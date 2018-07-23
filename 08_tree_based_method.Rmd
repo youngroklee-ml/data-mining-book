@@ -24,7 +24,7 @@ lapply(required_packages, function(x) {
 
 ## CART 트리 생성 {#cart-build}
 
-### 기본 R 스크립트
+### 기본 R 스크립트 {#cart-basic-r-script}
 
 ```{r tree-train-data-creation}
 train_df <- tibble(
@@ -64,7 +64,7 @@ rpart.plot(cart.est)
 [rpart](https://cran.r-project.org/web/packages/rpart/) 라는 package를 기반으로, 두 변수 x1과 x2를 이용하여 이분형 종속변수 class를 분류하는 CART 트리를 생성할 수 있으며, [rpart.plot](https://cran.r-project.org/web/packages/rpart.plot/) package를 이용하여 Figure \@ref(fig:cart-basic)과 같이 시각화할 수 있다.
 
 
-### 기호 정의
+### 기호 정의 {#cart-notation}
 
 본 장에서 사용될 수학적 기호는 아래와 같다.
 
@@ -89,7 +89,7 @@ p(j|t) &\approx \frac{N_j(t)}{N(t)}
 \end{align}
 
 
-### 노드 및 트리의 불순도
+### 노드 및 트리의 불순도 {#cart-impurity}
 
 #### 노드의 불순도
 
@@ -120,7 +120,7 @@ $$ I(t) = i(t)p(t) $$
 $$ I(T) = \sum_{t \in A(T)} I(t) $$
 
 
-### 분지기준
+### 분지기준 {#cart-split}
 
 뿌리 노드에서의 분지만을 살펴보기 위해 control parameter *maxdepth*의 값을 1으로 설정한다. 이 경우, CART 알고리즘은 뿌리노드에서의 양 갈래 분지만을 선택한 뒤 종료된다. 아래 스크립트를 이용하여 뿌리노드에서 최적분지된 트리를 얻는다.
 
@@ -253,9 +253,9 @@ tibble(maxdepth=c(1:4), impurity=tree.impurity) %>%
 
 
 
-## 가지치기 및 최종 트리 선정 {#cart-pruning}
+## 가지치기 및 최종 트리 선정 {#cart-pruning-complete}
 
-### 가지치기
+### 가지치기 {#cart-pruning}
 
 앞 장의 최대 트리 그림 \@ref(fig:cart-basic)은 학습 데이터를 오분류 없이 완벽하게 분류하기 위해 복잡한 분류 구조를 형성하였다. 이러한 복잡한 분류 구조는 학습 데이터가 아닌 새로운 데이터에 대한 분류 정확도를 떨어뜨릴 수 있다. 이는 bias-variance tradeoff라 부르는 현상으로, 비단 분류트리 뿐 아니라 모든 데이터마이닝 방법에 일반적으로 적용된다.  
 
@@ -363,7 +363,7 @@ rpart.plot(pruned.tree.2)
 
 
 
-### 최적 트리의 선정
+### 최적 트리의 선정 {#cart-best-tree}
 
 위 가지치기 과정에서 얻는 가지친 트리들이 최종 트리의 후보가 되며, 이 중 테스트 표본에 대한 오분류율이 가장 작은 트리를 최적 트리로 선정하게 된다.
 
@@ -482,12 +482,12 @@ rpart.plot(optimal_tree)
 
 
 
-## R패키지 내 분류 트리 방법  {#cart-r-package}
+## R패키지 내 분류 트리 방법  {#cart-r-pkg}
 
 앞 장에서는 *rpart*의 결과를 이용하여 교재 8.2 - 8.3장의 예제를 재현해보았다. 실제로 *rpart* 내부의 기본 트리 방법은 교재의 예제와는 다소 다른 부분이 있다. 이 장에서는 실제 *rpart* 패키지의 분류 트리 방법에 대해 알아본다. 
 
 
-### 트리 확장
+### 트리 확장 {#cart-r-pkg-split}
 
 트리 내 임의의 노드 $t$에 대한 불순도는 아래와 같이 정의된다.
 $$i(t) = \sum_{j=1}^{J} f\left(p(j|t)\right)$$
@@ -515,7 +515,9 @@ $$f(p) = -p\log(p)$$
 사용자가 임의로 함수를 정의하여 사용할 수 있다. 본 장에서는 자세한 설명은 생략한다.
 
 
-### 가지치기
+
+
+### 가지치기 {#cart-r-pkg-pruning}
 
 임의의 노드 $t$에 대한 위험도(오분류 비용의 기대치)는 아래와 같이 계산된다.
 $$r(t) = \sum_{j \neq \tau(t)} p(j|t)C\left(\tau(t)|j\right)$$
@@ -540,7 +542,7 @@ $$R_\alpha(T) = R(T) + \alpha|T|$$
 * $\alpha > \beta$일 때, $T_\alpha$는 $T_\beta$와 동일하거나 혹은 $T_\beta$에서 가지치기된 트리이다.
 
 
-### 파라미터값 결정
+### 파라미터값 결정 {#cart-r-pkg-param}
 
 함수 *rpart*를 사용할 때 여러가지 사용자 정의 파라미터값을 설정할 수 있으며, 그 파라미터 값에 따라 생성되는 트리의 결과가 달라진다. 대표적인 파라미터 값으로는 아래와 같은 것들이 있다.
 
