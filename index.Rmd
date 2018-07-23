@@ -8,6 +8,8 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 description: "전치혁 교수님의 책 <데이터마이닝 기법과 응용>을 기반으로 한 R 예제"
+url: 'https\://youngroklee-ml.github.io/data-mining-book/'
+github-repo: "youngroklee-ml/data-mining-book"
 ---
 
 # Prerequisites
