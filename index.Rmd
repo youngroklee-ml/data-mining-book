@@ -1,0 +1,21 @@
+--- 
+title: "데이터마이닝 with R"
+author: "전치혁, 이혜선, 이종석, 이영록"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "전치혁 교수님의 책 <데이터마이닝 기법과 응용>을 기반으로 한 R 예제"
+---
+
+# Prerequisites
+
+본 책의 예제는 R `r getRversion()` version에서 수행되었다. R 프로그램은 [CRAN](https://cran.r-project.org) 에서 다운로드받아 설치할 수 있다.
+
+본 책은 R을 이용한 데이터마이닝 수행에 초점을 두고 있으며, 기본적인 R 프로그래밍 지식을 요구한다. 기본 R 프로그래밍에 대한 지식은 아래와 같은 자료들로부터 얻을 수 있다.
+
+- DataCamp's free R Tutorial: https://www.datacamp.com/courses/free-introduction-to-r
+- TryR by Code School: http://tryr.codeschool.com
+
