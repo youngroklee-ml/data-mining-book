@@ -537,10 +537,6 @@ $$R_\alpha(T) = R(T) + \alpha|T|$$
 * $T_\infty$: 뿌리 노드 트리 (분지 없음)
 * $\alpha > \beta$일 때, $T_\alpha$는 $T_\beta$와 동일하거나 혹은 $T_\beta$에서 가지치기된 트리이다.
 
-위 관계를 통해, $m (\leq |T|)$개의 계수  $0 < \alpha_1 < \cdots < \alpha_{m-1} < \infty$에 대해
-$$I_1 = [0, \alpha_1] \\ 
-I_j = (\alpha_{j-1}, \alpha_j],  1 < j < m \\ 
-I_m =  (\alpha_{m-1}, \infty)$$
 
 
 ## 파라미터값 결정
