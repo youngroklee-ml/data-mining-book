@@ -37,4 +37,4 @@ rsconnect/
 .Rproj.user
 
 # bookdown
-_bookdown_files
+# _bookdown_files
