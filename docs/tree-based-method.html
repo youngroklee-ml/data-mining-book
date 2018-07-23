@@ -120,8 +120,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.5" data-path="tree-based-method.html"><a href="tree-based-method.html#r----"><i class="fa fa-check"></i><b>2.5</b> R패키지 내 분류 트리 방법</a><ul>
 <li class="chapter" data-level="2.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#-"><i class="fa fa-check"></i><b>2.5.1</b> 트리 확장</a></li>
 <li class="chapter" data-level="2.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#-1"><i class="fa fa-check"></i><b>2.5.2</b> 가지치기</a></li>
+<li class="chapter" data-level="2.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#-"><i class="fa fa-check"></i><b>2.5.3</b> 파라미터값 결정</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="tree-based-method.html"><a href="tree-based-method.html#-"><i class="fa fa-check"></i><b>2.6</b> 파라미터값 결정</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -1049,9 +1049,8 @@ optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(c
 <li><span class="math inline">\(\alpha &gt; \beta\)</span>일 때, <span class="math inline">\(T_\alpha\)</span>는 <span class="math inline">\(T_\beta\)</span>와 동일하거나 혹은 <span class="math inline">\(T_\beta\)</span>에서 가지치기된 트리이다.</li>
 </ul>
 </div>
-</div>
-<div id="-" class="section level2">
-<h2><span class="header-section-number">2.6</span> 파라미터값 결정</h2>
+<div id="-" class="section level3">
+<h3><span class="header-section-number">2.5.3</span> 파라미터값 결정</h3>
 <p><em>rpart</em> 함수를 사용할 때 여러가지 사용자 정의 파라미터값을 설정할 수 있으며, 그 파라미터 값에 따라 생성되는 트리의 결과가 달라진다. 대표적인 파라미터 값으로는 아래와 같은 것들이 있다.</p>
 <ul>
 <li>minsplit: 분지를 시도하기 위해 필요한 노드 내 최소 관측객체 수 (default=20)</li>
@@ -1059,6 +1058,7 @@ optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(c
 <li>maxdepth: 뿌리노드부터 임의의 최종노드에 도달하는 최대 가능 분지 수 (default=30)</li>
 </ul>
 
+</div>
 </div>
 </div>
 <h3>References</h3>
