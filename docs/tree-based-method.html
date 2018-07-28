@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2018-07-23">
+<meta name="date" content="2018-07-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -171,7 +171,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 <tr class="odd">
 <td align="left">rpart.plot</td>
-<td align="left">2.2.0</td>
+<td align="left">3.0.1</td>
 </tr>
 </tbody>
 </table>
@@ -296,11 +296,11 @@ p(j|t) &amp;\approx \frac{N_j(t)}{N(t)}
 <h3><span class="header-section-number">2.3.3</span> 노드 및 트리의 불순도</h3>
 <div id="-" class="section level4">
 <h4><span class="header-section-number">2.3.3.1</span> 노드의 불순도</h4>
-CART는 지니 지수(Gini index)를 불순도 함수로 사용한다. 총 <span class="math inline">\(J\)</span>개의 범주별 객체비율을 <span class="math inline">\(p_1, \cdots , p_J\)</span>라 할 때 (<span class="math inline">\(\sum_{j=1}^{J} p_j = 1\)</span>), 지니 지수는 식 <a href="tree-based-method.html#eq:gini-index">(2.1)</a>와 같다.
+<p>CART는 지니 지수(Gini index)를 불순도 함수로 사용한다. 총 <span class="math inline">\(J\)</span>개의 범주별 객체비율을 <span class="math inline">\(p_1, \cdots , p_J\)</span>라 할 때 (<span class="math inline">\(\sum_{j=1}^{J} p_j = 1\)</span>), 지니 지수는 식 <a href="tree-based-method.html#eq:gini-index">(2.1)</a>와 같다.</p>
 <span class="math display" id="eq:gini-index">\[\begin{equation}
 G(p_1, \cdots, p_J) = \sum_{j=1}^{J} p_j(1-p_j) = 1 - \sum_{j=1}^{J}p_j^2 \tag{2.1}
 \end{equation}\]</span>
-노드 <span class="math inline">\(t\)</span>에서의 범주별 객체비율은 <span class="math inline">\(p(1|t), \cdots, p(J|t)\)</span>이므로, 노드 <span class="math inline">\(t\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:node-impurity">(2.2)</a>와 같이 산출된다.
+<p>노드 <span class="math inline">\(t\)</span>에서의 범주별 객체비율은 <span class="math inline">\(p(1|t), \cdots, p(J|t)\)</span>이므로, 노드 <span class="math inline">\(t\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:node-impurity">(2.2)</a>와 같이 산출된다.</p>
 <span class="math display" id="eq:node-impurity">\[\begin{equation}
 \begin{split}
 i(t) &amp;= 1 - \sum_{j=1}^{J} p(j|t)^2\\
@@ -311,7 +311,7 @@ i(t) &amp;= 1 - \sum_{j=1}^{J} p(j|t)^2\\
 </div>
 <div id="-" class="section level4">
 <h4><span class="header-section-number">2.3.3.2</span> 트리 불순도</h4>
-트리 <span class="math inline">\(T\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:tree-impurity">(2.3)</a>와 같이 최종노드들의 불순도의 가중평균으로 정의된다.
+<p>트리 <span class="math inline">\(T\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:tree-impurity">(2.3)</a>와 같이 최종노드들의 불순도의 가중평균으로 정의된다.</p>
 <span class="math display" id="eq:tree-impurity">\[\begin{equation}
 I(T) = \sum_{t \in A(T)} i(t)p(t) \tag{2.3}
 \end{equation}\]</span>
@@ -1021,9 +1021,10 @@ optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(c
 <div id="cart-r-pkg-split" class="section level3">
 <h3><span class="header-section-number">2.5.1</span> 트리 확장</h3>
 <p>트리 내 임의의 노드 <span class="math inline">\(t\)</span>에 대한 불순도는 아래와 같이 정의된다. <span class="math display">\[i(t) = \sum_{j=1}^{J} f\left(p(j|t)\right)\]</span> 여기에서 <span class="math inline">\(p(j|t)\)</span>는 노드 <span class="math inline">\(t\)</span> 내 전체 샘플 <span class="math inline">\(N(t)\)</span> 중 범주 <span class="math inline">\(j\)</span>의 샘플 <span class="math inline">\(N_j(t)\)</span>의 비율로 추정된다. <span class="math display">\[p(j|t) \approx \frac{N_j(t)}{N(t)}\]</span> 또한 함수 <span class="math inline">\(f\)</span>는 concave 함수로, <span class="math inline">\(f(0) = f(1) = 0\)</span>의 조건을 만족시켜야 한다. <em>rpart</em> 에서 설정할 수 있는 함수 <span class="math inline">\(f\)</span>의 종류에 대해서는 아래에서 좀 더 자세히 살펴보기로 한다.</p>
-트리 내 임의의 노드 <span class="math inline">\(t\)</span>가 분지규칙 <span class="math inline">\(s\)</span>에 따라 두 개의 노드 <span class="math inline">\(t_L\)</span>과 <span class="math inline">\(t_R\)</span>로 분지된다고 할 때, 불순도의 감소량은 아래와 같이 계산된다.
+<p>트리 내 임의의 노드 <span class="math inline">\(t\)</span>가 분지규칙 <span class="math inline">\(s\)</span>에 따라 두 개의 노드 <span class="math inline">\(t_L\)</span>과 <span class="math inline">\(t_R\)</span>로 분지된다고 할 때, 불순도의 감소량은 아래와 같이 계산된다.</p>
 <span class="math display">\[\begin{eqnarray}
-\Delta I(s,t) &amp;=&amp; I(t) - I(t_L) - I(t_R)\\ &amp;=&amp; p(t)i(t) - p(t_L)i(t_L) - p(t_R)i(t_R) \end{eqnarray}\]</span>
+\Delta I(s,t) &amp;=&amp; I(t) - I(t_L) - I(t_R)\\ &amp;=&amp; p(t)i(t) - p(t_L)i(t_L) - p(t_R)i(t_R) 
+\end{eqnarray}\]</span>
 <p><em>rpart</em>는 위 <span class="math inline">\(\Delta I(s,t)\)</span>값이 최대가 되는 분지 기준 <span class="math inline">\(s^*\)</span>를 찾아 노드 <span class="math inline">\(t\)</span>를 분지하여 트리를 확장하고, 확장된 트리의 최종 노드에서 다시 최적 분지를 찾는 과정을 반복한다.</p>
 <div id="-" class="section level4">
 <h4><span class="header-section-number">2.5.1.1</span> 분지 함수</h4>
@@ -1039,8 +1040,8 @@ optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(c
 <h3><span class="header-section-number">2.5.2</span> 가지치기</h3>
 <p>임의의 노드 <span class="math inline">\(t\)</span>에 대한 위험도(오분류 비용의 기대치)는 아래와 같이 계산된다. <span class="math display">\[r(t) = \sum_{j \neq \tau(t)} p(j|t)C\left(\tau(t)|j\right)\]</span> 여기에서 함수 <span class="math inline">\(C(i|j)\)</span>는 범주 <span class="math inline">\(j\)</span>에 속하는 객체를 범주 <span class="math inline">\(i\)</span>로 분류할 때의 오분류 비용이며, <span class="math inline">\(\tau(t)\)</span>는 노드 <span class="math inline">\(t\)</span> 내의 오분류 비용을 최소화하도록 노드 <span class="math inline">\(t\)</span>에 지정된 범주값이다.</p>
 <p><em>rpart</em>의 오분류 비용 <span class="math inline">\(C(i|j)\)</span>의 기본값은 <span class="math display">\[C(i|j) = 
-\begin{cases} 1,&amp; \text{if } i \neq j\\
-              0,  &amp; \text{if} i = j
+\begin{cases} 1,  &amp; \text{  if } i \neq j\\
+              0,  &amp; \text{  if } i = j
 \end{cases} \]</span> 으로 설정되어 있으며, <em>parms</em> 파라미터에 <em>loss</em> 값으로 오분류 비용 <span class="math inline">\(C(i|j)\)</span>를 재설정할 수 있다. 본 장에서는 기본값을 사용하도록 하자.</p>
 <p><span class="math inline">\(A(T)\)</span>를 트리 <span class="math inline">\(T\)</span>의 최종 노드의 집합이라 정의하고, 트리의 최종 노드의 개수를 <span class="math inline">\(|T|\)</span>라 할 때, 트리 <span class="math inline">\(T\)</span>의 위험도 <span class="math inline">\(R(T)\)</span>는 아래와 같이 정의된다. <span class="math display">\[R(T) = \sum_{t \in A(T)} p(t)r(t)\]</span></p>
 <p>복잡도 계수(complexity parameter) <span class="math inline">\(\alpha \in [0, \infty)\)</span>를 이용하여, 트리의 비용-복합도 척도를 다음과 같이 정의한다. <span class="math display">\[R_\alpha(T) = R(T) + \alpha|T|\]</span> 이 때, 임의의 계수 <span class="math inline">\(\alpha\)</span>에 대해 비용 <span class="math inline">\(R_\alpha(T)\)</span>가 최소가 되게하는 가지치기 트리를 <span class="math inline">\(T_\alpha\)</span>라 하면, 아래와 같은 관계들이 성립한다.</p>

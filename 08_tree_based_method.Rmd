@@ -94,11 +94,13 @@ p(j|t) &\approx \frac{N_j(t)}{N(t)}
 #### 노드의 불순도
 
 CART는 지니 지수(Gini index)를 불순도 함수로 사용한다. 총 $J$개의 범주별 객체비율을 $p_1, \cdots , p_J$라 할 때 ($\sum_{j=1}^{J} p_j = 1$), 지니 지수는 식 \@ref(eq:gini-index)와 같다.
+
 \begin{equation}
 G(p_1, \cdots, p_J) = \sum_{j=1}^{J} p_j(1-p_j) = 1 - \sum_{j=1}^{J}p_j^2 (\#eq:gini-index)
 \end{equation}
 
 노드 $t$에서의 범주별 객체비율은 $p(1|t), \cdots, p(J|t)$이므로, 노드 $t$의 불순도는 식 \@ref(eq:node-impurity)와 같이 산출된다.
+
 \begin{equation}
 \begin{split}
 i(t) &= 1 - \sum_{j=1}^{J} p(j|t)^2\\
@@ -111,9 +113,11 @@ i(t) &= 1 - \sum_{j=1}^{J} p(j|t)^2\\
 #### 트리 불순도
 
 트리 $T$의 불순도는 식 \@ref(eq:tree-impurity)와 같이 최종노드들의 불순도의 가중평균으로 정의된다.
+
 \begin{equation}
 I(T) = \sum_{t \in A(T)} i(t)p(t) (\#eq:tree-impurity)
 \end{equation}
+
 여기서
 $$ I(t) = i(t)p(t) $$
 라 하면, 다음이 성립한다.
@@ -496,8 +500,11 @@ $$p(j|t) \approx \frac{N_j(t)}{N(t)}$$
 또한 함수 $f$는 concave 함수로, $f(0) = f(1) = 0$의 조건을 만족시켜야 한다. *rpart* 에서 설정할 수 있는 함수 $f$의 종류에 대해서는 아래에서 좀 더 자세히 살펴보기로 한다.
 
 트리 내 임의의 노드 $t$가 분지규칙 $s$에 따라 두 개의 노드 $t_L$과 $t_R$로 분지된다고 할 때, 불순도의 감소량은 아래와 같이 계산된다.
+
 \begin{eqnarray}
-\Delta I(s,t) &=& I(t) - I(t_L) - I(t_R)\\ &=& p(t)i(t) - p(t_L)i(t_L) - p(t_R)i(t_R) \end{eqnarray}
+\Delta I(s,t) &=& I(t) - I(t_L) - I(t_R)\\ &=& p(t)i(t) - p(t_L)i(t_L) - p(t_R)i(t_R) 
+\end{eqnarray}
+
 *rpart*는 위 $\Delta I(s,t)$값이 최대가 되는 분지 기준 $s^*$를 찾아 노드 $t$를 분지하여 트리를 확장하고, 확장된 트리의 최종 노드에서 다시 최적 분지를 찾는 과정을 반복한다.
 
 
@@ -525,8 +532,8 @@ $$r(t) = \sum_{j \neq \tau(t)} p(j|t)C\left(\tau(t)|j\right)$$
 
 *rpart*의 오분류 비용 $C(i|j)$의 기본값은
 $$C(i|j) = 
-\begin{cases} 1,& \text{if } i \neq j\\
-              0,  & \text{if} i = j
+\begin{cases} 1,  & \text{  if } i \neq j\\
+              0,  & \text{  if } i = j
 \end{cases} $$
 으로 설정되어 있으며,  *parms* 파라미터에 *loss* 값으로 오분류 비용 $C(i|j)$를 재설정할 수 있다. 본 장에서는 기본값을 사용하도록 하자.
 
