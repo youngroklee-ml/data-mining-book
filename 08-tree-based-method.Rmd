@@ -1,9 +1,5 @@
 # 트리기반 기법 {#tree-based-method}
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-library(tidyverse)
-```
-
 
 ## CART 개요 {#cart-overview}
 

@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2018-07-28">
+<meta name="date" content="2018-07-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="index.html">
-<link rel="next" href="references.html">
+<link rel="next" href="svm.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -100,27 +100,36 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./">데이터마이닝 with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
-<li class="chapter" data-level="2" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>2</b> 트리기반 기법</a><ul>
-<li class="chapter" data-level="2.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>2.1</b> CART 개요</a></li>
-<li class="chapter" data-level="2.2" data-path="tree-based-method.html"><a href="tree-based-method.html#-r-package-"><i class="fa fa-check"></i><b>2.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="2.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>2.3</b> CART 트리 생성</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>2.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="2.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>2.3.2</b> 기호 정의</a></li>
-<li class="chapter" data-level="2.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>2.3.3</b> 노드 및 트리의 불순도</a></li>
-<li class="chapter" data-level="2.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>2.3.4</b> 분지기준</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>개요</a></li>
+<li class="chapter" data-level="1" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>1</b> 트리기반 기법</a><ul>
+<li class="chapter" data-level="1.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>1.1</b> CART 개요</a></li>
+<li class="chapter" data-level="1.2" data-path="tree-based-method.html"><a href="tree-based-method.html#-r-package-"><i class="fa fa-check"></i><b>1.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="1.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>1.3</b> CART 트리 생성</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>1.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="1.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>1.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="1.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>1.3.3</b> 노드 및 트리의 불순도</a></li>
+<li class="chapter" data-level="1.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>1.3.4</b> 분지기준</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>2.4</b> 가지치기 및 최종 트리 선정</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>2.4.1</b> 가지치기</a></li>
-<li class="chapter" data-level="2.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>2.4.2</b> 최적 트리의 선정</a></li>
+<li class="chapter" data-level="1.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>1.4</b> 가지치기 및 최종 트리 선정</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>1.4.1</b> 가지치기</a></li>
+<li class="chapter" data-level="1.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>1.4.2</b> 최적 트리의 선정</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>2.5</b> R패키지 내 분류 트리 방법</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>2.5.1</b> 트리 확장</a></li>
-<li class="chapter" data-level="2.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>2.5.2</b> 가지치기</a></li>
-<li class="chapter" data-level="2.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>2.5.3</b> 파라미터값 결정</a></li>
+<li class="chapter" data-level="1.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>1.5</b> R패키지 내 분류 트리 방법</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>1.5.1</b> 트리 확장</a></li>
+<li class="chapter" data-level="1.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>1.5.2</b> 가지치기</a></li>
+<li class="chapter" data-level="1.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>1.5.3</b> 파라미터값 결정</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>2</b> 서포트 벡터 머신</a><ul>
+<li class="chapter" data-level="2.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>2.1</b> 개요</a></li>
+<li class="chapter" data-level="2.2" data-path="svm.html"><a href="svm.html#-r-package--1"><i class="fa fa-check"></i><b>2.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="2.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>2.3</b> 선형 SVM - 분리 가능 경우</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>2.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>2.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="2.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>2.3.3</b> 최적 하이퍼플레인</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -145,13 +154,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="tree-based-method" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> 트리기반 기법</h1>
+<h1><span class="header-section-number">Chapter 1</span> 트리기반 기법</h1>
 <div id="cart-overview" class="section level2">
-<h2><span class="header-section-number">2.1</span> CART 개요</h2>
+<h2><span class="header-section-number">1.1</span> CART 개요</h2>
 <p>CART(Classification and Regression Trees)는 <span class="citation">Breiman et al. (<a href="#ref-breiman1984classification">1984</a>)</span> 에 의하여 개발된 것인데, 각 (독립)변수를 이분화(binary split)하는 과정을 반복하여 트리 형태를 형성함으로써 분류(종속변수가 범주형일 때) 또는 회귀분석(종속변수가 연속형일 때)을 수행하는 것이다. 이 때 독립변수들은 범주형 또는 연속형 모두에 적용될 수 있다. 본 장에서는 분류를 위한 목적만을 설명하도록 한다.</p>
 </div>
 <div id="-r-package-" class="section level2">
-<h2><span class="header-section-number">2.2</span> 필요 R package 설치</h2>
+<h2><span class="header-section-number">1.2</span> 필요 R package 설치</h2>
 <p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
 <table>
 <thead>
@@ -177,16 +186,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </table>
 </div>
 <div id="cart-build" class="section level2">
-<h2><span class="header-section-number">2.3</span> CART 트리 생성</h2>
+<h2><span class="header-section-number">1.3</span> CART 트리 생성</h2>
 <div id="cart-basic-r-script" class="section level3">
-<h3><span class="header-section-number">2.3.1</span> 기본 R 스크립트</h3>
+<h3><span class="header-section-number">1.3.1</span> 기본 R 스크립트</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>),
   <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>),
   <span class="dt">class =</span> <span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))
 )</code></pre></div>
 <table>
-<caption><span id="tab:tree-train-data-table">Table 2.1: </span>학습표본 데이터</caption>
+<caption><span id="tab:tree-train-data-table">Table 1.1: </span>학습표본 데이터</caption>
 <thead>
 <tr class="header">
 <th align="right">x1</th>
@@ -247,7 +256,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 </tbody>
 </table>
-<p>Table <a href="tree-based-method.html#tab:tree-train-data-table">2.1</a>와 같이 두 독립변수 <em>x1</em>, <em>x2</em>와 이분형 종속변수 <em>class</em>의 관측값으로 이루어진 10개의 학습표본을 <em>train_df</em>라는 data frame에 저장한다.</p>
+<p>Table <a href="tree-based-method.html#tab:tree-train-data-table">1.1</a>와 같이 두 독립변수 <em>x1</em>, <em>x2</em>와 이분형 종속변수 <em>class</em>의 관측값으로 이루어진 10개의 학습표본을 <em>train_df</em>라는 data frame에 저장한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rpart)
 <span class="kw">library</span>(rpart.plot)
 cart.est &lt;-<span class="st"> </span><span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2
@@ -265,13 +274,13 @@ cart.est &lt;-<span class="st"> </span><span class="kw">rpart</span>(class <span
 <div class="figure" style="text-align: center"><span id="fig:cart-basic"></span>
 <img src="data-mining-book_files/figure-html/cart-basic-1.png" alt="CART 트리" width="672" />
 <p class="caption">
-Figure 2.1: CART 트리
+Figure 1.1: CART 트리
 </p>
 </div>
-<p><a href="https://cran.r-project.org/web/packages/rpart/">rpart</a> 라는 package를 기반으로, 두 변수 x1과 x2를 이용하여 이분형 종속변수 class를 분류하는 CART 트리를 생성할 수 있으며, <a href="https://cran.r-project.org/web/packages/rpart.plot/">rpart.plot</a> package를 이용하여 Figure <a href="tree-based-method.html#fig:cart-basic">2.1</a>과 같이 시각화할 수 있다.</p>
+<p><a href="https://cran.r-project.org/web/packages/rpart/">rpart</a> 라는 package를 기반으로, 두 변수 x1과 x2를 이용하여 이분형 종속변수 class를 분류하는 CART 트리를 생성할 수 있으며, <a href="https://cran.r-project.org/web/packages/rpart.plot/">rpart.plot</a> package를 이용하여 Figure <a href="tree-based-method.html#fig:cart-basic">1.1</a>과 같이 시각화할 수 있다.</p>
 </div>
 <div id="cart-notation" class="section level3">
-<h3><span class="header-section-number">2.3.2</span> 기호 정의</h3>
+<h3><span class="header-section-number">1.3.2</span> 기호 정의</h3>
 <p>본 장에서 사용될 수학적 기호는 아래와 같다.</p>
 <ul>
 <li><span class="math inline">\(T\)</span>: 트리</li>
@@ -293,33 +302,33 @@ p(j|t) &amp;\approx \frac{N_j(t)}{N(t)}
 \end{align}\]</span>
 </div>
 <div id="cart-impurity" class="section level3">
-<h3><span class="header-section-number">2.3.3</span> 노드 및 트리의 불순도</h3>
+<h3><span class="header-section-number">1.3.3</span> 노드 및 트리의 불순도</h3>
 <div id="-" class="section level4">
-<h4><span class="header-section-number">2.3.3.1</span> 노드의 불순도</h4>
-<p>CART는 지니 지수(Gini index)를 불순도 함수로 사용한다. 총 <span class="math inline">\(J\)</span>개의 범주별 객체비율을 <span class="math inline">\(p_1, \cdots , p_J\)</span>라 할 때 (<span class="math inline">\(\sum_{j=1}^{J} p_j = 1\)</span>), 지니 지수는 식 <a href="tree-based-method.html#eq:gini-index">(2.1)</a>와 같다.</p>
+<h4><span class="header-section-number">1.3.3.1</span> 노드의 불순도</h4>
+<p>CART는 지니 지수(Gini index)를 불순도 함수로 사용한다. 총 <span class="math inline">\(J\)</span>개의 범주별 객체비율을 <span class="math inline">\(p_1, \cdots , p_J\)</span>라 할 때 (<span class="math inline">\(\sum_{j=1}^{J} p_j = 1\)</span>), 지니 지수는 식 <a href="tree-based-method.html#eq:gini-index">(1.1)</a>와 같다.</p>
 <span class="math display" id="eq:gini-index">\[\begin{equation}
-G(p_1, \cdots, p_J) = \sum_{j=1}^{J} p_j(1-p_j) = 1 - \sum_{j=1}^{J}p_j^2 \tag{2.1}
+G(p_1, \cdots, p_J) = \sum_{j=1}^{J} p_j(1-p_j) = 1 - \sum_{j=1}^{J}p_j^2 \tag{1.1}
 \end{equation}\]</span>
-<p>노드 <span class="math inline">\(t\)</span>에서의 범주별 객체비율은 <span class="math inline">\(p(1|t), \cdots, p(J|t)\)</span>이므로, 노드 <span class="math inline">\(t\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:node-impurity">(2.2)</a>와 같이 산출된다.</p>
+<p>노드 <span class="math inline">\(t\)</span>에서의 범주별 객체비율은 <span class="math inline">\(p(1|t), \cdots, p(J|t)\)</span>이므로, 노드 <span class="math inline">\(t\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:node-impurity">(1.2)</a>와 같이 산출된다.</p>
 <span class="math display" id="eq:node-impurity">\[\begin{equation}
 \begin{split}
 i(t) &amp;= 1 - \sum_{j=1}^{J} p(j|t)^2\\
 &amp;\approx 1 - \sum_{j=1}^{J} \left[\frac{N_j(t)}{N(t)}\right]^2
 \end{split}
-\tag{2.2}
+\tag{1.2}
 \end{equation}\]</span>
 </div>
 <div id="-" class="section level4">
-<h4><span class="header-section-number">2.3.3.2</span> 트리 불순도</h4>
-<p>트리 <span class="math inline">\(T\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:tree-impurity">(2.3)</a>와 같이 최종노드들의 불순도의 가중평균으로 정의된다.</p>
+<h4><span class="header-section-number">1.3.3.2</span> 트리 불순도</h4>
+<p>트리 <span class="math inline">\(T\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:tree-impurity">(1.3)</a>와 같이 최종노드들의 불순도의 가중평균으로 정의된다.</p>
 <span class="math display" id="eq:tree-impurity">\[\begin{equation}
-I(T) = \sum_{t \in A(T)} i(t)p(t) \tag{2.3}
+I(T) = \sum_{t \in A(T)} i(t)p(t) \tag{1.3}
 \end{equation}\]</span>
 <p>여기서 <span class="math display">\[ I(t) = i(t)p(t) \]</span> 라 하면, 다음이 성립한다. <span class="math display">\[ I(T) = \sum_{t \in A(T)} I(t) \]</span></p>
 </div>
 </div>
 <div id="cart-split" class="section level3">
-<h3><span class="header-section-number">2.3.4</span> 분지기준</h3>
+<h3><span class="header-section-number">1.3.4</span> 분지기준</h3>
 <p>뿌리 노드에서의 분지만을 살펴보기 위해 control parameter <em>maxdepth</em>의 값을 1으로 설정한다. 이 경우, CART 알고리즘은 뿌리노드에서의 양 갈래 분지만을 선택한 뒤 종료된다. 아래 스크립트를 이용하여 뿌리노드에서 최적분지된 트리를 얻는다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cart.firstsplit &lt;-<span class="st"> </span><span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2
                   , <span class="dt">data =</span> train_df
@@ -337,10 +346,10 @@ I(T) = \sum_{t \in A(T)} i(t)p(t) \tag{2.3}
 <div class="figure" style="text-align: center"><span id="fig:firstsplit"></span>
 <img src="data-mining-book_files/figure-html/firstsplit-1.png" alt="뿌리노드 분지" width="672" />
 <p class="caption">
-Figure 2.2: 뿌리노드 분지
+Figure 1.2: 뿌리노드 분지
 </p>
 </div>
-<p>또한 분지 결과 트리는 Table <a href="tree-based-method.html#tab:firstsplit-frame">2.2</a>와 같이 <em>frame</em>이라는 이름의 data frame에 설명된다. 각 행 앞의 번호는 노드 인덱스 <span class="math inline">\(t\)</span>를 나타내며, 각 열에 대한 설명은 아래와 같다.</p>
+<p>또한 분지 결과 트리는 Table <a href="tree-based-method.html#tab:firstsplit-frame">1.2</a>와 같이 <em>frame</em>이라는 이름의 data frame에 설명된다. 각 행 앞의 번호는 노드 인덱스 <span class="math inline">\(t\)</span>를 나타내며, 각 열에 대한 설명은 아래와 같다.</p>
 <ul>
 <li>var: 노드 <span class="math inline">\(t\)</span>를 분지하는 데 이용된 변수. 값이 &lt;leaf&gt;인 경우에는 노드 <span class="math inline">\(t\)</span>가 최종 노드임을 나타낸다.</li>
 <li>n: 노드 내 객체 수 <span class="math inline">\(N(t)\)</span></li>
@@ -350,7 +359,7 @@ Figure 2.2: 뿌리노드 분지
 <li>complexity: 노드 <span class="math inline">\(t\)</span>에서 추가로 분지할 때 감소하는 relative error값; 본 분류트리 예제에서 error는 오분류율이며, 뿌리 노드의 relative error값을 1으로 한다.</li>
 </ul>
 <table>
-<caption><span id="tab:firstsplit-frame">Table 2.2: </span>뿌리노드 분지 상세 (frame)</caption>
+<caption><span id="tab:firstsplit-frame">Table 1.2: </span>뿌리노드 분지 상세 (frame)</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -400,7 +409,7 @@ Figure 2.2: 뿌리노드 분지
 </tr>
 </tbody>
 </table>
-<p>또한 <em>frame</em>에는 트리 내 각 노드에 속한 객체와 범주에 대한 정보를 나타내는 <em>yval2</em>라는 행렬이 Table <a href="tree-based-method.html#tab:firstsplit-yval2">2.3</a>와 같이 존재한다. 실제 <em>yval2</em>의 열의 개수는 전체 학습 대상 범주 수에 따라 달라지며, 본 예는 이분 분류 트리(범주개수 = 2)에 해당하는 열 구성을 보여준다. 각 행 앞의 번호는 노드 인덱스 <span class="math inline">\(t\)</span>를 나타내며, 각 열에 대한 설명은 아래와 같다.</p>
+<p>또한 <em>frame</em>에는 트리 내 각 노드에 속한 객체와 범주에 대한 정보를 나타내는 <em>yval2</em>라는 행렬이 Table <a href="tree-based-method.html#tab:firstsplit-yval2">1.3</a>와 같이 존재한다. 실제 <em>yval2</em>의 열의 개수는 전체 학습 대상 범주 수에 따라 달라지며, 본 예는 이분 분류 트리(범주개수 = 2)에 해당하는 열 구성을 보여준다. 각 행 앞의 번호는 노드 인덱스 <span class="math inline">\(t\)</span>를 나타내며, 각 열에 대한 설명은 아래와 같다.</p>
 <ul>
 <li>열1: 노드 <span class="math inline">\(t\)</span>에서의 최적 추정 범주 <span class="math inline">\(j^*\)</span></li>
 <li>열2: 노드 <span class="math inline">\(t\)</span> 내 범주 <em>class</em>=1 객체 수 <span class="math inline">\(N_1(t)\)</span></li>
@@ -411,7 +420,7 @@ Figure 2.2: 뿌리노드 분지
 </ul>
 <pre><code>## Warning: Setting row names on a tibble is deprecated.</code></pre>
 <table>
-<caption><span id="tab:firstsplit-yval2">Table 2.3: </span>노드 내 객체 및 범주 정보 (yval2)</caption>
+<caption><span id="tab:firstsplit-yval2">Table 1.3: </span>노드 내 객체 및 범주 정보 (yval2)</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -470,7 +479,7 @@ Figure 2.2: 뿌리노드 분지
   node.prob &lt;-<span class="st"> </span>rpart.obj<span class="op">$</span>frame<span class="op">$</span>yval2[leaf.nodes, <span class="st">&#39;nodeprob&#39;</span>]
   <span class="kw">return</span>(<span class="kw">sum</span>(node.prob <span class="op">*</span><span class="st"> </span>node.impurity))
 }</code></pre></div>
-<p>위 함수를 이용하여 계산한 트리 Figure <a href="tree-based-method.html#fig:cart-basic">2.1</a>의 불순도는 0.29이다.</p>
+<p>위 함수를 이용하여 계산한 트리 Figure <a href="tree-based-method.html#fig:cart-basic">1.1</a>의 불순도는 0.29이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rpartImpurity</span>(cart.firstsplit)</code></pre></div>
 <pre><code>## [1] 0.2857143</code></pre>
 <p>분지를 추가할수록 불순도는 감소한다. 분지를 추가하기 위해서는 <em>maxdepth</em>라는 control parameter 값을 증가시키면 된다.</p>
@@ -500,7 +509,7 @@ tree.impurity &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span
 <div class="figure" style="text-align: center"><span id="fig:impurity-trend"></span>
 <img src="data-mining-book_files/figure-html/impurity-trend-1.png" alt="파라미터 maxdepth값에 따른 트리불순도 변화" width="672" />
 <p class="caption">
-Figure 2.3: 파라미터 maxdepth값에 따른 트리불순도 변화
+Figure 1.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 </p>
 </div>
 <p>위 예에서, 트리의 분지가 증가함에 따라 불순도는 0.29, 0.17, 0.17, 0로 감소한다. <em>maxdepth</em>값이 3일 때 불순도가 감소하지 않는 이유는, 세 번째 분지 결과가 전체적인 오분류를 감소시키지 않아 <em>rpart</em> 함수가 해당 분지를 취소하기 때문이다. 여기에 작용하는 파라미터는 <em>cp</em>라는 control parameter이다.</p>
@@ -511,13 +520,13 @@ Figure 2.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 </div>
 </div>
 <div id="cart-pruning-complete" class="section level2">
-<h2><span class="header-section-number">2.4</span> 가지치기 및 최종 트리 선정</h2>
+<h2><span class="header-section-number">1.4</span> 가지치기 및 최종 트리 선정</h2>
 <div id="cart-pruning" class="section level3">
-<h3><span class="header-section-number">2.4.1</span> 가지치기</h3>
-<p>앞 장의 최대 트리 그림 <a href="tree-based-method.html#fig:cart-basic">2.1</a>은 학습 데이터를 오분류 없이 완벽하게 분류하기 위해 복잡한 분류 구조를 형성하였다. 이러한 복잡한 분류 구조는 학습 데이터가 아닌 새로운 데이터에 대한 분류 정확도를 떨어뜨릴 수 있다. 이는 bias-variance tradeoff라 부르는 현상으로, 비단 분류트리 뿐 아니라 모든 데이터마이닝 방법에 일반적으로 적용된다.</p>
+<h3><span class="header-section-number">1.4.1</span> 가지치기</h3>
+<p>앞 장의 최대 트리 그림 <a href="tree-based-method.html#fig:cart-basic">1.1</a>은 학습 데이터를 오분류 없이 완벽하게 분류하기 위해 복잡한 분류 구조를 형성하였다. 이러한 복잡한 분류 구조는 학습 데이터가 아닌 새로운 데이터에 대한 분류 정확도를 떨어뜨릴 수 있다. 이는 bias-variance tradeoff라 부르는 현상으로, 비단 분류트리 뿐 아니라 모든 데이터마이닝 방법에 일반적으로 적용된다.</p>
 <p>분류 트리는 가지치기라는 방식을 통해, 분류 구조를 단순화함으로써 분류 트리가 새로운 데이터에도 정확한 분류를 제공하기를 추구한다. 가지치기란 트리 내 특정 내부노드를 기준으로 그 하위에 발생한 분지를 모두 제거하고, 해당 내부노드를 최종노드로 치환하는 방식이다.</p>
 <table>
-<caption><span id="tab:max-frame">Table 2.4: </span>최대 트리 분지 상세 (frame)</caption>
+<caption><span id="tab:max-frame">Table 1.4: </span>최대 트리 분지 상세 (frame)</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -633,7 +642,7 @@ Figure 2.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 </tr>
 </tbody>
 </table>
-<p>Table <a href="tree-based-method.html#tab:max-frame">2.4</a>에서 생성 가능한 가지치기는 최종 노드(<em>var값이 &lt;leaf&gt;</em>)가 아닌 모든 노드(1, 3, 7, 14)에서 가능하며, 함수 <em>snip.rpart</em>를 이용하여 가지치기 된 트리를 생성할 수 있다. 각 내부 노드에서 가지치기된 트리들은 아래와 같이 얻어진다.</p>
+<p>Table <a href="tree-based-method.html#tab:max-frame">1.4</a>에서 생성 가능한 가지치기는 최종 노드(<em>var값이 &lt;leaf&gt;</em>)가 아닌 모든 노드(1, 3, 7, 14)에서 가능하며, 함수 <em>snip.rpart</em>를 이용하여 가지치기 된 트리를 생성할 수 있다. 각 내부 노드에서 가지치기된 트리들은 아래와 같이 얻어진다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">internal.node.index &lt;-<span class="st"> </span><span class="kw">rownames</span>(cart.est<span class="op">$</span>frame)[<span class="kw">which</span>(cart.est<span class="op">$</span>frame<span class="op">$</span>var <span class="op">!=</span><span class="st"> &#39;&lt;leaf&gt;&#39;</span>)] <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">as.numeric</span>()
 snipped &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, <span class="cf">function</span>(x){<span class="kw">snip.rpart</span>(cart.est, x)})
@@ -645,7 +654,7 @@ n.trees &lt;-<span class="st"> </span><span class="kw">length</span>(snipped)
 <div class="figure" style="text-align: center"><span id="fig:snipped"></span>
 <img src="data-mining-book_files/figure-html/snipped-1.png" alt="각 내부노드 기준으로 가지치기된 트리" width="672" />
 <p class="caption">
-Figure 2.4: 각 내부노드 기준으로 가지치기된 트리
+Figure 1.4: 각 내부노드 기준으로 가지치기된 트리
 </p>
 </div>
 <p>위 각 가지치기 후보 노드의 오분류 비용은 함수 <em>nodeCost</em>를 아래와 같이 구현하여 계산할 수 있다.</p>
@@ -708,7 +717,7 @@ Figure 2.4: 각 내부노드 기준으로 가지치기된 트리
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df.cost &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, subtreeEval, <span class="dt">tree=</span>cart.est) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">bind_rows</span>()</code></pre></div>
 <table>
-<caption><span id="tab:first-prune-candidate-tab">Table 2.5: </span>내부노드 가지치기 평가 (df.cost)</caption>
+<caption><span id="tab:first-prune-candidate-tab">Table 1.5: </span>내부노드 가지치기 평가 (df.cost)</caption>
 <thead>
 <tr class="header">
 <th align="right">pruning_node</th>
@@ -749,14 +758,14 @@ Figure 2.4: 각 내부노드 기준으로 가지치기된 트리
 </tr>
 </tbody>
 </table>
-<p>위 Table <a href="tree-based-method.html#tab:first-prune-candidate-tab">2.5</a> 에서 최소 알파값에 해당하는 노드 7에서 가지치기를 한다.</p>
+<p>위 Table <a href="tree-based-method.html#tab:first-prune-candidate-tab">1.5</a> 에서 최소 알파값에 해당하는 노드 7에서 가지치기를 한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pruned.tree.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(cart.est,
                             df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])
 <span class="kw">rpart.plot</span>(pruned.tree.<span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:first-prune-result"></span>
 <img src="data-mining-book_files/figure-html/first-prune-result-1.png" alt="1단계 가지치기 결과" width="672" />
 <p class="caption">
-Figure 2.5: 1단계 가지치기 결과
+Figure 1.5: 1단계 가지치기 결과
 </p>
 </div>
 <p>가지치기로 형성된 트리에서 다시 각 가지치기 노드의 오분류비용, 복잡도 및 알파값을 구한다.</p>
@@ -800,21 +809,21 @@ knitr<span class="op">::</span><span class="kw">kable</span>(df.cost)</code></pr
 <div class="figure" style="text-align: center"><span id="fig:second-prune-result"></span>
 <img src="data-mining-book_files/figure-html/second-prune-result-1.png" alt="2단계 가지치기 결과" width="672" />
 <p class="caption">
-Figure 2.6: 2단계 가지치기 결과
+Figure 1.6: 2단계 가지치기 결과
 </p>
 </div>
 </div>
 <div id="cart-best-tree" class="section level3">
-<h3><span class="header-section-number">2.4.2</span> 최적 트리의 선정</h3>
+<h3><span class="header-section-number">1.4.2</span> 최적 트리의 선정</h3>
 <p>위 가지치기 과정에서 얻는 가지친 트리들이 최종 트리의 후보가 되며, 이 중 테스트 표본에 대한 오분류율이 가장 작은 트리를 최적 트리로 선정하게 된다.</p>
-<p>트리를 학습할 때 사용된 학습데이터 Table <a href="tree-based-method.html#tab:tree-train-data-table">2.1</a> 외에, Table <a href="tree-based-method.html#tab:tree-test-data-table">2.6</a>과 같은 6개의 테스트 데이터가 있다고 하자.</p>
+<p>트리를 학습할 때 사용된 학습데이터 Table <a href="tree-based-method.html#tab:tree-train-data-table">1.1</a> 외에, Table <a href="tree-based-method.html#tab:tree-test-data-table">1.6</a>과 같은 6개의 테스트 데이터가 있다고 하자.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>),
   <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">4</span>),
   <span class="dt">class =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">levels=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
 )</code></pre></div>
 <table>
-<caption><span id="tab:tree-test-data-table">Table 2.6: </span>테스트 데이터</caption>
+<caption><span id="tab:tree-test-data-table">Table 1.6: </span>테스트 데이터</caption>
 <thead>
 <tr class="header">
 <th align="right">x1</th>
@@ -863,7 +872,7 @@ Figure 2.6: 2단계 가지치기 결과
     <span class="dt">pred_prune2 =</span> <span class="kw">predict</span>(pruned.tree.<span class="dv">2</span>, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
   )</code></pre></div>
 <table>
-<caption><span id="tab:tree-class-prediction-table">Table 2.7: </span>테스트 데이터에 대한 예측 결과</caption>
+<caption><span id="tab:tree-class-prediction-table">Table 1.7: </span>테스트 데이터에 대한 예측 결과</caption>
 <thead>
 <tr class="header">
 <th align="right">x1</th>
@@ -925,7 +934,7 @@ Figure 2.6: 2단계 가지치기 결과
 </tr>
 </tbody>
 </table>
-<p>결과 Table <a href="tree-based-method.html#tab:tree-class-prediction-table">2.7</a>에서 최대트리가 오분류한 테스트 표본은 1개, 첫번째 가지치기 트리가 오분류한 테스트 표본은 1개, 그리고 두 번째 가지치기 트리가 오분류한 테스트 표본은 2개이다.</p>
+<p>결과 Table <a href="tree-based-method.html#tab:tree-class-prediction-table">1.7</a>에서 최대트리가 오분류한 테스트 표본은 1개, 첫번째 가지치기 트리가 오분류한 테스트 표본은 1개, 그리고 두 번째 가지치기 트리가 오분류한 테스트 표본은 2개이다.</p>
 <p>위 결과를 토대로, 최적의 트리를 선정하는 과정은 아래와 같다.</p>
 <ol style="list-style-type: decimal">
 <li>각각의 트리에 의해 오분류된 테스트 표본의 개수를 전체 테스트 표본의 개수로 나누어 오분류율 <span class="math inline">\(R^{ts}\)</span>를 구한다.</li>
@@ -942,7 +951,7 @@ Figure 2.6: 2단계 가지치기 결과
          <span class="dt">score =</span> R.ts <span class="op">+</span><span class="st"> </span>SE) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>n.test)</code></pre></div>
 <table>
-<caption><span id="tab:misclassification-rate-table">Table 2.8: </span>분류 성능</caption>
+<caption><span id="tab:misclassification-rate-table">Table 1.8: </span>분류 성능</caption>
 <thead>
 <tr class="header">
 <th align="left">트리</th>
@@ -1016,10 +1025,10 @@ optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(c
 </div>
 </div>
 <div id="cart-r-pkg" class="section level2">
-<h2><span class="header-section-number">2.5</span> R패키지 내 분류 트리 방법</h2>
+<h2><span class="header-section-number">1.5</span> R패키지 내 분류 트리 방법</h2>
 <p>앞 장에서는 <em>rpart</em>의 결과를 이용하여 교재 8.2 - 8.3장의 예제를 재현해보았다. 실제로 <em>rpart</em> 내부의 기본 트리 방법은 교재의 예제와는 다소 다른 부분이 있다. 이 장에서는 실제 <em>rpart</em> 패키지의 분류 트리 방법에 대해 알아본다.</p>
 <div id="cart-r-pkg-split" class="section level3">
-<h3><span class="header-section-number">2.5.1</span> 트리 확장</h3>
+<h3><span class="header-section-number">1.5.1</span> 트리 확장</h3>
 <p>트리 내 임의의 노드 <span class="math inline">\(t\)</span>에 대한 불순도는 아래와 같이 정의된다. <span class="math display">\[i(t) = \sum_{j=1}^{J} f\left(p(j|t)\right)\]</span> 여기에서 <span class="math inline">\(p(j|t)\)</span>는 노드 <span class="math inline">\(t\)</span> 내 전체 샘플 <span class="math inline">\(N(t)\)</span> 중 범주 <span class="math inline">\(j\)</span>의 샘플 <span class="math inline">\(N_j(t)\)</span>의 비율로 추정된다. <span class="math display">\[p(j|t) \approx \frac{N_j(t)}{N(t)}\]</span> 또한 함수 <span class="math inline">\(f\)</span>는 concave 함수로, <span class="math inline">\(f(0) = f(1) = 0\)</span>의 조건을 만족시켜야 한다. <em>rpart</em> 에서 설정할 수 있는 함수 <span class="math inline">\(f\)</span>의 종류에 대해서는 아래에서 좀 더 자세히 살펴보기로 한다.</p>
 <p>트리 내 임의의 노드 <span class="math inline">\(t\)</span>가 분지규칙 <span class="math inline">\(s\)</span>에 따라 두 개의 노드 <span class="math inline">\(t_L\)</span>과 <span class="math inline">\(t_R\)</span>로 분지된다고 할 때, 불순도의 감소량은 아래와 같이 계산된다.</p>
 <span class="math display">\[\begin{eqnarray}
@@ -1027,7 +1036,7 @@ optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(c
 \end{eqnarray}\]</span>
 <p><em>rpart</em>는 위 <span class="math inline">\(\Delta I(s,t)\)</span>값이 최대가 되는 분지 기준 <span class="math inline">\(s^*\)</span>를 찾아 노드 <span class="math inline">\(t\)</span>를 분지하여 트리를 확장하고, 확장된 트리의 최종 노드에서 다시 최적 분지를 찾는 과정을 반복한다.</p>
 <div id="-" class="section level4">
-<h4><span class="header-section-number">2.5.1.1</span> 분지 함수</h4>
+<h4><span class="header-section-number">1.5.1.1</span> 분지 함수</h4>
 <p>함수 <em>rpart</em> 사용 시 <em>parms</em> 파라미터에 <em>split</em> 값으로 분지 방법을 설정할 수 있다.</p>
 <ol style="list-style-type: decimal">
 <li>Gini index (parms=list(split=‘gini’)) 교재의 예제에 사용된 방법으로, 우선 아래와 같은 함수 <span class="math inline">\(f\)</span>를 사용한다. <span class="math display">\[f(p) = p(1-p)\]</span></li>
@@ -1037,7 +1046,7 @@ optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(c
 </div>
 </div>
 <div id="cart-r-pkg-pruning" class="section level3">
-<h3><span class="header-section-number">2.5.2</span> 가지치기</h3>
+<h3><span class="header-section-number">1.5.2</span> 가지치기</h3>
 <p>임의의 노드 <span class="math inline">\(t\)</span>에 대한 위험도(오분류 비용의 기대치)는 아래와 같이 계산된다. <span class="math display">\[r(t) = \sum_{j \neq \tau(t)} p(j|t)C\left(\tau(t)|j\right)\]</span> 여기에서 함수 <span class="math inline">\(C(i|j)\)</span>는 범주 <span class="math inline">\(j\)</span>에 속하는 객체를 범주 <span class="math inline">\(i\)</span>로 분류할 때의 오분류 비용이며, <span class="math inline">\(\tau(t)\)</span>는 노드 <span class="math inline">\(t\)</span> 내의 오분류 비용을 최소화하도록 노드 <span class="math inline">\(t\)</span>에 지정된 범주값이다.</p>
 <p><em>rpart</em>의 오분류 비용 <span class="math inline">\(C(i|j)\)</span>의 기본값은 <span class="math display">\[C(i|j) = 
 \begin{cases} 1,  &amp; \text{  if } i \neq j\\
@@ -1052,7 +1061,7 @@ optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(c
 </ul>
 </div>
 <div id="cart-r-pkg-param" class="section level3">
-<h3><span class="header-section-number">2.5.3</span> 파라미터값 결정</h3>
+<h3><span class="header-section-number">1.5.3</span> 파라미터값 결정</h3>
 <p>함수 <em>rpart</em>를 사용할 때 여러가지 사용자 정의 파라미터값을 설정할 수 있으며, 그 파라미터 값에 따라 생성되는 트리의 결과가 달라진다. 대표적인 파라미터 값으로는 아래와 같은 것들이 있다.</p>
 <ul>
 <li>minsplit: 분지를 시도하기 위해 필요한 노드 내 최소 관측객체 수 (default=20)</li>
@@ -1075,7 +1084,7 @@ optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(c
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="svm.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

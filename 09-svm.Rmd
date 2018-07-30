@@ -1,0 +1,137 @@
+# 서포트 벡터 머신 {#svm}
+
+
+## 개요 {#svm-overview}
+
+서포트 벡터 머신(suuport vector machine; 이하 SVM)은 기본적으로 두 범주를 갖는 객체들을 분류하는 방법이다. 물론 세 범주 이상의 경우로 확장이 가능하다.
+
+## 필요 R package 설치
+
+본 장에서 필요한 R 패키지들은 아래와 같다.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+required_packages <- c("tidyverse", "e1071")
+lapply(required_packages, function(x) {
+  tibble(package=x, version=packageDescription(x, fields = c("Version"))[1])
+}) %>% 
+  bind_rows() %>%
+  knitr::kable()
+```
+
+
+## 선형 SVM - 분리 가능 경우 {#linear-svm-separable}
+
+### 기본 R 스크립트 {#linear-svm-separable-basic-script}
+
+```{r svm-train-data-table}
+train_df <- tibble(
+  x1 = c(5, 4, 7, 8, 3, 2, 6, 9, 5),
+  x2 = c(7, 3, 8, 6, 6, 5, 6, 6, 4),
+  class = c(1, -1, 1, 1, -1, -1, 1, 1, -1)
+)
+
+knitr::kable(train_df, booktabs = TRUE,
+             align = c('r', 'r', 'r'),
+             caption = '학습표본 데이터')
+```
+
+Table \@ref(tab:svm-train-data-table)와 같이 두 독립변수 *x1*, *x2*와 이분형 종속변수 *class*의 관측값으로 이루어진 `r dim(train_df)[1]`개의 학습표본을 *train_df*라는 data frame에 저장한다.
+
+```{r linear-svm-basic, fig.cap='선형 SVM 분리 하이퍼플레인', fig.align='center'}
+library(e1071)
+svm_model <- svm(as.factor(class) ~ x1 + x2, data = train_df, kernel = "linear",
+                 cost = 100, scale = FALSE)
+plot(svm_model, data = train_df, formula = x2 ~ x1, grid = 200)
+```
+
+그림 \@ref(fig:linear-svm-basic)에서 분리 하이퍼플레인은 아래와 같다.
+
+```{r, echo = FALSE}
+w <- t(svm_model$coefs) %*% svm_model$SV
+b <- (1 - train_df$class[svm_model$index] * (svm_model$SV %*% t(w))) %>%
+  `/`(train_df$class[svm_model$index]) %>%
+  mean()
+```
+
+\[
+`r w[1]` x_{1} + `r w[2]` x_{2} = `r -b`
+\]
+
+
+### 기호 정의 {#linear-svm-notation}
+
+본 장에서 사용될 수학적 기호는 아래와 같다.
+
+- $\mathbf{x} \in \mathbb{R}^p$: p차원 변수벡터
+- $y \in \{-1, 1\}$: 범주
+- $N$: 객체 수
+- $(\mathbf{x}_i, y_i)$: $i$번째 객체의 변수벡터와 범주값
+
+
+### 최적 하이퍼플레인 {#linear-svm-separable-hyperplane}
+
+선형 SVM은 주어진 객체들의 두 범주를 완벽하게 분리하는 하이퍼플레인 중 각 범주의 서포트 벡터들로부터의 거리가 최대가 되는 하이퍼플레인을 찾는 문제로 귀착된다.
+
+우선 아래와 같이 하이퍼플레인을 정의한다.
+
+\begin{equation}
+\mathbf{w}^\top \mathbf{x} + b = 0 (\#eq:linear-svm-hyperplane)
+\end{equation}
+
+여기서 $\mathbf{w} \in \mathbb{R}^p$와 $b \in \mathbb{R}$이 하이퍼플레인의 계수이다.
+
+범주값이 1인 객체들 중 하이퍼플레인에서 가장 가까운 객체에 대해 다음과 같은 조건이 만족한다고 가정하자.
+
+\[
+H_1: \mathbf{w}^\top \mathbf{x} + b = 1 
+\]
+
+또한 범주값이 -1인 객체들 중 하이퍼플레인에서 가장 가까운 객체에 대해 다음과 같은 조건이 만족한다고 가정하자.
+
+\[
+H_2: \mathbf{w}^\top \mathbf{x} + b = -1
+\]
+
+이 때 두 하이퍼플레인 $H_1$과 $H_2$ 간의 거리(margin)는 $2 / \lVert \mathbf{w} \rVert$이다. 선형 SVM은 아래와 같이 $H_1$과 $H_2$ 간의 거리를 최대로 하는 최적화 문제가 된다.
+
+\begin{equation*}
+\begin{split}
+\max \text{  } & \frac{2}{\mathbf{w}^\top \mathbf{w}}\\
+\text{s.t.}& \\
+& \mathbf{w}^\top \mathbf{x}_i + b \ge 1 \text{ for } y_i = 1\\
+& \mathbf{w}^\top \mathbf{x}_i + b \le -1 \text{ for } y_i = -1
+\end{split}
+\end{equation*}
+
+이를 간략히 정리하면
+
+\begin{equation*}
+\begin{split}
+\min \text{  } & \frac{\mathbf{w}^\top \mathbf{w}}{2}\\
+\text{s.t.}& \\
+& y_i \left( \mathbf{w}^\top \mathbf{x}_i + b \right) \ge 1
+\end{split}
+\end{equation*}
+
+과 같이 정리할 수 있으며, 각 객체 $i$에 대한 제약조건에 라그랑지 계수(Lagrange multiplier) $\alpha_i \ge 0$를 도입하여 라그랑지 함수를 유도하면 식 \@ref(eq:linear-svm-primal)과 같은 최적화 문제가 된다. 이를 원문제(primal problem)라 하자.
+
+\begin{equation}
+\begin{split}
+\min \text{  } & L_p = \frac{1}{2} \mathbf{w}^\top \mathbf{w} + \sum_{i = 1}^{N} \alpha_i \left[ y_i \left( \mathbf{w}^\top \mathbf{x}_i + b \right) - 1 \right]\\
+\text{s.t.  } & \alpha_i \ge 0, \text{  } i = 1, \cdots, N
+\end{split}
+(\#eq:linear-svm-primal)
+\end{equation}
+
+원문제 식 \@ref(eq:linear-svm-primal)에 대한 울프쌍대문제(Wolfe dual problem)는 아래 식 \@ref(eq:linear-svm-dual)과 같이 도출된다. 보다 자세한 내용은 교재 @jun2012datamining 참고.
+
+\begin{equation}
+\begin{split}
+\max \text{  } & L_p = \sum{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j\\
+\text{s.t. } &\\
+& \sum_{i = 1}^{N} \alpha_i y_i = 0\\
+& \alpha_i \ge 0, \text{  } i = 1, \cdots, N
+\end{split}
+(\#eq:linear-svm-dual)
+\end{equation}
+
