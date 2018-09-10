@@ -10,7 +10,7 @@
 본 장에서 필요한 R 패키지들은 아래와 같다.
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-required_packages <- c("tidyverse", "e1071")
+required_packages <- c("tidyverse", "e1071", "Matrix", "quadprog")
 lapply(required_packages, function(x) {
   tibble(package=x, version=packageDescription(x, fields = c("Version"))[1])
 }) %>% 
@@ -123,15 +123,121 @@ H_2: \mathbf{w}^\top \mathbf{x} + b = -1
 (\#eq:linear-svm-primal)
 \end{equation}
 
-원문제 식 \@ref(eq:linear-svm-primal)에 대한 울프쌍대문제(Wolfe dual problem)는 아래 식 \@ref(eq:linear-svm-dual)과 같이 도출된다. 보다 자세한 내용은 교재 @jun2012datamining 참고.
+원문제 식 \@ref(eq:linear-svm-primal)에 대한 울프쌍대문제(Wolfe dual problem)는 아래 식 \@ref(eq:linear-svm-dual)과 같이 도출된다. 보다 자세한 내용은 교재[@jun2012datamining] 참고.
 
 \begin{equation}
 \begin{split}
-\max \text{  } & L_p = \sum{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j\\
+\max \text{  } & L_p = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j\\
 \text{s.t. } &\\
 & \sum_{i = 1}^{N} \alpha_i y_i = 0\\
 & \alpha_i \ge 0, \text{  } i = 1, \cdots, N
 \end{split}
 (\#eq:linear-svm-dual)
 \end{equation}
+
+식 \@ref(eq:linear-svm-dual)은 이차계획(quadratic programming) 문제로, 각종 소프트웨어와 알고리즘을 이용하여 구할 수 있다. 본 장에서는 `quadprog` 패키지를 이용하여 해를 구하기로 한다. 이는 실제로 `e1071`의 `svm` 함수 호출 시 사용하는 방법은 아니며, 실제 `svm` 함수가 호출하는 알고리즘은 다음 장에서 다시 설명하기로 한다.
+
+`quadprog`의 `solve.QP` 함수는 아래와 같은 형태로 formulation된 문제[@goldfarb1983numerically]에 대한 최적해를 구한다.
+
+\begin{equation}
+\begin{split}
+\min \text{  } & -\mathbf{d}^{\top}\boldsymbol{\alpha} + \frac{1}{2} \boldsymbol{\alpha}^{\top}\mathbf{D}\boldsymbol{\alpha}\\
+\text{s.t. } & \mathbf{A}^{\top}\boldsymbol{\alpha} \ge \mathbf{b}_0
+\end{split}
+(\#eq:quadprog)
+\end{equation}
+
+식 \@ref(eq:quadprog)과 식 \@ref(eq:linear-svm-dual)이 동일한 문제를 나타내도록 아래와 같이 목적함수에 필요한 벡터 및 행렬을 정의한다.
+
+\begin{eqnarray*}
+\mathbf{d} &=& \mathbf{1}_{N \times 1}\\
+\mathbf{D} &=& \mathbf{y}\mathbf{y}^{\top}\mathbf{X}\mathbf{X}^{\top}
+\end{eqnarray*}
+where
+\begin{eqnarray*}
+\mathbf{y} &=& \left[ \begin{array}{c c c c} y_1 & y_2 & \cdots & y_N \end{array} \right]^\top\\
+\mathbf{X} &=& \left[ \begin{array}{c c c c} \mathbf{x}_1 & \mathbf{x}_2 & \cdots & \mathbf{x}_N \end{array} \right]^{\top}
+\end{eqnarray*}
+
+```{r}
+N <- dim(train_df)[1]
+X <- train_df[c('x1', 'x2')] %>% as.matrix()
+y <- train_df[['class']] %>% as.numeric()
+
+d <- rep(1, N)
+D <- (y %*% t(y)) * (X %*% t(X))
+```
+
+
+여기에서 행렬 $\mathbf{D}$의 determinant 값은 0으로, @goldfarb1983numerically 가 가정하는 symmetric positive definite matrix 조건에 위배되어 `solve.QP` 함수 실행 시 오류가 발생한다. 이를 방지하기 위해 아래 예에서는 `Matrix` 패키지의 `nearPD`함수를 이용하여 행렬 $\mathbf{D}$와 근사한 symmetric positive definite matrix를 아래와 같이 찾는다.
+
+```{r}
+D_pd <- Matrix::nearPD(D, doSym = T)$mat %>% as.matrix()
+```
+
+식 \@ref(eq:quadprog)의 제약식은 모두 inequality 형태로, 식 \@ref(eq:linear-svm-dual)의 equality constraint $\sum_{i = 1}^{N} \alpha_i y_i = 0$를 표현하기 위해서 두 개의 제약식 $\sum_{i = 1}^{N} \alpha_i y_i \ge 0$와 $\sum_{i = 1}^{N} - \alpha_i y_i \ge 0$를 생성한다.
+
+\begin{equation*}
+\mathbf{A}^\top = \left[ 
+\begin{array}{c c c c}
+y_1 & y_2 & \cdots & y_N\\
+-y_1 & -y_2 & \cdots & -y_N\\
+1 & 0 & \cdots & 0\\
+0 & 1 & \cdots & 0\\
+\cdots & \cdots & \cdots & \cdots \\
+0 & 0 & \cdots & 1
+\end{array}
+\right],
+\mathbf{b}_0 = \left[ \begin{array}{c}
+0 \\ 0 \\ 0 \\ 0 \\ \cdots \\ 0
+\end{array}
+\right]
+\end{equation*}
+
+```{r}
+A <- cbind(
+  y,
+  -y,
+  diag(N)
+)
+b_zero <- rep(0, 2 + N)
+```
+
+이제 위에서 구한 행렬과 벡터들을 `solve.QP` 함수에 입력하여 최적해를 구한다.
+
+```{r}
+res <- quadprog::solve.QP(D_pd, d, A, b_zero)
+alpha_sol <- res$solution
+obj_val <- -res$value
+```
+
+```{r svm-separable-alpha, echo=FALSE}
+knitr::kable(
+  tibble(
+    variable = paste0("alpha_", 1:N),
+    solution = round(res$solution, digits = 4) 
+    ),
+  booktabs = TRUE,
+  align = c('c', 'c'),
+  caption = '이차계획문제의 최적해')
+```
+
+표 \@ref(tab:svm-separable-alpha)의 결과는 교재[@jun2012datamining]에 나타난 최적해와는 다소 차이가 있으나, 결과적으로 목적함수값은 `r signif(obj_val, digits = 4)`로 동일하다.
+
+위의 과정으로 최적해 $\alpha_{i}^{*}$를 구한 뒤, 아래와 같이 분리 하이퍼플레인의 계수를 결정할 수 있다.
+
+\begin{eqnarray*}
+\mathbf{w} &=& \sum_{i = 1}^{N} \alpha_{i}^{*} y_{i} \mathbf{x}_{i}\\
+b &=& \sum_{i: \alpha_{i}^{*} > 0} \frac{1 - y_{i} \mathbf{w}^{\top} \mathbf{x}_{i}}{y_{i}} \left/ \sum_{i: \alpha_{i}^{*} > 0} 1 \right. 
+\end{eqnarray*}
+
+```{r}
+w <- colSums(alpha_sol * y * X)
+
+sv_ind <- which(round(alpha_sol, digits = 4) > 0)
+b <- mean((1 - y[sv_ind] * (X[sv_ind, ] %*% w)) / y[sv_ind])
+```
+
+위 결과 분리 하이퍼플레인은 교재와 동일하게 얻어진다.
+
 
