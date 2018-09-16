@@ -633,7 +633,7 @@ $\nu$-support vector classification($\nu$-SVC) [@scholkopf2000new, @chang2001tra
 
 $\nu$-SVC은 아래와 같이 `svm` 함수를 호출할 때 `type = "nu-classification"`과 파라미터 `nu` 값을 설정함으로써 학습할 수 있다.
 
-```{r nu-svc-radial, fig.cap='가우시안 커널을 이용한 $\nu$-SVC 하이퍼플레인', fig.align='center'}
+```{r nu-svc-radial, fig.cap='가우시안 커널을 이용한 $\\nu$-SVC 하이퍼플레인', fig.align='center'}
 svm_model <- svm(as.factor(class) ~ x1 + x2, data = nonlinear_train_df, 
                  type = "nu-classification", 
                  kernel = "radial", gamma = 1,
