@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2018-09-09">
+<meta name="date" content="2018-09-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -130,6 +130,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>2.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="2.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>2.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="2.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>2.3.3</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>2.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>2.4.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>2.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>2.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>2.5.2</b> 최적 하이퍼플레인</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -259,17 +267,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Table <a href="tree-based-method.html#tab:tree-train-data-table">1.1</a>와 같이 두 독립변수 <em>x1</em>, <em>x2</em>와 이분형 종속변수 <em>class</em>의 관측값으로 이루어진 10개의 학습표본을 <em>train_df</em>라는 data frame에 저장한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rpart)
 <span class="kw">library</span>(rpart.plot)
-cart.est &lt;-<span class="st"> </span><span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2
-                  , <span class="dt">data =</span> train_df
-                  , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>
-                  , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)
-                  , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span>
-                                            , <span class="dt">minbucket =</span> <span class="dv">1</span>
-                                            , <span class="dt">cp =</span> <span class="dv">0</span>
-                                            , <span class="dt">xval =</span> <span class="dv">0</span>
-                                            , <span class="dt">maxcompete =</span> <span class="dv">0</span>
-                                            )
-                  )
+cart.est &lt;-<span class="st"> </span><span class="kw">rpart</span>(
+  class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2
+  , <span class="dt">data =</span> train_df
+  , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>
+  , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)
+  , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span>
+                            , <span class="dt">minbucket =</span> <span class="dv">1</span>
+                            , <span class="dt">cp =</span> <span class="dv">0</span>
+                            , <span class="dt">xval =</span> <span class="dv">0</span>
+                            , <span class="dt">maxcompete =</span> <span class="dv">0</span>)
+  )
 <span class="kw">rpart.plot</span>(cart.est)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:cart-basic"></span>
 <img src="data-mining-book_files/figure-html/cart-basic-1.png" alt="CART 트리" width="672" />

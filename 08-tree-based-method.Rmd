@@ -43,17 +43,17 @@ Table \@ref(tab:tree-train-data-table)와 같이 두 독립변수 *x1*, *x2*와 
 ```{r cart-basic, fig.cap='CART 트리', fig.align='center'}
 library(rpart)
 library(rpart.plot)
-cart.est <- rpart(class ~ x1 + x2
-                  , data = train_df
-                  , method = "class"
-                  , parms = list(split = "gini")
-                  , control = rpart.control(minsplit = 2
-                                            , minbucket = 1
-                                            , cp = 0
-                                            , xval = 0
-                                            , maxcompete = 0
-                                            )
-                  )
+cart.est <- rpart(
+  class ~ x1 + x2
+  , data = train_df
+  , method = "class"
+  , parms = list(split = "gini")
+  , control = rpart.control(minsplit = 2
+                            , minbucket = 1
+                            , cp = 0
+                            , xval = 0
+                            , maxcompete = 0)
+  )
 rpart.plot(cart.est)
 ```
 

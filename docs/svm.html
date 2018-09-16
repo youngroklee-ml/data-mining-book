@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2018-09-09">
+<meta name="date" content="2018-09-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -131,6 +131,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>2.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="2.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>2.3.3</b> 최적 하이퍼플레인</a></li>
 </ul></li>
+<li class="chapter" data-level="2.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>2.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>2.4.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>2.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>2.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>2.5.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -201,9 +209,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
              <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
-             <span class="dt">caption =</span> <span class="st">&#39;학습표본 데이터&#39;</span>)</code></pre></div>
+             <span class="dt">caption =</span> <span class="st">&#39;선형분리가능 학습표본 데이터&#39;</span>)</code></pre></div>
 <table>
-<caption><span id="tab:svm-train-data-table">Table 2.1: </span>학습표본 데이터</caption>
+<caption><span id="tab:svm-train-data-table">Table 2.1: </span>선형분리가능 학습표본 데이터</caption>
 <thead>
 <tr class="header">
 <th align="right">x1</th>
@@ -261,8 +269,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 </table>
 <p>Table <a href="svm.html#tab:svm-train-data-table">2.1</a>와 같이 두 독립변수 <em>x1</em>, <em>x2</em>와 이분형 종속변수 <em>class</em>의 관측값으로 이루어진 9개의 학습표본을 <em>train_df</em>라는 data frame에 저장한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(e1071)
-svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> train_df, <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>,
-                 <span class="dt">cost =</span> <span class="dv">100</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)
+svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> train_df, <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)
 <span class="kw">plot</span>(svm_model, <span class="dt">data =</span> train_df, <span class="dt">formula =</span> x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">grid =</span> <span class="dv">200</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:linear-svm-basic"></span>
 <img src="data-mining-book_files/figure-html/linear-svm-basic-1.png" alt="선형 SVM 분리 하이퍼플레인" width="672" />
@@ -270,7 +277,7 @@ svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class=
 Figure 2.1: 선형 SVM 분리 하이퍼플레인
 </p>
 </div>
-<p>그림 <a href="svm.html#fig:linear-svm-basic">2.1</a>에서 분리 하이퍼플레인은 아래와 같다.</p>
+<p>그림 <a href="svm.html#fig:linear-svm-basic">2.1</a>에서 각 객체의 기호는 서포트 벡터 여부(“X”이면 서포트 벡터), 각 객체의 색상은 범주값(검정 = -1, 빨강 = 1)을 나타내며, 분리 하이퍼플레인은 아래와 같다.</p>
 <p><span class="math display">\[
 0.6666667 x_{1} + 0.6666667 x_{2} = 7
 \]</span></p>
@@ -444,10 +451,455 @@ obj_val &lt;-<span class="st"> </span><span class="op">-</span>res<span class="o
 b &amp;=&amp; \sum_{i: \alpha_{i}^{*} &gt; 0} \frac{1 - y_{i} \mathbf{w}^{\top} \mathbf{x}_{i}}{y_{i}} \left/ \sum_{i: \alpha_{i}^{*} &gt; 0} 1 \right. 
 \end{eqnarray*}\]</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">w &lt;-<span class="st"> </span><span class="kw">colSums</span>(alpha_sol <span class="op">*</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>X)
+<span class="kw">print</span>(w)</code></pre></div>
+<pre><code>##        x1        x2 
+## 0.6666658 0.6666657</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sv_ind &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">round</span>(alpha_sol, <span class="dt">digits =</span> <span class="dv">4</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)
+b &lt;-<span class="st"> </span><span class="kw">mean</span>((<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>y[sv_ind] <span class="op">*</span><span class="st"> </span>(X[sv_ind, ] <span class="op">%*%</span><span class="st"> </span>w)) <span class="op">/</span><span class="st"> </span>y[sv_ind])
+<span class="kw">print</span>(b)</code></pre></div>
+<pre><code>## [1] -6.99999</code></pre>
+<p>위 결과와 같이, 분리 하이퍼플레인은 교재와 동일하게 얻어진다.</p>
+</div>
+</div>
+<div id="linear-svm-inseparable" class="section level2">
+<h2><span class="header-section-number">2.4</span> 선형 SVM - 분리 불가능 경우</h2>
+<p>본 장에서는 학습표본 내의 두 범주가 어떠한 선형 하이퍼플레인으로도 완전하게 분리되지 않아 식 <a href="svm.html#eq:linear-svm-primal">(2.2)</a>이 해를 갖지 못하는 경우에 대한 문제를 다룬다.</p>
+<div id="linear-svm-inseparable-basic-script" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> 기본 R 스크립트</h3>
+<p>앞 장에서 사용한 학습표본에 아래와 같이 하나의 객체를 추가하여 전체 학습표본이 선형 하이퍼플레인으로 분리될 수 없도록 하자.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inseparable_train_df &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(train_df, 
+                                  <span class="kw">tibble</span>(<span class="dt">x1 =</span> <span class="dv">7</span>, <span class="dt">x2 =</span> <span class="dv">6</span>, <span class="dt">class =</span> <span class="op">-</span><span class="dv">1</span>))
 
-sv_ind &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">round</span>(alpha_sol, <span class="dt">digits =</span> <span class="dv">4</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)
-b &lt;-<span class="st"> </span><span class="kw">mean</span>((<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>y[sv_ind] <span class="op">*</span><span class="st"> </span>(X[sv_ind, ] <span class="op">%*%</span><span class="st"> </span>w)) <span class="op">/</span><span class="st"> </span>y[sv_ind])</code></pre></div>
-<p>위 결과 분리 하이퍼플레인은 교재와 동일하게 얻어진다.</p>
+knitr<span class="op">::</span><span class="kw">kable</span>(inseparable_train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
+             <span class="dt">caption =</span> <span class="st">&#39;선형분리불가능 학습표본 데이터&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:svm-inseparable-train-data-table">Table 2.3: </span>선형분리불가능 학습표본 데이터</caption>
+<thead>
+<tr class="header">
+<th align="right">x1</th>
+<th align="right">x2</th>
+<th align="right">class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">7</td>
+<td align="right">6</td>
+<td align="right">-1</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(e1071)
+svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> inseparable_train_df, 
+                 <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="dt">cost =</span> <span class="dv">1</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)
+<span class="kw">plot</span>(svm_model, <span class="dt">data =</span> inseparable_train_df, <span class="dt">formula =</span> x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">grid =</span> <span class="dv">200</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:linear-svm-basic-inseparable"></span>
+<img src="data-mining-book_files/figure-html/linear-svm-basic-inseparable-1.png" alt="선형 SVM 분리 불가능 경우의 하이퍼플레인" width="672" />
+<p class="caption">
+Figure 2.2: 선형 SVM 분리 불가능 경우의 하이퍼플레인
+</p>
+</div>
+<p>Figure <a href="svm.html#fig:linear-svm-basic-inseparable">2.2</a>에서 보이듯, 하나의 검정 객체(범주 = -1)가 범주 1로 분류되는 영역에 존재하여 오분류가 발생한다. 이처럼 선형 하이퍼플레인으로 두 범주 학습표본의 분리가 불가능한 경우, 오분류 학습표본에 대한 페널티를 적용하여 최적 분리 하이퍼플레인을 도출하게 된다. 위 예에서의 최적 하이퍼플레인은 아래와 같다.</p>
+<p><span class="math display">\[
+0.6 x_{1} + 0.8 x_{2} = 7.6
+\]</span></p>
+</div>
+<div id="linear-svm-inseparable-hyperplane" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> 최적 하이퍼플레인</h3>
+<p>여유변수(slack variable) <span class="math inline">\(\xi_i\)</span> 를 각 학습객체 <span class="math inline">\(i = 1, \cdots, N\)</span>에 대해 아래와 같이 정의한다.</p>
+<span class="math display">\[\begin{equation*}
+\xi_i = \max \left\{ 0, 1 - y_i (\mathbf{w}^\top \mathbf{x}_i + b) \right\}
+\end{equation*}\]</span>
+<p>이는 객체가 자신의 범주의 서포트 벡터를 지나는 하이퍼플레인(범주 1인 경우 <span class="math inline">\(H_1\)</span>, 범주 -1인 경우 <span class="math inline">\(H_2\)</span>)으로 부터 다른 범주 방향으로 떨어진 거리를 나타낸다. 이 여유변수 <span class="math inline">\(\xi_i\)</span>에 단위당 페널티 단가 <span class="math inline">\(C\)</span>를 부여하여 아래와 같은 최적화 문제를 정의한다.</p>
+<span class="math display">\[\begin{equation*}
+\begin{split}
+\min \text{  } &amp; \frac{\mathbf{w}^\top \mathbf{w}}{2} + C \sum_{i = 1}^{N} \xi_i \\
+\text{s.t.}&amp; \\
+&amp; y_i \left( \mathbf{w}^\top \mathbf{x}_i + b \right) \ge 1 - \xi_i, \text{  } i = 1, \cdots, N \\
+&amp; \xi \ge 0, \text{  } i = 1, \cdots, N
+\end{split}
+\end{equation*}\]</span>
+<p>이에 대한 울프쌍대문제를 앞 <a href="svm.html#linear-svm-separable-hyperplane">2.3.3</a>장과 같은 과정으로 도출하면 아래 식 <a href="svm.html#eq:linear-svm-inseparable-dual">(2.5)</a>와 같다.</p>
+<span class="math display" id="eq:linear-svm-inseparable-dual">\[\begin{equation}
+\begin{split}
+\max \text{  } &amp; L_p = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j\\
+\text{s.t. } &amp;\\
+&amp; \sum_{i = 1}^{N} \alpha_i y_i = 0\\
+&amp; 0 \le \alpha_i \le C, \text{  } i = 1, \cdots, N
+\end{split}
+\tag{2.5}
+\end{equation}\]</span>
+<p>이는 분리 가능 경우의 식 <a href="svm.html#eq:linear-svm-dual">(2.3)</a>에 변수 <span class="math inline">\(\alpha_i\)</span>에 대한 상한값 <span class="math inline">\(C\)</span>의 제약이 추가된 문제로, 이는 <code>e1071</code> 패키지의 <code>svm</code> 함수가 기본 방법으로 사용하는 <code>LIBSVM</code> 라이브러리<span class="citation">(Chang and Lin <a href="#ref-chang2011libsvm">2011</a>)</span>의 <span class="math inline">\(C\)</span>-support vector classification(<span class="math inline">\(C\)</span>-SVC)이 사용하는 문제식이며, <code>LIBSVM</code> 라이브러리는 특정 알고리즘<span class="citation">(Fan, Chen, and Lin <a href="#ref-fan2005working">2005</a>)</span>을 이용하여 해를 제공한다.</p>
+<p>아래 <code>svm</code> 함수의 입력 변수에서 <code>type = &quot;C-classification&quot;</code>은 식 <a href="svm.html#eq:linear-svm-dual">(2.3)</a>를 최적화하겠다는 것을 나타내며, <code>cost = 1</code>은 페널티 단가 <span class="math inline">\(C\)</span>의 값을 1로 설정하겠다는 것을 나타낸다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> inseparable_train_df,
+                 <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>,
+                 <span class="dt">type =</span> <span class="st">&quot;C-classification&quot;</span>, <span class="dt">cost =</span> <span class="dv">1</span>)</code></pre></div>
+<p>위 결과 모델 객체 <code>svm_model</code>의 원소 중 <code>index</code>는 학습표본 중 서포트 벡터에 해당하는 인덱스 <span class="math inline">\(i\)</span>를 나타내며, <code>coefs</code>는 각 서포트 벡터의 <span class="math inline">\(\alpha_i y_i\)</span> 값을 나타낸다. 따라서, <code>coefs</code>를 각 서포트 벡터의 범주값 <span class="math inline">\(y_i\)</span>로 나누면 식 <a href="svm.html#eq:linear-svm-inseparable-dual">(2.5)</a>의 최적해를 아래와 같이 볼 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">N &lt;-<span class="st"> </span><span class="kw">dim</span>(inseparable_train_df)[<span class="dv">1</span>]
+X &lt;-<span class="st"> </span>inseparable_train_df[<span class="kw">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()
+y &lt;-<span class="st"> </span>inseparable_train_df[[<span class="st">&#39;class&#39;</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+
+sv_ind &lt;-<span class="st"> </span>svm_model<span class="op">$</span>index
+alpha_sol &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, N)
+alpha_sol[sv_ind] &lt;-<span class="st"> </span><span class="kw">drop</span>(svm_model<span class="op">$</span>coefs[, <span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>y[sv_ind]</code></pre></div>
+<table>
+<caption><span id="tab:svm-inseparable-alpha">Table 2.4: </span>이차계획문제의 최적해: 선형 분리 불가능 경우</caption>
+<thead>
+<tr class="header">
+<th align="center">variable</th>
+<th align="center">solution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">alpha_1</td>
+<td align="center">0.8</td>
+</tr>
+<tr class="even">
+<td align="center">alpha_2</td>
+<td align="center">0.0</td>
+</tr>
+<tr class="odd">
+<td align="center">alpha_3</td>
+<td align="center">0.0</td>
+</tr>
+<tr class="even">
+<td align="center">alpha_4</td>
+<td align="center">0.0</td>
+</tr>
+<tr class="odd">
+<td align="center">alpha_5</td>
+<td align="center">0.8</td>
+</tr>
+<tr class="even">
+<td align="center">alpha_6</td>
+<td align="center">0.0</td>
+</tr>
+<tr class="odd">
+<td align="center">alpha_7</td>
+<td align="center">1.0</td>
+</tr>
+<tr class="even">
+<td align="center">alpha_8</td>
+<td align="center">0.0</td>
+</tr>
+<tr class="odd">
+<td align="center">alpha_9</td>
+<td align="center">0.0</td>
+</tr>
+<tr class="even">
+<td align="center">alpha_10</td>
+<td align="center">1.0</td>
+</tr>
+</tbody>
+</table>
+<p>하이퍼플레인의 계수 <span class="math inline">\(\mathbf{w}\)</span>는 분리 가능의 경우와 동일하게 구할 수 있다.</p>
+<span class="math display">\[\begin{equation*}
+\mathbf{w} = \sum_{i = 1}^{N} \alpha_{i}^{*} y_{i} \mathbf{x}_{i}
+\end{equation*}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">w &lt;-<span class="st"> </span><span class="kw">colSums</span>(alpha_sol <span class="op">*</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>X)
+<span class="kw">print</span>(w)</code></pre></div>
+<pre><code>##  x1  x2 
+## 0.6 0.8</code></pre>
+<p>상수 <span class="math inline">\(b\)</span>는 아래와 같이 <span class="math inline">\(0 &lt; \alpha_{i}^{*} &lt; C\)</span>인 객체들을 이용해 산출할 수 있다.</p>
+<span class="math display">\[\begin{equation*}
+b = \sum_{i: 0 &lt; \alpha_{i}^{*} &lt; C} \frac{1 - y_{i} \mathbf{w}^{\top} \mathbf{x}_{i}}{y_{i}} \left/ \sum_{i: 0 &lt; \alpha_{i}^{*} &lt; C} 1 \right. 
+\end{equation*}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ind &lt;-<span class="st"> </span>sv_ind[alpha_sol[sv_ind] <span class="op">&lt;</span><span class="st"> </span>svm_model<span class="op">$</span>cost]
+b &lt;-<span class="st"> </span><span class="kw">mean</span>((<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>y[ind] <span class="op">*</span><span class="st"> </span>(X[ind, ] <span class="op">%*%</span><span class="st"> </span>w)) <span class="op">/</span><span class="st"> </span>y[ind])
+<span class="kw">print</span>(b)</code></pre></div>
+<pre><code>## [1] -7.6</code></pre>
+<p>위와 같은 하이퍼플레인의 계수 <span class="math inline">\(\mathbf{w}\)</span>와 상수 <span class="math inline">\(b\)</span>값은 <code>svm</code> 객체에 원소들을 이용하여 보다 쉽게 확인할 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">w &lt;-<span class="st"> </span><span class="kw">t</span>(svm_model<span class="op">$</span>coefs) <span class="op">%*%</span><span class="st"> </span>svm_model<span class="op">$</span>SV
+<span class="kw">print</span>(w)</code></pre></div>
+<pre><code>##       x1  x2
+## [1,] 0.6 0.8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b &lt;-<span class="st"> </span><span class="op">-</span>svm_model<span class="op">$</span>rho
+<span class="kw">print</span>(b)</code></pre></div>
+<pre><code>## [1] -7.6</code></pre>
+<p>선형 하이퍼플레인으로 분리 불가능한 경우, 페널티 단가 <span class="math inline">\(C\)</span>의 값에 따라 도출되는 분리 하이퍼플레인이 달라진다. <span class="math inline">\(C\)</span>의 값이 1, 5, 100일 때의 하이퍼플레인을 비교해보자.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">svm_models &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">100</span>), <span class="cf">function</span>(C)
+  <span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> inseparable_train_df,
+      <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>,
+      <span class="dt">type =</span> <span class="st">&quot;C-classification&quot;</span>, <span class="dt">cost =</span> C))
+
+getHyperplane &lt;-<span class="st"> </span><span class="cf">function</span>(model) {
+  <span class="kw">list</span>(<span class="dt">C =</span> model<span class="op">$</span>cost,
+       <span class="dt">w =</span> <span class="kw">paste</span>(<span class="kw">round</span>(<span class="kw">t</span>(model<span class="op">$</span>coefs) <span class="op">%*%</span><span class="st"> </span>model<span class="op">$</span>SV, <span class="dt">digits =</span> <span class="dv">2</span>), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>),
+       <span class="dt">b =</span> <span class="op">-</span><span class="kw">round</span>(model<span class="op">$</span>rho, <span class="dt">digits =</span> <span class="dv">2</span>),
+       <span class="dt">sv =</span> <span class="kw">paste</span>(model<span class="op">$</span>index, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>),
+       <span class="dt">misclassified =</span> <span class="kw">paste</span>(<span class="kw">which</span>(model<span class="op">$</span>fitted <span class="op">!=</span><span class="st"> </span><span class="kw">as.factor</span>(inseparable_train_df<span class="op">$</span>class)), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>))
+}
+
+svm_summary &lt;-<span class="st"> </span><span class="kw">lapply</span>(svm_models, getHyperplane) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_rows</span>()</code></pre></div>
+<table>
+<caption><span id="tab:svm-inseparable-summary">Table 2.5: </span>페널티 단가 C에 따른 하이퍼플레인 계수 및 결과</caption>
+<thead>
+<tr class="header">
+<th align="center">페널티 단가 <span class="math inline">\(C\)</span></th>
+<th align="center"><span class="math inline">\((w_1, w_2)\)</span></th>
+<th align="center"><span class="math inline">\(b\)</span></th>
+<th align="center">서포트 벡터 객체</th>
+<th align="center">오분류 객체</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">0.6, 0.8</td>
+<td align="center">-7.6</td>
+<td align="center">1, 7, 5, 10</td>
+<td align="center">10</td>
+</tr>
+<tr class="even">
+<td align="center">5</td>
+<td align="center">0.4, 1.2</td>
+<td align="center">-9.4</td>
+<td align="center">1, 4, 7, 5, 10</td>
+<td align="center">10</td>
+</tr>
+<tr class="odd">
+<td align="center">100</td>
+<td align="center">0.4, 1.2</td>
+<td align="center">-9.4</td>
+<td align="center">1, 4, 7, 5, 10</td>
+<td align="center">10</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="svm.html#tab:svm-inseparable-summary">2.5</a>에서 보이는 바와 같이, 페널티 단가 <span class="math inline">\(C\)</span>의 값이 1과 5일 때 분리 하이퍼플레인이 변하는 것을 볼 수 있다. <span class="math inline">\(C\)</span>값이 5와 100일 때의 분리 하이퍼플레인은 거의 동일하다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(svm_models[[<span class="dv">2</span>]], <span class="dt">data =</span> inseparable_train_df, <span class="dt">formula =</span> x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">grid =</span> <span class="dv">200</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:linear-svm-inseparable-highcost"></span>
+<img src="data-mining-book_files/figure-html/linear-svm-inseparable-highcost-1.png" alt="선형 SVM 분리 불가능 경우의 하이퍼플레인 ($C = 5$)" width="672" />
+<p class="caption">
+Figure 2.3: 선형 SVM 분리 불가능 경우의 하이퍼플레인 (<span class="math inline">\(C = 5\)</span>)
+</p>
+</div>
+<p>Figure <a href="svm.html#fig:linear-svm-inseparable-highcost">2.3</a>의 하이퍼플레인(<span class="math inline">\(C = 5\)</span>인 경우)은 Figure <a href="svm.html#fig:linear-svm-basic-inseparable">2.2</a>의 하이퍼플레인(<span class="math inline">\(C = 1\)</span>인 경우)보다 오분류 객체에 가깝게 위치함을 확인할 수 있다.</p>
+</div>
+</div>
+<div id="nonlinear-svm" class="section level2">
+<h2><span class="header-section-number">2.5</span> 비선형 SVM</h2>
+<p>본 장에서는 선형으로 분리 성능이 좋지 않은 경우에 대해 원 입력변수에 대해 비선형인 하이퍼플레인을 찾는 문제를 다룬다. 이는 원 입력변수에 대해 비선형인 기저함수 공간으로 객체를 이동시킨 후 해당 공간에서 선형 분리 하이퍼플레인을 찾는 과정이다.</p>
+<div id="nonlinear-svm-basic-script" class="section level3">
+<h3><span class="header-section-number">2.5.1</span> 기본 R 스크립트</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nonlinear_train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">5</span>), 
+  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">4</span>), 
+  <span class="dt">class =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)
+)
+
+knitr<span class="op">::</span><span class="kw">kable</span>(nonlinear_train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
+             <span class="dt">caption =</span> <span class="st">&#39;비선형 SVM 학습표본 데이터&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:nonlinear-svm-train-data">Table 2.6: </span>비선형 SVM 학습표본 데이터</caption>
+<thead>
+<tr class="header">
+<th align="right">x1</th>
+<th align="right">x2</th>
+<th align="right">class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">-1</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(e1071)
+svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> nonlinear_train_df, 
+                 <span class="dt">kernel =</span> <span class="st">&quot;polynomial&quot;</span>, <span class="dt">coef0 =</span> <span class="dv">1</span>, <span class="dt">gamma =</span> <span class="dv">1</span>, <span class="dt">degree =</span> <span class="dv">2</span>,
+                 <span class="dt">cost =</span> <span class="dv">5</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)
+<span class="kw">plot</span>(svm_model, <span class="dt">data =</span> nonlinear_train_df, <span class="dt">formula =</span> x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">grid =</span> <span class="dv">200</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:nonlinear-svm-basic"></span>
+<img src="data-mining-book_files/figure-html/nonlinear-svm-basic-1.png" alt="비선형 SVM 하이퍼플레인" width="672" />
+<p class="caption">
+Figure 2.4: 비선형 SVM 하이퍼플레인
+</p>
+</div>
+</div>
+<div id="nonlinear-svm-hyperplane" class="section level3">
+<h3><span class="header-section-number">2.5.2</span> 최적 하이퍼플레인</h3>
+<p>식 <a href="svm.html#eq:linear-svm-hyperplane">(2.1)</a>을 일반화한 다음과 같은 하이퍼플레인을 고려하자.</p>
+<span class="math display" id="eq:nonlinear-svm-hyperplane">\[\begin{equation}
+f(\mathbf{x}) = \Phi(\mathbf{x})^\top \mathbf{w} + b \tag{2.6}
+\end{equation}\]</span>
+<p>여기서 벡터함수 <span class="math inline">\(\Phi: \mathbb{R}^p \rightarrow \mathbb{R}^m\)</span>는 <span class="math inline">\(\mathbf{x}\)</span>에 대한 새로운 특징(feature)을 추출하는 변환함수라 할 수 있는데, 통상 추출되는 특징의 차원 <span class="math inline">\(m\)</span>이 원 변수 <span class="math inline">\(\mathbf{x}\)</span>의 차원 <span class="math inline">\(p\)</span>보다 높다. 이를 <span class="math inline">\(\mathbf{x}\)</span>의 기저함수(basis function)라 부르며, 하이퍼플레인 계수 또한 <span class="math inline">\(m\)</span>차원의 벡터가 된다 (<span class="math inline">\(\mathbf{w} \in \mathbb{R}^m\)</span>). 이 때, 비선형 SVM 문제는 선형 SVM 문제 식 <a href="svm.html#eq:linear-svm-inseparable-dual">(2.5)</a>에서 변수를 기저변수로 치환한 형태로 아래 식 <a href="svm.html#eq:nonlinear-svm-dual">(2.7)</a>과 같이 나타낼 수 있다.</p>
+<span class="math display" id="eq:nonlinear-svm-dual">\[\begin{equation}
+\begin{split}
+\max \text{  } &amp; L_p = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)\\
+\text{s.t. } &amp;\\
+&amp; \sum_{i = 1}^{N} \alpha_i y_i = 0\\
+&amp; 0 \le \alpha_i \le C, \text{  } i = 1, \cdots, N
+\end{split}
+\tag{2.7}
+\end{equation}\]</span>
+<p>식 <a href="svm.html#eq:nonlinear-svm-dual">(2.7)</a>의 목적함수에서 기저함수의 내적 <span class="math inline">\(\Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)\)</span>을 아래와 같이 커널함수(kernel function)로 나타낼 수 있으며, 이는 두 객체 <span class="math inline">\(\mathbf{x}_i, \mathbf{x}_j\)</span>간의 일종의 유사성 척도(similarity measure)로 해석될 수 있다.</p>
+<span class="math display">\[\begin{equation*}
+K(\mathbf{x}_i, \mathbf{x}_j) = \Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)
+\end{equation*}\]</span>
+<p>널리 사용되는 커널함수로는 아래와 같은 함수들이 있다.</p>
+<span class="math display">\[\begin{eqnarray*}
+\text{Gaussian RBF:} &amp; &amp; K(\mathbf{x}_i, \mathbf{x}_j) &amp;=&amp; \exp \left( \frac{- \left\lVert \mathbf{x}_i - \mathbf{x}_j \right\rVert^2}{2 \sigma^2} \right)\\
+\text{$r$-th order polynomial:} &amp; &amp; K(\mathbf{x}_i, \mathbf{x}_j) &amp;=&amp; \left( \mathbf{x}_i^\top \mathbf{x}_j + 1 \right)^r \\
+\text{Sigmoid:} &amp; &amp; K(\mathbf{x}_i, \mathbf{x}_j) &amp;=&amp; \tanh \left(\kappa \mathbf{x}_i^\top \mathbf{x}_j - \delta \right)
+\end{eqnarray*}\]</span>
+<p>커널함수를 이용하여 분리 하이퍼플레인을 찾기 위한 식을 아래와 같이 나타낸다.</p>
+<span class="math display" id="eq:nonlinear-svm-dual-kernel">\[\begin{equation}
+\begin{split}
+\max \text{  } &amp; L_p = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j k_{ij}\\
+\text{s.t. } &amp;\\
+&amp; \sum_{i = 1}^{N} \alpha_i y_i = 0\\
+&amp; 0 \le \alpha_i \le C, \text{  } i = 1, \cdots, N
+\end{split}
+\tag{2.8}
+\end{equation}\]</span>
+<p>이 때 <span class="math inline">\(k_{ij}\)</span>는 <span class="math inline">\(K(\mathbf{x}_i, \mathbf{x}_j)\)</span>를 나타낸다. 식 <a href="svm.html#eq:nonlinear-svm-dual-kernel">(2.8)</a>의 최적해 <span class="math inline">\(\boldsymbol\alpha^*\)</span>는 선형 SVM과 마찬가지로 이차계획(quadratic programming) 소프트웨어/알고리즘을 이용하여 구할 수 있다.</p>
+<p>Table <a href="svm.html#tab:nonlinear-svm-train-data">2.6</a>의 학습데이터에 대해 <code>e1071</code> 패키지의 <code>svm</code> 함수를 이용하여 이차 다항 커널에 기반한 분리 하이퍼플레인을 구해보자. <code>svm</code> 함수에 파라미터값 <code>kernel = &quot;polynomial&quot;</code>를 설정함으로써 다항 커널을 사용할 수 있다. <code>svm</code> 함수의 다항 커널은 위에서 설명된 것보다 일반화된 형태로 아래와 같이 정의된다.</p>
+<span class="math display">\[\begin{equation*}
+K(\mathbf{x}_i, \mathbf{x}_j) = \left( \gamma \mathbf{x}_i^\top \mathbf{x}_j + \beta_0 \right)^r
+\end{equation*}\]</span>
+<p>위 커널함수의 파라미터 <span class="math inline">\(\gamma, \beta_0, r\)</span>은 <code>svm</code> 함수에 파라미터 <code>gamma, coef0, degree</code>로 각각 정의된다. 따라서 이차 커널</p>
+<span class="math display">\[\begin{equation*}
+K(\mathbf{x}_i, \mathbf{x}_j) = \left( \mathbf{x}_i^\top \mathbf{x}_j + 1 \right)^2
+\end{equation*}\]</span>
+<p>에 기반한 SVM을 학습하기 위해서 아래와 같이 <code>svm</code> 함수를 호출한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> nonlinear_train_df, 
+                 <span class="dt">kernel =</span> <span class="st">&quot;polynomial&quot;</span>, <span class="dt">coef0 =</span> <span class="dv">1</span>, <span class="dt">gamma =</span> <span class="dv">1</span>, <span class="dt">degree =</span> <span class="dv">2</span>,
+                 <span class="dt">scale =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>위 함수 호출 결과 서포트 벡터 객체는 1, 7, 2, 3, 9이다.</p>
+<p>비선형 SVM의 분리 하이퍼플레인 또한 페널티 단가 <span class="math inline">\(C\)</span>의 값에 따라 달라진다. 선형 SVM의 경우와 같이 <span class="math inline">\(C = 1, 5, 100\)</span>에 대해 각각 비선형 SVM을 구해보자.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">svm_models &lt;-<span class="st"> </span><span class="kw">lapply</span>(
+  <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">100</span>),
+  <span class="cf">function</span>(C)
+    <span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> nonlinear_train_df,
+        <span class="dt">kernel =</span> <span class="st">&quot;polynomial&quot;</span>, <span class="dt">coef0 =</span> <span class="dv">1</span>, <span class="dt">gamma =</span> <span class="dv">1</span>, <span class="dt">degree =</span> <span class="dv">2</span>,
+        <span class="dt">cost =</span> C, <span class="dt">scale =</span> <span class="ot">FALSE</span>)
+)
+
+getSummary &lt;-<span class="st"> </span><span class="cf">function</span>(model) {
+  <span class="kw">list</span>(<span class="dt">C =</span> model<span class="op">$</span>cost,
+       <span class="dt">sv =</span> <span class="kw">paste</span>(model<span class="op">$</span>index, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>),
+       <span class="dt">misclassified =</span> <span class="kw">paste</span>(<span class="kw">which</span>(model<span class="op">$</span>fitted <span class="op">!=</span><span class="st"> </span><span class="kw">as.factor</span>(nonlinear_train_df<span class="op">$</span>class)), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>))
+}
+
+svm_summary &lt;-<span class="st"> </span><span class="kw">lapply</span>(svm_models, getSummary) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_rows</span>()</code></pre></div>
+<table>
+<caption><span id="tab:nonlinear-svm-summary">Table 2.7: </span>페널티 단가 C에 따른 비선형 SVM 결과</caption>
+<thead>
+<tr class="header">
+<th align="center">페널티 단가 <span class="math inline">\(C\)</span></th>
+<th align="center">서포트 벡터 객체</th>
+<th align="center">오분류 객체</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">1, 7, 2, 3, 9</td>
+<td align="center">7</td>
+</tr>
+<tr class="even">
+<td align="center">5</td>
+<td align="center">6, 7, 2, 3, 9</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">100</td>
+<td align="center">6, 7, 2, 3, 9</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
 
 </div>
 </div>
@@ -459,6 +911,12 @@ b &lt;-<span class="st"> </span><span class="kw">mean</span>((<span class="dv">1
 </div>
 <div id="ref-goldfarb1983numerically">
 <p>Goldfarb, Donald, and Ashok Idnani. 1983. “A Numerically Stable Dual Method for Solving Strictly Convex Quadratic Programs.” <em>Mathematical Programming</em> 27 (1). Springer: 1–33.</p>
+</div>
+<div id="ref-chang2011libsvm">
+<p>Chang, Chih-Chung, and Chih-Jen Lin. 2011. “LIBSVM: A Library for Support Vector Machines.” <em>ACM Transactions on Intelligent Systems and Technology (TIST)</em> 2 (3). Acm: 27.</p>
+</div>
+<div id="ref-fan2005working">
+<p>Fan, Rong-En, Pai-Hsuen Chen, and Chih-Jen Lin. 2005. “Working Set Selection Using Second Order Information for Training Support Vector Machines.” <em>Journal of Machine Learning Research</em> 6 (Dec): 1889–1918.</p>
 </div>
 </div>
             </section>

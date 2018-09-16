@@ -32,29 +32,25 @@ train_df <- tibble(
 
 knitr::kable(train_df, booktabs = TRUE,
              align = c('r', 'r', 'r'),
-             caption = '학습표본 데이터')
+             caption = '선형분리가능 학습표본 데이터')
 ```
 
 Table \@ref(tab:svm-train-data-table)와 같이 두 독립변수 *x1*, *x2*와 이분형 종속변수 *class*의 관측값으로 이루어진 `r dim(train_df)[1]`개의 학습표본을 *train_df*라는 data frame에 저장한다.
 
 ```{r linear-svm-basic, fig.cap='선형 SVM 분리 하이퍼플레인', fig.align='center'}
 library(e1071)
-svm_model <- svm(as.factor(class) ~ x1 + x2, data = train_df, kernel = "linear",
-                 cost = 100, scale = FALSE)
+svm_model <- svm(as.factor(class) ~ x1 + x2, data = train_df, kernel = "linear", scale = FALSE)
 plot(svm_model, data = train_df, formula = x2 ~ x1, grid = 200)
 ```
 
-그림 \@ref(fig:linear-svm-basic)에서 분리 하이퍼플레인은 아래와 같다.
+그림 \@ref(fig:linear-svm-basic)에서 각 객체의 기호는 서포트 벡터 여부("X"이면 서포트 벡터), 각 객체의 색상은 범주값(검정 = -1, 빨강 = 1)을 나타내며, 분리 하이퍼플레인은 아래와 같다.
 
 ```{r, echo = FALSE}
 w <- t(svm_model$coefs) %*% svm_model$SV
-b <- (1 - train_df$class[svm_model$index] * (svm_model$SV %*% t(w))) %>%
-  `/`(train_df$class[svm_model$index]) %>%
-  mean()
 ```
 
 \[
-`r w[1]` x_{1} + `r w[2]` x_{2} = `r -b`
+`r w[1]` x_{1} + `r w[2]` x_{2} = `r svm_model$rho`
 \]
 
 
@@ -233,11 +229,328 @@ b &=& \sum_{i: \alpha_{i}^{*} > 0} \frac{1 - y_{i} \mathbf{w}^{\top} \mathbf{x}_
 
 ```{r}
 w <- colSums(alpha_sol * y * X)
+print(w)
 
 sv_ind <- which(round(alpha_sol, digits = 4) > 0)
 b <- mean((1 - y[sv_ind] * (X[sv_ind, ] %*% w)) / y[sv_ind])
+print(b)
 ```
 
-위 결과 분리 하이퍼플레인은 교재와 동일하게 얻어진다.
+위 결과와 같이, 분리 하이퍼플레인은 교재와 동일하게 얻어진다.
+
+
+## 선형 SVM - 분리 불가능 경우 {#linear-svm-inseparable}
+
+본 장에서는 학습표본 내의 두 범주가 어떠한 선형 하이퍼플레인으로도 완전하게 분리되지 않아 식 \@ref(eq:linear-svm-primal)이 해를 갖지 못하는 경우에 대한 문제를 다룬다.
+
+### 기본 R 스크립트 {#linear-svm-inseparable-basic-script}
+
+앞 장에서 사용한 학습표본에 아래와 같이 하나의 객체를 추가하여 전체 학습표본이 선형 하이퍼플레인으로 분리될 수 없도록 하자.
+
+```{r svm-inseparable-train-data-table}
+inseparable_train_df <- bind_rows(train_df, 
+                                  tibble(x1 = 7, x2 = 6, class = -1))
+
+knitr::kable(inseparable_train_df, booktabs = TRUE,
+             align = c('r', 'r', 'r'),
+             caption = '선형분리불가능 학습표본 데이터')
+```
+
+
+```{r linear-svm-basic-inseparable, fig.cap='선형 SVM 분리 불가능 경우의 하이퍼플레인', fig.align='center'}
+library(e1071)
+svm_model <- svm(as.factor(class) ~ x1 + x2, data = inseparable_train_df, 
+                 kernel = "linear", cost = 1, scale = FALSE)
+plot(svm_model, data = inseparable_train_df, formula = x2 ~ x1, grid = 200)
+```
+
+Figure \@ref(fig:linear-svm-basic-inseparable)에서 보이듯, 하나의 검정 객체(범주 = -1)가 범주 1로 분류되는 영역에 존재하여 오분류가 발생한다. 이처럼 선형 하이퍼플레인으로 두 범주 학습표본의 분리가 불가능한 경우, 오분류 학습표본에 대한 페널티를 적용하여 최적 분리 하이퍼플레인을 도출하게 된다. 위 예에서의 최적 하이퍼플레인은 아래와 같다.
+
+```{r, echo = FALSE}
+w <- t(svm_model$coefs) %*% svm_model$SV
+```
+
+\[
+`r w[1]` x_{1} + `r w[2]` x_{2} = `r svm_model$rho`
+\]
+
+
+### 최적 하이퍼플레인 {#linear-svm-inseparable-hyperplane}
+
+여유변수(slack variable) $\xi_i$ 를 각 학습객체 $i = 1, \cdots, N$에 대해 아래와 같이 정의한다.
+
+\begin{equation*}
+\xi_i = \max \left\{ 0, 1 - y_i (\mathbf{w}^\top \mathbf{x}_i + b) \right\}
+\end{equation*}
+
+이는 객체가 자신의 범주의 서포트 벡터를 지나는 하이퍼플레인(범주 1인 경우 $H_1$, 범주 -1인 경우 $H_2$)으로 부터 다른 범주 방향으로 떨어진 거리를 나타낸다. 이 여유변수 $\xi_i$에 단위당 페널티 단가 $C$를 부여하여 아래와 같은 최적화 문제를 정의한다. 
+
+\begin{equation*}
+\begin{split}
+\min \text{  } & \frac{\mathbf{w}^\top \mathbf{w}}{2} + C \sum_{i = 1}^{N} \xi_i \\
+\text{s.t.}& \\
+& y_i \left( \mathbf{w}^\top \mathbf{x}_i + b \right) \ge 1 - \xi_i, \text{  } i = 1, \cdots, N \\
+& \xi \ge 0, \text{  } i = 1, \cdots, N
+\end{split}
+\end{equation*}
+
+이에 대한 울프쌍대문제를 앞 \@ref(linear-svm-separable-hyperplane)장과 같은 과정으로 도출하면 아래 식 \@ref(eq:linear-svm-inseparable-dual)와 같다.
+
+\begin{equation}
+\begin{split}
+\max \text{  } & L_p = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j\\
+\text{s.t. } &\\
+& \sum_{i = 1}^{N} \alpha_i y_i = 0\\
+& 0 \le \alpha_i \le C, \text{  } i = 1, \cdots, N
+\end{split}
+(\#eq:linear-svm-inseparable-dual)
+\end{equation}
+
+이는 분리 가능 경우의 식 \@ref(eq:linear-svm-dual)에 변수 $\alpha_i$에 대한 상한값 $C$의 제약이 추가된 문제로, 이는 `e1071` 패키지의 `svm` 함수가 기본 방법으로 사용하는 `LIBSVM` 라이브러리[@chang2011libsvm]의 $C$-support vector classification($C$-SVC)이 사용하는 문제식이며, `LIBSVM` 라이브러리는 특정 알고리즘[@fan2005working]을 이용하여 해를 제공한다.
+
+아래 `svm` 함수의 입력 변수에서 `type = "C-classification"`은 식 \@ref(eq:linear-svm-dual)를 최적화하겠다는 것을 나타내며, `cost = 1`은 페널티 단가 $C$의 값을 1로 설정하겠다는 것을 나타낸다.
+
+```{r}
+svm_model <- svm(as.factor(class) ~ x1 + x2, data = inseparable_train_df,
+                 kernel = "linear", scale = FALSE,
+                 type = "C-classification", cost = 1)
+```
+
+위 결과 모델 객체 `svm_model`의 원소 중 `index`는 학습표본 중 서포트 벡터에 해당하는 인덱스 $i$를 나타내며, `coefs`는 각 서포트 벡터의 $\alpha_i y_i$ 값을 나타낸다. 따라서, `coefs`를 각 서포트 벡터의 범주값 $y_i$로 나누면 식 \@ref(eq:linear-svm-inseparable-dual)의 최적해를 아래와 같이 볼 수 있다.
+
+```{r}
+N <- dim(inseparable_train_df)[1]
+X <- inseparable_train_df[c('x1', 'x2')] %>% as.matrix()
+y <- inseparable_train_df[['class']] %>% as.numeric()
+
+sv_ind <- svm_model$index
+alpha_sol <- vector("numeric", N)
+alpha_sol[sv_ind] <- drop(svm_model$coefs[, 1]) / y[sv_ind]
+```
+
+
+```{r svm-inseparable-alpha, echo = FALSE}
+knitr::kable(
+  tibble(
+    variable = paste0("alpha_", 1:N),
+    solution = round(alpha_sol, digits = 4)
+    ),
+  booktabs = TRUE,
+  align = c('c', 'c'),
+  caption = '이차계획문제의 최적해: 선형 분리 불가능 경우')
+```
+
+
+하이퍼플레인의 계수 $\mathbf{w}$는 분리 가능의 경우와 동일하게 구할 수 있다.
+
+\begin{equation*}
+\mathbf{w} = \sum_{i = 1}^{N} \alpha_{i}^{*} y_{i} \mathbf{x}_{i}
+\end{equation*}
+
+```{r}
+w <- colSums(alpha_sol * y * X)
+print(w)
+```
+
+상수 $b$는 아래와 같이 $0 < \alpha_{i}^{*} < C$인 객체들을 이용해 산출할 수 있다.
+
+\begin{equation*}
+b = \sum_{i: 0 < \alpha_{i}^{*} < C} \frac{1 - y_{i} \mathbf{w}^{\top} \mathbf{x}_{i}}{y_{i}} \left/ \sum_{i: 0 < \alpha_{i}^{*} < C} 1 \right. 
+\end{equation*}
+
+```{r}
+ind <- sv_ind[alpha_sol[sv_ind] < svm_model$cost]
+b <- mean((1 - y[ind] * (X[ind, ] %*% w)) / y[ind])
+print(b)
+```
+
+
+위와 같은 하이퍼플레인의 계수 $\mathbf{w}$와 상수 $b$값은 `svm` 객체에 원소들을 이용하여 보다 쉽게 확인할 수 있다.
+
+```{r}
+w <- t(svm_model$coefs) %*% svm_model$SV
+print(w)
+
+b <- -svm_model$rho
+print(b)
+```
+
+
+선형 하이퍼플레인으로 분리 불가능한 경우, 페널티 단가 $C$의 값에 따라 도출되는 분리 하이퍼플레인이 달라진다. $C$의 값이 1, 5, 100일 때의 하이퍼플레인을 비교해보자.
+
+```{r}
+svm_models <- lapply(c(1, 5, 100), function(C)
+  svm(as.factor(class) ~ x1 + x2, data = inseparable_train_df,
+      kernel = "linear", scale = FALSE,
+      type = "C-classification", cost = C))
+
+getHyperplane <- function(model) {
+  list(C = model$cost,
+       w = paste(round(t(model$coefs) %*% model$SV, digits = 2), collapse = ", "),
+       b = -round(model$rho, digits = 2),
+       sv = paste(model$index, collapse = ", "),
+       misclassified = paste(which(model$fitted != as.factor(inseparable_train_df$class)), collapse = ", "))
+}
+
+svm_summary <- lapply(svm_models, getHyperplane) %>% bind_rows()
+```
+
+
+```{r svm-inseparable-summary, echo = FALSE}
+svm_summary %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('c', 'c', 'c', 'c', 'c'),
+    col.names = c("페널티 단가 $C$",
+                  "$(w_1, w_2)$",
+                  "$b$",
+                  "서포트 벡터 객체",
+                  "오분류 객체"),
+    caption = '페널티 단가 C에 따른 하이퍼플레인 계수 및 결과')
+```
+
+Table \@ref(tab:svm-inseparable-summary)에서 보이는 바와 같이, 페널티 단가 $C$의 값이 1과 5일 때 분리 하이퍼플레인이 변하는 것을 볼 수 있다. $C$값이 5와 100일 때의 분리 하이퍼플레인은 거의 동일하다.
+
+```{r linear-svm-inseparable-highcost, fig.cap='선형 SVM 분리 불가능 경우의 하이퍼플레인 ($C = 5$)', fig.align='center'}
+plot(svm_models[[2]], data = inseparable_train_df, formula = x2 ~ x1, grid = 200)
+```
+
+Figure \@ref(fig:linear-svm-inseparable-highcost)의 하이퍼플레인($C = 5$인 경우)은 Figure \@ref(fig:linear-svm-basic-inseparable)의 하이퍼플레인($C = 1$인 경우)보다 오분류 객체에 가깝게 위치함을 확인할 수 있다.
+
+
+
+## 비선형 SVM {#nonlinear-svm}
+
+본 장에서는 선형으로 분리 성능이 좋지 않은 경우에 대해 원 입력변수에 대해 비선형인 하이퍼플레인을 찾는 문제를 다룬다. 이는 원 입력변수에 대해 비선형인 기저함수 공간으로 객체를 이동시킨 후 해당 공간에서 선형 분리 하이퍼플레인을 찾는 과정이다.
+
+### 기본 R 스크립트 {#nonlinear-svm-basic-script}
+
+```{r nonlinear-svm-train-data}
+nonlinear_train_df <- tibble(
+  x1 = c(5, 4, 7, 8, 3, 2, 6, 9, 5), 
+  x2 = c(7, 3, 8, 6, 6, 5, 6, 6, 4), 
+  class = c(1, -1, -1, -1, 1, 1, 1, -1, -1)
+)
+
+knitr::kable(nonlinear_train_df, booktabs = TRUE,
+             align = c('r', 'r', 'r'),
+             caption = '비선형 SVM 학습표본 데이터')
+```
+
+
+```{r nonlinear-svm-basic, fig.cap='비선형 SVM 하이퍼플레인', fig.align='center'}
+library(e1071)
+svm_model <- svm(as.factor(class) ~ x1 + x2, data = nonlinear_train_df, 
+                 kernel = "polynomial", coef0 = 1, gamma = 1, degree = 2,
+                 cost = 5, scale = FALSE)
+plot(svm_model, data = nonlinear_train_df, formula = x2 ~ x1, grid = 200)
+```
+
+
+### 최적 하이퍼플레인 {#nonlinear-svm-hyperplane}
+
+
+식 \@ref(eq:linear-svm-hyperplane)을 일반화한 다음과 같은 하이퍼플레인을 고려하자.
+
+\begin{equation}
+f(\mathbf{x}) = \Phi(\mathbf{x})^\top \mathbf{w} + b (\#eq:nonlinear-svm-hyperplane)
+\end{equation}
+
+여기서 벡터함수 $\Phi: \mathbb{R}^p \rightarrow \mathbb{R}^m$는 $\mathbf{x}$에 대한 새로운 특징(feature)을 추출하는 변환함수라 할 수 있는데, 통상 추출되는 특징의 차원 $m$이 원 변수 $\mathbf{x}$의 차원 $p$보다 높다. 이를 $\mathbf{x}$의 기저함수(basis function)라 부르며, 하이퍼플레인 계수 또한 $m$차원의 벡터가 된다 ($\mathbf{w} \in \mathbb{R}^m$). 이 때, 비선형 SVM 문제는 선형 SVM 문제 식 \@ref(eq:linear-svm-inseparable-dual)에서 변수를 기저변수로 치환한 형태로 아래 식 \@ref(eq:nonlinear-svm-dual)과 같이 나타낼 수 있다.
+
+\begin{equation}
+\begin{split}
+\max \text{  } & L_p = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)\\
+\text{s.t. } &\\
+& \sum_{i = 1}^{N} \alpha_i y_i = 0\\
+& 0 \le \alpha_i \le C, \text{  } i = 1, \cdots, N
+\end{split}
+(\#eq:nonlinear-svm-dual)
+\end{equation}
+
+식 \@ref(eq:nonlinear-svm-dual)의 목적함수에서 기저함수의 내적 $\Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)$을 아래와 같이 커널함수(kernel function)로 나타낼 수 있으며, 이는 두 객체 $\mathbf{x}_i, \mathbf{x}_j$간의 일종의 유사성 척도(similarity measure)로 해석될 수 있다.
+
+\begin{equation*}
+K(\mathbf{x}_i, \mathbf{x}_j) = \Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)
+\end{equation*}
+
+널리 사용되는 커널함수로는 아래와 같은 함수들이 있다.
+
+\begin{eqnarray*}
+\text{Gaussian RBF:} & & K(\mathbf{x}_i, \mathbf{x}_j) &=& \exp \left( \frac{- \left\lVert \mathbf{x}_i - \mathbf{x}_j \right\rVert^2}{2 \sigma^2} \right)\\
+\text{$r$-th order polynomial:} & & K(\mathbf{x}_i, \mathbf{x}_j) &=& \left( \mathbf{x}_i^\top \mathbf{x}_j + 1 \right)^r \\
+\text{Sigmoid:} & & K(\mathbf{x}_i, \mathbf{x}_j) &=& \tanh \left(\kappa \mathbf{x}_i^\top \mathbf{x}_j - \delta \right)
+\end{eqnarray*}
+
+커널함수를 이용하여 분리 하이퍼플레인을 찾기 위한 식을 아래와 같이 나타낸다.
+
+\begin{equation}
+\begin{split}
+\max \text{  } & L_p = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j k_{ij}\\
+\text{s.t. } &\\
+& \sum_{i = 1}^{N} \alpha_i y_i = 0\\
+& 0 \le \alpha_i \le C, \text{  } i = 1, \cdots, N
+\end{split}
+(\#eq:nonlinear-svm-dual-kernel)
+\end{equation}
+
+이 때 $k_{ij}$는 $K(\mathbf{x}_i, \mathbf{x}_j)$를 나타낸다. 식 \@ref(eq:nonlinear-svm-dual-kernel)의 최적해 $\boldsymbol\alpha^*$는 선형 SVM과 마찬가지로 이차계획(quadratic programming) 소프트웨어/알고리즘을 이용하여 구할 수 있다.
+
+Table \@ref(tab:nonlinear-svm-train-data)의 학습데이터에 대해 `e1071` 패키지의 `svm` 함수를 이용하여 이차 다항 커널에 기반한 분리 하이퍼플레인을 구해보자. `svm` 함수에 파라미터값 `kernel = "polynomial"`를 설정함으로써 다항 커널을 사용할 수 있다. `svm` 함수의 다항 커널은 위에서 설명된 것보다 일반화된 형태로 아래와 같이 정의된다.
+
+\begin{equation*}
+K(\mathbf{x}_i, \mathbf{x}_j) = \left( \gamma \mathbf{x}_i^\top \mathbf{x}_j + \beta_0 \right)^r
+\end{equation*}
+
+위 커널함수의 파라미터 $\gamma, \beta_0, r$은 `svm` 함수에 파라미터 `gamma, coef0, degree`로 각각 정의된다. 따라서 이차 커널 
+
+\begin{equation*}
+K(\mathbf{x}_i, \mathbf{x}_j) = \left( \mathbf{x}_i^\top \mathbf{x}_j + 1 \right)^2
+\end{equation*}
+
+에 기반한 SVM을 학습하기 위해서 아래와 같이 `svm` 함수를 호출한다.
+
+```{r}
+svm_model <- svm(as.factor(class) ~ x1 + x2, data = nonlinear_train_df, 
+                 kernel = "polynomial", coef0 = 1, gamma = 1, degree = 2,
+                 scale = FALSE)
+```
+
+위 함수 호출 결과 서포트 벡터 객체는 `r paste(svm_model$index, collapse = ", ")`이다. 
+
+비선형 SVM의 분리 하이퍼플레인 또한 페널티 단가 $C$의 값에 따라 달라진다. 선형 SVM의 경우와 같이 $C = 1, 5, 100$에 대해 각각 비선형 SVM을 구해보자.
+
+```{r}
+svm_models <- lapply(
+  c(1, 5, 100),
+  function(C)
+    svm(as.factor(class) ~ x1 + x2, data = nonlinear_train_df,
+        kernel = "polynomial", coef0 = 1, gamma = 1, degree = 2,
+        cost = C, scale = FALSE)
+)
+
+getSummary <- function(model) {
+  list(C = model$cost,
+       sv = paste(model$index, collapse = ", "),
+       misclassified = paste(which(model$fitted != as.factor(nonlinear_train_df$class)), collapse = ", "))
+}
+
+svm_summary <- lapply(svm_models, getSummary) %>% bind_rows()
+```
+
+```{r nonlinear-svm-summary, echo = FALSE}
+svm_summary %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('c', 'c', 'c'),
+    col.names = c("페널티 단가 $C$",
+                  "서포트 벡터 객체",
+                  "오분류 객체"),
+    caption = '페널티 단가 C에 따른 비선형 SVM 결과')
+```
+
+
+
+
 
 
