@@ -113,7 +113,7 @@ H_2: \mathbf{w}^\top \mathbf{x} + b = -1
 
 \begin{equation}
 \begin{split}
-\min \text{  } & L_p = \frac{1}{2} \mathbf{w}^\top \mathbf{w} + \sum_{i = 1}^{N} \alpha_i \left[ y_i \left( \mathbf{w}^\top \mathbf{x}_i + b \right) - 1 \right]\\
+\min \text{  } & L_P = \frac{1}{2} \mathbf{w}^\top \mathbf{w} + \sum_{i = 1}^{N} \alpha_i \left[ y_i \left( \mathbf{w}^\top \mathbf{x}_i + b \right) - 1 \right]\\
 \text{s.t.  } & \alpha_i \ge 0, \text{  } i = 1, \cdots, N
 \end{split}
 (\#eq:linear-svm-primal)
@@ -123,7 +123,7 @@ H_2: \mathbf{w}^\top \mathbf{x} + b = -1
 
 \begin{equation}
 \begin{split}
-\max \text{  } & L_p = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j\\
+\max \text{  } & L_D = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j\\
 \text{s.t. } &\\
 & \sum_{i = 1}^{N} \alpha_i y_i = 0\\
 & \alpha_i \ge 0, \text{  } i = 1, \cdots, N
@@ -298,7 +298,7 @@ w <- t(svm_model$coefs) %*% svm_model$SV
 
 \begin{equation}
 \begin{split}
-\max \text{  } & L_p = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j\\
+\max \text{  } & L_D = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j\\
 \text{s.t. } &\\
 & \sum_{i = 1}^{N} \alpha_i y_i = 0\\
 & 0 \le \alpha_i \le C, \text{  } i = 1, \cdots, N
@@ -460,7 +460,7 @@ f(\mathbf{x}) = \Phi(\mathbf{x})^\top \mathbf{w} + b (\#eq:nonlinear-svm-hyperpl
 
 \begin{equation}
 \begin{split}
-\max \text{  } & L_p = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)\\
+\max \text{  } & L_D = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)\\
 \text{s.t. } &\\
 & \sum_{i = 1}^{N} \alpha_i y_i = 0\\
 & 0 \le \alpha_i \le C, \text{  } i = 1, \cdots, N
@@ -486,7 +486,7 @@ K(\mathbf{x}_i, \mathbf{x}_j) = \Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)
 
 \begin{equation}
 \begin{split}
-\max \text{  } & L_p = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j k_{ij}\\
+\max \text{  } & L_D = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j k_{ij}\\
 \text{s.t. } &\\
 & \sum_{i = 1}^{N} \alpha_i y_i = 0\\
 & 0 \le \alpha_i \le C, \text{  } i = 1, \cdots, N
@@ -551,6 +551,94 @@ svm_summary %>%
 
 
 
+## R패키지 내 SVM  {#svm-r-pkg}
 
+### 커널함수 {#svm-kernel-function}
+
+앞 장에서는 선형 커널과 다항 커널함수의 예를 살펴보았다. 본 장에서는 가우시안 커널 및 시그모이드 커널을 사용하는 법을 살펴보자.
+
+가우시안 커널의 경우 
+
+\begin{equation*}
+K(\mathbf{x}_i, \mathbf{x}_j) = \exp \left( -\gamma \left\lVert \mathbf{x}_i - \mathbf{x}_j \right\rVert^2 \right)
+\end{equation*}
+
+과 같이 $\gamma$ 파라미터를 이용하여 함수를 정의하며, `svm` 함수에 `gamma` 파라미터값을 통해 설정할 수 있다.
+
+```{r nonlinear-svm-radial, fig.cap='가우시안 커널을 이용한 비선형 SVM 하이퍼플레인', fig.align='center'}
+svm_model <- svm(as.factor(class) ~ x1 + x2, data = nonlinear_train_df, 
+                 kernel = "radial", gamma = 1,
+                 cost = 5, scale = FALSE)
+plot(svm_model, data = nonlinear_train_df, formula = x2 ~ x1, grid = 200)
+```
+
+
+시그모이드 커널의 경우 
+
+\begin{equation*}
+K(\mathbf{x}_i, \mathbf{x}_j) = \tanh \left(\gamma \mathbf{x}_i^\top \mathbf{x}_j + \beta_0 \right)
+\end{equation*}
+
+와 같이 두 파라미터 $\gamma, \beta_0$의 값에 대응하는 `svm` 함수의 파라미터 `gamma, coef0` 값을 통해 설정할 수 있다.
+
+```{r nonlinear-svm-sigmoid, fig.cap='시그모이드 커널을 이용한 비선형 SVM 하이퍼플레인', fig.align='center'}
+svm_model <- svm(as.factor(class) ~ x1 + x2, data = nonlinear_train_df, 
+                 kernel = "sigmoid", gamma = 0.01, coef0 = -1,
+                 cost = 5, scale = FALSE)
+plot(svm_model, data = nonlinear_train_df, formula = x2 ~ x1, grid = 200)
+```
+
+
+커널 함수의 종류 `kernel`, 커널 함수의 파라미터 `gamma, coef0, degree`, 페널티 단가 `cost`등의 `svm` 함수 파라미터는 학습 표본과는 별도의 테스트 데이터에 대해 오분류율을 최소화하는 값을 선택하는 것이 일반적이다. 
+
+
+### $\nu$-SVC {#svm-nu-classification}
+
+$\nu$-support vector classification($\nu$-SVC) [@scholkopf2000new, @chang2001training]은 $C$-SVC의 이차계획식 \@ref(eq:nonlinear-svm-dual-kernel)과 다른 형태로, 페널티 단가 $C$ 대신 $\nu$라는 파라미터를 이용한 아래 최적화 문제의 해를 구한다.
+
+\begin{equation}
+\begin{split}
+\min \text{  } & L_D = \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j k_{ij}\\
+\text{s.t. } &\\
+& \sum_{i = 1}^{N} \alpha_i y_i = 0\\
+& 0 \le \alpha_i \le \frac{1}{N}, \text{  } i = 1, \cdots, N\\
+& \sum_{i = 1}^{N} \alpha_i = \nu
+\end{split}
+(\#eq:nonlinear-nu-svc-dual)
+\end{equation}
+
+이 때, 각 $\alpha_i$의 최대값은 $1/N$으로, $\nu$를 포함한 제약식을 무시할 때 모든 객체에 대한 $\alpha_i$값의 합의 이론적 최대치는 1이 되며, $\nu \in (0, 1]$은 전체 객체 중 서포트 벡터 객체의 개수를 제한하는 개념으로 생각할 수 있다. 식 \@ref(eq:nonlinear-nu-svc-dual)이 실제로 최적해를 가지기 위한 $\nu$값의 범위는 
+
+\begin{equation*}
+0 < \nu \le \frac{2}{N} \min \left( \sum_i I(y_i = 1), \sum_i I(y_i = -1) \right)
+\end{equation*}
+
+으로 [@chang2001training], 에를 들어 범주 1에 속하는 학습표본 객체 수가
+전체의 10\% 라면, $\nu$ 값은 최대 0.2 까지 설정할 수 있다. 또한 
+
+`svm` 함수가 호출하는 `LIBSVM` 라이브러리는 위 식 \@ref(eq:nonlinear-nu-svc-dual)을 $N$이 큰(학습 표본 수가 매우 많은) 경우에도 안정된 결과를 얻을 수 있도록 아래와 같이 변환한 문제를 다룬다.
+
+\begin{equation}
+\begin{split}
+\min \text{  } & L_D = \sum_{i = 1}^{N} \sum_{j = 1}^{N} \bar{\alpha}_i \bar{\alpha}_j y_i y_j k_{ij}\\
+\text{s.t. } &\\
+& \sum_{i = 1}^{N} \bar{\alpha}_i y_i = 0\\
+& 0 \le \bar{\alpha}_i \le 1, \text{  } i = 1, \cdots, N\\
+& \sum_{i = 1}^{N} \bar{\alpha}_i = \nu N
+\end{split}
+(\#eq:libsvm-nu-svc-dual)
+\end{equation}
+
+이 때 $\bar{\alpha}_i = \alpha_i N$이다.
+
+$\nu$-SVC은 아래와 같이 `svm` 함수를 호출할 때 `type = "nu-classification"`과 파라미터 `nu` 값을 설정함으로써 학습할 수 있다.
+
+```{r nu-svc-radial, fig.cap='가우시안 커널을 이용한 $\nu$-SVC 하이퍼플레인', fig.align='center'}
+svm_model <- svm(as.factor(class) ~ x1 + x2, data = nonlinear_train_df, 
+                 type = "nu-classification", 
+                 kernel = "radial", gamma = 1,
+                 nu = 0.5, scale = FALSE)
+plot(svm_model, data = nonlinear_train_df, formula = x2 ~ x1, grid = 200)
+```
 
 
