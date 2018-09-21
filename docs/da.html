@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>데이터마이닝 with R</title>
+  <meta name="description" content="전치혁 교수님의 책 <데이터마이닝 기법과 응용>을 기반으로 한 R 예제">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="데이터마이닝 with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://youngroklee-ml.github.io/data-mining-book/" />
+  
+  <meta property="og:description" content="전치혁 교수님의 책 <데이터마이닝 기법과 응용>을 기반으로 한 R 예제" />
+  <meta name="github-repo" content="youngroklee-ml/data-mining-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="데이터마이닝 with R" />
+  
+  <meta name="twitter:description" content="전치혁 교수님의 책 <데이터마이닝 기법과 응용>을 기반으로 한 R 예제" />
+  
+
+<meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
+
+
+<meta name="date" content="2018-09-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="tree-based-method.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">데이터마이닝 with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>개요</a></li>
+<li class="chapter" data-level="1" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>1</b> 판별분석</a><ul>
+<li class="chapter" data-level="1.1" data-path="da.html"><a href="da.html#-1"><i class="fa fa-check"></i><b>1.1</b> 개요</a></li>
+<li class="chapter" data-level="1.2" data-path="da.html"><a href="da.html#-r--"><i class="fa fa-check"></i><b>1.2</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="1.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>1.3</b> 피셔 방법</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>1.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="1.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>1.3.2</b> 피셔 판별함수</a></li>
+<li class="chapter" data-level="1.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>1.3.3</b> 분류 규칙</a></li>
+<li class="chapter" data-level="1.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>1.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>1.4</b> 의사결정론에 의한 분류규칙</a></li>
+<li class="chapter" data-level="1.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>1.5</b> 오분류비용을 고려한 분류규칙</a></li>
+<li class="chapter" data-level="1.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>1.6</b> 이차판별분석</a></li>
+<li class="chapter" data-level="1.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>1.7</b> 세 범주 이상의 분류</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>2</b> 트리기반 기법</a><ul>
+<li class="chapter" data-level="2.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>2.1</b> CART 개요</a></li>
+<li class="chapter" data-level="2.2" data-path="tree-based-method.html"><a href="tree-based-method.html#-r-package-"><i class="fa fa-check"></i><b>2.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="2.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>2.3</b> CART 트리 생성</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>2.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>2.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="2.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>2.3.3</b> 노드 및 트리의 불순도</a></li>
+<li class="chapter" data-level="2.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>2.3.4</b> 분지기준</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>2.4</b> 가지치기 및 최종 트리 선정</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>2.4.1</b> 가지치기</a></li>
+<li class="chapter" data-level="2.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>2.4.2</b> 최적 트리의 선정</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>2.5</b> R패키지 내 분류 트리 방법</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>2.5.1</b> 트리 확장</a></li>
+<li class="chapter" data-level="2.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>2.5.2</b> 가지치기</a></li>
+<li class="chapter" data-level="2.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>2.5.3</b> 파라미터값 결정</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>3</b> 서포트 벡터 머신</a><ul>
+<li class="chapter" data-level="3.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>3.1</b> 개요</a></li>
+<li class="chapter" data-level="3.2" data-path="svm.html"><a href="svm.html#-r-package--1"><i class="fa fa-check"></i><b>3.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>3.3</b> 선형 SVM - 분리 가능 경우</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>3.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>3.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="3.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>3.3.3</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>3.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>3.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>3.4.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>3.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>3.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>3.5.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>3.6</b> R패키지 내 SVM</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>3.6.1</b> 커널함수</a></li>
+<li class="chapter" data-level="3.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>3.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">데이터마이닝 with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="da" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> 판별분석</h1>
+<div id="-1" class="section level2">
+<h2><span class="header-section-number">1.1</span> 개요</h2>
+<p>판별분석(discriminant analysis)은 범주들을 가장 잘 구별하는 변수들의 하나 또는 다수의 함수를 도출하여 이를 기반으로 분류규칙을 제시한다. 본 장에서는 변수의 분포에 대한 가정이 필요 없는 피셔(Fisher) 방법과 다변량 정규분포를 가정하는 선형 및 비선형 판별분석을 설명한다.</p>
+</div>
+<div id="-r--" class="section level2">
+<h2><span class="header-section-number">1.2</span> 필요 R 패키지 설치</h2>
+<p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">package</th>
+<th align="left">version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">tidyverse</td>
+<td align="left">1.2.1</td>
+</tr>
+<tr class="even">
+<td align="left">MASS</td>
+<td align="left">7.3-50</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="da-fisher" class="section level2">
+<h2><span class="header-section-number">1.3</span> 피셔 방법</h2>
+<div id="da-fisher-basic-script" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> 기본 R 스크립트</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>),
+  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">5</span>),
+  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">4</span>),
+  <span class="dt">class =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+)
+
+knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
+             <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, <span class="st">&#39;범주&#39;</span>),
+             
+             <span class="dt">caption =</span> <span class="st">&#39;판별분석 학습표본 데이터&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:da-train-data-table">Table 1.1: </span>판별분석 학습표본 데이터</caption>
+<thead>
+<tr class="header">
+<th align="center">객체번호</th>
+<th align="right"><span class="math inline">\(x_1\)</span></th>
+<th align="right"><span class="math inline">\(x_2\)</span></th>
+<th align="center">범주</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="da.html#tab:da-train-data-table">1.1</a>와 같이 두 독립변수 <em>x1</em>, <em>x2</em>와 이분형 종속변수 <em>class</em>의 관측값으로 이루어진 9개의 학습표본을 <em>train_df</em>라는 data frame에 저장한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fisher_da &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+
+<span class="kw">print</span>(fisher_da)</code></pre></div>
+<pre><code>## Call:
+## lda(class ~ x1 + x2, data = train_df)
+## 
+## Prior probabilities of groups:
+##         1         2 
+## 0.4444444 0.5555556 
+## 
+## Group means:
+##    x1  x2
+## 1 4.0 6.0
+## 2 6.6 5.4
+## 
+## Coefficients of linear discriminants:
+##           LD1
+## x1  0.6850490
+## x2 -0.7003859</code></pre>
+</div>
+<div id="-" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> 피셔 판별함수</h3>
+<p>각 객체는 변수벡터 <span class="math inline">\(\mathbf{x} \in \mathbb{R}^p\)</span>와 범주 <span class="math inline">\(y \in \{1, 2\}\)</span>로 이루어진다고 하자. 아래는 변수 <span class="math inline">\(\mathbf{x}\)</span>의 기대치와 분산-공분산행렬(varinace-covariance matrix)을 나타낸다.</p>
+<span class="math display">\[\begin{eqnarray*}
+\boldsymbol\mu_1 = E(\mathbf{x} | y = 1)\\
+\boldsymbol\mu_2 = E(\mathbf{x} | y = 2)\\
+\boldsymbol\Sigma = Var(\mathbf{x} | y = 1) = Var(\mathbf{x} | y = 2)
+\end{eqnarray*}\]</span>
+<p>다음과 같이 변수들의 선형조합으로 새로운 변수 <span class="math inline">\(z\)</span>를 형성하는 함수를 피셔 판별함수(Fisher’s discriminant function)라 한다.</p>
+<span class="math display" id="eq:fisher-discriminant-function">\[\begin{equation}
+z = \mathbf{w}^\top \mathbf{x} \tag{1.1}
+\end{equation}\]</span>
+<p>여기서 계수벡터 <span class="math inline">\(\mathbf{w} \in \mathbb{R}^p\)</span>는 통상 아래와 같이 변수 <span class="math inline">\(z\)</span>의 범주간 평균 차이 대 변수 <span class="math inline">\(z\)</span>의 분산의 비율을 최대화하는 것으로 결정한다.</p>
+<span class="math display" id="eq:fisher-discriminant-function-coef">\[\begin{equation}
+{\arg\!\min}_{\mathbf{w}} \frac{\mathbf{w}^\top ( \boldsymbol\mu_1 - \boldsymbol\mu_2 )}{\mathbf{w}^\top \boldsymbol\Sigma \mathbf{w}} \tag{1.2}
+\end{equation}\]</span>
+<p>위 식 <a href="da.html#eq:fisher-discriminant-function-coef">(1.2)</a>의 해는</p>
+<span class="math display">\[\begin{equation*}
+\mathbf{w} \propto \boldsymbol\Sigma^{-1}(\boldsymbol\mu_1 - \boldsymbol\mu_2)
+\end{equation*}\]</span>
+<p>의 조건을 만족하며, 편의상 비례상수를 1로 두면 아래와 같은 해가 얻어진다.</p>
+<span class="math display" id="eq:fisher-discriminant-function-coef-sol">\[\begin{equation}
+\mathbf{w} = \boldsymbol\Sigma^{-1}(\boldsymbol\mu_1 - \boldsymbol\mu_2) \tag{1.3}
+\end{equation}\]</span>
+<p>실제 모집단의 평균 및 분산을 알지 못하는 경우, 학습표본으로부터 <span class="math inline">\(\boldsymbol\mu_1, \boldsymbol\mu_2, \boldsymbol\Sigma\)</span>의 추정치를 얻어 식 <a href="da.html#eq:fisher-discriminant-function-coef-sol">(1.3)</a>에 대입하는 방식으로 판별계수를 추정한다. 자세한 내용은 교재 <span class="citation">(전치혁 <a href="#ref-jun2012datamining">2012</a>)</span> 참조.</p>
+<p>Table <a href="da.html#tab:da-train-data-table">1.1</a>에 주어진 학습표본을 이용하여 피셔 판별함수를 구해보도록 하자. 우선 각 범주별 평균벡터 <span class="math inline">\(\hat{\boldsymbol\mu}_1, \hat{\boldsymbol\mu}_2\)</span>를 아래와 같이 구한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu_hat &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">x1 =</span> <span class="kw">mean</span>(x1),
+            <span class="dt">x2 =</span> <span class="kw">mean</span>(x2)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(class)
+
+<span class="kw">print</span>(mu_hat)</code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##   class    x1    x2
+##   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 1       4     6  
+## 2 2       6.6   5.4</code></pre>
+<p>또한 범주별 표본 분산-공분산행렬 <span class="math inline">\(\mathbf{S}_1, \mathbf{S}_2\)</span>를 다음과 같이 구한다. 리스트 <code>S_within_group</code>의 첫번째 원소는 범주 1의 분산-공분산행렬 <span class="math inline">\(\mathbf{S}_1\)</span>, 두번째 원소는 범주 2의 분산-공분산행렬 <span class="math inline">\(\mathbf{S}_2\)</span>를 나타낸다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">S_within_group &lt;-<span class="st"> </span><span class="kw">lapply</span>(
+  <span class="kw">unique</span>(train_df<span class="op">$</span>class) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(), <span class="cf">function</span>(x) {
+    train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(class <span class="op">==</span><span class="st"> </span>x) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x1, x2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">var</span>()
+  }
+)
+
+<span class="kw">print</span>(S_within_group)</code></pre></div>
+<pre><code>## [[1]]
+##          x1        x2
+## x1 3.333333 1.0000000
+## x2 1.000000 0.6666667
+## 
+## [[2]]
+##      x1   x2
+## x1 4.30 2.95
+## x2 2.95 3.80</code></pre>
+<p>위에서 얻은 범주별 표본 분산-공분산행렬을 이용하여 합동 분산-공분산행렬을 아래와 같이 추정한다.</p>
+<span class="math display">\[\begin{equation*}
+\hat{\boldsymbol\Sigma} = \mathbf{S}_p = \frac{(n_1 - 1)\mathbf{S}_1 + (n_2 - 1)\mathbf{S}_2}{n_1 + n_2 - 2}
+\end{equation*}\]</span>
+<p>이 때 <span class="math inline">\(n_1, n_2\)</span>는 각각 범주 1, 2에 속한 학습표본 객체의 수를 나타낸다. 아래 R 스크립트에서는 임의의 범주 표본수 벡터 <code>n</code>과 범주별 표본 분산-공분산행렬 리스트 <code>S</code>에 대해 합동 분산-공분산행렬을 구하는 함수 <code>pooled_variance</code>를 정의하고, 주어진 학습표본에 대한 입력값을 대입하여 합동 분산-공분산행렬 추정치 <code>Sigma_hat</code>을 구한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pooled_variance &lt;-<span class="st"> </span><span class="cf">function</span>(n, S) {
+  <span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(n), <span class="cf">function</span>(i) (n[i] <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">*</span>S[[i]]) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">Reduce</span>(<span class="st">`</span><span class="dt">+</span><span class="st">`</span>, .) <span class="op">%&gt;%</span>
+<span class="st">    `</span><span class="dt">/</span><span class="st">`</span>(<span class="kw">sum</span>(n) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(n))
+}
+
+n_obs &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">count</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(class)
+
+Sigma_hat &lt;-<span class="st"> </span><span class="kw">pooled_variance</span>(n_obs<span class="op">$</span>n, S_within_group)
+
+<span class="kw">print</span>(Sigma_hat)</code></pre></div>
+<pre><code>##          x1       x2
+## x1 3.885714 2.114286
+## x2 2.114286 2.457143</code></pre>
+<p>위에서 구한 추정치들을 이용하여 아래와 같이 판별함수 계수 추정치 <span class="math inline">\(\hat{\mathbf{w}}\)</span>를 구한다.</p>
+<span class="math display">\[\begin{equation*}
+\hat{\mathbf{w}} = \hat{\boldsymbol\Sigma}^{-1}(\hat{\boldsymbol\mu}_1 - \hat{\boldsymbol\mu}_2) 
+\end{equation*}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">w_hat &lt;-<span class="st"> </span><span class="kw">solve</span>(Sigma_hat) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(mu_hat[<span class="dv">1</span>, <span class="kw">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)] <span class="op">-</span><span class="st"> </span>mu_hat[<span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)])
+
+<span class="kw">print</span>(w_hat)</code></pre></div>
+<pre><code>##         [,1]
+## x1 -1.508039
+## x2  1.541801</code></pre>
+</div>
+<div id="-" class="section level3">
+<h3><span class="header-section-number">1.3.3</span> 분류 규칙</h3>
+<p>피셔 판별함수에 따른 분류 경계값은 학습표본에 대한 판별함수값의 평균으로 아래와 같이 구할 수 있다.</p>
+<span class="math display">\[\begin{equation*}
+\bar{z} = \sum_i^N \hat{\mathbf{w}}^\top \mathbf{x}_i
+\end{equation*}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z_mean &lt;-<span class="st"> </span><span class="kw">t</span>(w_hat) <span class="op">%*%</span><span class="st"> </span>(train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x1, x2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">colMeans</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()
+
+<span class="kw">print</span>(z_mean)</code></pre></div>
+<pre><code>## [1] 0.526438</code></pre>
+<p>위 결과를 통해, 분류규칙은 다음과 같이 주어진다.</p>
+<ul>
+<li><span class="math inline">\(\hat{\mathbf{w}}^\top \mathbf{x} \ge \bar{z}\)</span> 이면, <span class="math inline">\(\mathbf{x}\)</span>를 범주 1로 분류</li>
+<li><span class="math inline">\(\hat{\mathbf{w}}^\top \mathbf{x} &lt; \bar{z}\)</span> 이면, <span class="math inline">\(\mathbf{x}\)</span>를 범주 2로 분류</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_prediction_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">z =</span> w_hat[<span class="dv">1</span>]<span class="op">*</span>x1 <span class="op">+</span><span class="st"> </span>w_hat[<span class="dv">2</span>]<span class="op">*</span>x2,
+    <span class="dt">predicted_class =</span> <span class="kw">factor</span>(<span class="kw">if_else</span>(z <span class="op">&gt;=</span><span class="st"> </span>z_mean, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+    )
+
+knitr<span class="op">::</span><span class="kw">kable</span>(train_prediction_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
+             <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$z$&#39;</span>, <span class="st">&#39;추정범주&#39;</span>),
+             <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 피셔 분류 결과&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:fisher-da-result">Table 1.2: </span>학습표본에 대한 피셔 분류 결과</caption>
+<thead>
+<tr class="header">
+<th align="center">객체번호</th>
+<th align="right"><span class="math inline">\(x_1\)</span></th>
+<th align="right"><span class="math inline">\(x_2\)</span></th>
+<th align="center">실제범주</th>
+<th align="right"><span class="math inline">\(z\)</span></th>
+<th align="center">추정범주</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="center">1</td>
+<td align="right">3.2524116</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="center">2</td>
+<td align="right">-1.4067524</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="center">2</td>
+<td align="right">1.7781350</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">-2.8135048</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">4.7266881</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="center">1</td>
+<td align="right">4.6929260</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">0.2025723</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">-4.3215434</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="center">2</td>
+<td align="right">-1.3729904</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+<p>위 결과 객체 3, 7가 오분류된다.</p>
+</div>
+<div id="r----" class="section level3">
+<h3><span class="header-section-number">1.3.4</span> R 패키지를 이용한 분류규칙 도출</h3>
+<p>패키지 <code>MASS</code>내의 함수 <code>lda</code> 수행 시 얻어지는 판별계수 <span class="math inline">\(\hat{\mathbf{w}}\)</span>는 위 결과와는 사뭇 다른데, <code>lda</code> 함수의 경우 아래와 같이 1) 제약식을 포함하여 비례계수를 구하기 때문에 계수의 크기가 달라지며, 2) 목적함수를 최소화하는 대신 최대화하는 값을 찾기 때문에 부호가 달라진다.</p>
+<span class="math display">\[\begin{equation*}
+\begin{split}
+\max \text{  } &amp; \mathbf{w}^\top ( \boldsymbol\mu_1 - \boldsymbol\mu_2 )\\
+\text{s.t. } &amp; \mathbf{w}^\top \boldsymbol\Sigma \mathbf{w} = 1
+\end{split}
+\end{equation*}\]</span>
+<p>이에 따른 <code>lda</code> 함수의 계수 추정 결과는 아래와 같다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">w_hat_lda &lt;-<span class="st"> </span>fisher_da<span class="op">$</span>scaling
+<span class="kw">print</span>(w_hat_lda)</code></pre></div>
+<pre><code>##           LD1
+## x1  0.6850490
+## x2 -0.7003859</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z_mean_lda &lt;-<span class="st"> </span><span class="kw">t</span>(fisher_da<span class="op">$</span>scaling) <span class="op">%*%</span><span class="st"> </span>(train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x1, x2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">colMeans</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()
+<span class="kw">print</span>(z_mean_lda)</code></pre></div>
+<pre><code>##        LD1 
+## -0.2391423</code></pre>
+<p>위 결과는 아래와 같은 계산을 통해 앞 장에서 보았던 결과와 동일한 분류 경계식으로 표현될 수 있음을 볼 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scale_adjust &lt;-<span class="st"> </span><span class="kw">t</span>(w_hat) <span class="op">%*%</span><span class="st"> </span>Sigma_hat <span class="op">%*%</span><span class="st"> </span>w_hat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sqrt</span>()
+sign_adjust &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">1</span>
+
+w_hat &lt;-<span class="st"> </span>w_hat_lda <span class="op">*</span><span class="st"> </span>scale_adjust <span class="op">*</span><span class="st"> </span>sign_adjust
+<span class="kw">print</span>(w_hat)</code></pre></div>
+<pre><code>##          LD1
+## x1 -1.508039
+## x2  1.541801</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z_mean &lt;-<span class="st"> </span>z_mean_lda <span class="op">*</span><span class="st"> </span>scale_adjust <span class="op">*</span><span class="st"> </span>sign_adjust 
+<span class="kw">print</span>(z_mean)</code></pre></div>
+<pre><code>##      LD1 
+## 0.526438</code></pre>
+<p>아래 스크립트는 위 <code>lda</code> 함수로부터의 경계식 추정을 기반으로 아래 수식값을 계산한다.</p>
+<span class="math display">\[\begin{equation*}
+\hat{\mathbf{w}}^\top \mathbf{x} - \bar{z}
+\end{equation*}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(fisher_da, train_df)<span class="op">$</span>x</code></pre></div>
+<pre><code>##          LD1
+## 1 -1.2383140
+## 2  0.8781805
+## 3 -0.5686020
+## 4  1.5172187
+## 5 -1.9080261
+## 6 -1.8926892
+## 7  0.1471208
+## 8  2.2022677
+## 9  0.8628436</code></pre>
+<p>피셔 분류규칙에 따라 해당 값이 0보다 작으면 범주 1, 0보다 크면 범주 2로 분류한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">centered_z =</span> <span class="kw">predict</span>(fisher_da, .)<span class="op">$</span>x,
+    <span class="dt">predicted_class =</span> <span class="kw">factor</span>(<span class="kw">if_else</span>(centered_z <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+    ) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
+             <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, 
+                           <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$z - </span><span class="ch">\\</span><span class="st">bar{z}$&#39;</span>, <span class="st">&#39;추정범주&#39;</span>),
+             <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 피셔 분류 결과 - `MASS::lda` 분류 경계식 기준&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:fisher-da-result-lda">Table 1.3: </span>학습표본에 대한 피셔 분류 결과 - <code>MASS::lda</code> 분류 경계식 기준</caption>
+<thead>
+<tr class="header">
+<th align="center">객체번호</th>
+<th align="right"><span class="math inline">\(x_1\)</span></th>
+<th align="right"><span class="math inline">\(x_2\)</span></th>
+<th align="center">실제범주</th>
+<th align="right"><span class="math inline">\(z - \bar{z}\)</span></th>
+<th align="center">추정범주</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="center">1</td>
+<td align="right">-1.2383140</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="center">2</td>
+<td align="right">0.8781805</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="center">2</td>
+<td align="right">-0.5686020</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">1.5172187</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">-1.9080261</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="center">1</td>
+<td align="right">-1.8926892</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">0.1471208</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">2.2022677</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="center">2</td>
+<td align="right">0.8628436</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="da.html#tab:fisher-da-result-lda">1.3</a>는 Table <a href="da.html#tab:fisher-da-result">1.2</a>와 동일한 범주 추정 결과를 보인다.</p>
+</div>
+</div>
+<div id="lda" class="section level2">
+<h2><span class="header-section-number">1.4</span> 의사결정론에 의한 분류규칙</h2>
+</div>
+<div id="lda-misclassification-cost" class="section level2">
+<h2><span class="header-section-number">1.5</span> 오분류비용을 고려한 분류규칙</h2>
+</div>
+<div id="qda" class="section level2">
+<h2><span class="header-section-number">1.6</span> 이차판별분석</h2>
+</div>
+<div id="da-multiclass" class="section level2">
+<h2><span class="header-section-number">1.7</span> 세 범주 이상의 분류</h2>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-jun2012datamining">
+<p>전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tree-based-method.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"search": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

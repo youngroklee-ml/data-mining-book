@@ -1,0 +1,262 @@
+# 판별분석 {#da}
+
+## 개요
+
+판별분석(discriminant analysis)은 범주들을 가장 잘 구별하는 변수들의 하나 또는 다수의 함수를 도출하여 이를 기반으로 분류규칙을 제시한다. 본 장에서는 변수의 분포에 대한 가정이 필요 없는 피셔(Fisher) 방법과 다변량 정규분포를 가정하는 선형 및 비선형 판별분석을 설명한다.
+
+## 필요 R 패키지 설치
+
+본 장에서 필요한 R 패키지들은 아래와 같다.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+required_packages <- c("tidyverse", "MASS")
+lapply(required_packages, function(x) {
+  tibble(package=x, version=packageDescription(x, fields = c("Version"))[1])
+}) %>% 
+  bind_rows() %>%
+  knitr::kable()
+```
+
+
+## 피셔 방법 {#da-fisher}
+
+### 기본 R 스크립트 {#da-fisher-basic-script}
+
+```{r da-train-data-table}
+train_df <- tibble(
+  id = c(1:9),
+  x1 = c(5, 4, 7, 8, 3, 2, 6, 9, 5),
+  x2 = c(7, 3, 8, 6, 6, 5, 6, 6, 4),
+  class = factor(c(1, 2, 2, 2, 1, 1, 1, 2, 2), levels = c(1, 2))
+)
+
+knitr::kable(train_df, booktabs = TRUE,
+             align = c('r', 'r', 'r', 'r'),
+             col.names = c('객체번호', '$x_1$', '$x_2$', '범주'),
+             
+             caption = '판별분석 학습표본 데이터')
+```
+
+Table \@ref(tab:da-train-data-table)와 같이 두 독립변수 *x1*, *x2*와 이분형 종속변수 *class*의 관측값으로 이루어진 `r dim(train_df)[1]`개의 학습표본을 *train_df*라는 data frame에 저장한다.
+
+```{r da-fisher-basic, fig.cap='피셔 판별함수', fig.align='center'}
+fisher_da <- MASS::lda(class ~ x1 + x2, train_df)
+
+print(fisher_da)
+```
+
+### 피셔 판별함수
+
+각 객체는 변수벡터 $\mathbf{x} \in \mathbb{R}^p$와 범주 $y \in \{1, 2\}$로 이루어진다고 하자. 아래는 변수 $\mathbf{x}$의 기대치와 분산-공분산행렬(varinace-covariance matrix)을 나타낸다.
+
+\begin{eqnarray*}
+\boldsymbol\mu_1 = E(\mathbf{x} | y = 1)\\
+\boldsymbol\mu_2 = E(\mathbf{x} | y = 2)\\
+\boldsymbol\Sigma = Var(\mathbf{x} | y = 1) = Var(\mathbf{x} | y = 2)
+\end{eqnarray*}
+
+다음과 같이 변수들의 선형조합으로 새로운 변수 $z$를 형성하는 함수를 피셔 판별함수(Fisher's discriminant function)라 한다. 
+
+\begin{equation}
+z = \mathbf{w}^\top \mathbf{x} (\#eq:fisher-discriminant-function)
+\end{equation}
+
+여기서 계수벡터 $\mathbf{w} \in \mathbb{R}^p$는 통상 아래와 같이 변수 $z$의 범주간 평균 차이 대 변수 $z$의 분산의 비율을 최대화하는 것으로 결정한다.
+
+\begin{equation}
+{\arg\!\min}_{\mathbf{w}} \frac{\mathbf{w}^\top ( \boldsymbol\mu_1 - \boldsymbol\mu_2 )}{\mathbf{w}^\top \boldsymbol\Sigma \mathbf{w}} (\#eq:fisher-discriminant-function-coef)
+\end{equation}
+
+위 식 \@ref(eq:fisher-discriminant-function-coef)의 해는 
+
+\begin{equation*}
+\mathbf{w} \propto \boldsymbol\Sigma^{-1}(\boldsymbol\mu_1 - \boldsymbol\mu_2)
+\end{equation*}
+
+의 조건을 만족하며, 편의상 비례상수를 1로 두면 아래와 같은 해가 얻어진다.
+
+\begin{equation}
+\mathbf{w} = \boldsymbol\Sigma^{-1}(\boldsymbol\mu_1 - \boldsymbol\mu_2) (\#eq:fisher-discriminant-function-coef-sol)
+\end{equation}
+
+실제 모집단의 평균 및 분산을 알지 못하는 경우, 학습표본으로부터 $\boldsymbol\mu_1, \boldsymbol\mu_2, \boldsymbol\Sigma$의 추정치를 얻어 식 \@ref(eq:fisher-discriminant-function-coef-sol)에 대입하는 방식으로 판별계수를 추정한다. 자세한 내용은 교재 [@jun2012datamining] 참조.
+
+Table \@ref(tab:da-train-data-table)에 주어진 학습표본을 이용하여 피셔 판별함수를 구해보도록 하자. 우선 각 범주별 평균벡터 $\hat{\boldsymbol\mu}_1, \hat{\boldsymbol\mu}_2$를 아래와 같이 구한다.
+
+```{r}
+mu_hat <- train_df %>% 
+  group_by(class) %>%
+  summarize(x1 = mean(x1),
+            x2 = mean(x2)) %>%
+  arrange(class)
+
+print(mu_hat)
+```
+
+또한 범주별 표본 분산-공분산행렬 $\mathbf{S}_1, \mathbf{S}_2$를 다음과 같이 구한다. 리스트 `S_within_group`의 첫번째 원소는 범주 1의 분산-공분산행렬 $\mathbf{S}_1$, 두번째 원소는 범주 2의 분산-공분산행렬 $\mathbf{S}_2$를 나타낸다.
+
+```{r}
+S_within_group <- lapply(
+  unique(train_df$class) %>% sort(), function(x) {
+    train_df %>% filter(class == x) %>% select(x1, x2) %>% var()
+  }
+)
+
+print(S_within_group)
+```
+
+위에서 얻은 범주별 표본 분산-공분산행렬을 이용하여 합동 분산-공분산행렬을 아래와 같이 추정한다.
+
+\begin{equation*}
+\hat{\boldsymbol\Sigma} = \mathbf{S}_p = \frac{(n_1 - 1)\mathbf{S}_1 + (n_2 - 1)\mathbf{S}_2}{n_1 + n_2 - 2}
+\end{equation*}
+
+이 때 $n_1, n_2$는 각각 범주 1, 2에 속한 학습표본 객체의 수를 나타낸다. 아래 R 스크립트에서는 임의의 범주 표본수 벡터 `n`과 범주별 표본 분산-공분산행렬 리스트 `S`에 대해 합동 분산-공분산행렬을 구하는 함수 `pooled_variance`를 정의하고, 주어진 학습표본에 대한 입력값을 대입하여 합동 분산-공분산행렬 추정치 `Sigma_hat`을 구한다.
+
+```{r}
+pooled_variance <- function(n, S) {
+  lapply(1:length(n), function(i) (n[i] - 1)*S[[i]]) %>% 
+    Reduce(`+`, .) %>%
+    `/`(sum(n) - length(n))
+}
+
+n_obs <- train_df %>%
+  group_by(class) %>%
+  count() %>%
+  arrange(class)
+
+Sigma_hat <- pooled_variance(n_obs$n, S_within_group)
+
+print(Sigma_hat)
+```
+
+위에서 구한 추정치들을 이용하여 아래와 같이 판별함수 계수 추정치 $\hat{\mathbf{w}}$를 구한다. 
+
+\begin{equation*}
+\hat{\mathbf{w}} = \hat{\boldsymbol\Sigma}^{-1}(\hat{\boldsymbol\mu}_1 - \hat{\boldsymbol\mu}_2) 
+\end{equation*}
+
+```{r}
+w_hat <- solve(Sigma_hat) %*% t(mu_hat[1, c('x1', 'x2')] - mu_hat[2, c('x1', 'x2')])
+
+print(w_hat)
+```
+
+
+
+
+### 분류 규칙
+
+피셔 판별함수에 따른 분류 경계값은 학습표본에 대한 판별함수값의 평균으로 아래와 같이 구할 수 있다.
+
+\begin{equation*}
+\bar{z} = \sum_i^N \hat{\mathbf{w}}^\top \mathbf{x}_i
+\end{equation*}
+
+```{r}
+z_mean <- t(w_hat) %*% (train_df %>% select(x1, x2) %>% colMeans()) %>% drop()
+
+print(z_mean)
+```
+
+위 결과를 통해, 분류규칙은 다음과 같이 주어진다.
+
+- $\hat{\mathbf{w}}^\top \mathbf{x} \ge \bar{z}$ 이면, $\mathbf{x}$를 범주 1로 분류
+- $\hat{\mathbf{w}}^\top \mathbf{x} < \bar{z}$ 이면, $\mathbf{x}$를 범주 2로 분류
+
+```{r fisher-da-result}
+train_prediction_df <- train_df %>%
+  mutate(
+    z = w_hat[1]*x1 + w_hat[2]*x2,
+    predicted_class = factor(if_else(z >= z_mean, 1, 2), levels = c(1, 2))
+    )
+
+knitr::kable(train_prediction_df, booktabs = TRUE,
+             align = c('r', 'r', 'r', 'r', 'r', 'r'),
+             col.names = c('객체번호', '$x_1$', '$x_2$', '실제범주', '$z$', '추정범주'),
+             caption = '학습표본에 대한 피셔 분류 결과')
+```
+
+위 결과 객체 `r train_prediction_df %>% filter(class != predicted_class) %>% magrittr::extract2("id") %>% paste(collapse = ", ")`가 오분류된다.
+
+
+
+### R 패키지를 이용한 분류규칙 도출
+
+패키지 `MASS`내의 함수 `lda` 수행 시 얻어지는 판별계수 $\hat{\mathbf{w}}$는 위 결과와는 사뭇 다른데, `lda` 함수의 경우 아래와 같이 1) 제약식을 포함하여 비례계수를 구하기 때문에 계수의 크기가 달라지며, 2) 목적함수를 최소화하는 대신 최대화하는 값을 찾기 때문에 부호가 달라진다.
+
+\begin{equation*}
+\begin{split}
+\max \text{  } & \mathbf{w}^\top ( \boldsymbol\mu_1 - \boldsymbol\mu_2 )\\
+\text{s.t. } & \mathbf{w}^\top \boldsymbol\Sigma \mathbf{w} = 1
+\end{split}
+\end{equation*}
+
+이에 따른 `lda` 함수의 계수 추정 결과는 아래와 같다.
+
+```{r}
+w_hat_lda <- fisher_da$scaling
+print(w_hat_lda)
+
+z_mean_lda <- t(fisher_da$scaling) %*% (train_df %>% select(x1, x2) %>% colMeans()) %>% drop()
+print(z_mean_lda)
+```
+
+위 결과는 아래와 같은 계산을 통해 앞 장에서 보았던 결과와 동일한 분류 경계식으로 표현될 수 있음을 볼 수 있다.
+
+```{r}
+scale_adjust <- t(w_hat) %*% Sigma_hat %*% w_hat %>% drop() %>% sqrt()
+sign_adjust <- -1
+
+w_hat <- w_hat_lda * scale_adjust * sign_adjust
+print(w_hat)
+
+z_mean <- z_mean_lda * scale_adjust * sign_adjust 
+print(z_mean)
+```
+
+
+
+아래 스크립트는 위 `lda` 함수로부터의 경계식 추정을 기반으로 아래 수식값을 계산한다.
+
+\begin{equation*}
+\hat{\mathbf{w}}^\top \mathbf{x} - \bar{z}
+\end{equation*}
+
+```{r}
+predict(fisher_da, train_df)$x
+```
+
+
+피셔 분류규칙에 따라 해당 값이 0보다 작으면 범주 1, 0보다 크면 범주 2로 분류한다.
+
+```{r fisher-da-result-lda}
+train_df %>%
+  mutate(
+    centered_z = predict(fisher_da, .)$x,
+    predicted_class = factor(if_else(centered_z <= 0, 1, 2), levels = c(1, 2))
+    ) %>%
+  knitr::kable(booktabs = TRUE,
+             align = c('r', 'r', 'r', 'r', 'r', 'r'),
+             col.names = c('객체번호', '$x_1$', '$x_2$', 
+                           '실제범주', '$z - \\bar{z}$', '추정범주'),
+             caption = '학습표본에 대한 피셔 분류 결과 - `MASS::lda` 분류 경계식 기준')
+```
+
+Table \@ref(tab:fisher-da-result-lda)는 Table \@ref(tab:fisher-da-result)와 동일한 범주 추정 결과를 보인다.
+
+
+## 의사결정론에 의한 분류규칙 {#lda}
+
+
+
+## 오분류비용을 고려한 분류규칙 {#lda-misclassification-cost}
+
+
+
+## 이차판별분석 {#qda}
+
+
+
+## 세 범주 이상의 분류 {#da-multiclass}
+
