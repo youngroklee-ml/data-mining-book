@@ -685,13 +685,13 @@ w_hat &lt;-<span class="st"> </span>w_hat_lda <span class="op">*</span><span cla
 </ul>
 <p>이 때 통상적으로 <span class="math inline">\(\mathbf{x}\)</span>는 다변량 정규분포를 따르는 것으로 가정하여 아래와 같이 평균벡터 <span class="math inline">\(\boldsymbol\mu_k\)</span>와 분산-공분산행렬 <span class="math inline">\(\boldsymbol\Sigma\)</span>로 확률밀도함수를 정의할 수 있다. 이 때 분산-공분산행렬 <span class="math inline">\(\boldsymbol\Sigma\)</span>는 모든 범주에 대해 동일하다고 가정한다.</p>
 <span class="math display" id="eq:mv-gaussian-dist">\[\begin{equation}
-f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma|^{1/2}} \exp \{ -frac{1}{2} \left(\mathbf{x} - \boldsymbol\mu_k\right)^\top \boldsymbol\Sigma^{-1} \left(\mathbf{x} - \boldsymbol\mu_k\right) \}
+f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma|^{1/2}} \exp \{ -\frac{1}{2} \left(\mathbf{x} - \boldsymbol\mu_k\right)^\top \boldsymbol\Sigma^{-1} \left(\mathbf{x} - \boldsymbol\mu_k\right) \}
 \tag{1.4}
 \end{equation}\]</span>
 <p>본 장에서는 두 범주(<span class="math inline">\(k = 1, 2\)</span>) 분류 문제만 다루며, 세 범주 이상에 대한 분류 문제는 뒷 장에서 추가적으로 다루기로 한다.</p>
 <div id="lda-basic-script" class="section level3">
 <h3><span class="header-section-number">1.4.1</span> 기본 R 스크립트</h3>
-<p>Table <a href="da.html#tab:da-train-data-table">1.1</a>의 학습표본에 대해 선형판별분석을 적용하는 R 스크립트는 아래에 보이는 것처럼 피셔 판별함수를 구하기 위한 동일하며, <code>prior</code> 파라미터를 정의하지 않음으로써 <code>\pi_1</code>과 <code>\pi_2</code>를 학습표본의 범주 1, 2의 비율로 설정한다.</p>
+<p>Table <a href="da.html#tab:da-train-data-table">1.1</a>의 학습표본에 대해 선형판별분석을 적용하는 R 스크립트는 아래에 보이는 것처럼 피셔 판별함수를 구하기 위한 동일하며, <code>prior</code> 파라미터를 정의하지 않음으로써 <span class="math inline">\(\pi_1\)</span>과 <span class="math inline">\(\pi_2\)</span>를 학습표본의 범주 1, 2의 비율로 설정한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
 
 <span class="kw">print</span>(lda_fit)</code></pre></div>
@@ -1163,7 +1163,7 @@ train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"
 </div>
 <div id="lda-misclassification-cost" class="section level2">
 <h2><span class="header-section-number">1.5</span> 오분류비용을 고려한 분류규칙</h2>
-<p>위 Table <a href="da.html#tab:lda-posterior-result">1.5</a>의 객체 c(3, 7)와 같이 선형분류함수가 모든 객체의 범주를 정확하게 추정하지 못하고 오분류가 발생하는 경우가 있다. 이 때 다음과 같이 두 종류의 오분류 비용이 있다고 가정하자.</p>
+<p>위 Table <a href="da.html#tab:lda-posterior-result">1.5</a>의 객체 3, 7와 같이 선형분류함수가 모든 객체의 범주를 정확하게 추정하지 못하고 오분류가 발생하는 경우가 있다. 이 때 다음과 같이 두 종류의 오분류 비용이 있다고 가정하자.</p>
 <ul>
 <li><span class="math inline">\(C(1 \, | \, 2)\)</span>: 범주 2를 1로 잘못 분류 시 초래 비용</li>
 <li><span class="math inline">\(C(2 \, | \, 1)\)</span>: 범주 1를 2로 잘못 분류 시 초래 비용</li>
@@ -1176,7 +1176,7 @@ C(1 \, | \, 2) \pi_2 \int_{\mathbf{x} \in R_1} f_2(\mathbf{x}) d\mathbf{x} + C(2
 <p>여기에서 <span class="math inline">\(R_1 \subset \mathbb{R}^p, R_2 = \mathbb{R}^p - R_{1}\)</span>는 판별함수에 의해 각각 범주 1, 2로 분류되는 판별변수 영역을 나타낸다. 즉,</p>
 <span class="math display">\[\begin{equation*}
 \hat{y} = \begin{cases}
-    1, &amp; \text{if } \mathbf{x}) \in R_1  \\
+    1, &amp; \text{if } \mathbf{x} \in R_1  \\
     2, &amp; \text{otherwise}
 \end{cases}
 \end{equation*}\]</span>
@@ -1341,7 +1341,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 <h3><span class="header-section-number">1.6.2</span> 이차 판별함수</h3>
 <p>각 범주의 확률밀도함수는 아래와 같이 다변량 정규분포로 정의된다.</p>
 <span class="math display" id="eq:qda-mv-gaussian-dist">\[\begin{equation}
-f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma_k|^{1/2}} \exp \{ -frac{1}{2} \left(\mathbf{x} - \boldsymbol\mu_k\right)^\top \boldsymbol\Sigma_k^{-1} \left(\mathbf{x} - \boldsymbol\mu_k\right) \}
+f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma_k|^{1/2}} \exp \{ -\frac{1}{2} \left(\mathbf{x} - \boldsymbol\mu_k\right)^\top \boldsymbol\Sigma_k^{-1} \left(\mathbf{x} - \boldsymbol\mu_k\right) \}
 \tag{1.10}
 \end{equation}\]</span>
 <p>위 식 <a href="da.html#eq:qda-mv-gaussian-dist">(1.10)</a>이 선형판별함수에서 사용한 식 <a href="da.html#eq:mv-gaussian-dist">(1.4)</a>과 다른 부분은 분산-공분산분포 <span class="math inline">\(\boldsymbol\Sigma_k\)</span>가 범주 <span class="math inline">\(k\)</span>에 대해 각각 정의된다는 점이다.</p>
