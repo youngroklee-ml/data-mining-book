@@ -328,7 +328,7 @@ u_k(\mathbf{x}) = \boldsymbol\mu_k^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac
 
 \begin{equation}
 \hat{y} = \begin{cases}
-    1, & \text{if } u_1(\mathbf(x)) \ge u_2(\mathbf(x))  \\
+    1, & \text{if } u_1(\mathbf{x}) \ge u_2(\mathbf{x})  \\
     2, & \text{otherwise}
 \end{cases}
 (\#eq:lda-discriminant-rule)
@@ -470,7 +470,7 @@ C(1 \, | \, 2) \pi_2 \int_{\mathbf{x} \in R_1} f_2(\mathbf{x}) d\mathbf{x} + C(2
 
 \begin{equation*}
 \hat{y} = \begin{cases}
-    1, & \text{if } \mathbf(x)) \in R_1  \\
+    1, & \text{if } \mathbf{x}) \in R_1  \\
     2, & \text{otherwise}
 \end{cases}
 \end{equation*}
@@ -573,7 +573,7 @@ qda_discriminant_func <- function(X, mu, Sigma, pi) {
 
 \begin{equation*}
 \hat{y} = \begin{cases}
-    1, & \text{if } u_1(\mathbf(x)) \ge u_2(\mathbf(x))  \\
+    1, & \text{if } u_1(\mathbf{x}) \ge u_2(\mathbf{x})  \\
     2, & \text{otherwise}
 \end{cases}
 \end{equation*}
