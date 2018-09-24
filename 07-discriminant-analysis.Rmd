@@ -9,7 +9,7 @@
 본 장에서 필요한 R 패키지들은 아래와 같다.
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-required_packages <- c("tidyverse", "MASS")
+required_packages <- c("tidyverse", "MASS", "mvtnorm")
 lapply(required_packages, function(x) {
   tibble(package=x, version=packageDescription(x, fields = c("Version"))[1])
 }) %>% 
@@ -123,6 +123,8 @@ pooled_variance <- function(n, S) {
 n_obs <- train_df %>%
   group_by(class) %>%
   count() %>%
+  ungroup() %>%
+  mutate(pi = n / sum(n)) %>%
   arrange(class)
 
 Sigma_hat <- pooled_variance(n_obs$n, S_within_group)
@@ -150,7 +152,7 @@ print(w_hat)
 피셔 판별함수에 따른 분류 경계값은 학습표본에 대한 판별함수값의 평균으로 아래와 같이 구할 수 있다.
 
 \begin{equation*}
-\bar{z} = \sum_i^N \hat{\mathbf{w}}^\top \mathbf{x}_i
+\bar{z} = \frac{1}{N} \sum_i^N \hat{\mathbf{w}}^\top \mathbf{x}_i
 \end{equation*}
 
 ```{r}
@@ -195,6 +197,8 @@ knitr::kable(train_prediction_df, booktabs = TRUE,
 이에 따른 `lda` 함수의 계수 추정 결과는 아래와 같다.
 
 ```{r}
+fisher_da <- MASS::lda(class ~ x1 + x2, train_df)
+
 w_hat_lda <- fisher_da$scaling
 print(w_hat_lda)
 
@@ -214,8 +218,6 @@ print(w_hat)
 z_mean <- z_mean_lda * scale_adjust * sign_adjust 
 print(z_mean)
 ```
-
-
 
 아래 스크립트는 위 `lda` 함수로부터의 경계식 추정을 기반으로 아래 수식값을 계산한다.
 
@@ -246,15 +248,422 @@ train_df %>%
 Table \@ref(tab:fisher-da-result-lda)는 Table \@ref(tab:fisher-da-result)와 동일한 범주 추정 결과를 보인다.
 
 
-## 의사결정론에 의한 분류규칙 {#lda}
+## 의사결정론에 의한 선형분류규칙 {#lda}
+
+다음과 같이 객체가 각 범주에 속할 사전확률과 각 범주 내에서의 분류변수의 확률밀도함수에 대한 기호를 정의한다.
+
+- $\pi_k$: 임의의 객체가 범주 $k$에 속할 사전확률
+- $f_k(\mathbf{x})$: 범주 $k$에 대한 변수의 확률밀도함수
+
+이 때 통상적으로 $\mathbf{x}$는 다변량 정규분포를 따르는 것으로 가정하여 아래와 같이 평균벡터 $\boldsymbol\mu_k$와 분산-공분산행렬 $\boldsymbol\Sigma$로 확률밀도함수를 정의할 수 있다. 이 때 분산-공분산행렬 $\boldsymbol\Sigma$는 모든 범주에 대해 동일하다고 가정한다.
+
+\begin{equation}
+f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma|^{1/2}} \exp \{ -frac{1}{2} \left(\mathbf{x} - \boldsymbol\mu_k\right)^\top \boldsymbol\Sigma^{-1} \left(\mathbf{x} - \boldsymbol\mu_k\right) \}
+(\#eq:mv-gaussian-dist)
+\end{equation}
+
+본 장에서는 두 범주($k = 1, 2$) 분류 문제만 다루며, 세 범주 이상에 대한 분류 문제는 뒷 장에서 추가적으로 다루기로 한다.
+
+### 기본 R 스크립트 {#lda-basic-script}
+
+Table \@ref(tab:da-train-data-table)의 학습표본에 대해 선형판별분석을 적용하는 R 스크립트는 아래에 보이는 것처럼 피셔 판별함수를 구하기 위한 동일하며, `prior` 파라미터를 정의하지 않음으로써 `\pi_1`과 `\pi_2`를 학습표본의 범주 1, 2의 비율로 설정한다.
+
+```{r lda-basic}
+lda_fit <- MASS::lda(class ~ x1 + x2, train_df)
+
+print(lda_fit)
+```
+
+### 선형판별함수 {#lda-function}
+
+두 범주 문제에 있어서, 범주를 알지 못하는 변수 $\mathbf{x}$에 대한 확률밀도함수는 아래와 같다.
+
+\begin{equation*}
+f(\mathbf{x}) = \pi_1 f_1(\mathbf{x}) + \pi_2 f_2(\mathbf{x})
+\end{equation*}
+
+베이즈 정리(Bayes's theorem)에 따라 변수 $\mathbf{x}$값이 주어졌을 때 범주 $k$에 속할 사후확률(posterior)은 아래와 같이 구할 수 있다.
+
+\begin{equation}
+P(y = k \, | \, \mathbf{x}) = \frac{\pi_k f_k(\mathbf{x})}{f(\mathbf{x})}
+(\#eq:lda-posterior)
+\end{equation}
+
+각 범주에 대한 사후확률을 계산하여, 확률이 높은 쪽으로 범주를 추정한다.
+
+\begin{equation}
+\hat{y} = \begin{cases}
+    1, & \text{if } P(y = 1 \, | \, \mathbf{x}) \ge P(y = 2 \, | \, \mathbf{x})\\
+    2, & \text{otherwise}
+\end{cases}
+(\#eq:lda-posterior-rule)
+\end{equation}
+
+이를 다시 정리하면 아래와 같다. 
+
+\begin{equation*}
+\hat{y} = \begin{cases}
+    1, & \text{if } \frac{f_1(\mathbf{x})}{f_2(\mathbf{x})} \ge \frac{\pi_2}{\pi_1}\\
+    2, & \text{otherwise}
+\end{cases}
+\end{equation*}
+
+위 분류규칙에 식 \@ref(eq:mv-gaussian-dist)을 대입하여 정리하면 다음과 같다. 보다 자세한 내용은 교재 [@jun2012datamining] 참조.
+
+\begin{equation*}
+\hat{y} = \begin{cases}
+    1, & \text{if } \boldsymbol\mu_1^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac{1}{2} \boldsymbol\mu_1^\top \boldsymbol\Sigma^{-1} \boldsymbol\mu_1 + \ln \pi_1 \ge \boldsymbol\mu_2^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac{1}{2} \boldsymbol\mu_2^\top \boldsymbol\Sigma^{-1} \boldsymbol\mu_2 + \ln \pi_2  \\
+    2, & \text{otherwise}
+\end{cases}
+\end{equation*}
+
+따라서, 각 범주에 대한 판별함수를
+
+\begin{equation}
+u_k(\mathbf{x}) = \boldsymbol\mu_k^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac{1}{2} \boldsymbol\mu_k^\top \boldsymbol\Sigma^{-1} \boldsymbol\mu_k + \ln \pi_k
+(\#eq:lda-discriminant-function)
+\end{equation}
+
+라 하면, 아래와 같이 분류규칙을 정의할 수 있다.
+
+\begin{equation}
+\hat{y} = \begin{cases}
+    1, & \text{if } u_1(\mathbf(x)) \ge u_2(\mathbf(x))  \\
+    2, & \text{otherwise}
+\end{cases}
+(\#eq:lda-discriminant-rule)
+\end{equation}
+
+Table \@ref(tab:da-train-data-table)의 학습표본에 대해 판별함수값을 계산하고 범주를 추정하면 아래와 같다.
+
+```{r lda-disriminant-result}
+discriminant_func <- function(X, mu, Sigma, pi) {
+  Sigma_inv <- solve(Sigma)
+  (t(mu) %*% Sigma_inv %*% X %>% drop()) -  
+    0.5 * (t(mu) %*% Sigma_inv %*% mu %>% drop()) + 
+    log(pi)
+}
+
+lda_discriminant_result_df <- train_df %>% 
+  mutate(
+    u1 = discriminant_func(
+      .[c("x1", "x2")] %>% t(),
+      mu_hat[1, c("x1", "x2")] %>% unlist(),
+      Sigma_hat,
+      n_obs$pi[1]
+      ),
+    u2 = discriminant_func(
+      .[c("x1", "x2")] %>% t(),
+      mu_hat[2, c("x1", "x2")] %>% unlist(),
+      Sigma_hat,
+      n_obs$pi[2]
+      )
+    ) %>%
+  mutate(
+    predicted_class = factor(if_else(u1 >= u2, 1, 2), levels = c(1, 2))
+    )
+
+knitr::kable(
+  lda_discriminant_result_df,
+  booktabs = TRUE,
+  align = rep('r', dim(lda_discriminant_result_df)[2]),
+  col.names = c('객체번호', '$x_1$', '$x_2$',
+                '실제범주', '$u_1(\\mathbf{x})$', '$u_2(\\mathbf{x})$',
+                '추정범주'),
+  caption = '학습표본에 대한 LDA 적용 결과: 판별함수값 및 추정범주')
+```
+
+또한 식 \@ref(eq:lda-posterior)에 따른 사후확률과 식 \@ref(eq:lda-posterior-rule)에 따른 추정범주는 아래와 같이 얻어진다.
+
+```{r lda-posterior-result}
+lda_posterior_result_df <- train_df %>%
+  mutate(
+    f1 = mvtnorm::dmvnorm(
+      .[c("x1", "x2")],
+      mu_hat[1, c("x1", "x2")] %>% unlist(),
+      Sigma_hat),
+    f2 = mvtnorm::dmvnorm(
+      .[c("x1", "x2")],
+      mu_hat[2, c("x1", "x2")] %>% unlist(),
+      Sigma_hat),
+    f = n_obs$pi[1] * f1 + n_obs$pi[2] * f2
+    ) %>%
+  mutate(
+    p1 = n_obs$pi[1] * f1 / f,
+    p2 = n_obs$pi[2] * f2 / f
+  ) %>%
+  mutate(
+    predicted_class = factor(if_else(p1 >= p2, 1, 2), levels = c(1, 2))
+  ) %>%
+  select(
+    id, x1, x2, class, p1, p2, predicted_class
+  )
+
+knitr::kable(
+  lda_posterior_result_df,
+  booktabs = TRUE,
+  align = rep('r', dim(lda_posterior_result_df)[2]),
+  col.names = c('객체번호', '$x_1$', '$x_2$',
+                '실제범주', 
+                '$P(y = 1 | \\mathbf{x})$', 
+                '$P(y = 2 | \\mathbf{x})$',
+                '추정범주'),
+  caption = '학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주')
+```
+
+
+패키지 `MASS`내의 함수 `lda`를 통해 위 Table \@ref(tab:lda-posterior-result) 결과를 간편하게 얻을 수 있다.
+
+```{r}
+lda_fit <- MASS::lda(class ~ x1 + x2, train_df)
+
+train_df %>% bind_cols(
+  predict(lda_fit, train_df)$posterior %>% 
+    `colnames<-`(paste0("p", colnames(.))) %>% as_data_frame()
+  ) %>%
+  mutate(
+    predicted_class = predict(lda_fit, .)$class
+    )
+```
+
+
+위 결과들은 교재 [@jun2012datamining]의 예제 결과와는 다소 차이가 있는데, 이는 교재에서는 사전확률을 학습표본 내 비율 대신 $\pi_1 = \pi_2 = 0.5$로 지정하였기 때문이다. 교재와 동일한 결과는 아래의 스크립트처럼 `lda` 함수 실행 시 사전확률 파리미터 `prior`의 값을 지정함으로써 얻을 수 있다.
+
+```{r lda-posterior-result-equal-prior}
+lda_fit_equal_prior <- MASS::lda(class ~ x1 + x2, train_df, prior = c(1/2, 1/2))
+
+train_df %>% bind_cols(
+  predict(lda_fit_equal_prior, train_df)$posterior %>% 
+    `colnames<-`(paste0("p", colnames(.))) %>% as_data_frame()
+  ) %>%
+  mutate(
+    predicted_class = predict(lda_fit_equal_prior, .)$class
+    ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = rep('r', dim(lda_posterior_result_df)[2]),
+    col.names = c('객체번호', '$x_1$', '$x_2$',
+                '실제범주', 
+                '$P(y = 1 | \\mathbf{x})$', 
+                '$P(y = 2 | \\mathbf{x})$',
+                '추정범주'),
+    caption = '학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주 (사전확률 = 0.5)')
+```
 
 
 
 ## 오분류비용을 고려한 분류규칙 {#lda-misclassification-cost}
 
+위 Table \@ref(tab:lda-posterior-result)의 객체 `r paste(lda_posterior_result_df %>% filter(class != predicted_class) %>% select(id), collapse = ", ")`와 같이 선형분류함수가 모든 객체의 범주를 정확하게 추정하지 못하고 오분류가 발생하는 경우가 있다. 이 때 다음과 같이 두 종류의 오분류 비용이 있다고 가정하자.
+
+- $C(1 \, | \, 2)$: 범주 2를 1로 잘못 분류 시 초래 비용
+- $C(2 \, | \, 1)$: 범주 1를 2로 잘못 분류 시 초래 비용
+
+이 때 총 기대 오분류 비용은 다음과 같다.
+
+\begin{equation}
+C(1 \, | \, 2) \pi_2 \int_{\mathbf{x} \in R_1} f_2(\mathbf{x}) d\mathbf{x} + C(2 \, | \, 1) \pi_1 \int_{\mathbf{x} \in R_2} f_1(\mathbf{x}) d\mathbf{x}
+(\#eq:expected-misclassification-cost)
+\end{equation}
+
+여기에서 $R_1 \subset \mathbb{R}^p, R_2 = \mathbb{R}^p - R_{1}$는 판별함수에 의해 각각 범주 1, 2로 분류되는 판별변수 영역을 나타낸다. 즉,
+
+\begin{equation*}
+\hat{y} = \begin{cases}
+    1, & \text{if } \mathbf(x)) \in R_1  \\
+    2, & \text{otherwise}
+\end{cases}
+\end{equation*}
+
+식 \@ref(eq:expected-misclassification-cost)을 최소화하는 영역 $R_1, R_2$는 아래와 같다.
+
+\begin{eqnarray*}
+R_1 &=& \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{f_1(\mathbf{x})}{f_2(\mathbf{x})} \ge \frac{\pi_2}{\pi_1} \left( \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right) \right\}\\
+R_2 &=& \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{f_1(\mathbf{x})}{f_2(\mathbf{x})} < \frac{\pi_2}{\pi_1} \left( \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right) \right\}
+\end{eqnarray*}
+
+위 중 $R_1$에 대한 식을 아래와 같이 단계적으로 전개할 수 있다.
+
+\begin{eqnarray*}
+R_1 &=& \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{\pi_1 f_1(\mathbf{x})}{\pi_2 f_2(\mathbf{x})} \ge \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right\}\\
+&=& \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{\frac{\pi_1 f_1(\mathbf{x})}{\pi_1 f_1(\mathbf{x}) + \pi_2 f_2(\mathbf{x})}}{\frac{\pi_2 f_2(\mathbf{x})}{\pi_1 f_1(\mathbf{x}) + \pi_2 f_2(\mathbf{x})}} \ge \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right\}\\
+&=& \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{P(y = 1 \, | \, \mathbf{x})}{P(y = 2 \, | \, \mathbf{x})} \ge \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right\}\\
+&=& \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, C(2 \, | \, 1) P(y = 1 \, | \, \mathbf{x}) \ge C(1 \, | \, 2) P(y = 2 \, | \, \mathbf{x}) \right\}
+\end{eqnarray*}
+
+따라서 오분류비용을 고려한 분류규칙은 1) 사후확률에 오분류 비용을 곱한 뒤, 2) 그 값이 큰 범주로 분류하여 오분류비용을 최소화한다.
+
+Table \@ref(tab:lda-posterior-result)에 오분류비용 $C(1 \, | \, 2) = 1, C(2 \, | \, 1) = 5$를 적용한 결과는 아래와 같이 구할 수 있다.
+
+```{r lda-unequal-cost-result}
+lda_fit <- MASS::lda(class ~ x1 + x2, train_df)
+
+misclassification_cost <- c(5, 1)
+
+lda_unequal_cost_result_df <- train_df %>% bind_cols(
+  predict(lda_fit, train_df)$posterior %*% diag(misclassification_cost) %>% 
+    as_data_frame() %>%
+    `names<-`(paste0("s", lda_fit$lev)) 
+  ) %>%
+  mutate(
+    predicted_class = factor(if_else(s1 >= s2, 1, 2), levels = c(1, 2))
+    )
+
+knitr::kable(
+  lda_unequal_cost_result_df,
+  booktabs = TRUE,
+  align = rep('r', dim(lda_unequal_cost_result_df)[2]),
+  col.names = c('객체번호', '$x_1$', '$x_2$',
+                '실제범주', 
+                '$C(2 \\, | \\, 1) P(y = 1 | \\mathbf{x})$', 
+                '$C(1 \\, | \\, 2) P(y = 2 | \\mathbf{x})$',
+                '추정범주'),
+  caption = '학습표본에 대한 오분류 비용을 고려한 LDA 적용 결과')
+```
+
+위 Table \@ref(tab:lda-unequal-cost-result)에서 보는 바와 같이 오분류 객체는 `r paste(lda_unequal_cost_result_df %>% filter(class != predicted_class) %>% select(id), collapse = ", ")`로, 이전 장의 Table \@ref(tab:lda-posterior-result)에 비해 실제범주가 1인 객체를 더 정확하게 분류함을 확인할 수 있다. 범주 1인 객체를 범주 2로 분류할 때 발생하는 비용이 범주 2인 객체를 범주 1로 분류할 때 발생하는 비용보다 다섯 배나 크기 때문에, 오분류비용을 고려한 분류규칙은 실제 범주가 2인 객체를 범주 2로 정확하게 분류할 확률이 줄어든다 할지라도, 실제 범주가 1인 객체를 범주 1로 정확하게 분류하는 확률을 높이는 방향으로 학습된다.
+
 
 
 ## 이차판별분석 {#qda}
+
+이차판별분석은 판별함수가 변수들에 대한 이차함수로 표현되는 경우인데, 각 범주에 대한 변수벡터 $\mathbf{x}$가 서로 다른 분산-공분산행렬을 갖는 다변량 정규분포를 따를 때 의사결정론에 의한 분류규칙으로부터 유도된다.
+
+### 기본 R 스크립트 {#qda-basic-script}
+
+Table \@ref(tab:da-train-data-table)의 학습표본에 대해 이차판별분석을 적용하는 R 스크립트는 아래에 보이는 것과 같이 `MASS` 패키지의 `qda` 함수를 사용한다.
+
+```{r}
+qda_fit <- MASS::qda(class ~ x1 + x2, train_df)
+
+print(qda_fit)
+```
+
+### 이차 판별함수 {#qda-function}
+
+각 범주의 확률밀도함수는 아래와 같이 다변량 정규분포로 정의된다.
+
+\begin{equation}
+f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma_k|^{1/2}} \exp \{ -frac{1}{2} \left(\mathbf{x} - \boldsymbol\mu_k\right)^\top \boldsymbol\Sigma_k^{-1} \left(\mathbf{x} - \boldsymbol\mu_k\right) \}
+(\#eq:qda-mv-gaussian-dist)
+\end{equation}
+
+위 식 \@ref(eq:qda-mv-gaussian-dist)이 선형판별함수에서 사용한 식 \@ref(eq:mv-gaussian-dist)과 다른 부분은 분산-공분산분포 $\boldsymbol\Sigma_k$가 범주 $k$에 대해 각각 정의된다는 점이다.
+
+이 경우 각 범주에 대한 판별함수는 아래와 같이 정의된다.
+
+\begin{equation}
+u_k(\mathbf{x}) = - \frac{1}{2} (\mathbf{x} - \boldsymbol\mu_k)^\top \boldsymbol\Sigma^{-1} (\mathbf{x} - \boldsymbol\mu_k) - \frac{1}{2} \ln \left| \boldsymbol\Sigma_k \right| + \ln \pi_k
+(\#eq:qda-discriminant-function)
+\end{equation}
+
+데이터 행렬 $X = (\mathbf{x}_1, \mathbf{x}_2, \cdots , \mathbf{x}_N)$의 각 객체에 대한 판별함수값을 얻는 함수를 아래와 같이 구현할 수 있다.
+
+```{r}
+qda_discriminant_func <- function(X, mu, Sigma, pi) {
+  Sigma_inv_sqrt <- chol(solve(Sigma))
+  - 0.5 * rowSums((t(X - mu) %*% t(Sigma_inv_sqrt))^2) - 0.5 * log(det(Sigma)) + log(pi)
+}
+```
+
+
+### 이차판별함수에 의한 분류 {#qda-discriminant-rule}
+
+분류기준은 선형판별분석과 마찬가지로 판별함수값이 큰 범주로 분류한다.
+
+\begin{equation*}
+\hat{y} = \begin{cases}
+    1, & \text{if } u_1(\mathbf(x)) \ge u_2(\mathbf(x))  \\
+    2, & \text{otherwise}
+\end{cases}
+\end{equation*}
+
+Table \@ref(tab:da-train-data-table)의 학습표본에 대해 이차판별함수값을 계산하고 범주를 추정하면 아래와 같다.
+
+
+```{r qda-discriminant-result}
+qda_discriminant_result_df <- train_df %>% mutate(
+  u1 = qda_discriminant_func(
+      .[c("x1", "x2")] %>% t(),
+      mu_hat[1, c("x1", "x2")] %>% unlist(),
+      S_within_group[[1]],
+      n_obs$pi[1]
+      ),
+  u2 = qda_discriminant_func(
+      .[c("x1", "x2")] %>% t(),
+      mu_hat[2, c("x1", "x2")] %>% unlist(),
+      S_within_group[[2]],
+      n_obs$pi[2]
+      )
+  ) %>%
+  mutate(
+    predicted_class = factor(if_else(u1 >= u2, 1, 2), levels = c(1, 2))
+  )
+
+knitr::kable(
+  qda_discriminant_result_df,
+  booktabs = TRUE,
+  align = rep('r', dim(qda_discriminant_result_df)[2]),
+  col.names = c('객체번호', '$x_1$', '$x_2$',
+                '실제범주', '$u_1(\\mathbf{x})$', '$u_2(\\mathbf{x})$',
+                '추정범주'),
+  caption = '학습표본에 대한 QDA 적용 결과: 판별함수값 및 추정범주')
+
+```
+
+위 Table \@ref(tab:qda-discriminant-result)에서 보듯이 모든 학습객체가 올바로 분류되고 있다.
+
+
+또한 선형판별분석의 경우와 마찬가지로 사후확률 비교를 통한 범주 분류를 수행할 수 있다. 
+
+```{r qda-posterior-result}
+qda_posterior_result_df <- train_df %>%
+  mutate(
+    f1 = mvtnorm::dmvnorm(
+      .[c("x1", "x2")],
+      mu_hat[1, c("x1", "x2")] %>% unlist(),
+      S_within_group[[1]]),
+    f2 = mvtnorm::dmvnorm(
+      .[c("x1", "x2")],
+      mu_hat[2, c("x1", "x2")] %>% unlist(),
+      S_within_group[[2]]),
+    f = n_obs$pi[1] * f1 + n_obs$pi[2] * f2
+    ) %>%
+  mutate(
+    p1 = n_obs$pi[1] * f1 / f,
+    p2 = n_obs$pi[2] * f2 / f
+  ) %>%
+  mutate(
+    predicted_class = factor(if_else(p1 >= p2, 1, 2), levels = c(1, 2))
+  ) %>%
+  select(
+    id, x1, x2, class, p1, p2, predicted_class
+  )
+
+knitr::kable(
+  qda_posterior_result_df,
+  booktabs = TRUE,
+  align = rep('r', dim(qda_posterior_result_df)[2]),
+  col.names = c('객체번호', '$x_1$', '$x_2$',
+                '실제범주', 
+                '$P(y = 1 | \\mathbf{x})$', 
+                '$P(y = 2 | \\mathbf{x})$',
+                '추정범주'),
+  caption = '학습표본에 대한 QDA 적용 결과: 사후확률 및 추정범주')
+```
+
+이 또한 `MASS` 패키지의 `predict.qda` 함수를 통해 아래와 같이 동일한 결과값을 보다 간편하게 얻을 수 있다.
+
+```{r}
+train_df %>% bind_cols(
+  predict(qda_fit, train_df)$posterior %>% 
+    `colnames<-`(paste0("p", colnames(.))) %>% as_data_frame()
+  ) %>%
+  mutate(
+    predicted_class = predict(qda_fit, .)$class
+    )
+```
+
 
 
 

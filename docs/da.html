@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2018-09-21">
+<meta name="date" content="2018-09-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -113,9 +113,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>1.3.3</b> 분류 규칙</a></li>
 <li class="chapter" data-level="1.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>1.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>1.4</b> 의사결정론에 의한 분류규칙</a></li>
+<li class="chapter" data-level="1.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>1.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>1.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="1.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>1.4.2</b> 선형판별함수</a></li>
+</ul></li>
 <li class="chapter" data-level="1.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>1.5</b> 오분류비용을 고려한 분류규칙</a></li>
-<li class="chapter" data-level="1.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>1.6</b> 이차판별분석</a></li>
+<li class="chapter" data-level="1.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>1.6</b> 이차판별분석</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>1.6.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="1.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>1.6.2</b> 이차 판별함수</a></li>
+<li class="chapter" data-level="1.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>1.6.3</b> 이차판별함수에 의한 분류</a></li>
+</ul></li>
 <li class="chapter" data-level="1.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>1.7</b> 세 범주 이상의 분류</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>2</b> 트리기반 기법</a><ul>
@@ -203,6 +210,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <tr class="even">
 <td align="left">MASS</td>
 <td align="left">7.3-50</td>
+</tr>
+<tr class="odd">
+<td align="left">mvtnorm</td>
+<td align="left">1.0-8</td>
 </tr>
 </tbody>
 </table>
@@ -380,6 +391,8 @@ z = \mathbf{w}^\top \mathbf{x} \tag{1.1}
 n_obs &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">count</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pi =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(class)
 
 Sigma_hat &lt;-<span class="st"> </span><span class="kw">pooled_variance</span>(n_obs<span class="op">$</span>n, S_within_group)
@@ -403,7 +416,7 @@ Sigma_hat &lt;-<span class="st"> </span><span class="kw">pooled_variance</span>(
 <h3><span class="header-section-number">1.3.3</span> 분류 규칙</h3>
 <p>피셔 판별함수에 따른 분류 경계값은 학습표본에 대한 판별함수값의 평균으로 아래와 같이 구할 수 있다.</p>
 <span class="math display">\[\begin{equation*}
-\bar{z} = \sum_i^N \hat{\mathbf{w}}^\top \mathbf{x}_i
+\bar{z} = \frac{1}{N} \sum_i^N \hat{\mathbf{w}}^\top \mathbf{x}_i
 \end{equation*}\]</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z_mean &lt;-<span class="st"> </span><span class="kw">t</span>(w_hat) <span class="op">%*%</span><span class="st"> </span>(train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x1, x2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">colMeans</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()
 
@@ -523,7 +536,9 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_prediction_df
 \end{split}
 \end{equation*}\]</span>
 <p>이에 따른 <code>lda</code> 함수의 계수 추정 결과는 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">w_hat_lda &lt;-<span class="st"> </span>fisher_da<span class="op">$</span>scaling
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fisher_da &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+
+w_hat_lda &lt;-<span class="st"> </span>fisher_da<span class="op">$</span>scaling
 <span class="kw">print</span>(w_hat_lda)</code></pre></div>
 <pre><code>##           LD1
 ## x1  0.6850490
@@ -662,13 +677,971 @@ w_hat &lt;-<span class="st"> </span>w_hat_lda <span class="op">*</span><span cla
 </div>
 </div>
 <div id="lda" class="section level2">
-<h2><span class="header-section-number">1.4</span> 의사결정론에 의한 분류규칙</h2>
+<h2><span class="header-section-number">1.4</span> 의사결정론에 의한 선형분류규칙</h2>
+<p>다음과 같이 객체가 각 범주에 속할 사전확률과 각 범주 내에서의 분류변수의 확률밀도함수에 대한 기호를 정의한다.</p>
+<ul>
+<li><span class="math inline">\(\pi_k\)</span>: 임의의 객체가 범주 <span class="math inline">\(k\)</span>에 속할 사전확률</li>
+<li><span class="math inline">\(f_k(\mathbf{x})\)</span>: 범주 <span class="math inline">\(k\)</span>에 대한 변수의 확률밀도함수</li>
+</ul>
+<p>이 때 통상적으로 <span class="math inline">\(\mathbf{x}\)</span>는 다변량 정규분포를 따르는 것으로 가정하여 아래와 같이 평균벡터 <span class="math inline">\(\boldsymbol\mu_k\)</span>와 분산-공분산행렬 <span class="math inline">\(\boldsymbol\Sigma\)</span>로 확률밀도함수를 정의할 수 있다. 이 때 분산-공분산행렬 <span class="math inline">\(\boldsymbol\Sigma\)</span>는 모든 범주에 대해 동일하다고 가정한다.</p>
+<span class="math display" id="eq:mv-gaussian-dist">\[\begin{equation}
+f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma|^{1/2}} \exp \{ -frac{1}{2} \left(\mathbf{x} - \boldsymbol\mu_k\right)^\top \boldsymbol\Sigma^{-1} \left(\mathbf{x} - \boldsymbol\mu_k\right) \}
+\tag{1.4}
+\end{equation}\]</span>
+<p>본 장에서는 두 범주(<span class="math inline">\(k = 1, 2\)</span>) 분류 문제만 다루며, 세 범주 이상에 대한 분류 문제는 뒷 장에서 추가적으로 다루기로 한다.</p>
+<div id="lda-basic-script" class="section level3">
+<h3><span class="header-section-number">1.4.1</span> 기본 R 스크립트</h3>
+<p>Table <a href="da.html#tab:da-train-data-table">1.1</a>의 학습표본에 대해 선형판별분석을 적용하는 R 스크립트는 아래에 보이는 것처럼 피셔 판별함수를 구하기 위한 동일하며, <code>prior</code> 파라미터를 정의하지 않음으로써 <code>\pi_1</code>과 <code>\pi_2</code>를 학습표본의 범주 1, 2의 비율로 설정한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+
+<span class="kw">print</span>(lda_fit)</code></pre></div>
+<pre><code>## Call:
+## lda(class ~ x1 + x2, data = train_df)
+## 
+## Prior probabilities of groups:
+##         1         2 
+## 0.4444444 0.5555556 
+## 
+## Group means:
+##    x1  x2
+## 1 4.0 6.0
+## 2 6.6 5.4
+## 
+## Coefficients of linear discriminants:
+##           LD1
+## x1  0.6850490
+## x2 -0.7003859</code></pre>
+</div>
+<div id="lda-function" class="section level3">
+<h3><span class="header-section-number">1.4.2</span> 선형판별함수</h3>
+<p>두 범주 문제에 있어서, 범주를 알지 못하는 변수 <span class="math inline">\(\mathbf{x}\)</span>에 대한 확률밀도함수는 아래와 같다.</p>
+<span class="math display">\[\begin{equation*}
+f(\mathbf{x}) = \pi_1 f_1(\mathbf{x}) + \pi_2 f_2(\mathbf{x})
+\end{equation*}\]</span>
+<p>베이즈 정리(Bayes’s theorem)에 따라 변수 <span class="math inline">\(\mathbf{x}\)</span>값이 주어졌을 때 범주 <span class="math inline">\(k\)</span>에 속할 사후확률(posterior)은 아래와 같이 구할 수 있다.</p>
+<span class="math display" id="eq:lda-posterior">\[\begin{equation}
+P(y = k \, | \, \mathbf{x}) = \frac{\pi_k f_k(\mathbf{x})}{f(\mathbf{x})}
+\tag{1.5}
+\end{equation}\]</span>
+<p>각 범주에 대한 사후확률을 계산하여, 확률이 높은 쪽으로 범주를 추정한다.</p>
+<span class="math display" id="eq:lda-posterior-rule">\[\begin{equation}
+\hat{y} = \begin{cases}
+    1, &amp; \text{if } P(y = 1 \, | \, \mathbf{x}) \ge P(y = 2 \, | \, \mathbf{x})\\
+    2, &amp; \text{otherwise}
+\end{cases}
+\tag{1.6}
+\end{equation}\]</span>
+<p>이를 다시 정리하면 아래와 같다.</p>
+<span class="math display">\[\begin{equation*}
+\hat{y} = \begin{cases}
+    1, &amp; \text{if } \frac{f_1(\mathbf{x})}{f_2(\mathbf{x})} \ge \frac{\pi_2}{\pi_1}\\
+    2, &amp; \text{otherwise}
+\end{cases}
+\end{equation*}\]</span>
+<p>위 분류규칙에 식 <a href="da.html#eq:mv-gaussian-dist">(1.4)</a>을 대입하여 정리하면 다음과 같다. 보다 자세한 내용은 교재 <span class="citation">(전치혁 <a href="#ref-jun2012datamining">2012</a>)</span> 참조.</p>
+<span class="math display">\[\begin{equation*}
+\hat{y} = \begin{cases}
+    1, &amp; \text{if } \boldsymbol\mu_1^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac{1}{2} \boldsymbol\mu_1^\top \boldsymbol\Sigma^{-1} \boldsymbol\mu_1 + \ln \pi_1 \ge \boldsymbol\mu_2^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac{1}{2} \boldsymbol\mu_2^\top \boldsymbol\Sigma^{-1} \boldsymbol\mu_2 + \ln \pi_2  \\
+    2, &amp; \text{otherwise}
+\end{cases}
+\end{equation*}\]</span>
+<p>따라서, 각 범주에 대한 판별함수를</p>
+<span class="math display" id="eq:lda-discriminant-function">\[\begin{equation}
+u_k(\mathbf{x}) = \boldsymbol\mu_k^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac{1}{2} \boldsymbol\mu_k^\top \boldsymbol\Sigma^{-1} \boldsymbol\mu_k + \ln \pi_k
+\tag{1.7}
+\end{equation}\]</span>
+<p>라 하면, 아래와 같이 분류규칙을 정의할 수 있다.</p>
+<span class="math display" id="eq:lda-discriminant-rule">\[\begin{equation}
+\hat{y} = \begin{cases}
+    1, &amp; \text{if } u_1(\mathbf(x)) \ge u_2(\mathbf(x))  \\
+    2, &amp; \text{otherwise}
+\end{cases}
+\tag{1.8}
+\end{equation}\]</span>
+<p>Table <a href="da.html#tab:da-train-data-table">1.1</a>의 학습표본에 대해 판별함수값을 계산하고 범주를 추정하면 아래와 같다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">discriminant_func &lt;-<span class="st"> </span><span class="cf">function</span>(X, mu, Sigma, pi) {
+  Sigma_inv &lt;-<span class="st"> </span><span class="kw">solve</span>(Sigma)
+  (<span class="kw">t</span>(mu) <span class="op">%*%</span><span class="st"> </span>Sigma_inv <span class="op">%*%</span><span class="st"> </span>X <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()) <span class="op">-</span><span class="st">  </span>
+<span class="st">    </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>(<span class="kw">t</span>(mu) <span class="op">%*%</span><span class="st"> </span>Sigma_inv <span class="op">%*%</span><span class="st"> </span>mu <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">log</span>(pi)
+}
+
+lda_discriminant_result_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">u1 =</span> <span class="kw">discriminant_func</span>(
+      .[<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>(),
+      mu_hat[<span class="dv">1</span>, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>(),
+      Sigma_hat,
+      n_obs<span class="op">$</span>pi[<span class="dv">1</span>]
+      ),
+    <span class="dt">u2 =</span> <span class="kw">discriminant_func</span>(
+      .[<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>(),
+      mu_hat[<span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>(),
+      Sigma_hat,
+      n_obs<span class="op">$</span>pi[<span class="dv">2</span>]
+      )
+    ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">predicted_class =</span> <span class="kw">factor</span>(<span class="kw">if_else</span>(u1 <span class="op">&gt;=</span><span class="st"> </span>u2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+    )
+
+knitr<span class="op">::</span><span class="kw">kable</span>(
+  lda_discriminant_result_df,
+  <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="kw">dim</span>(lda_discriminant_result_df)[<span class="dv">2</span>]),
+  <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,
+                <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$u_1(</span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, <span class="st">&#39;$u_2(</span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
+                <span class="st">&#39;추정범주&#39;</span>),
+  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 판별함수값 및 추정범주&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:lda-disriminant-result">Table 1.4: </span>학습표본에 대한 LDA 적용 결과: 판별함수값 및 추정범주</caption>
+<thead>
+<tr class="header">
+<th align="center">객체번호</th>
+<th align="right"><span class="math inline">\(x_1\)</span></th>
+<th align="right"><span class="math inline">\(x_2\)</span></th>
+<th align="center">실제범주</th>
+<th align="right"><span class="math inline">\(u_1(\mathbf{x})\)</span></th>
+<th align="right"><span class="math inline">\(u_2(\mathbf{x})\)</span></th>
+<th align="center">추정범주</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="center">1</td>
+<td align="right">9.2051470</td>
+<td align="right">6.971538</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="center">2</td>
+<td align="right">-1.9363321</td>
+<td align="right">0.489223</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="center">2</td>
+<td align="right">11.0057900</td>
+<td align="right">10.246458</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">4.5909990</td>
+<td align="right">8.423307</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">7.4045039</td>
+<td align="right">3.696619</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="center">1</td>
+<td align="right">5.0411598</td>
+<td align="right">1.367036</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">5.7164010</td>
+<td align="right">6.532631</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">4.0282981</td>
+<td align="right">9.368644</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="center">2</td>
+<td align="right">0.4270119</td>
+<td align="right">2.818805</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+<p>또한 식 <a href="da.html#eq:lda-posterior">(1.5)</a>에 따른 사후확률과 식 <a href="da.html#eq:lda-posterior-rule">(1.6)</a>에 따른 추정범주는 아래와 같이 얻어진다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_posterior_result_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">f1 =</span> mvtnorm<span class="op">::</span><span class="kw">dmvnorm</span>(
+      .[<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],
+      mu_hat[<span class="dv">1</span>, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>(),
+      Sigma_hat),
+    <span class="dt">f2 =</span> mvtnorm<span class="op">::</span><span class="kw">dmvnorm</span>(
+      .[<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],
+      mu_hat[<span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>(),
+      Sigma_hat),
+    <span class="dt">f =</span> n_obs<span class="op">$</span>pi[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>f1 <span class="op">+</span><span class="st"> </span>n_obs<span class="op">$</span>pi[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>f2
+    ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">p1 =</span> n_obs<span class="op">$</span>pi[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>f1 <span class="op">/</span><span class="st"> </span>f,
+    <span class="dt">p2 =</span> n_obs<span class="op">$</span>pi[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>f2 <span class="op">/</span><span class="st"> </span>f
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">predicted_class =</span> <span class="kw">factor</span>(<span class="kw">if_else</span>(p1 <span class="op">&gt;=</span><span class="st"> </span>p2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(
+    id, x1, x2, class, p1, p2, predicted_class
+  )
+
+knitr<span class="op">::</span><span class="kw">kable</span>(
+  lda_posterior_result_df,
+  <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="kw">dim</span>(lda_posterior_result_df)[<span class="dv">2</span>]),
+  <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,
+                <span class="st">&#39;실제범주&#39;</span>, 
+                <span class="st">&#39;$P(y = 1 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, 
+                <span class="st">&#39;$P(y = 2 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
+                <span class="st">&#39;추정범주&#39;</span>),
+  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:lda-posterior-result">Table 1.5: </span>학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주</caption>
+<thead>
+<tr class="header">
+<th align="center">객체번호</th>
+<th align="right"><span class="math inline">\(x_1\)</span></th>
+<th align="right"><span class="math inline">\(x_2\)</span></th>
+<th align="center">실제범주</th>
+<th align="right"><span class="math inline">\(P(y = 1 | \mathbf{x})\)</span></th>
+<th align="right"><span class="math inline">\(P(y = 2 | \mathbf{x})\)</span></th>
+<th align="center">추정범주</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="center">1</td>
+<td align="right">0.9032273</td>
+<td align="right">0.0967727</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="center">2</td>
+<td align="right">0.0812446</td>
+<td align="right">0.9187554</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="center">2</td>
+<td align="right">0.6812088</td>
+<td align="right">0.3187912</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">0.0212004</td>
+<td align="right">0.9787996</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">0.9760579</td>
+<td align="right">0.0239421</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="center">1</td>
+<td align="right">0.9752562</td>
+<td align="right">0.0247438</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">0.3065644</td>
+<td align="right">0.6934356</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">0.0047713</td>
+<td align="right">0.9952287</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="center">2</td>
+<td align="right">0.0838007</td>
+<td align="right">0.9161993</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+<p>패키지 <code>MASS</code>내의 함수 <code>lda</code>를 통해 위 Table <a href="da.html#tab:lda-posterior-result">1.5</a> 결과를 간편하게 얻을 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+
+train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_cols</span>(
+  <span class="kw">predict</span>(lda_fit, train_df)<span class="op">$</span>posterior <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">paste0</span>(<span class="st">&quot;p&quot;</span>, <span class="kw">colnames</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_data_frame</span>()
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">predicted_class =</span> <span class="kw">predict</span>(lda_fit, .)<span class="op">$</span>class
+    )</code></pre></div>
+<pre><code>## # A tibble: 9 x 7
+##      id    x1    x2 class      p1     p2 predicted_class
+##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;          
+## 1     1     5     7 1     0.903   0.0968 1              
+## 2     2     4     3 2     0.0812  0.919  2              
+## 3     3     7     8 2     0.681   0.319  1              
+## 4     4     8     6 2     0.0212  0.979  2              
+## 5     5     3     6 1     0.976   0.0239 1              
+## 6     6     2     5 1     0.975   0.0247 1              
+## 7     7     6     6 1     0.307   0.693  2              
+## 8     8     9     6 2     0.00477 0.995  2              
+## 9     9     5     4 2     0.0838  0.916  2</code></pre>
+<p>위 결과들은 교재 <span class="citation">(전치혁 <a href="#ref-jun2012datamining">2012</a>)</span>의 예제 결과와는 다소 차이가 있는데, 이는 교재에서는 사전확률을 학습표본 내 비율 대신 <span class="math inline">\(\pi_1 = \pi_2 = 0.5\)</span>로 지정하였기 때문이다. 교재와 동일한 결과는 아래의 스크립트처럼 <code>lda</code> 함수 실행 시 사전확률 파리미터 <code>prior</code>의 값을 지정함으로써 얻을 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_fit_equal_prior &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df, <span class="dt">prior =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))
+
+train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_cols</span>(
+  <span class="kw">predict</span>(lda_fit_equal_prior, train_df)<span class="op">$</span>posterior <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">paste0</span>(<span class="st">&quot;p&quot;</span>, <span class="kw">colnames</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_data_frame</span>()
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">predicted_class =</span> <span class="kw">predict</span>(lda_fit_equal_prior, .)<span class="op">$</span>class
+    ) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(
+    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+    <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="kw">dim</span>(lda_posterior_result_df)[<span class="dv">2</span>]),
+    <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,
+                <span class="st">&#39;실제범주&#39;</span>, 
+                <span class="st">&#39;$P(y = 1 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, 
+                <span class="st">&#39;$P(y = 2 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
+                <span class="st">&#39;추정범주&#39;</span>),
+    <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주 (사전확률 = 0.5)&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:lda-posterior-result-equal-prior">Table 1.6: </span>학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주 (사전확률 = 0.5)</caption>
+<thead>
+<tr class="header">
+<th align="center">객체번호</th>
+<th align="right"><span class="math inline">\(x_1\)</span></th>
+<th align="right"><span class="math inline">\(x_2\)</span></th>
+<th align="center">실제범주</th>
+<th align="right"><span class="math inline">\(P(y = 1 | \mathbf{x})\)</span></th>
+<th align="right"><span class="math inline">\(P(y = 2 | \mathbf{x})\)</span></th>
+<th align="center">추정범주</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="center">1</td>
+<td align="right">0.9210538</td>
+<td align="right">0.0789462</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="center">2</td>
+<td align="right">0.0995341</td>
+<td align="right">0.9004659</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="center">2</td>
+<td align="right">0.7275992</td>
+<td align="right">0.2724008</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">0.0263608</td>
+<td align="right">0.9736392</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">0.9807542</td>
+<td align="right">0.0192458</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="center">1</td>
+<td align="right">0.9801065</td>
+<td align="right">0.0198935</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">0.3559269</td>
+<td align="right">0.6440731</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">0.0059571</td>
+<td align="right">0.9940429</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="center">2</td>
+<td align="right">0.1026013</td>
+<td align="right">0.8973987</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="lda-misclassification-cost" class="section level2">
 <h2><span class="header-section-number">1.5</span> 오분류비용을 고려한 분류규칙</h2>
+<p>위 Table <a href="da.html#tab:lda-posterior-result">1.5</a>의 객체 c(3, 7)와 같이 선형분류함수가 모든 객체의 범주를 정확하게 추정하지 못하고 오분류가 발생하는 경우가 있다. 이 때 다음과 같이 두 종류의 오분류 비용이 있다고 가정하자.</p>
+<ul>
+<li><span class="math inline">\(C(1 \, | \, 2)\)</span>: 범주 2를 1로 잘못 분류 시 초래 비용</li>
+<li><span class="math inline">\(C(2 \, | \, 1)\)</span>: 범주 1를 2로 잘못 분류 시 초래 비용</li>
+</ul>
+<p>이 때 총 기대 오분류 비용은 다음과 같다.</p>
+<span class="math display" id="eq:expected-misclassification-cost">\[\begin{equation}
+C(1 \, | \, 2) \pi_2 \int_{\mathbf{x} \in R_1} f_2(\mathbf{x}) d\mathbf{x} + C(2 \, | \, 1) \pi_1 \int_{\mathbf{x} \in R_2} f_1(\mathbf{x}) d\mathbf{x}
+\tag{1.9}
+\end{equation}\]</span>
+<p>여기에서 <span class="math inline">\(R_1 \subset \mathbb{R}^p, R_2 = \mathbb{R}^p - R_{1}\)</span>는 판별함수에 의해 각각 범주 1, 2로 분류되는 판별변수 영역을 나타낸다. 즉,</p>
+<span class="math display">\[\begin{equation*}
+\hat{y} = \begin{cases}
+    1, &amp; \text{if } \mathbf(x)) \in R_1  \\
+    2, &amp; \text{otherwise}
+\end{cases}
+\end{equation*}\]</span>
+<p>식 <a href="da.html#eq:expected-misclassification-cost">(1.9)</a>을 최소화하는 영역 <span class="math inline">\(R_1, R_2\)</span>는 아래와 같다.</p>
+<span class="math display">\[\begin{eqnarray*}
+R_1 &amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{f_1(\mathbf{x})}{f_2(\mathbf{x})} \ge \frac{\pi_2}{\pi_1} \left( \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right) \right\}\\
+R_2 &amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{f_1(\mathbf{x})}{f_2(\mathbf{x})} &lt; \frac{\pi_2}{\pi_1} \left( \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right) \right\}
+\end{eqnarray*}\]</span>
+<p>위 중 <span class="math inline">\(R_1\)</span>에 대한 식을 아래와 같이 단계적으로 전개할 수 있다.</p>
+<span class="math display">\[\begin{eqnarray*}
+R_1 &amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{\pi_1 f_1(\mathbf{x})}{\pi_2 f_2(\mathbf{x})} \ge \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right\}\\
+&amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{\frac{\pi_1 f_1(\mathbf{x})}{\pi_1 f_1(\mathbf{x}) + \pi_2 f_2(\mathbf{x})}}{\frac{\pi_2 f_2(\mathbf{x})}{\pi_1 f_1(\mathbf{x}) + \pi_2 f_2(\mathbf{x})}} \ge \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right\}\\
+&amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{P(y = 1 \, | \, \mathbf{x})}{P(y = 2 \, | \, \mathbf{x})} \ge \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right\}\\
+&amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, C(2 \, | \, 1) P(y = 1 \, | \, \mathbf{x}) \ge C(1 \, | \, 2) P(y = 2 \, | \, \mathbf{x}) \right\}
+\end{eqnarray*}\]</span>
+<p>따라서 오분류비용을 고려한 분류규칙은 1) 사후확률에 오분류 비용을 곱한 뒤, 2) 그 값이 큰 범주로 분류하여 오분류비용을 최소화한다.</p>
+<p>Table <a href="da.html#tab:lda-posterior-result">1.5</a>에 오분류비용 <span class="math inline">\(C(1 \, | \, 2) = 1, C(2 \, | \, 1) = 5\)</span>를 적용한 결과는 아래와 같이 구할 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+
+misclassification_cost &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>)
+
+lda_unequal_cost_result_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_cols</span>(
+  <span class="kw">predict</span>(lda_fit, train_df)<span class="op">$</span>posterior <span class="op">%*%</span><span class="st"> </span><span class="kw">diag</span>(misclassification_cost) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">as_data_frame</span>() <span class="op">%&gt;%</span>
+<span class="st">    `</span><span class="dt">names&lt;-</span><span class="st">`</span>(<span class="kw">paste0</span>(<span class="st">&quot;s&quot;</span>, lda_fit<span class="op">$</span>lev)) 
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">predicted_class =</span> <span class="kw">factor</span>(<span class="kw">if_else</span>(s1 <span class="op">&gt;=</span><span class="st"> </span>s2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+    )
+
+knitr<span class="op">::</span><span class="kw">kable</span>(
+  lda_unequal_cost_result_df,
+  <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="kw">dim</span>(lda_unequal_cost_result_df)[<span class="dv">2</span>]),
+  <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,
+                <span class="st">&#39;실제범주&#39;</span>, 
+                <span class="st">&#39;$C(2 </span><span class="ch">\\</span><span class="st">, | </span><span class="ch">\\</span><span class="st">, 1) P(y = 1 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, 
+                <span class="st">&#39;$C(1 </span><span class="ch">\\</span><span class="st">, | </span><span class="ch">\\</span><span class="st">, 2) P(y = 2 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
+                <span class="st">&#39;추정범주&#39;</span>),
+  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 오분류 비용을 고려한 LDA 적용 결과&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:lda-unequal-cost-result">Table 1.7: </span>학습표본에 대한 오분류 비용을 고려한 LDA 적용 결과</caption>
+<thead>
+<tr class="header">
+<th align="center">객체번호</th>
+<th align="right"><span class="math inline">\(x_1\)</span></th>
+<th align="right"><span class="math inline">\(x_2\)</span></th>
+<th align="center">실제범주</th>
+<th align="right"><span class="math inline">\(C(2 \, | \, 1) P(y = 1 | \mathbf{x})\)</span></th>
+<th align="right"><span class="math inline">\(C(1 \, | \, 2) P(y = 2 | \mathbf{x})\)</span></th>
+<th align="center">추정범주</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="center">1</td>
+<td align="right">4.5161363</td>
+<td align="right">0.0967727</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="center">2</td>
+<td align="right">0.4062232</td>
+<td align="right">0.9187554</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="center">2</td>
+<td align="right">3.4060438</td>
+<td align="right">0.3187912</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">0.1060019</td>
+<td align="right">0.9787996</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">4.8802897</td>
+<td align="right">0.0239421</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="center">1</td>
+<td align="right">4.8762808</td>
+<td align="right">0.0247438</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">1.5328222</td>
+<td align="right">0.6934356</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">0.0238567</td>
+<td align="right">0.9952287</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="center">2</td>
+<td align="right">0.4190033</td>
+<td align="right">0.9161993</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+<p>위 Table <a href="da.html#tab:lda-unequal-cost-result">1.7</a>에서 보는 바와 같이 오분류 객체는 3로, 이전 장의 Table <a href="da.html#tab:lda-posterior-result">1.5</a>에 비해 실제범주가 1인 객체를 더 정확하게 분류함을 확인할 수 있다. 범주 1인 객체를 범주 2로 분류할 때 발생하는 비용이 범주 2인 객체를 범주 1로 분류할 때 발생하는 비용보다 다섯 배나 크기 때문에, 오분류비용을 고려한 분류규칙은 실제 범주가 2인 객체를 범주 2로 정확하게 분류할 확률이 줄어든다 할지라도, 실제 범주가 1인 객체를 범주 1로 정확하게 분류하는 확률을 높이는 방향으로 학습된다.</p>
 </div>
 <div id="qda" class="section level2">
 <h2><span class="header-section-number">1.6</span> 이차판별분석</h2>
+<p>이차판별분석은 판별함수가 변수들에 대한 이차함수로 표현되는 경우인데, 각 범주에 대한 변수벡터 <span class="math inline">\(\mathbf{x}\)</span>가 서로 다른 분산-공분산행렬을 갖는 다변량 정규분포를 따를 때 의사결정론에 의한 분류규칙으로부터 유도된다.</p>
+<div id="qda-basic-script" class="section level3">
+<h3><span class="header-section-number">1.6.1</span> 기본 R 스크립트</h3>
+<p>Table <a href="da.html#tab:da-train-data-table">1.1</a>의 학습표본에 대해 이차판별분석을 적용하는 R 스크립트는 아래에 보이는 것과 같이 <code>MASS</code> 패키지의 <code>qda</code> 함수를 사용한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">qda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+
+<span class="kw">print</span>(qda_fit)</code></pre></div>
+<pre><code>## Call:
+## qda(class ~ x1 + x2, data = train_df)
+## 
+## Prior probabilities of groups:
+##         1         2 
+## 0.4444444 0.5555556 
+## 
+## Group means:
+##    x1  x2
+## 1 4.0 6.0
+## 2 6.6 5.4</code></pre>
+</div>
+<div id="qda-function" class="section level3">
+<h3><span class="header-section-number">1.6.2</span> 이차 판별함수</h3>
+<p>각 범주의 확률밀도함수는 아래와 같이 다변량 정규분포로 정의된다.</p>
+<span class="math display" id="eq:qda-mv-gaussian-dist">\[\begin{equation}
+f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma_k|^{1/2}} \exp \{ -frac{1}{2} \left(\mathbf{x} - \boldsymbol\mu_k\right)^\top \boldsymbol\Sigma_k^{-1} \left(\mathbf{x} - \boldsymbol\mu_k\right) \}
+\tag{1.10}
+\end{equation}\]</span>
+<p>위 식 <a href="da.html#eq:qda-mv-gaussian-dist">(1.10)</a>이 선형판별함수에서 사용한 식 <a href="da.html#eq:mv-gaussian-dist">(1.4)</a>과 다른 부분은 분산-공분산분포 <span class="math inline">\(\boldsymbol\Sigma_k\)</span>가 범주 <span class="math inline">\(k\)</span>에 대해 각각 정의된다는 점이다.</p>
+<p>이 경우 각 범주에 대한 판별함수는 아래와 같이 정의된다.</p>
+<span class="math display" id="eq:qda-discriminant-function">\[\begin{equation}
+u_k(\mathbf{x}) = - \frac{1}{2} (\mathbf{x} - \boldsymbol\mu_k)^\top \boldsymbol\Sigma^{-1} (\mathbf{x} - \boldsymbol\mu_k) - \frac{1}{2} \ln \left| \boldsymbol\Sigma_k \right| + \ln \pi_k
+\tag{1.11}
+\end{equation}\]</span>
+<p>데이터 행렬 <span class="math inline">\(X = (\mathbf{x}_1, \mathbf{x}_2, \cdots , \mathbf{x}_N)\)</span>의 각 객체에 대한 판별함수값을 얻는 함수를 아래와 같이 구현할 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qda_discriminant_func &lt;-<span class="st"> </span><span class="cf">function</span>(X, mu, Sigma, pi) {
+  Sigma_inv_sqrt &lt;-<span class="st"> </span><span class="kw">chol</span>(<span class="kw">solve</span>(Sigma))
+  <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="kw">rowSums</span>((<span class="kw">t</span>(X <span class="op">-</span><span class="st"> </span>mu) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(Sigma_inv_sqrt))<span class="op">^</span><span class="dv">2</span>) <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">det</span>(Sigma)) <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(pi)
+}</code></pre></div>
+</div>
+<div id="qda-discriminant-rule" class="section level3">
+<h3><span class="header-section-number">1.6.3</span> 이차판별함수에 의한 분류</h3>
+<p>분류기준은 선형판별분석과 마찬가지로 판별함수값이 큰 범주로 분류한다.</p>
+<span class="math display">\[\begin{equation*}
+\hat{y} = \begin{cases}
+    1, &amp; \text{if } u_1(\mathbf(x)) \ge u_2(\mathbf(x))  \\
+    2, &amp; \text{otherwise}
+\end{cases}
+\end{equation*}\]</span>
+<p>Table <a href="da.html#tab:da-train-data-table">1.1</a>의 학습표본에 대해 이차판별함수값을 계산하고 범주를 추정하면 아래와 같다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qda_discriminant_result_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(
+  <span class="dt">u1 =</span> <span class="kw">qda_discriminant_func</span>(
+      .[<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>(),
+      mu_hat[<span class="dv">1</span>, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>(),
+      S_within_group[[<span class="dv">1</span>]],
+      n_obs<span class="op">$</span>pi[<span class="dv">1</span>]
+      ),
+  <span class="dt">u2 =</span> <span class="kw">qda_discriminant_func</span>(
+      .[<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>(),
+      mu_hat[<span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>(),
+      S_within_group[[<span class="dv">2</span>]],
+      n_obs<span class="op">$</span>pi[<span class="dv">2</span>]
+      )
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">predicted_class =</span> <span class="kw">factor</span>(<span class="kw">if_else</span>(u1 <span class="op">&gt;=</span><span class="st"> </span>u2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+  )
+
+knitr<span class="op">::</span><span class="kw">kable</span>(
+  qda_discriminant_result_df,
+  <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="kw">dim</span>(qda_discriminant_result_df)[<span class="dv">2</span>]),
+  <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,
+                <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$u_1(</span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, <span class="st">&#39;$u_2(</span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
+                <span class="st">&#39;추정범주&#39;</span>),
+  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 QDA 적용 결과: 판별함수값 및 추정범주&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:qda-discriminant-result">Table 1.8: </span>학습표본에 대한 QDA 적용 결과: 판별함수값 및 추정범주</caption>
+<thead>
+<tr class="header">
+<th align="center">객체번호</th>
+<th align="right"><span class="math inline">\(x_1\)</span></th>
+<th align="right"><span class="math inline">\(x_2\)</span></th>
+<th align="center">실제범주</th>
+<th align="right"><span class="math inline">\(u_1(\mathbf{x})\)</span></th>
+<th align="right"><span class="math inline">\(u_2(\mathbf{x})\)</span></th>
+<th align="center">추정범주</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="center">1</td>
+<td align="right">-1.729447</td>
+<td align="right">-3.950639</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="center">2</td>
+<td align="right">-13.183993</td>
+<td align="right">-2.497284</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="center">2</td>
+<td align="right">-3.911266</td>
+<td align="right">-3.145402</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">-5.274902</td>
+<td align="right">-1.868806</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">-1.183993</td>
+<td align="right">-5.764060</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="center">1</td>
+<td align="right">-1.729447</td>
+<td align="right">-6.202685</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">-2.002175</td>
+<td align="right">-1.934273</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">-7.729447</td>
+<td align="right">-2.582391</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="center">2</td>
+<td align="right">-8.274902</td>
+<td align="right">-1.927726</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+<p>위 Table <a href="da.html#tab:qda-discriminant-result">1.8</a>에서 보듯이 모든 학습객체가 올바로 분류되고 있다.</p>
+<p>또한 선형판별분석의 경우와 마찬가지로 사후확률 비교를 통한 범주 분류를 수행할 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qda_posterior_result_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">f1 =</span> mvtnorm<span class="op">::</span><span class="kw">dmvnorm</span>(
+      .[<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],
+      mu_hat[<span class="dv">1</span>, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>(),
+      S_within_group[[<span class="dv">1</span>]]),
+    <span class="dt">f2 =</span> mvtnorm<span class="op">::</span><span class="kw">dmvnorm</span>(
+      .[<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],
+      mu_hat[<span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>(),
+      S_within_group[[<span class="dv">2</span>]]),
+    <span class="dt">f =</span> n_obs<span class="op">$</span>pi[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>f1 <span class="op">+</span><span class="st"> </span>n_obs<span class="op">$</span>pi[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>f2
+    ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">p1 =</span> n_obs<span class="op">$</span>pi[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>f1 <span class="op">/</span><span class="st"> </span>f,
+    <span class="dt">p2 =</span> n_obs<span class="op">$</span>pi[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>f2 <span class="op">/</span><span class="st"> </span>f
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">predicted_class =</span> <span class="kw">factor</span>(<span class="kw">if_else</span>(p1 <span class="op">&gt;=</span><span class="st"> </span>p2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(
+    id, x1, x2, class, p1, p2, predicted_class
+  )
+
+knitr<span class="op">::</span><span class="kw">kable</span>(
+  qda_posterior_result_df,
+  <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="kw">dim</span>(qda_posterior_result_df)[<span class="dv">2</span>]),
+  <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,
+                <span class="st">&#39;실제범주&#39;</span>, 
+                <span class="st">&#39;$P(y = 1 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, 
+                <span class="st">&#39;$P(y = 2 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
+                <span class="st">&#39;추정범주&#39;</span>),
+  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 QDA 적용 결과: 사후확률 및 추정범주&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:qda-posterior-result">Table 1.9: </span>학습표본에 대한 QDA 적용 결과: 사후확률 및 추정범주</caption>
+<thead>
+<tr class="header">
+<th align="center">객체번호</th>
+<th align="right"><span class="math inline">\(x_1\)</span></th>
+<th align="right"><span class="math inline">\(x_2\)</span></th>
+<th align="center">실제범주</th>
+<th align="right"><span class="math inline">\(P(y = 1 | \mathbf{x})\)</span></th>
+<th align="right"><span class="math inline">\(P(y = 2 | \mathbf{x})\)</span></th>
+<th align="center">추정범주</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="center">1</td>
+<td align="right">0.9021365</td>
+<td align="right">0.0978635</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="center">2</td>
+<td align="right">0.0000228</td>
+<td align="right">0.9999772</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="center">2</td>
+<td align="right">0.3173746</td>
+<td align="right">0.6826254</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="right">8</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">0.0321055</td>
+<td align="right">0.9678945</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">0.9898499</td>
+<td align="right">0.0101501</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="center">1</td>
+<td align="right">0.9887184</td>
+<td align="right">0.0112816</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="center">1</td>
+<td align="right">0.4830310</td>
+<td align="right">0.5169690</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="center">2</td>
+<td align="right">0.0057829</td>
+<td align="right">0.9942171</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="center">2</td>
+<td align="right">0.0017486</td>
+<td align="right">0.9982514</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+<p>이 또한 <code>MASS</code> 패키지의 <code>predict.qda</code> 함수를 통해 아래와 같이 동일한 결과값을 보다 간편하게 얻을 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_cols</span>(
+  <span class="kw">predict</span>(qda_fit, train_df)<span class="op">$</span>posterior <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">paste0</span>(<span class="st">&quot;p&quot;</span>, <span class="kw">colnames</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_data_frame</span>()
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">predicted_class =</span> <span class="kw">predict</span>(qda_fit, .)<span class="op">$</span>class
+    )</code></pre></div>
+<pre><code>## # A tibble: 9 x 7
+##      id    x1    x2 class        p1     p2 predicted_class
+##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;          
+## 1     1     5     7 1     0.902     0.0979 1              
+## 2     2     4     3 2     0.0000228 1.000  2              
+## 3     3     7     8 2     0.317     0.683  2              
+## 4     4     8     6 2     0.0321    0.968  2              
+## 5     5     3     6 1     0.990     0.0102 1              
+## 6     6     2     5 1     0.989     0.0113 1              
+## 7     7     6     6 1     0.483     0.517  2              
+## 8     8     9     6 2     0.00578   0.994  2              
+## 9     9     5     4 2     0.00175   0.998  2</code></pre>
+</div>
 </div>
 <div id="da-multiclass" class="section level2">
 <h2><span class="header-section-number">1.7</span> 세 범주 이상의 분류</h2>
