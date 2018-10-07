@@ -133,7 +133,7 @@ L = \prod_{i = 1}^{N} P_i^{y_i} (1 - P_i)^{1 - y_i}
 
 \begin{equation*}
 \frac{\exp(z)}{1 + \exp(z)} = \frac{1}{1 + \exp(-z)}
-\end{equaiton*}
+\end{equation*}
 
 임을 고려하면 아래와 같이 범주확률모형을 정의할 수 있다.
 
@@ -186,7 +186,8 @@ update_beta <- function(x, y, beta0 = 0, beta = rep(0, dim(x)[2]), alpha = 0.01)
   
   # intercept 외 회귀계수 이동량 계산
   beta_numerator <- sweep(x, MARGIN = 1, STATS = 1 - 2 * y, FUN = "*")
-  beta_update = apply(beta_numerator, MARGIN = 2, function(x) sum(x / denominator))
+  beta_update = apply(beta_numerator, MARGIN = 2, 
+                      function(x) sum(x / denominator))
 
   # 회귀계수 이동
   beta0 <- beta0 - alpha * beta0_update
@@ -199,11 +200,19 @@ update_beta <- function(x, y, beta0 = 0, beta = rep(0, dim(x)[2]), alpha = 0.01)
 위의 함수를 이용하여 아래 `estimate_beta`처엄 수렴할 때까지 회귀계수 추정값을 계속 이동시킨다. 본 경사하강법은 학습률 파라미터 `alpha`값에 따라 민감한 단점이 있으며, 특히 `alpha`값을 크게 설정할 경우에는 추정값이 수렴하지 않고 오히려 실제값에서 계속 멀어지는 현상이 발생하기도 한다. 이러한 단점을 보완하기 위한 여러 방법이 있으나, 본 장에서 자세한 설명은 생략하기로 한다. 
 
 ```{r}
-caltculate_loglik <- function(x, y, beta0 = 0, beta = rep(0, dim(x)[2])) {
-  sum(y * (beta0 + (x %*% beta))) - sum(log(1 + exp(beta0 + (x %*% beta))))
+caltculate_loglik <- function(x, y, 
+                              beta0 = 0, 
+                              beta = rep(0, dim(x)[2])) {
+  sum(y * (beta0 + (x %*% beta))) - 
+    sum(log(1 + exp(beta0 + (x %*% beta))))
 }
 
-estimate_beta <- function(x, y, beta0 = 0, beta = rep(0, dim(x)[2]), alpha = 0.01, conv_threshold = 1e-5, max_iter = 1e+5) {
+estimate_beta <- function(x, y, 
+                          beta0 = 0, 
+                          beta = rep(0, dim(x)[2]), 
+                          alpha = 0.01, 
+                          conv_threshold = 1e-5, 
+                          max_iter = 1e+5) {
   new_beta0 <- beta0
   new_beta <- beta
   conv <- FALSE
@@ -212,7 +221,9 @@ estimate_beta <- function(x, y, beta0 = 0, beta = rep(0, dim(x)[2]), alpha = 0.0
   while(i_iter < max_iter) {
     res <- update_beta(x, y, new_beta0, new_beta, alpha)
     
-    if(abs(caltculate_loglik(x, y, beta0, beta) - caltculate_loglik(x, y, res$beta0, res$beta)) < conv_threshold) {
+    if(abs(caltculate_loglik(x, y, beta0, beta)
+           - caltculate_loglik(x, y, res$beta0, res$beta))
+       < conv_threshold) {
       conv <- TRUE
       break
       }
@@ -279,7 +290,8 @@ w_i = P_i (1 - P_i)
 우선 회귀계수 추정값이 주어졌을 때 각 객체에 대한 확률값 $P_i$와 가중치 $w_i$를 구하는 함수 `calculate_weight`를 아래와 같이 구현해보자.
 
 ```{r}
-calculate_weight <- function(x, beta0 = 0, beta = rep(0, dim(x)[2])) {
+calculate_weight <- function(x, beta0 = 0, 
+                             beta = rep(0, dim(x)[2])) {
   # 각 객체의 y값이 1일 확률
   P <- (1 + exp(- beta0 - (x %*% beta)))^(-1) %>% drop()
 
@@ -295,7 +307,8 @@ calculate_weight <- function(x, beta0 = 0, beta = rep(0, dim(x)[2])) {
 
 ```{r}
 calculate_beta <- function(x, y, P, w) {
-  # 추정확률값이 0 이나 1인 경우 여전히 logit 함수가 정의되지 않으므로 회귀계수 결정에서 제외
+  # 추정확률값이 0 이나 1인 경우 
+  # 여전히 logit 함수가 정의되지 않으므로 회귀계수 결정에서 제외
   logit_derivative <- 1/P + 1/(1 - P)
   is_good <- !is.nan(logit_derivative)
   
@@ -303,10 +316,14 @@ calculate_beta <- function(x, y, P, w) {
   if(all(!is_good)) return(NULL)
   
   # 테일러 급수 계산
-  g_y <- log(P[is_good]) - log(1 - P[is_good]) + (y[is_good] - P[is_good]) * logit_derivative
+  g_y <- log(P[is_good]) - 
+    log(1 - P[is_good]) + 
+    (y[is_good] - P[is_good]) * logit_derivative
   
   # 가중치최소자승법을 이용한 추정
-  df <- bind_cols(as_tibble(x) %>% `colnames<-`(colnames(x)), tibble(g_y = g_y))
+  df <- bind_cols(as_tibble(x) %>% 
+                    `colnames<-`(colnames(x)), 
+                  tibble(g_y = g_y))
   lm(g_y ~ ., data = df, subset = is_good, weights = w)
 }
 ```

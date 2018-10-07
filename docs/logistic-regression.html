@@ -477,11 +477,9 @@ L = \prod_{i = 1}^{N} P_i^{y_i} (1 - P_i)^{1 - y_i}
 <p>식 <a href="logistic-regression.html#eq:logistic-function">(1.1)</a>과 <span class="math inline">\(P(y_i = 0 \,|\, \mathbf{x}_i) = 1 - P_i\)</span>, 그리고</p>
 <span class="math display">\[\begin{equation*}
 \frac{\exp(z)}{1 + \exp(z)} = \frac{1}{1 + \exp(-z)}
-\end{equaiton*}
-
-임을 고려하면 아래와 같이 범주확률모형을 정의할 수 있다.
-
-\begin{equation*}
+\end{equation*}\]</span>
+<p>임을 고려하면 아래와 같이 범주확률모형을 정의할 수 있다.</p>
+<span class="math display">\[\begin{equation*}
 P(y = y_i \,|\, \mathbf{x}_i, \beta_0, \boldsymbol\beta) = \frac{1}{1 + \exp\left((1 - 2y_i)(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij})\right)}
 \end{equation*}\]</span>
 <p>이에 따라 로그우도함수 <a href="logistic-regression.html#eq:binary-logistic-reg-loglik">(1.4)</a>는 아래와 같이 정리된다.</p>
@@ -520,7 +518,8 @@ f(\beta_0, \boldsymbol\beta) = \sum_{i = 1}^{N} \log \left(1 + \exp\left((1 - 2y
   
   <span class="co"># intercept 외 회귀계수 이동량 계산</span>
   beta_numerator &lt;-<span class="st"> </span><span class="kw">sweep</span>(x, <span class="dt">MARGIN =</span> <span class="dv">1</span>, <span class="dt">STATS =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>y, <span class="dt">FUN =</span> <span class="st">&quot;*&quot;</span>)
-  beta_update =<span class="st"> </span><span class="kw">apply</span>(beta_numerator, <span class="dt">MARGIN =</span> <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">/</span><span class="st"> </span>denominator))
+  beta_update =<span class="st"> </span><span class="kw">apply</span>(beta_numerator, <span class="dt">MARGIN =</span> <span class="dv">2</span>, 
+                      <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">/</span><span class="st"> </span>denominator))
 
   <span class="co"># 회귀계수 이동</span>
   beta0 &lt;-<span class="st"> </span>beta0 <span class="op">-</span><span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span>beta0_update
@@ -529,11 +528,19 @@ f(\beta_0, \boldsymbol\beta) = \sum_{i = 1}^{N} \log \left(1 + \exp\left((1 - 2y
   <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">beta0 =</span> beta0, <span class="dt">beta =</span> beta))
 }</code></pre></div>
 <p>위의 함수를 이용하여 아래 <code>estimate_beta</code>처엄 수렴할 때까지 회귀계수 추정값을 계속 이동시킨다. 본 경사하강법은 학습률 파라미터 <code>alpha</code>값에 따라 민감한 단점이 있으며, 특히 <code>alpha</code>값을 크게 설정할 경우에는 추정값이 수렴하지 않고 오히려 실제값에서 계속 멀어지는 현상이 발생하기도 한다. 이러한 단점을 보완하기 위한 여러 방법이 있으나, 본 장에서 자세한 설명은 생략하기로 한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caltculate_loglik &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">beta0 =</span> <span class="dv">0</span>, <span class="dt">beta =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(x)[<span class="dv">2</span>])) {
-  <span class="kw">sum</span>(y <span class="op">*</span><span class="st"> </span>(beta0 <span class="op">+</span><span class="st"> </span>(x <span class="op">%*%</span><span class="st"> </span>beta))) <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">log</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(beta0 <span class="op">+</span><span class="st"> </span>(x <span class="op">%*%</span><span class="st"> </span>beta))))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caltculate_loglik &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, 
+                              <span class="dt">beta0 =</span> <span class="dv">0</span>, 
+                              <span class="dt">beta =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(x)[<span class="dv">2</span>])) {
+  <span class="kw">sum</span>(y <span class="op">*</span><span class="st"> </span>(beta0 <span class="op">+</span><span class="st"> </span>(x <span class="op">%*%</span><span class="st"> </span>beta))) <span class="op">-</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">sum</span>(<span class="kw">log</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(beta0 <span class="op">+</span><span class="st"> </span>(x <span class="op">%*%</span><span class="st"> </span>beta))))
 }
 
-estimate_beta &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">beta0 =</span> <span class="dv">0</span>, <span class="dt">beta =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(x)[<span class="dv">2</span>]), <span class="dt">alpha =</span> <span class="fl">0.01</span>, <span class="dt">conv_threshold =</span> <span class="fl">1e-5</span>, <span class="dt">max_iter =</span> <span class="fl">1e+5</span>) {
+estimate_beta &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, 
+                          <span class="dt">beta0 =</span> <span class="dv">0</span>, 
+                          <span class="dt">beta =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(x)[<span class="dv">2</span>]), 
+                          <span class="dt">alpha =</span> <span class="fl">0.01</span>, 
+                          <span class="dt">conv_threshold =</span> <span class="fl">1e-5</span>, 
+                          <span class="dt">max_iter =</span> <span class="fl">1e+5</span>) {
   new_beta0 &lt;-<span class="st"> </span>beta0
   new_beta &lt;-<span class="st"> </span>beta
   conv &lt;-<span class="st"> </span><span class="ot">FALSE</span>
@@ -542,7 +549,9 @@ estimate_beta &lt;-<span class="st"> </span><span class="cf">function</span>(x, 
   <span class="cf">while</span>(i_iter <span class="op">&lt;</span><span class="st"> </span>max_iter) {
     res &lt;-<span class="st"> </span><span class="kw">update_beta</span>(x, y, new_beta0, new_beta, alpha)
     
-    <span class="cf">if</span>(<span class="kw">abs</span>(<span class="kw">caltculate_loglik</span>(x, y, beta0, beta) <span class="op">-</span><span class="st"> </span><span class="kw">caltculate_loglik</span>(x, y, res<span class="op">$</span>beta0, res<span class="op">$</span>beta)) <span class="op">&lt;</span><span class="st"> </span>conv_threshold) {
+    <span class="cf">if</span>(<span class="kw">abs</span>(<span class="kw">caltculate_loglik</span>(x, y, beta0, beta)
+           <span class="op">-</span><span class="st"> </span><span class="kw">caltculate_loglik</span>(x, y, res<span class="op">$</span>beta0, res<span class="op">$</span>beta))
+       <span class="op">&lt;</span><span class="st"> </span>conv_threshold) {
       conv &lt;-<span class="st"> </span><span class="ot">TRUE</span>
       <span class="cf">break</span>
       }
@@ -598,7 +607,8 @@ w_i = P_i (1 - P_i)
 \end{equation*}\]</span>
 <p>가중치와 회귀계수 추정값은 상호 영향을 미치므로, 수렴할 때까지 반복적으로 가중치와 회귀계수 추정값을 변화시키면서 최종 추정값을 찾아가는 방법이다.</p>
 <p>우선 회귀계수 추정값이 주어졌을 때 각 객체에 대한 확률값 <span class="math inline">\(P_i\)</span>와 가중치 <span class="math inline">\(w_i\)</span>를 구하는 함수 <code>calculate_weight</code>를 아래와 같이 구현해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calculate_weight &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">beta0 =</span> <span class="dv">0</span>, <span class="dt">beta =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(x)[<span class="dv">2</span>])) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calculate_weight &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">beta0 =</span> <span class="dv">0</span>, 
+                             <span class="dt">beta =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(x)[<span class="dv">2</span>])) {
   <span class="co"># 각 객체의 y값이 1일 확률</span>
   P &lt;-<span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="st"> </span>beta0 <span class="op">-</span><span class="st"> </span>(x <span class="op">%*%</span><span class="st"> </span>beta)))<span class="op">^</span>(<span class="op">-</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()
 
@@ -609,7 +619,8 @@ w_i = P_i (1 - P_i)
 }</code></pre></div>
 <p>그리고 확률추정값과 가중치가 주어졌을 때 회귀계수를 구하는 함수 <code>calculate_beta</code>를 아래와 같이 구현해보자. 여기서 회귀계수를 구하는 부분은 R의 선형회귀분석함수 <code>lm</code>을 사용한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calculate_beta &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, P, w) {
-  <span class="co"># 추정확률값이 0 이나 1인 경우 여전히 logit 함수가 정의되지 않으므로 회귀계수 결정에서 제외</span>
+  <span class="co"># 추정확률값이 0 이나 1인 경우 </span>
+  <span class="co"># 여전히 logit 함수가 정의되지 않으므로 회귀계수 결정에서 제외</span>
   logit_derivative &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>P <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>P)
   is_good &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.nan</span>(logit_derivative)
   
@@ -617,10 +628,14 @@ w_i = P_i (1 - P_i)
   <span class="cf">if</span>(<span class="kw">all</span>(<span class="op">!</span>is_good)) <span class="kw">return</span>(<span class="ot">NULL</span>)
   
   <span class="co"># 테일러 급수 계산</span>
-  g_y &lt;-<span class="st"> </span><span class="kw">log</span>(P[is_good]) <span class="op">-</span><span class="st"> </span><span class="kw">log</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>P[is_good]) <span class="op">+</span><span class="st"> </span>(y[is_good] <span class="op">-</span><span class="st"> </span>P[is_good]) <span class="op">*</span><span class="st"> </span>logit_derivative
+  g_y &lt;-<span class="st"> </span><span class="kw">log</span>(P[is_good]) <span class="op">-</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">log</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>P[is_good]) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span>(y[is_good] <span class="op">-</span><span class="st"> </span>P[is_good]) <span class="op">*</span><span class="st"> </span>logit_derivative
   
   <span class="co"># 가중치최소자승법을 이용한 추정</span>
-  df &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(<span class="kw">as_tibble</span>(x) <span class="op">%&gt;%</span><span class="st"> `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">colnames</span>(x)), <span class="kw">tibble</span>(<span class="dt">g_y =</span> g_y))
+  df &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(<span class="kw">as_tibble</span>(x) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                    `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">colnames</span>(x)), 
+                  <span class="kw">tibble</span>(<span class="dt">g_y =</span> g_y))
   <span class="kw">lm</span>(g_y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> df, <span class="dt">subset =</span> is_good, <span class="dt">weights =</span> w)
 }</code></pre></div>
 <p>위에서 정의한 두 함수 <code>calculate_weight</code>과 <code>calculate_beta</code>를 반복적으로 사용하여 Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">1.1</a>의 학습표본에 대한 로지스틱 회귀모형을 추정해보자. 모든 객체의 가중치 변화량이 1/10000 보다 작을 경우 모형추정이 수렴한 것으로 간주하도록 하자.</p>
