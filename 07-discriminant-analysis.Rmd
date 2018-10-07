@@ -669,3 +669,182 @@ train_df %>% bind_cols(
 
 ## 세 범주 이상의 분류 {#da-multiclass}
 
+
+### 기본 R 스크립트 {#mutliclass-da-basic-script}
+
+3개의 범주를 지닌 붓꽃(iris) 데이터에 대해 선형판별분석을 적용하는 R 스크립트는 아래와 같다. 본 예제에서는 각 범주별 50개 데이터 중 첫 30개 관측치만을 학습표본으로 삼아 판별함수를 유도한다.
+
+```{r}
+iris_train_df <- datasets::iris %>%
+  rename(x1 = Sepal.Length,
+         x2 = Sepal.Width,
+         x3 = Petal.Length,
+         x4 = Petal.Width,
+         class = Species) %>%
+  group_by(class) %>%
+  slice(1:30) %>%
+  ungroup() %>%
+  mutate(id = row_number())
+
+iris_lda_fit <- MASS::lda(class ~ . -id, iris_train_df)
+
+print(iris_lda_fit)
+```
+
+### 일반화된 판별함수 {#mutliclass-generalized-discriminant-function}
+
+$K (> 2)$개의 범주가 있는 경우에 대한 판별분석은 아래와 같이 일반화된다.
+
+- $\pi_k$: 범주 $k$에 속할 사전확률, $k = 1, 2, \cdots, K$
+- $C(k' \, | \, k) \ge 0$: 실제 범주 $k$에 속하는 데 범주 $k'$로 분류할 때 소요 비용 ($C(k' \, | \, k) = 0 \text{ if } k' = k$)
+- $f_k(\mathbf{x})$: 범주 $k$에 속하는 $\mathbf{x}$의 확률밀도함수
+- $R_k \subset \mathbb{R}^p$: 범주 $k$로 분류되는 $\mathbf{x}$의 영역
+- $P(k' \, | \, k) = \int_{\mathbf{x} \in R_{k'}} f_k(\mathbf{x}) d\mathbf{x}$: 실제범주 $k$에 속하는 데 범주 $k'$로 분류할 확률
+
+이 때, 총 기대 오분류 비용은 아래와 같다.
+
+\begin{equation*}
+\sum_{k = 1}^{K} \pi_k \sum_{k' \neq k} C(k' \, | \, k) \int_{\mathbf{x} \in R_{k'}} f_k(\mathbf{x}) d\mathbf{x}
+\end{equation*}
+
+따라서 분류문제는 위 총 기대 오분류 비용을 최소화하는 $R_1, \cdots, R_K$를 찾는 것이다.
+
+
+
+우선, 범주를 고려하지 않은 $\mathbf{x}$의 확률밀도함수는 아래와 같이 정의된다.
+
+\begin{equation*}
+f(\mathbf{x}) = \sum_{k=1}^{K} \pi_k f_k(\mathbf{x})
+\end{equation*}
+
+베이즈 정리에 의하여, 변수 $\mathbf{x}$가 주어졌을 때 범주 $k$에 속할 사후확률은 아래와 같다.
+
+\begin{equation*}
+P(y = k \,|\, \mathbf{x}) = \frac{\pi_k f_k(\mathbf{x})}{f(\mathbf{x})}
+\end{equation*}
+
+오분류비용이 동일한 경우에는 각 객체에 대해 위의 사후확률이 가장 큰 범주로 추정한다. 위 식에서
+
+\begin{equation*}
+P(y = k \,|\, \mathbf{x}) \propto \pi_k f_k(\mathbf{x})
+\end{equation*}
+
+이므로, 아래와 같이 범주가 추정된다.
+
+\begin{equation*}
+\hat{y} = {arg\,max}_{k} \pi_k f_k(\mathbf{x})
+\end{equation*}
+
+앞 장들에서 살펴본 것과 마찬가지로, 선형판별분석의 경우 각 범주의 확률밀도함수 $f_k(\mathbf{x})$가 동일 분산-공분산행렬을 가정하며, 이차판별분석의 경우 서로 다른 분산-공분산행렬을 가정한다.
+
+
+```{r, include = FALSE, eval = FALSE}
+mu_hat <- iris_train_df %>% 
+  group_by(class) %>%
+  summarize(x1 = mean(x1),
+            x2 = mean(x2),
+            x3 = mean(x3),
+            x4 = mean(x4)) %>%
+  arrange(class)
+
+S_within_group <- lapply(
+  unique(iris_train_df$class) %>% sort(), function(x) {
+    iris_train_df %>% filter(class == x) %>% 
+      select(x1:x4) %>% var()
+  }
+)
+
+n_obs <- iris_train_df %>%
+  group_by(class) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(pi = n / sum(n)) %>%
+  arrange(class)
+
+Sigma_hat <- pooled_variance(n_obs$n, S_within_group)
+
+var_list <- c("x1", "x2", "x3", "x4")
+
+iris_train_df %>%
+  {lapply(1:length(n_obs$class), 
+          function(x, df = .) {
+            df %>% mutate(
+              component = x,
+              f = mvtnorm::dmvnorm(
+                df[var_list],
+                mu_hat[x, var_list] %>% unlist(),
+                Sigma_hat
+              )
+            )
+          }
+  )} %>%
+  bind_rows() %>%
+  mutate(pi = n_obs$pi[component],
+         pif = pi * f) %>%
+  group_by(id) %>%
+  mutate(p = pif / sum(pif)) %>%
+  arrange(id, -p) %>%
+  slice(1) %>%
+  mutate(predicted_class = n_obs$class[component]) %>%
+  select(id, x1:x4, class, p, predicted_class)
+```
+
+아래 스크립트는 `MASS` 패키지의 `lda` 함수를 통해 각 범주에 속할 사후확률과 범주 추정값을 얻는 과정을 보여준다.
+
+```{r iris-lda}
+iris_lda_fit <- MASS::lda(class ~ x1 + x2 + x3 + x4, iris_train_df)
+
+iris_lda_result <- iris_train_df %>%
+  bind_cols(
+    predict(iris_lda_fit, .)$posterior %>%
+      as_data_frame()
+    ) %>%
+  mutate(
+    predicted_class = predict(iris_lda_fit, .)$class
+  )
+
+print(iris_lda_result)
+
+knitr::kable(
+  iris_lda_result %>% 
+    select(id, class, predicted_class,
+           setosa, versicolor, virginica) %>% 
+    filter(class != predicted_class),
+  booktabs = TRUE,
+  align = rep('r', 6),
+  col.names = c('객체번호', '실제범주', '추정범주',
+                'setosa', 'versicolor', 'virginica'),
+  caption = '붓꽃 학습표본에 대한 LDA 적용 결과 - 오분류 객체 사후 확률')
+```
+
+아래 스크립트는 `MASS` 패키지의 `qda` 함수를 통해 각 범주에 속할 사후확률과 범주 추정값을 얻는 과정을 보여준다.
+
+```{r iris-qda}
+iris_qda_fit <- MASS::qda(class ~ x1 + x2 + x3 + x4, iris_train_df)
+
+iris_qda_result <- iris_train_df %>%
+  bind_cols(
+    predict(iris_qda_fit, .)$posterior %>%
+      as_data_frame()
+    ) %>%
+  mutate(
+    predicted_class = predict(iris_qda_fit, .)$class
+  )
+
+knitr::kable(
+  iris_qda_result %>% 
+    select(id, class, predicted_class,
+           setosa, versicolor, virginica) %>% 
+    filter(class != predicted_class),
+  booktabs = TRUE,
+  align = rep('r', 6),
+  col.names = c('객체번호', '실제범주', '추정범주',
+                'setosa', 'versicolor', 'virginica'),
+  caption = '붓꽃 학습표본에 대한 QDA 적용 결과 - 오분류 객체 사후 확률')
+```
+
+
+위 결과에서 선형판별분석과 이차판별분석은 동일한 객체를 오분류한다. 해당 객체의 실제 범주에 대한 사후확률은 이차판별분석 결과에서 보다 높게 나타난다.
+
+
+
