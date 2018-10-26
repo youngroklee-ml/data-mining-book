@@ -7,7 +7,7 @@
 본 장에서 필요한 R 패키지들은 아래와 같다.
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-required_packages <- c("tidyverse", "stats", "nnet", "VGAM")
+required_packages <- c("tidyverse", "stats", "nnet", "MASS", "VGAM")
 lapply(required_packages, function(x) {
   tibble(package=x, version=packageDescription(x, fields = c("Version"))[1])
 }) %>% 
