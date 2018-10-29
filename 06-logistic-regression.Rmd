@@ -1,8 +1,12 @@
 # 로지스틱 회귀분석 {#logistic-regression}
 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
 로지스틱 회귀분석(logistic regression)은 종속변수가 통상 2개의 범주(있음/없음, 불량/양호, 합격/불합격 등)를 다루는 모형을 지칭하나, 3개 이상의 범주를 다루기도 한다. 후자의 경우는 다시 서열형(ordinal) 데이터와 명목형(nominal) 데이터인 경우에 따라 서로 다른 모형이 사용된다. 
 
-## 필요 R 패키지 설치
+## 필요 R 패키지 설치 {#logistic-packages-install}
 
 본 장에서 필요한 R 패키지들은 아래와 같다.
 

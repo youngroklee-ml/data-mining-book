@@ -1,11 +1,14 @@
 # 서포트 벡터 머신 {#svm}
 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
 
 ## 개요 {#svm-overview}
 
 서포트 벡터 머신(suuport vector machine; 이하 SVM)은 기본적으로 두 범주를 갖는 객체들을 분류하는 방법이다. 물론 세 범주 이상의 경우로 확장이 가능하다.
 
-## 필요 R package 설치
+## 필요 R package 설치 {#svm-packages-install}
 
 본 장에서 필요한 R 패키지들은 아래와 같다.
 

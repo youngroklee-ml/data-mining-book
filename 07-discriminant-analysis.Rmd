@@ -1,10 +1,14 @@
 # 판별분석 {#da}
 
-## 개요
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+## 개요 {#da-overview}
 
 판별분석(discriminant analysis)은 범주들을 가장 잘 구별하는 변수들의 하나 또는 다수의 함수를 도출하여 이를 기반으로 분류규칙을 제시한다. 본 장에서는 변수의 분포에 대한 가정이 필요 없는 피셔(Fisher) 방법과 다변량 정규분포를 가정하는 선형 및 비선형 판별분석을 설명한다.
 
-## 필요 R 패키지 설치
+## 필요 R 패키지 설치 {#da-packages-install}
 
 본 장에서 필요한 R 패키지들은 아래와 같다.
 
