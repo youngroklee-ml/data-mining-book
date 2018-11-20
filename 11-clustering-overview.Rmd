@@ -1,0 +1,505 @@
+# 군집분석 개요 {#clustering-overview}
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+하나의 객체(object)가 여러 속성(attribute)을 갖는다 하고, 이러한 객체가 다수 있다고 하자. 군집분석이란 유사한 속성들을 갖는 객체들을 묶어 전체의 객체들을 몇 개의 그룹 또는 군집(cluster)으로 나누는 것을 말한다.
+
+## 필요 R 패키지 설치 {#clusering-overview-packages-install}
+
+본 장에서 필요한 R 패키지들은 아래와 같다.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+required_packages <- c("tidyverse", "stats", "corrr", "cluster")
+lapply(required_packages, function(x) {
+  tibble(package=x, version=packageDescription(x, fields = c("Version"))[1])
+}) %>% 
+  bind_rows() %>%
+  knitr::kable()
+```
+
+
+## 군집분석 기법 {#clustering-method}
+
+전체 객체의 개수를 $n$이라 하고, $i$번째 객체를 $O_i$라 할 때, 전체 객체의 집합 $S$는 다음과 같다.
+
+\begin{equation*}
+S = \{O_1, \cdots, O_n\}
+\end{equation*}
+
+군집분석이란 집합 $S$를 서로 배타적인 $K$개의 부분집합 $C_1, \cdots, C_K$로 나누는 것이다. 따라서 다음이 성립한다.
+
+\begin{equation*}
+\begin{split}
+C_i \cap C_j &=& \emptyset, \, 1 \leq i \neq j \leq K\\
+\cup_{i = 1}^{K} C_i &=& S
+\end{split}
+\end{equation*}
+ 
+이 때, $C_j$를 $j$번째 군집(또는 군집 $j$)이라 한다. 각 객체는 한 군집에만 속하여야 하며, 한 군집에는 적어도 하나의 객체를 포함하여야 한다. 군집들을 다음과 같이 모아놓은 것을 군집결과(clustering result) 또는 군집해(clustering solution)라 한다.
+
+\begin{equation*}
+C = \{C_1, \cdots, C_K\}
+\end{equation*}
+
+군집방법(clustering method)은 무수히 많다. 다음 장들에서 아래에 분류된 방법들을 보다 자세히 다룬다.
+
+- 계층적 방법(hierarchical method)
+    + 집괴법(agglomerative method)
+    + 분리법(divisive method)
+- 비계층적 방법(non-hierarchical method)
+
+
+## 객체 간의 유사성 척도 {#object-similarity-metric}
+
+### 거리 관련 척도 {#object-distance-metric}
+
+각 객체가 $p$개의 속성 또는 변수(variable)를 갖는다 하고, $j$번째 변수의 객체 $i$에 대한 관측치를 $x_{ji}$라 하면, 객체 $i$의 $p$차원 공간에서의 좌표는 아래와 같은 열벡터로 표현된다.
+
+\begin{equation*}
+\mathbf{x}_{i} = [x_{1i} \, x_{2i} \, \cdots \, x_{pi}]^\top
+\end{equation*}
+
+이 때, 객체 $i$와 객체 $j$의 거리를 나타내는 척도들은 아래와 같은 것들이 있다.
+
+
+- 유클리드 거리(Euclidean distance)
+
+\begin{eqnarray*}
+d(\mathbf{x}_i, \mathbf{x}_j) &=& \sqrt{\sum_{a = 1}^{p} \left(x_{ai} - x_{aj}\right)^2}\\
+&=& \sqrt{(\mathbf{x}_i - \mathbf{x}_j)^\top (\mathbf{x}_i - \mathbf{x}_j)}
+\end{eqnarray*}
+
+- 맨하탄 거리(Manhattan distance)
+
+\begin{equation*}
+d(\mathbf{x}_i, \mathbf{x}_j) = \sum_{a = 1}^{p} \left| x_{ai} - x_{aj} \right|
+\end{equation*}
+
+- 민코프스키 거리(Minkowski distance)
+
+\begin{equation*}
+d(\mathbf{x}_i, \mathbf{x}_j) = \left( \sum_{a = 1}^{p} \left| x_{ai} - x_{aj} \right|^m \right)^\frac{1}{m}
+\end{equation*}
+
+- 표준 유클리드 거리(standardized Euclidean distance)
+
+\begin{eqnarray*}
+d(\mathbf{x}_i, \mathbf{x}_j) &=& \sqrt{\sum_{a = 1}^{p} \left(\frac{x_{ai} - x_{aj}}{s_a}\right)^2}\\
+&=& \sqrt{(\mathbf{x}_i - \mathbf{x}_j)^\top \mathbf{S}_d^{-1} (\mathbf{x}_i - \mathbf{x}_j)}
+\end{eqnarray*}
+
+여기서
+
+\begin{eqnarray*}
+\mathbf{S}_d &=& \begin{bmatrix}
+s_1^2 & 0 & \dots & 0\\
+0 & s_2^2 & \dots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \dots & s_p^2
+\end{bmatrix}\\
+s_a &=& \sqrt{\frac{\sum_{i = 1}^{n} \left(x_{ai} - \bar{x}_a \right)^2}{n - 1}}\\
+\bar{x}_a &=& \frac{1}{n} \sum_{i = 1}^{n} x_{ai}
+\end{eqnarray*}
+
+
+- 마할라노비스 거리(Mahalanobis distance)
+
+\begin{equation*}
+d(\mathbf{x}_i, \mathbf{x}_j) = \sqrt{(\mathbf{x}_i - \mathbf{x}_j)^\top \mathbf{S}^{-1} (\mathbf{x}_i - \mathbf{x}_j)}
+\end{equation*}
+
+여기서
+
+\begin{eqnarray*}
+\mathbf{S} &=& \begin{bmatrix}
+s_1^2 & s_{12} & \dots & s_{1p}\\
+s_{21} & s_2^2 & \dots & s_{2p}\\
+\vdots & \vdots & \ddots & \vdots\\
+s_{p1} & s_{p2} & \dots & s_p^2
+\end{bmatrix}\\
+s_{ab} &=& \frac{\sum_{i = 1}^{n} (x_{ai} - \bar{x}_a)(x_{bi} - \bar{x}_b)}{n - 1}\\
+\bar{x}_a &=& \frac{1}{n} \sum_{i = 1}^{n} x_{ai}
+\end{eqnarray*}
+
+
+위와 같은 거리 척도들을 이용하여 객체들의 모든 쌍에 대한 거리를 다음과 같이 $(n \times n)$ 행렬 $\mathbf{D}$로 나타낼 수 있다.
+
+\begin{equation*}
+\mathbf{D} = \begin{bmatrix}
+0 & d(\mathbf{x}_1, \mathbf{x}_2) & \dots & d(\mathbf{x}_1, \mathbf{x}_n)\\
+d(\mathbf{x}_2, \mathbf{x}_1) & 0 & \dots & d(\mathbf{x}_2, \mathbf{x}_n)\\
+\vdots & \vdots & \ddots & \vdots \\
+d(\mathbf{x}_n, \mathbf{x}_1) & d(\mathbf{x}_n, \mathbf{x}_2) & \dots & 0
+\end{bmatrix}
+\end{equation*}
+
+아래 표는 가정에서 PC를 사용하는 10명에 대한 나이($x_1$), PC 경험연수($x_2$), 주당 사용시간($x_3$)을 나타낸 것이다.
+
+```{r pc-user}
+df <- tribble(
+  ~id, ~x1, ~x2, ~x3,
+  1, 20, 6, 14,
+  2, 28, 8, 13,
+  3, 42, 14, 6,
+  4, 35, 12, 7,
+  5, 30, 15, 7,
+  6, 30, 7, 15,
+  7, 45, 13, 6,
+  8, 46, 4, 2,
+  9, 51, 3, 3,
+  10, 41, 3, 2
+)
+
+df %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r', 'r'),
+    col.names = c('객체번호', '나이($x_1$)', 'PC 경험연수($x_2$)', '주당 사용시간($x_3$)'),
+    caption = 'PC 사용 데이터'
+  )
+```
+
+R 함수 `dist`를 이용하여 다양한 거리를 계산할 수 있다.
+
+우선 객체 2로부터 객체 4, 5까지의 유클리드 거리는 아래와 같이 계산된다.
+
+```{r euclidean-dist}
+dist(df[, c("x1", "x2", "x3")], upper = TRUE) %>%
+  broom::tidy() %>%
+  filter(
+    item1 == 2,
+    item2 %in% c(4, 5)
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r'),
+    col.names = c('객체번호(from)', '객체번호(to)', '거리'),
+    caption = '유클리드 거리'
+  )
+```
+
+위 표에서 나타나는 바와 같이, 객체 2를 기준으로 할 때, 객체 4가 객체 5보다 멀리 떨어져있다고 할 수 있다.
+
+표준화된 거리를 계산하기 위해서는 데이터를 함수 `scale`을 이용하여 데이터를 표준화한 뒤 `dist`함수를 적용한다.
+
+```{r std-euclidean-dist}
+dist(scale(df[, c("x1", "x2", "x3")]), upper = TRUE) %>%
+  broom::tidy() %>%
+  filter(
+    item1 == 2,
+    item2 %in% c(4, 5)
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r'),
+    col.names = c('객체번호(from)', '객체번호(to)', '거리'),
+    caption = '표준 유클리드 거리'
+  )
+```
+
+표준화된 거리로는 객체 5가 객체 4보다 객체 2에서 멀리 떨어짐을 알 수 있다.
+
+유클리드 거리 외에 민코프스키 거리, 마할라노비스 거리 등은 `dist`함수의 파라미터 `method` 및 `p`값을 설정하여 계산할 수 있다.
+
+
+
+### 상관계수 관련 척도 {#object-correlation-metric}
+
+또 다른 유사성 척도로 다음과 같은 객체 간의 상관계수를 사용할 수 있다.
+
+\begin{equation}
+sim(\mathbf{x}_i, \mathbf{x}_j) = r_{ij} = \frac{\sum_{a = 1}^{p} (x_{ai} - m_{i})(x_{aj} - m_{j})}{\sqrt{\sum_{a = 1}^{p} (x_{ai} - m_{i})^2} \sqrt{\sum_{a = 1}^{p} (x_{aj} - m_{j})^2}}
+(\#eq:object-correlation)
+\end{equation}
+
+여기서 $m_i$는 객체 $i$의 평균값으로 다음과 같다.
+
+\begin{equation*}
+m_{i} = \frac{1}{p} \sum_{a = 1}^{p} x_{ai}
+\end{equation*}
+
+식 \@ref(eq:object-correlation)은 -1에서 1 사이의 값을 가지며, 값이 클수록 두 객체의 유사성이 크다고 할 수 있다. 여기서도 데이터를 변수별로 표준화한 후 상관계수를 산출함을 추천한다.
+
+아래는 Table \@ref(tab:pc-user)의 객체 1과 객체 6, 8간의 상관계수를 계산한 것이다.
+
+```{r std-correlation-similarity}
+t(scale(df[, c("x1", "x2", "x3")])) %>% 
+  corrr::correlate() %>% 
+  corrr::stretch(na.rm = TRUE) %>%
+  mutate(
+    x = as.integer(gsub("V", "", x)),
+    y = as.integer(gsub("V", "", y))
+  ) %>%
+  filter(
+    x == 1,
+    y %in% c(6, 8)
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r'),
+    col.names = c('객체번호(from)', '객체번호(to)', '상관계수'),
+    caption = '객체 간 상관계수'
+  )
+```
+
+한편, 상관계수로부터 거리 개념의 비유사성 척도를 원하면 다음의 척도를 사용할 수 있다.
+
+\begin{equation*}
+d(\mathbf{x}_i, \mathbf{x}_j) = 1 - r_{ij}
+\end{equation*}
+
+
+```{r std-correlation-dissimilarity}
+t(scale(df[, c("x1", "x2", "x3")])) %>% 
+  corrr::correlate() %>% 
+  corrr::stretch(na.rm = TRUE) %>%
+  mutate(
+    x = as.integer(gsub("V", "", x)),
+    y = as.integer(gsub("V", "", y)),
+    d = 1 - r
+  ) %>%
+  select(-r) %>%
+  filter(
+    x == 1,
+    y %in% c(6, 8)
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r'),
+    col.names = c('객체번호(from)', '객체번호(to)', '거리'),
+    caption = '상관계수 기반 비유사성 척도'
+  )
+```
+
+
+## 범주형 객체의 유사성 척도 {#category-similarity-metric}
+
+객체의 변수(속성)들 중 일부 또는 전체가 범주형인 경우에는 유사성 척도를 다소 다르게 정의할 필요가 있다. 범주형 변수는 다시 이분형(binary), 서열형(ordinal), 명목형(nominal)으로 구분된다. 이분형은 서열형 또는 명목형에 속할 수도 있으나, 통상적으로 별도로 구분하고 있다.
+
+### 이분형 변수의 경우 {#binary-similarity-metric}
+
+이분형 변수란 변수가 취하는 값이 두 개인 것을 의미하며, 통상 0과 1을 부여한다. 이 경우 사용되는 유사성 척도는 다양하나, 단순매칭(simple matching)과 자카드(Jaccard) 척도가 주로 사용된다.
+
+- 단순매칭
+
+객체 $\mathbf{x}_i$와 $\mathbf{x}_j$에 대하여 $k$번째 변수가 이분형일 때, 해당 변수값에 대한 유사성을 아래와 같이 계산한다.
+
+\begin{equation*}
+sim(x_{ki}, x_{kj}) = \begin{cases}
+1 & \text{if } x_{ki} = x_{kj}\\
+0 & \text{if } x_{ki} \neq x_{kj}
+\end{cases}
+\end{equation*}
+
+객체의 $p$개의 모든 변수가 이분형일 때, 두 객체의 유사성은 아래와 같이 변수별 유사성의 평균으로 계산한다.
+
+\begin{equation*}
+sim(\mathbf{x}_i, \mathbf{x}_j) = \frac{1}{p} \sum_{k = 1}^{p} sim(x_{ki}, x_{kj})
+\end{equation*}
+
+
+- 자카드(Jaccard) 척도
+
+자카드 척도에서는 변수값을 특정 속성이 나타나는(presence) 경우에 1, 나타나지 않는(absence) 경우 0으로 표현할 때, 두 객체에서 모두 나타나는 경우에만 유사한 것으로 평가한다. 결국, 이 척도에서는 두 객체에서 특정 속성이 0인 경우에는 전반적 유사성 척도 산출에 포함되지 않고 무시된다.
+
+\begin{equation*}
+sim(x_{ki}, x_{kj}) = \begin{cases}
+1 & \text{if } x_{ki} = x_{kj} = 1\\
+\text{ignored} & \text{if } x_{ki} = x_{kj} = 0\\
+0 & \text{if } x_{ki} \neq x_{kj}
+\end{cases}
+\end{equation*}
+
+따라서, 객체의 $p$개의 모든 변수가 이분형일 때, 두 객체의 유사성은 아래와 같이 계산한다.
+
+\begin{equation*}
+sim(\mathbf{x}_i, \mathbf{x}_j) = \frac{\sum_{k: x_{ki} + x_{kj} > 0} sim(x_{ki}, x_{kj})}{\sum_{k: x_{ki} + x_{kj} > 0} 1}
+\end{equation*}
+
+
+다음은 3명에 대한 건강 관련 문진에 대한 답을 나타낸 자료이다.
+
+```{r health-question-df}
+df <- tribble(
+  ~id, ~x1, ~x2, ~x3, ~x4, ~x5,
+  1, 1, 1, 1, 0, 1,
+  2, 1, 0, 1, 0, 0,
+  3, 0, 1, 0, 1, 0
+)
+
+df %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r', 'r', 'r', 'r'),
+    col.names = c('객체번호', '운동여부($x_1$)', '음주여부($x_2$)', '흡연여부($x_3$)', '가족력여부($x_4$)', '고혈압여부($x_5$)'),
+    caption = '건강 문진'
+  )
+```
+
+
+객체 1과 2의 단순매칭에 의한 유사성은 다음과 같다.
+
+```{r binary-simplematching}
+similarity_simplematching <- function(vec_1, vec_2) {
+  sum(1 - abs(vec_1 - vec_2)) / length(vec_1)
+}
+
+df_pairs <- df %>%
+  select(id) %>%
+  expand(id_1 = id, id_2 = id) %>%
+  filter(id_1 != id_2)
+
+df_pairs$similarity <- df_pairs %>% 
+  inner_join(df, by=c("id_1" = "id")) %>%
+  inner_join(df, by=c("id_2" = "id")) %>%
+  rowwise() %>%
+  do(similarity = similarity_simplematching(
+    .[c("x1.x", "x2.x", "x3.x", "x4.x", "x5.x")] %>% unlist(),
+    .[c("x1.y", "x2.y", "x3.y", "x4.y", "x5.y")] %>% unlist())) %>%
+  unlist()
+
+df_pairs %>%
+  filter(
+    id_1 == 1,
+    id_2 == 2
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r'),
+    col.names = c('객체번호(from)', '객체번호(to)', '유사도'),
+    caption = '단순매칭 유사성 척도'
+  )
+```
+
+한편 자카드 유사성은 아래와 같이 함수 `dist`를 이용하여 구할 수 있다. 함수 `dist`는 거리 척도 함수로, 자카드 기반 거리의 경우 $d(\mathbf{x}_i, \mathbf{x}_j) = 1 - sim(\mathbf{x}_i, \mathbf{x}_j)$를 계산한다. 따라서, 거리값에 기반하여 자카드 유사성을 구하고 싶은 경우, $sim(\mathbf{x}_i, \mathbf{x}_j) = 1 - d(\mathbf{x}_i, \mathbf{x}_j)$를 계산하면 된다.
+
+```{r binary-jaccard}
+dist(df[, -1], method = "binary", upper = TRUE) %>%
+  broom::tidy() %>%
+  mutate(similarity = 1 - distance) %>%
+  select(-distance) %>%
+  filter(
+    item1 == 1,
+    item2 == 2
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r'),
+    col.names = c('객체번호(from)', '객체번호(to)', '유사도'),
+    caption = '자카드 유사성 척도'
+  )
+```
+
+
+
+### 서열형 변수의 경우 {#ordinal-similarity-metric}
+
+객체의 $k$번째 변수가 서열형이고 $1, 2, \cdots, M_k$ 중 한 값을 갖는다고 할 때, 거리척도로는 우선 아래와 같은 직접적 방법이 있다.
+
+\begin{equation*}
+d(x_{ki}, x_{kj}) = \frac{|x_{ki} - x_{kj}|}{M_k - 1}
+\end{equation*}
+
+위에서 분모는 해당 변수가 취할 수 있는 범위(range)를 나타내며, 따라서 위의 값은 0에서 1 사이 값을 갖는다. 이 방법을 사용할 경우, 객체의 모든 변수가 서열형이면 두 객 체의 거리는 다음과 같다.
+
+\begin{equation*}
+d(\mathbf{x}_i, \mathbf{x}_j) = \sum_{k = 1}^{p} d(x_{ki}, x_{kj}) = \sum_{k = 1}^{p} \frac{|x_{ki} - x_{kj}|}{M_k - 1}
+\end{equation*}
+
+또 다른 방법은 우선 각 변수를 0에서 1 사이의 값으로 변환한 후, 연속형 변수의 경우와 같이 거리척도를 산출하는 것이다. 이 경우 객체 $i$의 $k$번째 변수는 다음과 같이 변환한다.
+
+\begin{equation*}
+x_{ki}' = \frac{x_{ki} - 1}{M_k - 1}
+\end{equation*}
+
+
+### 명목형 변수의 경우 {#nominal-similarity-metric}
+
+두 객체에 대한 $k$번째 변수가 명목형인 경우, 이분형 변수의 경우와 같이 두 변수가 일치하면 1, 그렇지 않으면 0으로 유사성을 평가한다. 즉,
+
+\begin{equation*}
+sim(x_{ki}, x_{kj}) = \begin{cases}
+1 & \text{if } x_{ki} = x_{kj}\\
+0 & \text{if } x_{ki} \neq x_{kj}
+\end{cases}
+\end{equation*}
+
+$p$개의 모든 변수가 명목형인 경우, 두 객체 간유사성은 다음과 같다.
+
+\begin{equation*}
+sim(\mathbf{x}_i, \mathbf{x}_j) = \frac{1}{p} \sum_{k: x_{ki} = x_{kj}} 1
+\end{equation*}
+
+
+### 혼합형의 경우 {#mixed-similarity-metric}
+
+두 객체의 유사성 또는 비유사성을 산출하는 데 각 변수의 형태가 연속형, 이분형, 서열형, 명목형 등으로 다른 경우에는, 각 변수의 형태에 따라 위에서 언급한 바와 같이 각기 다른 방법으로 유사성 또는 비유사성을 평가한 후, 최종적으로 합 또는 평균으로 도출하게 된다. 따라서 편의상 각 변수에 대하여 0에서 1 사이의 값을 갖는 척도를 사용하고 있다. 위에서 언급한 이분형, 서열형, 명목형인 경우에는 이미 0에서 1 사이의 유사성 척도가 제시되었다.
+
+연속형의 경우, 0에서 1 사이의 값을 갖는 거리(비유사성)의 척도로는 아래와 같이 각 변수의 범위를 활용하는 방법을 사용한다.
+
+\begin{equation*}
+d(x_{ki}, x_{kj}) = \frac{|x_{ki} - x_{kj}|}{R_k}
+\end{equation*}
+
+여기서 $R_k$는 $k$번째 변수의 범위(=최대값 - 최소값)를 의미한다. 유사성 척도를 원할 경우에는 다음과 같이 산출할 수 있다.
+
+\begin{equation*}
+sim(x_{ki}, x_{kj}) = 1 - d(x_{ki}, x_{kj})
+\end{equation*}
+
+결국, 여러 형태의 변수가 혼합되어 있는 경우, 각 변수에 대한 유사성 척도가 산출되어 있을 때, 두 객체의 유사성은 다음과 같이 계산한다.
+
+\begin{equation*}
+sim(\mathbf{x}_i, \mathbf{x}_j) = \frac{1}{p} \sum_{k = 1}^{p} sim(x_{ki}, x_{kj})
+\end{equation*}
+
+또는 각 변수의 거리가 산출도니 경우, 두 객체의 거리는 다음과 같다.
+
+\begin{equation*}
+d(\mathbf{x}_i, \mathbf{x}_j) = \frac{1}{p} \sum_{k = 1}^{p} d(x_{ki}, x_{kj})
+\end{equation*}
+
+위에 설명한 혼합형 거리 척도는 @gower1971general 에 기반하며, R에서는 `cluster` 패키지의 `daisy` 함수를 이용하여 구할 수 있다. `daisy` 함수는 연속형 및 서열형 변수의 경우 입력 데이터에 기반하여 range를 계산하므로, 입력 데이터의 최소값, 최대값이 아닌 이론적 최소값, 최대값에 의하여 range를 계산하고 싶은 경우에는 명시적으로 각 변수의 최소값과 최대값을 나타내는 데이터를 입력 데이터에 추가하여야 한다.
+
+```{r mixed-gower}
+df <- tribble(
+  ~id, ~x1, ~x2, ~x3, ~x4, ~x5,
+  1, "남", 46, "공무원", 35000, 2,
+  2, "여", 28, "은행원", 51000, 3,
+  3, "여", 32, "주부", 46000, 4
+) %>%
+  mutate(
+    x1 = factor(x1, levels = c("남", "여")),
+    x3 = factor(x3),
+    x5 = factor(x5, levels = c(1:5), ordered = TRUE)
+  )
+
+n_obs <- nrow(df)
+
+range_df <- tibble(
+    x2 = c(25, 70),
+    x4 = c(0, 150000),
+    x5 = factor(c(1, 5), levels = c(1:5), ordered = TRUE)
+  )
+
+df %>%
+  bind_rows(range_df) %>%
+  select(-id) %>%
+  cluster::daisy() %>%
+  as.dist() %>%
+  broom::tidy() %>%
+  filter(
+    item1 <= n_obs,
+    item2 <= n_obs
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r'),
+    col.names = c('객체번호(from)', '객체번호(to)', '거리'),
+    caption = '혼합형 Gower 거리'
+  )
+```
+
+

@@ -55,13 +55,14 @@ Table \@ref(tab:binary-logistic-reg-train-data)와 같이 세 개의 독립변�
 
 아래와 같이 `glm` 함수를 이용하여 로지스틱 회귀모형을 간편하게 추정할 수 있다.
 
+
 ```{r binary-logistic-reg-coef}
 glm_fit <- glm(y ~ x1 + x2 + x3, family = binomial(link = "logit"), data = train_df)
 
 knitr::kable(
   glm_fit %>%  broom::tidy(),
   booktabs = TRUE,
-  caption = 'Table \\@ref(tab:binary-logistic-reg-train-data)에 대한 Logistic Regression 결과'
+  caption = "Table \\@ref(tab:binary-logistic-reg-train-data)에 대한 Logistic Regression 결과"
   )
 ```
 
