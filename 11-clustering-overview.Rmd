@@ -6,7 +6,7 @@ library(tidyverse)
 
 하나의 객체(object)가 여러 속성(attribute)을 갖는다 하고, 이러한 객체가 다수 있다고 하자. 군집분석이란 유사한 속성들을 갖는 객체들을 묶어 전체의 객체들을 몇 개의 그룹 또는 군집(cluster)으로 나누는 것을 말한다.
 
-## 필요 R 패키지 설치 {#clusering-overview-packages-install}
+## 필요 R 패키지 설치 {#clustering-overview-packages-install}
 
 본 장에서 필요한 R 패키지들은 아래와 같다.
 
