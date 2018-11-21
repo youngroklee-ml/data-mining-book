@@ -354,7 +354,7 @@ dist(train_df[, -1]) %>%
 
 
 
-### 워드 굱집 알고리즘 {#ward-method-algorithm}
+### 워드 군집 알고리즘 {#ward-method-algorithm}
 
 군집결과가 $\mathbf{C} = \{ C_1, C_2, \cdots, C_k \}$일 때, 군집 $C_i$ 내의 제곱합(within sum of squares)은 다음과 같이 산출된다.
 

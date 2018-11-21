@@ -209,7 +209,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>6.4</b> 워드 방법</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>6.4.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="6.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>6.4.2</b> 워드 굱집 알고리즘</a></li>
+<li class="chapter" data-level="6.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>6.4.2</b> 워드 군집 알고리즘</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -726,10 +726,10 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
     <span class="dt">ylab =</span> <span class="st">&quot;distance&quot;</span>,
     <span class="dt">xlab =</span> <span class="st">&quot;observation&quot;</span>
   )</code></pre></div>
-<p><img src="data-mining-book_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
+<p><img src="data-mining-book_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
 </div>
 <div id="ward-method-algorithm" class="section level3">
-<h3><span class="header-section-number">6.4.2</span> 워드 굱집 알고리즘</h3>
+<h3><span class="header-section-number">6.4.2</span> 워드 군집 알고리즘</h3>
 <p>군집결과가 <span class="math inline">\(\mathbf{C} = \{ C_1, C_2, \cdots, C_k \}\)</span>일 때, 군집 <span class="math inline">\(C_i\)</span> 내의 제곱합(within sum of squares)은 다음과 같이 산출된다.</p>
 <span class="math display">\[\begin{equation*}
 SS(C_i) = \sum_{u \in C_i} \left(\mathbf{x}_u - \mathbf{c}_i\right)^\top\left(\mathbf{x}_u - \mathbf{c}_i\right)
