@@ -257,7 +257,7 @@ print_clusters <- function(i, k, clusters) {
 print_clusters(i, k, current_clusters)
 
 #단계1
-iteration <- vector("list", length = nrow(train_df))
+iteration <- vector("list", length = nrow(train_df) - 1)
 while(k > 1) {
   i <- i + 1
   if(i == 1) {
@@ -340,14 +340,13 @@ knitr::kable(train_df, booktabs = TRUE,
              caption = '운전경력에 따른 교통위반 횟수')
 ```
 
-앞 절의 연결법에서 사용했던 `hclust` 함수를 이용하여 워드 방법에 의한 군집해도 구할 수 있으며, 이 때 파라미터 `method`의 값으로 "ward.D"를 사용한다.
+앞 절의 연결법에서 사용했던 `hclust` 함수를 이용하여 워드 방법에 의한 군집해도 구할 수 있으며, 이 때 파라미터 `method`의 값으로 "ward.D2"를 사용한다.
 
 ```{r}
 dist(train_df[, -1]) %>%
-  hclust(method = "ward.D") %>%
+  hclust(method = "ward.D2") %>%
   plot(
     main = NULL,
-    ylab = "distance",
     xlab = "observation"
   )
 ```
@@ -480,7 +479,7 @@ print_clusters(i, k, current_clusters, ssw)
 
 
 #단계1
-iteration <- vector("list", length = nrow(train_df))
+iteration <- vector("list", length = nrow(train_df) - 1)
 while(k > 1) {
   i <- i + 1
   if(i == 1) {
@@ -505,4 +504,180 @@ while(k > 1) {
 
 
 
+### R 패키지 내 워드 방법 {#ward-rpackages}
+
+R 패키지로 구현된 워드 군집은 위에서 구현한 $SSW$와는 다소 다른 metric을 이용하여 군집해를 구한다. 따라서, 우선 워드 방법이 제안된 논문들을 살펴볼 필요가 있다.
+
+우선 원 논문 @ward1963hierarchical 는 $ESS$(error sum of squares)를 아래와 같이 정의하였으며, 이는 위에서 사용한 $SSW$와 일치한다.
+
+\begin{equation*}
+\begin{split}
+ESS(\{C_1, \cdots, C_k \}) &=& \sum_{i = 1}^{k} ESS(C_i)\\
+&=& \sum_{i = 1}^{k} \sum_{u \in C_i} \mathbf{x}_u^\top \mathbf{x}_u - |C_i| \mathbf{c}_i^\top \mathbf{c}_i\\
+&=& SSW
+\end{split}
+\end{equation*}
+
+위 식에서 임의의 두 군집 $C_i$, $C_j$를 하나의 군집으로 묶을 때 $SSW$의 변화는 아래와 같다. $C_i$와 $C_j$ 외의 군집은 $SSW$의 변화에 영향을 미치지 않으므로, $SSW$ 변화량은 아래와 같이 군집 $C_i$와 $C_j$에 속하는 객체만을 이용하여 구할 수 있으며, 결과적으로 $C_i$와 $C_j$의 군집 크기 $|C_i|$와 $|C_j|$및 군집 중심벡터 $\mathbf{c}_i$와 $\mathbf{c}_j$를 이용하여 구할 수 있다.
+
+\begin{equation}
+\begin{split}
+\Delta SSW &=& ESS(C_i \cup C_j) - ESS(C_i) - ESS(C_j)\\
+&=& \sum_{u \in C_i \cup C_j} \mathbf{x}_u^\top \mathbf{x}_u - (|C_i| + |C_j|)\left[\frac{|C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j}{|C_i| + |C_j|}\right]^\top \left[\frac{|C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j}{|C_i| + |C_j|}\right]\\
+&& - \left( \sum_{u \in C_i} \mathbf{x}_u^\top \mathbf{x}_u - |C_i| \mathbf{c}_i^\top \mathbf{c}_i \right) - \left( \sum_{u \in C_j} \mathbf{x}_u^\top \mathbf{x}_u - |C_j| \mathbf{c}_j^\top \mathbf{c}_j \right)\\
+&=& -\frac{1}{|C_i| + |C_j|} \left( |C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j \right)^\top \left( |C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j \right) + |C_i| \mathbf{c}_i^\top \mathbf{c}_i + |C_j| \mathbf{c}_j^\top \mathbf{c}_j\\
+&=& \frac{|C_i||C_j|}{|C_i| + |C_j|} \left(\mathbf{c}_i - \mathbf{c}_j\right)^\top \left(\mathbf{c}_i - \mathbf{c}_j\right)
+\end{split}
+(\#eq:ward-minimand)
+\end{equation}
+
+따라서 워드 방법은 각 iteration에서 식 \@ref(eq:ward-minimand)를 최소화하는 두 군집 $C_i$, $C_j$를 선택하여 두 군집을 하나로 묶는 방법이다.
+
+
+한편, $SS(C_i)$는 아래와 같이 군집 $C_i$내 객체들 간의 제곱 유클리드 거리로 나타낼 수 있다.
+
+\begin{equation}
+\begin{split}
+D^2(C_i) &=& \sum_{u, v \in C_i} (\mathbf{x}_u - \mathbf{x}_v)^\top (\mathbf{x}_u - \mathbf{x}_v)\\
+&=& \sum_{u, v \in C_i} \left((\mathbf{x}_u - \mathbf{c}_i) - (\mathbf{x}_v - \mathbf{c}_i)\right)^\top \left((\mathbf{x}_u - \mathbf{c}_i) - (\mathbf{x}_v - \mathbf{c}_i)\right)\\
+&=& 2 \sum_{u \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_u - \mathbf{c}_i) - 2 \sum_{u, v \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_v - \mathbf{c}_i)\\
+&=& 2 \sum_{u \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_u - \mathbf{c}_i)\\
+&=& 2 SS(C_i)
+\end{split}
+(\#eq:squared-euclidean-within-cluster)
+\end{equation}
+
+위 식 \@ref(eq:squared-euclidean-within-cluster)을 달리 표현하면, 객체간의 제곱 유클리드 거리를 표현한 행렬에서 군집 $i$에 속한 객체들에 해당하는 부분행렬(submatrix)를 뽑아 행렬의 원소값을 모두 더하면, 그 값이 $2 SS(C_i)$와 같다. 이를 통해 각 군집의 중심벡터를 계산하지 않고도 각 iteration에서 SSW를 최소화하는 군집 결합을 찾을 수 있다.
+
+R 패키지 `stats` 내의 `hclust` 함수는 워드 방법으로 `method` 파라미터의 값을 "ward.D" 혹은 "ward.D2"로 설정할 수 있다. 이 두 방법의 차이는 입력 거리행렬을 제곱 유클리드 거리로 사용하는지 일반 유클리드 거리로 사용하는지의 차이로, 아래에서 R 스크립트 예제와 함께 설명하기로 한다.
+
+우선 `method`값을 "ward.D2"로 설정하는 경우, `dist` 함수의 결과를 입력 거리행렬로 그대로 사용하면 된다.
+
+```{r}
+res_ward.D2 <- dist(train_df[, -1]) %>%
+  hclust(method = "ward.D2")
+```
+
+이 때, 결과 데이터 `res_ward.D2`에서 워드 방법의 criterion을 나타내는 `height` 원소(component)가 표현하는 값은 위에서 계산하였던 $SSW$와 다르다.
+
+```{r}
+res_ward.D2$height
+```
+
+이는 `height`에서 표현하는 값은 전체 $SSW$가 아니라, 두 군집 $i$와 $j$를 하나로 묶을 때 추가로 증가하는 $SSW$ 수치의 변환으로, 아래와 같이 계산되기 때문이다.
+
+\begin{equation}
+height = \sqrt{D^2(C_i \cup C_j) - \left(D^2(C_i) + D^2(C_j)\right)}
+(\#eq:hclust-height)
+\end{equation}
+
+따라서, 군집 $i$와 $j$를 하나로 묶을 때 증가하는 $SSW$의 수치 $\Delta SSW$는 아래와 같이 표현된다.
+
+\begin{equation}
+\Delta SSW = \frac{1}{2} height^2
+\end{equation}
+
+각 iteration에서 발생하는 $\Delta SSW$의 누적합이 위 \@ref(ward-method-algorithm)절에서 보였던 $SSW$ 결과와 동일함을 아래와 같이 확인해보자.
+
+```{r ward-D2-height-ssw}
+tibble(
+  iteration = c(1:(nrow(train_df) - 1)),
+  height = res_ward.D2$height
+) %>%
+  mutate(
+    delta_ssw = height ^ 2 / 2
+  ) %>%
+  mutate(
+    ssw = cumsum(delta_ssw)
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r', 'r'),
+    col.names = c('iteration', '$height$', '$\\Delta SSW = \\frac{1}{2} height ^ 2$', '$SSW = \\sum \\Delta SSW$'),
+    caption = 'hclust 함수 ward.D2 방법의 height와 SSW 관계'
+  )
+```
+
+
+우선 `method`값을 "ward.D"로 설정하는 경우, `dist` 함수의 결과를 입력 거리행렬로 그대로 사용하면 아래와 같이 위 "ward.D2"와는 다른 `height`값을 출력하며, 이는 워드 방법의 criterion을 정확히 반영하지 못한다.
+
+```{r}
+res_ward.D <- dist(train_df[, -1]) %>%
+  hclust(method = "ward.D")
+
+res_ward.D$height
+```
+
+이는 "ward.D2"는 워드 방법 수행 전 입력된 유클리드 거리행렬을 내부적으로 제곱하는 반면, "ward.D" 방법은 제곱 유클리드 거리행렬이 입력되는 것을 가정하기 때문이다.
+
+@lance1967general 은 군집 $i$와 $j$를 하나로 묶을 때, 새로 생성된 군집과 다른 군집들간의 거리는 원 두 군집들과 다른 군집들간의 거리로 아래와 같이 표현됨을 보였다. 이를 Lance-Williams update 공식이라 한다.
+
+\begin{equation}
+D(C_i \cup C_j, C_{h \notin \{i, j\}}) = \alpha_i D(C_i, C_h) + \alpha_j D(C_j, C_h) + \beta D(C_i, C_j) + \gamma |D(C_i, C_h) - D(C_j, C_h)|
+(\#eq:lance-williams-update)
+\end{equation}
+
+이후 @wishart1969256 에서 워드 방법을 위 Lance-Williams update 공식으로 표현하였다.
+
+\begin{equation}
+\begin{split}
+\alpha_i &=& \frac{|C_i| + |C_h|}{|C_i| + |C_j| + |C_h|}\\
+\alpha_j &=& \frac{|C_j| + |C_h|}{|C_i| + |C_j| + |C_h|}\\
+\beta &=& - \frac{|C_h|}{|C_i| + |C_j| + |C_h|}\\
+\gamma &=& 0
+\end{split}
+(\#eq:wishart)
+\end{equation}
+
+이 때, 식 \@ref(eq:wishart)가 기반한 식 \@ref(eq:lance-williams-update)에서의 거리함수 $D$는 제곱 유클리드 거리를 사용한다.
+
+"ward.D" 방법은 제곱 유클리드 거리의 입력을 가정하며, 위의 경우와 같이 제곱 유클리드 거리가 아닌 일반 유클리드 거리행렬을 입력하였을 때, 오류 메시지를 출력하는 대신, 입력된 거리행렬이 제곱 유클리드 거리를 나타낸다 가정하고 Lance-Williams update를 수행한다. 따라서, 이 경우 `height`는 워드 방법의 criterion을 정확히 표현하지 못한다.
+
+제곱 유클리드 거리를 "ward.D" 방법의 입력 거리행렬로 설정하고, 구해진 `height`를 출력해보자
+
+```{r}
+res_ward.D <- dist(train_df[, -1])^2 %>%
+  hclust(method = "ward.D")
+
+res_ward.D$height
+```
+
+위 `height`값은 "ward.D2" 방법에서 출력된 값보다 크다. 위 값의 제곱근(square root)를 구하면 "ward.D2"에서의 `height`값과 동일한 값을 얻을 수 있다.
+
+```{r}
+sqrt(res_ward.D$height)
+```
+
+
+제곱 유클리드 거리행렬을 입력한 "ward.D" 방법의 결과로 출력된 criterion `height`는 $2 \Delta SSW$의 값에 해당하는 수치이며, 각 iteration 당 $\sum_i D(C_i)$의 값의 변화량이라고 볼 수 있다. (식  \@ref(eq:squared-euclidean-within-cluster) 참조)
+
+```{r ward-D-height-ssw}
+tibble(
+  iteration = c(1:(nrow(train_df) - 1)),
+  height = res_ward.D$height
+) %>%
+  mutate(
+    delta_ssw = height / 2
+  ) %>%
+  mutate(
+    ssw = cumsum(delta_ssw)
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r', 'r'),
+    col.names = c('iteration', '$height$', '$\\Delta SSW = \\frac{1}{2} height$', '$SSW = \\sum \\Delta SSW$'),
+    caption = 'hclust 함수 ward.D 방법의 height와 SSW 관계'
+  )
+```
+
+
+즉, "ward.D2"와 "ward.D"의 가장 큰 차이는 입력될 거리행렬이 유클리드 거리(ward.D2)인지 제곱 유클리드 거리(ward.D)인지의 차이이다.
+
+참고로, `cluster` 패키지의 `agnes`함수도 워드 방법을 지원하며, 이 경우 파라미터 `method`의 값을 "ward"로 설정한 결과가 `hclust`함수의 "ward.D2"의 경우와 동일하다. 본 절에서는 해당 함수의 자세한 사용법은 생략한다.
+
+```{r}
+res_agnes_ward <- cluster::agnes(train_df[, -1], method = "ward")
+
+sort(res_agnes_ward$height)
+```
 

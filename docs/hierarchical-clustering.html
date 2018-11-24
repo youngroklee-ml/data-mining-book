@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2018-11-21">
+<meta name="date" content="2018-11-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -210,6 +210,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>6.4</b> 워드 방법</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>6.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>6.4.2</b> 워드 군집 알고리즘</a></li>
+<li class="chapter" data-level="6.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>6.4.3</b> R 패키지 내 워드 방법</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -589,7 +590,7 @@ print_clusters &lt;-<span class="st"> </span><span class="cf">function</span>(i,
 <span class="kw">print_clusters</span>(i, k, current_clusters)</code></pre></div>
 <pre><code>## Iteration:  0 , k =  10 , clusters =  {1} {2} {3} {4} {5} {6} {7} {8} {9} {10}</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#단계1</span>
-iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> <span class="kw">nrow</span>(train_df))
+iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> <span class="kw">nrow</span>(train_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)
 <span class="cf">while</span>(k <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {
   i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
   <span class="cf">if</span>(i <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {
@@ -718,12 +719,11 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 </tr>
 </tbody>
 </table>
-<p>앞 절의 연결법에서 사용했던 <code>hclust</code> 함수를 이용하여 워드 방법에 의한 군집해도 구할 수 있으며, 이 때 파라미터 <code>method</code>의 값으로 “ward.D”를 사용한다.</p>
+<p>앞 절의 연결법에서 사용했던 <code>hclust</code> 함수를 이용하여 워드 방법에 의한 군집해도 구할 수 있으며, 이 때 파라미터 <code>method</code>의 값으로 “ward.D2”를 사용한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dist</span>(train_df[, <span class="op">-</span><span class="dv">1</span>]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">hclust</span>(<span class="dt">method =</span> <span class="st">&quot;ward.D&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hclust</span>(<span class="dt">method =</span> <span class="st">&quot;ward.D2&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">plot</span>(
     <span class="dt">main =</span> <span class="ot">NULL</span>,
-    <span class="dt">ylab =</span> <span class="st">&quot;distance&quot;</span>,
     <span class="dt">xlab =</span> <span class="st">&quot;observation&quot;</span>
   )</code></pre></div>
 <p><img src="data-mining-book_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
@@ -831,7 +831,7 @@ print_clusters &lt;-<span class="st"> </span><span class="cf">function</span>(i,
 <span class="kw">print_clusters</span>(i, k, current_clusters, ssw)</code></pre></div>
 <pre><code>## Iteration:  0 , k =  8 , clusters =  {1} {2} {3} {4} {5} {6} {7} {8} , SSW = 0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#단계1</span>
-iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> <span class="kw">nrow</span>(train_df))
+iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> <span class="kw">nrow</span>(train_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)
 <span class="cf">while</span>(k <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {
   i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
   <span class="cf">if</span>(i <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {
@@ -859,8 +859,255 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
 ## Iteration:  5 , k =  3 , clusters =  {1,3,6} {2,7,5} {4,8} , SSW = 43.16667 
 ## Iteration:  6 , k =  2 , clusters =  {1,3,6} {2,7,5,4,8} , SSW = 140.4 
 ## Iteration:  7 , k =  1 , clusters =  {1,3,6,2,7,5,4,8} , SSW = 499.875</code></pre>
+</div>
+<div id="ward-rpackages" class="section level3">
+<h3><span class="header-section-number">6.4.3</span> R 패키지 내 워드 방법</h3>
+<p>R 패키지로 구현된 워드 군집은 위에서 구현한 <span class="math inline">\(SSW\)</span>와는 다소 다른 metric을 이용하여 군집해를 구한다. 따라서, 우선 워드 방법이 제안된 논문들을 살펴볼 필요가 있다.</p>
+<p>우선 원 논문 <span class="citation">Ward Jr (<a href="#ref-ward1963hierarchical">1963</a>)</span> 는 <span class="math inline">\(ESS\)</span>(error sum of squares)를 아래와 같이 정의하였으며, 이는 위에서 사용한 <span class="math inline">\(SSW\)</span>와 일치한다.</p>
+<span class="math display">\[\begin{equation*}
+\begin{split}
+ESS(\{C_1, \cdots, C_k \}) &amp;=&amp; \sum_{i = 1}^{k} ESS(C_i)\\
+&amp;=&amp; \sum_{i = 1}^{k} \sum_{u \in C_i} \mathbf{x}_u^\top \mathbf{x}_u - |C_i| \mathbf{c}_i^\top \mathbf{c}_i\\
+&amp;=&amp; SSW
+\end{split}
+\end{equation*}\]</span>
+<p>위 식에서 임의의 두 군집 <span class="math inline">\(C_i\)</span>, <span class="math inline">\(C_j\)</span>를 하나의 군집으로 묶을 때 <span class="math inline">\(SSW\)</span>의 변화는 아래와 같다. <span class="math inline">\(C_i\)</span>와 <span class="math inline">\(C_j\)</span> 외의 군집은 <span class="math inline">\(SSW\)</span>의 변화에 영향을 미치지 않으므로, <span class="math inline">\(SSW\)</span> 변화량은 아래와 같이 군집 <span class="math inline">\(C_i\)</span>와 <span class="math inline">\(C_j\)</span>에 속하는 객체만을 이용하여 구할 수 있으며, 결과적으로 <span class="math inline">\(C_i\)</span>와 <span class="math inline">\(C_j\)</span>의 군집 크기 <span class="math inline">\(|C_i|\)</span>와 <span class="math inline">\(|C_j|\)</span>및 군집 중심벡터 <span class="math inline">\(\mathbf{c}_i\)</span>와 <span class="math inline">\(\mathbf{c}_j\)</span>를 이용하여 구할 수 있다.</p>
+<span class="math display" id="eq:ward-minimand">\[\begin{equation}
+\begin{split}
+\Delta SSW &amp;=&amp; ESS(C_i \cup C_j) - ESS(C_i) - ESS(C_j)\\
+&amp;=&amp; \sum_{u \in C_i \cup C_j} \mathbf{x}_u^\top \mathbf{x}_u - (|C_i| + |C_j|)\left[\frac{|C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j}{|C_i| + |C_j|}\right]^\top \left[\frac{|C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j}{|C_i| + |C_j|}\right]\\
+&amp;&amp; - \left( \sum_{u \in C_i} \mathbf{x}_u^\top \mathbf{x}_u - |C_i| \mathbf{c}_i^\top \mathbf{c}_i \right) - \left( \sum_{u \in C_j} \mathbf{x}_u^\top \mathbf{x}_u - |C_j| \mathbf{c}_j^\top \mathbf{c}_j \right)\\
+&amp;=&amp; -\frac{1}{|C_i| + |C_j|} \left( |C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j \right)^\top \left( |C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j \right) + |C_i| \mathbf{c}_i^\top \mathbf{c}_i + |C_j| \mathbf{c}_j^\top \mathbf{c}_j\\
+&amp;=&amp; \frac{|C_i||C_j|}{|C_i| + |C_j|} \left(\mathbf{c}_i - \mathbf{c}_j\right)^\top \left(\mathbf{c}_i - \mathbf{c}_j\right)
+\end{split}
+\tag{6.1}
+\end{equation}\]</span>
+<p>따라서 워드 방법은 각 iteration에서 식 <a href="hierarchical-clustering.html#eq:ward-minimand">(6.1)</a>를 최소화하는 두 군집 <span class="math inline">\(C_i\)</span>, <span class="math inline">\(C_j\)</span>를 선택하여 두 군집을 하나로 묶는 방법이다.</p>
+<p>한편, <span class="math inline">\(SS(C_i)\)</span>는 아래와 같이 군집 <span class="math inline">\(C_i\)</span>내 객체들 간의 제곱 유클리드 거리로 나타낼 수 있다.</p>
+<span class="math display" id="eq:squared-euclidean-within-cluster">\[\begin{equation}
+\begin{split}
+D^2(C_i) &amp;=&amp; \sum_{u, v \in C_i} (\mathbf{x}_u - \mathbf{x}_v)^\top (\mathbf{x}_u - \mathbf{x}_v)\\
+&amp;=&amp; \sum_{u, v \in C_i} \left((\mathbf{x}_u - \mathbf{c}_i) - (\mathbf{x}_v - \mathbf{c}_i)\right)^\top \left((\mathbf{x}_u - \mathbf{c}_i) - (\mathbf{x}_v - \mathbf{c}_i)\right)\\
+&amp;=&amp; 2 \sum_{u \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_u - \mathbf{c}_i) - 2 \sum_{u, v \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_v - \mathbf{c}_i)\\
+&amp;=&amp; 2 \sum_{u \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_u - \mathbf{c}_i)\\
+&amp;=&amp; 2 SS(C_i)
+\end{split}
+\tag{6.2}
+\end{equation}\]</span>
+<p>위 식 <a href="hierarchical-clustering.html#eq:squared-euclidean-within-cluster">(6.2)</a>을 달리 표현하면, 객체간의 제곱 유클리드 거리를 표현한 행렬에서 군집 <span class="math inline">\(i\)</span>에 속한 객체들에 해당하는 부분행렬(submatrix)를 뽑아 행렬의 원소값을 모두 더하면, 그 값이 <span class="math inline">\(2 SS(C_i)\)</span>와 같다. 이를 통해 각 군집의 중심벡터를 계산하지 않고도 각 iteration에서 SSW를 최소화하는 군집 결합을 찾을 수 있다.</p>
+<p>R 패키지 <code>stats</code> 내의 <code>hclust</code> 함수는 워드 방법으로 <code>method</code> 파라미터의 값을 “ward.D” 혹은 “ward.D2”로 설정할 수 있다. 이 두 방법의 차이는 입력 거리행렬을 제곱 유클리드 거리로 사용하는지 일반 유클리드 거리로 사용하는지의 차이로, 아래에서 R 스크립트 예제와 함께 설명하기로 한다.</p>
+<p>우선 <code>method</code>값을 “ward.D2”로 설정하는 경우, <code>dist</code> 함수의 결과를 입력 거리행렬로 그대로 사용하면 된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_ward.D2 &lt;-<span class="st"> </span><span class="kw">dist</span>(train_df[, <span class="op">-</span><span class="dv">1</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hclust</span>(<span class="dt">method =</span> <span class="st">&quot;ward.D2&quot;</span>)</code></pre></div>
+<p>이 때, 결과 데이터 <code>res_ward.D2</code>에서 워드 방법의 criterion을 나타내는 <code>height</code> 원소(component)가 표현하는 값은 위에서 계산하였던 <span class="math inline">\(SSW\)</span>와 다르다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_ward.D2<span class="op">$</span>height</code></pre></div>
+<pre><code>## [1]  1.414214  2.236068  2.236068  5.944185  6.244998 13.945131 26.813243</code></pre>
+<p>이는 <code>height</code>에서 표현하는 값은 전체 <span class="math inline">\(SSW\)</span>가 아니라, 두 군집 <span class="math inline">\(i\)</span>와 <span class="math inline">\(j\)</span>를 하나로 묶을 때 추가로 증가하는 <span class="math inline">\(SSW\)</span> 수치의 변환으로, 아래와 같이 계산되기 때문이다.</p>
+<span class="math display" id="eq:hclust-height">\[\begin{equation}
+height = \sqrt{D^2(C_i \cup C_j) - \left(D^2(C_i) + D^2(C_j)\right)}
+\tag{6.3}
+\end{equation}\]</span>
+<p>따라서, 군집 <span class="math inline">\(i\)</span>와 <span class="math inline">\(j\)</span>를 하나로 묶을 때 증가하는 <span class="math inline">\(SSW\)</span>의 수치 <span class="math inline">\(\Delta SSW\)</span>는 아래와 같이 표현된다.</p>
+<span class="math display">\[\begin{equation}
+\Delta SSW = \frac{1}{2} height^2
+\end{equation}\]</span>
+<p>각 iteration에서 발생하는 <span class="math inline">\(\Delta SSW\)</span>의 누적합이 위 <a href="hierarchical-clustering.html#ward-method-algorithm">6.4.2</a>절에서 보였던 <span class="math inline">\(SSW\)</span> 결과와 동일함을 아래와 같이 확인해보자.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(
+  <span class="dt">iteration =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>(<span class="kw">nrow</span>(train_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)),
+  <span class="dt">height =</span> res_ward.D2<span class="op">$</span>height
+) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">delta_ssw =</span> height <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">ssw =</span> <span class="kw">cumsum</span>(delta_ssw)
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(
+    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+    <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
+    <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;iteration&#39;</span>, <span class="st">&#39;$height$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">Delta SSW = </span><span class="ch">\\</span><span class="st">frac{1}{2} height ^ 2$&#39;</span>, <span class="st">&#39;$SSW = </span><span class="ch">\\</span><span class="st">sum </span><span class="ch">\\</span><span class="st">Delta SSW$&#39;</span>),
+    <span class="dt">caption =</span> <span class="st">&#39;hclust 함수 ward.D2 방법의 height와 SSW 관계&#39;</span>
+  )</code></pre></div>
+<table>
+<caption><span id="tab:ward-D2-height-ssw">Table 6.4: </span>hclust 함수 ward.D2 방법의 height와 SSW 관계</caption>
+<thead>
+<tr class="header">
+<th align="right">iteration</th>
+<th align="right"><span class="math inline">\(height\)</span></th>
+<th align="right"><span class="math inline">\(\Delta SSW = \frac{1}{2} height ^ 2\)</span></th>
+<th align="right"><span class="math inline">\(SSW = \sum \Delta SSW\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1.414214</td>
+<td align="right">1.00000</td>
+<td align="right">1.00000</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2.236068</td>
+<td align="right">2.50000</td>
+<td align="right">3.50000</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2.236068</td>
+<td align="right">2.50000</td>
+<td align="right">6.00000</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">5.944185</td>
+<td align="right">17.66667</td>
+<td align="right">23.66667</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">6.244998</td>
+<td align="right">19.50000</td>
+<td align="right">43.16667</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">13.945131</td>
+<td align="right">97.23333</td>
+<td align="right">140.40000</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">26.813243</td>
+<td align="right">359.47500</td>
+<td align="right">499.87500</td>
+</tr>
+</tbody>
+</table>
+<p>우선 <code>method</code>값을 “ward.D”로 설정하는 경우, <code>dist</code> 함수의 결과를 입력 거리행렬로 그대로 사용하면 아래와 같이 위 “ward.D2”와는 다른 <code>height</code>값을 출력하며, 이는 워드 방법의 criterion을 정확히 반영하지 못한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_ward.D &lt;-<span class="st"> </span><span class="kw">dist</span>(train_df[, <span class="op">-</span><span class="dv">1</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hclust</span>(<span class="dt">method =</span> <span class="st">&quot;ward.D&quot;</span>)
+
+res_ward.D<span class="op">$</span>height</code></pre></div>
+<pre><code>## [1]  1.414214  2.236068  2.236068  6.452039  6.615990 17.358484 39.311447</code></pre>
+<p>이는 “ward.D2”는 워드 방법 수행 전 입력된 유클리드 거리행렬을 내부적으로 제곱하는 반면, “ward.D” 방법은 제곱 유클리드 거리행렬이 입력되는 것을 가정하기 때문이다.</p>
+<p><span class="citation">Lance and Williams (<a href="#ref-lance1967general">1967</a>)</span> 은 군집 <span class="math inline">\(i\)</span>와 <span class="math inline">\(j\)</span>를 하나로 묶을 때, 새로 생성된 군집과 다른 군집들간의 거리는 원 두 군집들과 다른 군집들간의 거리로 아래와 같이 표현됨을 보였다. 이를 Lance-Williams update 공식이라 한다.</p>
+<span class="math display" id="eq:lance-williams-update">\[\begin{equation}
+D(C_i \cup C_j, C_{h \notin \{i, j\}}) = \alpha_i D(C_i, C_h) + \alpha_j D(C_j, C_h) + \beta D(C_i, C_j) + \gamma |D(C_i, C_h) - D(C_j, C_h)|
+\tag{6.4}
+\end{equation}\]</span>
+<p>이후 <span class="citation">Wishart (<a href="#ref-wishart1969256">1969</a>)</span> 에서 워드 방법을 위 Lance-Williams update 공식으로 표현하였다.</p>
+<span class="math display" id="eq:wishart">\[\begin{equation}
+\begin{split}
+\alpha_i &amp;=&amp; \frac{|C_i| + |C_h|}{|C_i| + |C_j| + |C_h|}\\
+\alpha_j &amp;=&amp; \frac{|C_j| + |C_h|}{|C_i| + |C_j| + |C_h|}\\
+\beta &amp;=&amp; - \frac{|C_h|}{|C_i| + |C_j| + |C_h|}\\
+\gamma &amp;=&amp; 0
+\end{split}
+\tag{6.5}
+\end{equation}\]</span>
+<p>이 때, 식 <a href="hierarchical-clustering.html#eq:wishart">(6.5)</a>가 기반한 식 <a href="hierarchical-clustering.html#eq:lance-williams-update">(6.4)</a>에서의 거리함수 <span class="math inline">\(D\)</span>는 제곱 유클리드 거리를 사용한다.</p>
+<p>“ward.D” 방법은 제곱 유클리드 거리의 입력을 가정하며, 위의 경우와 같이 제곱 유클리드 거리가 아닌 일반 유클리드 거리행렬을 입력하였을 때, 오류 메시지를 출력하는 대신, 입력된 거리행렬이 제곱 유클리드 거리를 나타낸다 가정하고 Lance-Williams update를 수행한다. 따라서, 이 경우 <code>height</code>는 워드 방법의 criterion을 정확히 표현하지 못한다.</p>
+<p>제곱 유클리드 거리를 “ward.D” 방법의 입력 거리행렬로 설정하고, 구해진 <code>height</code>를 출력해보자</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_ward.D &lt;-<span class="st"> </span><span class="kw">dist</span>(train_df[, <span class="op">-</span><span class="dv">1</span>])<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hclust</span>(<span class="dt">method =</span> <span class="st">&quot;ward.D&quot;</span>)
+
+res_ward.D<span class="op">$</span>height</code></pre></div>
+<pre><code>## [1]   2.00000   5.00000   5.00000  35.33333  39.00000 194.46667 718.95000</code></pre>
+<p>위 <code>height</code>값은 “ward.D2” 방법에서 출력된 값보다 크다. 위 값의 제곱근(square root)를 구하면 “ward.D2”에서의 <code>height</code>값과 동일한 값을 얻을 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(res_ward.D<span class="op">$</span>height)</code></pre></div>
+<pre><code>## [1]  1.414214  2.236068  2.236068  5.944185  6.244998 13.945131 26.813243</code></pre>
+<p>제곱 유클리드 거리행렬을 입력한 “ward.D” 방법의 결과로 출력된 criterion <code>height</code>는 <span class="math inline">\(2 \Delta SSW\)</span>의 값에 해당하는 수치이며, 각 iteration 당 <span class="math inline">\(\sum_i D(C_i)\)</span>의 값의 변화량이라고 볼 수 있다. (식 <a href="hierarchical-clustering.html#eq:squared-euclidean-within-cluster">(6.2)</a> 참조)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(
+  <span class="dt">iteration =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>(<span class="kw">nrow</span>(train_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)),
+  <span class="dt">height =</span> res_ward.D<span class="op">$</span>height
+) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">delta_ssw =</span> height <span class="op">/</span><span class="st"> </span><span class="dv">2</span>
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">ssw =</span> <span class="kw">cumsum</span>(delta_ssw)
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(
+    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+    <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
+    <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;iteration&#39;</span>, <span class="st">&#39;$height$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">Delta SSW = </span><span class="ch">\\</span><span class="st">frac{1}{2} height$&#39;</span>, <span class="st">&#39;$SSW = </span><span class="ch">\\</span><span class="st">sum </span><span class="ch">\\</span><span class="st">Delta SSW$&#39;</span>),
+    <span class="dt">caption =</span> <span class="st">&#39;hclust 함수 ward.D 방법의 height와 SSW 관계&#39;</span>
+  )</code></pre></div>
+<table>
+<caption><span id="tab:ward-D-height-ssw">Table 6.5: </span>hclust 함수 ward.D 방법의 height와 SSW 관계</caption>
+<thead>
+<tr class="header">
+<th align="right">iteration</th>
+<th align="right"><span class="math inline">\(height\)</span></th>
+<th align="right"><span class="math inline">\(\Delta SSW = \frac{1}{2} height\)</span></th>
+<th align="right"><span class="math inline">\(SSW = \sum \Delta SSW\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">2.00000</td>
+<td align="right">1.00000</td>
+<td align="right">1.00000</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">5.00000</td>
+<td align="right">2.50000</td>
+<td align="right">3.50000</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">5.00000</td>
+<td align="right">2.50000</td>
+<td align="right">6.00000</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">35.33333</td>
+<td align="right">17.66667</td>
+<td align="right">23.66667</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">39.00000</td>
+<td align="right">19.50000</td>
+<td align="right">43.16667</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">194.46667</td>
+<td align="right">97.23333</td>
+<td align="right">140.40000</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">718.95000</td>
+<td align="right">359.47500</td>
+<td align="right">499.87500</td>
+</tr>
+</tbody>
+</table>
+<p>즉, “ward.D2”와 “ward.D”의 가장 큰 차이는 입력될 거리행렬이 유클리드 거리(ward.D2)인지 제곱 유클리드 거리(ward.D)인지의 차이이다.</p>
+<p>참고로, <code>cluster</code> 패키지의 <code>agnes</code>함수도 워드 방법을 지원하며, 이 경우 파라미터 <code>method</code>의 값을 “ward”로 설정한 결과가 <code>hclust</code>함수의 “ward.D2”의 경우와 동일하다. 본 절에서는 해당 함수의 자세한 사용법은 생략한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_agnes_ward &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">agnes</span>(train_df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">method =</span> <span class="st">&quot;ward&quot;</span>)
+
+<span class="kw">sort</span>(res_agnes_ward<span class="op">$</span>height)</code></pre></div>
+<pre><code>## [1]  1.414214  2.236068  2.236068  5.944185  6.244998 13.945131 26.813243</code></pre>
 
 </div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-ward1963hierarchical">
+<p>Ward Jr, Joe H. 1963. “Hierarchical Grouping to Optimize an Objective Function.” <em>Journal of the American Statistical Association</em> 58 (301). Taylor &amp; Francis Group: 236–44.</p>
+</div>
+<div id="ref-lance1967general">
+<p>Lance, Godfrey N, and William Thomas Williams. 1967. “A General Theory of Classificatory Sorting Strategies: 1. Hierarchical Systems.” <em>The Computer Journal</em> 9 (4). The British Computer Society: 373–80.</p>
+</div>
+<div id="ref-wishart1969256">
+<p>Wishart, David. 1969. “256. Note: An Algorithm for Hierarchical Classifications.” <em>Biometrics</em>. JSTOR, 165–70.</p>
 </div>
 </div>
             </section>
