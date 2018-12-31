@@ -134,11 +134,13 @@ merge_cluster <- function(df, cluster_label) {
     inner_join(
       cluster_label %>% rename(
         item1 = id, cluster1 = cluster
-        )) %>%
+        ),
+      by = "item1") %>%
     inner_join(
       cluster_label %>% rename(
         item2 = id, cluster2 = cluster
-        )) %>%
+        ),
+      by = "item2") %>%
     filter(cluster1 != cluster2) %>%
     group_by(cluster1, cluster2) %>%
     summarize(distance = mean(distance)) %>%
@@ -342,7 +344,7 @@ knitr::kable(train_df, booktabs = TRUE,
 
 앞 절의 연결법에서 사용했던 `hclust` 함수를 이용하여 워드 방법에 의한 군집해도 구할 수 있으며, 이 때 파라미터 `method`의 값으로 "ward.D2"를 사용한다.
 
-```{r}
+```{r ward-dendrogram, fig.cap='운전자 데이터에 대한 워드 방법 덴드로그램', fig.align='center'}
 dist(train_df[, -1]) %>%
   hclust(method = "ward.D2") %>%
   plot(
@@ -387,7 +389,7 @@ SSW = \sum_{i = 1}^{k} SS(C_i)
 # SSW 계산
 calculate_ssw <- function(df, cluster_label) {
   df %>%
-    inner_join(cluster_label) %>%
+    inner_join(cluster_label, by = "id") %>%
     group_by(cluster) %>%
     select(-id) %>%
     summarize_all(function(x) sum((x - mean(x))^2)) %>%
@@ -680,4 +682,355 @@ res_agnes_ward <- cluster::agnes(train_df[, -1], method = "ward")
 
 sort(res_agnes_ward$height)
 ```
+
+
+
+## 분리적 방법 - 다이아나 {#diana}
+
+다이아나는 분리적 방법의 하나로, @kaufman1990finding 에 의하여 제안된 것이다. 이는 전체의 객체를 하나의 군집으로 시작하여 매번 이분화하는 등 모든 군집이 단독 객체로 구성될 때까지 진행하는 방법이다. 이 때, 비유사성 척도로는 평균거리를 사용한다.
+
+
+### 기본 R 스크립트 {#diana-basic-script}
+
+```{r diana-data}
+train_df <- tibble(
+  id = c(1:7),
+  x1 = c(30, 45, 25, 40, 50, 20, 42),
+  x2 = c(15, 22, 12, 24, 25, 10, 9)
+)
+
+knitr::kable(train_df, booktabs = TRUE,
+             align = c('r', 'r', 'r'),
+             col.names = c('객체번호', '$x_1$', '$x_2$'),
+             caption = 'DIANA 군집 대상 객체 데이터')
+```
+
+Table \@ref(tab:diana-data)와 같이 두 변수 $x_1$, $x_2$로 이루어진 7개의 객체 데이터에 대해 DIANA 방법에 의해 군집해를 아래와 같이 `cluster` 패키지의 `diana` 함수를 이용하여 간단히 구할 수 있다.
+
+```{r diana-result-plot, fig.cap='DIANA 방법에 의한 군집 덴드로그램', fig.align='center'}
+res_diana <- cluster::diana(train_df[, -1])
+cluster::pltree(res_diana,
+                main = NULL,
+                xlab = "observation"
+                )
+```
+
+
+
+### 다이아나 알고리즘 {#diana-algorithm}
+
+
+가장 처음 이분화가 이루어질 때, 우선 타 객체와의 평균거리가 가장 큰 객체가 분파되어 새로운 군집을 형성한다. 그리고 다른 객체에 대하여, 군집에 남아있을 때의 평균거리와 새로운 군집으로 분리될 때의 평균거리를 산출하여, 현 군집에 잔류 또는 새로운 군집으로의 합류를 결정한다.
+
+여기서 객체 $i$와 군집 $C$간의 평균거리는 다음과 같이 산출된다.
+
+\begin{equation*}
+\bar{d}(i, C) = \begin{cases}
+\frac{1}{|C| - 1} \sum_{j \in C} d(i, j) & \text{ if } i \in C\\
+\frac{1}{|C|} \sum_{j \in C} d(i, j) & \text{ if } i \notin C
+\end{cases}
+\end{equation*}
+
+본 방법의 알고리즘은 다음과 같다.
+
+1. 단계0: $n$개의 객체를 하나의 군집으로 간주한다. ($k = 1$)
+2. 단계1: 객체 간 거리가 가장 큰 두 객체를 포함한 군집을 이분화 대상으로 선정한다. (이를 $A$라 하고, $B \leftarrow \emptyset$로 둔다.)
+3. 단계2: 다음 과정을 통하여 군집 $A$를 이분화한다.
+    1. 단계2-1: $i \leftarrow \arg\,\max_{i'} \bar{d}(i', A)$
+    2. 단계2-2: $A \leftarrow A - \{i\}$, $B \leftarrow B \cup \{i\}$
+    3. 단계2-3: $i \leftarrow \arg\,\max_{i' \in A} e(i') = \bar{d}(i', A) - \bar{d}(i', B)$
+    4. 단계2-4: $e(i) > 0$이면 단계2-2로, $e(i) \le 0$이면 단계3으로
+4. 단계3
+    1. $k \leftarrow k + 1$
+    2. $k < n$이면 단계1로, $k = n$이면 Stop.
+
+
+DIANA 알고리즘을 R script로 구현해보자. 
+
+우선, 단계1의 군집을 찾는 함수 `max_distance_cluster`를 구현하자. 이 함수는 아래 두 개의 데이터 프레임을 입력받는다.
+
+- 입력
+    + `df`: 관측 데이터. 각 열의 설명은 아래와 같다.
+        + `id`: 객체번호
+        + 나머지 열: 숫자형 변수
+    + `cluster_label`: 각 객체의 현재 소속 군집을 나타내는 데이터 프레임
+        + `id`: 객체번호
+        + `cluster`: 군집명
+- 함수값
+    + `cluster`: 객체간 거리가 가장 큰 두 객체를 포함한 군집명
+    + `distance`: 군집 내 객체간 최대 거리
+
+```{r}
+max_distance_cluster <- function(df, cluster_label) {
+  unique_cluster <- unique(cluster_label$cluster)
+  
+  cluster_df <- lapply(unique_cluster, function(x) {
+    cluster_label %>% 
+      filter(cluster == x) %>%
+      inner_join(df, by = "id") %>%
+      select(-cluster, -id)
+    })
+  
+  max_distance <- sapply(cluster_df, 
+                         function(x) {
+                           if(nrow(x) == 1) return(0)
+                           max(dist(x))
+                         }
+                         )
+
+  list(
+    cluster = unique_cluster[which.max(max_distance)],
+    distance = max(max_distance)
+  )
+}
+```
+
+단계 2-1에서 군집 내 평균거리가 가장 큰 객체를 찾는 함수 `max_within_distance`를 아래와 같이 구현해보자. 이 때 입력변수인 `cluster_df`는 해당 군집의 객체 데이터로, 객체 번호를 나타내는 열 `id`와 객체의 각 숫자형 변수를 표현하는 열들로 구성된다. 
+
+```{r}
+max_within_distance <- function(cluster_df) {
+  idx <- dist(subset(cluster_df, select = -id), upper = TRUE) %>%
+    broom::tidy() %>%
+    group_by(item1) %>%
+    summarize(mean_distance = mean(distance)) %>%
+    ungroup() %>%
+    arrange(-mean_distance) %>%
+    .[["item1"]] %>%
+    .[1]
+  
+  cluster_df$id[idx]
+}
+```
+
+이후 단계2-3에서 정의한 $e(i') = \bar{d}(i', A) - \bar{d}(i', B)$를 계산하는 함수 `e_score`를 아래와 같이 구현한다.
+
+- `object`: 객체 번호(`id`)
+- `A`(`B`): 군집 $A$($B$)의 객체 데이터. 행은 객체를 나타내며, `id` 열은 객체 번호, 이외의 열들은 변수를 나타낸다.
+
+```{r}
+e_score <- function(object, A, B) {
+  d_from_A <- proxy::dist(subset(A, id == object, -id), 
+                          subset(A, id != object, -id)) %>% 
+    mean()
+  d_from_B <- proxy::dist(subset(A, id == object, -id), 
+                          B %>% select(-id)) %>% 
+    mean()
+  return(d_from_A - d_from_B)
+}
+```
+
+위 두 함수 `max_within_distance`와 `e_score`를 이용하여, 주어진 데이터 프레임을 두 군집으로 나누는 함수 `split_cluster`를 구현해보자. 
+
+- 입력: 객체 데이터를 나타내는 데이터 프레임 `cluster_df`. 행은 객체를 나타내며, 객체 번호를 나타내는 열 `id`와 객체의 각 숫자형 변수를 표현하는 열들로 구성된다. 
+- 함수값: 아래 두 개의 component를 지닌 리스트.
+    + `idx_A`: 객체 데이터에서 행렬 $A$에 속하는 객체 번호
+    + `idx_B`: 객체 데이터에서 행렬 $B$에 속하는 객체 번호
+
+```{r}
+split_cluster <- function(cluster_df) {
+  n <- nrow(cluster_df)
+  
+  idx_A <- cluster_df$id
+  idx_B <- NULL
+  
+  # 단계2-1
+  max_object <- max_within_distance(cluster_df)
+  e_i <- Inf
+
+  while(e_i > 0) {
+    # 단계2-2
+    idx_B <- c(idx_B, max_object)
+    idx_A <- setdiff(idx_A, max_object)
+    
+    A <- cluster_df %>% filter(id %in% idx_A)
+    B <- cluster_df %>% filter(id %in% idx_B)
+
+    # 단계2-3
+    if(nrow(A) > 1) {
+      e_is <- sapply(A$id, function(x) e_score(x, A, B))
+      max_object <- A$id[which.max(e_is)]
+      e_i <- max(e_is)
+    } else {
+      e_i <- -Inf
+    }
+  }
+  
+  return(list(idx_A = idx_A, idx_B = idx_B))
+}
+```
+
+단계1 함수 `max_distance_cluster`와 단계2 함수 `split_cluster`를 반복적으로 수행하며 각각의 객체가 군집에 될 때까지 군집을 분리해간다.
+
+```{r}
+# 단계0
+current_cluster <- tibble(
+  id = train_df$id
+)
+current_cluster$cluster <- paste(1:nrow(current_cluster), collapse = ",")
+i <- 0L
+k <- 1L
+
+while(k < nrow(train_df)) {
+  i <- i + 1L
+  
+  # 단계1
+  max_cluster <- max_distance_cluster(train_df, current_cluster)
+
+  # 단계2
+  new_split <- current_cluster %>%
+    filter(cluster == max_cluster$cluster) %>%
+    inner_join(train_df, by = "id") %>%
+    select(-cluster) %>%
+    split_cluster()
+
+  # 군집해 업데이트
+  current_cluster[
+    current_cluster$id %in% new_split$idx_A, 
+    "cluster"] <- paste(new_split$idx_A, collapse = ",")
+  current_cluster[
+    current_cluster$id %in% new_split$idx_B, 
+    "cluster"] <- paste(new_split$idx_B, collapse = ",")
+  
+  # 군집해 출력
+  k <- length(unique(current_cluster$cluster))
+  cat("Iteration: ", i, ", k = ", k, ", clusters = ", 
+      paste0("{", unique(current_cluster$cluster), "}"),
+      ", height = ", max_cluster$distance, "\n")
+}
+```
+
+위 출력 결과에서 `height`는 해당 iteration에서 분리된 군집의 분리 전 지름(diameter)으로, 함수 `max_distance_cluster`에서 계산한 군집 내 객체간 최대 거리를 나타내며, 이는 R 패키지 `cluster`의 `diana` 함수 수행 시 함수값으로 출력되는 `height`값이다. Iteration이 진행됨에 따라 `height`의 값이 감소하는 것을 확인할 수 있다.
+
+
+
+## 군집수의 결정 {#hierarchical-cluster-number}
+
+최적의 군집수를 결정하는 객관적인 방법은 존재하지 않는다. 계층적 군집방법에서는 덴드로그램을 참조하여 군집 간의 거리가 급격히 증가하는 계층에서 수평으로 절단하여, 그 이하의 그룹들을 하나의 군집으로 형성하는 방안을 널리 사용하고 있다. 이외에 군집수를 결정하는 데 통계량으로 다음과 같은 통계량들이 부수적으로 사용된다.
+
+1. 새 군집의 RMS 표준편차(root-mean-square standard deviation of the new cluster; RMSSTD)
+
+\begin{equation*}
+RMSSTD(C_i, C_j) = \sqrt{\frac{SS(C_i \cup C_j)}{p(|C_i| + |C_j| - 1)}}
+\end{equation*}
+
+2. Semipartial R-squared(SPR)
+
+\begin{equation*}
+SPR(C_i, C_j) = \frac{SS(C_i \cup C_j) - (SS(C_i) + SS(C_j))}{SST}
+\end{equation*}
+
+where
+
+\begin{equation*}
+SST = \sum_{i = 1}^{n} \sum_{j = 1}^{p} \left( x_{ji} - \frac{1}{n} \sum_{a = 1}^{n} x_{ja} \right)^2
+\end{equation*}
+
+3. R-squared($R^2$)
+
+\begin{equation*}
+1 - \frac{\sum_{i = 1}^{k} SS(C_i)}{SST}
+\end{equation*}
+
+
+위 \@ref(ward-method-algorithm)절에서 워드 군집 알고리즘으로 구현한 군집 과정에 대해 위 통계량을 계산해보자.
+
+```{r}
+train_df <- tibble(
+  id = c(1:8),
+  x1 = c(4, 20, 3, 19, 17, 8, 19, 18),
+  x2 = c(15, 13, 13, 4, 17, 11, 12, 6)
+)
+
+sst <- train_df %>%
+  select(-id) %>%
+  sapply(function(x) sum((x - mean(x))^2)) %>%
+  sum()
+
+#단계0
+init_cluster <- tibble(
+  id = train_df$id,
+  cluster = as.character(1:nrow(train_df))
+)
+i <- 0L
+current_clusters <- unique(init_cluster$cluster)
+k <- length(current_clusters)
+ssw <- calculate_ssw(train_df, init_cluster)
+old_ssw <- NA_real_
+
+#단계1
+iteration <- vector("list", length = nrow(train_df) - 1)
+while(k > 1) {
+  i <- i + 1
+  old_ssw <- ssw
+  
+  if(i == 1) {
+    old_cluster <- init_cluster
+  } else {
+    old_cluster <- iteration[[i-1]]$new_cluster_label
+  }
+  
+  iteration[[i]] <- best_merge_cluster(
+    train_df,
+    old_cluster
+  )
+  
+  merged <- old_cluster %>% 
+    anti_join(iteration[[i]]$new_cluster_label, by = "cluster")
+  
+  current_clusters <- unique(iteration[[i]]$new_cluster_label$cluster)
+  k <- length(current_clusters)
+  ssw <- iteration[[i]]$new_ssw
+  
+  iteration[[i]]$rmsstd <- sqrt(
+    merged %>% 
+      inner_join(train_df, by = "id") %>%
+      select(-id, -cluster) %>%
+      sapply(function(x) sum((x - mean(x))^2)) %>%
+      sum() / (2 * (nrow(merged) - 1))
+  )
+  
+  iteration[[i]]$iter <- i
+  iteration[[i]]$merge <- paste0("{", unique(merged$cluster), "}", collapse = ", ")
+  iteration[[i]]$sol <- paste0("{", unique(current_clusters), "}", collapse = ", ")
+  iteration[[i]]$spr <- (ssw - old_ssw) / sst
+  iteration[[i]]$r_sq <- 1 - ssw / sst
+}
+```
+
+
+```{r cluster-statistic, fig.cap='군집 과정에 따른 통계량 추이', fig.align='center'}
+cluster_statistic <- lapply(iteration, function(x) x[
+  c("iter", "merge", "sol", "rmsstd", "spr", "r_sq")]) %>%
+  bind_rows(
+    tibble(
+      iter = 0,
+      sol = paste0("{", unique(init_cluster$cluster), "}", collapse = ", "),
+      r_sq = 1
+    )
+  ) %>%
+  arrange(iter)
+
+cluster_statistic %>%
+  knitr::kable(
+    booktabs = TRUE,
+    col.names = c('Iteration', '통합대상군집', '통합 후 군집',
+                  '$RMSSTD$', '$SPR$', '$R^2$'),
+    caption = '군집 과정에 따른 여러 통계량'
+  )
+
+cluster_statistic %>%
+  mutate(
+    rmsstd = if_else(is.na(rmsstd), 0, rmsstd),
+    spr = if_else(is.na(spr), 0, spr)
+    ) %>%
+  ggplot(aes(x = iter)) +
+  geom_line(aes(y = rmsstd, color = "RMSSTD")) +
+  geom_line(aes(y = spr * 6, color = "SPR")) + 
+  geom_line(aes(y = r_sq * 6, color = "R2")) + 
+  scale_y_continuous(sec.axis = sec_axis(~ . / 6, name = "SPR, R2")) +
+  ylab("RMSSTD") +
+  xlab("Iteration")
+```
+
+그림 \@ref(fig:cluster-statistic)에서 보듯이 Iteration 6부터 3가지 통계량 모두 급격하게 변화하는 것을 알 수 있다. 따라서 군집수는 Iteration 5까지 3개가 가장 적당하다고 하겠다.
 

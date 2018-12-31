@@ -1,0 +1,5 @@
+# 비계층적 군집방법 {#nonhierarchical-clustering}
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+```

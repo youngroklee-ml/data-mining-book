@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2018-11-24">
+<meta name="date" content="2018-12-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="clustering-overview.html">
-<link rel="next" href="references.html">
+<link rel="next" href="nonhierarchical-clustering.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -212,7 +212,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>6.4.2</b> 워드 군집 알고리즘</a></li>
 <li class="chapter" data-level="6.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>6.4.3</b> R 패키지 내 워드 방법</a></li>
 </ul></li>
+<li class="chapter" data-level="6.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>6.5</b> 분리적 방법 - 다이아나</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>6.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="6.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>6.5.2</b> 다이아나 알고리즘</a></li>
 </ul></li>
+<li class="chapter" data-level="6.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>6.6</b> 군집수의 결정</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>7</b> 비계층적 군집방법</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -450,11 +456,13 @@ Figure 6.2: PC 사용자 데이터에 대한 평균연결법 덴드로그램
 <span class="st">    </span><span class="kw">inner_join</span>(
       cluster_label <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(
         <span class="dt">item1 =</span> id, <span class="dt">cluster1 =</span> cluster
-        )) <span class="op">%&gt;%</span>
+        ),
+      <span class="dt">by =</span> <span class="st">&quot;item1&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">inner_join</span>(
       cluster_label <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(
         <span class="dt">item2 =</span> id, <span class="dt">cluster2 =</span> cluster
-        )) <span class="op">%&gt;%</span>
+        ),
+      <span class="dt">by =</span> <span class="st">&quot;item2&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">filter</span>(cluster1 <span class="op">!=</span><span class="st"> </span>cluster2) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">group_by</span>(cluster1, cluster2) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">summarize</span>(<span class="dt">distance =</span> <span class="kw">mean</span>(distance)) <span class="op">%&gt;%</span>
@@ -495,8 +503,6 @@ Figure 6.2: PC 사용자 데이터에 대한 평균연결법 덴드로그램
 <p>위와 같이, 초기 군집해에서 군집 수는 전체 객체수와 같은 10개이다.</p>
 <p>위 초기해로부터 단계1을 아래와 같이 수행해보자.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">merge_cluster</span>(train_df, init_cluster)</code></pre></div>
-<pre><code>## Joining, by = &quot;item1&quot;</code></pre>
-<pre><code>## Joining, by = &quot;item2&quot;</code></pre>
 <p>찾아진 가장 가까운 두 군집은 아래와 같다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">1</span>]]<span class="op">$</span>closest_cluster</code></pre></div>
 <pre><code>## # A tibble: 1 x 3
@@ -523,8 +529,6 @@ Figure 6.2: PC 사용자 데이터에 대한 평균연결법 덴드로그램
   train_df,
   iteration[[<span class="dv">1</span>]]<span class="op">$</span>new_cluster_label
 )</code></pre></div>
-<pre><code>## Joining, by = &quot;item1&quot;</code></pre>
-<pre><code>## Joining, by = &quot;item2&quot;</code></pre>
 <p>이번에 찾아진 가장 가까운 두 군집은 아래와 같다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">2</span>]]<span class="op">$</span>closest_cluster</code></pre></div>
 <pre><code>## # A tibble: 1 x 3
@@ -550,10 +554,9 @@ Figure 6.2: PC 사용자 데이터에 대한 평균연결법 덴드로그램
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="kw">merge_cluster</span>(
   train_df,
   iteration[[<span class="dv">2</span>]]<span class="op">$</span>new_cluster_label
-)</code></pre></div>
-<pre><code>## Joining, by = &quot;item1&quot;</code></pre>
-<pre><code>## Joining, by = &quot;item2&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(iteration[[<span class="dv">3</span>]]<span class="op">$</span>closest_cluster)</code></pre></div>
+)
+
+<span class="kw">print</span>(iteration[[<span class="dv">3</span>]]<span class="op">$</span>closest_cluster)</code></pre></div>
 <pre><code>## # A tibble: 1 x 3
 ##   cluster1 cluster2 distance
 ##   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;
@@ -726,7 +729,12 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
     <span class="dt">main =</span> <span class="ot">NULL</span>,
     <span class="dt">xlab =</span> <span class="st">&quot;observation&quot;</span>
   )</code></pre></div>
-<p><img src="data-mining-book_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
+<div class="figure" style="text-align: center"><span id="fig:ward-dendrogram"></span>
+<img src="data-mining-book_files/figure-html/ward-dendrogram-1.png" alt="운전자 데이터에 대한 워드 방법 덴드로그램" width="672" />
+<p class="caption">
+Figure 6.3: 운전자 데이터에 대한 워드 방법 덴드로그램
+</p>
+</div>
 </div>
 <div id="ward-method-algorithm" class="section level3">
 <h3><span class="header-section-number">6.4.2</span> 워드 군집 알고리즘</h3>
@@ -760,7 +768,7 @@ SSW = \sum_{i = 1}^{k} SS(C_i)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># SSW 계산</span>
 calculate_ssw &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_label) {
   df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">inner_join</span>(cluster_label) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(cluster_label, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">group_by</span>(cluster) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>id) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">summarize_all</span>(<span class="cf">function</span>(x) <span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x))<span class="op">^</span><span class="dv">2</span>)) <span class="op">%&gt;%</span>
@@ -1094,8 +1102,468 @@ res_ward.D<span class="op">$</span>height</code></pre></div>
 
 <span class="kw">sort</span>(res_agnes_ward<span class="op">$</span>height)</code></pre></div>
 <pre><code>## [1]  1.414214  2.236068  2.236068  5.944185  6.244998 13.945131 26.813243</code></pre>
-
 </div>
+</div>
+<div id="diana" class="section level2">
+<h2><span class="header-section-number">6.5</span> 분리적 방법 - 다이아나</h2>
+<p>다이아나는 분리적 방법의 하나로, <span class="citation">Kaufman and Rousseeuw (<a href="#ref-kaufman1990finding">1990</a>)</span> 에 의하여 제안된 것이다. 이는 전체의 객체를 하나의 군집으로 시작하여 매번 이분화하는 등 모든 군집이 단독 객체로 구성될 때까지 진행하는 방법이다. 이 때, 비유사성 척도로는 평균거리를 사용한다.</p>
+<div id="diana-basic-script" class="section level3">
+<h3><span class="header-section-number">6.5.1</span> 기본 R 스크립트</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>),
+  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">42</span>),
+  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="dv">12</span>, <span class="dv">24</span>, <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">9</span>)
+)
+
+knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
+             <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>),
+             <span class="dt">caption =</span> <span class="st">&#39;DIANA 군집 대상 객체 데이터&#39;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:diana-data">Table 6.6: </span>DIANA 군집 대상 객체 데이터</caption>
+<thead>
+<tr class="header">
+<th align="center">객체번호</th>
+<th align="right"><span class="math inline">\(x_1\)</span></th>
+<th align="right"><span class="math inline">\(x_2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="right">30</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="right">45</td>
+<td align="right">22</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="right">25</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="right">40</td>
+<td align="right">24</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="right">50</td>
+<td align="right">25</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="right">20</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="right">42</td>
+<td align="right">9</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="hierarchical-clustering.html#tab:diana-data">6.6</a>와 같이 두 변수 <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>로 이루어진 7개의 객체 데이터에 대해 DIANA 방법에 의해 군집해를 아래와 같이 <code>cluster</code> 패키지의 <code>diana</code> 함수를 이용하여 간단히 구할 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_diana &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">diana</span>(train_df[, <span class="op">-</span><span class="dv">1</span>])
+cluster<span class="op">::</span><span class="kw">pltree</span>(res_diana,
+                <span class="dt">main =</span> <span class="ot">NULL</span>,
+                <span class="dt">xlab =</span> <span class="st">&quot;observation&quot;</span>
+                )</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:diana-result-plot"></span>
+<img src="data-mining-book_files/figure-html/diana-result-plot-1.png" alt="DIANA 방법에 의한 군집 덴드로그램" width="672" />
+<p class="caption">
+Figure 6.4: DIANA 방법에 의한 군집 덴드로그램
+</p>
+</div>
+</div>
+<div id="diana-algorithm" class="section level3">
+<h3><span class="header-section-number">6.5.2</span> 다이아나 알고리즘</h3>
+<p>가장 처음 이분화가 이루어질 때, 우선 타 객체와의 평균거리가 가장 큰 객체가 분파되어 새로운 군집을 형성한다. 그리고 다른 객체에 대하여, 군집에 남아있을 때의 평균거리와 새로운 군집으로 분리될 때의 평균거리를 산출하여, 현 군집에 잔류 또는 새로운 군집으로의 합류를 결정한다.</p>
+<p>여기서 객체 <span class="math inline">\(i\)</span>와 군집 <span class="math inline">\(C\)</span>간의 평균거리는 다음과 같이 산출된다.</p>
+<span class="math display">\[\begin{equation*}
+\bar{d}(i, C) = \begin{cases}
+\frac{1}{|C| - 1} \sum_{j \in C} d(i, j) &amp; \text{ if } i \in C\\
+\frac{1}{|C|} \sum_{j \in C} d(i, j) &amp; \text{ if } i \notin C
+\end{cases}
+\end{equation*}\]</span>
+<p>본 방법의 알고리즘은 다음과 같다.</p>
+<ol style="list-style-type: decimal">
+<li>단계0: <span class="math inline">\(n\)</span>개의 객체를 하나의 군집으로 간주한다. (<span class="math inline">\(k = 1\)</span>)</li>
+<li>단계1: 객체 간 거리가 가장 큰 두 객체를 포함한 군집을 이분화 대상으로 선정한다. (이를 <span class="math inline">\(A\)</span>라 하고, <span class="math inline">\(B \leftarrow \emptyset\)</span>로 둔다.)</li>
+<li>단계2: 다음 과정을 통하여 군집 <span class="math inline">\(A\)</span>를 이분화한다.
+<ol style="list-style-type: decimal">
+<li>단계2-1: <span class="math inline">\(i \leftarrow \arg\,\max_{i&#39;} \bar{d}(i&#39;, A)\)</span></li>
+<li>단계2-2: <span class="math inline">\(A \leftarrow A - \{i\}\)</span>, <span class="math inline">\(B \leftarrow B \cup \{i\}\)</span></li>
+<li>단계2-3: <span class="math inline">\(i \leftarrow \arg\,\max_{i&#39; \in A} e(i&#39;) = \bar{d}(i&#39;, A) - \bar{d}(i&#39;, B)\)</span></li>
+<li>단계2-4: <span class="math inline">\(e(i) &gt; 0\)</span>이면 단계2-2로, <span class="math inline">\(e(i) \le 0\)</span>이면 단계3으로</li>
+</ol></li>
+<li>단계3
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(k \leftarrow k + 1\)</span></li>
+<li><span class="math inline">\(k &lt; n\)</span>이면 단계1로, <span class="math inline">\(k = n\)</span>이면 Stop.</li>
+</ol></li>
+</ol>
+<p>DIANA 알고리즘을 R script로 구현해보자.</p>
+<p>우선, 단계1의 군집을 찾는 함수 <code>max_distance_cluster</code>를 구현하자. 이 함수는 아래 두 개의 데이터 프레임을 입력받는다.</p>
+<ul>
+<li>입력
+<ul>
+<li><code>df</code>: 관측 데이터. 각 열의 설명은 아래와 같다.
+<ul>
+<li><code>id</code>: 객체번호</li>
+<li>나머지 열: 숫자형 변수</li>
+</ul></li>
+<li><code>cluster_label</code>: 각 객체의 현재 소속 군집을 나타내는 데이터 프레임
+<ul>
+<li><code>id</code>: 객체번호</li>
+<li><code>cluster</code>: 군집명</li>
+</ul></li>
+</ul></li>
+<li>함수값
+<ul>
+<li><code>cluster</code>: 객체간 거리가 가장 큰 두 객체를 포함한 군집명</li>
+<li><code>distance</code>: 군집 내 객체간 최대 거리</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">max_distance_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_label) {
+  unique_cluster &lt;-<span class="st"> </span><span class="kw">unique</span>(cluster_label<span class="op">$</span>cluster)
+  
+  cluster_df &lt;-<span class="st"> </span><span class="kw">lapply</span>(unique_cluster, <span class="cf">function</span>(x) {
+    cluster_label <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">      </span><span class="kw">filter</span>(cluster <span class="op">==</span><span class="st"> </span>x) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">inner_join</span>(df, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">select</span>(<span class="op">-</span>cluster, <span class="op">-</span>id)
+    })
+  
+  max_distance &lt;-<span class="st"> </span><span class="kw">sapply</span>(cluster_df, 
+                         <span class="cf">function</span>(x) {
+                           <span class="cf">if</span>(<span class="kw">nrow</span>(x) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="kw">return</span>(<span class="dv">0</span>)
+                           <span class="kw">max</span>(<span class="kw">dist</span>(x))
+                         }
+                         )
+
+  <span class="kw">list</span>(
+    <span class="dt">cluster =</span> unique_cluster[<span class="kw">which.max</span>(max_distance)],
+    <span class="dt">distance =</span> <span class="kw">max</span>(max_distance)
+  )
+}</code></pre></div>
+<p>단계 2-1에서 군집 내 평균거리가 가장 큰 객체를 찾는 함수 <code>max_within_distance</code>를 아래와 같이 구현해보자. 이 때 입력변수인 <code>cluster_df</code>는 해당 군집의 객체 데이터로, 객체 번호를 나타내는 열 <code>id</code>와 객체의 각 숫자형 변수를 표현하는 열들로 구성된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">max_within_distance &lt;-<span class="st"> </span><span class="cf">function</span>(cluster_df) {
+  idx &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">subset</span>(cluster_df, <span class="dt">select =</span> <span class="op">-</span>id), <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(item1) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_distance =</span> <span class="kw">mean</span>(distance)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">arrange</span>(<span class="op">-</span>mean_distance) <span class="op">%&gt;%</span>
+<span class="st">    </span>.[[<span class="st">&quot;item1&quot;</span>]] <span class="op">%&gt;%</span>
+<span class="st">    </span>.[<span class="dv">1</span>]
+  
+  cluster_df<span class="op">$</span>id[idx]
+}</code></pre></div>
+<p>이후 단계2-3에서 정의한 <span class="math inline">\(e(i&#39;) = \bar{d}(i&#39;, A) - \bar{d}(i&#39;, B)\)</span>를 계산하는 함수 <code>e_score</code>를 아래와 같이 구현한다.</p>
+<ul>
+<li><code>object</code>: 객체 번호(<code>id</code>)</li>
+<li><code>A</code>(<code>B</code>): 군집 <span class="math inline">\(A\)</span>(<span class="math inline">\(B\)</span>)의 객체 데이터. 행은 객체를 나타내며, <code>id</code> 열은 객체 번호, 이외의 열들은 변수를 나타낸다.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e_score &lt;-<span class="st"> </span><span class="cf">function</span>(object, A, B) {
+  d_from_A &lt;-<span class="st"> </span>proxy<span class="op">::</span><span class="kw">dist</span>(<span class="kw">subset</span>(A, id <span class="op">==</span><span class="st"> </span>object, <span class="op">-</span>id), 
+                          <span class="kw">subset</span>(A, id <span class="op">!=</span><span class="st"> </span>object, <span class="op">-</span>id)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mean</span>()
+  d_from_B &lt;-<span class="st"> </span>proxy<span class="op">::</span><span class="kw">dist</span>(<span class="kw">subset</span>(A, id <span class="op">==</span><span class="st"> </span>object, <span class="op">-</span>id), 
+                          B <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>id)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mean</span>()
+  <span class="kw">return</span>(d_from_A <span class="op">-</span><span class="st"> </span>d_from_B)
+}</code></pre></div>
+<p>위 두 함수 <code>max_within_distance</code>와 <code>e_score</code>를 이용하여, 주어진 데이터 프레임을 두 군집으로 나누는 함수 <code>split_cluster</code>를 구현해보자.</p>
+<ul>
+<li>입력: 객체 데이터를 나타내는 데이터 프레임 <code>cluster_df</code>. 행은 객체를 나타내며, 객체 번호를 나타내는 열 <code>id</code>와 객체의 각 숫자형 변수를 표현하는 열들로 구성된다.</li>
+<li>함수값: 아래 두 개의 component를 지닌 리스트.
+<ul>
+<li><code>idx_A</code>: 객체 데이터에서 행렬 <span class="math inline">\(A\)</span>에 속하는 객체 번호</li>
+<li><code>idx_B</code>: 객체 데이터에서 행렬 <span class="math inline">\(B\)</span>에 속하는 객체 번호</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">split_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(cluster_df) {
+  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(cluster_df)
+  
+  idx_A &lt;-<span class="st"> </span>cluster_df<span class="op">$</span>id
+  idx_B &lt;-<span class="st"> </span><span class="ot">NULL</span>
+  
+  <span class="co"># 단계2-1</span>
+  max_object &lt;-<span class="st"> </span><span class="kw">max_within_distance</span>(cluster_df)
+  e_i &lt;-<span class="st"> </span><span class="ot">Inf</span>
+
+  <span class="cf">while</span>(e_i <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) {
+    <span class="co"># 단계2-2</span>
+    idx_B &lt;-<span class="st"> </span><span class="kw">c</span>(idx_B, max_object)
+    idx_A &lt;-<span class="st"> </span><span class="kw">setdiff</span>(idx_A, max_object)
+    
+    A &lt;-<span class="st"> </span>cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(id <span class="op">%in%</span><span class="st"> </span>idx_A)
+    B &lt;-<span class="st"> </span>cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(id <span class="op">%in%</span><span class="st"> </span>idx_B)
+
+    <span class="co"># 단계2-3</span>
+    <span class="cf">if</span>(<span class="kw">nrow</span>(A) <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {
+      e_is &lt;-<span class="st"> </span><span class="kw">sapply</span>(A<span class="op">$</span>id, <span class="cf">function</span>(x) <span class="kw">e_score</span>(x, A, B))
+      max_object &lt;-<span class="st"> </span>A<span class="op">$</span>id[<span class="kw">which.max</span>(e_is)]
+      e_i &lt;-<span class="st"> </span><span class="kw">max</span>(e_is)
+    } <span class="cf">else</span> {
+      e_i &lt;-<span class="st"> </span><span class="op">-</span><span class="ot">Inf</span>
+    }
+  }
+  
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">idx_A =</span> idx_A, <span class="dt">idx_B =</span> idx_B))
+}</code></pre></div>
+<p>단계1 함수 <code>max_distance_cluster</code>와 단계2 함수 <code>split_cluster</code>를 반복적으로 수행하며 각각의 객체가 군집에 될 때까지 군집을 분리해간다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 단계0</span>
+current_cluster &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">id =</span> train_df<span class="op">$</span>id
+)
+current_cluster<span class="op">$</span>cluster &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(current_cluster), <span class="dt">collapse =</span> <span class="st">&quot;,&quot;</span>)
+i &lt;-<span class="st"> </span>0L
+k &lt;-<span class="st"> </span>1L
+
+<span class="cf">while</span>(k <span class="op">&lt;</span><span class="st"> </span><span class="kw">nrow</span>(train_df)) {
+  i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span>1L
+  
+  <span class="co"># 단계1</span>
+  max_cluster &lt;-<span class="st"> </span><span class="kw">max_distance_cluster</span>(train_df, current_cluster)
+
+  <span class="co"># 단계2</span>
+  new_split &lt;-<span class="st"> </span>current_cluster <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(cluster <span class="op">==</span><span class="st"> </span>max_cluster<span class="op">$</span>cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(train_df, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">split_cluster</span>()
+
+  <span class="co"># 군집해 업데이트</span>
+  current_cluster[
+    current_cluster<span class="op">$</span>id <span class="op">%in%</span><span class="st"> </span>new_split<span class="op">$</span>idx_A, 
+    <span class="st">&quot;cluster&quot;</span>] &lt;-<span class="st"> </span><span class="kw">paste</span>(new_split<span class="op">$</span>idx_A, <span class="dt">collapse =</span> <span class="st">&quot;,&quot;</span>)
+  current_cluster[
+    current_cluster<span class="op">$</span>id <span class="op">%in%</span><span class="st"> </span>new_split<span class="op">$</span>idx_B, 
+    <span class="st">&quot;cluster&quot;</span>] &lt;-<span class="st"> </span><span class="kw">paste</span>(new_split<span class="op">$</span>idx_B, <span class="dt">collapse =</span> <span class="st">&quot;,&quot;</span>)
+  
+  <span class="co"># 군집해 출력</span>
+  k &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(current_cluster<span class="op">$</span>cluster))
+  <span class="kw">cat</span>(<span class="st">&quot;Iteration: &quot;</span>, i, <span class="st">&quot;, k = &quot;</span>, k, <span class="st">&quot;, clusters = &quot;</span>, 
+      <span class="kw">paste0</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">unique</span>(current_cluster<span class="op">$</span>cluster), <span class="st">&quot;}&quot;</span>),
+      <span class="st">&quot;, height = &quot;</span>, max_cluster<span class="op">$</span>distance, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+}</code></pre></div>
+<pre><code>## Iteration:  1 , k =  2 , clusters =  {6,3,1} {2,4,5,7} , height =  33.54102 
+## Iteration:  2 , k =  3 , clusters =  {6,3,1} {2,4,5} {7} , height =  17.88854 
+## Iteration:  3 , k =  4 , clusters =  {1} {2,4,5} {3,6} {7} , height =  11.18034 
+## Iteration:  4 , k =  5 , clusters =  {1} {2,4} {3,6} {5} {7} , height =  10.04988 
+## Iteration:  5 , k =  6 , clusters =  {1} {2} {3,6} {4} {5} {7} , height =  5.385165 
+## Iteration:  6 , k =  7 , clusters =  {1} {2} {3} {4} {5} {6} {7} , height =  5.385165</code></pre>
+<p>위 출력 결과에서 <code>height</code>는 해당 iteration에서 분리된 군집의 분리 전 지름(diameter)으로, 함수 <code>max_distance_cluster</code>에서 계산한 군집 내 객체간 최대 거리를 나타내며, 이는 R 패키지 <code>cluster</code>의 <code>diana</code> 함수 수행 시 함수값으로 출력되는 <code>height</code>값이다. Iteration이 진행됨에 따라 <code>height</code>의 값이 감소하는 것을 확인할 수 있다.</p>
+</div>
+</div>
+<div id="hierarchical-cluster-number" class="section level2">
+<h2><span class="header-section-number">6.6</span> 군집수의 결정</h2>
+<p>최적의 군집수를 결정하는 객관적인 방법은 존재하지 않는다. 계층적 군집방법에서는 덴드로그램을 참조하여 군집 간의 거리가 급격히 증가하는 계층에서 수평으로 절단하여, 그 이하의 그룹들을 하나의 군집으로 형성하는 방안을 널리 사용하고 있다. 이외에 군집수를 결정하는 데 통계량으로 다음과 같은 통계량들이 부수적으로 사용된다.</p>
+<ol style="list-style-type: decimal">
+<li>새 군집의 RMS 표준편차(root-mean-square standard deviation of the new cluster; RMSSTD)</li>
+</ol>
+<span class="math display">\[\begin{equation*}
+RMSSTD(C_i, C_j) = \sqrt{\frac{SS(C_i \cup C_j)}{p(|C_i| + |C_j| - 1)}}
+\end{equation*}\]</span>
+<ol start="2" style="list-style-type: decimal">
+<li>Semipartial R-squared(SPR)</li>
+</ol>
+<span class="math display">\[\begin{equation*}
+SPR(C_i, C_j) = \frac{SS(C_i \cup C_j) - (SS(C_i) + SS(C_j))}{SST}
+\end{equation*}\]</span>
+<p>where</p>
+<span class="math display">\[\begin{equation*}
+SST = \sum_{i = 1}^{n} \sum_{j = 1}^{p} \left( x_{ji} - \frac{1}{n} \sum_{a = 1}^{n} x_{ja} \right)^2
+\end{equation*}\]</span>
+<ol start="3" style="list-style-type: decimal">
+<li>R-squared(<span class="math inline">\(R^2\)</span>)</li>
+</ol>
+<span class="math display">\[\begin{equation*}
+1 - \frac{\sum_{i = 1}^{k} SS(C_i)}{SST}
+\end{equation*}\]</span>
+<p>위 <a href="hierarchical-clustering.html#ward-method-algorithm">6.4.2</a>절에서 워드 군집 알고리즘으로 구현한 군집 과정에 대해 위 통계량을 계산해보자.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>),
+  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">19</span>, <span class="dv">17</span>, <span class="dv">8</span>, <span class="dv">19</span>, <span class="dv">18</span>),
+  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">15</span>, <span class="dv">13</span>, <span class="dv">13</span>, <span class="dv">4</span>, <span class="dv">17</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">6</span>)
+)
+
+sst &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>id) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">sapply</span>(<span class="cf">function</span>(x) <span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x))<span class="op">^</span><span class="dv">2</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">sum</span>()
+
+<span class="co">#단계0</span>
+init_cluster &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">id =</span> train_df<span class="op">$</span>id,
+  <span class="dt">cluster =</span> <span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(train_df))
+)
+i &lt;-<span class="st"> </span>0L
+current_clusters &lt;-<span class="st"> </span><span class="kw">unique</span>(init_cluster<span class="op">$</span>cluster)
+k &lt;-<span class="st"> </span><span class="kw">length</span>(current_clusters)
+ssw &lt;-<span class="st"> </span><span class="kw">calculate_ssw</span>(train_df, init_cluster)
+old_ssw &lt;-<span class="st"> </span><span class="ot">NA_real_</span>
+
+<span class="co">#단계1</span>
+iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> <span class="kw">nrow</span>(train_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)
+<span class="cf">while</span>(k <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {
+  i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+  old_ssw &lt;-<span class="st"> </span>ssw
+  
+  <span class="cf">if</span>(i <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {
+    old_cluster &lt;-<span class="st"> </span>init_cluster
+  } <span class="cf">else</span> {
+    old_cluster &lt;-<span class="st"> </span>iteration[[i<span class="op">-</span><span class="dv">1</span>]]<span class="op">$</span>new_cluster_label
+  }
+  
+  iteration[[i]] &lt;-<span class="st"> </span><span class="kw">best_merge_cluster</span>(
+    train_df,
+    old_cluster
+  )
+  
+  merged &lt;-<span class="st"> </span>old_cluster <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">anti_join</span>(iteration[[i]]<span class="op">$</span>new_cluster_label, <span class="dt">by =</span> <span class="st">&quot;cluster&quot;</span>)
+  
+  current_clusters &lt;-<span class="st"> </span><span class="kw">unique</span>(iteration[[i]]<span class="op">$</span>new_cluster_label<span class="op">$</span>cluster)
+  k &lt;-<span class="st"> </span><span class="kw">length</span>(current_clusters)
+  ssw &lt;-<span class="st"> </span>iteration[[i]]<span class="op">$</span>new_ssw
+  
+  iteration[[i]]<span class="op">$</span>rmsstd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(
+    merged <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">      </span><span class="kw">inner_join</span>(train_df, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">select</span>(<span class="op">-</span>id, <span class="op">-</span>cluster) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">sapply</span>(<span class="cf">function</span>(x) <span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x))<span class="op">^</span><span class="dv">2</span>)) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">sum</span>() <span class="op">/</span><span class="st"> </span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="kw">nrow</span>(merged) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
+  )
+  
+  iteration[[i]]<span class="op">$</span>iter &lt;-<span class="st"> </span>i
+  iteration[[i]]<span class="op">$</span>merge &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">unique</span>(merged<span class="op">$</span>cluster), <span class="st">&quot;}&quot;</span>, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>)
+  iteration[[i]]<span class="op">$</span>sol &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">unique</span>(current_clusters), <span class="st">&quot;}&quot;</span>, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>)
+  iteration[[i]]<span class="op">$</span>spr &lt;-<span class="st"> </span>(ssw <span class="op">-</span><span class="st"> </span>old_ssw) <span class="op">/</span><span class="st"> </span>sst
+  iteration[[i]]<span class="op">$</span>r_sq &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>ssw <span class="op">/</span><span class="st"> </span>sst
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_statistic &lt;-<span class="st"> </span><span class="kw">lapply</span>(iteration, <span class="cf">function</span>(x) x[
+  <span class="kw">c</span>(<span class="st">&quot;iter&quot;</span>, <span class="st">&quot;merge&quot;</span>, <span class="st">&quot;sol&quot;</span>, <span class="st">&quot;rmsstd&quot;</span>, <span class="st">&quot;spr&quot;</span>, <span class="st">&quot;r_sq&quot;</span>)]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">bind_rows</span>(
+    <span class="kw">tibble</span>(
+      <span class="dt">iter =</span> <span class="dv">0</span>,
+      <span class="dt">sol =</span> <span class="kw">paste0</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">unique</span>(init_cluster<span class="op">$</span>cluster), <span class="st">&quot;}&quot;</span>, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>),
+      <span class="dt">r_sq =</span> <span class="dv">1</span>
+    )
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(iter)
+
+cluster_statistic <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(
+    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+    <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;Iteration&#39;</span>, <span class="st">&#39;통합대상군집&#39;</span>, <span class="st">&#39;통합 후 군집&#39;</span>,
+                  <span class="st">&#39;$RMSSTD$&#39;</span>, <span class="st">&#39;$SPR$&#39;</span>, <span class="st">&#39;$R^2$&#39;</span>),
+    <span class="dt">caption =</span> <span class="st">&#39;군집 과정에 따른 여러 통계량&#39;</span>
+  )</code></pre></div>
+<table>
+<caption><span id="tab:cluster-statistic">Table 6.7: </span>군집 과정에 따른 여러 통계량</caption>
+<thead>
+<tr class="header">
+<th align="right">Iteration</th>
+<th align="left">통합대상군집</th>
+<th align="left">통합 후 군집</th>
+<th align="right"><span class="math inline">\(RMSSTD\)</span></th>
+<th align="right"><span class="math inline">\(SPR\)</span></th>
+<th align="right"><span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">NA</td>
+<td align="left">{1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">{2}, {7}</td>
+<td align="left">{1}, {2,7}, {3}, {4}, {5}, {6}, {8}</td>
+<td align="right">0.7071068</td>
+<td align="right">0.0020005</td>
+<td align="right">0.9979995</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="left">{1}, {3}</td>
+<td align="left">{1,3}, {2,7}, {4}, {5}, {6}, {8}</td>
+<td align="right">1.1180340</td>
+<td align="right">0.0050013</td>
+<td align="right">0.9929982</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="left">{4}, {8}</td>
+<td align="left">{1,3}, {2,7}, {4,8}, {5}, {6}</td>
+<td align="right">1.1180340</td>
+<td align="right">0.0050013</td>
+<td align="right">0.9879970</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="left">{2,7}, {5}</td>
+<td align="left">{1,3}, {2,7,5}, {4,8}, {6}</td>
+<td align="right">2.1602469</td>
+<td align="right">0.0353422</td>
+<td align="right">0.9526548</td>
+</tr>
+<tr class="even">
+<td align="right">5</td>
+<td align="left">{1,3}, {6}</td>
+<td align="left">{1,3,6}, {2,7,5}, {4,8}</td>
+<td align="right">2.3452079</td>
+<td align="right">0.0390098</td>
+<td align="right">0.9136451</td>
+</tr>
+<tr class="odd">
+<td align="right">6</td>
+<td align="left">{2,7,5}, {4,8}</td>
+<td align="left">{1,3,6}, {2,7,5,4,8}</td>
+<td align="right">3.8470768</td>
+<td align="right">0.1945153</td>
+<td align="right">0.7191298</td>
+</tr>
+<tr class="even">
+<td align="right">7</td>
+<td align="left">{1,3,6}, {2,7,5,4,8}</td>
+<td align="left">{1,3,6,2,7,5,4,8}</td>
+<td align="right">5.9753960</td>
+<td align="right">0.7191298</td>
+<td align="right">0.0000000</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_statistic <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">rmsstd =</span> <span class="kw">if_else</span>(<span class="kw">is.na</span>(rmsstd), <span class="dv">0</span>, rmsstd),
+    <span class="dt">spr =</span> <span class="kw">if_else</span>(<span class="kw">is.na</span>(spr), <span class="dv">0</span>, spr)
+    ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> iter)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> rmsstd, <span class="dt">color =</span> <span class="st">&quot;RMSSTD&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> spr <span class="op">*</span><span class="st"> </span><span class="dv">6</span>, <span class="dt">color =</span> <span class="st">&quot;SPR&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> r_sq <span class="op">*</span><span class="st"> </span><span class="dv">6</span>, <span class="dt">color =</span> <span class="st">&quot;R2&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">sec.axis =</span> <span class="kw">sec_axis</span>(<span class="op">~</span><span class="st"> </span>. <span class="op">/</span><span class="st"> </span><span class="dv">6</span>, <span class="dt">name =</span> <span class="st">&quot;SPR, R2&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;RMSSTD&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Iteration&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:cluster-statistic"></span>
+<img src="data-mining-book_files/figure-html/cluster-statistic-1.png" alt="군집 과정에 따른 통계량 추이" width="672" />
+<p class="caption">
+Figure 6.5: 군집 과정에 따른 통계량 추이
+</p>
+</div>
+<p>그림 <a href="hierarchical-clustering.html#fig:cluster-statistic">6.5</a>에서 보듯이 Iteration 6부터 3가지 통계량 모두 급격하게 변화하는 것을 알 수 있다. 따라서 군집수는 Iteration 5까지 3개가 가장 적당하다고 하겠다.</p>
+
 </div>
 </div>
 <h3>References</h3>
@@ -1109,6 +1577,9 @@ res_ward.D<span class="op">$</span>height</code></pre></div>
 <div id="ref-wishart1969256">
 <p>Wishart, David. 1969. “256. Note: An Algorithm for Hierarchical Classifications.” <em>Biometrics</em>. JSTOR, 165–70.</p>
 </div>
+<div id="ref-kaufman1990finding">
+<p>Kaufman, L, and P. J. Rousseeuw. 1990. “Finding Groups in Data: An Introduction to Cluster Analysis.” Wiley.</p>
+</div>
 </div>
             </section>
 
@@ -1116,7 +1587,7 @@ res_ward.D<span class="op">$</span>height</code></pre></div>
         </div>
       </div>
 <a href="clustering-overview.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="nonhierarchical-clustering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
