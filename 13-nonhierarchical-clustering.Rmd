@@ -429,9 +429,11 @@ SWAP은 대표객체로 선정되어 있는 객체 $i$와 선정되지 않은 �
 
 **[단계 1]** 객체 $i$와 객체 $h$를 교환할 때 목적함수의 변화량을 산출하기 위하여 우선, 대표객체로 선정되지 않은 임의의 객체 $j \neq h$에서의 변화량을 다음과 같이 산출한다.
 
-\begin{equation*}
-C_{jih} = \text{($i$와 $h$를 교환 후 객체 $j$와 대표객체와의 거리)} - \text{(교환 전 객체 $j$와 대표객체와의 거리)}, \, (j \notin M, i \in M, h \notin M)
-\end{equation*}
+\begin{eqnarray*}
+C_{jih} &=& \text{($i$와 $h$를 교환 후 객체 $j$와 대표객체와의 거리)}\\
+ & & - \text{(교환 전 객체 $j$와 대표객체와의 거리)},\\
+ & & \, (j \notin M, i \in M, h \notin M)
+\end{eqnarray*}
 
 
 ```{r}
@@ -497,7 +499,7 @@ C_jih
 
 **[단계 2]** 대표객체 $i$를 $h$로 교환하는 경우 총 변화량은 다음과 같다.
 
-\begion{equation*}
+\begin{equation*}
 T_{ih} = \sum_{j} C_{jih}
 \end{equation*}
 

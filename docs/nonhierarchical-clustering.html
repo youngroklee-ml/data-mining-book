@@ -782,9 +782,11 @@ M \leftarrow M \cup \{m\}
 <h5><span class="header-section-number">7.3.1.2.2</span> SWAP</h5>
 <p>SWAP은 대표객체로 선정되어 있는 객체 <span class="math inline">\(i\)</span>와 선정되지 않은 객체 <span class="math inline">\(h\)</span>를 교환할 때 목적함수의 변화량을 산출해 더 나은 목적함수값을 찾아가는 과정이다.</p>
 <p><strong>[단계 1]</strong> 객체 <span class="math inline">\(i\)</span>와 객체 <span class="math inline">\(h\)</span>를 교환할 때 목적함수의 변화량을 산출하기 위하여 우선, 대표객체로 선정되지 않은 임의의 객체 <span class="math inline">\(j \neq h\)</span>에서의 변화량을 다음과 같이 산출한다.</p>
-<span class="math display">\[\begin{equation*}
-C_{jih} = \text{($i$와 $h$를 교환 후 객체 $j$와 대표객체와의 거리)} - \text{(교환 전 객체 $j$와 대표객체와의 거리)}, \, (j \notin M, i \in M, h \notin M)
-\end{equation*}\]</span>
+<span class="math display">\[\begin{eqnarray*}
+C_{jih} &amp;=&amp; \text{($i$와 $h$를 교환 후 객체 $j$와 대표객체와의 거리)}\\
+ &amp; &amp; - \text{(교환 전 객체 $j$와 대표객체와의 거리)},\\
+ &amp; &amp; \, (j \notin M, i \in M, h \notin M)
+\end{eqnarray*}\]</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 교환 전 각 객체와 대표 객체와의 거리</span>
 D_j &lt;-<span class="st"> </span>pairwise_distance_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(
@@ -876,7 +878,9 @@ C_jih</code></pre></div>
 ## 10     3     2.83         2.83     2     1         0    
 ## # … with 14 more rows</code></pre>
 <p><strong>[단계 2]</strong> 대표객체 <span class="math inline">\(i\)</span>를 <span class="math inline">\(h\)</span>로 교환하는 경우 총 변화량은 다음과 같다.</p>
-<p> T_{ih} = <em>{j} C</em>{jih} \end{equation*}</p>
+<span class="math display">\[\begin{equation*}
+T_{ih} = \sum_{j} C_{jih}
+\end{equation*}\]</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">T_ih &lt;-<span class="st"> </span>C_jih <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(i, h) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_diff_distance =</span> <span class="kw">sum</span>(diff_distance))
