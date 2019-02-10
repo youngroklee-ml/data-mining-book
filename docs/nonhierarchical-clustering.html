@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-02-09">
+<meta name="date" content="2019-02-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -240,6 +240,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>7.5</b> 모형기반 군집방법</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>7.5.1</b> 기본 R script</a></li>
 <li class="chapter" data-level="7.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>7.5.2</b> EM 알고리즘</a></li>
+<li class="chapter" data-level="7.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>7.5.3</b> R 스크립트 구현</a></li>
+<li class="chapter" data-level="7.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>7.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -1791,16 +1793,22 @@ mu_hat</code></pre></div>
 ## $C2
 ##       x1       x2 
 ## 8.777757 7.853884</code></pre>
-<p>분산-공분산 행렬 <span class="math inline">\(\boldsymbol\Sigma_k\)</span>의 추정은 분산-공분산 구조를 어떻게 가정하느냐에 따라 다르다. 우선, 일반적으로 분산-공분산 행렬 <span class="math inline">\(\boldsymbol\Sigma_k\)</span>는 아래와 같이 decompose할 수 있다.</p>
+<p>분산-공분산 행렬 <span class="math inline">\(\boldsymbol\Sigma_k\)</span>의 추정은 분산-공분산 구조를 어떻게 가정하느냐에 따라 다르다. 우선, 일반적으로 분산-공분산 행렬 <span class="math inline">\(\boldsymbol\Sigma_k\)</span>는 아래와 같이 decompose할 수 있다 <span class="citation">(Banfield and Raftery <a href="#ref-banfield1993model">1993</a>)</span>.</p>
 <span class="math display">\[\begin{equation*}
-\boldsymbol\Sigma_k = \lambda_k \mathbf{P}_k \mathbf{D}_k \mathbf{P}_k^\top
+\boldsymbol\Sigma_k = \lambda_k \mathbf{D}_k \mathbf{A}_k \mathbf{D}_k^\top
 \end{equation*}\]</span>
-<p>여기에서 <span class="math inline">\(\lambda_k\)</span>, <span class="math inline">\(\mathbf{P}_k\)</span> 및 <span class="math inline">\(\mathbf{D}_k\)</span>에 적용되는 제약조건에 따라 분산-공분산 모형을 정의할 수 있다. 아래는 본 장에서 다룰 세 가지 모형이다.</p>
+<p>여기에서</p>
+<ul>
+<li><span class="math inline">\(\lambda_k = \det{\boldsymbol\Sigma_k}^{1 / 2}\)</span>; 군집 <span class="math inline">\(k\)</span>이 크기와 관련</li>
+<li><span class="math inline">\(\mathbf{D}_k\)</span>: matrix of eigenvectors of <span class="math inline">\(\boldsymbol\Sigma_k\)</span>; 군집 <span class="math inline">\(k\)</span>의 방향(orientation)과 관련</li>
+<li><span class="math inline">\(\mathbf{A}_k\)</span>: diagonal matrix s.t. <span class="math inline">\(\det{\mathbf{A}_k} = 1\)</span>; 군집 <span class="math inline">\(k\)</span>의 형태와 관련</li>
+</ul>
+<p>이다. <span class="math inline">\(\lambda_k\)</span>, <span class="math inline">\(\mathbf{D}_k\)</span> 및 <span class="math inline">\(\mathbf{A}_k\)</span>에 적용되는 제약조건에 따라 분산-공분산 모형을 정의할 수 있다. 아래는 본 장에서 다룰 세 가지 모형이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tribble</span>(
   <span class="op">~</span>model, <span class="op">~</span>sigma,
   <span class="st">&quot;VII&quot;</span>, <span class="st">&quot;$</span><span class="ch">\\</span><span class="st">lambda_k </span><span class="ch">\\</span><span class="st">mathbf{I}$&quot;</span>,
-  <span class="st">&quot;VEI&quot;</span>, <span class="st">&quot;$</span><span class="ch">\\</span><span class="st">lambda_k </span><span class="ch">\\</span><span class="st">mathbf{D}$&quot;</span>,
-  <span class="st">&quot;VEE&quot;</span>, <span class="st">&quot;$</span><span class="ch">\\</span><span class="st">lambda_k </span><span class="ch">\\</span><span class="st">mathbf{P} </span><span class="ch">\\</span><span class="st">mathbf{D} </span><span class="ch">\\</span><span class="st">mathbf{P}^</span><span class="ch">\\</span><span class="st">top$&quot;</span>
+  <span class="st">&quot;VEI&quot;</span>, <span class="st">&quot;$</span><span class="ch">\\</span><span class="st">lambda_k </span><span class="ch">\\</span><span class="st">mathbf{A}$&quot;</span>,
+  <span class="st">&quot;VEE&quot;</span>, <span class="st">&quot;$</span><span class="ch">\\</span><span class="st">lambda_k </span><span class="ch">\\</span><span class="st">mathbf{D} </span><span class="ch">\\</span><span class="st">mathbf{A} </span><span class="ch">\\</span><span class="st">mathbf{D}^</span><span class="ch">\\</span><span class="st">top$&quot;</span>
 ) <span class="op">%&gt;%</span>
 <span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(
     <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
@@ -1826,11 +1834,11 @@ mu_hat</code></pre></div>
 </tr>
 <tr class="even">
 <td align="center">VEI</td>
-<td align="center"><span class="math inline">\(\lambda_k \mathbf{D}\)</span></td>
+<td align="center"><span class="math inline">\(\lambda_k \mathbf{A}\)</span></td>
 </tr>
 <tr class="odd">
 <td align="center">VEE</td>
-<td align="center"><span class="math inline">\(\lambda_k \mathbf{P} \mathbf{D} \mathbf{P}^\top\)</span></td>
+<td align="center"><span class="math inline">\(\lambda_k \mathbf{D} \mathbf{A} \mathbf{D}^\top\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -1838,101 +1846,193 @@ mu_hat</code></pre></div>
 <ul>
 <li>“VII”
 <ul>
-<li>for all <span class="math inline">\(k\)</span>,<span class="math inline">\(\mathbf{P}_k = \mathbf{I}\)</span></li>
-<li>for all <span class="math inline">\(k\)</span>, <span class="math inline">\(\mathbf{D}_k = \mathbf{I}\)</span></li>
+<li>for all <span class="math inline">\(k\)</span>,<span class="math inline">\(\mathbf{D}_k = \mathbf{I}\)</span></li>
+<li>for all <span class="math inline">\(k\)</span>, <span class="math inline">\(\mathbf{A}_k = \mathbf{I}\)</span></li>
 </ul></li>
 <li>“VEI”
 <ul>
-<li>for all <span class="math inline">\(k\)</span>, <span class="math inline">\(\mathbf{P}_k = \mathbf{I}\)</span></li>
-<li>for all <span class="math inline">\(k\)</span>, <span class="math inline">\(\mathbf{D}_k = \mathbf{D}\)</span></li>
+<li>for all <span class="math inline">\(k\)</span>, <span class="math inline">\(\mathbf{D}_k = \mathbf{I}\)</span></li>
+<li>for all <span class="math inline">\(k\)</span>, <span class="math inline">\(\mathbf{A}_k = \mathbf{A}\)</span></li>
 </ul></li>
 <li>“VEE”
 <ul>
-<li>for all <span class="math inline">\(k\)</span>, <span class="math inline">\(\mathbf{P}_k = \mathbf{P}\)</span></li>
 <li>for all <span class="math inline">\(k\)</span>, <span class="math inline">\(\mathbf{D}_k = \mathbf{D}\)</span></li>
+<li>for all <span class="math inline">\(k\)</span>, <span class="math inline">\(\mathbf{A}_k = \mathbf{A}\)</span></li>
 </ul></li>
 </ul>
-<p>이외에도 R 패키지 <code>mclust</code>를 통해 보다 다양한 분산-공분산 모형을 가정한 군집분석을 수행할 수 있다 <span class="citation">(Scrucca et al. <a href="#ref-scrucca2016mclust">2016</a>)</span>.</p>
-<p><span class="citation">Celeux and Govaert (<a href="#ref-celeux1995gaussian">1995</a>)</span> 에 각 분산-공분산 모형에 대한 추정값을 얻는 반복적 알고리즘이 소개되어 있다.</p>
+<p><span class="citation">Celeux and Govaert (<a href="#ref-celeux1995gaussian">1995</a>)</span> 에 각 분산-공분산 모형에 대한 추정값을 얻는 반복적 알고리즘이 소개되어 있으며, 이는 교재 <span class="citation">(전치혁 <a href="#ref-jun2012datamining">2012</a>)</span>에도 설명되어 있다.</p>
+<p>우선, 각 군집 <span class="math inline">\(k\)</span> 내에서의 scatter matrix를 아래와 같이 계산한다.</p>
+<span class="math display">\[\begin{equation*}
+\mathbf{W}_k = \sum_{i = 1}^{n} \hat{z}_{ik} (\mathbf{x}_i - \hat{\boldsymbol\mu}_k)(\mathbf{x}_i - \hat{\boldsymbol\mu}_k)^\top
+\end{equation*}\]</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ncol</span>(df[, <span class="op">-</span><span class="dv">1</span>])
 W &lt;-<span class="st"> </span><span class="kw">map</span>(mu_hat, 
     <span class="op">~</span><span class="kw">pmap_dfc</span>(<span class="kw">list</span>(<span class="dt">x =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">mu =</span> .),
              <span class="cf">function</span>(x, mu) x <span class="op">-</span><span class="st"> </span>mu)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">map</span>(as.matrix) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">map</span>(as.matrix, <span class="dt">nrow =</span> p, <span class="dt">ncol =</span> p) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">map2</span>(z_hat, <span class="op">~</span><span class="st"> </span><span class="kw">t</span>(.x) <span class="op">%*%</span><span class="st"> </span>(.y <span class="op">*</span><span class="st"> </span>.x))
 
-estimate_mixture_cov &lt;-<span class="st"> </span><span class="cf">function</span>(modelName, W, z, p) {
-  M &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv">1</span>, p)
+W</code></pre></div>
+<pre><code>## $C1
+##           x1        x2
+## x1  28.22794 -44.46516
+## x2 -44.46516  82.36848
+## 
+## $C2
+##           x1        x2
+## x1  37.16942 -53.17491
+## x2 -53.17491  92.90912</code></pre>
+<p>이후 분산-공분산 모형에 따라 아래와 같이 각 군집의 분산-공분산 행렬을 추정한다.</p>
+<p>[VII의 경우] 반복 업데이트의 과정 없이 closed-form으로 해가 존재한다.</p>
+<span class="math display">\[\begin{equation*}
+\lambda_k = \frac{Tr(\mathbf{W}_k)}{p \sum_{i = 1}^{n} \hat{z}_{ik}}
+\end{equation*}\]</span>
+<span class="math display">\[\begin{equation*}
+\boldsymbol\Sigma_k = \lambda_k \mathbf{I}
+\end{equation*}\]</span>
+<p>이 때 <span class="math inline">\(p\)</span>는 관측값의 차원수이다 (<span class="math inline">\(\mathbf{x} \in \mathbb{R}^p\)</span>).</p>
+<p>[VEI의 경우]</p>
+<p>VEI-0. 행렬 <span class="math inline">\(\mathbf{B} = \mathbf{I}\)</span>로 초기화한다.</p>
+<p>VEI-1. <span class="math inline">\(\lambda_k\)</span>값을 아래와 같이 계산한다.</p>
+<span class="math display">\[\begin{equation*}
+\lambda_k = \frac{Tr(\mathbf{W}_k \mathbf{B}^{-1})}{p \sum_{i = 1}^{n} \hat{z}_{ik}}
+\end{equation*}\]</span>
+<p>VEI-2. 행렬 <span class="math inline">\(\mathbf{B}\)</span>를 아래와 같이 업데이트한다.</p>
+<span class="math display">\[\begin{equation*}
+\mathbf{B} = \frac{diag\left( \sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k} \right)}{\left( \det diag\left( \sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k} \right) \right)^{1 / p}}
+\end{equation*}\]</span>
+<p>VEI-3. 결과가 수렴하면 종료, 그렇지 않으면 VEI-1로 돌아간다. 최종 수렴한 결과를 통해 각 군집의 분산-공분산 행렬을 아래와 같이 얻는다.</p>
+<span class="math display">\[\begin{equation*}
+\boldsymbol\Sigma_k = \lambda_k \mathbf{B}
+\end{equation*}\]</span>
+<p>[VEE의 경우]</p>
+<p>VEE-0. 행렬 <span class="math inline">\(\mathbf{C} = \mathbf{I}\)</span>로 초기화한다.</p>
+<p>VEE-1. <span class="math inline">\(\lambda_k\)</span>값을 아래와 같이 계산한다.</p>
+<span class="math display">\[\begin{equation*}
+\lambda_k = \frac{Tr(\mathbf{W}_k \mathbf{C}^{-1})}{p \sum_{i = 1}^{n} \hat{z}_{ik}}
+\end{equation*}\]</span>
+<p>VEE-2. 행렬 <span class="math inline">\(\mathbf{C}\)</span>를 아래와 같이 업데이트한다.</p>
+<span class="math display">\[\begin{equation*}
+\mathbf{C} = \frac{\sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k}}{\left( \det \sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k} \right)^{1 / p}}
+\end{equation*}\]</span>
+<p>VEE-3. 결과가 수렴하면 종료, 그렇지 않으면 VEE-1로 돌아간다. 최종 수렴한 결과를 통해 각 군집의 분산-공분산 행렬을 아래와 같이 얻는다.</p>
+<span class="math display">\[\begin{equation*}
+\boldsymbol\Sigma_k = \lambda_k \mathbf{C}
+\end{equation*}\]</span>
+<p>위 각 분산-공분산 모형을 추정 과정에 대한 설명은, 보다 일반화된 분산-공분산 구조 <span class="math inline">\(\lambda_k \mathbf{D}_k \mathbf{A}_k \mathbf{D}_k^\top\)</span>을 추정하는 과정을 각 모형에 추가되는 제약에 따라 조금 더 단순하게 표현한 것이다. 보다 자세한 내용은 <span class="citation">Celeux and Govaert (<a href="#ref-celeux1995gaussian">1995</a>)</span> 참조.</p>
+<p>아래와 같이 군집 내 분산-공분산 행렬을 추정하는 함수 <code>estimate_mixture_cov</code>를 구현해보자. 해당 함수는 3개의 입력변수를 사용한다.</p>
+<ul>
+<li><code>modelName</code>: 분산-공분산 모형 이름. “VII”, “VEI”, “VEE” 중 하나를 선택한다.</li>
+<li><code>W</code>: <code>K</code>개의 scatter matrix (<span class="math inline">\(\mathbf{W}_1, \cdots, \mathbf{W}_K\)</span>)를 원소로 지니는 리스트 (<code>list</code>)</li>
+<li><code>z</code>: <span class="math inline">\(z_{ik}\)</span> 값을 지닌 데이터 프레임 (<code>data.frame</code>). <span class="math inline">\(n\)</span>개의 행과 <span class="math inline">\(K\)</span>개의 열로 이루어진다. 즉, 행은 각 관측객체를 나타내며, 열은 각 군집을 나타낸다.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">estimate_mixture_cov &lt;-<span class="st"> </span><span class="cf">function</span>(modelName, W, z) {
+  K &lt;-<span class="st"> </span><span class="kw">ncol</span>(z)
+  p &lt;-<span class="st"> </span><span class="kw">ncol</span>(W[[<span class="dv">1</span>]])
+
+  <span class="co"># 초기화</span>
+  D &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span>K, <span class="op">~</span><span class="st"> </span><span class="kw">diag</span>(<span class="dv">1</span>, p))
+  A &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span>K, <span class="op">~</span><span class="st"> </span><span class="kw">diag</span>(<span class="dv">1</span>, p))
   
-  <span class="cf">if</span> (modelName <span class="op">==</span><span class="st"> &quot;VII&quot;</span>) {
-    lambda &lt;-<span class="st"> </span><span class="kw">map2</span>(W, z, <span class="op">~</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(.x <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(M))) <span class="op">/</span><span class="st"> </span>(<span class="kw">sum</span>(.y) <span class="op">*</span><span class="st"> </span>p))
-  } <span class="cf">else</span> <span class="cf">if</span> (modelName <span class="op">==</span><span class="st"> &quot;VEI&quot;</span>) {
-    obj &lt;-<span class="st"> </span><span class="ot">Inf</span>
-    i &lt;-<span class="st"> </span>0L
-    <span class="cf">while</span> (<span class="ot">TRUE</span>) {
-      i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span>1L
-      lambda &lt;-<span class="st"> </span><span class="kw">map2</span>(W, z, <span class="op">~</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(.x <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(M))) <span class="op">/</span><span class="st"> </span>(<span class="kw">sum</span>(.y) <span class="op">*</span><span class="st"> </span>p))
-      new_obj &lt;-<span class="st"> </span><span class="kw">pmap_dbl</span>(<span class="kw">list</span>(<span class="dt">W =</span> W, <span class="dt">z =</span> z, <span class="dt">lambda =</span> lambda), 
-                          <span class="cf">function</span>(W, z, lambda, M, p) {
-                            <span class="kw">sum</span>(<span class="kw">diag</span>(W <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(M))) <span class="op">/</span><span class="st"> </span>lambda <span class="op">+</span>
-<span class="st">                              </span>p <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(z) <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(lambda)
-                          },
-                          <span class="dt">M =</span> M, <span class="dt">p =</span> p) <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">sum</span>()
+  get_lambda &lt;-<span class="st"> </span><span class="cf">function</span>(W, z, D, A, p) {
+    <span class="kw">pmap</span>(
+      <span class="kw">list</span>(W, z, D, A),
+      <span class="cf">function</span>(W, z, D, A, p)
+        <span class="kw">sum</span>(<span class="kw">diag</span>(W <span class="op">%*%</span><span class="st"> </span>D <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(A) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(D))) <span class="op">/</span><span class="st"> </span>(<span class="kw">sum</span>(z) <span class="op">*</span><span class="st"> </span>p),
+      <span class="dt">p =</span> p
+      )
+  }
+  
+  objective_value &lt;-<span class="st"> </span><span class="cf">function</span>(W, z, lambda, D, A, p) {
+    <span class="kw">pmap_dbl</span>(
+      <span class="kw">list</span>(W, z, lambda, D, A),
+      <span class="cf">function</span>(W, z, lambda, D, A, p)
+        <span class="kw">sum</span>(<span class="kw">diag</span>(W <span class="op">%*%</span><span class="st"> </span>D <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(A) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(D))) <span class="op">/</span><span class="st"> </span>lambda <span class="op">+</span>
+<span class="st">        </span>p <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(z) <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(lambda),
+      <span class="dt">p =</span> p
+    ) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">sum</span>()
+  }
+  
+  i &lt;-<span class="st"> </span>0L
+  obj &lt;-<span class="st"> </span><span class="ot">Inf</span>
+  
+  <span class="cf">while</span>(<span class="ot">TRUE</span>) {
+    i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span>1L
+    
+    lambda &lt;-<span class="st"> </span><span class="kw">get_lambda</span>(W, z, D, A, p)
+    new_obj &lt;-<span class="st"> </span><span class="kw">objective_value</span>(W, z, lambda, D, A, p)
+    
+    <span class="cf">if</span> (obj <span class="op">-</span><span class="st"> </span>new_obj <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-9</span>) <span class="cf">break</span>
+    
+    <span class="cf">if</span> (modelName <span class="op">==</span><span class="st"> &quot;VII&quot;</span>) {
       
-      <span class="cf">if</span> (obj <span class="op">-</span><span class="st"> </span>new_obj <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-9</span>) <span class="cf">break</span>
-      
-      obj &lt;-<span class="st"> </span>new_obj
-      M &lt;-<span class="st"> </span><span class="kw">map2</span>(W, lambda, <span class="op">~</span><span class="st"> </span><span class="kw">diag</span>(.x) <span class="op">/</span><span class="st"> </span>.y) <span class="op">%&gt;%</span><span class="st"> </span>
+    } <span class="cf">else</span> <span class="cf">if</span> (modelName <span class="op">==</span><span class="st"> &quot;VEI&quot;</span>) {
+      B &lt;-<span class="st"> </span><span class="kw">map2</span>(W, lambda, <span class="op">~</span><span class="st"> </span><span class="kw">diag</span>(.x) <span class="op">/</span><span class="st"> </span>.y) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">reduce</span>(<span class="st">`</span><span class="dt">+</span><span class="st">`</span>) <span class="op">%&gt;%</span>
 <span class="st">        </span><span class="kw">diag</span>() <span class="op">%&gt;%</span>
 <span class="st">        `</span><span class="dt">/</span><span class="st">`</span>(<span class="kw">det</span>(.) <span class="op">^</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>p))
-    }
-  } <span class="cf">else</span> <span class="cf">if</span> (modelName <span class="op">==</span><span class="st"> &quot;VEE&quot;</span>) {
-    obj &lt;-<span class="st"> </span><span class="ot">Inf</span>
-    i &lt;-<span class="st"> </span>0L
-    <span class="cf">while</span> (<span class="ot">TRUE</span>) {
-      i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span>1L
-      lambda &lt;-<span class="st"> </span><span class="kw">map2</span>(W, z, <span class="op">~</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(.x <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(M))) <span class="op">/</span><span class="st"> </span>(<span class="kw">sum</span>(.y) <span class="op">*</span><span class="st"> </span>p))
-      new_obj &lt;-<span class="st"> </span><span class="kw">pmap_dbl</span>(<span class="kw">list</span>(<span class="dt">W =</span> W, <span class="dt">z =</span> z, <span class="dt">lambda =</span> lambda), 
-                          <span class="cf">function</span>(W, z, lambda, M, p) {
-                            <span class="kw">sum</span>(<span class="kw">diag</span>(W <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(M))) <span class="op">/</span><span class="st"> </span>lambda <span class="op">+</span>
-<span class="st">                              </span>p <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(z) <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(lambda)
-                          },
-                          <span class="dt">M =</span> M, <span class="dt">p =</span> p) <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">sum</span>()
-      
-      <span class="cf">if</span> (obj <span class="op">-</span><span class="st"> </span>new_obj <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-9</span>) <span class="cf">break</span>
-      
-      obj &lt;-<span class="st"> </span>new_obj
-      M &lt;-<span class="st"> </span><span class="kw">map2</span>(W, lambda, <span class="op">~</span><span class="st"> </span>.x <span class="op">/</span><span class="st"> </span>.y) <span class="op">%&gt;%</span><span class="st"> </span>
+      A &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span>K, <span class="op">~</span><span class="st"> </span>B)
+    } <span class="cf">else</span> <span class="cf">if</span> (modelName <span class="op">==</span><span class="st"> &quot;VEE&quot;</span>) {
+      C &lt;-<span class="st"> </span><span class="kw">map2</span>(W, lambda, <span class="op">~</span><span class="st"> </span>.x <span class="op">/</span><span class="st"> </span>.y) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">reduce</span>(<span class="st">`</span><span class="dt">+</span><span class="st">`</span>) <span class="op">%&gt;%</span>
 <span class="st">        `</span><span class="dt">/</span><span class="st">`</span>(<span class="kw">det</span>(.) <span class="op">^</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>p))
+      
+      s &lt;-<span class="st"> </span><span class="kw">svd</span>(C)
+      A &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span>K, <span class="op">~</span><span class="st"> </span><span class="kw">diag</span>(s<span class="op">$</span>d))
+      D &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span>K, <span class="op">~</span><span class="st"> </span>s<span class="op">$</span>u)
+    } <span class="cf">else</span> {
+      <span class="kw">stop</span>(<span class="st">&quot;Model &quot;</span>, modelName, <span class="st">&quot; is not supported yet.&quot;</span>)
     }
+    
+    obj &lt;-<span class="st"> </span>new_obj
   }
-  
-  Sigma &lt;-<span class="st"> </span><span class="kw">map</span>(lambda, <span class="op">~</span><span class="st"> </span>. <span class="op">*</span><span class="st"> </span>M)
+
+  Sigma &lt;-<span class="st"> </span><span class="kw">pmap</span>(
+    <span class="kw">list</span>(lambda, D, A),
+    <span class="cf">function</span>(lambda, D, A) lambda <span class="op">*</span><span class="st"> </span>(D <span class="op">%*%</span><span class="st"> </span>A <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(D))
+    )
 
   <span class="kw">return</span> (<span class="kw">list</span>(
-    <span class="dt">lambda =</span> lambda,
-    <span class="dt">M =</span> M,
+    <span class="dt">volume =</span> lambda,
+    <span class="dt">shape =</span> A,
+    <span class="dt">orientation =</span> D,
     <span class="dt">Sigma =</span> Sigma
   ))
-}
-
-<span class="kw">estimate_mixture_cov</span>(<span class="st">&quot;VII&quot;</span>, W, z_hat, p)</code></pre></div>
-<pre><code>## $lambda
-## $lambda$C1
+}</code></pre></div>
+<p>초기값으로 주어진 <span class="math inline">\(\hat{z}_{ik}\)</span> 를 이용하여 “VII” 구조의 분산-공분산 행렬을 구해보자.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">estimate_mixture_cov</span>(<span class="st">&quot;VII&quot;</span>, W, z_hat)</code></pre></div>
+<pre><code>## $volume
+## $volume$C1
 ## [1] 16.64239
 ## 
-## $lambda$C2
+## $volume$C2
 ## [1] 17.68685
 ## 
 ## 
-## $M
+## $shape
+## $shape[[1]]
 ##      [,1] [,2]
 ## [1,]    1    0
 ## [2,]    0    1
+## 
+## $shape[[2]]
+##      [,1] [,2]
+## [1,]    1    0
+## [2,]    0    1
+## 
+## 
+## $orientation
+## $orientation[[1]]
+##      [,1] [,2]
+## [1,]    1    0
+## [2,]    0    1
+## 
+## $orientation[[2]]
+##      [,1] [,2]
+## [1,]    1    0
+## [2,]    0    1
+## 
 ## 
 ## $Sigma
 ## $Sigma$C1
@@ -1945,8 +2045,8 @@ estimate_mixture_cov &lt;-<span class="st"> </span><span class="cf">function</sp
 ## [1,] 17.68685  0.00000
 ## [2,]  0.00000 17.68685</code></pre>
 <p>위 <code>estimate_mixture_cov</code> 함수에서 “VII”보다 일반화된 “VEI”와 “VEE” 분산-공분산 모형에 대한 추정도 구현되어 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># estimate_mixture_cov(&quot;VEI&quot;, W, z_hat, p)</span>
-<span class="co"># estimate_mixture_cov(&quot;VEE&quot;, W, z_hat, p)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># estimate_mixture_cov(&quot;VEI&quot;, W, z_hat)</span>
+<span class="co"># estimate_mixture_cov(&quot;VEE&quot;, W, z_hat)</span></code></pre></div>
 <p>위 일련의 파리미터 추정을 하나의 함수 <code>GMM_Mstep</code>으로 아래와 같이 구성해보자.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GMM_Mstep &lt;-<span class="st"> </span><span class="cf">function</span>(df, z, <span class="dt">modelName =</span> <span class="st">&quot;VII&quot;</span>) {
   tau &lt;-<span class="st"> </span><span class="kw">map</span>(z, mean)
@@ -1955,10 +2055,10 @@ estimate_mixture_cov &lt;-<span class="st"> </span><span class="cf">function</sp
   p &lt;-<span class="st"> </span><span class="kw">ncol</span>(df)
   W &lt;-<span class="st"> </span><span class="kw">map</span>(mu, <span class="op">~</span><span class="kw">pmap_dfc</span>(
     <span class="kw">list</span>(<span class="dt">x =</span> df, <span class="dt">mu =</span> .), <span class="cf">function</span>(x, mu) x <span class="op">-</span><span class="st"> </span>mu)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">map</span>(as.matrix) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">map</span>(as.matrix, <span class="dt">nrow =</span> p, <span class="dt">ncol =</span> p) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">map2</span>(z, <span class="op">~</span><span class="st"> </span><span class="kw">t</span>(.x) <span class="op">%*%</span><span class="st"> </span>(.y <span class="op">*</span><span class="st"> </span>.x))
   
-  var_cov &lt;-<span class="st"> </span><span class="kw">estimate_mixture_cov</span>(modelName, W, z, p)
+  var_cov &lt;-<span class="st"> </span><span class="kw">estimate_mixture_cov</span>(modelName, W, z)
   
   res &lt;-<span class="st"> </span><span class="kw">list</span>(
     <span class="dt">tau =</span> tau,
@@ -2027,13 +2127,16 @@ new_z_hat</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(<span class="kw">abs</span>(z_hat <span class="op">-</span><span class="st"> </span>new_z_hat)) <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-9</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>위 수식의 값이 <code>TRUE</code>이면 수렴, <code>FALSE</code>이면 [단계 1]을 반복한다.</p>
-<p>위 일련의 과정들을 포함하는 하나의 함수 <code>GMM_EM</code>을 아래와 같이 구현해보자.</p>
+</div>
+<div id="model-based-clustering-script-implement" class="section level3">
+<h3><span class="header-section-number">7.5.3</span> R 스크립트 구현</h3>
+<p>위 일련의 과정들을 포함하는 하나의 함수 <code>GMM_EM</code>을 아래와 같이 구현해보자. 앞에서 정의했던 함수 <code>GMM_Mstep</code> 및 <code>GMM_Estep</code>을 재사용한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GMM_EM &lt;-<span class="st"> </span><span class="cf">function</span>(df, K, <span class="dt">modelName =</span> <span class="st">&quot;VII&quot;</span>, <span class="dt">tol =</span> <span class="fl">1e-9</span>) {
   K &lt;-<span class="st"> </span><span class="kw">min</span>(K, <span class="kw">nrow</span>(df))
   
   i &lt;-<span class="st"> </span>0L  
   
-  <span class="co"># z_ik 추정값 초기화</span>
+  <span class="co"># [단계 0] z_ik 추정값 초기화</span>
   z_hat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="kw">nrow</span>(df) <span class="op">*</span><span class="st"> </span>K), <span class="dt">ncol =</span> K) <span class="op">%&gt;%</span>
 <span class="st">    `</span><span class="dt">/</span><span class="st">`</span>(<span class="kw">apply</span>(., <span class="dv">1</span>, sum)) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span>
@@ -2042,12 +2145,13 @@ new_z_hat</code></pre></div>
   <span class="cf">while</span> (<span class="ot">TRUE</span>) {
     i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span>1L
     
-    <span class="co"># M-step</span>
+    <span class="co"># [단계 1] M-step</span>
     Mstep_res &lt;-<span class="st"> </span><span class="kw">GMM_Mstep</span>(df, z_hat, modelName)
     
-    <span class="co"># E-step</span>
+    <span class="co"># [단계 2] E-step</span>
     new_z_hat &lt;-<span class="st"> </span><span class="kw">GMM_Estep</span>(df, Mstep_res<span class="op">$</span>tau, Mstep_res<span class="op">$</span>mu, Mstep_res<span class="op">$</span>Sigma)
     
+    <span class="co"># [단계 3] 수렴조건 확인</span>
     <span class="cf">if</span> (<span class="kw">max</span>(<span class="kw">abs</span>(z_hat <span class="op">-</span><span class="st"> </span>new_z_hat)) <span class="op">&lt;</span><span class="st"> </span>tol) <span class="cf">break</span>
     
     z_hat &lt;-<span class="st"> </span>new_z_hat
@@ -2100,6 +2204,103 @@ VII_res<span class="op">$</span>parameters</code></pre></div>
 ##         [,1]    [,2]
 ## [1,] 0.96875 0.00000
 ## [2,] 0.00000 0.96875</code></pre>
+</div>
+<div id="r-packages-model-based-clustering" class="section level3">
+<h3><span class="header-section-number">7.5.4</span> R 패키지 내 모형기반 군집분석</h3>
+<p>R 패키지 <code>mclust</code>를 통해, 위에서 살펴본 VII, VEI, VEE 외에 보다 다양한 분산-공분산 모형을 가정한 군집분석을 수행할 수 있다 <span class="citation">(Scrucca et al. <a href="#ref-scrucca2016mclust">2016</a>)</span>. 다음은 “EEI” 구조에 대한 수행 예이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI &lt;-<span class="st"> </span>mclust<span class="op">::</span><span class="kw">meEEI</span>(df[, <span class="op">-</span><span class="dv">1</span>], z)</code></pre></div>
+<p>위 수행 결과 객체는 리스트 형태이며, 그 원소 중 <code>z</code>는 <span class="math inline">\(\hat{z}_{ik}\)</span>값을, <code>parameters</code>는 혼합분포 파라미터 추정값 (<span class="math inline">\(\hat{\tau}_k\)</span>, <span class="math inline">\(\hat{\boldsymbol\mu}_k\)</span>, <span class="math inline">\(\hat{\boldsymbol\Sigma}_k\)</span>)을 나타낸다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI<span class="op">$</span>z</code></pre></div>
+<pre><code>##              [,1]         [,2]
+## [1,] 6.198742e-26 1.000000e+00
+## [2,] 2.193775e-22 1.000000e+00
+## [3,] 1.432979e-28 1.000000e+00
+## [4,] 1.000000e+00 3.497777e-20
+## [5,] 1.000000e+00 1.350932e-26
+## [6,] 1.000000e+00 5.217649e-33
+## [7,] 1.000000e+00 9.883335e-24</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI<span class="op">$</span>parameters</code></pre></div>
+<pre><code>## $pro
+## [1] 0.5714286 0.4285714
+## 
+## $mean
+##     [,1]      [,2]
+## x1 11.25  5.333333
+## x2  3.50 13.333333
+## 
+## $variance
+## $variance$modelName
+## [1] &quot;EEI&quot;
+## 
+## $variance$d
+## [1] 2
+## 
+## $variance$G
+## [1] 2
+## 
+## $variance$sigma
+## , , 1
+## 
+##           x1       x2
+## x1 0.7738095 0.000000
+## x2 0.0000000 1.380952
+## 
+## , , 2
+## 
+##           x1       x2
+## x1 0.7738095 0.000000
+## x2 0.0000000 1.380952
+## 
+## 
+## $variance$Sigma
+##           x1       x2
+## x1 0.7738095 0.000000
+## x2 0.0000000 1.380952
+## 
+## $variance$scale
+## [1] 1.033728
+## 
+## $variance$shape
+## [1] 0.7485618 1.3358950
+## 
+## 
+## $Vinv
+## NULL</code></pre>
+<p><code>mclust</code> 패키지 내의 함수 <code>densityMclust</code>는 Bayesian information criterion (BIC)을 기준으로 최적의 혼합분포를 찾는 함수이다. 즉, 내부적으로 여러가지 분산-공분산 모형과 군집 수의 조합에 대한 군집분석을 수행한 뒤, 각 조합의 최종결과에서 얻어진 BIC 값을 기준으로 최적의 조합을 선정한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_opt &lt;-<span class="st"> </span>mclust<span class="op">::</span><span class="kw">densityMclust</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>함수 수행결과 객체의 <code>BIC</code> 원소가 나타내는 결과는 아래와 같다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_opt<span class="op">$</span>BIC</code></pre></div>
+<pre><code>## Bayesian Information Criterion (BIC): 
+##         EII       VII       EEI       VEI       EVI       VVI       EEE
+## 1 -85.40006 -85.40006 -85.70851 -85.70851 -85.70851 -85.70851 -75.27433
+## 2 -62.00992 -63.86240 -63.37677 -65.22485 -65.32204 -67.17013 -64.66516
+## 3 -65.47796        NA -66.01911        NA        NA        NA -67.87781
+## 4 -69.04346        NA -70.17240        NA        NA        NA -67.31282
+## 5 -72.02226        NA -73.96817        NA        NA        NA        NA
+## 6 -62.27998        NA -64.22589        NA        NA        NA        NA
+## 7        NA        NA        NA        NA        NA        NA        NA
+##         EVE       VEE       VVE       EEV       VEV       EVV       VVV
+## 1 -75.27433 -75.27433 -75.27433 -75.27433 -75.27433 -75.27433 -75.27433
+## 2 -65.06811 -66.60332 -66.92481 -65.42506 -67.34154 -66.55375 -68.44666
+## 3        NA        NA        NA -71.48895        NA        NA        NA
+## 4        NA        NA        NA        NA        NA        NA        NA
+## 5        NA        NA        NA        NA        NA        NA        NA
+## 6        NA        NA        NA        NA        NA        NA        NA
+## 7        NA        NA        NA        NA        NA        NA        NA
+## 
+## Top 3 models based on the BIC criterion: 
+##     EII,2     EII,6     EEI,2 
+## -62.00992 -62.27998 -63.37677</code></pre>
+<p>수행 결과 가장 큰 BIC 값을 지닌 최적의 조합은 EII 분산-공분산 모형으로 2개의 군집을 가정했을 때 얻어진다.</p>
+<p><code>densityMclust</code> 함수 수행 결과 얻어진 혼합분포를 plotting해보자.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(res_mclust_opt, <span class="dt">what =</span> <span class="st">&quot;density&quot;</span>,
+     <span class="dt">data =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">points.cex =</span> <span class="fl">0.5</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:mclust-opt-result-plot"></span>
+<img src="data-mining-book_files/figure-html/mclust-opt-result-plot-1.png" alt="mclust::densityMclust 수행 결과 얻어진 혼합분포" width="672" />
+<p class="caption">
+Figure 7.2: mclust::densityMclust 수행 결과 얻어진 혼합분포
+</p>
+</div>
 
 </div>
 </div>
@@ -2115,11 +2316,14 @@ VII_res<span class="op">$</span>parameters</code></pre></div>
 <div id="ref-park2009simple">
 <p>Park, Hae-Sang, and Chi-Hyuck Jun. 2009. “A Simple and Fast Algorithm for K-Medoids Clustering.” <em>Expert Systems with Applications</em> 36 (2). Elsevier: 3336–41.</p>
 </div>
-<div id="ref-scrucca2016mclust">
-<p>Scrucca, Luca, Michael Fop, T Brendan Murphy, and Adrian E Raftery. 2016. “Mclust 5: Clustering, Classification and Density Estimation Using Gaussian Finite Mixture Models.” <em>The R Journal</em> 8 (1). NIH Public Access: 289.</p>
+<div id="ref-banfield1993model">
+<p>Banfield, Jeffrey D, and Adrian E Raftery. 1993. “Model-Based Gaussian and Non-Gaussian Clustering.” <em>Biometrics</em>. JSTOR, 803–21.</p>
 </div>
 <div id="ref-celeux1995gaussian">
 <p>Celeux, Gilles, and Gérard Govaert. 1995. “Gaussian Parsimonious Clustering Models.” <em>Pattern Recognition</em> 28 (5). Elsevier: 781–93.</p>
+</div>
+<div id="ref-scrucca2016mclust">
+<p>Scrucca, Luca, Michael Fop, T Brendan Murphy, and Adrian E Raftery. 2016. “Mclust 5: Clustering, Classification and Density Estimation Using Gaussian Finite Mixture Models.” <em>The R Journal</em> 8 (1). NIH Public Access: 289.</p>
 </div>
 </div>
             </section>

@@ -1309,100 +1309,176 @@ tribble(
 \mathbf{W}_k = \sum_{i = 1}^{n} \hat{z}_{ik} (\mathbf{x}_i - \hat{\boldsymbol\mu}_k)(\mathbf{x}_i - \hat{\boldsymbol\mu}_k)^\top
 \end{equation*}
 
-이후 분산-공분산 모형에 따라 아래와 같이 각 군집의 분산-공분산 행렬을 추정한다.
-
-<VII의 경우> 반복 업데이트의 과정 없이 closed-form으로 해가 존재한다.
-
-\begin{equation*}
-\lambda_k &=& \frac{Tr(\mathbf{W}_k)}{p \sum_{i = 1}^{n} \hat{z}_{ik}}
-\end{equation*}
-
-이 때 $p$는 관측값의 차원수이다 ($\mathbf{x} \in \mathbb{R}^p$).
-
-
-<VEI의 경우> 
-
-
-
 ```{r}
 p <- ncol(df[, -1])
 W <- map(mu_hat, 
     ~pmap_dfc(list(x = df[, -1], mu = .),
              function(x, mu) x - mu)) %>%
-  map(as.matrix) %>%
+  map(as.matrix, nrow = p, ncol = p) %>%
   map2(z_hat, ~ t(.x) %*% (.y * .x))
 
-estimate_mixture_cov <- function(modelName, W, z, p) {
+W
+```
+
+
+이후 분산-공분산 모형에 따라 아래와 같이 각 군집의 분산-공분산 행렬을 추정한다.
+
+[VII의 경우] 반복 업데이트의 과정 없이 closed-form으로 해가 존재한다.
+
+\begin{equation*}
+\lambda_k = \frac{Tr(\mathbf{W}_k)}{p \sum_{i = 1}^{n} \hat{z}_{ik}}
+\end{equation*}
+
+\begin{equation*}
+\boldsymbol\Sigma_k = \lambda_k \mathbf{I}
+\end{equation*}
+
+이 때 $p$는 관측값의 차원수이다 ($\mathbf{x} \in \mathbb{R}^p$).
+
+
+[VEI의 경우]
+
+VEI-0. 행렬 $\mathbf{B} = \mathbf{I}$로 초기화한다.
+
+VEI-1. $\lambda_k$값을 아래와 같이 계산한다.
+
+\begin{equation*}
+\lambda_k = \frac{Tr(\mathbf{W}_k \mathbf{B}^{-1})}{p \sum_{i = 1}^{n} \hat{z}_{ik}}
+\end{equation*}
+
+VEI-2. 행렬 $\mathbf{B}$를 아래와 같이 업데이트한다.
+
+\begin{equation*}
+\mathbf{B} = \frac{diag\left( \sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k} \right)}{\left( \det diag\left( \sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k} \right) \right)^{1 / p}}
+\end{equation*}
+
+VEI-3. 결과가 수렴하면 종료, 그렇지 않으면 VEI-1로 돌아간다. 최종 수렴한 결과를 통해 각 군집의 분산-공분산 행렬을 아래와 같이 얻는다.
+
+\begin{equation*}
+\boldsymbol\Sigma_k = \lambda_k \mathbf{B}
+\end{equation*}
+
+
+
+[VEE의 경우]
+
+VEE-0. 행렬 $\mathbf{C} = \mathbf{I}$로 초기화한다.
+
+VEE-1. $\lambda_k$값을 아래와 같이 계산한다.
+
+\begin{equation*}
+\lambda_k = \frac{Tr(\mathbf{W}_k \mathbf{C}^{-1})}{p \sum_{i = 1}^{n} \hat{z}_{ik}}
+\end{equation*}
+
+VEE-2. 행렬 $\mathbf{C}$를 아래와 같이 업데이트한다.
+
+\begin{equation*}
+\mathbf{C} = \frac{\sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k}}{\left( \det \sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k} \right)^{1 / p}}
+\end{equation*}
+
+VEE-3. 결과가 수렴하면 종료, 그렇지 않으면 VEE-1로 돌아간다. 최종 수렴한 결과를 통해 각 군집의 분산-공분산 행렬을 아래와 같이 얻는다.
+
+\begin{equation*}
+\boldsymbol\Sigma_k = \lambda_k \mathbf{C}
+\end{equation*}
+
+위 각 분산-공분산 모형을 추정 과정에 대한 설명은, 보다 일반화된 분산-공분산 구조 $\lambda_k \mathbf{D}_k \mathbf{A}_k \mathbf{D}_k^\top$을 추정하는 과정을 각 모형에 추가되는 제약에 따라 조금 더 단순하게 표현한 것이다. 보다 자세한 내용은 @celeux1995gaussian 참조.
+
+
+아래와 같이 군집 내 분산-공분산 행렬을 추정하는 함수 `estimate_mixture_cov`를 구현해보자. 해당 함수는 3개의 입력변수를 사용한다.
+
+- `modelName`: 분산-공분산 모형 이름. "VII", "VEI", "VEE" 중 하나를 선택한다.
+- `W`: `K`개의 scatter matrix ($\mathbf{W}_1, \cdots, \mathbf{W}_K$)를 원소로 지니는 리스트 (`list`)
+- `z`: $z_{ik}$ 값을 지닌 데이터 프레임 (`data.frame`). $n$개의 행과 $K$개의 열로 이루어진다. 즉, 행은 각 관측객체를 나타내며, 열은 각 군집을 나타낸다.
+
+```{r}
+estimate_mixture_cov <- function(modelName, W, z) {
   K <- ncol(z)
-  
+  p <- ncol(W[[1]])
+
   # 초기화
   D <- map(1:K, ~ diag(1, p))
   A <- map(1:K, ~ diag(1, p))
-
-  if (modelName == "VII") {
-    lambda <- map2(W, z, ~ sum(diag(.x %*% solve(M))) / (sum(.y) * p))
-  } else if (modelName == "VEI") {
-    obj <- Inf
-    i <- 0L
-    while (TRUE) {
-      i <- i + 1L
-      lambda <- map2(W, z, ~ sum(diag(.x %*% solve(M))) / (sum(.y) * p))
-      new_obj <- pmap_dbl(list(W = W, z = z, lambda = lambda), 
-                          function(W, z, lambda, M, p) {
-                            sum(diag(W %*% solve(M))) / lambda +
-                              p * sum(z) * log(lambda)
-                          },
-                          M = M, p = p) %>%
-        sum()
+  
+  get_lambda <- function(W, z, D, A, p) {
+    pmap(
+      list(W, z, D, A),
+      function(W, z, D, A, p)
+        sum(diag(W %*% D %*% solve(A) %*% t(D))) / (sum(z) * p),
+      p = p
+      )
+  }
+  
+  objective_value <- function(W, z, lambda, D, A, p) {
+    pmap_dbl(
+      list(W, z, lambda, D, A),
+      function(W, z, lambda, D, A, p)
+        sum(diag(W %*% D %*% solve(A) %*% t(D))) / lambda +
+        p * sum(z) * log(lambda),
+      p = p
+    ) %>%
+      sum()
+  }
+  
+  i <- 0L
+  obj <- Inf
+  
+  while(TRUE) {
+    i <- i + 1L
+    
+    lambda <- get_lambda(W, z, D, A, p)
+    new_obj <- objective_value(W, z, lambda, D, A, p)
+    
+    if (obj - new_obj < 1e-9) break
+    
+    if (modelName == "VII") {
       
-      if (obj - new_obj < 1e-9) break
-      
-      obj <- new_obj
-      M <- map2(W, lambda, ~ diag(.x) / .y) %>% 
+    } else if (modelName == "VEI") {
+      B <- map2(W, lambda, ~ diag(.x) / .y) %>% 
         reduce(`+`) %>%
         diag() %>%
         `/`(det(.) ^ (1 / p))
-    }
-  } else if (modelName == "VEE") {
-    obj <- Inf
-    i <- 0L
-    while (TRUE) {
-      i <- i + 1L
-      lambda <- map2(W, z, ~ sum(diag(.x %*% solve(M))) / (sum(.y) * p))
-      new_obj <- pmap_dbl(list(W = W, z = z, lambda = lambda), 
-                          function(W, z, lambda, M, p) {
-                            sum(diag(W %*% solve(M))) / lambda +
-                              p * sum(z) * log(lambda)
-                          },
-                          M = M, p = p) %>%
-        sum()
-      
-      if (obj - new_obj < 1e-9) break
-      
-      obj <- new_obj
-      M <- map2(W, lambda, ~ .x / .y) %>% 
+      A <- map(1:K, ~ B)
+    } else if (modelName == "VEE") {
+      C <- map2(W, lambda, ~ .x / .y) %>% 
         reduce(`+`) %>%
         `/`(det(.) ^ (1 / p))
+      
+      s <- svd(C)
+      A <- map(1:K, ~ diag(s$d))
+      D <- map(1:K, ~ s$u)
+    } else {
+      stop("Model ", modelName, " is not supported yet.")
     }
+    
+    obj <- new_obj
   }
-  
-  Sigma <- map(lambda, ~ . * M)
+
+  Sigma <- pmap(
+    list(lambda, D, A),
+    function(lambda, D, A) lambda * (D %*% A %*% t(D))
+    )
 
   return (list(
-    lambda = lambda,
-    M = M,
+    volume = lambda,
+    shape = A,
+    orientation = D,
     Sigma = Sigma
   ))
 }
+```
 
-estimate_mixture_cov("VII", W, z_hat, p)
+초기값으로 주어진 $\hat{z}_{ik}$ 를 이용하여 "VII" 구조의 분산-공분산 행렬을 구해보자.
+
+```{r}
+estimate_mixture_cov("VII", W, z_hat)
 ```
 
 위 `estimate_mixture_cov` 함수에서 "VII"보다 일반화된 "VEI"와 "VEE" 분산-공분산 모형에 대한 추정도 구현되어 있다.
 
 ```{r}
-# estimate_mixture_cov("VEI", W, z_hat, p)
-# estimate_mixture_cov("VEE", W, z_hat, p)
+# estimate_mixture_cov("VEI", W, z_hat)
+# estimate_mixture_cov("VEE", W, z_hat)
 ```
 
 
@@ -1416,10 +1492,10 @@ GMM_Mstep <- function(df, z, modelName = "VII") {
   p <- ncol(df)
   W <- map(mu, ~pmap_dfc(
     list(x = df, mu = .), function(x, mu) x - mu)) %>%
-  map(as.matrix) %>%
+  map(as.matrix, nrow = p, ncol = p) %>%
   map2(z, ~ t(.x) %*% (.y * .x))
   
-  var_cov <- estimate_mixture_cov(modelName, W, z, p)
+  var_cov <- estimate_mixture_cov(modelName, W, z)
   
   res <- list(
     tau = tau,
@@ -1467,7 +1543,9 @@ max(abs(z_hat - new_z_hat)) < 1e-9
 위 수식의 값이 `TRUE`이면 수렴, `FALSE`이면 [단계 1]을 반복한다.
 
 
-위 일련의 과정들을 포함하는 하나의 함수 `GMM_EM`을 아래와 같이 구현해보자.
+### R 스크립트 구현 {#model-based-clustering-script-implement}
+
+위 일련의 과정들을 포함하는 하나의 함수 `GMM_EM`을 아래와 같이 구현해보자. 앞에서 정의했던 함수 `GMM_Mstep` 및 `GMM_Estep`을 재사용한다.
 
 ```{r}
 GMM_EM <- function(df, K, modelName = "VII", tol = 1e-9) {
@@ -1475,7 +1553,7 @@ GMM_EM <- function(df, K, modelName = "VII", tol = 1e-9) {
   
   i <- 0L  
   
-  # z_ik 추정값 초기화
+  # [단계 0] z_ik 추정값 초기화
   z_hat <- matrix(runif(nrow(df) * K), ncol = K) %>%
     `/`(apply(., 1, sum)) %>%
     as_tibble() %>%
@@ -1484,12 +1562,13 @@ GMM_EM <- function(df, K, modelName = "VII", tol = 1e-9) {
   while (TRUE) {
     i <- i + 1L
     
-    # M-step
+    # [단계 1] M-step
     Mstep_res <- GMM_Mstep(df, z_hat, modelName)
     
-    # E-step
+    # [단계 2] E-step
     new_z_hat <- GMM_Estep(df, Mstep_res$tau, Mstep_res$mu, Mstep_res$Sigma)
     
+    # [단계 3] 수렴조건 확인
     if (max(abs(z_hat - new_z_hat)) < tol) break
     
     z_hat <- new_z_hat
@@ -1517,6 +1596,40 @@ VII_res$parameters
 
 ### R 패키지 내 모형기반 군집분석 {#r-packages-model-based-clustering}
 
-R 패키지 `mclust`를 통해, 위에서 살펴본 VII, VEI, VEE 외에 보다 다양한 분산-공분산 모형을 가정한 군집분석을 수행할 수 있다 [@scrucca2016mclust].
+R 패키지 `mclust`를 통해, 위에서 살펴본 VII, VEI, VEE 외에 보다 다양한 분산-공분산 모형을 가정한 군집분석을 수행할 수 있다 [@scrucca2016mclust]. 다음은 "EEI" 구조에 대한 수행 예이다.
+
+```{r}
+res_mclust_EEI <- mclust::meEEI(df[, -1], z)
+```
+
+위 수행 결과 객체는 리스트 형태이며, 그 원소 중 `z`는 $\hat{z}_{ik}$값을, `parameters`는 혼합분포 파라미터 추정값 ($\hat{\tau}_k$, $\hat{\boldsymbol\mu}_k$, $\hat{\boldsymbol\Sigma}_k$)을 나타낸다.
+
+```{r}
+res_mclust_EEI$z
+res_mclust_EEI$parameters
+```
+
+`mclust` 패키지 내의 함수 `densityMclust`는 Bayesian information criterion (BIC)을 기준으로 최적의 혼합분포를 찾는 함수이다. 즉, 내부적으로 여러가지 분산-공분산 모형과 군집 수의 조합에 대한 군집분석을 수행한 뒤, 각 조합의 최종결과에서 얻어진 BIC 값을 기준으로 최적의 조합을 선정한다.
+
+```{r}
+res_mclust_opt <- mclust::densityMclust(df[, -1], verbose = FALSE)
+```
+
+함수 수행결과 객체의 `BIC` 원소가 나타내는 결과는 아래와 같다.
+
+```{r}
+res_mclust_opt$BIC
+```
+
+수행 결과 가장 큰 BIC 값을 지닌 최적의 조합은 `r res_mclust_opt$modelName` 분산-공분산 모형으로 `r res_mclust_opt$G`개의 군집을 가정했을 때 얻어진다.
+
+`densityMclust` 함수 수행 결과 얻어진 혼합분포를 plotting해보자.
+
+```{r mclust-opt-result-plot, fig.cap='mclust::densityMclust 수행 결과 얻어진 혼합분포', fig.align='center'}
+plot(res_mclust_opt, what = "density",
+     data = df[, -1], points.cex = 0.5)
+```
+
+
 
 
