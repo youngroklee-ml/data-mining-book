@@ -5,27 +5,27 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>데이터마이닝 with R</title>
-  <meta name="description" content="전치혁 교수님의 책 <데이터마이닝 기법과 응용>을 기반으로 한 R 예제">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <title>Chapter 4 서포트 벡터 머신 | 데이터마이닝 with R</title>
+  <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="데이터마이닝 with R" />
+  <meta property="og:title" content="Chapter 4 서포트 벡터 머신 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://youngroklee-ml.github.io/data-mining-book/" />
   
-  <meta property="og:description" content="전치혁 교수님의 책 <데이터마이닝 기법과 응용>을 기반으로 한 R 예제" />
+  <meta property="og:description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
   <meta name="github-repo" content="youngroklee-ml/data-mining-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="데이터마이닝 with R" />
+  <meta name="twitter:title" content="Chapter 4 서포트 벡터 머신 | 데이터마이닝 with R" />
   
-  <meta name="twitter:description" content="전치혁 교수님의 책 <데이터마이닝 기법과 응용>을 기반으로 한 R 예제" />
+  <meta name="twitter:description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
   
 
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2018-12-30">
+<meta name="date" content="2019-02-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="clustering-overview.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -218,7 +219,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="6.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>6.6</b> 군집수의 결정</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>7</b> 비계층적 군집방법</a></li>
+<li class="chapter" data-level="7" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>7</b> 비계층적 군집방법</a><ul>
+<li class="chapter" data-level="7.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>7.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="7.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>7.2</b> K-means 알고리즘</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>7.2.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="7.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>7.2.2</b> 알고리즘</a></li>
+<li class="chapter" data-level="7.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>7.2.3</b> R 스크립트 구현</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>7.3</b> K-medoids 군집방법</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>7.3.1</b> PAM 알고리즘</a></li>
+<li class="chapter" data-level="7.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>7.3.2</b> CLARA 알고리즘</a></li>
+<li class="chapter" data-level="7.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>7.3.3</b> CLARANS 알고리즘</a></li>
+<li class="chapter" data-level="7.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>7.3.4</b> K-means-like 알고리즘</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>7.4</b> 퍼지 K-means 알고리즘</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="7.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>7.4.2</b> 알고리즘</a></li>
+<li class="chapter" data-level="7.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>7.4.3</b> R 스크립트 구현</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>7.5</b> 모형기반 군집방법</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>7.5.1</b> 기본 R script</a></li>
+<li class="chapter" data-level="7.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>7.5.2</b> EM 알고리즘</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -267,7 +290,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 <tr class="odd">
 <td align="left">Matrix</td>
-<td align="left">1.2-14</td>
+<td align="left">1.2-15</td>
 </tr>
 <tr class="even">
 <td align="left">quadprog</td>
@@ -1111,7 +1134,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -1121,6 +1144,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -1139,7 +1166,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;
