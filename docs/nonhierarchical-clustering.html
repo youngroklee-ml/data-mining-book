@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-02-10">
+<meta name="date" content="2019-03-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="hierarchical-clustering.html">
-<link rel="next" href="references.html">
+<link rel="next" href="cluster-solution-evaluation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -243,6 +243,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>7.5.3</b> R 스크립트 구현</a></li>
 <li class="chapter" data-level="7.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>7.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>8</b> 군집해의 평가 및 해석</a><ul>
+<li class="chapter" data-level="8.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>8.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="8.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>8.2</b> 군집해의 평가</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>8.2.1</b> 외부평가지수</a></li>
+<li class="chapter" data-level="8.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>8.2.2</b> 내부평가지수</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>8.3</b> 군집해의 해석</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -1764,9 +1772,10 @@ K &lt;-<span class="st"> </span><span class="dv">2</span>
 z_hat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="kw">nrow</span>(df) <span class="op">*</span><span class="st"> </span>K), <span class="dt">ncol =</span> K) <span class="op">%&gt;%</span>
 <span class="st">  `</span><span class="dt">/</span><span class="st">`</span>(<span class="kw">apply</span>(., <span class="dv">1</span>, sum)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span>
-<span class="st">  `</span><span class="dt">names&lt;-</span><span class="st">`</span>(<span class="kw">str_c</span>(<span class="st">&quot;C&quot;</span>, <span class="dv">1</span><span class="op">:</span>K))
-
-z_hat</code></pre></div>
+<span class="st">  `</span><span class="dt">names&lt;-</span><span class="st">`</span>(<span class="kw">str_c</span>(<span class="st">&quot;C&quot;</span>, <span class="dv">1</span><span class="op">:</span>K))</code></pre></div>
+<pre><code>## Warning: `as_tibble.matrix()` requires a matrix with column names or a `.name_repair` argument. Using compatibility `.name_repair`.
+## This warning is displayed once per session.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z_hat</code></pre></div>
 <pre><code>## # A tibble: 7 x 2
 ##       C1     C2
 ##    &lt;dbl&gt;  &lt;dbl&gt;
@@ -2216,7 +2225,7 @@ VII_res<span class="op">$</span>parameters</code></pre></div>
 <div id="r-packages-model-based-clustering" class="section level3">
 <h3><span class="header-section-number">7.5.4</span> R 패키지 내 모형기반 군집분석</h3>
 <p>R 패키지 <code>mclust</code>를 통해, 위에서 살펴본 VII, VEI, VEE 외에 보다 다양한 분산-공분산 모형을 가정한 군집분석을 수행할 수 있다 <span class="citation">(Scrucca et al. <a href="#ref-scrucca2016mclust">2016</a>)</span>. 다음은 “EEI” 구조에 대한 수행 예이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI &lt;-<span class="st"> </span>mclust<span class="op">::</span><span class="kw">meEEI</span>(df[, <span class="op">-</span><span class="dv">1</span>], z)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI &lt;-<span class="st"> </span>mclust<span class="op">::</span><span class="kw">meEEI</span>(df[, <span class="op">-</span><span class="dv">1</span>], z_hat)</code></pre></div>
 <p>위 수행 결과 객체는 리스트 형태이며, 그 원소 중 <code>z</code>는 <span class="math inline">\(\hat{z}_{ik}\)</span>값을, <code>parameters</code>는 혼합분포 파라미터 추정값 (<span class="math inline">\(\hat{\tau}_k\)</span>, <span class="math inline">\(\hat{\boldsymbol\mu}_k\)</span>, <span class="math inline">\(\hat{\boldsymbol\Sigma}_k\)</span>)을 나타낸다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI<span class="op">$</span>z</code></pre></div>
 <pre><code>##              [,1]         [,2]
@@ -2340,7 +2349,7 @@ Figure 7.2: mclust::densityMclust 수행 결과 얻어진 혼합분포
         </div>
       </div>
 <a href="hierarchical-clustering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="cluster-solution-evaluation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

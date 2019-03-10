@@ -1601,7 +1601,7 @@ VII_res$parameters
 R 패키지 `mclust`를 통해, 위에서 살펴본 VII, VEI, VEE 외에 보다 다양한 분산-공분산 모형을 가정한 군집분석을 수행할 수 있다 [@scrucca2016mclust]. 다음은 "EEI" 구조에 대한 수행 예이다.
 
 ```{r}
-res_mclust_EEI <- mclust::meEEI(df[, -1], z)
+res_mclust_EEI <- mclust::meEEI(df[, -1], z_hat)
 ```
 
 위 수행 결과 객체는 리스트 형태이며, 그 원소 중 `z`는 $\hat{z}_{ik}$값을, `parameters`는 혼합분포 파라미터 추정값 ($\hat{\tau}_k$, $\hat{\boldsymbol\mu}_k$, $\hat{\boldsymbol\Sigma}_k$)을 나타낸다.

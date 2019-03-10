@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 8 군집해의 평가 및 해석 | 데이터마이닝 with R</title>
+  <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 8 군집해의 평가 및 해석 | 데이터마이닝 with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://youngroklee-ml.github.io/data-mining-book/" />
+  
+  <meta property="og:description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
+  <meta name="github-repo" content="youngroklee-ml/data-mining-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 군집해의 평가 및 해석 | 데이터마이닝 with R" />
+  
+  <meta name="twitter:description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
+  
+
+<meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
+
+
+<meta name="date" content="2019-03-09">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="nonhierarchical-clustering.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">데이터마이닝 with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>개요</a></li>
+<li class="chapter" data-level="1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>1</b> 로지스틱 회귀분석</a><ul>
+<li class="chapter" data-level="1.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-packages-install"><i class="fa fa-check"></i><b>1.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="1.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>1.2</b> 이분 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#bianry-logistic-reg-basic-script"><i class="fa fa-check"></i><b>1.2.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="1.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-model"><i class="fa fa-check"></i><b>1.2.2</b> 회귀모형</a></li>
+<li class="chapter" data-level="1.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-estimation"><i class="fa fa-check"></i><b>1.2.3</b> 회귀계수 추정</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>1.3</b> 명목 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-reg-basic-script"><i class="fa fa-check"></i><b>1.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="1.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#baseline-category-logit-model"><i class="fa fa-check"></i><b>1.3.2</b> 기준범주 로짓모형</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>1.4</b> 서열 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-basic-script"><i class="fa fa-check"></i><b>1.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="1.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#cumulative-logit-model"><i class="fa fa-check"></i><b>1.4.2</b> 누적 로짓모형</a></li>
+<li class="chapter" data-level="1.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#adjacent-categories-logit-model"><i class="fa fa-check"></i><b>1.4.3</b> 인근범주 로짓모형</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>2</b> 판별분석</a><ul>
+<li class="chapter" data-level="2.1" data-path="da.html"><a href="da.html#da-overview"><i class="fa fa-check"></i><b>2.1</b> 개요</a></li>
+<li class="chapter" data-level="2.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>2.2</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="2.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>2.3</b> 피셔 방법</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>2.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>2.3.2</b> 피셔 판별함수</a></li>
+<li class="chapter" data-level="2.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>2.3.3</b> 분류 규칙</a></li>
+<li class="chapter" data-level="2.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>2.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>2.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>2.4.2</b> 선형판별함수</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>2.5</b> 오분류비용을 고려한 분류규칙</a></li>
+<li class="chapter" data-level="2.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>2.6</b> 이차판별분석</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>2.6.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>2.6.2</b> 이차 판별함수</a></li>
+<li class="chapter" data-level="2.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>2.6.3</b> 이차판별함수에 의한 분류</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>2.7</b> 세 범주 이상의 분류</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="da.html"><a href="da.html#mutliclass-da-basic-script"><i class="fa fa-check"></i><b>2.7.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.7.2" data-path="da.html"><a href="da.html#mutliclass-generalized-discriminant-function"><i class="fa fa-check"></i><b>2.7.2</b> 일반화된 판별함수</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>3</b> 트리기반 기법</a><ul>
+<li class="chapter" data-level="3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>3.1</b> CART 개요</a></li>
+<li class="chapter" data-level="3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-packages-install"><i class="fa fa-check"></i><b>3.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>3.3</b> CART 트리 생성</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>3.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>3.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>3.3.3</b> 노드 및 트리의 불순도</a></li>
+<li class="chapter" data-level="3.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>3.3.4</b> 분지기준</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>3.4</b> 가지치기 및 최종 트리 선정</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>3.4.1</b> 가지치기</a></li>
+<li class="chapter" data-level="3.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>3.4.2</b> 최적 트리의 선정</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>3.5</b> R패키지 내 분류 트리 방법</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>3.5.1</b> 트리 확장</a></li>
+<li class="chapter" data-level="3.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>3.5.2</b> 가지치기</a></li>
+<li class="chapter" data-level="3.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>3.5.3</b> 파라미터값 결정</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> 서포트 벡터 머신</a><ul>
+<li class="chapter" data-level="4.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>4.1</b> 개요</a></li>
+<li class="chapter" data-level="4.2" data-path="svm.html"><a href="svm.html#svm-packages-install"><i class="fa fa-check"></i><b>4.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="4.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>4.3</b> 선형 SVM - 분리 가능 경우</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>4.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="4.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>4.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="4.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>4.3.3</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>4.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>4.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="4.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>4.4.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>4.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>4.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="4.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>4.5.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>4.6</b> R패키지 내 SVM</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>4.6.1</b> 커널함수</a></li>
+<li class="chapter" data-level="4.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>4.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>5</b> 군집분석 개요</a><ul>
+<li class="chapter" data-level="5.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>5.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="5.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>5.2</b> 군집분석 기법</a></li>
+<li class="chapter" data-level="5.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>5.3</b> 객체 간의 유사성 척도</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="clustering-overview.html"><a href="clustering-overview.html#object-distance-metric"><i class="fa fa-check"></i><b>5.3.1</b> 거리 관련 척도</a></li>
+<li class="chapter" data-level="5.3.2" data-path="clustering-overview.html"><a href="clustering-overview.html#object-correlation-metric"><i class="fa fa-check"></i><b>5.3.2</b> 상관계수 관련 척도</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>5.4</b> 범주형 객체의 유사성 척도</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="clustering-overview.html"><a href="clustering-overview.html#binary-similarity-metric"><i class="fa fa-check"></i><b>5.4.1</b> 이분형 변수의 경우</a></li>
+<li class="chapter" data-level="5.4.2" data-path="clustering-overview.html"><a href="clustering-overview.html#ordinal-similarity-metric"><i class="fa fa-check"></i><b>5.4.2</b> 서열형 변수의 경우</a></li>
+<li class="chapter" data-level="5.4.3" data-path="clustering-overview.html"><a href="clustering-overview.html#nominal-similarity-metric"><i class="fa fa-check"></i><b>5.4.3</b> 명목형 변수의 경우</a></li>
+<li class="chapter" data-level="5.4.4" data-path="clustering-overview.html"><a href="clustering-overview.html#mixed-similarity-metric"><i class="fa fa-check"></i><b>5.4.4</b> 혼합형의 경우</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>6</b> 계층적 군집방법</a><ul>
+<li class="chapter" data-level="6.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>6.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="6.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#distance-between-clusters"><i class="fa fa-check"></i><b>6.2</b> 군집 간 거리척도 및 연결법</a></li>
+<li class="chapter" data-level="6.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>6.3</b> 연결법의 군집 알고리즘</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-basic-script"><i class="fa fa-check"></i><b>6.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="6.3.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-algorithm"><i class="fa fa-check"></i><b>6.3.2</b> 연결법 군집 알고리즘</a></li>
+<li class="chapter" data-level="6.3.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hclust"><i class="fa fa-check"></i><b>6.3.3</b> R 패키지 내 연결법</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>6.4</b> 워드 방법</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>6.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="6.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>6.4.2</b> 워드 군집 알고리즘</a></li>
+<li class="chapter" data-level="6.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>6.4.3</b> R 패키지 내 워드 방법</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>6.5</b> 분리적 방법 - 다이아나</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>6.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="6.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>6.5.2</b> 다이아나 알고리즘</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>6.6</b> 군집수의 결정</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>7</b> 비계층적 군집방법</a><ul>
+<li class="chapter" data-level="7.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>7.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="7.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>7.2</b> K-means 알고리즘</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>7.2.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="7.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>7.2.2</b> 알고리즘</a></li>
+<li class="chapter" data-level="7.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>7.2.3</b> R 스크립트 구현</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>7.3</b> K-medoids 군집방법</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>7.3.1</b> PAM 알고리즘</a></li>
+<li class="chapter" data-level="7.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>7.3.2</b> CLARA 알고리즘</a></li>
+<li class="chapter" data-level="7.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>7.3.3</b> CLARANS 알고리즘</a></li>
+<li class="chapter" data-level="7.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>7.3.4</b> K-means-like 알고리즘</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>7.4</b> 퍼지 K-means 알고리즘</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="7.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>7.4.2</b> 알고리즘</a></li>
+<li class="chapter" data-level="7.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>7.4.3</b> R 스크립트 구현</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>7.5</b> 모형기반 군집방법</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>7.5.1</b> 기본 R script</a></li>
+<li class="chapter" data-level="7.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>7.5.2</b> EM 알고리즘</a></li>
+<li class="chapter" data-level="7.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>7.5.3</b> R 스크립트 구현</a></li>
+<li class="chapter" data-level="7.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>7.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>8</b> 군집해의 평가 및 해석</a><ul>
+<li class="chapter" data-level="8.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>8.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="8.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>8.2</b> 군집해의 평가</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>8.2.1</b> 외부평가지수</a></li>
+<li class="chapter" data-level="8.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>8.2.2</b> 내부평가지수</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>8.3</b> 군집해의 해석</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">데이터마이닝 with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cluster-solution-evaluation" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> 군집해의 평가 및 해석</h1>
+<p>군집분석 수행 시에는 분류분석과 달리 각 객체가 속하는 군집에 대하여 알려진 학습표본이 없기 때문에 어떤 군집해의 성능을 평가하기가 곤란하다. 각 객체가 이차원 또는 삼차원의 변수로 이루어진 경우에는 각 객체를 좌표축에 나타내어 도식화함으로써 어느 정도 군집해의 타당성을 정성적으로 평가가 가능할 것이나, 이보다 높은 차원의 경우에는 도식화가 불가능하다. 따라서 응용분야에 따라 전문가의 견해가 군집해의 평가에 필요할 수도 있다.</p>
+<div id="cluster-solution-evaluation-packages-install" class="section level2">
+<h2><span class="header-section-number">8.1</span> 필요 R package 설치</h2>
+<p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">package</th>
+<th align="left">version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">tidyverse</td>
+<td align="left">1.2.1</td>
+</tr>
+<tr class="even">
+<td align="left">cluster</td>
+<td align="left">2.0.7-1</td>
+</tr>
+<tr class="odd">
+<td align="left">flexclust</td>
+<td align="left">1.4-0</td>
+</tr>
+<tr class="even">
+<td align="left">clValid</td>
+<td align="left">0.6-6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cluster-solution-evaluation-metric" class="section level2">
+<h2><span class="header-section-number">8.2</span> 군집해의 평가</h2>
+<p>군집해의 정량적인 평가척도에 대한 연구는 지속적으로 이루어지고 있으며, 크게 외부평가지수(external index)와 내부평가지수(internal index)로 구분되고 있다.</p>
+<div id="cluster-evaluation-external-index" class="section level3">
+<h3><span class="header-section-number">8.2.1</span> 외부평가지수</h3>
+<p>이미 잘 알려진 군집해가 있다고 가정할 때, 새로 제안된 군집해를 기존에 알려진 군집해와 비교하는 평가척도이다.</p>
+<p><span class="math inline">\(n\)</span>개의 객체에 대하여 알려진 기준 군집해를 다음과 같다고 하자.</p>
+<span class="math display">\[\begin{equation*}
+\mathbf{U} = \{ U_1, U_2, \cdots, U_r \}
+\end{equation*}\]</span>
+<p>즉, 기준 군집해 <span class="math inline">\(\mathbf{U}\)</span>는 <span class="math inline">\(r\)</span>개의 군집으로 구성되며, <span class="math inline">\(k\)</span>번째 군집을 <span class="math inline">\(U_k\)</span>로 나타낸다.</p>
+<p>유사하게, 비교 대상의 군집해를 다음과 같이 <span class="math inline">\(s\)</span>개의 군집으로 구성된 <span class="math inline">\(\mathbf{V}\)</span>로 나타내자.</p>
+<span class="math display">\[\begin{equation*}
+\mathbf{V} = \{ V_1, V_2, \cdots, V_s \}
+\end{equation*}\]</span>
+<div id="cluster-external-index-basic-script" class="section level4">
+<h4><span class="header-section-number">8.2.1.1</span> 기본 R 스크립트</h4>
+<p>다음의 두 군집해 간의 유사도를 랜드지수 및 수정랜드지수를 이용하여 표현할 수 있다.</p>
+<span class="math display">\[\begin{eqnarray*}
+U &amp;=&amp; \{ \{1, 2, 3, 4\}, \{5, 6, 7\}, \{8, 9, 10\} \}\\
+V &amp;=&amp; \{ \{1, 2, 5, 8\}, \{3, 6, 9\}, \{4, 7, 10\} \}
+\end{eqnarray*}\]</span>
+<p>랜드지수 및 수정랜드지수는 <code>flexclust</code> 패키지의 <code>randIndex</code> 함수를 호출하여 계산할 수 있으며, 랜드지수를 계산할 때는 <code>correct = FALSE</code>, 수정랜드지수를 계산할 때는 <code>correct = TRUE</code>로 파라미터 값을 지정하여야 한다. 파라미터값을 지정하지 않을 때는 기본값으로 수정랜드지수를 계산한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sol_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)
+sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+<span class="kw">map</span>(<span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>), 
+    <span class="op">~</span><span class="st"> </span>flexclust<span class="op">::</span><span class="kw">randIndex</span>(<span class="dt">x =</span> sol_<span class="dv">1</span>, <span class="dt">y =</span> sol_<span class="dv">2</span>, <span class="dt">correct =</span> .x))</code></pre></div>
+<pre><code>## [[1]]
+##        RI 
+## 0.5111111 
+## 
+## [[2]]
+##   ARI 
+## -0.25</code></pre>
+</div>
+<div id="cluster-external-rand-index" class="section level4">
+<h4><span class="header-section-number">8.2.1.2</span> 랜드지수</h4>
+<p>두 군집해 <span class="math inline">\(U, V\)</span> 내 에서 각 객체가 속한 군집을 나타내기 위한membership 변수를 아래와 같이 정의하자.</p>
+<span class="math display">\[\begin{equation*}
+u_{ik} = \begin{cases}
+1 &amp; \text{ if object $i$ belongs to cluster $U_k$, i.e. } i \in U_k \\
+0 &amp; \text{ otherwise}
+\end{cases}, \, i = 1, \cdots, n, \, k = 1, \cdots, r
+\end{equation*}\]</span>
+<span class="math display">\[\begin{equation*}
+v_{ik} = \begin{cases}
+1 &amp; \text{ if object $i$ belongs to cluster $V_k$, i.e. } i \in V_k \\
+0 &amp; \text{ otherwise}
+\end{cases}, \, i = 1, \cdots, n, \, k = 1, \cdots, s
+\end{equation*}\]</span>
+<p>랜드지수를 산출하기 위해, 우선 다음과 같은 네 가지 값을 정의한다.</p>
+<span class="math display">\[\begin{eqnarray*}
+a &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} u_{jk} v_{il} v_{jl}\\
+b &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} u_{jk} v_{il} (1 - v_{jl})\\
+c &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} (1 - u_{jk}) v_{il} v_{jl}\\
+d &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} (1 - u_{jk}) v_{il} (1 - v_{jl})
+\end{eqnarray*}\]</span>
+<p>이 때, <span class="citation">Rand (<a href="#ref-rand1971objective">1971</a>)</span> 가 제안한 랜드지수(Rand index)는 다음과 같이 정의된다.</p>
+<span class="math display" id="eq:rand-index">\[\begin{equation}
+RI = \frac{a + d}{a + b + c + d} \tag{8.1}
+\end{equation}\]</span>
+<p>여기서, <span class="math inline">\(a + b + c + d\)</span>는 객체 쌍의 전체 수를 의미하므로 다음과 같다.</p>
+<span class="math display">\[\begin{equation*}
+a + b + c + d = {n \choose 2}
+\end{equation*}\]</span>
+<p>식 <a href="cluster-solution-evaluation.html#eq:rand-index">(8.1)</a>는 0에서 1 사이의 값을 갖게 되며, 0에 가까울수록 두 군집해가 일치하지 않음을, 1에 가까울수록 두 군집해가 일치함을 나타낸다. 또한 랜드지수는 랜덤하게 작성한 두 군집해 간의 유사도의 기대값이 0보다 크다.</p>
+<p><span class="citation">Hubert and Arabie (<a href="#ref-hubert1985comparing">1985</a>)</span> 는 수정랜드지수(adjusted Rand index)를 아래와 같이 제안하였다.</p>
+<span class="math display" id="eq:adj-rand-index">\[\begin{equation}
+RI_{adj} = \frac{2 (ad - bc)}{(a + b)(b + d) + (a + c)(c + d)} \tag{8.2}
+\end{equation}\]</span>
+<p>식 <a href="cluster-solution-evaluation.html#eq:adj-rand-index">(8.2)</a>는 랜덤한 군집해 간의 비교의 경우 0에 가까운 값을 갖는다.</p>
+<p>아래 구현한 <code>rand_index</code> 함수는 임의의 두 군집해 <code>u</code>와 <code>v</code>에 대한 랜드지수 및 수정랜드지수를 계산하는 함수이다.</p>
+<ul>
+<li><code>u</code>, <code>v</code>: 서로 비교할 두 개의 군집해 벡터. 각 원소값은 각 객체가 속한 군집을 나타낸다.</li>
+<li>다음과 같은 두 개의 component를 지닌 list를 리턴한다.
+<ul>
+<li><code>ri</code>: 랜드지수</li>
+<li><code>adj_ri</code>: 수정랜드지수</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rand_index &lt;-<span class="st"> </span><span class="cf">function</span>(u, v) {
+  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is_vector</span>(u) <span class="op">||</span><span class="st"> </span><span class="op">!</span><span class="kw">is_vector</span>(v)) {
+    <span class="kw">stop</span>(<span class="st">&quot;Input needs to be vector&quot;</span>)
+  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">length</span>(u) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(v)) {
+    <span class="kw">stop</span>(<span class="st">&quot;Vectors u and v must have the same length.&quot;</span>)
+  }
+  
+  U &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+    <span class="dt">i =</span> <span class="kw">seq_along</span>(u),
+    <span class="dt">cluster =</span> u
+  ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(
+      <span class="kw">rename</span>(., <span class="dt">j =</span> i),
+      <span class="dt">by =</span> <span class="st">&quot;cluster&quot;</span>
+    ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(i <span class="op">&lt;</span><span class="st"> </span>j) 
+  
+  V &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+    <span class="dt">i =</span> <span class="kw">seq_along</span>(v),
+    <span class="dt">cluster =</span> v
+  ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(
+      <span class="kw">rename</span>(., <span class="dt">j =</span> i),
+      <span class="dt">by =</span> <span class="st">&quot;cluster&quot;</span>
+    ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(i <span class="op">&lt;</span><span class="st"> </span>j) 
+  
+  a &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">inner_join</span>(U, V, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))
+  b &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">anti_join</span>(U, V, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))
+  c &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">anti_join</span>(V, U, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))
+  d &lt;-<span class="st"> </span><span class="kw">choose</span>(<span class="kw">length</span>(u), <span class="dv">2</span>) <span class="op">-</span><span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span>c)
+  
+  ri &lt;-<span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>d) <span class="op">/</span><span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span>c <span class="op">+</span><span class="st"> </span>d)
+  adj_ri &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(a <span class="op">*</span><span class="st"> </span>d <span class="op">-</span><span class="st"> </span>b <span class="op">*</span><span class="st"> </span>c) <span class="op">/</span><span class="st"> </span>
+<span class="st">    </span>((a <span class="op">+</span><span class="st"> </span>b) <span class="op">*</span><span class="st"> </span>(b <span class="op">+</span><span class="st"> </span>d) <span class="op">+</span><span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>c) <span class="op">*</span><span class="st"> </span>(c <span class="op">+</span><span class="st"> </span>d))
+
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">ri =</span> ri, <span class="dt">adj_ri =</span> adj_ri))
+}</code></pre></div>
+<p>50개의 객체에 대해 랜덤하게 할당된 군집해(<code>K = 3</code>) 두 개를 비교하여 랜드지수와 수정랜드지수를 구해보자.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">random_rand_index &lt;-<span class="st"> </span><span class="cf">function</span>(n, r, s) {
+  u &lt;-<span class="st"> </span><span class="kw">sample.int</span>(r, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+  v &lt;-<span class="st"> </span><span class="kw">sample.int</span>(s, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+  <span class="kw">rand_index</span>(u, v)
+}
+
+<span class="kw">set.seed</span>(<span class="dv">500</span>)
+
+<span class="kw">rerun</span>(<span class="dv">200</span>, <span class="kw">random_rand_index</span>(<span class="dv">50</span>, <span class="dv">3</span>, <span class="dv">3</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">bind_rows</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;metric&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> value, <span class="dt">fill =</span> metric)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.05</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_discrete</span>(
+    <span class="dt">name =</span> <span class="st">&quot;index&quot;</span>,
+    <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="st">&quot;ri&quot;</span>, <span class="st">&quot;adj_ri&quot;</span>),
+    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Rand Index&quot;</span>, <span class="st">&quot;adjusted Rand Index&quot;</span>)
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(
+    <span class="dt">title =</span> <span class="st">&quot;Distribution of index values from 200 random assignments&quot;</span>,
+    <span class="dt">x =</span> <span class="st">&quot;index value&quot;</span>,
+    <span class="dt">y =</span> <span class="st">&quot;frequency&quot;</span>
+  )</code></pre></div>
+<pre><code>## Warning: Removed 4 rows containing missing values (geom_bar).</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:rand-index-random"></span>
+<img src="data-mining-book_files/figure-html/rand-index-random-1.png" alt="랜덤한 군집해 간 비교: 랜드지수 및 수정랜드지수" width="672" />
+<p class="caption">
+Figure 8.1: 랜덤한 군집해 간 비교: 랜드지수 및 수정랜드지수
+</p>
+</div>
+<p>Figure <a href="cluster-solution-evaluation.html#fig:rand-index-random">8.1</a>에 보이듯이, 랜덤한 군집해 간 비교에서 랜드지수는 0보다 큰 값을 나타내는 반면, 수정랜드지수는 0을 중심으로 분포되어 있다.</p>
+<p>다음의 두 군집해에 대하여 랜드지수와 수정랜드지수를 구해보자.</p>
+<span class="math display">\[\begin{eqnarray*}
+U &amp;=&amp; \{(1, 2, 3, 4), (5, 6, 7), (8, 9, 10) \}\\
+V &amp;=&amp; \{(1, 2, 5, 8), (3, 6, 9), (4, 7, 10) \}
+\end{eqnarray*}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rand_index</span>(
+  <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>),
+  <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+)</code></pre></div>
+<pre><code>## $ri
+## [1] 0.5111111
+## 
+## $adj_ri
+## [1] -0.25</code></pre>
+</div>
+</div>
+<div id="cluster-evaluation-internal-index" class="section level3">
+<h3><span class="header-section-number">8.2.2</span> 내부평가지수</h3>
+<p>군집해에 대한 내부평가지수는 외부 정보의 도움 없이 입력 데이터만으로 군집해를 평가하는 척도로써, 주로 밀집성(compactness), 연결성(connectedness), 분리성(spatial separation) 등 세 가지 관점에서 평가한다.</p>
+<p>우선 <span class="math inline">\(K\)</span>개의 군집으로 이루어진 군집해 <span class="math inline">\(C\)</span>가 다음과 같다고 하자.</p>
+<span class="math display">\[\begin{equation*}
+C = \{ C_1, C_2, \cdots, C_K \}
+\end{equation*}\]</span>
+<div id="cluster-evaluation-internal-index-basic-script" class="section level4">
+<h4><span class="header-section-number">8.2.2.1</span> 기본 R 스크립트</h4>
+<p>아래와 같이 두 개의 변수 <span class="math inline">\(x_1\)</span> 및 <span class="math inline">\(x_2\)</span>로 표현되는 객체 데이터에 대해 군집을 찾고자 한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>id, <span class="op">~</span>x1, <span class="op">~</span>x2,
+  <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">15</span>,
+  <span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">13</span>,
+  <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">13</span>,
+  <span class="dv">4</span>, <span class="dv">19</span>, <span class="dv">4</span>,
+  <span class="dv">5</span>, <span class="dv">17</span>, <span class="dv">17</span>,
+  <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">11</span>,
+  <span class="dv">7</span>, <span class="dv">19</span>, <span class="dv">12</span>,
+  <span class="dv">8</span>, <span class="dv">18</span>, <span class="dv">6</span>
+)
+
+df <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(
+    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+    <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
+    <span class="dt">col.names =</span> <span class="kw">c</span>(
+      <span class="st">&#39;객체번호&#39;</span>, 
+      <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>
+      ),
+    <span class="dt">caption =</span> <span class="st">&#39;군집 대상 데이터&#39;</span>
+  )</code></pre></div>
+<table>
+<caption><span id="tab:cluster-eval-data">Table 8.1: </span>군집 대상 데이터</caption>
+<thead>
+<tr class="header">
+<th align="center">객체번호</th>
+<th align="right"><span class="math inline">\(x_1\)</span></th>
+<th align="right"><span class="math inline">\(x_2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="right">4</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="right">20</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="right">3</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="right">19</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="right">17</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="right">8</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="right">19</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="right">18</td>
+<td align="right">6</td>
+</tr>
+</tbody>
+</table>
+<p>위 데이터에 대해 다음과 같은 두 개의 다른 군집해를 얻었다고 하자.</p>
+<span class="math display" id="eq:cluster-eval-two-solutions">\[\begin{equation}
+\begin{split}
+U &amp;=&amp; \{ \{1, 3, 6\}, \{2, 5, 7\}, \{4, 8\} \}\\
+V &amp;=&amp; \{ \{1, 3, 6\}, \{2, 4, 5, 7, 8\} \}
+\end{split}
+\tag{8.3}
+\end{equation}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sol_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</code></pre></div>
+<p>본 장에서는 4가지 내부 평가지수를 다룬다. 아래는 R 패키지들에 속한 각각의 함수를 실행하여 그 결과를 리스트 형태로 리턴하는 사용자 정의 함수 <code>cluster_eval</code>를 구현한 것이다. 해당 함수에서 호출하는 R 패키지 함수들은 아래와 같다.</p>
+<ul>
+<li>Dunn index <span class="citation">(Dunn <a href="#ref-dunn1973fuzzy">1973</a>)</span>: <code>clValid::dunn</code></li>
+<li>CH index <span class="citation">(Caliński and Harabasz <a href="#ref-calinski1974dendrite">1974</a>)</span>: <code>fpc::calinhara</code></li>
+<li>Connectivity <span class="citation">(Handl and Knowles <a href="#ref-handl2005exploiting">2005</a>)</span>: <code>clValid::connectivity</code></li>
+<li>Silhouettes <span class="citation">(P. J. Rousseeuw <a href="#ref-rousseeuw1987silhouettes">1987</a>)</span>: <code>cluster::silhouette</code></li>
+</ul>
+<p>각각의 평가지수에 대한 자세한 설명은 다음 장에서 하기로 한다.</p>
+<p>아래 구현한 사용자 정의함수는 아래와 같은 입력 파라미터를 요구한다.</p>
+<ul>
+<li><code>cluster</code>: 군집 해를 나타내는 길이 <span class="math inline">\(n\)</span>, 최대값 <span class="math inline">\(K\)</span>의 정수형 벡터</li>
+<li><code>df</code>: 군집 데이터</li>
+<li><code>dist_method</code>: 거리 척도; Dunn, Connectivity, Silhouettes 지수 측정에 사용된다.</li>
+<li><code>nn</code>: 최근 객체 수 (&gt;= 2); Connectivity 측정에 사용된다.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_eval &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="dt">nn =</span> <span class="dv">2</span>) {
+  dunn_index &lt;-<span class="st"> </span>clValid<span class="op">::</span><span class="kw">dunn</span>(
+    <span class="dt">Data =</span> df, 
+    <span class="dt">clusters =</span> cluster, 
+    <span class="dt">method =</span> dist_method
+  )
+  
+  ch_index &lt;-<span class="st"> </span>fpc<span class="op">::</span><span class="kw">calinhara</span>(
+    <span class="dt">x =</span> df, 
+    <span class="dt">clustering =</span> cluster
+  )
+  
+  connectivity &lt;-<span class="st"> </span>clValid<span class="op">::</span><span class="kw">connectivity</span>(
+    <span class="dt">Data =</span> df, 
+    <span class="dt">clusters =</span> cluster, 
+    <span class="dt">neighbSize =</span> nn
+  )
+  
+  asw &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">silhouette</span>(
+    <span class="dt">x =</span> cluster, 
+    <span class="dt">dist =</span> <span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method)
+  )[, <span class="st">&quot;sil_width&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mean</span>()
+  
+  <span class="kw">return</span>(<span class="kw">list</span>(
+    <span class="dt">dunn_index =</span> dunn_index,
+    <span class="dt">ch_index =</span> ch_index,
+    <span class="dt">connectivity =</span> connectivity,
+    <span class="dt">asw =</span> asw
+  ))
+}
+
+<span class="kw">map_dfr</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), cluster_eval, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">.id =</span> <span class="st">&quot;solution&quot;</span>)</code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   solution dunn_index ch_index connectivity   asw
+##   &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
+## 1 1             1.08      26.5            1 0.651
+## 2 2             0.822     15.4            0 0.586</code></pre>
+</div>
+<div id="cluster-evaluation-internal-index-explanation" class="section level4">
+<h4><span class="header-section-number">8.2.2.2</span> 대표 내부평가지수</h4>
+<p><span class="citation">Dunn (<a href="#ref-dunn1973fuzzy">1973</a>)</span> 은 아래와 같은 지수를 제안하였다.</p>
+<span class="math display" id="eq:cluster-dunn-index">\[\begin{equation}
+DI = \frac{\min_{\mathbf{x} \in C_i, \, \mathbf{y} \in C_j \, 1 \leq i \neq j \leq K} d(\mathbf{x}, \mathbf{y})}{\max_{\mathbf{x} \in C_i, \mathbf{y} \in C_i, \, 1 \leq i \leq K} d(\mathbf{x}, \mathbf{y})} \tag{8.4}
+\end{equation}\]</span>
+<p>여기서 분자는 군집 간의 분리성(클수록 분리성이 큼), 분모는 군집의 밀집성(작을수록 밀집성이 높음)을 반영하는 것이라 볼 수 있다. 따라서 분리성과 밀집성이 높을 때 식 <a href="cluster-solution-evaluation.html#eq:cluster-dunn-index">(8.4)</a>는 큰 값을 갖게 되며 해당 군집해가 상대적으로 좋게 평가된다.</p>
+<p>군집해로부터 식 <a href="cluster-solution-evaluation.html#eq:cluster-dunn-index">(8.4)</a>를 계산하는 함수 <code>dunn_index</code>를 아래와 같이 구현해보자. 입력 파라미터는 아래와 같다.</p>
+<ul>
+<li><code>cluster</code>: 각 객체가 속한 군집을 나타내는 길이 <span class="math inline">\(n\)</span>의 벡터</li>
+<li><code>df</code>: 객체 데이터를 나타내는 <span class="math inline">\(n\)</span>행의 프레임</li>
+<li><code>dist_method</code>: <code>base::dist</code> 함수의 <code>method</code> 파라미터값으로 사용할 거리 척도</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dunn_index &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {
+  <span class="co"># 객체 수</span>
+  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
+  
+  <span class="co"># 각 객체의 군집해</span>
+  cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+    <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span>n,
+    <span class="dt">cluster =</span> cluster
+  )
+  
+  <span class="co"># 각 객체 간 거리 데이터 프레임</span>
+  <span class="co"># 위 군집해 데이터 프레임과 `inner_join` 을 통해</span>
+  <span class="co"># 두 객체가 동일 군집에 속하는지 서로 다른 군집에 속하는 지 표현</span>
+  dist_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method, <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(
+      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item1 =</span> id, <span class="dt">item1_cluster =</span> cluster),
+      <span class="dt">by =</span> <span class="st">&quot;item1&quot;</span>
+      ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(
+      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item2 =</span> id, <span class="dt">item2_cluster =</span> cluster),
+      <span class="dt">by =</span> <span class="st">&quot;item2&quot;</span>
+    )
+  
+  <span class="co"># 서로 다른 군집에 속한 객체 쌍 중</span>
+  <span class="co"># 가장 가까운 객체 간의 거리</span>
+  numerator &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">!=</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">1</span>, distance) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span>.<span class="op">$</span>distance
+  
+  <span class="co"># 서로 같은 군집에 속한 객체 쌍 중</span>
+  <span class="co"># 가장 먼 객체 간의 거리</span>
+  denominator &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">==</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">top_n</span>(<span class="dv">1</span>, distance) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span>.<span class="op">$</span>distance
+  
+  res &lt;-<span class="st"> </span>numerator <span class="op">/</span><span class="st"> </span>denominator
+  
+  <span class="kw">return</span>(res)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), dunn_index, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>])</code></pre></div>
+<pre><code>## [1] 1.075291 0.822375</code></pre>
+<p><span class="citation">Caliński and Harabasz (<a href="#ref-calinski1974dendrite">1974</a>)</span> 는 다음과 같은 지수를 제안하였다.</p>
+<span class="math display" id="eq:cluster-ch-index">\[\begin{equation}
+CH = \frac{\frac{1}{K - 1} \sum_{k = 1}^{K} n_k (\mathbf{c}_k - \mathbf{c})^\top (\mathbf{c}_k - \mathbf{c})}{\frac{1}{n - K} \sum_{k = 1}^{K} \sum_{i \in C_k} (\mathbf{x}_i - \mathbf{c}_k)^\top (\mathbf{x}_i - \mathbf{c}_k)} \tag{8.5}
+\end{equation}\]</span>
+<p>여기에서 <span class="math inline">\(\mathbf{c}_k\)</span>는 군집 <span class="math inline">\(k\)</span>의 중심좌표(centroid), <span class="math inline">\(\mathbf{c}\)</span>는 전체 객체들의 중심좌표, <span class="math inline">\(n_k\)</span>는 군집 <span class="math inline">\(C_k\)</span>내의 객체 수, <span class="math inline">\(n\)</span>은 전체 객체 수를 나타낸다. 식 <a href="cluster-solution-evaluation.html#eq:cluster-ch-index">(8.5)</a> 또한 분자는 분리성, 분모는 밀집성을 평가하며, 값이 클수록 좋은 군집해로 평가된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_index &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df) {
+  <span class="co"># 전체 데이터 중심</span>
+  centroid &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)
+  
+  cluster_df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cluster =</span> cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">nest</span>()
+  
+  <span class="co"># 군집 중심</span>
+  cluster_centroid_df &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(cluster_df<span class="op">$</span>data, <span class="op">~</span><span class="st"> </span><span class="kw">summarize_all</span>(., mean))
+  
+  <span class="co"># 각 군집 중심과 전체 데이터 중심 간 제곱 유클리드 거리</span>
+  centroid_dist &lt;-<span class="st"> </span>flexclust<span class="op">::</span><span class="kw">dist2</span>(
+    cluster_centroid_df, 
+    centroid
+    )<span class="op">^</span><span class="dv">2</span>
+  
+  <span class="co"># 각 군집 크기</span>
+  cluster_size &lt;-<span class="st"> </span><span class="kw">map_dbl</span>(cluster_df<span class="op">$</span>data, nrow)
+  
+  numerator &lt;-<span class="st"> </span><span class="kw">sum</span>(centroid_dist <span class="op">*</span><span class="st"> </span>cluster_size) <span class="op">/</span><span class="st"> </span>(<span class="kw">nrow</span>(cluster_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)
+  
+  denominator &lt;-<span class="st"> </span><span class="kw">map_dbl</span>(
+    cluster_df<span class="op">$</span>data,
+    <span class="co"># 각 군집 내의 객체와 군집 중심 간 제곱 유클리드 거리의 합</span>
+    <span class="op">~</span><span class="st"> </span>flexclust<span class="op">::</span><span class="kw">dist2</span>(., <span class="kw">summarize_all</span>(., mean))<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>()
+    ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">sum</span>() <span class="op">%&gt;%</span>
+<span class="st">    `</span><span class="dt">/</span><span class="st">`</span>(<span class="kw">nrow</span>(df) <span class="op">-</span><span class="st"> </span><span class="kw">nrow</span>(cluster_df))
+
+  res &lt;-<span class="st"> </span>numerator <span class="op">/</span><span class="st"> </span>denominator
+  
+  <span class="kw">return</span>(res)
+}
+
+<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), ch_index, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>])</code></pre></div>
+<pre><code>## [1] 26.45029 15.36218</code></pre>
+<p><span class="citation">Handl and Knowles (<a href="#ref-handl2005exploiting">2005</a>)</span> 은 연결성을 반영한 아래와 같은 지수를 제시하고 있다.</p>
+<span class="math display" id="eq:cluster-connectivity">\[\begin{equation}
+Conn = \sum_{i = 1}^{n} \sum_{j = 1}^{L} v_{i, nn_{i}(j)} \tag{8.6}
+\end{equation}\]</span>
+<p>이 때, <span class="math inline">\(nn_{i}(j)\)</span>는 객체 <span class="math inline">\(i\)</span>의 <span class="math inline">\(j\)</span>번째 최근 객체(nearest neighbor)를 나타내며, <span class="math inline">\(L\)</span>은 연결성 척도 측정을 위한 사용자 지정 파라미터값이다. 또한 변수 <span class="math inline">\(v_{i, nn_i(j)}\)</span>는 아래와 같이 정의된다.</p>
+<span class="math display">\[\begin{equation*}
+v_{i, nn_i(j)} = \begin{cases}
+0 &amp; \text{ if } \exists C_k : i, nn_i(j) \in C_k \\
+1 / j &amp; \text{ otherwise} 
+\end{cases}
+\end{equation*}\]</span>
+<p>즉, 식 <a href="cluster-solution-evaluation.html#eq:cluster-connectivity">(8.6)</a>는 각 객체가 <span class="math inline">\(j (\leq L)\)</span>번째 최근 객체와 다른 객체에 속하면 <span class="math inline">\(1 / j\)</span>의 벌점을 부여하는 방식으로, 작은 값일수록 좋은 군집으로 평가될 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">connectivity &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="dt">n_neighbor =</span> <span class="dv">1</span>) {
+  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
+  
+  cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+    <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span>n,
+    <span class="dt">cluster =</span> cluster
+  )
+
+  <span class="co"># 객체간 거리</span>
+  distance_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method, <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>()
+  
+  <span class="co"># 최근 객체</span>
+  nn_df &lt;-<span class="st"> </span>distance_df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(item1) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">nearest =</span> <span class="kw">rank</span>(distance, <span class="dt">ties.method =</span> <span class="st">&quot;random&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(nearest <span class="op">&lt;=</span><span class="st"> </span>n_neighbor) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(
+      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item1 =</span> id, <span class="dt">item1_cluster =</span> cluster),
+      <span class="dt">by =</span> <span class="st">&quot;item1&quot;</span>
+      ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(
+      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item2 =</span> id, <span class="dt">item2_cluster =</span> cluster),
+      <span class="dt">by =</span> <span class="st">&quot;item2&quot;</span>
+    )
+  
+  <span class="co"># 연결성 계산</span>
+  nn_df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">!=</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">v =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span>nearest) <span class="op">%&gt;%</span>
+<span class="st">    </span>.<span class="op">$</span>v <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">sum</span>()
+  
+}
+
+<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), connectivity, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">n_neighbor =</span> <span class="dv">1</span>)</code></pre></div>
+<pre><code>## [1] 0 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), connectivity, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">n_neighbor =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 1 0</code></pre>
+<p><span class="citation">P. J. Rousseeuw (<a href="#ref-rousseeuw1987silhouettes">1987</a>)</span> 은 실루엣(silhouettes)이라는 내부평가지수를 제안하였다. 우선 다음과 같은 기호를 정의하자.</p>
+<ul>
+<li><span class="math inline">\(a(i)\)</span>: 객체 <span class="math inline">\(i\)</span>와 동일 군집에 속한 다른 객체들과의 평균 거리</li>
+<li><span class="math inline">\(d(i, C_k)\)</span>: 객체 <span class="math inline">\(i\)</span>와 다른 군집 <span class="math inline">\(C_k\)</span>에 속한 모든 객체들과의 평균 거리, <span class="math inline">\(i \notin C_k\)</span></li>
+<li><span class="math inline">\(b(i) = \min_{k: i \notin C_k} d(i, C_k)\)</span></li>
+</ul>
+<p>객체의 군집 멤버쉽 변수 <span class="math inline">\(z_{ik}\)</span>를</p>
+<span class="math display">\[\begin{equation*}
+z_{ik} = \begin{cases}
+1 &amp; \text{ if } i \in C_k\\
+0 &amp; \text{ otherwise }
+\end{cases}
+\end{equation*}\]</span>
+<p>라 정의하면, 위 <span class="math inline">\(a(i)\)</span>와 <span class="math inline">\(b(i)\)</span>를 아래와 같이 수식화할 수 있다.</p>
+<span class="math display">\[\begin{eqnarray*}
+a(i) &amp;=&amp; \sum_{k = 1}^{K} z_{ik} \frac{\sum_{j \neq i} z_{jk} d(\mathbf{x}_i, \mathbf{x}_j)}{\sum_{j \neq i} z_{jk}}\\
+b(i) &amp;=&amp; \max_{k: z_{ik} \neq 1} \frac{\sum_{j \neq i} z_{jk} d(\mathbf{x}_i, \mathbf{x}_j)}{\sum_{j \neq i} z_{jk}}
+\end{eqnarray*}\]</span>
+<p>이 때 객체 <span class="math inline">\(i\)</span>에 대한 실루엣은 아래와 같이 정의된다.</p>
+<span class="math display" id="eq:cluster-silhouette">\[\begin{equation}
+s(i) = \frac{b(i) - a(i)}{\max \{ a(i), b(i) \}} \tag{8.7}
+\end{equation}\]</span>
+<p>식 <a href="cluster-solution-evaluation.html#eq:cluster-silhouette">(8.7)</a>은 -1과 1 사이의 값을 갖는데, 1에 가까울수록 객체 <span class="math inline">\(i\)</span>가 비슷한 객체들과 군집된 것으로, -1에 가까울수록 먼 객체들과 군집된 것으로 판단할 수 있다.</p>
+<p>객체 <span class="math inline">\(i\)</span>가 어떠한 다른 객체와도 같은 군집에 속하지 않는 경우가 발생할 수 있다 (<span class="math inline">\(i \in C_k, \, \left| C_k \right| = 1\)</span>). 이 경우 <span class="math inline">\(a(i)\)</span>가 정의되지 않으므로 <span class="math inline">\(s(i)\)</span>값이 식 <a href="cluster-solution-evaluation.html#eq:cluster-silhouette">(8.7)</a>에 의해서 정의되지 않는다. 이러한 경우에는 <span class="math inline">\(s(i) = 0\)</span>이라고 실루엣을 정의한다.</p>
+<span class="math display" id="eq:cluster-silhouette-single">\[\begin{equation}
+s(i) = \begin{cases}
+\frac{b(i) - a(i)}{\max \{ a(i), b(i) \}} &amp; \text{ if $a(i)$ is defined}\\
+0 &amp; \text{ otherwise }
+\end{cases}
+\tag{8.8}
+\end{equation}\]</span>
+<p>이후 군집해의 평가지표로써 평균실루엣(overall average silhouette width; ASW)을 다음과 같이 정의하여 사용한다.</p>
+<span class="math display" id="eq:cluster-average-silhouette">\[\begin{equation}
+ASW = \frac{1}{n} \sum_{i = 1}^{n} s(i) \tag{8.9}
+\end{equation}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asw &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {
+  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
+  
+  cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+    <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span>n,
+    <span class="dt">cluster =</span> cluster
+  )
+  
+  dist_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method, <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(
+      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item1 =</span> id, <span class="dt">item1_cluster =</span> cluster),
+      <span class="dt">by =</span> <span class="st">&quot;item1&quot;</span>
+      ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(
+      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item2 =</span> id, <span class="dt">item2_cluster =</span> cluster),
+      <span class="dt">by =</span> <span class="st">&quot;item2&quot;</span>
+    )
+  
+  dist_df &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(item1, item1_cluster, item2_cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarize</span>(
+      <span class="dt">avg_distance =</span> <span class="kw">mean</span>(distance)
+    )
+  
+  a &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">==</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span>.<span class="op">$</span>avg_distance
+  
+  b &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">!=</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">1</span>, avg_distance) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span>.<span class="op">$</span>avg_distance
+  
+  s &lt;-<span class="st"> </span><span class="kw">map2_dbl</span>(a, b, <span class="op">~</span><span class="st"> </span>(.y <span class="op">-</span><span class="st"> </span>.x) <span class="op">/</span><span class="st"> </span><span class="kw">max</span>(.x, .y))
+  
+  <span class="kw">mean</span>(s)
+}
+
+<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), asw, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>)</code></pre></div>
+<pre><code>## [1] 0.6507364 0.5864226</code></pre>
+</div>
+</div>
+</div>
+<div id="cluster-solution-interpretation" class="section level2">
+<h2><span class="header-section-number">8.3</span> 군집해의 해석</h2>
+<p>군집분석의 주목적을 달성하기 위해서는 군집해를 얻은 후 이에 대한 해석이 가능하여야 할 것이다. 즉, 각 군집의 특성을 파악할 수 있어야 실제 문제에 적용할 수 있을 것이다. 이를 위해서는 특정 응용분야의 전문가 지식을 요하는 경우가 많다. 그러나 첫 출발은 각 군집의 중심좌표, 즉 군집 별 변수별 평균치를 산출하는 것이다. 대부분의 경우 변수별 평균치로 군집들을 비교함으로써 군집의 특성을 파악할 수 있다. 다변량을 처리할 수 있는 그래프 역시 도움이 되며, 특히 다변량인 경우 요인분석(factor analysis)를 활용하기도 한다. 최종적으로 각 군집에 대한 특성이 파악되면 명명(naming)하는 것이 추천된다.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-rand1971objective">
+<p>Rand, William M. 1971. “Objective Criteria for the Evaluation of Clustering Methods.” <em>Journal of the American Statistical Association</em> 66 (336). Taylor &amp; Francis Group: 846–50.</p>
+</div>
+<div id="ref-hubert1985comparing">
+<p>Hubert, Lawrence, and Phipps Arabie. 1985. “Comparing Partitions.” <em>Journal of Classification</em> 2 (1). Springer: 193–218.</p>
+</div>
+<div id="ref-dunn1973fuzzy">
+<p>Dunn, Joseph C. 1973. “A Fuzzy Relative of the Isodata Process and Its Use in Detecting Compact Well-Separated Clusters.” Taylor &amp; Francis.</p>
+</div>
+<div id="ref-calinski1974dendrite">
+<p>Caliński, Tadeusz, and Jerzy Harabasz. 1974. “A Dendrite Method for Cluster Analysis.” <em>Communications in Statistics</em> 3 (1). Taylor &amp; Francis: 1–27.</p>
+</div>
+<div id="ref-handl2005exploiting">
+<p>Handl, Julia, and Joshua Knowles. 2005. “Exploiting the Trade-Off—the Benefits of Multiple Objectives in Data Clustering.” In <em>International Conference on Evolutionary Multi-Criterion Optimization</em>, 547–60. Springer.</p>
+</div>
+<div id="ref-rousseeuw1987silhouettes">
+<p>Rousseeuw, Peter J. 1987. “Silhouettes: A Graphical Aid to the Interpretation and Validation of Cluster Analysis.” <em>Journal of Computational and Applied Mathematics</em> 20. Elsevier: 53–65.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="nonhierarchical-clustering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"search": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -25,14 +25,14 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-02-10">
+<meta name="date" content="2019-03-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="nonhierarchical-clustering.html">
+<link rel="prev" href="cluster-solution-evaluation.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -244,6 +244,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>7.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>8</b> 군집해의 평가 및 해석</a><ul>
+<li class="chapter" data-level="8.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>8.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="8.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>8.2</b> 군집해의 평가</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>8.2.1</b> 외부평가지수</a></li>
+<li class="chapter" data-level="8.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>8.2.2</b> 내부평가지수</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>8.3</b> 군집해의 해석</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -276,6 +284,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Breiman, Leo, Jerome Friedman, Charles J Stone, and Richard A Olshen. 1984. <em>Classification and Regression Trees</em>. CRC press.</p>
 </div>
 <div>
+<p>Caliński, Tadeusz, and Jerzy Harabasz. 1974. “A Dendrite Method for Cluster Analysis.” <em>Communications in Statistics</em> 3 (1). Taylor &amp; Francis: 1–27.</p>
+</div>
+<div>
 <p>Cavanaugh, JR, RW Hatch, and JL Sullivan. 1976. “Models for the Subjective Effects of Loss, Noise, and Talker Echo on Telephone Connections.” <em>Bell System Technical Journal</em> 55 (9). Wiley Online Library: 1319–71.</p>
 </div>
 <div>
@@ -291,6 +302,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Czepiel, Scott A. 2002. “Maximum Likelihood Estimation of Logistic Regression Models: Theory and Implementation.” <em>Available at Czep. Net/Stat/Mlelr. Pdf</em>.</p>
 </div>
 <div>
+<p>Dunn, Joseph C. 1973. “A Fuzzy Relative of the Isodata Process and Its Use in Detecting Compact Well-Separated Clusters.” Taylor &amp; Francis.</p>
+</div>
+<div>
 <p>Fan, Rong-En, Pai-Hsuen Chen, and Chih-Jen Lin. 2005. “Working Set Selection Using Second Order Information for Training Support Vector Machines.” <em>Journal of Machine Learning Research</em> 6 (Dec): 1889–1918.</p>
 </div>
 <div>
@@ -298,6 +312,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div>
 <p>Gower, John C. 1971. “A General Coefficient of Similarity and Some of Its Properties.” <em>Biometrics</em>. JSTOR, 857–71.</p>
+</div>
+<div>
+<p>Handl, Julia, and Joshua Knowles. 2005. “Exploiting the Trade-Off—the Benefits of Multiple Objectives in Data Clustering.” In <em>International Conference on Evolutionary Multi-Criterion Optimization</em>, 547–60. Springer.</p>
+</div>
+<div>
+<p>Hubert, Lawrence, and Phipps Arabie. 1985. “Comparing Partitions.” <em>Journal of Classification</em> 2 (1). Springer: 193–218.</p>
 </div>
 <div>
 <p>Kaufman, L, and P. J. Rousseeuw. 1990. “Finding Groups in Data: An Introduction to Cluster Analysis.” Wiley.</p>
@@ -310,6 +330,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div>
 <p>Pratt, John W. 1981. “Concavity of the Log Likelihood.” <em>Journal of the American Statistical Association</em> 76 (373). Taylor &amp; Francis: 103–6.</p>
+</div>
+<div>
+<p>Rand, William M. 1971. “Objective Criteria for the Evaluation of Clustering Methods.” <em>Journal of the American Statistical Association</em> 66 (336). Taylor &amp; Francis Group: 846–50.</p>
+</div>
+<div>
+<p>Rousseeuw, Peter J. 1987. “Silhouettes: A Graphical Aid to the Interpretation and Validation of Cluster Analysis.” <em>Journal of Computational and Applied Mathematics</em> 20. Elsevier: 53–65.</p>
 </div>
 <div>
 <p>Schölkopf, Bernhard, Alex J Smola, Robert C Williamson, and Peter L Bartlett. 2000. “New Support Vector Algorithms.” <em>Neural Computation</em> 12 (5). MIT Press: 1207–45.</p>
@@ -333,7 +359,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="nonhierarchical-clustering.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cluster-solution-evaluation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
