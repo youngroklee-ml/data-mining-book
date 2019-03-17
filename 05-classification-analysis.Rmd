@@ -1,0 +1,465 @@
+# 분류분석 개요 {#classification-analysis}
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+분류분석(classification analysis)은 다수의 속성(attribute) 또는 변수를 갖는 객체(object)를 사전에 정해진 그룹 또는 범주(class, category) 중의 하나로 분류하는 것이다. 예를 들어, 기업의 3개의 재무제표를 기준으로 우량 또는 불량으로 분류하는 것은 범주수가 2이고 변수수가 3인 분류분석 문제가 될 것이다. 이를 위해서는 이미 범주(우량 또는 불량)가 알려진 여러 기업에 대하여 3개의 재무제표 데이터를 수집한 후 효율적인 분류규칙(classification rule)을 만들어야 할 것이다. 여기서 효율적이라 함은 기존 객체를 잘 분류할 뿐만 아니라 새로운 객체 역시 잘 분류함을 의미한다. 분류규칙을 만들기 위해서는 기존의 범주가 알려진 객체 데이터를 수집하여야 하며, 이를 학습표본(learning sample)이라 한다.
+
+## 필요 R 패키지 설치 {#classification-packages-install}
+
+본 장에서 필요한 R 패키지들은 아래와 같다.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+tibble(package = c("tidyverse", "stats", "class")) %>%
+  mutate(version = map_chr(
+    package, 
+    ~ packageDescription(.x, fields = c("Version"))[1])) %>%
+  knitr::kable()
+```
+
+
+## 분류문제 및 분류기법 {#classification-problem-methods}
+
+분류문제를 설명하기 위하여 $N$개의 객체로 이루어진 학습데이터 $\{(\mathbf{x}_i, y_i)\}_{i = 1, \cdots, N}$를 아래와 같이 정의하자.
+
+- $\mathbf{x}_i$: $p$개의 독립변수로 이루어진 $i$번째 객체의 변수벡터 ($\mathbf{x}_i = [x_{i1} \, x_{i2} \, \cdots \, x_{ip}]^\top$)
+- $J$: 총 범주 수
+- $y_i$: $i$번째 객체의 범주 변수; $y_i \in \{1, 2, \cdots, J\}$
+
+이 때 학습표본을 다음과 같이 나타낼 수 있다.
+
+\begin{equation*}
+\{(\mathbf{x}_1, y_1), (\mathbf{x}_2, y_2), \cdots, (\mathbf{x}_N, y_N)\}
+\end{equation*}
+
+분류문제는 새로운 객체를 범주 중의 하나로 분류하기 위하여 학습표본을 바탕으로 분류규칙을 만드는 것이다. 이 때 분류규칙은 객체의 변수벡터의 함수로 도출되므로 이를 $r(\mathbf{x})$로 나타낸다. 이 때, $r(\mathbf{x})$는 $1, \cdots, J$ 중 하나의 값을 가지며, 이를 분류기(classifier)라 부르기도 한다. 분류규칙의 성능을 관찰하기 위하여 우선 학습표본에 적용하여 실제범주와 추정된 범주를 비교한다. 즉, $r(\mathbf{x}_i)$와 $y_i$를 비교하여 오분류율 등을 분석한다. 다시 말하면, $r(\mathbf{x}_i) = y_i$ 이면 올바르게 분류된 것이나, 그렇지 않으면 잘못 분류된 것이다. 학습표본에 있는 전체 객체는 서로 배타적인 $J$개의 집합으로 나누어진다. 분류규칙의 성능평가에 대한 보다 자세한 설명은 이후 \@ref(classifier-evaluation)장에서 하기로 한다.
+
+분류를 위한 방법론은 무수하게 많은데, 크게 아래와 같이 대별된다.
+
+1. 통계적 방법: 로지스틱 회귀분석, 반별분석 등 다변량 통계이론에 바탕을 둔 방법
+2. 트리기반 기법: CART, C4.5, CHAID 등 트리 형태의 분지방법을 이용하는 기법
+3. 비선형 최적화 기법: 서포트 벡터 머신(support vector machine; SVM) 등
+4. 기계학습 기법: 신경망(neural network) 등의 블랙박스 형태의 기법
+
+\@ref(logistic-regression)장에서는 로지스틱 회귀분석을, \@ref(da)장에서는 판별분석에 의한 분류분석을, \@ref(tree-based-method)장에서는 트리기반 기법을 다루며, \@ref(svm)장에서는 서포트 벡터 머신을 다루고자 한다.
+
+
+## 기본적인 분류기법 {#simple-classification-methods}
+
+본 절에서는 위에서 언급하지 않은 기본적인 몇 가지 분류기법에 대하여 설명하고자 한다.
+
+### 인접객체법 {#nearest-neighbor-classification}
+
+인접객체법(nearest neighbor classification)은 학습 데이터를 활용하지만 규칙을 도출하는 기법은 아니다. 분류하고자 하는 새로운 객체에 대하여 학습 데이터에 있는 가장 가까운 몇 개의 객체들을 찾은 후 이들 인접객체들의 다수 범주로 분류하는 기법이다. $k$개의 인접객체를 고려할 때, $k$-인접객체법(k-nearest neighbor method)이라 한다. 가까운 정도의 척도는 유사성 척도 또는 유클리드 거리 등의 비유사성 척도가 사용되는데, 이들에 대한 자세한 설명은 \@ref(clustering-overview)장에서 이루어진다.
+
+
+#### 기본 R 스트립트 {#nearest-neighbor-classificaiton-basic-script}
+
+다음과 같은 7개의 객체에 대한 학습표본이 있다.
+
+```{r knn-classification-data}
+train_df <- tribble(
+  ~id, ~x1, ~x2, ~y,
+  1, 5, 7, 1,
+  2, 4, 3, 2,
+  3, 7, 8, 2,
+  4, 8, 6, 2,
+  5, 3, 6, 1,
+  6, 2, 5, 1,
+  7, 9, 6, 2
+) %>%
+  mutate(y = factor(y, levels = c(1, 2)))
+
+knitr::kable(
+  train_df, booktabs = TRUE,
+  align = c('r', 'r', 'r', 'r'),
+  col.names = c('객체번호', '$x_1$', '$x_2$', '범주'),
+  caption = '인접객체법 학습표본'
+)
+```
+
+
+`class` 패키지의 `knn.cv` 함수는 학습표본의 각각의 객체에 대해 그 객체를 제외한 나머지 학습표본 중 객체에서 가장 가까운(유클리드 거리 기반) $k$개의 객체의 범주값을 이용하여 대상 학습표본의 범주값을 추정하는 leave-one-out cross validation을 수행한다. 아래 스크립트는 Table \@ref(tab:knn-classification-data)의 학습표본 데이터에 대해 3-인접객체 leave-one-out cross validation 결과 추정된 범주값을 산출한다.
+
+```{r knn-classification-cv}
+y_hat <- class::knn.cv(
+  train = train_df[, c("x1", "x2")],
+  cl = train_df$y,
+  k = 3
+)
+
+train_df %>%
+  mutate(y_hat = y_hat) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r', 'r', 'r'),
+    col.names = c('객체번호', '$x_1$', '$x_2$', '실제범주', '추정범주'),
+    caption = '인접객체법 추정범주 - 학습데이터'
+  )
+```
+
+`class` 패키지의 `knn` 함수는 새로운 객체에 대해 인접한 학습데이터를 이용하여 범주를 추정하는 함수이다. 아래 스크립트는 두 개의 새로운 객체 $(6, 7)^\top$과 $(4, 2)^\top$에 대해 3-인근객체법으로 추정범주를 구하는 스크립트이다.
+
+```{r knn-classification-test}
+test_df <- tribble(
+  ~id, ~x1, ~x2,
+  8, 6, 7,
+  9, 4, 2
+)
+
+y_hat <- class::knn(
+  train = train_df %>% select(x1, x2),
+  test = test_df %>% select(x1, x2),
+  cl = train_df$y,
+  k = 3
+)
+
+test_df %>%
+  mutate(y_hat = y_hat) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r', 'r'),
+    col.names = c('객체번호', '$x_1$', '$x_2$', '추정범주'),
+    caption = '인접객체법 추정범주 - 새로운 객체'
+  )
+```
+
+
+
+#### 인접객체법 알고리즘 {#nearest-neighbor-classification-algorithm}
+
+$k$-인접객체법의 알고리즘은 다음과 같다.
+
+- **[단계 1]** $k$값을 정한다.
+- **[단계 2]** 분류하고자 하는 새로운 객체 $\mathbf{z}$에 대하여
+    + 2-1. 학습표본에 있는 각 객체 $\mathbf{x}_i$와의 거리 $d(\mathbf{z}, \mathbf{x}_i)$를 산출한다.
+    + 2-2. 위의 거리가 짧은 순으로 $k$개의 객체를 선정한다.
+    + 2-3. $k$개의 인근객체가 취하는 범주 중 최빈값을 새로운 객체 $\mathbf{z}$의 범주로 정한다.
+    
+위 알고리즘을 학습표본 Table \@ref(tab:knn-classification-data)와 두 새로운 객체 $(6, 7)^\top$ 및 $(4, 2)^\top$에 적용해보자.
+
+[단계 1] 우선 각 학습표본 객체에 대해 $k$값을 변화시키며 인접객체법으로 분류해보자. 이 때, 각 객체 스스로는 인접객체에 포함되지 않는다.
+
+우선 아래 스크립트는 각 학습 객체간 유클리드 거리를 구한다.
+
+```{r}
+train_pairwise_dist <- dist(train_df[, c("x1", "x2")], upper = TRUE) %>%
+  broom::tidy()
+
+train_pairwise_dist
+```
+
+각 객체별로 가장 인접한 객체 순으로 순서(rank)를 구한다.
+
+```{r}
+train_nn_rank <- train_pairwise_dist %>%
+  group_by(item1) %>%
+  mutate(nn_rank = rank(distance, ties.method = "random")) %>%
+  ungroup() %>%
+  arrange(item1, nn_rank)
+
+train_nn_rank
+```
+
+
+이후 각 $k$값에 대하여 각 객체 대해 $k$-인접객체법에 대한 추정범주를 구해보자.
+
+```{r}
+loo_cv <- bind_cols(
+  train_nn_rank %>% select(item1, nn_rank),
+  map2_dfr(
+    train_nn_rank$item1,
+    train_nn_rank$nn_rank,
+    function(.x, .y, df, y) {
+      df %>%
+        filter(
+          item1 == .x,
+          nn_rank <= .y
+        ) %>%
+        mutate(y = y[item2]) %>%
+        count(y) %>%
+        slice(which.max(n))
+    },
+    df = train_nn_rank,
+    y = train_df$y
+  )
+) %>%
+  rename(k = nn_rank, y_hat = y) %>%
+  mutate(y = train_df$y[item1])
+
+loo_cv
+```
+
+
+학습객체들의 $k$-인접객체법 추정범주와 실제범주가 같은 비율을 정확도라 하여, 각 $k$값에 대해 정확도를 계산해보자.
+
+```{r}
+loo_cv %>%
+  mutate(is_correct = (y == y_hat)) %>%
+  group_by(k) %>%
+  summarize(accuracy = mean(is_correct)) %>%
+  arrange(desc(accuracy))
+```
+
+위의 결과에 기반하여, 정확도가 가장 높은 경우의 $k$들 중 가장 큰 값인 $k = 3$ 을 최적 $k$값으로 선정하자.
+
+
+[단계 2] 두 새로운 객체에 대한 3-인접객체법 추정범주를 구해보자.
+
+우선 새로운 객체들과 기존 학습표본 객체들간의 거리를 구해보자.
+
+```{r}
+test_df <- tribble(
+  ~id, ~x1, ~x2,
+  8, 6, 7,
+  9, 4, 2
+)
+
+test_train_dist <- flexclust::dist2(
+  test_df %>% select(x1, x2), 
+  train_df %>% select(x1, x2)
+) %>%
+  as_tibble() %>%
+  `names<-`(seq_len(nrow(train_df))) %>%
+  mutate(item1 = seq_len(nrow(test_df))) %>%
+  gather(key = "item2", value = "distance", -item1) %>%
+  mutate(item2 = as.numeric(item2))
+
+test_train_dist
+```
+
+
+각 새로운 객체에 대하여 가장 인접한 3개의 학습표본만 남긴다.
+
+```{r}
+test_nn <- test_train_dist %>%
+  group_by(item1) %>%
+  arrange(distance) %>%
+  mutate(nn_rank = row_number()) %>%
+  filter(nn_rank <= 3) %>%
+  ungroup()
+
+test_nn
+```
+
+
+해당 인접 학습표본들의 범주값을 관측하여, 가장 자주 발견되는 범주값을 새로운 객체의 범주값으로 추정한다.
+
+```{r}
+test_yhat <- test_nn %>%
+  mutate(
+    id = test_df$id[item1],
+    y = train_df$y[item2]
+    ) %>%
+  group_by(id, y) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+  slice(1) %>%
+  ungroup() %>%
+  rename(y_hat = y)
+
+test_yhat
+```
+
+위 결과, 객체 $(6, 7)^\top$는 범주 2로, 객체 $(4, 2)^\top$는 범주 1로 분류된다.
+
+
+
+### 나이브 베이지안 분류법 {#naive-bayes}
+
+나이브 베이지안(Naive Bayesian) 분류법이란 속성변수들과 범주변수가 확률분포를 따른다고 간주하여 베이즈 정리와 조건부 독립성을 활용한 분류기법이다. 속성변수들이 범주형일 때 주로 사용되나, 연속형인 경우에도 확률분포의 형태를 가정하여 사용할 수 있다. 본 장에서는 범주형 변수인 경우를 설명한다.
+
+#### 기본 R 스크립트 {#naive-bayes-basic-script}
+
+아래와 같은 9명의 고객에 대한 학습표본이 있다.
+
+```{r naive-bayes-data}
+train_df <- tribble(
+  ~id, ~x1, ~x2, ~y,
+  1, "남", "20대", 1,
+  2, "남", "20대", 2,
+  3, "남", "30대", 1,
+  4, "남", "40대", 1,
+  5, "여", "10대", 1,
+  6, "여", "20대", 2,
+  7, "여", "20대", 1,
+  8, "여", "30대", 2,
+  9, "여", "40대", 2
+) %>%
+  mutate(y = factor(y, levels = c(1, 2)))
+
+knitr::kable(
+  train_df, booktabs = TRUE,
+  align = c('r', 'r', 'r', 'r'),
+  col.names = c('고객번호', '성별 ($x_1$)', '나이 ($x_2$)', '범주 ($y$)'),
+  caption = '나이브 베이지안 분류법 학습표본'
+)
+```
+
+`e1071` 패키지의 `naiveBayes` 함수를 이용하면, 객체가 각 범주에 속할 조건부 확률분포 모델을 추정할 수 있다.
+
+```{r}
+nb_fit <- e1071::naiveBayes(formula = y ~ x1 + x2, data = train_df)
+
+print(nb_fit)
+```
+
+추정된 모델을 학습표본에 적용하여 범주를 추정해보자.
+
+```{r naive-bayes-posterior}
+# 범주 추정값
+y_hat <- predict(nb_fit, train_df)
+
+# 사후확률 추정값
+nb_posterior <- predict(nb_fit, train_df, type = "raw") %>%
+  as_tibble() %>%
+  `colnames<-`(str_c("p", levels(train_df$y)))
+
+train_df %>%
+  mutate(y_hat = y_hat) %>%
+  bind_cols(nb_posterior) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('r', 'r', 'r', 'r', 'r'),
+    col.names = c('고객번호', '성별 ($x_1$)', '나이 ($x_2$)', 
+                  '실제범주 ($y$)', '추정범주 ($\\hat{y}$)', 
+                  str_c('사후확률 ($y$ = ', levels(train_df$y), ')')),
+    caption = '나이브 베이지안 분류법에 의한 추정 범주'
+  )
+```
+
+또한, 학습표본에 포함되지 않은 10대 남자인 새로운 고객에 대한 범주가 아래와 같이 추정된다.
+
+```{r}
+predict(nb_fit, tibble(x1 = "남", x2 = "10대"))
+```
+
+
+#### 알고리즘 {#naive-bayes-algorithm}
+
+어떤 객체 $\mathbf{x}$에 대해 범주가 $y$일 조건부 확률분포는 베이즈 정리에 의하여 다음과 같이 표현된다.
+
+\begin{equation}
+P(y \, | \, \mathbf{x}) \propto P(y) P(\mathbf{x} \, | \, y), \, y = 1, \cdots, J (\#eq:bayes-posterior)
+\end{equation}
+
+여기서 $P(y)$는 임의의 객체가 범주 $y$에 속할 사전확률을 의미하며, $P(y \, | \, \mathbf{x})$는 객체 속성변수 $\mathbf{x}$의 관측값에 따른 범주 $y$의 사후확률을 나타낸다. 그리고 $P(\mathbf{x} \, | \, y)$는 범주 $y$에 속한 객체들의 속성변수 분포를 나타낸다.
+
+나이브 베이지안 분류법에서는 속성변수들의 조건부 결합확률분포 $P(\mathbf{x} \, | \, y)$에 대한 조건부 독립성을 가정하여, $p$개의 변수로 이루어진 객체 속성변수 벡터 $\mathbf{x} = (x_1, x_2, \cdots, x_p)$에 대하여 다음이 성립한고 가정한다.
+
+\begin{equation*}
+P(x_a \, | x_{a + 1}, x_{a + 2}, \cdots, x_p, y) = P(x_a \,|\, y)
+\end{equation*}
+
+이 때, 식 \@ref(eq:bayes-posterior)는 아래와 같이 표현될 수 있다.
+
+\begin{equation}
+P(y \, | \, \mathbf{x}) \propto P(y) \prod_{a = 1}^{p} P(x_a \, | \, y), \, y = 1, \cdots, J (\#eq:naive-bayes-posterior)
+\end{equation}
+
+우선, 학습표본 \@ref(tab:naive-bayes-data)을 이용하여 범주의 사전확률 $P(y)$를 추정해보자.
+
+```{r}
+prior_prob <- train_df %>%
+  group_by(y) %>%
+  summarize(n = n()) %>%
+  mutate(prior = n / sum(n)) %>%
+  select(-n)
+
+prior_prob
+```
+
+
+또한, 학습표본 \@ref(tab:naive-bayes-data)에 대해 각 변수의 조건부 확률 $P(x_a \,|\, y)$를 추정해보자.
+
+```{r}
+condition_prob <- train_df %>%
+  gather(key = "variable", value = "value", x1, x2) %>%
+  group_by(y, variable, value) %>%
+  summarize(n = n()) %>%
+  mutate(cond_prob = n / sum(n)) %>%
+  select(-n) %>%
+  ungroup() %>%
+  complete(y, nesting(variable, value), fill = list(cond_prob = 0))
+
+condition_prob
+```
+
+추정된 확률을 식 \@ref(eq:naive-bayes-posterior)에 적용하여, 각 학습데이터에 대한 범주의 사후확률을 구해보자.
+
+```{r}
+posterior_prob <- train_df %>%
+  select(-y) %>%
+  gather(key = "variable", value = "value", x1, x2) %>%
+  inner_join(condition_prob, by = c("variable", "value")) %>%
+  group_by(id, y) %>%
+  summarize(cond_prob = reduce(cond_prob, `*`)) %>%
+  inner_join(prior_prob, by = "y") %>%
+  mutate(posterior_unadjust = prior * cond_prob) %>%
+  mutate(posterior = posterior_unadjust / sum(posterior_unadjust)) %>%
+  select(id, y, posterior) %>%
+  ungroup()
+
+posterior_prob %>%
+  spread(key = y, value = posterior)
+```
+
+추정범주는 사후확률이 가장 큰 범주를 선택한다.
+
+```{r}
+posterior_prob %>%
+  group_by(id) %>%
+  top_n(1, posterior) %>%
+  slice(1)
+```
+
+
+
+
+
+#### R 패키지 내 나이브 베이지안 분류법 {#naive-bayes-pkg}
+
+위 \@ref(naive-bayes-basic-script)절에서 살펴본 바와 같이 `e1071` 패키지 내의 `naiveBayes` 함수를 이용하여 분류 모델을 추정할 수 있다.
+
+```{r}
+nb_fit <- e1071::naiveBayes(formula = y ~ x1 + x2, data = train_df)
+```
+
+
+위 `naiveBayes` 모델 객체의 component 중 `apriori`는 객체가 각 범주에 속할 사전분포를 나타내는 `table` 형태의 객체로, 본 예에서 학습표본 중 각 범주에 속한 객체 수를 나타낸다.
+
+```{r}
+str(nb_fit$apriori)
+```
+
+아래와 같이, 각 범주에 속한 객체 수를 전체 객체 수로 나눔으로써 추정된 사전분포(prior distribution)을 확인할 수 있다.
+
+```{r}
+nb_fit$apriori %>%
+  broom::tidy() %>%
+  mutate(p = n / sum(n))
+```
+
+각 변수별 조건부 확률은 `tables`라는 리스트 객체에서 변수별로 확인할 수 있다.
+
+```{r}
+nb_fit$tables
+```
+
+
+`predict` 함수를 이용하여 사후확률을 구할 때, `threshold` 파라미터값을 이용하여 최소 사후확률값을 지정할 수 있다. 기본값은 0.001로, 추정 사후확률값이 최소 0.1%보다 커야한다는 것을 의미한다.
+
+```{r}
+predict(nb_fit, newdata = train_df[5, ], type = "raw")
+```
+
+해당 파라미터값을 0.01으로 지정할 경우, 위에서 범주 2에 속할 사후확률이 보다 크게 얻어짐을 확인할 수 있다.
+
+```{r}
+predict(nb_fit, newdata = train_df[5, ], type = "raw", threshold = 0.01)
+```
+
+
+
+

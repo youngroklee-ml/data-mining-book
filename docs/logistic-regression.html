@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 1 로지스틱 회귀분석 | 데이터마이닝 with R</title>
+  <title>Chapter 2 로지스틱 회귀분석 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 1 로지스틱 회귀분석 | 데이터마이닝 with R" />
+  <meta property="og:title" content="Chapter 2 로지스틱 회귀분석 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://youngroklee-ml.github.io/data-mining-book/" />
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="youngroklee-ml/data-mining-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 로지스틱 회귀분석 | 데이터마이닝 with R" />
+  <meta name="twitter:title" content="Chapter 2 로지스틱 회귀분석 | 데이터마이닝 with R" />
   
   <meta name="twitter:description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
   
@@ -25,14 +25,14 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-03-09">
+<meta name="date" content="2019-03-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
+<link rel="prev" href="classification-analysis.html">
 <link rel="next" href="da.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -105,152 +105,161 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>개요</a></li>
-<li class="chapter" data-level="1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>1</b> 로지스틱 회귀분석</a><ul>
-<li class="chapter" data-level="1.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-packages-install"><i class="fa fa-check"></i><b>1.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="1.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>1.2</b> 이분 로지스틱 회귀모형</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#bianry-logistic-reg-basic-script"><i class="fa fa-check"></i><b>1.2.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="1.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-model"><i class="fa fa-check"></i><b>1.2.2</b> 회귀모형</a></li>
-<li class="chapter" data-level="1.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-estimation"><i class="fa fa-check"></i><b>1.2.3</b> 회귀계수 추정</a></li>
-</ul></li>
-<li class="chapter" data-level="1.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>1.3</b> 명목 로지스틱 회귀모형</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-reg-basic-script"><i class="fa fa-check"></i><b>1.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="1.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#baseline-category-logit-model"><i class="fa fa-check"></i><b>1.3.2</b> 기준범주 로짓모형</a></li>
-</ul></li>
-<li class="chapter" data-level="1.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>1.4</b> 서열 로지스틱 회귀모형</a><ul>
-<li class="chapter" data-level="1.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-basic-script"><i class="fa fa-check"></i><b>1.4.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="1.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#cumulative-logit-model"><i class="fa fa-check"></i><b>1.4.2</b> 누적 로짓모형</a></li>
-<li class="chapter" data-level="1.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#adjacent-categories-logit-model"><i class="fa fa-check"></i><b>1.4.3</b> 인근범주 로짓모형</a></li>
+<li class="chapter" data-level="1" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>1</b> 분류분석 개요</a><ul>
+<li class="chapter" data-level="1.1" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-packages-install"><i class="fa fa-check"></i><b>1.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="1.2" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-problem-methods"><i class="fa fa-check"></i><b>1.2</b> 분류문제 및 분류기법</a></li>
+<li class="chapter" data-level="1.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>1.3</b> 기본적인 분류기법</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#nearest-neighbor-classification"><i class="fa fa-check"></i><b>1.3.1</b> 인접객체법</a></li>
+<li class="chapter" data-level="1.3.2" data-path="classification-analysis.html"><a href="classification-analysis.html#naive-bayes"><i class="fa fa-check"></i><b>1.3.2</b> 나이브 베이지안 분류법</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>2</b> 판별분석</a><ul>
-<li class="chapter" data-level="2.1" data-path="da.html"><a href="da.html#da-overview"><i class="fa fa-check"></i><b>2.1</b> 개요</a></li>
-<li class="chapter" data-level="2.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>2.2</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="2.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>2.3</b> 피셔 방법</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>2.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="2.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>2.3.2</b> 피셔 판별함수</a></li>
-<li class="chapter" data-level="2.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>2.3.3</b> 분류 규칙</a></li>
-<li class="chapter" data-level="2.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>2.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
+<li class="chapter" data-level="2" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>2</b> 로지스틱 회귀분석</a><ul>
+<li class="chapter" data-level="2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-packages-install"><i class="fa fa-check"></i><b>2.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>2.2</b> 이분 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#bianry-logistic-reg-basic-script"><i class="fa fa-check"></i><b>2.2.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-model"><i class="fa fa-check"></i><b>2.2.2</b> 회귀모형</a></li>
+<li class="chapter" data-level="2.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-estimation"><i class="fa fa-check"></i><b>2.2.3</b> 회귀계수 추정</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>2.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="2.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>2.4.2</b> 선형판별함수</a></li>
+<li class="chapter" data-level="2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>2.3</b> 명목 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-reg-basic-script"><i class="fa fa-check"></i><b>2.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#baseline-category-logit-model"><i class="fa fa-check"></i><b>2.3.2</b> 기준범주 로짓모형</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>2.5</b> 오분류비용을 고려한 분류규칙</a></li>
-<li class="chapter" data-level="2.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>2.6</b> 이차판별분석</a><ul>
-<li class="chapter" data-level="2.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>2.6.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="2.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>2.6.2</b> 이차 판별함수</a></li>
-<li class="chapter" data-level="2.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>2.6.3</b> 이차판별함수에 의한 분류</a></li>
-</ul></li>
-<li class="chapter" data-level="2.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>2.7</b> 세 범주 이상의 분류</a><ul>
-<li class="chapter" data-level="2.7.1" data-path="da.html"><a href="da.html#mutliclass-da-basic-script"><i class="fa fa-check"></i><b>2.7.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="2.7.2" data-path="da.html"><a href="da.html#mutliclass-generalized-discriminant-function"><i class="fa fa-check"></i><b>2.7.2</b> 일반화된 판별함수</a></li>
+<li class="chapter" data-level="2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>2.4</b> 서열 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#cumulative-logit-model"><i class="fa fa-check"></i><b>2.4.2</b> 누적 로짓모형</a></li>
+<li class="chapter" data-level="2.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#adjacent-categories-logit-model"><i class="fa fa-check"></i><b>2.4.3</b> 인근범주 로짓모형</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>3</b> 트리기반 기법</a><ul>
-<li class="chapter" data-level="3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>3.1</b> CART 개요</a></li>
-<li class="chapter" data-level="3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-packages-install"><i class="fa fa-check"></i><b>3.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>3.3</b> CART 트리 생성</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>3.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="3.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>3.3.2</b> 기호 정의</a></li>
-<li class="chapter" data-level="3.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>3.3.3</b> 노드 및 트리의 불순도</a></li>
-<li class="chapter" data-level="3.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>3.3.4</b> 분지기준</a></li>
+<li class="chapter" data-level="3" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>3</b> 판별분석</a><ul>
+<li class="chapter" data-level="3.1" data-path="da.html"><a href="da.html#da-overview"><i class="fa fa-check"></i><b>3.1</b> 개요</a></li>
+<li class="chapter" data-level="3.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>3.2</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="3.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>3.3</b> 피셔 방법</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>3.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>3.3.2</b> 피셔 판별함수</a></li>
+<li class="chapter" data-level="3.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>3.3.3</b> 분류 규칙</a></li>
+<li class="chapter" data-level="3.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>3.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>3.4</b> 가지치기 및 최종 트리 선정</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>3.4.1</b> 가지치기</a></li>
-<li class="chapter" data-level="3.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>3.4.2</b> 최적 트리의 선정</a></li>
+<li class="chapter" data-level="3.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>3.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>3.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>3.4.2</b> 선형판별함수</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>3.5</b> R패키지 내 분류 트리 방법</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>3.5.1</b> 트리 확장</a></li>
-<li class="chapter" data-level="3.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>3.5.2</b> 가지치기</a></li>
-<li class="chapter" data-level="3.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>3.5.3</b> 파라미터값 결정</a></li>
+<li class="chapter" data-level="3.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>3.5</b> 오분류비용을 고려한 분류규칙</a></li>
+<li class="chapter" data-level="3.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>3.6</b> 이차판별분석</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>3.6.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>3.6.2</b> 이차 판별함수</a></li>
+<li class="chapter" data-level="3.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>3.6.3</b> 이차판별함수에 의한 분류</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> 서포트 벡터 머신</a><ul>
-<li class="chapter" data-level="4.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>4.1</b> 개요</a></li>
-<li class="chapter" data-level="4.2" data-path="svm.html"><a href="svm.html#svm-packages-install"><i class="fa fa-check"></i><b>4.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="4.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>4.3</b> 선형 SVM - 분리 가능 경우</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>4.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="4.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>4.3.2</b> 기호 정의</a></li>
-<li class="chapter" data-level="4.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>4.3.3</b> 최적 하이퍼플레인</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>4.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>4.4.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="4.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>4.4.2</b> 최적 하이퍼플레인</a></li>
-</ul></li>
-<li class="chapter" data-level="4.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>4.5</b> 비선형 SVM</a><ul>
-<li class="chapter" data-level="4.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>4.5.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="4.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>4.5.2</b> 최적 하이퍼플레인</a></li>
-</ul></li>
-<li class="chapter" data-level="4.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>4.6</b> R패키지 내 SVM</a><ul>
-<li class="chapter" data-level="4.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>4.6.1</b> 커널함수</a></li>
-<li class="chapter" data-level="4.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>4.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
+<li class="chapter" data-level="3.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>3.7</b> 세 범주 이상의 분류</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="da.html"><a href="da.html#mutliclass-da-basic-script"><i class="fa fa-check"></i><b>3.7.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.7.2" data-path="da.html"><a href="da.html#mutliclass-generalized-discriminant-function"><i class="fa fa-check"></i><b>3.7.2</b> 일반화된 판별함수</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>5</b> 군집분석 개요</a><ul>
-<li class="chapter" data-level="5.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>5.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="5.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>5.2</b> 군집분석 기법</a></li>
-<li class="chapter" data-level="5.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>5.3</b> 객체 간의 유사성 척도</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="clustering-overview.html"><a href="clustering-overview.html#object-distance-metric"><i class="fa fa-check"></i><b>5.3.1</b> 거리 관련 척도</a></li>
-<li class="chapter" data-level="5.3.2" data-path="clustering-overview.html"><a href="clustering-overview.html#object-correlation-metric"><i class="fa fa-check"></i><b>5.3.2</b> 상관계수 관련 척도</a></li>
+<li class="chapter" data-level="4" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>4</b> 트리기반 기법</a><ul>
+<li class="chapter" data-level="4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>4.1</b> CART 개요</a></li>
+<li class="chapter" data-level="4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-packages-install"><i class="fa fa-check"></i><b>4.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="4.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>4.3</b> CART 트리 생성</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>4.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="4.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>4.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="4.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>4.3.3</b> 노드 및 트리의 불순도</a></li>
+<li class="chapter" data-level="4.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>4.3.4</b> 분지기준</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>5.4</b> 범주형 객체의 유사성 척도</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="clustering-overview.html"><a href="clustering-overview.html#binary-similarity-metric"><i class="fa fa-check"></i><b>5.4.1</b> 이분형 변수의 경우</a></li>
-<li class="chapter" data-level="5.4.2" data-path="clustering-overview.html"><a href="clustering-overview.html#ordinal-similarity-metric"><i class="fa fa-check"></i><b>5.4.2</b> 서열형 변수의 경우</a></li>
-<li class="chapter" data-level="5.4.3" data-path="clustering-overview.html"><a href="clustering-overview.html#nominal-similarity-metric"><i class="fa fa-check"></i><b>5.4.3</b> 명목형 변수의 경우</a></li>
-<li class="chapter" data-level="5.4.4" data-path="clustering-overview.html"><a href="clustering-overview.html#mixed-similarity-metric"><i class="fa fa-check"></i><b>5.4.4</b> 혼합형의 경우</a></li>
+<li class="chapter" data-level="4.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>4.4</b> 가지치기 및 최종 트리 선정</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>4.4.1</b> 가지치기</a></li>
+<li class="chapter" data-level="4.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>4.4.2</b> 최적 트리의 선정</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>6</b> 계층적 군집방법</a><ul>
-<li class="chapter" data-level="6.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>6.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="6.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#distance-between-clusters"><i class="fa fa-check"></i><b>6.2</b> 군집 간 거리척도 및 연결법</a></li>
-<li class="chapter" data-level="6.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>6.3</b> 연결법의 군집 알고리즘</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-basic-script"><i class="fa fa-check"></i><b>6.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="6.3.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-algorithm"><i class="fa fa-check"></i><b>6.3.2</b> 연결법 군집 알고리즘</a></li>
-<li class="chapter" data-level="6.3.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hclust"><i class="fa fa-check"></i><b>6.3.3</b> R 패키지 내 연결법</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>6.4</b> 워드 방법</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>6.4.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="6.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>6.4.2</b> 워드 군집 알고리즘</a></li>
-<li class="chapter" data-level="6.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>6.4.3</b> R 패키지 내 워드 방법</a></li>
-</ul></li>
-<li class="chapter" data-level="6.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>6.5</b> 분리적 방법 - 다이아나</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>6.5.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="6.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>6.5.2</b> 다이아나 알고리즘</a></li>
-</ul></li>
-<li class="chapter" data-level="6.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>6.6</b> 군집수의 결정</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>7</b> 비계층적 군집방법</a><ul>
-<li class="chapter" data-level="7.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>7.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="7.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>7.2</b> K-means 알고리즘</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>7.2.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="7.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>7.2.2</b> 알고리즘</a></li>
-<li class="chapter" data-level="7.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>7.2.3</b> R 스크립트 구현</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>7.3</b> K-medoids 군집방법</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>7.3.1</b> PAM 알고리즘</a></li>
-<li class="chapter" data-level="7.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>7.3.2</b> CLARA 알고리즘</a></li>
-<li class="chapter" data-level="7.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>7.3.3</b> CLARANS 알고리즘</a></li>
-<li class="chapter" data-level="7.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>7.3.4</b> K-means-like 알고리즘</a></li>
-</ul></li>
-<li class="chapter" data-level="7.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>7.4</b> 퍼지 K-means 알고리즘</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="7.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>7.4.2</b> 알고리즘</a></li>
-<li class="chapter" data-level="7.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>7.4.3</b> R 스크립트 구현</a></li>
-</ul></li>
-<li class="chapter" data-level="7.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>7.5</b> 모형기반 군집방법</a><ul>
-<li class="chapter" data-level="7.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>7.5.1</b> 기본 R script</a></li>
-<li class="chapter" data-level="7.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>7.5.2</b> EM 알고리즘</a></li>
-<li class="chapter" data-level="7.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>7.5.3</b> R 스크립트 구현</a></li>
-<li class="chapter" data-level="7.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>7.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
+<li class="chapter" data-level="4.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>4.5</b> R패키지 내 분류 트리 방법</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>4.5.1</b> 트리 확장</a></li>
+<li class="chapter" data-level="4.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>4.5.2</b> 가지치기</a></li>
+<li class="chapter" data-level="4.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>4.5.3</b> 파라미터값 결정</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>8</b> 군집해의 평가 및 해석</a><ul>
-<li class="chapter" data-level="8.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>8.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="8.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>8.2</b> 군집해의 평가</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>8.2.1</b> 외부평가지수</a></li>
-<li class="chapter" data-level="8.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>8.2.2</b> 내부평가지수</a></li>
+<li class="chapter" data-level="5" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>5</b> 서포트 벡터 머신</a><ul>
+<li class="chapter" data-level="5.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>5.1</b> 개요</a></li>
+<li class="chapter" data-level="5.2" data-path="svm.html"><a href="svm.html#svm-packages-install"><i class="fa fa-check"></i><b>5.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="5.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>5.3</b> 선형 SVM - 분리 가능 경우</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>5.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="5.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>5.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="5.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>5.3.3</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>8.3</b> 군집해의 해석</a></li>
+<li class="chapter" data-level="5.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>5.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>5.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="5.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>5.4.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>5.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>5.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="5.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>5.5.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>5.6</b> R패키지 내 SVM</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>5.6.1</b> 커널함수</a></li>
+<li class="chapter" data-level="5.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>5.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>6</b> 분류규칙의 성능 평가</a></li>
+<li class="chapter" data-level="7" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>7</b> 군집분석 개요</a><ul>
+<li class="chapter" data-level="7.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>7.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="7.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>7.2</b> 군집분석 기법</a></li>
+<li class="chapter" data-level="7.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>7.3</b> 객체 간의 유사성 척도</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="clustering-overview.html"><a href="clustering-overview.html#object-distance-metric"><i class="fa fa-check"></i><b>7.3.1</b> 거리 관련 척도</a></li>
+<li class="chapter" data-level="7.3.2" data-path="clustering-overview.html"><a href="clustering-overview.html#object-correlation-metric"><i class="fa fa-check"></i><b>7.3.2</b> 상관계수 관련 척도</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>7.4</b> 범주형 객체의 유사성 척도</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="clustering-overview.html"><a href="clustering-overview.html#binary-similarity-metric"><i class="fa fa-check"></i><b>7.4.1</b> 이분형 변수의 경우</a></li>
+<li class="chapter" data-level="7.4.2" data-path="clustering-overview.html"><a href="clustering-overview.html#ordinal-similarity-metric"><i class="fa fa-check"></i><b>7.4.2</b> 서열형 변수의 경우</a></li>
+<li class="chapter" data-level="7.4.3" data-path="clustering-overview.html"><a href="clustering-overview.html#nominal-similarity-metric"><i class="fa fa-check"></i><b>7.4.3</b> 명목형 변수의 경우</a></li>
+<li class="chapter" data-level="7.4.4" data-path="clustering-overview.html"><a href="clustering-overview.html#mixed-similarity-metric"><i class="fa fa-check"></i><b>7.4.4</b> 혼합형의 경우</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>8</b> 계층적 군집방법</a><ul>
+<li class="chapter" data-level="8.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>8.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="8.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#distance-between-clusters"><i class="fa fa-check"></i><b>8.2</b> 군집 간 거리척도 및 연결법</a></li>
+<li class="chapter" data-level="8.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>8.3</b> 연결법의 군집 알고리즘</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-basic-script"><i class="fa fa-check"></i><b>8.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="8.3.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-algorithm"><i class="fa fa-check"></i><b>8.3.2</b> 연결법 군집 알고리즘</a></li>
+<li class="chapter" data-level="8.3.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hclust"><i class="fa fa-check"></i><b>8.3.3</b> R 패키지 내 연결법</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>8.4</b> 워드 방법</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>8.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="8.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>8.4.2</b> 워드 군집 알고리즘</a></li>
+<li class="chapter" data-level="8.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>8.4.3</b> R 패키지 내 워드 방법</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>8.5</b> 분리적 방법 - 다이아나</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>8.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="8.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>8.5.2</b> 다이아나 알고리즘</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>8.6</b> 군집수의 결정</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>9</b> 비계층적 군집방법</a><ul>
+<li class="chapter" data-level="9.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>9.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="9.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>9.2</b> K-means 알고리즘</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>9.2.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="9.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>9.2.2</b> 알고리즘</a></li>
+<li class="chapter" data-level="9.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>9.2.3</b> R 스크립트 구현</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>9.3</b> K-medoids 군집방법</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>9.3.1</b> PAM 알고리즘</a></li>
+<li class="chapter" data-level="9.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>9.3.2</b> CLARA 알고리즘</a></li>
+<li class="chapter" data-level="9.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>9.3.3</b> CLARANS 알고리즘</a></li>
+<li class="chapter" data-level="9.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>9.3.4</b> K-means-like 알고리즘</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>9.4</b> 퍼지 K-means 알고리즘</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>9.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="9.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>9.4.2</b> 알고리즘</a></li>
+<li class="chapter" data-level="9.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>9.4.3</b> R 스크립트 구현</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>9.5</b> 모형기반 군집방법</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>9.5.1</b> 기본 R script</a></li>
+<li class="chapter" data-level="9.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>9.5.2</b> EM 알고리즘</a></li>
+<li class="chapter" data-level="9.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>9.5.3</b> R 스크립트 구현</a></li>
+<li class="chapter" data-level="9.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>9.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>10</b> 군집해의 평가 및 해석</a><ul>
+<li class="chapter" data-level="10.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>10.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="10.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>10.2</b> 군집해의 평가</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>10.2.1</b> 외부평가지수</a></li>
+<li class="chapter" data-level="10.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>10.2.2</b> 내부평가지수</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>10.3</b> 군집해의 해석</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -274,10 +283,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="logistic-regression" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> 로지스틱 회귀분석</h1>
+<h1><span class="header-section-number">Chapter 2</span> 로지스틱 회귀분석</h1>
 <p>로지스틱 회귀분석(logistic regression)은 종속변수가 통상 2개의 범주(있음/없음, 불량/양호, 합격/불합격 등)를 다루는 모형을 지칭하나, 3개 이상의 범주를 다루기도 한다. 후자의 경우는 다시 서열형(ordinal) 데이터와 명목형(nominal) 데이터인 경우에 따라 서로 다른 모형이 사용된다.</p>
 <div id="logistic-packages-install" class="section level2">
-<h2><span class="header-section-number">1.1</span> 필요 R 패키지 설치</h2>
+<h2><span class="header-section-number">2.1</span> 필요 R 패키지 설치</h2>
 <p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
 <table>
 <thead>
@@ -311,9 +320,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </table>
 </div>
 <div id="binary-logistic-regression" class="section level2">
-<h2><span class="header-section-number">1.2</span> 이분 로지스틱 회귀모형</h2>
+<h2><span class="header-section-number">2.2</span> 이분 로지스틱 회귀모형</h2>
 <div id="bianry-logistic-reg-basic-script" class="section level3">
-<h3><span class="header-section-number">1.2.1</span> 기본 R 스크립트</h3>
+<h3><span class="header-section-number">2.2.1</span> 기본 R 스크립트</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>id, <span class="op">~</span>x1, <span class="op">~</span>x2, <span class="op">~</span>x3, <span class="op">~</span>y,
   <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="st">&quot;우수&quot;</span>,
@@ -339,7 +348,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
              <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;아침식사여부($x_1$)&#39;</span>, <span class="st">&#39;수면시간($x_2$)&#39;</span>, <span class="st">&#39;서클활동시간($x_3$)&#39;</span>, <span class="st">&#39;범주(y)&#39;</span>),
              <span class="dt">caption =</span> <span class="st">&#39;우수/보통 학생에 대한 설문조사 결과&#39;</span>)</code></pre></div>
 <table>
-<caption><span id="tab:binary-logistic-reg-train-data">Table 1.1: </span>우수/보통 학생에 대한 설문조사 결과</caption>
+<caption><span id="tab:binary-logistic-reg-train-data">Table 2.1: </span>우수/보통 학생에 대한 설문조사 결과</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호</th>
@@ -457,17 +466,17 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 </tr>
 </tbody>
 </table>
-<p>Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">1.1</a>와 같이 세 개의 독립변수 <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(x_3\)</span>와 이분형 종속변수 <span class="math inline">\(y\)</span>의 관측값(보통 = 0, 우수 = 1)으로 이루어진 15개의 학습표본을 <code>train_df</code>라는 data frame에 저장한다.</p>
+<p>Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">2.1</a>와 같이 세 개의 독립변수 <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(x_3\)</span>와 이분형 종속변수 <span class="math inline">\(y\)</span>의 관측값(보통 = 0, 우수 = 1)으로 이루어진 15개의 학습표본을 <code>train_df</code>라는 data frame에 저장한다.</p>
 <p>아래와 같이 <code>glm</code> 함수를 이용하여 로지스틱 회귀모형을 간편하게 추정할 수 있다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), <span class="dt">data =</span> train_df)
 
 knitr<span class="op">::</span><span class="kw">kable</span>(
   glm_fit <span class="op">%&gt;%</span><span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>(),
   <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
-  <span class="dt">caption =</span> <span class="st">&quot;Table </span><span class="ch">\\</span><span class="st"><a href="logistic-regression.html#tab:binary-logistic-reg-train-data">1.1</a>에 대한 Logistic Regression 결과&quot;</span>
+  <span class="dt">caption =</span> <span class="st">&quot;Table </span><span class="ch">\\</span><span class="st"><a href="logistic-regression.html#tab:binary-logistic-reg-train-data">2.1</a>에 대한 Logistic Regression 결과&quot;</span>
   )</code></pre></div>
 <table>
-<caption><span id="tab:binary-logistic-reg-coef">Table 1.2: </span>Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">1.1</a>에 대한 Logistic Regression 결과</caption>
+<caption><span id="tab:binary-logistic-reg-coef">Table 2.2: </span>Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">2.1</a>에 대한 Logistic Regression 결과</caption>
 <thead>
 <tr class="header">
 <th align="left">term</th>
@@ -508,10 +517,10 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 </tr>
 </tbody>
 </table>
-<p>Table <a href="logistic-regression.html#tab:binary-logistic-reg-coef">1.2</a>은 추정된 회귀계수 추정치 <code>estmate</code>과 그 표준오차 <code>std.error</code>, 표준화(standardized)된 회귀계수값 <code>statistic</code> (= <code>estmate</code> / <code>std.error</code>), 그리고 귀무가설 <span class="math inline">\(H_0\)</span>: <code>statistic</code> = 0 에 대한 유의확률 <code>p.value</code>를 보여준다.</p>
+<p>Table <a href="logistic-regression.html#tab:binary-logistic-reg-coef">2.2</a>은 추정된 회귀계수 추정치 <code>estmate</code>과 그 표준오차 <code>std.error</code>, 표준화(standardized)된 회귀계수값 <code>statistic</code> (= <code>estmate</code> / <code>std.error</code>), 그리고 귀무가설 <span class="math inline">\(H_0\)</span>: <code>statistic</code> = 0 에 대한 유의확률 <code>p.value</code>를 보여준다.</p>
 </div>
 <div id="binary-logistic-reg-model" class="section level3">
-<h3><span class="header-section-number">1.2.2</span> 회귀모형</h3>
+<h3><span class="header-section-number">2.2.2</span> 회귀모형</h3>
 <p>이분 로지스틱 회귀모형은 종속변수가 2가지 범주를 취하는 경우에 사용된다.</p>
 <p><span class="math inline">\(N\)</span>개의 객체로 이루어진 학습데이터 <span class="math inline">\(\{(\mathbf{x}_i, y_i)\}_{i = 1, \cdots, N}\)</span>를 아래와 같이 정의하자.</p>
 <ul>
@@ -523,28 +532,28 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 P_i &amp;=&amp; P(y_i = 1 \,|\, \mathbf{x}_i)\\
 &amp;=&amp; E[y_i | \mathbf{x}_i]\\ 
 &amp;=&amp; \frac{\exp(\beta_0 + \boldsymbol\beta^\top \mathbf{x}_i)}{1 + \exp(\beta_0 + \boldsymbol\beta^\top \mathbf{x}_i)}
-\tag{1.1}
+\tag{2.1}
 \end{eqnarray}\]</span>
 <p>여기에서 <span class="math inline">\(\boldsymbol\beta \in \mathbb{R}^{p}\)</span>는 <span class="math inline">\(\mathbf{x}_i\)</span>와 동일한 차원의 벡터이다 (<span class="math inline">\(\boldsymbol\beta = [\beta_1 \, \beta_2 \, \cdots \, \beta_p]^\top\)</span>).</p>
-<p>식 <a href="logistic-regression.html#eq:logistic-function">(1.1)</a>는 모든 <span class="math inline">\(\mathbf{x}_i\)</span>값에 대해 0에서 1 사이의 값을 갖게 되므로 각 범주에 속할 확률을 추정하는 데 적합한 반면, 변수 <span class="math inline">\(\mathbf{x}\)</span> 및 계수들에 대해 선형이 아니므로 추정이 어렵다. 그러나 아래와 같이 로짓(logit) 변환을 통해 선형회귀식으로 변환할 수 있다.</p>
+<p>식 <a href="logistic-regression.html#eq:logistic-function">(2.1)</a>는 모든 <span class="math inline">\(\mathbf{x}_i\)</span>값에 대해 0에서 1 사이의 값을 갖게 되므로 각 범주에 속할 확률을 추정하는 데 적합한 반면, 변수 <span class="math inline">\(\mathbf{x}\)</span> 및 계수들에 대해 선형이 아니므로 추정이 어렵다. 그러나 아래와 같이 로짓(logit) 변환을 통해 선형회귀식으로 변환할 수 있다.</p>
 <span class="math display" id="eq:logit-transform">\[\begin{eqnarray}
 logit(P_i) &amp;=&amp; \ln \left[ \frac{P_i}{1 - P_i} \right]\\
 &amp;=&amp; \ln(\exp(\beta_0 + \boldsymbol\beta^\top \mathbf{x}_i))\\
 &amp;=&amp; \beta_0 + \boldsymbol\beta^\top \mathbf{x}_i
-\tag{1.2}
+\tag{2.2}
 \end{eqnarray}\]</span>
-<p>식 <a href="logistic-regression.html#eq:logit-transform">(1.2)</a>에서 확률 <span class="math inline">\(P_i\)</span>는 직접적으로 관측되는 것이 아니고 0 또는 1을 갖는 <span class="math inline">\(y_i\)</span>가 관측되므로, <span class="math inline">\(P_i\)</span>를 일종의 잠재변수(latent variable)로 해석할 수 있다.</p>
+<p>식 <a href="logistic-regression.html#eq:logit-transform">(2.2)</a>에서 확률 <span class="math inline">\(P_i\)</span>는 직접적으로 관측되는 것이 아니고 0 또는 1을 갖는 <span class="math inline">\(y_i\)</span>가 관측되므로, <span class="math inline">\(P_i\)</span>를 일종의 잠재변수(latent variable)로 해석할 수 있다.</p>
 <span class="math display" id="eq:binary-logistic-latent-interpret">\[\begin{equation}
 y_i = \begin{cases}
 1 &amp; \text{ if } \beta_0 + \boldsymbol\beta^\top \mathbf{x}_i + \varepsilon_i &gt; 0 \\
 0 &amp; \text{ otherwise }
 \end{cases}
-\tag{1.3}
+\tag{2.3}
 \end{equation}\]</span>
-<p>식 <a href="logistic-regression.html#eq:binary-logistic-latent-interpret">(1.3)</a>에서 <span class="math inline">\(\varepsilon_i\)</span>는 표준로지스틱분포(standard logistic distribution)을 따른다.</p>
+<p>식 <a href="logistic-regression.html#eq:binary-logistic-latent-interpret">(2.3)</a>에서 <span class="math inline">\(\varepsilon_i\)</span>는 표준로지스틱분포(standard logistic distribution)을 따른다.</p>
 </div>
 <div id="binary-logistic-reg-estimation" class="section level3">
-<h3><span class="header-section-number">1.2.3</span> 회귀계수 추정</h3>
+<h3><span class="header-section-number">2.2.3</span> 회귀계수 추정</h3>
 <p>로지스틱 모형에서 회귀계수의 추정을 위해서 주로 최우추정법(maximum likelihood estimation)이 사용된다. <span class="math inline">\(N\)</span>개의 객체로 이루어진 학습데이터에 대해 우도함수는 다음과 같다.</p>
 <span class="math display">\[\begin{equation*}
 L = \prod_{i = 1}^{N} P_i^{y_i} (1 - P_i)^{1 - y_i}
@@ -555,12 +564,12 @@ L = \prod_{i = 1}^{N} P_i^{y_i} (1 - P_i)^{1 - y_i}
 &amp;=&amp; \sum_{i = 1}^{N} y_i \log \frac{P_i}{1 - P_i} + \sum_{i = 1}^{N} \log (1 - P_i)\\
 &amp;=&amp; \sum_{i = 1}^{N} y_i (\beta_0 + \boldsymbol\beta^\top \mathbf{x}_i) - \sum_{i = 1}^{N}  \log (1 + \exp (\beta_0 + \boldsymbol\beta^\top \mathbf{x}_i) )\\
 &amp;=&amp; \sum_{i = 1}^{N} y_i \left(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij} \right) - \sum_{i = 1}^{N}  \log \left(1 + \exp\left(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij}\right)\right)
-\tag{1.4}
+\tag{2.4}
 \end{eqnarray}\]</span>
 <p>식 (eq:binary-logistic-reg-loglik)을 각 회귀계수 <span class="math inline">\(\beta_0, \beta_1, \cdots, \beta_p\)</span>에 대해 편미분하여 최적해를 얻는다. 이를 위해 주로 뉴턴-랩슨 알고리즘(Newton-Raphson algorithm)이나 quasi-Newton 알고리즘이 사용되나 <span class="citation">(전치혁 <a href="#ref-jun2012datamining">2012</a>)</span>, 본 장에서는 우선 안정성은 떨어지지만 보다 간편한 방법으로 경사하강법(gradient descent)을 소개한다.</p>
 <div id="binary-logistic-gradient-descent" class="section level4">
-<h4><span class="header-section-number">1.2.3.1</span> 경사하강법</h4>
-<p>식 <a href="logistic-regression.html#eq:logistic-function">(1.1)</a>과 <span class="math inline">\(P(y_i = 0 \,|\, \mathbf{x}_i) = 1 - P_i\)</span>, 그리고</p>
+<h4><span class="header-section-number">2.2.3.1</span> 경사하강법</h4>
+<p>식 <a href="logistic-regression.html#eq:logistic-function">(2.1)</a>과 <span class="math inline">\(P(y_i = 0 \,|\, \mathbf{x}_i) = 1 - P_i\)</span>, 그리고</p>
 <span class="math display">\[\begin{equation*}
 \frac{\exp(z)}{1 + \exp(z)} = \frac{1}{1 + \exp(-z)}
 \end{equation*}\]</span>
@@ -568,23 +577,23 @@ L = \prod_{i = 1}^{N} P_i^{y_i} (1 - P_i)^{1 - y_i}
 <span class="math display">\[\begin{equation*}
 P(y = y_i \,|\, \mathbf{x}_i, \beta_0, \boldsymbol\beta) = \frac{1}{1 + \exp\left((1 - 2y_i)(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij})\right)}
 \end{equation*}\]</span>
-<p>이에 따라 로그우도함수 <a href="logistic-regression.html#eq:binary-logistic-reg-loglik">(1.4)</a>는 아래와 같이 정리된다.</p>
+<p>이에 따라 로그우도함수 <a href="logistic-regression.html#eq:binary-logistic-reg-loglik">(2.4)</a>는 아래와 같이 정리된다.</p>
 <span class="math display">\[\begin{equation*}
 \log \prod_{i = 1}^{N} P(y = y_i \,|\, \mathbf{x}_i, \beta_0, \boldsymbol\beta) = - \sum_{i = 1}^{N} \log \left(1 + \exp\left((1 - 2y_i)(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij})\right)\right)
 \end{equation*}\]</span>
 <p>위 로그우도함수를 최대화하는 문제는 아래 함수를 최소화하는 문제와 동일하다.</p>
 <span class="math display" id="eq:binary-logistic-reg-negative-loglik">\[\begin{equation}
 f(\beta_0, \boldsymbol\beta) = \sum_{i = 1}^{N} \log \left(1 + \exp\left((1 - 2y_i)(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij})\right)\right)
-\tag{1.5}
+\tag{2.5}
 \end{equation}\]</span>
 <p>경사하강법에 따라 아래의 과정을 통해 회귀계수를 추정할 수 있다.</p>
 <ol style="list-style-type: decimal">
 <li>임의의 값으로 <span class="math inline">\(\beta_0, \beta_1, \cdots, \beta_j\)</span>의 초기 추정값을 설정한다.</li>
-<li>식 <a href="logistic-regression.html#eq:binary-logistic-reg-negative-loglik">(1.5)</a>을 각 회귀변수에 대해 편미분한 미분값을 구한다.</li>
+<li>식 <a href="logistic-regression.html#eq:binary-logistic-reg-negative-loglik">(2.5)</a>을 각 회귀변수에 대해 편미분한 미분값을 구한다.</li>
 <li>2의 값에 학습률(step size)을 곱한 만큼 회귀계수 추정값을 이동시킨다. 방향은 미분값의 반대방향.</li>
 <li>수렴할 때까지 2-3의 과정을 반복한다.</li>
 </ol>
-<p>여기에서 식 <a href="logistic-regression.html#eq:binary-logistic-reg-negative-loglik">(1.5)</a>의 각 회귀변수에 대한 편미분식은 아래와 같다.</p>
+<p>여기에서 식 <a href="logistic-regression.html#eq:binary-logistic-reg-negative-loglik">(2.5)</a>의 각 회귀변수에 대한 편미분식은 아래와 같다.</p>
 <span class="math display">\[\begin{eqnarray*}
 \frac{\partial f}{\partial \beta_0} &amp;=&amp; \sum_{i = 1}^{N} (1 - 2y_i) \frac{\exp\left((1 - 2y_i)(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij})\right)}{1 + \exp\left((1 - 2y_i)(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij})\right)}\\
 &amp;=&amp; \sum_{i = 1}^{N} \frac{1 - 2y_i}{1 + \exp\left((2y_i - 1)(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij})\right)}
@@ -650,7 +659,7 @@ estimate_beta &lt;-<span class="st"> </span><span class="cf">function</span>(x, 
   
   <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">conv =</span> conv, <span class="dt">beta0 =</span> new_beta0, <span class="dt">beta =</span> new_beta))
 }</code></pre></div>
-<p>위에서 정의한 함수를 이용하여 Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">1.1</a>의 학습표본에 대한 로지스틱 회귀모형을 추정해보자.</p>
+<p>위에서 정의한 함수를 이용하여 Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">2.1</a>의 학습표본에 대한 로지스틱 회귀모형을 추정해보자.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">estimate_beta</span>(train_df[, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>(), 
                      train_df<span class="op">$</span>y <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>,
                      <span class="dt">alpha =</span> <span class="fl">0.015</span>,
@@ -666,15 +675,15 @@ estimate_beta &lt;-<span class="st"> </span><span class="cf">function</span>(x, 
 ## $beta
 ##       x1       x2       x3 
 ## 2.022808 3.457019 2.405969</code></pre>
-<p>위 회귀계수 추정값은 R 함수 <code>glm</code>을 이용한 추정값(Table <a href="logistic-regression.html#tab:binary-logistic-reg-coef">1.2</a>)과 유사함을 볼 수 있다.</p>
+<p>위 회귀계수 추정값은 R 함수 <code>glm</code>을 이용한 추정값(Table <a href="logistic-regression.html#tab:binary-logistic-reg-coef">2.2</a>)과 유사함을 볼 수 있다.</p>
 </div>
 <div id="binary-logistic-irls" class="section level4">
-<h4><span class="header-section-number">1.2.3.2</span> 반복재가중최소제곱법</h4>
+<h4><span class="header-section-number">2.2.3.2</span> 반복재가중최소제곱법</h4>
 <p>R의 <code>glm</code> 함수는 반복재가중최소제곱법(iteratively rewighted least squares; IRLS 혹은 IWLS)을 사용한다. 이는 선형회귀식</p>
 <span class="math display">\[\begin{equation*}
 logit(y_i) = \beta_0 + \boldsymbol\beta^\top \mathbf{x}_i + \varepsilon_i
 \end{equation*}\]</span>
-<p>을 추정하는 방법인데, 여기에서 <span class="math inline">\(y_i\)</span>는 0 혹은 1이므로, <span class="math inline">\(logit(y_i)\)</span>는 <span class="math inline">\(-\infty\)</span> 혹은 <span class="math inline">\(\infty\)</span>가 되어 회귀식을 추정할 수 없다. 따라서, 식 <a href="logistic-regression.html#eq:logistic-function">(1.1)</a>에 설명된 로지스틱 함수</p>
+<p>을 추정하는 방법인데, 여기에서 <span class="math inline">\(y_i\)</span>는 0 혹은 1이므로, <span class="math inline">\(logit(y_i)\)</span>는 <span class="math inline">\(-\infty\)</span> 혹은 <span class="math inline">\(\infty\)</span>가 되어 회귀식을 추정할 수 없다. 따라서, 식 <a href="logistic-regression.html#eq:logistic-function">(2.1)</a>에 설명된 로지스틱 함수</p>
 <span class="math display">\[\begin{equation*}
 P = \frac{\exp(\beta_0 + \boldsymbol\beta^\top \mathbf{x})}{1 + \exp(\beta_0 + \boldsymbol\beta^\top \mathbf{x})}
 \end{equation*}\]</span>
@@ -724,7 +733,7 @@ w_i = P_i (1 - P_i)
                   <span class="kw">tibble</span>(<span class="dt">g_y =</span> g_y))
   <span class="kw">lm</span>(g_y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> df, <span class="dt">subset =</span> is_good, <span class="dt">weights =</span> w)
 }</code></pre></div>
-<p>위에서 정의한 두 함수 <code>calculate_weight</code>과 <code>calculate_beta</code>를 반복적으로 사용하여 Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">1.1</a>의 학습표본에 대한 로지스틱 회귀모형을 추정해보자. 모든 객체의 가중치 변화량이 1/10000 보다 작을 경우 모형추정이 수렴한 것으로 간주하도록 하자.</p>
+<p>위에서 정의한 두 함수 <code>calculate_weight</code>과 <code>calculate_beta</code>를 반복적으로 사용하여 Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">2.1</a>의 학습표본에 대한 로지스틱 회귀모형을 추정해보자. 모든 객체의 가중치 변화량이 1/10000 보다 작을 경우 모형추정이 수렴한 것으로 간주하도록 하자.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span>train_df[, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()
 y &lt;-<span class="st"> </span>train_df<span class="op">$</span>y <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
 
@@ -746,14 +755,14 @@ weight &lt;-<span class="st"> </span><span class="kw">calculate_weight</span>(X)
 <span class="kw">coef</span>(wls_fit)</code></pre></div>
 <pre><code>## (Intercept)          x1          x2          x3 
 ##  -30.510837    2.031278    3.470671    2.414387</code></pre>
-<p>위 스크립트를 실행시킨 결과 7번째 반복수행에서 결과가 수렴하였으며, 해당 결과는 <code>glm</code> 함수를 사용하였을 때의 결과 (Table <a href="logistic-regression.html#tab:binary-logistic-reg-coef">1.2</a>)과 매우 근사함을 확인할 수 있다.</p>
+<p>위 스크립트를 실행시킨 결과 7번째 반복수행에서 결과가 수렴하였으며, 해당 결과는 <code>glm</code> 함수를 사용하였을 때의 결과 (Table <a href="logistic-regression.html#tab:binary-logistic-reg-coef">2.2</a>)과 매우 근사함을 확인할 수 있다.</p>
 </div>
 </div>
 </div>
 <div id="nominal-logistic-regression" class="section level2">
-<h2><span class="header-section-number">1.3</span> 명목 로지스틱 회귀모형</h2>
+<h2><span class="header-section-number">2.3</span> 명목 로지스틱 회귀모형</h2>
 <div id="nominal-logistic-reg-basic-script" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> 기본 R 스크립트</h3>
+<h3><span class="header-section-number">2.3.1</span> 기본 R 스크립트</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>id, <span class="op">~</span>x1, <span class="op">~</span>x2, <span class="op">~</span>y,
   <span class="dv">1</span>, <span class="fl">0.09</span>, <span class="fl">5.02</span>, <span class="dv">1</span>,
@@ -782,7 +791,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
              <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, <span class="st">&#39;불량범주($y$)&#39;</span>),
              <span class="dt">caption =</span> <span class="st">&#39;공정변수-불량 종류 데이터&#39;</span>)</code></pre></div>
 <table>
-<caption><span id="tab:nominal-logistic-reg-train-data">Table 1.3: </span>공정변수-불량 종류 데이터</caption>
+<caption><span id="tab:nominal-logistic-reg-train-data">Table 2.3: </span>공정변수-불량 종류 데이터</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호</th>
@@ -902,7 +911,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 </tr>
 </tbody>
 </table>
-<p>Table <a href="logistic-regression.html#tab:nominal-logistic-reg-train-data">1.3</a>와 같이 두 개의 독립변수 <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>에 따라 세 종류의 불량 (<span class="math inline">\(y = 1, 2, 3\)</span>)$이 발생함을 알았다면, 아래와 같이 <code>nnet</code> 패키지의 <code>multinom</code> 함수를 이용하여 공정변수에 따른 불량 종류를 분류하기 위한 로지스틱 회귀모형을 간편하게 추정할 수 있다.</p>
+<p>Table <a href="logistic-regression.html#tab:nominal-logistic-reg-train-data">2.3</a>와 같이 두 개의 독립변수 <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>에 따라 세 종류의 불량 (<span class="math inline">\(y = 1, 2, 3\)</span>)$이 발생함을 알았다면, 아래와 같이 <code>nnet</code> 패키지의 <code>multinom</code> 함수를 이용하여 공정변수에 따른 불량 종류를 분류하기 위한 로지스틱 회귀모형을 간편하게 추정할 수 있다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multinom_fit &lt;-<span class="st"> </span>nnet<span class="op">::</span><span class="kw">multinom</span>(
   y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, 
   <span class="dt">data =</span> train_df, 
@@ -921,10 +930,10 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(
   multinom_fit <span class="op">%&gt;%</span><span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>(<span class="dt">exponentiate =</span> <span class="ot">FALSE</span>),
   <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
-  <span class="dt">caption =</span> <span class="st">&#39;Table </span><span class="ch">\\</span><span class="st"><a href="logistic-regression.html#tab:nominal-logistic-reg-train-data">1.3</a>에 대한 Logistic Regression 결과&#39;</span>
+  <span class="dt">caption =</span> <span class="st">&#39;Table </span><span class="ch">\\</span><span class="st"><a href="logistic-regression.html#tab:nominal-logistic-reg-train-data">2.3</a>에 대한 Logistic Regression 결과&#39;</span>
   )</code></pre></div>
 <table>
-<caption><span id="tab:nominal-logistic-reg-coef">Table 1.4: </span>Table <a href="logistic-regression.html#tab:nominal-logistic-reg-train-data">1.3</a>에 대한 Logistic Regression 결과</caption>
+<caption><span id="tab:nominal-logistic-reg-coef">Table 2.4: </span>Table <a href="logistic-regression.html#tab:nominal-logistic-reg-train-data">2.3</a>에 대한 Logistic Regression 결과</caption>
 <thead>
 <tr class="header">
 <th align="left">y.level</th>
@@ -989,7 +998,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 <p><code>multinom</code> 함수는 범주 <code>y</code>의 값 1, 2, 3중 첫번째 값인 1을 기준범주(reference category)로 사용한다.</p>
 </div>
 <div id="baseline-category-logit-model" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> 기준범주 로짓모형</h3>
+<h3><span class="header-section-number">2.3.2</span> 기준범주 로짓모형</h3>
 <p>종속변수가 셋 이상의 범주를 갖고 있으나 자연스러운 순서가 없는 경우, 기준범주 로짓모형이 널리 사용된다.</p>
 <p><span class="math inline">\(N\)</span>개의 객체로 이루어진 학습데이터 <span class="math inline">\(\{(\mathbf{x}_i, y_i)\}_{i = 1, \cdots, N}\)</span>를 아래와 같이 정의하자.</p>
 <ul>
@@ -1015,7 +1024,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 \pi_{ij} &amp;=&amp; \frac{\exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}, \, j = 2, \cdots, J\\
 \pi_{i1} &amp;=&amp; \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}
 \end{split}
-\tag{1.6}
+\tag{2.6}
 \end{equation}\]</span>
 <p>위 모수 추정을 위해 최우추정법을 사용해보자. 우선, 종속변수를 변환한 지시변수를 아래와 같이 정의한다.</p>
 <span class="math display">\[\begin{equation*}
@@ -1032,7 +1041,7 @@ L &amp;=&amp; \prod_{i = 1}^{n} \prod_{j = 1}^{J} \left( \pi_{ij} \right)^{v_{ij
 &amp;=&amp; \prod_{i = 1}^{n} \frac{\pi_{i1}}{\prod_{j = 2}^{J} \pi_{i1}^{v_{ij}}} \prod_{j = 2}^{J} \left( \pi_{ij} \right)^{v_{ij}}\\
 &amp;=&amp; \prod_{i = 1}^{n} \pi_{i1} \prod_{j = 2}^{J} \left( \frac{\pi_{ij}}{\pi_{i1}} \right)^{v_{ij}}
 \end{eqnarray*}\]</span>
-<p>와 같이 표현할 수 있으며, 여기에 식 <a href="logistic-regression.html#eq:multi-nominal-prob-sol">(1.6)</a>을 이용하면 아래와 같이 정리할 수 있다.</p>
+<p>와 같이 표현할 수 있으며, 여기에 식 <a href="logistic-regression.html#eq:multi-nominal-prob-sol">(2.6)</a>을 이용하면 아래와 같이 정리할 수 있다.</p>
 <span class="math display">\[\begin{eqnarray*}
 L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)} \prod_{j = 2}^{J} \left( \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right) \right)^{v_{ij}}\\
 &amp;=&amp; \prod_{i = 1}^{n} \left( 1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right) \right)^{-1} \prod_{j = 2}^{J} \left( \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right) \right)^{v_{ij}}
@@ -1040,18 +1049,18 @@ L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_
 <p>이에 따라 로그 우도함수는 다음과 같이 정의된다.</p>
 <span class="math display" id="eq:multi-nominal-logit-loglik">\[\begin{equation}
 \log L = \sum_{i = 1}^{n} \left( - \log \left( 1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right) \right) + \sum_{j = 2}^{J} v_{ij} \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right) \right) 
-\tag{1.7}
+\tag{2.7}
 \end{equation}\]</span>
-<p>식 <a href="logistic-regression.html#eq:multi-nominal-logit-loglik">(1.7)</a>을 각 계수에 대해 미분하면 아래와 같이 정리된다.</p>
+<p>식 <a href="logistic-regression.html#eq:multi-nominal-logit-loglik">(2.7)</a>을 각 계수에 대해 미분하면 아래와 같이 정리된다.</p>
 <span class="math display" id="eq:multi-nominal-logit-loglik-diff">\[\begin{equation}
 \begin{split}
 \frac{\partial \log L}{\partial \beta_{0,j}} &amp;=&amp; \sum_{i = 1}^{n} v_{ij} - \frac{\exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}\\
 \frac{\partial \log L}{\partial \beta_{k,j}} &amp;=&amp; \sum_{i = 1}^{n} v_{ij} x_{ik} - \frac{x_{ik} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}, \, k = 1, \cdots, p
 \end{split}
-\tag{1.8}
+\tag{2.8}
 \end{equation}\]</span>
-<p>따라서, 명목 로지스틱 회귀분석은 식 <a href="logistic-regression.html#eq:multi-nominal-logit-loglik-diff">(1.8)</a>이 표현하는 <span class="math inline">\((J - 1) \times (p + 1)\)</span>개의 미분식을 모두 0으로 만드는 계수값을 찾는 문제가 된다. 이에 대한 closed form solution은 존재하지 않으므로, 각종 알고리즘을 이용하여 해를 찾아야 한다. Newton-Raphson method에 의해 해를 찾는 방법은 <span class="citation">Czepiel (<a href="#ref-czepiel2002maximum">2002</a>)</span> 에 보다 자세하게 설명되어 있다.</p>
-<p>Table <a href="logistic-regression.html#tab:nominal-logistic-reg-train-data">1.3</a>의 학습데이터에 대해 명목 로지스틱 회귀모형을 학습하여 범주를 추정한 결과는 아래와 같다.</p>
+<p>따라서, 명목 로지스틱 회귀분석은 식 <a href="logistic-regression.html#eq:multi-nominal-logit-loglik-diff">(2.8)</a>이 표현하는 <span class="math inline">\((J - 1) \times (p + 1)\)</span>개의 미분식을 모두 0으로 만드는 계수값을 찾는 문제가 된다. 이에 대한 closed form solution은 존재하지 않으므로, 각종 알고리즘을 이용하여 해를 찾아야 한다. Newton-Raphson method에 의해 해를 찾는 방법은 <span class="citation">Czepiel (<a href="#ref-czepiel2002maximum">2002</a>)</span> 에 보다 자세하게 설명되어 있다.</p>
+<p>Table <a href="logistic-regression.html#tab:nominal-logistic-reg-train-data">2.3</a>의 학습데이터에 대해 명목 로지스틱 회귀모형을 학습하여 범주를 추정한 결과는 아래와 같다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multinom_fit &lt;-<span class="st"> </span>nnet<span class="op">::</span><span class="kw">multinom</span>(
   y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, 
   <span class="dt">data =</span> train_df, 
@@ -1070,10 +1079,9 @@ L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predict_df &lt;-<span class="st"> </span><span class="kw">predict</span>(multinom_fit, train_df, <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as_data_frame</span>() <span class="op">%&gt;%</span>
 <span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pred_class =</span> <span class="kw">predict</span>(multinom_fit, train_df, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>))</code></pre></div>
-<pre><code>## Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).
-## This warning is displayed once per session.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bind_cols</span>(train_df, predict_df) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pred_class =</span> <span class="kw">predict</span>(multinom_fit, train_df, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>))
+
+<span class="kw">bind_cols</span>(train_df, predict_df) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>x1, <span class="op">-</span>x2) <span class="op">%&gt;%</span>
 <span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(
     <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
@@ -1084,7 +1092,7 @@ L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_
     <span class="dt">digits =</span> <span class="dv">3</span>
   )</code></pre></div>
 <table>
-<caption><span id="tab:nominal-logistic-prediction">Table 1.5: </span>명목 로지스틱 회귀모형 범주 추정 결과</caption>
+<caption><span id="tab:nominal-logistic-prediction">Table 2.5: </span>명목 로지스틱 회귀모형 범주 추정 결과</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호</th>
@@ -1266,10 +1274,10 @@ L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_
 </div>
 </div>
 <div id="ordinal-logistic-regression" class="section level2">
-<h2><span class="header-section-number">1.4</span> 서열 로지스틱 회귀모형</h2>
+<h2><span class="header-section-number">2.4</span> 서열 로지스틱 회귀모형</h2>
 <p>본 장에서는 종속변수가 3개 이상의 범주를 가지며, 각 범주 간에 서열이 있는 경우에 대한 로지스틱 회귀모형을 소개한다.</p>
 <div id="ordinal-logistic-basic-script" class="section level3">
-<h3><span class="header-section-number">1.4.1</span> 기본 R 스크립트</h3>
+<h3><span class="header-section-number">2.4.1</span> 기본 R 스크립트</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>N, <span class="op">~</span>L, <span class="op">~</span>y,
   <span class="dv">25</span>, <span class="dv">5</span>, <span class="dv">3</span>,
@@ -1292,7 +1300,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
              <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;만족도($y$)&#39;</span>),
              <span class="dt">caption =</span> <span class="st">&#39;성능변수에 따른 통신 만족도&#39;</span>)</code></pre></div>
 <table>
-<caption><span id="tab:ordinal-logistic-reg-train-data">Table 1.6: </span>성능변수에 따른 통신 만족도</caption>
+<caption><span id="tab:ordinal-logistic-reg-train-data">Table 2.6: </span>성능변수에 따른 통신 만족도</caption>
 <thead>
 <tr class="header">
 <th align="center">잡음(N)</th>
@@ -1363,7 +1371,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 </tr>
 </tbody>
 </table>
-<p>Table <a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">1.6</a>은 벨 연구소에서 한 통신장치에 대하여 실시한 조사 결과를 나타낸 것이다. 주요 성능변수인 회선잡음(circuit noise: N)과 소리크기 손실(loudness loss: L)이 이용자의 주관적인 만족도에 미치는 영향을 분석하기 위한 것이다. 만족도는 원결과<span class="citation">(Cavanaugh, Hatch, and Sullivan <a href="#ref-cavanaugh1976models">1976</a>)</span>를 가공하여 다음과 같이 3가지로 분류하였다.</p>
+<p>Table <a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">2.6</a>은 벨 연구소에서 한 통신장치에 대하여 실시한 조사 결과를 나타낸 것이다. 주요 성능변수인 회선잡음(circuit noise: N)과 소리크기 손실(loudness loss: L)이 이용자의 주관적인 만족도에 미치는 영향을 분석하기 위한 것이다. 만족도는 원결과<span class="citation">(Cavanaugh, Hatch, and Sullivan <a href="#ref-cavanaugh1976models">1976</a>)</span>를 가공하여 다음과 같이 3가지로 분류하였다.</p>
 <span class="math display">\[\begin{equation*}
 y = \begin{cases}
 1 &amp; \mbox{good}\\
@@ -1404,7 +1412,7 @@ y = \begin{cases}
 ## This is an adjacent categories model with 3 levels</code></pre>
 </div>
 <div id="cumulative-logit-model" class="section level3">
-<h3><span class="header-section-number">1.4.2</span> 누적 로짓모형</h3>
+<h3><span class="header-section-number">2.4.2</span> 누적 로짓모형</h3>
 <p>객체 <span class="math inline">\(i\)</span>가 범주 <span class="math inline">\(j\)</span> 이하에 속할 누적확률을 <span class="math inline">\(\kappa_{ij}\)</span>라 하자.</p>
 <span class="math display">\[\begin{equation*}
 \kappa_{ij} = P(y_i \leq j \, | \, \mathbf{x}_i), \, j = 1, \cdots, J
@@ -1412,10 +1420,10 @@ y = \begin{cases}
 <p>누적 로짓모형은 범주 누적확률의 로짓변환에 대한 선형 회귀모형이다.</p>
 <span class="math display" id="eq:cumulative-logit">\[\begin{equation}
 \log \left( \frac{\kappa_{ij}}{1 - \kappa_{ij}} \right) = \beta_{0,j} + \boldsymbol\beta^\top \mathbf{x}_i, \, j = 1, \cdots, J - 1
-\tag{1.9}
+\tag{2.9}
 \end{equation}\]</span>
-<p>식 <a href="logistic-regression.html#eq:cumulative-logit">(1.9)</a>은 독립변수에 대한 계수 <span class="math inline">\(\boldsymbol\beta\)</span>가 모든 범주에 대해 동일하며 절편(intercept) <span class="math inline">\(\beta_{0,j}\)</span>만 범주에 따라 다른 비례 승산 모형(proportional odds model)이다. 즉, 범주에 관계없이 각 독립변수가 한 단위 증가할 때마다 로그 승산비는 동일하게 증가한다.</p>
-<p>모형의 추정은 <a href="logistic-regression.html#baseline-category-logit-model">1.3.2</a>절과 유사하게 다항분포를 사용한 최우추정법을 사용할 수 있다. 각 객체 <span class="math inline">\(i\)</span>가 범주 <span class="math inline">\(j\)</span>에 속할 확률은 아래와 같다.</p>
+<p>식 <a href="logistic-regression.html#eq:cumulative-logit">(2.9)</a>은 독립변수에 대한 계수 <span class="math inline">\(\boldsymbol\beta\)</span>가 모든 범주에 대해 동일하며 절편(intercept) <span class="math inline">\(\beta_{0,j}\)</span>만 범주에 따라 다른 비례 승산 모형(proportional odds model)이다. 즉, 범주에 관계없이 각 독립변수가 한 단위 증가할 때마다 로그 승산비는 동일하게 증가한다.</p>
+<p>모형의 추정은 <a href="logistic-regression.html#baseline-category-logit-model">2.3.2</a>절과 유사하게 다항분포를 사용한 최우추정법을 사용할 수 있다. 각 객체 <span class="math inline">\(i\)</span>가 범주 <span class="math inline">\(j\)</span>에 속할 확률은 아래와 같다.</p>
 <span class="math display" id="eq:cumulative-logit-prob">\[\begin{equation*}
 \begin{split}
 \pi_{ij} &amp;=&amp; \kappa_{ij} - \kappa_{i,j-1}\\
@@ -1427,7 +1435,7 @@ y = \begin{cases}
 \pi_{iJ} &amp;=&amp; 1 - \kappa_{i,J-1}\\
 &amp;=&amp; 1 - \frac{\exp (\beta_{0,J-1} + \boldsymbol\beta^\top \mathbf{x}_i)}{1 + \exp (\beta_{0,J-1} + \boldsymbol\beta^\top \mathbf{x}_i)}
 \end{split}
-\tag{1.10}
+\tag{2.10}
 \end{equation*}\]</span>
 <p>로그 우도함수는</p>
 <span class="math display">\[\begin{equation*}
@@ -1455,7 +1463,7 @@ y = \begin{cases}
 \log \left( \frac{\kappa_{ij}}{1 - \kappa_{ij}} \right) = \beta_{0,j} - \boldsymbol\beta^\top \mathbf{x}_i, \, j = 1, \cdots, J - 1
 \end{equation*}\]</span>
 <p>위 모형에서 <code>polr</code> 함수 실행 결과 추정된 절편값은 <span class="math inline">\(\beta_{0,1} = -13.0352721\)</span>, <span class="math inline">\(\beta_{0,2} = -11.3990207\)</span> 이며, 두 변수 <span class="math inline">\(N\)</span>, <span class="math inline">\(L\)</span>에 대한 회귀계수는 각각 -0.2236292, -0.2998833로 추정된다.</p>
-<p>추정된 회귀계수를 식 <a href="logistic-regression.html#eq:cumulative-logit-prob">(1.10)</a>에 대입하면 각 객체 <span class="math inline">\(i\)</span>가 각 범주 <span class="math inline">\(j\)</span>에 속할 확률을 Table <a href="logistic-regression.html#tab:cumulative-logit-prediction">1.7</a>와 같이 얻을 수 있다. 아래 R 스크립트에서 사용한 <code>predict</code>라는 함수가 해당 계산을 수행한다.</p>
+<p>추정된 회귀계수를 식 <a href="logistic-regression.html#eq:cumulative-logit-prob">(2.10)</a>에 대입하면 각 객체 <span class="math inline">\(i\)</span>가 각 범주 <span class="math inline">\(j\)</span>에 속할 확률을 Table <a href="logistic-regression.html#tab:cumulative-logit-prediction">2.7</a>와 같이 얻을 수 있다. 아래 R 스크립트에서 사용한 <code>predict</code>라는 함수가 해당 계산을 수행한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predict_df &lt;-<span class="st"> </span><span class="kw">predict</span>(polr_fit, train_df, <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as_data_frame</span>() <span class="op">%&gt;%</span>
 <span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="op">%&gt;%</span>
@@ -1467,11 +1475,11 @@ y = \begin{cases}
     <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;실제범주 $y_i$&#39;</span>, 
                   <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i1}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i2}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i3}$&#39;</span>, <span class="st">&#39;추정범주 $</span><span class="ch">\\</span><span class="st">hat{y}_i$&#39;</span>),
-    <span class="dt">caption =</span> <span class="st">&#39;Table </span><span class="ch">\\</span><span class="st"><a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">1.6</a>에 대한 누적 로짓모형의 추정범주&#39;</span>,
+    <span class="dt">caption =</span> <span class="st">&#39;Table </span><span class="ch">\\</span><span class="st"><a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">2.6</a>에 대한 누적 로짓모형의 추정범주&#39;</span>,
     <span class="dt">digits =</span> <span class="dv">4</span>
   )</code></pre></div>
 <table>
-<caption><span id="tab:cumulative-logit-prediction">Table 1.7: </span>Table <a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">1.6</a>에 대한 누적 로짓모형의 추정범주</caption>
+<caption><span id="tab:cumulative-logit-prediction">Table 2.7: </span>Table <a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">2.6</a>에 대한 누적 로짓모형의 추정범주</caption>
 <thead>
 <tr class="header">
 <th align="center">잡음(N)</th>
@@ -1596,11 +1604,11 @@ y = \begin{cases}
 </table>
 </div>
 <div id="adjacent-categories-logit-model" class="section level3">
-<h3><span class="header-section-number">1.4.3</span> 인근범주 로짓모형</h3>
+<h3><span class="header-section-number">2.4.3</span> 인근범주 로짓모형</h3>
 <p>인근범주 로짓모형은 아래와 같이 인접한 두 범주의 확률 비율에 대한 회귀모형이다.</p>
 <span class="math display" id="eq:adjacent-category-logit">\[\begin{equation}
 \log \left( \frac{\pi_{ij}}{\pi_{i,j+1}} \right) = \beta_{0,j} + \boldsymbol\beta^\top \mathbf{x}_i, \, j = 1, \cdots, J - 1
-\tag{1.11}
+\tag{2.11}
 \end{equation}\]</span>
 <p>따라서, <span class="math inline">\(\pi_{ij}\)</span>간에 다음과 같은 관계식이 성립한다.</p>
 <span class="math display">\[\begin{equation*}
@@ -1616,10 +1624,10 @@ y = \begin{cases}
 \pi_{ij} &amp;=&amp; \frac{\exp \left( \sum_{l = j}^{J - 1} \beta_{0,l} + (J - j) \boldsymbol\beta^\top \mathbf{x}_i \right)}{1 + \sum_{k = 1}^{J - 1} \exp \left( \sum_{l = k}^{J - 1} \beta_{0,l} + (J - k) \boldsymbol\beta^\top \mathbf{x}_i \right)}, \, j = 1, \cdots, J - 1\\
 \pi_{iJ} &amp;=&amp; \frac{1}{1 + \sum_{k = 1}^{J - 1} \exp \left( \sum_{l = k}^{J - 1} \beta_{0,l} + (J - k) \boldsymbol\beta^\top \mathbf{x}_i \right)}
 \end{split}
-\tag{1.12}
+\tag{2.12}
 \end{equation}\]</span>
-<p>와 같다. 이는 <a href="logistic-regression.html#baseline-category-logit-model">1.3.2</a>절에서 살펴보았던 명목형 로지스틱 회귀모형에 비해 다소 복잡하지만 비슷한 형태이며, 역시 최우추정법을 이용하여 모형을 추정할 수 있다.</p>
-<p>R에서는 <code>VGAM</code> 패키지의 <code>vglm</code> 함수를 이용할 때 파라미터 <code>family</code>의 값을 <code>VGAM</code> 패키지의 <code>acat</code> 함수를 설정함으로써 인근범주 로짓모형을 추정할 수 있다. 이 때 <code>acat</code> 함수의 <code>parallel</code> 파라미터값을 <code>TRUE</code>로 설정함으로써 식 <a href="logistic-regression.html#eq:adjacent-category-logit">(1.11)</a>에서와 같이 비례 승산 모형(proportional odds model)을 정의한다.</p>
+<p>와 같다. 이는 <a href="logistic-regression.html#baseline-category-logit-model">2.3.2</a>절에서 살펴보았던 명목형 로지스틱 회귀모형에 비해 다소 복잡하지만 비슷한 형태이며, 역시 최우추정법을 이용하여 모형을 추정할 수 있다.</p>
+<p>R에서는 <code>VGAM</code> 패키지의 <code>vglm</code> 함수를 이용할 때 파라미터 <code>family</code>의 값을 <code>VGAM</code> 패키지의 <code>acat</code> 함수를 설정함으로써 인근범주 로짓모형을 추정할 수 있다. 이 때 <code>acat</code> 함수의 <code>parallel</code> 파라미터값을 <code>TRUE</code>로 설정함으로써 식 <a href="logistic-regression.html#eq:adjacent-category-logit">(2.11)</a>에서와 같이 비례 승산 모형(proportional odds model)을 정의한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vglm_fit &lt;-<span class="st"> </span>VGAM<span class="op">::</span><span class="kw">vglm</span>(
   y <span class="op">~</span><span class="st"> </span>N <span class="op">+</span><span class="st"> </span>L,
   <span class="dt">data =</span> train_df,
@@ -1629,7 +1637,7 @@ y = \begin{cases}
 <span class="kw">print</span>(<span class="kw">coef</span>(vglm_fit))</code></pre></div>
 <pre><code>## (Intercept):1 (Intercept):2             N             L 
 ##    -9.0658976    -8.9018134     0.1725867     0.2082167</code></pre>
-<p>추정된 모형을 위 식 <a href="logistic-regression.html#eq:adjacent-category-prob">(1.12)</a>에 대입하면 각 객체 <span class="math inline">\(i\)</span>가 각 범주 <span class="math inline">\(j\)</span>에 속할 확률을 추정할 수 있다. <code>VGAM</code> 패키지의 <code>predictvglm</code> 함수가 해당 계산을 수행한다.</p>
+<p>추정된 모형을 위 식 <a href="logistic-regression.html#eq:adjacent-category-prob">(2.12)</a>에 대입하면 각 객체 <span class="math inline">\(i\)</span>가 각 범주 <span class="math inline">\(j\)</span>에 속할 확률을 추정할 수 있다. <code>VGAM</code> 패키지의 <code>predictvglm</code> 함수가 해당 계산을 수행한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predict_df &lt;-<span class="st"> </span>VGAM<span class="op">::</span><span class="kw">predictvglm</span>(vglm_fit, train_df, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as_data_frame</span>() <span class="op">%&gt;%</span>
 <span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="op">%&gt;%</span>
@@ -1641,11 +1649,11 @@ y = \begin{cases}
     <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;실제범주 $y_i$&#39;</span>, 
                   <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i1}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i2}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i3}$&#39;</span>, <span class="st">&#39;추정범주 $</span><span class="ch">\\</span><span class="st">hat{y}_i$&#39;</span>),
-    <span class="dt">caption =</span> <span class="st">&#39;Table </span><span class="ch">\\</span><span class="st"><a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">1.6</a>에 대한 인근범주 로짓모형의 추정범주&#39;</span>,
+    <span class="dt">caption =</span> <span class="st">&#39;Table </span><span class="ch">\\</span><span class="st"><a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">2.6</a>에 대한 인근범주 로짓모형의 추정범주&#39;</span>,
     <span class="dt">digits =</span> <span class="dv">4</span>
   )</code></pre></div>
 <table>
-<caption><span id="tab:adjacent-category-logit-prediction">Table 1.8: </span>Table <a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">1.6</a>에 대한 인근범주 로짓모형의 추정범주</caption>
+<caption><span id="tab:adjacent-category-logit-prediction">Table 2.8: </span>Table <a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">2.6</a>에 대한 인근범주 로짓모형의 추정범주</caption>
 <thead>
 <tr class="header">
 <th align="center">잡음(N)</th>
@@ -1771,7 +1779,7 @@ y = \begin{cases}
 <p>비례 승산 모형(proportional odds model)이 아닌 인근범주 로짓모형은 아래와 같다.</p>
 <span class="math display" id="eq:adjacent-category-logit-nonproportional">\[\begin{equation}
 \log \left( \frac{\pi_{ij}}{\pi_{i,j+1}} \right) = \beta_{0,j} + \boldsymbol\beta_j^\top \mathbf{x}_i, \, j = 1, \cdots, J - 1
-\tag{1.13}
+\tag{2.13}
 \end{equation}\]</span>
 <p>해당 모형은 <code>acat</code> 함수의 <code>parallel</code> 파라미터 값을 <code>FALSE</code>로 설정함으로써 추정할 수 있다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vglm_fit &lt;-<span class="st"> </span>VGAM<span class="op">::</span><span class="kw">vglm</span>(
@@ -1796,11 +1804,11 @@ y = \begin{cases}
     <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;실제범주 $y_i$&#39;</span>, 
                   <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i1}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i2}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i3}$&#39;</span>, <span class="st">&#39;추정범주 $</span><span class="ch">\\</span><span class="st">hat{y}_i$&#39;</span>),
-    <span class="dt">caption =</span> <span class="st">&#39;Table </span><span class="ch">\\</span><span class="st"><a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">1.6</a>에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)&#39;</span>,
+    <span class="dt">caption =</span> <span class="st">&#39;Table </span><span class="ch">\\</span><span class="st"><a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">2.6</a>에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)&#39;</span>,
     <span class="dt">digits =</span> <span class="dv">4</span>
   )</code></pre></div>
 <table>
-<caption><span id="tab:adjacent-category-logit-prediction-nonproportional">Table 1.9: </span>Table <a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">1.6</a>에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)</caption>
+<caption><span id="tab:adjacent-category-logit-prediction-nonproportional">Table 2.9: </span>Table <a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">2.6</a>에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)</caption>
 <thead>
 <tr class="header">
 <th align="center">잡음(N)</th>
@@ -1947,7 +1955,7 @@ y = \begin{cases}
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="classification-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="da.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

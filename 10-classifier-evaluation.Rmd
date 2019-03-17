@@ -1,0 +1,6 @@
+# 분류규칙의 성능 평가 {#classifier-evaluation}
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+

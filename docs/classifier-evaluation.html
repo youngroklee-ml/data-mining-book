@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>References | 데이터마이닝 with R</title>
+  <title>Chapter 6 분류규칙의 성능 평가 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="References | 데이터마이닝 with R" />
+  <meta property="og:title" content="Chapter 6 분류규칙의 성능 평가 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://youngroklee-ml.github.io/data-mining-book/" />
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="youngroklee-ml/data-mining-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | 데이터마이닝 with R" />
+  <meta name="twitter:title" content="Chapter 6 분류규칙의 성능 평가 | 데이터마이닝 with R" />
   
   <meta name="twitter:description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="cluster-solution-evaluation.html">
-
+<link rel="prev" href="svm.html">
+<link rel="next" href="clustering-overview.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -282,94 +282,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="classifier-evaluation" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> 분류규칙의 성능 평가</h1>
 
-<div id="refs" class="references">
-<div>
-<p>Banfield, Jeffrey D, and Adrian E Raftery. 1993. “Model-Based Gaussian and Non-Gaussian Clustering.” <em>Biometrics</em>. JSTOR, 803–21.</p>
-</div>
-<div>
-<p>Breiman, Leo, Jerome Friedman, Charles J Stone, and Richard A Olshen. 1984. <em>Classification and Regression Trees</em>. CRC press.</p>
-</div>
-<div>
-<p>Caliński, Tadeusz, and Jerzy Harabasz. 1974. “A Dendrite Method for Cluster Analysis.” <em>Communications in Statistics</em> 3 (1). Taylor &amp; Francis: 1–27.</p>
-</div>
-<div>
-<p>Cavanaugh, JR, RW Hatch, and JL Sullivan. 1976. “Models for the Subjective Effects of Loss, Noise, and Talker Echo on Telephone Connections.” <em>Bell System Technical Journal</em> 55 (9). Wiley Online Library: 1319–71.</p>
-</div>
-<div>
-<p>Celeux, Gilles, and Gérard Govaert. 1995. “Gaussian Parsimonious Clustering Models.” <em>Pattern Recognition</em> 28 (5). Elsevier: 781–93.</p>
-</div>
-<div>
-<p>Chang, Chih-Chung, and Chih-Jen Lin. 2001. “Training V-Support Vector Classifiers: Theory and Algorithms.” <em>Neural Computation</em> 13 (9). MIT Press: 2119–47.</p>
-</div>
-<div>
-<p>———. 2011. “LIBSVM: A Library for Support Vector Machines.” <em>ACM Transactions on Intelligent Systems and Technology (TIST)</em> 2 (3). Acm: 27.</p>
-</div>
-<div>
-<p>Czepiel, Scott A. 2002. “Maximum Likelihood Estimation of Logistic Regression Models: Theory and Implementation.” <em>Available at Czep. Net/Stat/Mlelr. Pdf</em>.</p>
-</div>
-<div>
-<p>Dunn, Joseph C. 1973. “A Fuzzy Relative of the Isodata Process and Its Use in Detecting Compact Well-Separated Clusters.” Taylor &amp; Francis.</p>
-</div>
-<div>
-<p>Fan, Rong-En, Pai-Hsuen Chen, and Chih-Jen Lin. 2005. “Working Set Selection Using Second Order Information for Training Support Vector Machines.” <em>Journal of Machine Learning Research</em> 6 (Dec): 1889–1918.</p>
-</div>
-<div>
-<p>Goldfarb, Donald, and Ashok Idnani. 1983. “A Numerically Stable Dual Method for Solving Strictly Convex Quadratic Programs.” <em>Mathematical Programming</em> 27 (1). Springer: 1–33.</p>
-</div>
-<div>
-<p>Gower, John C. 1971. “A General Coefficient of Similarity and Some of Its Properties.” <em>Biometrics</em>. JSTOR, 857–71.</p>
-</div>
-<div>
-<p>Handl, Julia, and Joshua Knowles. 2005. “Exploiting the Trade-Off—the Benefits of Multiple Objectives in Data Clustering.” In <em>International Conference on Evolutionary Multi-Criterion Optimization</em>, 547–60. Springer.</p>
-</div>
-<div>
-<p>Hubert, Lawrence, and Phipps Arabie. 1985. “Comparing Partitions.” <em>Journal of Classification</em> 2 (1). Springer: 193–218.</p>
-</div>
-<div>
-<p>Kaufman, L, and P. J. Rousseeuw. 1990. “Finding Groups in Data: An Introduction to Cluster Analysis.” Wiley.</p>
-</div>
-<div>
-<p>Lance, Godfrey N, and William Thomas Williams. 1967. “A General Theory of Classificatory Sorting Strategies: 1. Hierarchical Systems.” <em>The Computer Journal</em> 9 (4). The British Computer Society: 373–80.</p>
-</div>
-<div>
-<p>Park, Hae-Sang, and Chi-Hyuck Jun. 2009. “A Simple and Fast Algorithm for K-Medoids Clustering.” <em>Expert Systems with Applications</em> 36 (2). Elsevier: 3336–41.</p>
-</div>
-<div>
-<p>Pratt, John W. 1981. “Concavity of the Log Likelihood.” <em>Journal of the American Statistical Association</em> 76 (373). Taylor &amp; Francis: 103–6.</p>
-</div>
-<div>
-<p>Rand, William M. 1971. “Objective Criteria for the Evaluation of Clustering Methods.” <em>Journal of the American Statistical Association</em> 66 (336). Taylor &amp; Francis Group: 846–50.</p>
-</div>
-<div>
-<p>Rousseeuw, Peter J. 1987. “Silhouettes: A Graphical Aid to the Interpretation and Validation of Cluster Analysis.” <em>Journal of Computational and Applied Mathematics</em> 20. Elsevier: 53–65.</p>
-</div>
-<div>
-<p>Schölkopf, Bernhard, Alex J Smola, Robert C Williamson, and Peter L Bartlett. 2000. “New Support Vector Algorithms.” <em>Neural Computation</em> 12 (5). MIT Press: 1207–45.</p>
-</div>
-<div>
-<p>Scrucca, Luca, Michael Fop, T Brendan Murphy, and Adrian E Raftery. 2016. “Mclust 5: Clustering, Classification and Density Estimation Using Gaussian Finite Mixture Models.” <em>The R Journal</em> 8 (1). NIH Public Access: 289.</p>
-</div>
-<div>
-<p>Ward Jr, Joe H. 1963. “Hierarchical Grouping to Optimize an Objective Function.” <em>Journal of the American Statistical Association</em> 58 (301). Taylor &amp; Francis Group: 236–44.</p>
-</div>
-<div>
-<p>Wishart, David. 1969. “256. Note: An Algorithm for Hierarchical Classifications.” <em>Biometrics</em>. JSTOR, 165–70.</p>
-</div>
-<div>
-<p>전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.</p>
-</div>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="cluster-solution-evaluation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="svm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="clustering-overview.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
