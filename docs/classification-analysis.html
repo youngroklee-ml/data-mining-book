@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-03-17">
+<meta name="date" content="2019-03-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -194,7 +194,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>5.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>6</b> 분류규칙의 성능 평가</a></li>
+<li class="chapter" data-level="6" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>6</b> 분류규칙의 성능 평가</a><ul>
+<li class="chapter" data-level="6.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-packages-install"><i class="fa fa-check"></i><b>6.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="6.2" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-misclassification-rate"><i class="fa fa-check"></i><b>6.2</b> 분류오류율</a></li>
+<li class="chapter" data-level="6.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>6.3</b> 정확도, 민감도 및 특이도</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#confusion-matrix-r-package"><i class="fa fa-check"></i><b>6.3.1</b> R 패키지 내 정오분류표</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#roc-curve"><i class="fa fa-check"></i><b>6.4</b> ROC 곡선</a></li>
+<li class="chapter" data-level="6.5" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#gain-chart"><i class="fa fa-check"></i><b>6.5</b> 이익도표</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>7</b> 군집분석 개요</a><ul>
 <li class="chapter" data-level="7.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>7.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="7.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>7.2</b> 군집분석 기법</a></li>
@@ -643,11 +651,11 @@ loo_cv</code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##       k accuracy
 ##   &lt;int&gt;    &lt;dbl&gt;
-## 1     1    0.857
+## 1     1    0.714
 ## 2     2    0.714
 ## 3     3    0.714
 ## 4     4    0.714
-## 5     5    0.286
+## 5     5    0.429
 ## 6     6    0</code></pre>
 <p>위의 결과에 기반하여, 정확도가 가장 높은 경우의 <span class="math inline">\(k\)</span>들 중 가장 큰 값인 <span class="math inline">\(k = 3\)</span> 을 최적 <span class="math inline">\(k\)</span>값으로 선정하자.</p>
 <p>[단계 2] 두 새로운 객체에 대한 3-인접객체법 추정범주를 구해보자.</p>
