@@ -1,0 +1,722 @@
+# 연관규칙 {#association-rule}
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+연관규칙(association rule)이란 간단히 말하면 항목들 간의 조건-결과 식으로 표현되는 유용한 패턴을 말한다. 연관규칙 탐사는 기업의 활동, 특히 마케팅에서 가장 널리 사용되고 있다.
+
+## 필요 R package 설치 {#association-packages-install}
+
+본 장에서 필요한 R 패키지들은 아래와 같다.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+tibble(package = c("tidyverse", "arules")) %>%
+  mutate(version = map_chr(
+    package, 
+    ~ packageDescription(.x, fields = c("Version"))[1])) %>%
+  knitr::kable()
+```
+
+
+## 연관규칙의 정의 및 성능척도 {#association-rule-definition-metric}
+
+데이터베이스가 총 $n$개의 트랜잭션 데이터로 구성되며, 전체 $m$개의 항목을 포함한다 하자. 전체 항목집합 $I$를 다음과 같이 정의하자.
+
+\begin{equation*}
+I = \{ i_1, \cdots, i_m \}
+\end{equation*}
+
+이 때, 각 트랜잭션 $Z_j$는 $I$의 부분집합이 된다.
+
+\begin{equation*}
+Z_j \subseteq I, \, j = 1, \cdots, n
+\end{equation*}
+
+연관규칙 $R$은 조건부 $X$와 결과부 $Y$로 구성되어 ($X, Y \subseteq I$, $X \cap Y = \emptyset$) "$X$가 일어나면 $Y$도 일어난다"는 의미로 아래와 같이 표현된다.
+
+\begin{equation}
+R: X \Rightarrow Y (\#eq:association-rule)
+\end{equation}
+
+식 \@ref(eq:association-rule)의 연관규칙 $R$에 대한 성능척도로 지지도(support), 신뢰도(confidence) 및 개선도(lift)가 널리 사용된다.
+
+### 지지도 {#association-rule-support}
+
+지지도는 전체 트랜잭션 중 관심있는 항목집합을 포함하는 트랜잭션의 비율을 나타낸다.
+
+항목 $X \subseteq I$에 대한 지지도는 아래와 같이 계산된다.
+
+\begin{equation*}
+supp(X) = \frac{1}{n} \sum_{j = 1}^{n} \mathbb{I}(X \subseteq Z_j)
+\end{equation*}
+
+이 때, $\mathbb{I}(a)$는 지시함수로 $a$가 참일 때 1, 거짓일 때 0의 함수값을 가진다.
+
+식 \@ref(eq:association-rule)의 연관규칙 $R$에 대한 지지도는 아래와 같이 정의된다.
+
+\begin{equation*}
+supp(R) = supp(X \cup Y)
+\end{equation*}
+
+
+다음과 같은 5개의 트랜잭션을 고려해보자.
+
+```{r transaction-data}
+transaction_df <- tribble(
+  ~transaction_id, ~item,
+  1, "b",
+  1, "c",
+  1, "g",
+  2, "a",
+  2, "b",
+  2, "d",
+  2, "e",
+  2, "f",
+  3, "a",
+  3, "b",
+  3, "c",
+  3, "g",
+  4, "b",
+  4, "c",
+  4, "e",
+  4, "f",
+  5, "b",
+  5, "c",
+  5, "e",
+  5, "f",
+  5, "g"
+)
+
+transaction_df %>%
+  group_by(transaction_id) %>%
+  summarize(items = str_c(item, collapse = ", ")) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('c', 'c'),
+    col.names = c('트랜잭션', '항목'),
+    caption = '트랜잭션 데이터'
+  )
+```
+
+이 때, 전체 항목집합 $I$는 $`r  str_c("\\{", str_c(sort(unique(transaction_df[["item"]])), collapse = ", "), "\\}")`$ 이다. 다음과 같은 규칙을 적용해보자.
+
+\begin{equation*}
+R: \{b, c\} \Rightarrow \{g\}
+\end{equation*}
+
+이 때, 조건부 $X = \{b, c\}$에 대한 지지도는 아래와 같이 산출된다.
+
+```{r}
+support <- function(group_df, item, set) {
+  if(is_empty(set)) return(1)
+  
+  group_df %>%
+    unique() %>%
+    summarize(n = sum(!!rlang::sym(item) %in% set)) %>%
+    mutate(is_support = (n == length(set))) %>%
+    {mean(.$is_support)}
+}
+
+X <- c("b", "c")
+group_transaction_df <- transaction_df %>% group_by(transaction_id)
+
+support(group_transaction_df, item = "item", set = X)
+```
+
+또한, 규칙 $R$에 대한 지지도는 아래와 같이 산출할 수 있다.
+
+```{r}
+Y <- c("g")
+support(group_transaction_df, item = "item", set = union(X, Y))
+```
+
+
+### 신뢰도 {#association-rule-confidence}
+
+연관규칙 $R$의 가치를 평가할 때, 통상 다음과 같이 정의되는 신뢰도를 사용한다.
+
+\begin{equation*}
+conf(R) = \frac{supp(R)}{supp(X)} = \frac{supp(X \cup Y)}{supp(X)}
+\end{equation*}
+
+이 신뢰도는 조건부 확률의 개념으로, 집합 $X$(조건부)가 발생할 때 집합 $Y$(결과부)도 동시에 발생할 확률을 의미한다.
+
+```{r}
+rule_confidence <- function(group_df, item, x, y) {
+  support(group_df, item, union(x, y)) / support(group_df, item, x)
+}
+```
+
+
+```{r}
+rule_confidence(group_transaction_df, item = "item", x = X, y = Y)
+```
+
+
+### 개선도 {#association-rule-lift}
+
+결과가 단독으로 발생할 가능성에 비추어 조건과 연계하여 결과가 발생할 가능성의 빈도 비율로 정의한다.
+
+\begin{equation*}
+lift(R) = \frac{conf(R)}{supp(Y)} = \frac{supp(X \cup Y)}{supp(X)supp(Y)}
+\end{equation*}
+
+```{r}
+rule_lift <- function(group_df, item, x, y) {
+  rule_confidence(group_df, item, x, y) / support(group_df, item, y)
+}
+```
+
+```{r}
+rule_lift(group_transaction_df, item = "item", x = X, y = Y)
+```
+
+즉, 항목 $b$, $c$가 발생할 때 $g$가 발생하는 빈도가 25% 높아진다.
+
+
+
+## 연관규칙의 탐사 {#association-rule-exploration}
+
+연관규칙의 탐사는 결국 신뢰도 또는 개선도가 높은 규칙 $R$을 트랜잭션 데이터로부터 도출하는 과정이다. 알고리즘으로 가장 널리 사용되는 것이 Apriori 알고리즘[@agrawal1994fast]이다.
+
+### 빈발항목집합 생성 {#apriori-large-itemsets}
+
+빈발항목집합(large itemsets)이란 미리 결정한 최소 지지도 $s_{\text{min}}$ 이상의 지지도를 같는 모든 항목집합들을 뜻한다.
+
+빈발항목집합 생성 과정은 아래와 같다.
+
+1. $k$개의 항목을 지닌 빈발항목집합 후보군 $C_{k}$ 중 최소지지도 $s_{\text{min}}$ 이상의 지지도를 같는 모든 항목집합들을 빈발항목집합 $L_{k}$라 한다.
+2. 빈발항목집합들 $L_{k}$내의 각 쌍에 대해 합집합을 구하여 그 합집합의 크기(항목의 수)가 $k + 1$인 항목집합들을 빈발항목집합 후보군 $C_{k + 1}$라 한다.
+
+$k$를 1부터 증가시키면서 더 이상 빈발항목집합을 찾을 수 없을 때까지 위 과정을 반복한다. 이 때, 빈발항목집합 후보군을 생성하는 함수 `apriori_gen`을 아래와 같이 구현해보자.
+
+```{r}
+apriori_gen <- function(L) {
+  if(length(L) < 2) return(NULL)
+  
+  n_sets <- length(L)
+  n_item <- unique(map_dbl(L, length))
+
+  if(length(n_item) > 1) stop("All itemsets must be the same length.")
+  
+  C <- combn(L, m = 2, simplify = TRUE) %>%
+    t() %>%
+    `colnames<-`(c("set1", "set2")) %>%
+    as_tibble() %>%
+    pmap(function(set1, set2) {
+      if(length(intersect(set1, set2)) != n_item - 1) return(NULL)
+      sort(union(set1, set2))
+      }) %>% 
+    compact() %>%
+    unique()
+
+  C  
+}
+```
+
+
+위 함수를 이용하여, Table \@ref(tab:transaction-data)에서 최소 지지도 $s_{\text{min}} = 0.4$를 기준으로 빈발항목집합을 찾아보자.
+
+```{r}
+s_min <- 0.4
+group_transaction_df <- transaction_df %>% group_by(transaction_id)
+
+candidate_itemsets <- as.list(sort(unique(transaction_df$item)))
+large_itemsets <- vector("list", length = length(candidate_itemsets))
+
+for(i in seq_along(large_itemsets)) {
+  itemset_support <- map_dbl(candidate_itemsets, 
+                             support, 
+                             group_df = group_transaction_df, 
+                             item = "item")
+
+  large_itemsets[[i]] <- candidate_itemsets[itemset_support >= s_min]
+  
+  candidate_itemsets <- apriori_gen(large_itemsets[[i]])
+  
+  if(is.null(candidate_itemsets)) break
+}
+
+large_itemsets <- compact(large_itemsets)
+```
+
+찾아진 빈발항목집합들은 아래와 같다.
+
+```{r}
+map(large_itemsets,
+    ~map_chr(.x, ~str_c("{", str_c(.x, collapse = ", "), "}")))
+```
+
+
+### 규칙의 탐사 {#apriori-rule-exploration}
+
+도출된 빈발항목집합 각각($L$)을 조건부($X$)와 결과부($Y = L \backslash A$)로 나눌 때 미리 결정된 최소 신뢰도 $c_{\text{min}}$ 이상의 신뢰도를 지닌 규칙 $R$을 찾는다.
+
+\begin{equation*}
+R: X \Rightarrow L \backslash X
+\end{equation*}
+
+
+우선, 빈발항목집합 $L$으로부터 가능한 규칙들을 생성하는 함수 `generate_rules`를 아래와 같이 구현해보자.
+
+```{r}
+generate_rules <- function(L, n_min_item = 1) {
+  n_item <- length(L)
+  if(n_item < n_min_item) return(NULL) # 항목 최소개수 제한
+  
+  X <- map(seq_len(n_item), ~combn(L, m = .x - 1, list)) %>% flatten()
+  Y <- map(X, ~setdiff(L, .x))
+  
+  tibble(X = X, Y = Y)
+}
+```
+
+
+앞 장에서 추출한 모든 빈발항목집합들로부터 규칙을 생성해보자.
+
+```{r}
+rule_list <- map_dfr(
+  large_itemsets %>% flatten(),
+  generate_rules
+)
+```
+
+각각의 규칙에 대하여 신뢰도를 계산하여, 그 값이 최소 신뢰도 $c_{\text{min}}$ 이상인 규칙만을 `conf_rule_list`라는 데이터 프레임으로 저장하자.
+
+```{r}
+rule_list$confidence <- pmap_dbl(rule_list, function(X, Y) 
+  rule_confidence(group_transaction_df, item = "item", x = X, y = Y)
+  )
+
+c_min <- 0.7
+conf_rule_list <- rule_list %>% filter(confidence >= c_min)
+```
+
+이 결과 최종적으로 도출된 규칙들은 아래와 같다.
+
+```{r confident-rules}
+conf_rule_list %>%
+  rowwise() %>%
+  mutate(
+    X = str_c("{", str_c(unlist(X), collapse = ", "), "}"),
+    Y = str_c("{", str_c(unlist(Y), collapse = ", "), "}")
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('c', 'c', 'c'),
+    col.names = c('조건부 $X$', '결과부 $Y$', '신뢰도'),
+    caption = '최종 연관규칙'
+  )
+```
+
+항목의 수가 많은 경우, 생성 가능한 규칙의 수가 매우 많아, 보다 효율적인 탐사의 수행이 필요할 수 있다. 자세한 방법에 대해서는 교재 [@jun2012datamining] 참조.
+
+
+### R 패키지 내 Apriori  {#apriori-r-package}
+
+R 패키지 `arules`의 `apriori` 함수를 이용하여 위에서 살펴본 연관규칙 탐사를 수행할 수 있다.
+
+우선, \@ref(association-rule-support) 절에서 생성한 데이터 프레임 `transaction_df`를 `arules` 패키지 내에 정의된 `transactions` 클래스 형태의 데이터로 변환한다.
+
+```{r}
+transaction_df2 <- as(
+  split(transaction_df$item, transaction_df$transaction_id),
+  "transactions"
+)
+```
+
+이후, `apriori` 함수를 호출하여 연관규칙 탐사를 수행한다.
+
+```{r}
+rule_results <- arules::apriori(
+  transaction_df2,
+  parameter = list(
+    support = 0.4,
+    confidence = 0.7,
+    target = "rules"
+  ),
+  control = list(
+    verbose = FALSE
+  )
+)
+```
+
+결과로 얻어지는 `rules` 클래스 객체에서 필요한 정보를 추출하여 데이터 프레임으로 저장하자.
+
+- `lhs`: 조건부
+- `rhs`: 결과부
+- `quality`: 평가척도 (지지도, 신뢰도, 개선도, 관측수)
+
+```{r}
+rule_results_df <- tibble(
+  X = as(rule_results@lhs, "list"),
+  Y = as(rule_results@rhs, "list")
+) %>%
+  bind_cols(rule_results@quality)
+```
+
+해당 데이터 프레임은 아래와 같다.
+
+```{r apriori-r-results}
+rule_results_df %>%
+  rowwise() %>%
+  mutate(
+    X = str_c("{", str_c(unlist(X), collapse = ", "), "}"),
+    Y = str_c("{", str_c(unlist(Y), collapse = ", "), "}")
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('c', 'c', 'c', 'c', 'c', 'c'),
+    col.names = c('조건부 $X$', '결과부 $Y$', '지지도',
+                  '신뢰도', '개선도', '관측수'),
+    caption = '최종 연관규칙 - arules::apriori'
+  )
+```
+
+위 Table \@ref(tab:apriori-r-results)를 살펴보면, 결과부에는 오직 하나의 항목만 존재하는 것을 알 수 있다. 이는 Apriori 알고리즘이 제안된 원 논문 [@agrawal1993mining]에 따른 것이며, 위 \@ref(apriori-rule-exploration) 절에서 여러 개의 항목이 결과부에 존재하는 방식은 이 Apriori 알고리즘을 보다 일반화한 것이라 생각할 수 있겠다.
+
+
+
+## 순차적 패턴의 탐사 {#association-sequential-pattern}
+
+순차적 패턴(sequential pattern)이란 고객들의 시간에 따른 구매 행태를 말하는데, 예를 들어 "냉장고를 구입한 후 김치냉장고를 구매한다"는 식이다.
+
+순차적 패턴의 탐사를 위해서는 고객별, 시간별 트랜잭션 데이터가 필요하다. 항목 집합을 순서적으로 나열한 리스트를 시퀀스(sequence)라 하는데, $A_j$를 $j$번째의 항목집합이라 할 때, 시퀀스는 다음과 같이 표기한다.
+
+\begin{equation*}
+s = < A_1, A_2, \cdots, A_n >
+\end{equation*}
+
+시퀀스에 포함된 항목집합의 수를 시퀀스의 길이라 하며, 길이가 $k$인 시퀀스를 $k$-시퀀스라 한다.
+
+\begin{equation*}
+length(< A_1, A_2, \cdots, A_n >) = n
+\end{equation*}
+
+두 시퀀스 $s_1 = < A_1, A_2, \cdots, A_n >$과 $s_2 = < B_1, B_2, \cdots, B_m >$에 대하여 ($n \leq m$),
+
+\begin{equation*}
+A_1 \subseteq B_{i_1}, A_2 \subseteq B_{i_2}, \cdots,  A_n \subseteq B_{i_n}
+\end{equation*}
+
+이 성립하는 $i_1 < i_2 < \cdots < i_n$이 존재할 때, $s_1$은 $s_2$에 포함된다고 하며, 이 때 $s_1$을 $s_2$의 부분 시퀀스라 하며, 아래와 같이 표현한다.
+
+\begin{equation*}
+s_1 \prec s_2
+\end{equation*}
+
+시퀀스 $s$가 어떤 다른 시퀀스에 포함되지 않을 경우 최대 시퀀스(maximal sequence)라 한다.
+
+$N$명의 고객 각자에 대한 트랜잭션 시퀀스를 고객 시퀀스(customer sequence)라 하며, $i$번째 고객에 대한 고객 시퀀스를 $s_i$라 할 때 ($i = 1, \cdots, N$), 임의의 시퀀스 $s$에 대한 지지도를 다음과 같이 정의한다. 
+
+\begin{equation*}
+supp(s) = \frac{1}{N} \sum_{i = 1}^{N} I(s \prec s_i)
+\end{equation*}
+
+그리고, 미리 정한 최소 지지도 이상을 갖는 시퀀스를 빈발 시퀀스(large sequence)라 한다. 따라서, 순차적 패턴 탐사 문제는 빈발 시퀀스 중 최대 시퀀스(maximal sequence)들을 찾는 것이라 할 수 있다.
+
+
+### AprioriAll 알고리즘 {#association-aprioriall}
+
+AprioriAll 알고리즘은 빈발 시퀀스를 탐색하나, 탐색된 시퀀스가 최대 빈발 시퀀스임을 보장하지는 못한다. 따라서, 후에 최대화 단계를 요한다.
+
+아래와 같은 고객 시퀀스가 존재한다고 하자.
+
+```{r sequential-transaction-data}
+sequential_transaction_df <- tribble(
+  ~customer_id, ~transaction_seq, ~item,
+  1, 1, "a",
+  1, 2, "b",
+  2, 1, "c",
+  2, 1, "d",
+  2, 2, "a",
+  2, 3, "e",
+  2, 3, "f",
+  2, 3, "g",
+  3, 1, "a",
+  3, 1, "h",
+  3, 1, "g",
+  4, 1, "a",
+  4, 2, "e",
+  4, 2, "g",
+  4, 3, "b",
+  5, 1, "b"
+)
+
+sequential_transaction_df %>%
+  group_by(customer_id, transaction_seq) %>%
+  summarize(itemset = str_c("{", str_c(item, collapse = ", "), "}")) %>%
+  summarize(sequence = str_c("<", str_c(itemset, collapse = ", "), ">")) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c("c", "c"),
+    col.names = c("고객ID ($i$)", "고객 시퀀스 ($s_i$)"),
+    caption = "고객별 시퀀스"
+  )
+  
+```
+
+고객 시퀀스의 항목집합 또는 이의 부분집합 중 최소 지지도 이상인 것들을 빈발항목 집합으로 도출한다.
+
+우선 시퀀스가 특정 패턴을 포함하는지 여부를 판단하는 사용자 정의 함수 `is_contained`와 고객 시퀀스 집합의 특정 패턴에 대한 지지도를 산출하는 사용자 정의 함수 `support_sequence`를 아래와 같이 구현해보자.
+
+```{r}
+is_contained <- function(x, pattern) {
+  n_x <- length(x)
+  n_pattern <- length(pattern)
+  if (n_pattern == 0) return (TRUE)
+  
+  rtn <- FALSE
+  
+  location <- rep(NA_integer_, n_pattern)
+
+  if (n_x >= n_pattern) {
+    j <- 1L
+    for(i in seq_len(n_x)) {
+      if (is_empty(setdiff(pattern[[j]], x[[i]]))) {
+        location[j] <- i
+        j <- j + 1
+        if (j > n_pattern) {
+          rtn <- TRUE
+          break
+        }
+      }
+    }
+  }
+
+  rtn
+}
+
+support_sequence <- function(sequence_list, pattern) {
+  map_lgl(sequence_list, is_contained, pattern = pattern) %>% mean()
+}
+```
+
+
+앞 \@ref(apriori-large-itemsets)절에서와 같이 사용자 정의 함수 `apriori_gen`을 이용하여 빈발항목집합(시퀀스 지지도 기준)을 아래와 같이 얻는다.
+
+```{r}
+s_min <- 0.4
+
+customer_sequence <- sequential_transaction_df %>%
+  group_by(customer_id, transaction_seq) %>%
+  summarize(itemset = list(item)) %>%
+  summarize(sequence = list(itemset))
+
+candidate_itemsets <- map(sort(unique(sequential_transaction_df$item)), ~list(.x))
+large_itemsets <- vector("list", length = length(candidate_itemsets))
+
+for (i in seq_along(large_itemsets)) {
+  large_itemsets[[i]] <- candidate_itemsets[
+    map_dbl(candidate_itemsets,
+            ~support_sequence(customer_sequence$sequence, pattern = .x)) >= s_min
+    ] %>% flatten()
+
+  candidate_itemsets <- map(apriori_gen(large_itemsets[[i]]), ~list(.x))
+}
+
+large_itemsets <- large_itemsets %>% flatten()
+```
+
+위 결과, 아래와 같은 빈발항목집합이 얻어진다.
+
+```{r}
+large_itemsets
+```
+
+위 빈발항목집합에 일련번호를 부여한 뒤, 고객 시퀀스를 해당 일련번호를 이용한 시퀀스로 변환한다. 우선 아래와 같이 일련번호를 부여해보자.
+
+```{r association-sequence-large-itemsets}
+large_itemset_df <- tibble(
+  itemset = large_itemsets,
+  mapped_to = seq_along(large_itemsets)
+)
+
+large_itemset_df %>%
+  rowwise() %>%
+  mutate(itemset = str_c("{", str_c(itemset, collapse = ", "), "}")) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c("c", "c"),
+    col.names = c("빈발항목집합", "일련번호"),
+    caption = "고객 시퀀스 빈발항목집합"
+  )
+```
+
+원 고객 시퀀스에 대해, 각 항목집합이 위 빈발항목집합을 포함하는 경우, 해당 일련번호가 항목으로 포함되는 형태로 변환 시퀀스를 생성한다.
+
+```{r}
+customer_sequence$transformed_sequence <- customer_sequence$sequence %>%
+  map(~map(.x, function(x) {
+    large_itemset_df$mapped_to[
+      map_lgl(large_itemset_df$itemset, ~is_contained(x, .x))
+      ]
+  }) %>% compact())
+```
+
+원 고객 시퀀스와 변환 시퀀스는 아래와 같이 표현될 수 있다.
+
+```{r association-transformed-sequence}
+print_sequence <- function(sequence) {
+  str_c("<", str_c(
+    map(sequence, function(x) 
+      str_c(map_chr(x, ~str_c("{", str_c(.x, collapse = ", "), "}")), 
+            collapse = ", ")),
+    ">"))
+}
+
+customer_sequence %>%
+  group_by(customer_id) %>%
+  mutate(
+    sequence = print_sequence(sequence),
+    transformed_sequence = print_sequence(transformed_sequence)
+  ) %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c("c", "c", "c"),
+    col.names = c("고객ID", "고객 시퀀스", "변환 시퀀스"),
+    caption = "고객 시퀀스의 변환"
+  )
+```
+
+
+변환 시퀀스를 기준으로, 길이가 1인 빈발 시퀀스를 구한다. 최소 지지도를 앞에서 빈발항목집합을 구할 때와 동일하게 설정할 때, 길이가 1인 빈발 시퀀스는 빈발항목집합(의 변환된 일련번호)과 동일하다.
+
+우선, 최대 시퀀스 길이를 구하자.
+
+```{r}
+max_sequence_length <- max(map_int(customer_sequence$transformed_sequence, ~length(.x)))
+```
+
+1-시퀀스인 빈발시퀀스는 빈발항목집합과 같다.
+
+```{r}
+large_sequences <- vector("list", length = max_sequence_length)
+large_sequences[[1]] <- map(large_itemset_df$mapped_to, ~list(.x))
+```
+
+같은 길이의 두 시퀀스를 이용해서 길이가 1 증가한 새로운 시퀀스를 생성하는 함수 `generate_sequence`를 아래와 같이 구현해보자. 새로운 시퀀스는 첫 번째 시퀀스 후에 두 번째 시퀀스의 가장 마지막 트랜잭션을 추가한 시퀀스이다.
+
+```{r}
+generate_sequence <- function(seq1, seq2) {
+  if (length(seq1) != length(seq2)) stop("Two sequences must be the same length.")
+  
+  # two k-sequences needs to be the same for first k-1 items to generate new sequence
+  new_sequence <- NULL
+  k <- length(seq1)
+  if (identical(seq1[seq_len(k - 1)], seq2[seq_len(k - 1)])) {
+    new_sequence <- c(seq1, seq2[[k]])
+  }
+  
+  new_sequence
+}
+```
+
+
+빈발 $k$-시퀀스들로부터 $(k+1)$-시퀀스들을 생성하는 함수 `apriori_seq_gen`을 아래와 같이 구현해보자. 
+
+```{r}
+apriori_seq_gen <- function(L) {
+  n_seqs <- length(L)
+  n_item <- unique(map_dbl(L, length))
+  
+  if (length(n_item) > 1) stop("All sequences must be the same length.")
+  
+  k <- n_item
+  
+  # generate large new sequences with length (k+1)
+  C <- vector("list", length = n_seqs * n_seqs)
+  for (i in seq_along(L)) {
+    for (j in seq_along(L)) {
+      candidate_sequence <- generate_sequence(L[[i]], L[[j]])
+      
+      # check whether all subsequences with length k are element of L
+      if (
+        all(map_lgl(seq_len(k), function(x) 
+          any(map_lgl(L, ~identical(.x, candidate_sequence[-x])))
+        ))
+      ) {
+        C[[n_seqs * (i - 1) + j]] <- candidate_sequence
+      }
+    }
+  }
+  
+  compact(C)
+}
+```
+
+
+위 `apriori_seq_gen` 함수 수행결과로 얻어지는 $(k+1)$-시퀀스들이 모두 빈발 시퀀스라는 보장은 없으므로, 새로 생성된 각 시퀀스가 최소 지지도 이상의 지지도를 갖는지 검토하여, 빈발 시퀀스만을 남기기로 하자. 앞에서 정의했던 함수 `support_sequence`를 활용하여, 새로운 함수 `get_large_sequence`를 정의하자.
+
+```{r}
+get_large_sequence <- function(sequence_list, C, s_min) {
+  is_large <- map_lgl(
+    C, ~ support_sequence(sequence_list, .x) >= s_min
+  )
+  
+  C[is_large]
+}
+```
+
+
+위 빈발 $k$-시퀀스를 과정을 $k$값을 1씩 증가시켜가며 더 이상 빈발 시퀀스를 찾을 수 없을 때까지 반복한다.
+
+```{r}
+s_min <- 0.4
+
+large_sequences <- vector("list", length = max_sequence_length)
+large_sequences[[1]] <- map(large_itemset_df$mapped_to, ~list(.x))
+
+for(i in seq_len(max_sequence_length - 1)) {
+  large_sequences[[i + 1]] <- get_large_sequence(
+    customer_sequence$transformed_sequence,
+    apriori_seq_gen(large_sequences[[i]]),
+    s_min
+  )
+  
+  if(is_empty(large_sequences[[i + 1]])) break
+}
+
+large_sequences <- flatten(compact(large_sequences))
+```
+
+
+결과적으로 찾아진 빈발 시퀀스들은 아래와 같다.
+
+```{r}
+map_chr(large_sequences, 
+    ~str_c("<", str_c(str_c("{", unlist(.x), "}"), collapse = ", "), ">"))
+```
+
+
+이후 최대화 단계를 통해, 빈발 시퀀스 중 최대 시퀀스들만 추출한다.
+
+
+```{r}
+maximal_large_sequences <- large_sequences
+
+for (i in seq(from = length(large_sequences), to = 2)) {
+  if(!is_empty(maximal_large_sequences[i])) {
+    is_subsequence <- map_lgl(maximal_large_sequences[seq_len(i - 1)],
+                              ~is_contained(maximal_large_sequences[i], .x))
+    
+    walk(which(is_subsequence), function(x) maximal_large_sequences[[x]] <<- list())
+  }
+}
+
+maximal_large_sequences <- compact(maximal_large_sequences)
+```
+
+
+최대 빈발 시퀀스(변환 시퀀스 기준)은 아래와 같다.
+
+
+```{r}
+map_chr(maximal_large_sequences, 
+    ~str_c("<", str_c(str_c("{", unlist(.x), "}"), collapse = ", "), ">"))
+```
+
+
+이외에도 AprioriSome 알고리즘, DynamicSome 알고리즘 등의 시퀀스 탐사 알고리즘 들이 존재한다. 보다 자세한 내용은 @jun2012datamining 및 @agrawal1995mining 참고.
+
