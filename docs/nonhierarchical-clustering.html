@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-04-11">
+<meta name="date" content="2019-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -51,41 +51,67 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -326,11 +352,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 <tr class="even">
 <td align="left">stats</td>
-<td align="left">3.5.2</td>
+<td align="left">3.5.3</td>
 </tr>
 <tr class="odd">
 <td align="left">cluster</td>
-<td align="left">2.0.7-1</td>
+<td align="left">2.0.8</td>
 </tr>
 <tr class="even">
 <td align="left">flexclust</td>
@@ -338,11 +364,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 <tr class="odd">
 <td align="left">mclust</td>
-<td align="left">5.4.2</td>
+<td align="left">5.4.3</td>
 </tr>
 <tr class="even">
 <td align="left">mvtnorm</td>
-<td align="left">1.0-8</td>
+<td align="left">1.0-10</td>
 </tr>
 </tbody>
 </table>
@@ -353,7 +379,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="kmeans-basic-script" class="section level3">
 <h3><span class="header-section-number">9.2.1</span> 기본 R 스크립트</h3>
 <p>10명에 대한 PC의 사용경력(<span class="math inline">\(x_1\)</span>)과 주당 사용시간(<span class="math inline">\(x_2\)</span>)이 다음과 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>id, <span class="op">~</span>x1, <span class="op">~</span>x2,
   <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">14</span>,
   <span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">13</span>,
@@ -376,7 +402,7 @@ df <span class="op">%&gt;%</span>
       <span class="st">&#39;사용경력($x_1$)&#39;</span>, <span class="st">&#39;사용시간($x_2$)&#39;</span>
       ),
     <span class="dt">caption =</span> <span class="st">&#39;PC 사용 데이터&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:kmeans-train-data">Table 9.1: </span>PC 사용 데이터</caption>
 <thead>
@@ -440,22 +466,22 @@ df <span class="op">%&gt;%</span>
 </tbody>
 </table>
 <p>아래와 같이 <code>stats</code> 패키지의 <code>kmeans</code> 함수를 이용하여 K-means 알고리즘 수행 결과를 얻을 수 있다. 아래 스크립트는 군집 수가 <span class="math inline">\(K = 3\)</span>라 가정하여 수행한 예이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
-kmeans_solution &lt;-<span class="st"> </span><span class="kw">kmeans</span>(<span class="dt">x =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">centers =</span> <span class="dv">3</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
+kmeans_solution &lt;-<span class="st"> </span><span class="kw">kmeans</span>(<span class="dt">x =</span> df[, <span class="dv">-1</span>], <span class="dt">centers =</span> <span class="dv">3</span>)</code></pre>
 <p>위 스크립트 실행 결과 도출된 군집 중심좌표는 위에서 얻어진 <code>kmeans</code> 클래스 객체의 <code>centers</code>값에 저장된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kmeans_solution<span class="op">$</span>centers</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">kmeans_solution<span class="op">$</span>centers</code></pre>
 <pre><code>##          x1    x2
 ## 1 13.250000  6.75
 ## 2  3.666667  3.00
 ## 3  7.000000 14.00</code></pre>
 <p>또한 각 학습 데이터가 속한 군집은 <code>cluster</code>값에 저장된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kmeans_solution<span class="op">$</span>cluster</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">kmeans_solution<span class="op">$</span>cluster</code></pre>
 <pre><code>##  [1] 3 3 1 1 1 3 1 2 2 2</code></pre>
 <p>객체의 군집결과는 아래와 같이 도식화하여 보일 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cluster =</span> <span class="kw">as.factor</span>(kmeans_solution<span class="op">$</span>cluster)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> id, <span class="dt">color =</span> cluster))</code></pre></div>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> id, <span class="dt">color =</span> cluster))</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:kmeans-cluster"></span>
 <img src="data-mining-book_files/figure-html/kmeans-cluster-1.png" alt="K-means 수행 결과" width="672" />
 <p class="caption">
@@ -472,7 +498,7 @@ Figure 9.1: K-means 수행 결과
 <li>외각 객체 선정: 전체 객체의 중심좌표에서 가장 멀리 위치하는 <span class="math inline">\(K\)</span>개의 객체를 선정한다.</li>
 </ul>
 <p>[단계 0] 무작위 방법을 이용하여 Table <a href="nonhierarchical-clustering.html#tab:kmeans-train-data">9.1</a>으로부터 3개의 객체를 초기 군집 중심좌표로 선정하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
 
 init_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, <span class="dt">k =</span> <span class="dv">1</span>) {
   k &lt;-<span class="st"> </span><span class="kw">min</span>(k, <span class="kw">nrow</span>(df))
@@ -481,9 +507,9 @@ init_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, 
 <span class="st">    </span><span class="kw">sample_n</span>(k)
 }
 
-cluster_df &lt;-<span class="st"> </span><span class="kw">init_cluster</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dv">3</span>)
+cluster_df &lt;-<span class="st"> </span><span class="kw">init_cluster</span>(df[, <span class="dv">-1</span>], <span class="dv">3</span>)
 
-cluster_df</code></pre></div>
+cluster_df</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##      x1    x2
 ##   &lt;dbl&gt; &lt;dbl&gt;
@@ -491,14 +517,14 @@ cluster_df</code></pre></div>
 ## 2     5     4
 ## 3    11     8</code></pre>
 <p><strong>[단계 1] (객체의 군집 배정)</strong> 각 객체에 대하여 <span class="math inline">\(K\)</span>개의 군집 중심좌표(centroid)와의 거리(주로 유클리드 거리 사용)를 산출한 후 가장 가까운 군집에 그 객체를 배정한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 a_{ij} = \begin{cases}
 1 &amp; \text{if } j = \arg\,\max_k d(\mathbf{x}_i, \mathbf{c}_k)\\
 0 &amp; \text{otherwise}
 \end{cases}, \, i = 1, \cdots, n, \, j = 1, \cdots, K
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>각 객체에 대하여 3개의 군집 중심좌표와의 거리를 산출해보면 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flexclust<span class="op">::</span><span class="kw">dist2</span>(df[, <span class="op">-</span><span class="dv">1</span>], cluster_df)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">flexclust<span class="op">::</span><span class="kw">dist2</span>(df[, <span class="dv">-1</span>], cluster_df)</code></pre>
 <pre><code>##            [,1]      [,2]      [,3]
 ##  [1,] 11.313708 10.049876  7.810250
 ##  [2,]  9.219544  9.486833  5.830952
@@ -511,16 +537,16 @@ a_{ij} = \begin{cases}
 ##  [9,] 11.401754  2.236068  9.433981
 ## [10,] 11.704700  2.828427 10.000000</code></pre>
 <p>이에 각 객체들에 대해 거리가 가장 가까운 군집에 그 객체를 배정한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">assign_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_df) {
+<pre class="sourceCode r"><code class="sourceCode r">assign_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_df) {
   cluster_ind &lt;-<span class="st"> </span>flexclust<span class="op">::</span><span class="kw">dist2</span>(df, cluster_df) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">apply</span>(<span class="dv">1</span>, which.min)
   
   <span class="kw">map</span>(<span class="kw">unique</span>(cluster_ind), <span class="op">~</span><span class="kw">which</span>(cluster_ind <span class="op">==</span><span class="st"> </span>.))
 }
 
-cluster_objects &lt;-<span class="st"> </span><span class="kw">assign_cluster</span>(df[, <span class="op">-</span><span class="dv">1</span>], cluster_df)
+cluster_objects &lt;-<span class="st"> </span><span class="kw">assign_cluster</span>(df[, <span class="dv">-1</span>], cluster_df)
 
-cluster_objects</code></pre></div>
+cluster_objects</code></pre>
 <pre><code>## [[1]]
 ## [1] 1 2 4 6
 ## 
@@ -530,16 +556,16 @@ cluster_objects</code></pre></div>
 ## [[3]]
 ## [1]  8  9 10</code></pre>
 <p><strong>[단계 2] (군집 중심좌표의 산출)</strong> 새로운 군집에 대한 중심좌표를 산출한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \bar{x}^{(j)}_l = \frac{\sum_{i} a_{ij} x_{li}}{\sum_{i} a_{ij}}, \, l = 1, \cdots, p, \, j = 1, \cdots, K
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">find_center &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster) {
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">find_center &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster) {
   <span class="kw">map_dfr</span>(cluster, <span class="op">~</span>df[., ] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)) 
 }
 
-new_cluster_df &lt;-<span class="st"> </span><span class="kw">find_center</span>(df[, <span class="op">-</span><span class="dv">1</span>], cluster_objects)
+new_cluster_df &lt;-<span class="st"> </span><span class="kw">find_center</span>(df[, <span class="dv">-1</span>], cluster_objects)
 
-new_cluster_df</code></pre></div>
+new_cluster_df</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##      x1    x2
 ##   &lt;dbl&gt; &lt;dbl&gt;
@@ -547,14 +573,14 @@ new_cluster_df</code></pre></div>
 ## 2 14     6.33
 ## 3  3.67  3</code></pre>
 <p><strong>[단계 3] (수렴 조건 점검)</strong> 새로 산출된 중심좌표값과 이전 좌표값을 비교하여 수렴 조건 내에 들면 마치며, 그렇지 않으면 단계 1을 반복한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">identical</span>(cluster_df, new_cluster_df)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">identical</span>(cluster_df, new_cluster_df)</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>위의 경우, 군집 중심좌표가 다르므로 다음 iteration을 진행한다.</p>
 </div>
 <div id="kmeans-user-defined-functions" class="section level3">
 <h3><span class="header-section-number">9.2.3</span> R 스크립트 구현</h3>
 <p>위의 과정을 군집해가 수렴할 때까지 반복하도록 아래와 같이 R 스크립트를 구현해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">init_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, <span class="dt">k =</span> <span class="dv">1</span>) {
+<pre class="sourceCode r"><code class="sourceCode r">init_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, <span class="dt">k =</span> <span class="dv">1</span>) {
   k &lt;-<span class="st"> </span><span class="kw">min</span>(k, <span class="kw">nrow</span>(df))
   
   df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(k)
@@ -576,13 +602,13 @@ kmeans_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df
   
   i &lt;-<span class="st"> </span>0L
   
-  ## 단계 0
+  <span class="co">## 단계 0</span>
   cluster_df &lt;-<span class="st"> </span><span class="kw">init_cluster</span>(df, k)
   
   <span class="cf">while</span>(<span class="ot">TRUE</span>) {
     i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span>1L
     
-    ## 단계 1
+    <span class="co">## 단계 1</span>
     cluster_objects &lt;-<span class="st"> </span><span class="kw">assign_cluster</span>(df, cluster_df)
     <span class="cf">if</span> (verbose) { <span class="co"># 군집해 출력</span>
       <span class="kw">cat</span>(<span class="st">&quot;Iteration&quot;</span>, i, <span class="st">&quot;:&quot;</span>, 
@@ -592,10 +618,10 @@ kmeans_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df
       )
     }
     
-    ## 단계 2
+    <span class="co">## 단계 2</span>
     new_cluster_df &lt;-<span class="st"> </span><span class="kw">find_center</span>(df, cluster_objects)
 
-    ## 단계 3
+    <span class="co">## 단계 3</span>
     <span class="cf">if</span>(<span class="kw">identical</span>(cluster_df, new_cluster_df)) <span class="cf">break</span>
     
     cluster_df &lt;-<span class="st"> </span>new_cluster_df
@@ -608,15 +634,15 @@ kmeans_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df
   )
   
   <span class="kw">return</span> (res)
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
 
-kmeans_solution &lt;-<span class="st"> </span><span class="kw">kmeans_cluster</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre></div>
+kmeans_solution &lt;-<span class="st"> </span><span class="kw">kmeans_cluster</span>(df[, <span class="dv">-1</span>], <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre>
 <pre><code>## Iteration 1 : {1, 2, 4, 6}, {3, 5, 7}, {8, 9, 10} 
 ## Iteration 2 : {1, 2, 6}, {3, 4, 5, 7}, {8, 9, 10} 
 ## Iteration 3 : {1, 2, 6}, {3, 4, 5, 7}, {8, 9, 10}</code></pre>
 <p>위와 같이 3번째 Iteration에서 군집해가 수렴하였으며, 최종 군집해는 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kmeans_solution<span class="op">$</span>assgined_objects</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">kmeans_solution<span class="op">$</span>assgined_objects</code></pre>
 <pre><code>## [[1]]
 ## [1] 1 2 6
 ## 
@@ -642,7 +668,7 @@ kmeans_solution &lt;-<span class="st"> </span><span class="kw">kmeans_cluster</s
 <p>PAM 알고리즘은 <span class="citation">Kaufman and Rousseeuw (<a href="#ref-kaufman1990finding">1990</a>)</span> 에 의하여 발표된 것으로, 초기 대표객체를 선정하는 방법인 <strong>BUILD</strong>와 더 나은 군집해를 찾아나가는 과정인 <strong>SWAP</strong>의 두 부분으로 구성되어 있다.</p>
 <div id="pam-basic-script" class="section level4">
 <h4><span class="header-section-number">9.3.1.1</span> 기본 R 스크립트</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>id, <span class="op">~</span>x1, <span class="op">~</span>x2,
   <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">3</span>,
   <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">4</span>,
@@ -661,7 +687,7 @@ df <span class="op">%&gt;%</span>
       <span class="st">&#39;사용경력($x_1$)&#39;</span>, <span class="st">&#39;사용시간($x_2$)&#39;</span>
       ),
     <span class="dt">caption =</span> <span class="st">&#39;PC 사용자 데이터&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:pam-train-data">Table 9.2: </span>PC 사용자 데이터</caption>
 <thead>
@@ -705,12 +731,12 @@ df <span class="op">%&gt;%</span>
 </tbody>
 </table>
 <p>PAM 알고리즘은 <code>cluster</code> 패키지 내의 함수 <code>pam</code>을 이용하여 아래와 같이 간단하게 실행할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pam_solution &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">pam</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">k =</span> <span class="dv">2</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">pam_solution &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">pam</span>(df[, <span class="dv">-1</span>], <span class="dt">k =</span> <span class="dv">2</span>)</code></pre>
 <p>얻어진 <code>pam</code> 객체의 원소 <code>id.med</code>는 몇 번째 객체가 군집의 대표객체로 선정되었는지를 나타낸다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pam_solution<span class="op">$</span>id.med</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">pam_solution<span class="op">$</span>id.med</code></pre>
 <pre><code>## [1] 2 5</code></pre>
 <p>또한 <code>pam</code> 객체의 원소 <code>clustering</code>은 각 객체가 어떠한 군집에 할당되었는지를 보여준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pam_solution<span class="op">$</span>clustering</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">pam_solution<span class="op">$</span>clustering</code></pre>
 <pre><code>## [1] 1 1 2 2 2 2</code></pre>
 </div>
 <div id="pam-algorithm" class="section level4">
@@ -720,7 +746,7 @@ df <span class="op">%&gt;%</span>
 <h5><span class="header-section-number">9.3.1.2.1</span> BUILD</h5>
 <p>BUILD는 다음 절차들을 거쳐서 <span class="math inline">\(K\)</span>개의 초기 대표객체를 구하는 과정이다.</p>
 <p><strong>[단계 0]</strong> 우선 각 객체별로 다른 객체 간의 거리를 구한 후, 그 합이 가장 작은 객체 하나를 대표객체로 선정한다. 선정된 대표객체집합을 <span class="math inline">\(M\)</span>이라 하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pairwise_distance_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">pairwise_distance_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df[, <span class="dv">-1</span>], <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>()
 
 M_idx &lt;-<span class="st"> </span>pairwise_distance_df <span class="op">%&gt;%</span>
@@ -731,16 +757,16 @@ M_idx &lt;-<span class="st"> </span>pairwise_distance_df <span class="op">%&gt;%
 
 M &lt;-<span class="st"> </span>df[M_idx, ]
 
-M</code></pre></div>
+M</code></pre>
 <pre><code>## # A tibble: 1 x 3
 ##      id    x1    x2
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1     4    13     6</code></pre>
 <p><strong>[단계 1]</strong> 대표객체로 선정되지 않은 객체 <span class="math inline">\(j\)</span>에 대하여, 이전에 대표객체로 선정된 객체들 중 객체 <span class="math inline">\(j\)</span>에 가장 가까운 거리 <span class="math inline">\(D_j\)</span>를 구한다. 즉,</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 D_j = \min_{k \in M} d(j, k), \, j \notin M
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">D_j &lt;-<span class="st"> </span>pairwise_distance_df <span class="op">%&gt;%</span>
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">D_j &lt;-<span class="st"> </span>pairwise_distance_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(
     <span class="op">!</span>item1 <span class="op">%in%</span><span class="st"> </span>M<span class="op">$</span>id,
     item2 <span class="op">%in%</span><span class="st"> </span>M<span class="op">$</span>id
@@ -751,7 +777,7 @@ D_j = \min_{k \in M} d(j, k), \, j \notin M
 <span class="st">  </span><span class="kw">rename</span>(<span class="dt">D_j =</span> distance) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>item2)
 
-D_j</code></pre></div>
+D_j</code></pre>
 <pre><code>## # A tibble: 5 x 2
 ##   item1   D_j
 ##   &lt;int&gt; &lt;dbl&gt;
@@ -761,10 +787,10 @@ D_j</code></pre></div>
 ## 4     5  1   
 ## 5     6  2.24</code></pre>
 <p>그리고 대표객체로 선정되지 않은 두 객체 <span class="math inline">\(i\)</span>, <span class="math inline">\(j\)</span>에 대하여 다음을 산출한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 C_{ji} = \max \left(D_j - d(j, i), 0\right)
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d_ji &lt;-<span class="st"> </span>pairwise_distance_df <span class="op">%&gt;%</span>
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">d_ji &lt;-<span class="st"> </span>pairwise_distance_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(
     <span class="op">!</span>item1 <span class="op">%in%</span><span class="st"> </span>M<span class="op">$</span>id,
     <span class="op">!</span>item2 <span class="op">%in%</span><span class="st"> </span>M<span class="op">$</span>id
@@ -774,7 +800,7 @@ C_ji &lt;-<span class="st"> </span>D_j <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">inner_join</span>(d_ji, <span class="dt">by =</span> <span class="st">&quot;item1&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">C_ji =</span> <span class="kw">pmax</span>(D_j <span class="op">-</span><span class="st"> </span>distance, <span class="dv">0</span>))
 
-C_ji</code></pre></div>
+C_ji</code></pre>
 <pre><code>## # A tibble: 20 x 5
 ##    item1   D_j item2 distance  C_ji
 ##    &lt;int&gt; &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;
@@ -800,35 +826,35 @@ C_ji</code></pre></div>
 ## 20     6  2.24     5     1.41 0.822</code></pre>
 <p>이는 객체 <span class="math inline">\(i\)</span>가 추가로 대표객체가 된다고 할 때, 객체 <span class="math inline">\(j\)</span>의 입장에서 거리 감소량이다.</p>
 <p><strong>[단계 2]</strong> 다음과 같이 거리감소량이 가장 큰 객체 <span class="math inline">\(m\)</span>을 대표객체에 포함시키고,</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 m = \arg\,\max_{i \notin M} \sum_{j \notin M} C_{ji}
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span>C_ji <span class="op">%&gt;%</span>
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span>C_ji <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(item2) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">sum_C_ji =</span> <span class="kw">sum</span>(C_ji)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">top_n</span>(<span class="dv">1</span>, sum_C_ji) <span class="op">%&gt;%</span>
 <span class="st">  </span>.<span class="op">$</span>item2
 
-m</code></pre></div>
+m</code></pre>
 <pre><code>## [1] 2</code></pre>
 <p>대표객체집합을 수정한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 M \leftarrow M \cup \{m\}
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M &lt;-<span class="st"> </span>M <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">bind_rows</span>(df[m, ])</code></pre></div>
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">M &lt;-<span class="st"> </span>M <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">bind_rows</span>(df[m, ])</code></pre>
 <p><strong>[단계 3]</strong> <span class="math inline">\(K\)</span>개의 대표객체가 선정되었으면 Stop, 그렇지 않은 경우에는 [단계 1]로 되돌아간다.</p>
 </div>
 <div id="pam-swap" class="section level5">
 <h5><span class="header-section-number">9.3.1.2.2</span> SWAP</h5>
 <p>SWAP은 대표객체로 선정되어 있는 객체 <span class="math inline">\(i\)</span>와 선정되지 않은 객체 <span class="math inline">\(h\)</span>를 교환할 때 목적함수의 변화량을 산출해 더 나은 목적함수값을 찾아가는 과정이다.</p>
 <p><strong>[단계 1]</strong> 객체 <span class="math inline">\(i\)</span>와 객체 <span class="math inline">\(h\)</span>를 교환할 때 목적함수의 변화량을 산출하기 위하여 우선, 대표객체로 선정되지 않은 임의의 객체 <span class="math inline">\(j \neq h\)</span>에서의 변화량을 다음과 같이 산출한다.</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 C_{jih} &amp;=&amp; \text{($i$와 $h$를 교환 후 객체 $j$와 대표객체와의 거리)}\\
  &amp; &amp; - \text{(교환 전 객체 $j$와 대표객체와의 거리)},\\
  &amp; &amp; \, (j \notin M, i \in M, h \notin M)
-\end{eqnarray*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 교환 전 각 객체와 대표 객체와의 거리</span>
+\end{eqnarray*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 교환 전 각 객체와 대표 객체와의 거리</span>
 D_j &lt;-<span class="st"> </span>pairwise_distance_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(
     <span class="op">!</span>item1 <span class="op">%in%</span><span class="st"> </span>M<span class="op">$</span>id,
@@ -840,7 +866,7 @@ D_j &lt;-<span class="st"> </span>pairwise_distance_df <span class="op">%&gt;%</
 <span class="st">  </span><span class="kw">rename</span>(<span class="dt">j =</span> item1) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>item2)
 
-D_j</code></pre></div>
+D_j</code></pre>
 <pre><code>## # A tibble: 4 x 2
 ##       j distance
 ##   &lt;int&gt;    &lt;dbl&gt;
@@ -848,7 +874,7 @@ D_j</code></pre></div>
 ## 2     3     2.83
 ## 3     5     1   
 ## 4     6     2.24</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 교환할 객체</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 교환할 객체</span>
 swap_ids &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">i =</span> <span class="kw">rep</span>(M<span class="op">$</span>id, <span class="dt">each =</span> <span class="kw">nrow</span>(df) <span class="op">-</span><span class="st"> </span><span class="kw">nrow</span>(M)),
   <span class="dt">h =</span> <span class="kw">rep</span>(<span class="kw">setdiff</span>(df<span class="op">$</span>id, M<span class="op">$</span>id), <span class="kw">nrow</span>(M))
@@ -883,7 +909,7 @@ D_jih &lt;-<span class="st"> </span><span class="kw">pmap_dfr</span>(
   <span class="dt">center_ids =</span> M<span class="op">$</span>id
   )
 
-D_jih</code></pre></div>
+D_jih</code></pre>
 <pre><code>## # A tibble: 24 x 4
 ##        j distance     i     h
 ##    &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -898,12 +924,12 @@ D_jih</code></pre></div>
 ##  9     6     1.41     4     5
 ## 10     1     2.24     4     6
 ## # … with 14 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 거리의 변화량</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 거리의 변화량</span>
 C_jih &lt;-<span class="st"> </span>D_j <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">inner_join</span>(D_jih, <span class="dt">by =</span> <span class="st">&quot;j&quot;</span>, <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;_new&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">diff_distance =</span> distance_new <span class="op">-</span><span class="st"> </span>distance)
 
-C_jih</code></pre></div>
+C_jih</code></pre>
 <pre><code>## # A tibble: 24 x 6
 ##        j distance distance_new     i     h diff_distance
 ##    &lt;int&gt;    &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;
@@ -919,16 +945,16 @@ C_jih</code></pre></div>
 ## 10     3     2.83         2.83     2     1         0    
 ## # … with 14 more rows</code></pre>
 <p><strong>[단계 2]</strong> 대표객체 <span class="math inline">\(i\)</span>를 <span class="math inline">\(h\)</span>로 교환하는 경우 총 변화량은 다음과 같다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 T_{ih} = \sum_{j} C_{jih}
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">T_ih &lt;-<span class="st"> </span>C_jih <span class="op">%&gt;%</span>
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">T_ih &lt;-<span class="st"> </span>C_jih <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(i, h) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_diff_distance =</span> <span class="kw">sum</span>(diff_distance))
 
-T_ih</code></pre></div>
+T_ih</code></pre>
 <pre><code>## # A tibble: 8 x 3
-## # Groups:   i [?]
+## # Groups:   i [2]
 ##       i     h total_diff_distance
 ##   &lt;dbl&gt; &lt;dbl&gt;               &lt;dbl&gt;
 ## 1     2     1              0     
@@ -940,22 +966,22 @@ T_ih</code></pre></div>
 ## 7     4     5             -0.0447
 ## 8     4     6              1.71</code></pre>
 <p>이 때 <span class="math inline">\(\min_{i, h} T_{ih}\)</span>에 대응하는 객체 <span class="math inline">\(i^*\)</span>와 <span class="math inline">\(h^*\)</span>를 찾아 <span class="math inline">\(T_{i^*h^*} &lt; 0\)</span>이면 교환한 후에 다시 [단계 1]으로 돌아가고, <span class="math inline">\(T_{i^*h^*} \geq 0\)</span>이면 교환하지 않고 stop.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">swap_ih &lt;-<span class="st"> </span>T_ih <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">swap_ih &lt;-<span class="st"> </span>T_ih <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(total_diff_distance <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">1</span>, total_diff_distance)
 
-swap_ih</code></pre></div>
+swap_ih</code></pre>
 <pre><code>## # A tibble: 1 x 3
 ## # Groups:   i [1]
 ##       i     h total_diff_distance
 ##   &lt;dbl&gt; &lt;dbl&gt;               &lt;dbl&gt;
 ## 1     4     5             -0.0447</code></pre>
 <p>본 예제의 경우 객체 4 대신 객체 5가 새로운 대표객체로 선택되고, 다시 [단계 1]로 넘어간다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M &lt;-<span class="st"> </span>M <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">M &lt;-<span class="st"> </span>M <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">anti_join</span>(df[swap_ih<span class="op">$</span>i, ]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">bind_rows</span>(df[swap_ih<span class="op">$</span>h, ])</code></pre></div>
+<span class="st">  </span><span class="kw">bind_rows</span>(df[swap_ih<span class="op">$</span>h, ])</code></pre>
 <pre><code>## Joining, by = c(&quot;id&quot;, &quot;x1&quot;, &quot;x2&quot;)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">M</code></pre>
 <pre><code>## # A tibble: 2 x 3
 ##      id    x1    x2
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -967,7 +993,7 @@ swap_ih</code></pre></div>
 <div id="pam-user-defined-functions" class="section level4">
 <h4><span class="header-section-number">9.3.1.3</span> R 스크립트 구현</h4>
 <p>일련의 과정을 함수로 구현해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 각 객체로부터 가장 가까운 대표객체까지의 거리</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 각 객체로부터 가장 가까운 대표객체까지의 거리</span>
 distance_from_medoids &lt;-<span class="st"> </span><span class="cf">function</span>(distance_df, medoids_ids) {
   distance_df <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">filter</span>(
@@ -1098,14 +1124,14 @@ pam_medoids &lt;-<span class="st"> </span><span class="cf">function</span>(dista
   }
   
   <span class="kw">return</span> (medoids_ids)
-}</code></pre></div>
+}</code></pre>
 <p>위 구현한 함수를 이용하여 아래와 같이 PAM을 실행해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pairwise_distance_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">pairwise_distance_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df[, <span class="dv">-1</span>], <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>()
 
 medoids_ids &lt;-<span class="st"> </span><span class="kw">pam_medoids</span>(pairwise_distance_df, <span class="dt">k =</span> <span class="dv">2</span>)
 
-df[medoids_ids, ]</code></pre></div>
+df[medoids_ids, ]</code></pre>
 <pre><code>## # A tibble: 2 x 3
 ##      id    x1    x2
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1113,7 +1139,7 @@ df[medoids_ids, ]</code></pre></div>
 ## 2     5    14     6</code></pre>
 <p>위와 같이 2개의 대표객체 2, 5가 선정된다.</p>
 <p>최종 군집해는 각 객체를 가장 가까운 대표객체가 속한 군집에 할당함으로써 얻어진다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">assign_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(distance_df, medoids_ids) {
+<pre class="sourceCode r"><code class="sourceCode r">assign_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(distance_df, medoids_ids) {
   distance_df <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">filter</span>(
       <span class="op">!</span>item1 <span class="op">%in%</span><span class="st"> </span>medoids_ids,
@@ -1138,7 +1164,7 @@ df[medoids_ids, ]</code></pre></div>
 <span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>item2)
 }
 
-<span class="kw">assign_cluster</span>(pairwise_distance_df, medoids_ids)</code></pre></div>
+<span class="kw">assign_cluster</span>(pairwise_distance_df, medoids_ids)</code></pre>
 <pre><code>## # A tibble: 6 x 3
 ##   object distance cluster     
 ##    &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;       
@@ -1156,12 +1182,12 @@ df[medoids_ids, ]</code></pre></div>
 <p>자세한 내용은 교재 <span class="citation">(전치혁 <a href="#ref-jun2012datamining">2012</a>)</span> 참조</p>
 <div id="clara-basic-script" class="section level4">
 <h4><span class="header-section-number">9.3.2.1</span> 기본 R 스크립트</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clara_solution &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">clara</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">k =</span> <span class="dv">2</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">clara_solution &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">clara</span>(df[, <span class="dv">-1</span>], <span class="dt">k =</span> <span class="dv">2</span>)</code></pre>
 <p>얻어진 <code>clara</code> 객체의 원소 <code>i.med</code>는 몇 번째 객체가 군집의 대표객체로 선정되었는지를 나타낸다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clara_solution<span class="op">$</span>i.med</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">clara_solution<span class="op">$</span>i.med</code></pre>
 <pre><code>## [1] 2 5</code></pre>
 <p>또한 <code>clara</code> 객체의 원소 <code>clustering</code>은 각 객체가 어떠한 군집에 할당되었는지를 보여준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clara_solution<span class="op">$</span>clustering</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">clara_solution<span class="op">$</span>clustering</code></pre>
 <pre><code>## [1] 1 1 2 2 2 2</code></pre>
 </div>
 </div>
@@ -1174,13 +1200,13 @@ df[medoids_ids, ]</code></pre></div>
 <p>본 알고리즘은 PAM 알고리즘의 단점을 보완하고자 <span class="citation">Park and Jun (<a href="#ref-park2009simple">2009</a>)</span> 에 의해 제안된 것으로, 대표객체를 반복적으로 수정하는데 K-means 알고리즘의 작동 원리를 모방한 K-medoids 군집 방법이다. 따라서 간단하며 계산 시간이 빠른 것이 장점이라 하겠다. 이 알고리즘은 다음과 같이 3단계로 구성되어 있다. 알고리즘의 각 단계를 Table <a href="nonhierarchical-clustering.html#tab:pam-train-data">9.2</a>의 예제 데이터에 적용하여 살펴보기로 하자.</p>
 <p><strong>[단계 1]</strong> (초기 대표객체 선정) <span class="math inline">\(K\)</span>개의 초기 대표객체를 선정하며, 각 객체를 가장 가까운 대표객체에 배정하여 초기 군집해를 얻는다.</p>
 <p>객체들 간의 거리 <span class="math inline">\(d(i, j), \, i, j = 1, \cdots, n\)</span>를 구한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pairwise_distance_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>()</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">pairwise_distance_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df[, <span class="dv">-1</span>], <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>()</code></pre>
 <p>각 객체 <span class="math inline">\(j = 1, \cdots, n\)</span>에 대하여 다음을 산출한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 v_j = \sum_{i = 1}^{n} \frac{d(i, j)}{\sum_{k = 1}^{n} d(i, k)}
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v_j &lt;-<span class="st"> </span>pairwise_distance_df <span class="op">%&gt;%</span>
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">v_j &lt;-<span class="st"> </span>pairwise_distance_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(item2) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop =</span> distance <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(distance)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
@@ -1188,7 +1214,7 @@ v_j = \sum_{i = 1}^{n} \frac{d(i, j)}{\sum_{k = 1}^{n} d(i, k)}
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">sum_prop =</span> <span class="kw">sum</span>(prop)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">rename</span>(<span class="dt">j =</span> item1)
 
-v_j</code></pre></div>
+v_j</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##       j sum_prop
 ##   &lt;int&gt;    &lt;dbl&gt;
@@ -1199,20 +1225,20 @@ v_j</code></pre></div>
 ## 5     5    0.713
 ## 6     6    0.849</code></pre>
 <p>이후 <span class="math inline">\(v_j\)</span>값들을 오름차순으로 정렬하여 가장 작은 <span class="math inline">\(K\)</span>개의 값을 초기 대표객체로 선정한다. 본 예에서는 <span class="math inline">\(K = 2\)</span>로 가정하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">medoids_ids &lt;-<span class="st"> </span>v_j <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">medoids_ids &lt;-<span class="st"> </span>v_j <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(sum_prop) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span>.<span class="op">$</span>j
 
-medoids_ids</code></pre></div>
+medoids_ids</code></pre>
 <pre><code>## [1] 4 5</code></pre>
 <p>이후 객체를 배정하여 군집해를 얻는다. 위에서 정의했던 <code>assign_cluster</code> 함수를 재사용하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_solution &lt;-<span class="st"> </span><span class="kw">assign_cluster</span>(
+<pre class="sourceCode r"><code class="sourceCode r">cluster_solution &lt;-<span class="st"> </span><span class="kw">assign_cluster</span>(
   pairwise_distance_df, 
   medoids_ids
   )
 
-cluster_solution</code></pre></div>
+cluster_solution</code></pre>
 <pre><code>## # A tibble: 6 x 3
 ##   object distance cluster     
 ##    &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;       
@@ -1223,7 +1249,7 @@ cluster_solution</code></pre></div>
 ## 5      5     0    {5, 6}      
 ## 6      6     1.41 {5, 6}</code></pre>
 <p><strong>[단계 2]</strong> (대표객체의 수정) 현재의 군집에 배정된 객체들의 대표객체를 구하여 새로운 대표객체로 삼는다. 새로운 대표객체는 같은 군집에 배정된 다른 객체들로부터의 거리의 합이 최소가 되는 객체이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">find_medoids &lt;-<span class="st"> </span><span class="cf">function</span>(distance_df, ids) {
+<pre class="sourceCode r"><code class="sourceCode r">find_medoids &lt;-<span class="st"> </span><span class="cf">function</span>(distance_df, ids) {
   distance_df <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">filter</span>(
       item1 <span class="op">%in%</span><span class="st"> </span>ids, 
@@ -1246,11 +1272,11 @@ medoids_ids &lt;-<span class="st"> </span><span class="kw">map_int</span>(
   <span class="dt">distance_df =</span> pairwise_distance_df
 )
 
-medoids_ids</code></pre></div>
+medoids_ids</code></pre>
 <pre><code>## {1, 2, 3, 4}       {5, 6} 
 ##            2            5</code></pre>
 <p><strong>[단계 3]</strong> (객체의 배정) 각 객체를 가장 가까운 대표객체에 배정하여 군집해를 얻는다. 군집해가 이전과 동일하면 Stop하고, 그렇지 않으면 [단계 2]를 반복한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_cluster_solution &lt;-<span class="st"> </span><span class="kw">assign_cluster</span>(
+<pre class="sourceCode r"><code class="sourceCode r">new_cluster_solution &lt;-<span class="st"> </span><span class="kw">assign_cluster</span>(
   pairwise_distance_df, 
   medoids_ids
   )
@@ -1268,14 +1294,14 @@ is_converge &lt;-<span class="st"> </span><span class="kw">near</span>(
   )
 )
 
-<span class="kw">print</span>(is_converge)</code></pre></div>
+<span class="kw">print</span>(is_converge)</code></pre>
 <pre><code>##   ARI 
 ## FALSE</code></pre>
 <p>위의 경우 첫 번째 iteration에서 군집해가 수정되었으므로 다음 iteration을 수행한다.</p>
 <div id="kmeans-like-user-defined-functions" class="section level4">
 <h4><span class="header-section-number">9.3.4.1</span> R 스크립트 구현</h4>
 <p>위 일련의 과정들을 수행하는 R 함수 스크립트를 구현해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">init_medoids &lt;-<span class="st"> </span><span class="cf">function</span>(distance_df, <span class="dt">k =</span> <span class="dv">1</span>) {
+<pre class="sourceCode r"><code class="sourceCode r">init_medoids &lt;-<span class="st"> </span><span class="cf">function</span>(distance_df, <span class="dt">k =</span> <span class="dv">1</span>) {
   object_ids &lt;-<span class="st"> </span><span class="kw">unique</span>(distance_df<span class="op">$</span>item1)
   k &lt;-<span class="st"> </span><span class="kw">min</span>(k, <span class="kw">length</span>(object_ids))
   
@@ -1363,14 +1389,14 @@ kmeans_like_kmedoids &lt;-<span class="st"> </span><span class="cf">function</sp
   }
   
   <span class="kw">return</span>(medoids_ids)
-}</code></pre></div>
+}</code></pre>
 <p>위에서 정의한 함수 <code>kmeans_like_kmedoids</code>를 Table <a href="nonhierarchical-clustering.html#tab:pam-train-data">9.2</a>의 데이터에 적용한 군집결과 및 군집 대표객체는 아래와 같이 얻어진다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pairwise_distance_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">pairwise_distance_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df[, <span class="dv">-1</span>], <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>()
 
 medoids_ids &lt;-<span class="st"> </span><span class="kw">kmeans_like_kmedoids</span>(pairwise_distance_df, <span class="dt">k =</span> <span class="dv">2</span>)
 
-medoids_ids</code></pre></div>
+medoids_ids</code></pre>
 <pre><code>##       {1, 2} {3, 4, 5, 6} 
 ##            1            5</code></pre>
 </div>
@@ -1381,7 +1407,7 @@ medoids_ids</code></pre></div>
 <p>이 방법은 K-means 알고리즘과 유사하나, 하나의 객체가 여러 군집에 속할 가능성을 허용하는 확률 또는 이를 확장한 퍼지(fuzzy) 개념을 도입한 것이다. 객체 <span class="math inline">\(i\)</span>가 군집 <span class="math inline">\(j\)</span>에 속할 확률 <span class="math inline">\(P_{ij}\)</span>를 구하는 문제이다.</p>
 <div id="fuzzy-kmeans-basic-script" class="section level3">
 <h3><span class="header-section-number">9.4.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>),
   <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">14</span>, <span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">7</span>, <span class="dv">13</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">3</span>),
   <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">14</span>, <span class="dv">13</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">15</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>)
@@ -1397,7 +1423,7 @@ df <span class="op">%&gt;%</span>
       <span class="st">&#39;사용시간($x_2$)&#39;</span>
       ),
     <span class="dt">caption =</span> <span class="st">&#39;PC 사용자 데이터&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:fuzzy-kmeans-data">Table 9.3: </span>PC 사용자 데이터</caption>
 <thead>
@@ -1460,7 +1486,7 @@ df <span class="op">%&gt;%</span>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster<span class="op">::</span><span class="kw">fanny</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">metric =</span> <span class="st">&quot;SqEuclidean&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cluster<span class="op">::</span><span class="kw">fanny</span>(df[, <span class="dv">-1</span>], <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">metric =</span> <span class="st">&quot;SqEuclidean&quot;</span>)</code></pre>
 <pre><code>## Fuzzy Clustering object of class &#39;fanny&#39; :                      
 ## m.ship.expon.        2
 ## objective     18.37061
@@ -1495,13 +1521,13 @@ df <span class="op">%&gt;%</span>
 <div id="fuzzy-kmeans-algorithm" class="section level3">
 <h3><span class="header-section-number">9.4.2</span> 알고리즘</h3>
 <p><strong>[단계 0]</strong> 초기 <span class="math inline">\(K\)</span>개의 군집을 임의로 결정한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 P_{ij} = \begin{cases}
 1 &amp; \text{ if object $i$ belongs to cluster $j$}\\
 0 &amp; \text{ otherwise}
 \end{cases}
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">init_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, <span class="dt">k =</span> <span class="dv">1</span>) {
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">init_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, <span class="dt">k =</span> <span class="dv">1</span>) {
   k &lt;-<span class="st"> </span><span class="kw">min</span>(k, <span class="kw">nrow</span>(df))
   
   <span class="cf">while</span> (<span class="ot">TRUE</span>) {
@@ -1514,9 +1540,9 @@ P_{ij} = \begin{cases}
 
 <span class="kw">set.seed</span>(<span class="dv">4000</span>)
 
-cluster_membership &lt;-<span class="st"> </span><span class="kw">init_cluster</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">k =</span> <span class="dv">3</span>)
+cluster_membership &lt;-<span class="st"> </span><span class="kw">init_cluster</span>(df[, <span class="dv">-1</span>], <span class="dt">k =</span> <span class="dv">3</span>)
 
-cluster_membership</code></pre></div>
+cluster_membership</code></pre>
 <pre><code>## # A tibble: 10 x 3
 ##       V1    V2    V3
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1531,19 +1557,19 @@ cluster_membership</code></pre></div>
 ##  9     0     0     1
 ## 10     0     1     0</code></pre>
 <p><strong>[단계 1]</strong> 각 군집의 중심좌표를 산출한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \mathbf{c}_j = \frac{\sum_{i = 1}^{n} P_{ij}^{m} \mathbf{x}_i}{\sum_{i = 1}^{n} P_{ij}^{m}}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>여기에서 상수 <span class="math inline">\(m\)</span>은 1보다 큰 값을 사용한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">find_center &lt;-<span class="st"> </span><span class="cf">function</span>(df, p, m) {
+<pre class="sourceCode r"><code class="sourceCode r">find_center &lt;-<span class="st"> </span><span class="cf">function</span>(df, p, m) {
   wt &lt;-<span class="st"> </span>p <span class="op">^</span><span class="st"> </span>m
   df <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">summarize_all</span>(weighted.mean, <span class="dt">w =</span> wt)
 }
 
-cluster_df &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(cluster_membership, find_center, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">m =</span> <span class="dv">2</span>)
+cluster_df &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(cluster_membership, find_center, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">m =</span> <span class="dv">2</span>)
 
-cluster_df</code></pre></div>
+cluster_df</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##      x1    x2
 ##   &lt;dbl&gt; &lt;dbl&gt;
@@ -1551,11 +1577,11 @@ cluster_df</code></pre></div>
 ## 2  7.67  4.33
 ## 3  5     9</code></pre>
 <p><strong>[단계 2]</strong> 군집 membership 계수 <span class="math inline">\(P_{ij}\)</span>를 업데이트한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 P_{ij} = \frac{d(\mathbf{x}_i, \mathbf{c}_j)^{-\frac{1}{m - 1}}}{\sum_{a = 1}^{K} d(\mathbf{x}_i, \mathbf{c}_a)^{-\frac{1}{m - 1}}}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>여기에서 거리함수 <span class="math inline">\(d()\)</span>는 제곱 유클리드 거리를 사용한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">update_membership &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_df, m) {
+<pre class="sourceCode r"><code class="sourceCode r">update_membership &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_df, m) {
   distance_mat &lt;-<span class="st"> </span>flexclust<span class="op">::</span><span class="kw">dist2</span>(df, cluster_df)  <span class="op">^</span><span class="st"> </span><span class="dv">2</span>
   
   p &lt;-<span class="st"> </span>distance_mat <span class="op">^</span><span class="st"> </span>(<span class="op">-</span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(m <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)) <span class="op">%&gt;%</span>
@@ -1565,7 +1591,7 @@ P_{ij} = \frac{d(\mathbf{x}_i, \mathbf{c}_j)^{-\frac{1}{m - 1}}}{\sum_{a = 1}^{K
   p
 }
 
-<span class="kw">update_membership</span>(df[, <span class="op">-</span><span class="dv">1</span>], cluster_df, <span class="dt">m =</span> <span class="dv">2</span>)</code></pre></div>
+<span class="kw">update_membership</span>(df[, <span class="dv">-1</span>], cluster_df, <span class="dt">m =</span> <span class="dv">2</span>)</code></pre>
 <pre><code>## # A tibble: 10 x 3
 ##        ``     ``     ``
 ##     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -1582,7 +1608,7 @@ P_{ij} = \frac{d(\mathbf{x}_i, \mathbf{c}_j)^{-\frac{1}{m - 1}}}{\sum_{a = 1}^{K
 </div>
 <div id="fuzzy-kmeans-script-implement" class="section level3">
 <h3><span class="header-section-number">9.4.3</span> R 스크립트 구현</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fuzzy_kmeans &lt;-<span class="st"> </span><span class="cf">function</span>(df, <span class="dt">k =</span> <span class="dv">1</span>, <span class="dt">m =</span> <span class="dv">2</span>, <span class="dt">max_iter =</span> 1000L, <span class="dt">tol =</span> <span class="fl">1e-9</span>) {
+<pre class="sourceCode r"><code class="sourceCode r">fuzzy_kmeans &lt;-<span class="st"> </span><span class="cf">function</span>(df, <span class="dt">k =</span> <span class="dv">1</span>, <span class="dt">m =</span> <span class="dv">2</span>, <span class="dt">max_iter =</span> 1000L, <span class="dt">tol =</span> <span class="fl">1e-9</span>) {
   k &lt;-<span class="st"> </span><span class="kw">min</span>(k, <span class="kw">nrow</span>(df))
   i &lt;-<span class="st"> </span>0L
   
@@ -1607,21 +1633,21 @@ P_{ij} = \frac{d(\mathbf{x}_i, \mathbf{c}_j)^{-\frac{1}{m - 1}}}{\sum_{a = 1}^{K
   )
   
   <span class="kw">return</span> (res)
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">4000</span>)
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">4000</span>)
 
-fuzzy_kmeans_solution &lt;-<span class="st"> </span><span class="kw">fuzzy_kmeans</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">m =</span> <span class="dv">2</span>)
+fuzzy_kmeans_solution &lt;-<span class="st"> </span><span class="kw">fuzzy_kmeans</span>(df[, <span class="dv">-1</span>], <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">m =</span> <span class="dv">2</span>)
 
-fuzzy_kmeans_solution<span class="op">$</span>n_iteration</code></pre></div>
+fuzzy_kmeans_solution<span class="op">$</span>n_iteration</code></pre>
 <pre><code>## [1] 16</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fuzzy_kmeans_solution<span class="op">$</span>center</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">fuzzy_kmeans_solution<span class="op">$</span>center</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##      x1    x2
 ##   &lt;dbl&gt; &lt;dbl&gt;
 ## 1 13.4   6.63
 ## 2  3.64  2.98
 ## 3  7.00 14.0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fuzzy_kmeans_solution<span class="op">$</span>membership</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">fuzzy_kmeans_solution<span class="op">$</span>membership</code></pre>
 <pre><code>##                                          
 ##  [1,] 0.009042608 0.007809655 0.983147737
 ##  [2,] 0.026757600 0.015726915 0.957515485
@@ -1633,8 +1659,8 @@ fuzzy_kmeans_solution<span class="op">$</span>n_iteration</code></pre></div>
 ##  [8,] 0.034648640 0.939278603 0.026072757
 ##  [9,] 0.003348637 0.993661878 0.002989486
 ## [10,] 0.010393499 0.981125198 0.008481303</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fuzzy_kmeans_solution<span class="op">$</span>membership <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">apply</span>(<span class="dv">1</span>, which.max)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">fuzzy_kmeans_solution<span class="op">$</span>membership <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">apply</span>(<span class="dv">1</span>, which.max)</code></pre>
 <pre><code>##  [1] 3 3 1 1 1 3 1 2 2 2</code></pre>
 </div>
 </div>
@@ -1643,7 +1669,7 @@ fuzzy_kmeans_solution<span class="op">$</span>n_iteration</code></pre></div>
 <p>모형기반 군집방법(model-based clustering)에서는 각 객체가 혼합분포(mixture)를 따른다고 가정하여 객체의 군집배정변수를 통계적으로 추정하는 것이다.</p>
 <div id="model-based-clustering-basic-script" class="section level3">
 <h3><span class="header-section-number">9.5.1</span> 기본 R script</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>),
   <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">12</span>),
   <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">15</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>)
@@ -1659,7 +1685,7 @@ df <span class="op">%&gt;%</span>
       <span class="st">&#39;$x_2$&#39;</span>
       ),
     <span class="dt">caption =</span> <span class="st">&#39;모형기반 군집 학습 데이터&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:model-based-clustering-data">Table 9.4: </span>모형기반 군집 학습 데이터</caption>
 <thead>
@@ -1708,7 +1734,7 @@ df <span class="op">%&gt;%</span>
 </tbody>
 </table>
 <p>Table <a href="nonhierarchical-clustering.html#tab:model-based-clustering-data">9.4</a>의 7개의 객체를 두 개의 군집에 배정하는 간단한 R 스크립트는 아래와 같다. 여기에서 <code>mclust::meVII</code>는 각 군집의 분산-공분산 행렬은 서로 다르되, 각 변수의 분산이 동일하며 공분산은 0이라 가정한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1024</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1024</span>)
 
 <span class="co"># 군집 개수</span>
 K &lt;-<span class="st"> </span><span class="dv">2</span>
@@ -1718,10 +1744,10 @@ init_z &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class=
 <span class="st">  `</span><span class="dt">/</span><span class="st">`</span>(<span class="kw">apply</span>(., <span class="dv">1</span>, sum))
 
 <span class="co"># EM 알고리즘 - 분산-공분산 행렬: unequal volume (V), spherical(II) </span>
-sol &lt;-<span class="st"> </span>mclust<span class="op">::</span><span class="kw">meVII</span>(<span class="dt">data =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">z =</span> init_z)
+sol &lt;-<span class="st"> </span>mclust<span class="op">::</span><span class="kw">meVII</span>(<span class="dt">data =</span> df[, <span class="dv">-1</span>], <span class="dt">z =</span> init_z)
 
 <span class="co"># 군집 사후확률</span>
-sol<span class="op">$</span>z</code></pre></div>
+sol<span class="op">$</span>z</code></pre>
 <pre><code>##              [,1]         [,2]
 ## [1,] 7.596402e-28 1.000000e+00
 ## [2,] 8.254183e-27 1.000000e+00
@@ -1730,8 +1756,8 @@ sol<span class="op">$</span>z</code></pre></div>
 ## [5,] 1.000000e+00 1.473491e-25
 ## [6,] 1.000000e+00 4.876251e-31
 ## [7,] 1.000000e+00 1.480388e-20</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 혼합분포</span>
-sol<span class="op">$</span>parameters</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 혼합분포</span>
+sol<span class="op">$</span>parameters</code></pre>
 <pre><code>## $pro
 ## [1] 0.5714286 0.4285714
 ## 
@@ -1782,21 +1808,21 @@ sol<span class="op">$</span>parameters</code></pre></div>
 <li><span class="math inline">\(\tau_k\)</span>: 임의의 객체가 군집 <span class="math inline">\(k\)</span>에 속할 사전확률 (<span class="math inline">\(\tau_k \geq 0, \, \sum_{k = 1}^{K} \tau = 1\)</span>)</li>
 </ul>
 <p>이 때, 임의의 객체 <span class="math inline">\(\mathbf{x}\)</span>는 다음과 같은 혼합 확률밀도함수를 갖는다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 f(\mathbf{x} \, | \, \boldsymbol\theta) = \sum_{k = 1}^{K} \tau_k f_k(\mathbf{x} \, | \, \theta_k)
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>본 장에서는 <span class="math inline">\(f_k\)</span>가 다변량 정규분포를 나타낸다고 가정하자.</p>
 <p>추가로, 각 객체가 속하는 군집에 대한 지시변수 <span class="math inline">\(z_{ik}\)</span>를 아래와 같이 정의하자.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 z_{ik} = \begin{cases}
 1 &amp; \text{ if object $i$ belongs to cluster $k$} \\
 0 &amp; \text{ otherwise}
 \end{cases}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>이 <span class="math inline">\(z_{ik}\)</span> 변수는 실제값이 관측되지 않는 변수이므로, 최우추정법을 이용하여 그 기대값, 즉 객체 <span class="math inline">\(i\)</span>가 군집 <span class="math inline">\(k\)</span>에 속할 확률을 추정한다. 보다 자세한 설명은 교재 <span class="citation">(전치혁 <a href="#ref-jun2012datamining">2012</a>)</span> 참조.</p>
 <p>앞의 <a href="nonhierarchical-clustering.html#model-based-clustering-basic-script">9.5.1</a>장에서 수행했던 예제를 단계별로 살펴보기로 하자.</p>
 <p><strong>[단계 0]</strong> <span class="math inline">\(\hat{z}_{ik}\)</span>를 초기화한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1024</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1024</span>)
 
 <span class="co"># 군집 개수</span>
 K &lt;-<span class="st"> </span><span class="dv">2</span>
@@ -1807,7 +1833,7 @@ z_hat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="
 <span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span>
 <span class="st">  `</span><span class="dt">names&lt;-</span><span class="st">`</span>(<span class="kw">str_c</span>(<span class="st">&quot;C&quot;</span>, <span class="dv">1</span><span class="op">:</span>K))
 
-z_hat</code></pre></div>
+z_hat</code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##       C1     C2
 ##    &lt;dbl&gt;  &lt;dbl&gt;
@@ -1820,21 +1846,21 @@ z_hat</code></pre></div>
 ## 7 0.264  0.736</code></pre>
 <p><strong>[단계 1]</strong> (M-step) <span class="math inline">\(\hat{z}_{ik}\)</span>를 바탕으로 파라미터를 추정한다.</p>
 <p>우선 <span class="math inline">\(\tau_k\)</span>와 <span class="math inline">\(\boldsymbol\mu_k\)</span>를 다음과 같이 추정한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \hat{\tau}_k = \frac{\sum_{i = 1}^{n} \hat{z}_{ik}}{n}
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tau_hat &lt;-<span class="st"> </span><span class="kw">map</span>(z_hat, mean)
-tau_hat</code></pre></div>
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">tau_hat &lt;-<span class="st"> </span><span class="kw">map</span>(z_hat, mean)
+tau_hat</code></pre>
 <pre><code>## $C1
 ## [1] 0.4746762
 ## 
 ## $C2
 ## [1] 0.5253238</code></pre>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \hat{\boldsymbol\mu}_k = \frac{\sum_{i = 1}^{n} \hat{z}_{ik} \mathbf{x}_i}{\sum_{i = 1}^{n} \hat{z}_{ik}}
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu_hat &lt;-<span class="st"> </span><span class="kw">map</span>(z_hat, <span class="op">~</span><span class="kw">colSums</span>(.<span class="op">*</span>df[, <span class="op">-</span><span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(.))
-mu_hat</code></pre></div>
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">mu_hat &lt;-<span class="st"> </span><span class="kw">map</span>(z_hat, <span class="op">~</span><span class="kw">colSums</span>(.<span class="op">*</span>df[, <span class="dv">-1</span>]) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(.))
+mu_hat</code></pre>
 <pre><code>## $C1
 ##       x1       x2 
 ## 8.644042 7.559792 
@@ -1843,9 +1869,9 @@ mu_hat</code></pre></div>
 ##       x1       x2 
 ## 8.777757 7.853884</code></pre>
 <p>분산-공분산 행렬 <span class="math inline">\(\boldsymbol\Sigma_k\)</span>의 추정은 분산-공분산 구조를 어떻게 가정하느냐에 따라 다르다. 우선, 일반적으로 분산-공분산 행렬 <span class="math inline">\(\boldsymbol\Sigma_k\)</span>는 아래와 같이 decompose할 수 있다 <span class="citation">(Banfield and Raftery <a href="#ref-banfield1993model">1993</a>)</span>.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \boldsymbol\Sigma_k = \lambda_k \mathbf{D}_k \mathbf{A}_k \mathbf{D}_k^\top
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>여기에서</p>
 <ul>
 <li><span class="math inline">\(\lambda_k = \det{\boldsymbol\Sigma_k}^{1 / 2}\)</span>; 군집 <span class="math inline">\(k\)</span>이 크기와 관련</li>
@@ -1853,7 +1879,7 @@ mu_hat</code></pre></div>
 <li><span class="math inline">\(\mathbf{A}_k\)</span>: diagonal matrix s.t. <span class="math inline">\(\det{\mathbf{A}_k} = 1\)</span>; 군집 <span class="math inline">\(k\)</span>의 형태와 관련</li>
 </ul>
 <p>이다. <span class="math inline">\(\lambda_k\)</span>, <span class="math inline">\(\mathbf{D}_k\)</span> 및 <span class="math inline">\(\mathbf{A}_k\)</span>에 적용되는 제약조건에 따라 분산-공분산 모형을 정의할 수 있다. 아래는 본 장에서 다룰 세 가지 모형이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tribble</span>(
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tribble</span>(
   <span class="op">~</span>model, <span class="op">~</span>sigma,
   <span class="st">&quot;VII&quot;</span>, <span class="st">&quot;$</span><span class="ch">\\</span><span class="st">lambda_k </span><span class="ch">\\</span><span class="st">mathbf{I}$&quot;</span>,
   <span class="st">&quot;VEI&quot;</span>, <span class="st">&quot;$</span><span class="ch">\\</span><span class="st">lambda_k </span><span class="ch">\\</span><span class="st">mathbf{A}$&quot;</span>,
@@ -1867,7 +1893,7 @@ mu_hat</code></pre></div>
       <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">boldsymbol</span><span class="ch">\\</span><span class="st">Sigma_k$&#39;</span>
       ),
     <span class="dt">caption =</span> <span class="st">&#39;Within-group 분산-공분산 모형&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:within-group-cov-models">Table 9.5: </span>Within-group 분산-공분산 모형</caption>
 <thead>
@@ -1911,17 +1937,17 @@ mu_hat</code></pre></div>
 </ul>
 <p><span class="citation">Celeux and Govaert (<a href="#ref-celeux1995gaussian">1995</a>)</span> 에 각 분산-공분산 모형에 대한 추정값을 얻는 반복적 알고리즘이 소개되어 있으며, 이는 교재 <span class="citation">(전치혁 <a href="#ref-jun2012datamining">2012</a>)</span>에도 설명되어 있다.</p>
 <p>우선, 각 군집 <span class="math inline">\(k\)</span> 내에서의 scatter matrix를 아래와 같이 계산한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \mathbf{W}_k = \sum_{i = 1}^{n} \hat{z}_{ik} (\mathbf{x}_i - \hat{\boldsymbol\mu}_k)(\mathbf{x}_i - \hat{\boldsymbol\mu}_k)^\top
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ncol</span>(df[, <span class="op">-</span><span class="dv">1</span>])
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ncol</span>(df[, <span class="dv">-1</span>])
 W &lt;-<span class="st"> </span><span class="kw">map</span>(mu_hat, 
-    <span class="op">~</span><span class="kw">pmap_dfc</span>(<span class="kw">list</span>(<span class="dt">x =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">mu =</span> .),
+    <span class="op">~</span><span class="kw">pmap_dfc</span>(<span class="kw">list</span>(<span class="dt">x =</span> df[, <span class="dv">-1</span>], <span class="dt">mu =</span> .),
              <span class="cf">function</span>(x, mu) x <span class="op">-</span><span class="st"> </span>mu)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">map</span>(as.matrix, <span class="dt">nrow =</span> p, <span class="dt">ncol =</span> p) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">map2</span>(z_hat, <span class="op">~</span><span class="st"> </span><span class="kw">t</span>(.x) <span class="op">%*%</span><span class="st"> </span>(.y <span class="op">*</span><span class="st"> </span>.x))
 
-W</code></pre></div>
+W</code></pre>
 <pre><code>## $C1
 ##           x1        x2
 ## x1  28.22794 -44.46516
@@ -1933,41 +1959,41 @@ W</code></pre></div>
 ## x2 -53.17491  92.90912</code></pre>
 <p>이후 분산-공분산 모형에 따라 아래와 같이 각 군집의 분산-공분산 행렬을 추정한다.</p>
 <p>[VII의 경우] 반복 업데이트의 과정 없이 closed-form으로 해가 존재한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \lambda_k = \frac{Tr(\mathbf{W}_k)}{p \sum_{i = 1}^{n} \hat{z}_{ik}}
-\end{equation*}\]</span>
-<span class="math display">\[\begin{equation*}
+\end{equation*}\]</span></p>
+<p><span class="math display">\[\begin{equation*}
 \boldsymbol\Sigma_k = \lambda_k \mathbf{I}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>이 때 <span class="math inline">\(p\)</span>는 관측값의 차원수이다 (<span class="math inline">\(\mathbf{x} \in \mathbb{R}^p\)</span>).</p>
 <p>[VEI의 경우]</p>
 <p>VEI-0. 행렬 <span class="math inline">\(\mathbf{B} = \mathbf{I}\)</span>로 초기화한다.</p>
 <p>VEI-1. <span class="math inline">\(\lambda_k\)</span>값을 아래와 같이 계산한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \lambda_k = \frac{Tr(\mathbf{W}_k \mathbf{B}^{-1})}{p \sum_{i = 1}^{n} \hat{z}_{ik}}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>VEI-2. 행렬 <span class="math inline">\(\mathbf{B}\)</span>를 아래와 같이 업데이트한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \mathbf{B} = \frac{diag\left( \sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k} \right)}{\left( \det diag\left( \sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k} \right) \right)^{1 / p}}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>VEI-3. 결과가 수렴하면 종료, 그렇지 않으면 VEI-1로 돌아간다. 최종 수렴한 결과를 통해 각 군집의 분산-공분산 행렬을 아래와 같이 얻는다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \boldsymbol\Sigma_k = \lambda_k \mathbf{B}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>[VEE의 경우]</p>
 <p>VEE-0. 행렬 <span class="math inline">\(\mathbf{C} = \mathbf{I}\)</span>로 초기화한다.</p>
 <p>VEE-1. <span class="math inline">\(\lambda_k\)</span>값을 아래와 같이 계산한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \lambda_k = \frac{Tr(\mathbf{W}_k \mathbf{C}^{-1})}{p \sum_{i = 1}^{n} \hat{z}_{ik}}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>VEE-2. 행렬 <span class="math inline">\(\mathbf{C}\)</span>를 아래와 같이 업데이트한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \mathbf{C} = \frac{\sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k}}{\left( \det \sum_{k = 1}^{K} \frac{\mathbf{W}_k}{\lambda_k} \right)^{1 / p}}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>VEE-3. 결과가 수렴하면 종료, 그렇지 않으면 VEE-1로 돌아간다. 최종 수렴한 결과를 통해 각 군집의 분산-공분산 행렬을 아래와 같이 얻는다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \boldsymbol\Sigma_k = \lambda_k \mathbf{C}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>위 각 분산-공분산 모형을 추정 과정에 대한 설명은, 보다 일반화된 분산-공분산 구조 <span class="math inline">\(\lambda_k \mathbf{D}_k \mathbf{A}_k \mathbf{D}_k^\top\)</span>을 추정하는 과정을 각 모형에 추가되는 제약에 따라 조금 더 단순하게 표현한 것이다. 보다 자세한 내용은 <span class="citation">Celeux and Govaert (<a href="#ref-celeux1995gaussian">1995</a>)</span> 참조.</p>
 <p>아래와 같이 군집 내 분산-공분산 행렬을 추정하는 함수 <code>estimate_mixture_cov</code>를 구현해보자. 해당 함수는 3개의 입력변수를 사용한다.</p>
 <ul>
@@ -1975,7 +2001,7 @@ W</code></pre></div>
 <li><code>W</code>: <code>K</code>개의 scatter matrix (<span class="math inline">\(\mathbf{W}_1, \cdots, \mathbf{W}_K\)</span>)를 원소로 지니는 리스트 (<code>list</code>)</li>
 <li><code>z</code>: <span class="math inline">\(z_{ik}\)</span> 값을 지닌 데이터 프레임 (<code>data.frame</code>). <span class="math inline">\(n\)</span>개의 행과 <span class="math inline">\(K\)</span>개의 열로 이루어진다. 즉, 행은 각 관측객체를 나타내며, 열은 각 군집을 나타낸다.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">estimate_mixture_cov &lt;-<span class="st"> </span><span class="cf">function</span>(modelName, W, z) {
+<pre class="sourceCode r"><code class="sourceCode r">estimate_mixture_cov &lt;-<span class="st"> </span><span class="cf">function</span>(modelName, W, z) {
   K &lt;-<span class="st"> </span><span class="kw">ncol</span>(z)
   p &lt;-<span class="st"> </span><span class="kw">ncol</span>(W[[<span class="dv">1</span>]])
 
@@ -2048,9 +2074,9 @@ W</code></pre></div>
     <span class="dt">orientation =</span> D,
     <span class="dt">Sigma =</span> Sigma
   ))
-}</code></pre></div>
+}</code></pre>
 <p>초기값으로 주어진 <span class="math inline">\(\hat{z}_{ik}\)</span> 를 이용하여 “VII” 구조의 분산-공분산 행렬을 구해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">estimate_mixture_cov</span>(<span class="st">&quot;VII&quot;</span>, W, z_hat)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">estimate_mixture_cov</span>(<span class="st">&quot;VII&quot;</span>, W, z_hat)</code></pre>
 <pre><code>## $volume
 ## $volume$C1
 ## [1] 16.64239
@@ -2094,10 +2120,10 @@ W</code></pre></div>
 ## [1,] 17.68685  0.00000
 ## [2,]  0.00000 17.68685</code></pre>
 <p>위 <code>estimate_mixture_cov</code> 함수에서 “VII”보다 일반화된 “VEI”와 “VEE” 분산-공분산 모형에 대한 추정도 구현되어 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># estimate_mixture_cov(&quot;VEI&quot;, W, z_hat)</span>
-<span class="co"># estimate_mixture_cov(&quot;VEE&quot;, W, z_hat)</span></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># estimate_mixture_cov(&quot;VEI&quot;, W, z_hat)</span>
+<span class="co"># estimate_mixture_cov(&quot;VEE&quot;, W, z_hat)</span></code></pre>
 <p>위 일련의 파리미터 추정을 하나의 함수 <code>GMM_Mstep</code>으로 아래와 같이 구성해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GMM_Mstep &lt;-<span class="st"> </span><span class="cf">function</span>(df, z, <span class="dt">modelName =</span> <span class="st">&quot;VII&quot;</span>) {
+<pre class="sourceCode r"><code class="sourceCode r">GMM_Mstep &lt;-<span class="st"> </span><span class="cf">function</span>(df, z, <span class="dt">modelName =</span> <span class="st">&quot;VII&quot;</span>) {
   tau &lt;-<span class="st"> </span><span class="kw">map</span>(z, mean)
   mu &lt;-<span class="st"> </span><span class="kw">map</span>(z, <span class="op">~</span><span class="kw">colSums</span>(. <span class="op">*</span><span class="st"> </span>df) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(.))
   
@@ -2118,9 +2144,9 @@ W</code></pre></div>
   <span class="kw">return</span> (res)
 }
 
-Mstep_res &lt;-<span class="st"> </span><span class="kw">GMM_Mstep</span>(df[, <span class="op">-</span><span class="dv">1</span>], z_hat)
+Mstep_res &lt;-<span class="st"> </span><span class="kw">GMM_Mstep</span>(df[, <span class="dv">-1</span>], z_hat)
 
-Mstep_res</code></pre></div>
+Mstep_res</code></pre>
 <pre><code>## $tau
 ## $tau$C1
 ## [1] 0.4746762
@@ -2150,10 +2176,10 @@ Mstep_res</code></pre></div>
 ## [1,] 17.68685  0.00000
 ## [2,]  0.00000 17.68685</code></pre>
 <p><strong>[단계 2]</strong> (E-step) M-step에서의 파라미터 추정치를 바탕으로 <span class="math inline">\(\hat{z}_{ik}\)</span>를 산출한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \hat{z}_{ik} = \frac{\hat{\tau}_k f_k(\mathbf{x}_i \, | \, \hat{\boldsymbol{\mu}}_k, \hat{\boldsymbol{\Sigma}}_k)}{\sum_{l = 1}^{K} \hat{\tau}_l f_l(\mathbf{x}_i \, | \, \hat{\boldsymbol{\mu}}_l, \hat{\boldsymbol{\Sigma}}_l)}
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GMM_Estep &lt;-<span class="st"> </span><span class="cf">function</span>(df, tau, mu, Sigma) {
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">GMM_Estep &lt;-<span class="st"> </span><span class="cf">function</span>(df, tau, mu, Sigma) {
   <span class="kw">pmap_dfc</span>(<span class="kw">list</span>(<span class="dt">tau =</span> tau, <span class="dt">mu =</span> mu, <span class="dt">Sigma =</span> Sigma),
        <span class="cf">function</span>(df, tau, mu, Sigma) 
          tau <span class="op">*</span><span class="st"> </span>mvtnorm<span class="op">::</span><span class="kw">dmvnorm</span>(df, <span class="dt">mean =</span> mu, <span class="dt">sigma =</span> Sigma),
@@ -2161,9 +2187,9 @@ Mstep_res</code></pre></div>
 <span class="st">    `</span><span class="dt">/</span><span class="st">`</span>(<span class="kw">rowSums</span>(.))
 }
 
-new_z_hat &lt;-<span class="st"> </span><span class="kw">GMM_Estep</span>(df[, <span class="op">-</span><span class="dv">1</span>], Mstep_res<span class="op">$</span>tau, Mstep_res<span class="op">$</span>mu, Mstep_res<span class="op">$</span>Sigma)
+new_z_hat &lt;-<span class="st"> </span><span class="kw">GMM_Estep</span>(df[, <span class="dv">-1</span>], Mstep_res<span class="op">$</span>tau, Mstep_res<span class="op">$</span>mu, Mstep_res<span class="op">$</span>Sigma)
 
-new_z_hat</code></pre></div>
+new_z_hat</code></pre>
 <pre><code>##          C1        C2
 ## 1 0.4626878 0.5373122
 ## 2 0.4568716 0.5431284
@@ -2173,14 +2199,14 @@ new_z_hat</code></pre></div>
 ## 6 0.4886741 0.5113259
 ## 7 0.4870085 0.5129915</code></pre>
 <p><strong>[단계 3]</strong> 수렴조건을 만족하면 stop, 그렇지 않으면 [단계 1]을 반복한다. 일반적으로는 우도함수값의 변화량을 수렴조건으로 사용하나, 본 장에서는 간단하게 <span class="math inline">\(z_{ik}\)</span>값의 변화량을 기준으로 수렴을 판단하도록 하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(<span class="kw">abs</span>(z_hat <span class="op">-</span><span class="st"> </span>new_z_hat)) <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-9</span></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(<span class="kw">abs</span>(z_hat <span class="op">-</span><span class="st"> </span>new_z_hat)) <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-9</span></code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>위 수식의 값이 <code>TRUE</code>이면 수렴, <code>FALSE</code>이면 [단계 1]을 반복한다.</p>
 </div>
 <div id="model-based-clustering-script-implement" class="section level3">
 <h3><span class="header-section-number">9.5.3</span> R 스크립트 구현</h3>
 <p>위 일련의 과정들을 포함하는 하나의 함수 <code>GMM_EM</code>을 아래와 같이 구현해보자. 앞에서 정의했던 함수 <code>GMM_Mstep</code> 및 <code>GMM_Estep</code>을 재사용한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GMM_EM &lt;-<span class="st"> </span><span class="cf">function</span>(df, K, <span class="dt">modelName =</span> <span class="st">&quot;VII&quot;</span>, <span class="dt">tol =</span> <span class="fl">1e-9</span>) {
+<pre class="sourceCode r"><code class="sourceCode r">GMM_EM &lt;-<span class="st"> </span><span class="cf">function</span>(df, K, <span class="dt">modelName =</span> <span class="st">&quot;VII&quot;</span>, <span class="dt">tol =</span> <span class="fl">1e-9</span>) {
   K &lt;-<span class="st"> </span><span class="kw">min</span>(K, <span class="kw">nrow</span>(df))
   
   i &lt;-<span class="st"> </span>0L  
@@ -2209,12 +2235,12 @@ new_z_hat</code></pre></div>
   <span class="kw">return</span> (<span class="kw">list</span>(<span class="dt">z =</span> z_hat, 
                <span class="dt">parameters =</span> Mstep_res,
                <span class="dt">n_iteration =</span> i))
-}</code></pre></div>
+}</code></pre>
 <p>위 함수를 학습데이터 Table <a href="nonhierarchical-clustering.html#tab:model-based-clustering-data">9.4</a>에 적용한 결과는 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">VII_res &lt;-<span class="st"> </span><span class="kw">GMM_EM</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dv">2</span>, <span class="st">&quot;VII&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r">VII_res &lt;-<span class="st"> </span><span class="kw">GMM_EM</span>(df[, <span class="dv">-1</span>], <span class="dv">2</span>, <span class="st">&quot;VII&quot;</span>)
 
 <span class="co"># 군집 멤버쉽</span>
-VII_res<span class="op">$</span>z</code></pre></div>
+VII_res<span class="op">$</span>z</code></pre>
 <pre><code>##             C1           C2
 ## 1 1.000000e+00 6.786307e-28
 ## 2 1.000000e+00 8.771316e-27
@@ -2223,8 +2249,8 @@ VII_res<span class="op">$</span>z</code></pre></div>
 ## 5 7.046079e-22 1.000000e+00
 ## 6 1.843399e-26 1.000000e+00
 ## 7 1.544788e-17 1.000000e+00</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 혼합분포</span>
-VII_res<span class="op">$</span>parameters</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 혼합분포</span>
+VII_res<span class="op">$</span>parameters</code></pre>
 <pre><code>## $tau
 ## $tau$C1
 ## [1] 0.4285714
@@ -2257,9 +2283,9 @@ VII_res<span class="op">$</span>parameters</code></pre></div>
 <div id="r-packages-model-based-clustering" class="section level3">
 <h3><span class="header-section-number">9.5.4</span> R 패키지 내 모형기반 군집분석</h3>
 <p>R 패키지 <code>mclust</code>를 통해, 위에서 살펴본 VII, VEI, VEE 외에 보다 다양한 분산-공분산 모형을 가정한 군집분석을 수행할 수 있다 <span class="citation">(Scrucca et al. <a href="#ref-scrucca2016mclust">2016</a>)</span>. 다음은 “EEI” 구조에 대한 수행 예이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI &lt;-<span class="st"> </span>mclust<span class="op">::</span><span class="kw">meEEI</span>(df[, <span class="op">-</span><span class="dv">1</span>], z_hat)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI &lt;-<span class="st"> </span>mclust<span class="op">::</span><span class="kw">meEEI</span>(df[, <span class="dv">-1</span>], z_hat)</code></pre>
 <p>위 수행 결과 객체는 리스트 형태이며, 그 원소 중 <code>z</code>는 <span class="math inline">\(\hat{z}_{ik}\)</span>값을, <code>parameters</code>는 혼합분포 파라미터 추정값 (<span class="math inline">\(\hat{\tau}_k\)</span>, <span class="math inline">\(\hat{\boldsymbol\mu}_k\)</span>, <span class="math inline">\(\hat{\boldsymbol\Sigma}_k\)</span>)을 나타낸다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI<span class="op">$</span>z</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI<span class="op">$</span>z</code></pre>
 <pre><code>##              [,1]         [,2]
 ## [1,] 6.198742e-26 1.000000e+00
 ## [2,] 2.193775e-22 1.000000e+00
@@ -2268,7 +2294,7 @@ VII_res<span class="op">$</span>parameters</code></pre></div>
 ## [5,] 1.000000e+00 1.350932e-26
 ## [6,] 1.000000e+00 5.217649e-33
 ## [7,] 1.000000e+00 9.883335e-24</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI<span class="op">$</span>parameters</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">res_mclust_EEI<span class="op">$</span>parameters</code></pre>
 <pre><code>## $pro
 ## [1] 0.5714286 0.4285714
 ## 
@@ -2316,9 +2342,9 @@ VII_res<span class="op">$</span>parameters</code></pre></div>
 ## $Vinv
 ## NULL</code></pre>
 <p><code>mclust</code> 패키지 내의 함수 <code>densityMclust</code>는 Bayesian information criterion (BIC)을 기준으로 최적의 혼합분포를 찾는 함수이다. 즉, 내부적으로 여러가지 분산-공분산 모형과 군집 수의 조합에 대한 군집분석을 수행한 뒤, 각 조합의 최종결과에서 얻어진 BIC 값을 기준으로 최적의 조합을 선정한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_opt &lt;-<span class="st"> </span>mclust<span class="op">::</span><span class="kw">densityMclust</span>(df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">res_mclust_opt &lt;-<span class="st"> </span>mclust<span class="op">::</span><span class="kw">densityMclust</span>(df[, <span class="dv">-1</span>], <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre>
 <p>함수 수행결과 객체의 <code>BIC</code> 원소가 나타내는 결과는 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_mclust_opt<span class="op">$</span>BIC</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">res_mclust_opt<span class="op">$</span>BIC</code></pre>
 <pre><code>## Bayesian Information Criterion (BIC): 
 ##         EII       VII       EEI       VEI       EVI       VVI       EEE
 ## 1 -85.40006 -85.40006 -85.70851 -85.70851 -85.70851 -85.70851 -75.27433
@@ -2342,8 +2368,8 @@ VII_res<span class="op">$</span>parameters</code></pre></div>
 ## -62.00992 -62.27998 -63.37677</code></pre>
 <p>수행 결과 가장 큰 BIC 값을 지닌 최적의 조합은 EII 분산-공분산 모형으로 2개의 군집을 가정했을 때 얻어진다.</p>
 <p><code>densityMclust</code> 함수 수행 결과 얻어진 혼합분포를 plotting해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(res_mclust_opt, <span class="dt">what =</span> <span class="st">&quot;density&quot;</span>,
-     <span class="dt">data =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">points.cex =</span> <span class="fl">0.5</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(res_mclust_opt, <span class="dt">what =</span> <span class="st">&quot;density&quot;</span>,
+     <span class="dt">data =</span> df[, <span class="dv">-1</span>], <span class="dt">points.cex =</span> <span class="fl">0.5</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:mclust-opt-result-plot"></span>
 <img src="data-mining-book_files/figure-html/mclust-opt-result-plot-1.png" alt="mclust::densityMclust 수행 결과 얻어진 혼합분포" width="672" />
 <p class="caption">
@@ -2432,7 +2458,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

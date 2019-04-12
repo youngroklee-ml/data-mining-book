@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-04-11">
+<meta name="date" content="2019-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -51,41 +51,67 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -329,11 +355,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 <tr class="even">
 <td align="left">MASS</td>
-<td align="left">7.3-51.1</td>
+<td align="left">7.3-51.4</td>
 </tr>
 <tr class="odd">
 <td align="left">mvtnorm</td>
-<td align="left">1.0-8</td>
+<td align="left">1.0-10</td>
 </tr>
 </tbody>
 </table>
@@ -342,7 +368,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">3.3</span> 피셔 방법</h2>
 <div id="da-fisher-basic-script" class="section level3">
 <h3><span class="header-section-number">3.3.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>),
   <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">5</span>),
   <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">4</span>),
@@ -353,7 +379,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
              <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
              <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, <span class="st">&#39;범주&#39;</span>),
              
-             <span class="dt">caption =</span> <span class="st">&#39;판별분석 학습표본 데이터&#39;</span>)</code></pre></div>
+             <span class="dt">caption =</span> <span class="st">&#39;판별분석 학습표본 데이터&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:da-train-data-table">Table 3.1: </span>판별분석 학습표본 데이터</caption>
 <thead>
@@ -422,9 +448,9 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 </tbody>
 </table>
 <p>Table <a href="da.html#tab:da-train-data-table">3.1</a>와 같이 두 독립변수 <em>x1</em>, <em>x2</em>와 이분형 종속변수 <em>class</em>의 관측값으로 이루어진 9개의 학습표본을 <em>train_df</em>라는 data frame에 저장한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fisher_da &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+<pre class="sourceCode r"><code class="sourceCode r">fisher_da &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
 
-<span class="kw">print</span>(fisher_da)</code></pre></div>
+<span class="kw">print</span>(fisher_da)</code></pre>
 <pre><code>## Call:
 ## lda(class ~ x1 + x2, data = train_df)
 ## 
@@ -445,49 +471,49 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 <div id="-" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> 피셔 판별함수</h3>
 <p>각 객체는 변수벡터 <span class="math inline">\(\mathbf{x} \in \mathbb{R}^p\)</span>와 범주 <span class="math inline">\(y \in \{1, 2\}\)</span>로 이루어진다고 하자. 아래는 변수 <span class="math inline">\(\mathbf{x}\)</span>의 기대치와 분산-공분산행렬(varinace-covariance matrix)을 나타낸다.</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 \boldsymbol\mu_1 = E(\mathbf{x} | y = 1)\\
 \boldsymbol\mu_2 = E(\mathbf{x} | y = 2)\\
 \boldsymbol\Sigma = Var(\mathbf{x} | y = 1) = Var(\mathbf{x} | y = 2)
-\end{eqnarray*}\]</span>
+\end{eqnarray*}\]</span></p>
 <p>다음과 같이 변수들의 선형조합으로 새로운 변수 <span class="math inline">\(z\)</span>를 형성하는 함수를 피셔 판별함수(Fisher’s discriminant function)라 한다.</p>
-<span class="math display" id="eq:fisher-discriminant-function">\[\begin{equation}
+<p><span class="math display" id="eq:fisher-discriminant-function">\[\begin{equation}
 z = \mathbf{w}^\top \mathbf{x} \tag{3.1}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>여기서 계수벡터 <span class="math inline">\(\mathbf{w} \in \mathbb{R}^p\)</span>는 통상 아래와 같이 변수 <span class="math inline">\(z\)</span>의 범주간 평균 차이 대 변수 <span class="math inline">\(z\)</span>의 분산의 비율을 최대화하는 것으로 결정한다.</p>
-<span class="math display" id="eq:fisher-discriminant-function-coef">\[\begin{equation}
+<p><span class="math display" id="eq:fisher-discriminant-function-coef">\[\begin{equation}
 {\arg\!\min}_{\mathbf{w}} \frac{\mathbf{w}^\top ( \boldsymbol\mu_1 - \boldsymbol\mu_2 )}{\mathbf{w}^\top \boldsymbol\Sigma \mathbf{w}} \tag{3.2}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>위 식 <a href="da.html#eq:fisher-discriminant-function-coef">(3.2)</a>의 해는</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \mathbf{w} \propto \boldsymbol\Sigma^{-1}(\boldsymbol\mu_1 - \boldsymbol\mu_2)
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>의 조건을 만족하며, 편의상 비례상수를 1로 두면 아래와 같은 해가 얻어진다.</p>
-<span class="math display" id="eq:fisher-discriminant-function-coef-sol">\[\begin{equation}
+<p><span class="math display" id="eq:fisher-discriminant-function-coef-sol">\[\begin{equation}
 \mathbf{w} = \boldsymbol\Sigma^{-1}(\boldsymbol\mu_1 - \boldsymbol\mu_2) \tag{3.3}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>실제 모집단의 평균 및 분산을 알지 못하는 경우, 학습표본으로부터 <span class="math inline">\(\boldsymbol\mu_1, \boldsymbol\mu_2, \boldsymbol\Sigma\)</span>의 추정치를 얻어 식 <a href="da.html#eq:fisher-discriminant-function-coef-sol">(3.3)</a>에 대입하는 방식으로 판별계수를 추정한다. 자세한 내용은 교재 <span class="citation">(전치혁 <a href="#ref-jun2012datamining">2012</a>)</span> 참조.</p>
 <p>Table <a href="da.html#tab:da-train-data-table">3.1</a>에 주어진 학습표본을 이용하여 피셔 판별함수를 구해보도록 하자. 우선 각 범주별 평균벡터 <span class="math inline">\(\hat{\boldsymbol\mu}_1, \hat{\boldsymbol\mu}_2\)</span>를 아래와 같이 구한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu_hat &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">mu_hat &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">x1 =</span> <span class="kw">mean</span>(x1),
             <span class="dt">x2 =</span> <span class="kw">mean</span>(x2)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(class)
 
-<span class="kw">print</span>(mu_hat)</code></pre></div>
+<span class="kw">print</span>(mu_hat)</code></pre>
 <pre><code>## # A tibble: 2 x 3
 ##   class    x1    x2
 ##   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 1       4     6  
 ## 2 2       6.6   5.4</code></pre>
 <p>또한 범주별 표본 분산-공분산행렬 <span class="math inline">\(\mathbf{S}_1, \mathbf{S}_2\)</span>를 다음과 같이 구한다. 리스트 <code>S_within_group</code>의 첫번째 원소는 범주 1의 분산-공분산행렬 <span class="math inline">\(\mathbf{S}_1\)</span>, 두번째 원소는 범주 2의 분산-공분산행렬 <span class="math inline">\(\mathbf{S}_2\)</span>를 나타낸다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">S_within_group &lt;-<span class="st"> </span><span class="kw">lapply</span>(
+<pre class="sourceCode r"><code class="sourceCode r">S_within_group &lt;-<span class="st"> </span><span class="kw">lapply</span>(
   <span class="kw">unique</span>(train_df<span class="op">$</span>class) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(), <span class="cf">function</span>(x) {
     train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(class <span class="op">==</span><span class="st"> </span>x) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x1, x2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">var</span>()
   }
 )
 
-<span class="kw">print</span>(S_within_group)</code></pre></div>
+<span class="kw">print</span>(S_within_group)</code></pre>
 <pre><code>## [[1]]
 ##          x1        x2
 ## x1 3.333333 1.0000000
@@ -498,11 +524,11 @@ z = \mathbf{w}^\top \mathbf{x} \tag{3.1}
 ## x1 4.30 2.95
 ## x2 2.95 3.80</code></pre>
 <p>위에서 얻은 범주별 표본 분산-공분산행렬을 이용하여 합동 분산-공분산행렬을 아래와 같이 추정한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \hat{\boldsymbol\Sigma} = \mathbf{S}_p = \frac{(n_1 - 1)\mathbf{S}_1 + (n_2 - 1)\mathbf{S}_2}{n_1 + n_2 - 2}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>이 때 <span class="math inline">\(n_1, n_2\)</span>는 각각 범주 1, 2에 속한 학습표본 객체의 수를 나타낸다. 아래 R 스크립트에서는 임의의 범주 표본수 벡터 <code>n</code>과 범주별 표본 분산-공분산행렬 리스트 <code>S</code>에 대해 합동 분산-공분산행렬을 구하는 함수 <code>pooled_variance</code>를 정의하고, 주어진 학습표본에 대한 입력값을 대입하여 합동 분산-공분산행렬 추정치 <code>Sigma_hat</code>을 구한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pooled_variance &lt;-<span class="st"> </span><span class="cf">function</span>(n, S) {
+<pre class="sourceCode r"><code class="sourceCode r">pooled_variance &lt;-<span class="st"> </span><span class="cf">function</span>(n, S) {
   <span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(n), <span class="cf">function</span>(i) (n[i] <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">*</span>S[[i]]) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">Reduce</span>(<span class="st">`</span><span class="dt">+</span><span class="st">`</span>, .) <span class="op">%&gt;%</span>
 <span class="st">    `</span><span class="dt">/</span><span class="st">`</span>(<span class="kw">sum</span>(n) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(n))
@@ -517,17 +543,17 @@ n_obs &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
 
 Sigma_hat &lt;-<span class="st"> </span><span class="kw">pooled_variance</span>(n_obs<span class="op">$</span>n, S_within_group)
 
-<span class="kw">print</span>(Sigma_hat)</code></pre></div>
+<span class="kw">print</span>(Sigma_hat)</code></pre>
 <pre><code>##          x1       x2
 ## x1 3.885714 2.114286
 ## x2 2.114286 2.457143</code></pre>
 <p>위에서 구한 추정치들을 이용하여 아래와 같이 판별함수 계수 추정치 <span class="math inline">\(\hat{\mathbf{w}}\)</span>를 구한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \hat{\mathbf{w}} = \hat{\boldsymbol\Sigma}^{-1}(\hat{\boldsymbol\mu}_1 - \hat{\boldsymbol\mu}_2) 
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">w_hat &lt;-<span class="st"> </span><span class="kw">solve</span>(Sigma_hat) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(mu_hat[<span class="dv">1</span>, <span class="kw">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)] <span class="op">-</span><span class="st"> </span>mu_hat[<span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)])
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">w_hat &lt;-<span class="st"> </span><span class="kw">solve</span>(Sigma_hat) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(mu_hat[<span class="dv">1</span>, <span class="kw">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)] <span class="op">-</span><span class="st"> </span>mu_hat[<span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)])
 
-<span class="kw">print</span>(w_hat)</code></pre></div>
+<span class="kw">print</span>(w_hat)</code></pre>
 <pre><code>##         [,1]
 ## x1 -1.508039
 ## x2  1.541801</code></pre>
@@ -535,19 +561,19 @@ Sigma_hat &lt;-<span class="st"> </span><span class="kw">pooled_variance</span>(
 <div id="-" class="section level3">
 <h3><span class="header-section-number">3.3.3</span> 분류 규칙</h3>
 <p>피셔 판별함수에 따른 분류 경계값은 학습표본에 대한 판별함수값의 평균으로 아래와 같이 구할 수 있다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \bar{z} = \frac{1}{N} \sum_i^N \hat{\mathbf{w}}^\top \mathbf{x}_i
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z_mean &lt;-<span class="st"> </span><span class="kw">t</span>(w_hat) <span class="op">%*%</span><span class="st"> </span>(train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x1, x2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">colMeans</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">z_mean &lt;-<span class="st"> </span><span class="kw">t</span>(w_hat) <span class="op">%*%</span><span class="st"> </span>(train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x1, x2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">colMeans</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()
 
-<span class="kw">print</span>(z_mean)</code></pre></div>
+<span class="kw">print</span>(z_mean)</code></pre>
 <pre><code>## [1] 0.526438</code></pre>
 <p>위 결과를 통해, 분류규칙은 다음과 같이 주어진다.</p>
 <ul>
 <li><span class="math inline">\(\hat{\mathbf{w}}^\top \mathbf{x} \ge \bar{z}\)</span> 이면, <span class="math inline">\(\mathbf{x}\)</span>를 범주 1로 분류</li>
 <li><span class="math inline">\(\hat{\mathbf{w}}^\top \mathbf{x} &lt; \bar{z}\)</span> 이면, <span class="math inline">\(\mathbf{x}\)</span>를 범주 2로 분류</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_prediction_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">train_prediction_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">z =</span> w_hat[<span class="dv">1</span>]<span class="op">*</span>x1 <span class="op">+</span><span class="st"> </span>w_hat[<span class="dv">2</span>]<span class="op">*</span>x2,
     <span class="dt">predicted_class =</span> <span class="kw">factor</span>(<span class="kw">if_else</span>(z <span class="op">&gt;=</span><span class="st"> </span>z_mean, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
@@ -556,7 +582,7 @@ Sigma_hat &lt;-<span class="st"> </span><span class="kw">pooled_variance</span>(
 knitr<span class="op">::</span><span class="kw">kable</span>(train_prediction_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
              <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
              <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$z$&#39;</span>, <span class="st">&#39;추정범주&#39;</span>),
-             <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 피셔 분류 결과&#39;</span>)</code></pre></div>
+             <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 피셔 분류 결과&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:fisher-da-result">Table 3.2: </span>학습표본에 대한 피셔 분류 결과</caption>
 <thead>
@@ -649,42 +675,42 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_prediction_df
 <div id="r----" class="section level3">
 <h3><span class="header-section-number">3.3.4</span> R 패키지를 이용한 분류규칙 도출</h3>
 <p>패키지 <code>MASS</code>내의 함수 <code>lda</code> 수행 시 얻어지는 판별계수 <span class="math inline">\(\hat{\mathbf{w}}\)</span>는 위 결과와는 사뭇 다른데, <code>lda</code> 함수의 경우 아래와 같이 1) 제약식을 포함하여 비례계수를 구하기 때문에 계수의 크기가 달라지며, 2) 목적함수를 최소화하는 대신 최대화하는 값을 찾기 때문에 부호가 달라진다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \begin{split}
 \max \text{  } &amp; \mathbf{w}^\top ( \boldsymbol\mu_1 - \boldsymbol\mu_2 )\\
 \text{s.t. } &amp; \mathbf{w}^\top \boldsymbol\Sigma \mathbf{w} = 1
 \end{split}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>이에 따른 <code>lda</code> 함수의 계수 추정 결과는 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fisher_da &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+<pre class="sourceCode r"><code class="sourceCode r">fisher_da &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
 
 w_hat_lda &lt;-<span class="st"> </span>fisher_da<span class="op">$</span>scaling
-<span class="kw">print</span>(w_hat_lda)</code></pre></div>
+<span class="kw">print</span>(w_hat_lda)</code></pre>
 <pre><code>##           LD1
 ## x1  0.6850490
 ## x2 -0.7003859</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z_mean_lda &lt;-<span class="st"> </span><span class="kw">t</span>(fisher_da<span class="op">$</span>scaling) <span class="op">%*%</span><span class="st"> </span>(train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x1, x2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">colMeans</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()
-<span class="kw">print</span>(z_mean_lda)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">z_mean_lda &lt;-<span class="st"> </span><span class="kw">t</span>(fisher_da<span class="op">$</span>scaling) <span class="op">%*%</span><span class="st"> </span>(train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x1, x2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">colMeans</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()
+<span class="kw">print</span>(z_mean_lda)</code></pre>
 <pre><code>##        LD1 
 ## -0.2391423</code></pre>
 <p>위 결과는 아래와 같은 계산을 통해 앞 장에서 보았던 결과와 동일한 분류 경계식으로 표현될 수 있음을 볼 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scale_adjust &lt;-<span class="st"> </span><span class="kw">t</span>(w_hat) <span class="op">%*%</span><span class="st"> </span>Sigma_hat <span class="op">%*%</span><span class="st"> </span>w_hat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sqrt</span>()
-sign_adjust &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">1</span>
+<pre class="sourceCode r"><code class="sourceCode r">scale_adjust &lt;-<span class="st"> </span><span class="kw">t</span>(w_hat) <span class="op">%*%</span><span class="st"> </span>Sigma_hat <span class="op">%*%</span><span class="st"> </span>w_hat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sqrt</span>()
+sign_adjust &lt;-<span class="st"> </span><span class="dv">-1</span>
 
 w_hat &lt;-<span class="st"> </span>w_hat_lda <span class="op">*</span><span class="st"> </span>scale_adjust <span class="op">*</span><span class="st"> </span>sign_adjust
-<span class="kw">print</span>(w_hat)</code></pre></div>
+<span class="kw">print</span>(w_hat)</code></pre>
 <pre><code>##          LD1
 ## x1 -1.508039
 ## x2  1.541801</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z_mean &lt;-<span class="st"> </span>z_mean_lda <span class="op">*</span><span class="st"> </span>scale_adjust <span class="op">*</span><span class="st"> </span>sign_adjust 
-<span class="kw">print</span>(z_mean)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">z_mean &lt;-<span class="st"> </span>z_mean_lda <span class="op">*</span><span class="st"> </span>scale_adjust <span class="op">*</span><span class="st"> </span>sign_adjust 
+<span class="kw">print</span>(z_mean)</code></pre>
 <pre><code>##      LD1 
 ## 0.526438</code></pre>
 <p>아래 스크립트는 위 <code>lda</code> 함수로부터의 경계식 추정을 기반으로 아래 수식값을 계산한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \hat{\mathbf{w}}^\top \mathbf{x} - \bar{z}
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(fisher_da, train_df)<span class="op">$</span>x</code></pre></div>
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(fisher_da, train_df)<span class="op">$</span>x</code></pre>
 <pre><code>##          LD1
 ## 1 -1.2383140
 ## 2  0.8781805
@@ -696,7 +722,7 @@ w_hat &lt;-<span class="st"> </span>w_hat_lda <span class="op">*</span><span cla
 ## 8  2.2022677
 ## 9  0.8628436</code></pre>
 <p>피셔 분류규칙에 따라 해당 값이 0보다 작으면 범주 1, 0보다 크면 범주 2로 분류한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">train_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">centered_z =</span> <span class="kw">predict</span>(fisher_da, .)<span class="op">$</span>x,
     <span class="dt">predicted_class =</span> <span class="kw">factor</span>(<span class="kw">if_else</span>(centered_z <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
@@ -705,7 +731,7 @@ w_hat &lt;-<span class="st"> </span>w_hat_lda <span class="op">*</span><span cla
              <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
              <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, 
                            <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$z - </span><span class="ch">\\</span><span class="st">bar{z}$&#39;</span>, <span class="st">&#39;추정범주&#39;</span>),
-             <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 피셔 분류 결과 - `MASS::lda` 분류 경계식 기준&#39;</span>)</code></pre></div>
+             <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 피셔 분류 결과 - `MASS::lda` 분류 경계식 기준&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:fisher-da-result-lda">Table 3.3: </span>학습표본에 대한 피셔 분류 결과 - <code>MASS::lda</code> 분류 경계식 기준</caption>
 <thead>
@@ -804,17 +830,17 @@ w_hat &lt;-<span class="st"> </span>w_hat_lda <span class="op">*</span><span cla
 <li><span class="math inline">\(f_k(\mathbf{x})\)</span>: 범주 <span class="math inline">\(k\)</span>에 대한 변수의 확률밀도함수</li>
 </ul>
 <p>이 때 통상적으로 <span class="math inline">\(\mathbf{x}\)</span>는 다변량 정규분포를 따르는 것으로 가정하여 아래와 같이 평균벡터 <span class="math inline">\(\boldsymbol\mu_k\)</span>와 분산-공분산행렬 <span class="math inline">\(\boldsymbol\Sigma\)</span>로 확률밀도함수를 정의할 수 있다. 이 때 분산-공분산행렬 <span class="math inline">\(\boldsymbol\Sigma\)</span>는 모든 범주에 대해 동일하다고 가정한다.</p>
-<span class="math display" id="eq:mv-gaussian-dist">\[\begin{equation}
+<p><span class="math display" id="eq:mv-gaussian-dist">\[\begin{equation}
 f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma|^{1/2}} \exp \{ -\frac{1}{2} \left(\mathbf{x} - \boldsymbol\mu_k\right)^\top \boldsymbol\Sigma^{-1} \left(\mathbf{x} - \boldsymbol\mu_k\right) \}
 \tag{3.4}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>본 장에서는 두 범주(<span class="math inline">\(k = 1, 2\)</span>) 분류 문제만 다루며, 세 범주 이상에 대한 분류 문제는 뒷 장에서 추가적으로 다루기로 한다.</p>
 <div id="lda-basic-script" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> 기본 R 스크립트</h3>
 <p>Table <a href="da.html#tab:da-train-data-table">3.1</a>의 학습표본에 대해 선형판별분석을 적용하는 R 스크립트는 아래에 보이는 것처럼 피셔 판별함수를 구하기 위한 동일하며, <code>prior</code> 파라미터를 정의하지 않음으로써 <span class="math inline">\(\pi_1\)</span>과 <span class="math inline">\(\pi_2\)</span>를 학습표본의 범주 1, 2의 비율로 설정한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+<pre class="sourceCode r"><code class="sourceCode r">lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
 
-<span class="kw">print</span>(lda_fit)</code></pre></div>
+<span class="kw">print</span>(lda_fit)</code></pre>
 <pre><code>## Call:
 ## lda(class ~ x1 + x2, data = train_df)
 ## 
@@ -835,51 +861,51 @@ f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma|^{1/2}} \exp \{ -\frac
 <div id="lda-function" class="section level3">
 <h3><span class="header-section-number">3.4.2</span> 선형판별함수</h3>
 <p>두 범주 문제에 있어서, 범주를 알지 못하는 변수 <span class="math inline">\(\mathbf{x}\)</span>에 대한 확률밀도함수는 아래와 같다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 f(\mathbf{x}) = \pi_1 f_1(\mathbf{x}) + \pi_2 f_2(\mathbf{x})
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>베이즈 정리(Bayes’s theorem)에 따라 변수 <span class="math inline">\(\mathbf{x}\)</span>값이 주어졌을 때 범주 <span class="math inline">\(k\)</span>에 속할 사후확률(posterior)은 아래와 같이 구할 수 있다.</p>
-<span class="math display" id="eq:lda-posterior">\[\begin{equation}
+<p><span class="math display" id="eq:lda-posterior">\[\begin{equation}
 P(y = k \, | \, \mathbf{x}) = \frac{\pi_k f_k(\mathbf{x})}{f(\mathbf{x})}
 \tag{3.5}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>각 범주에 대한 사후확률을 계산하여, 확률이 높은 쪽으로 범주를 추정한다.</p>
-<span class="math display" id="eq:lda-posterior-rule">\[\begin{equation}
+<p><span class="math display" id="eq:lda-posterior-rule">\[\begin{equation}
 \hat{y} = \begin{cases}
     1, &amp; \text{if } P(y = 1 \, | \, \mathbf{x}) \ge P(y = 2 \, | \, \mathbf{x})\\
     2, &amp; \text{otherwise}
 \end{cases}
 \tag{3.6}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>이를 다시 정리하면 아래와 같다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \hat{y} = \begin{cases}
     1, &amp; \text{if } \frac{f_1(\mathbf{x})}{f_2(\mathbf{x})} \ge \frac{\pi_2}{\pi_1}\\
     2, &amp; \text{otherwise}
 \end{cases}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>위 분류규칙에 식 <a href="da.html#eq:mv-gaussian-dist">(3.4)</a>을 대입하여 정리하면 다음과 같다. 보다 자세한 내용은 교재 <span class="citation">(전치혁 <a href="#ref-jun2012datamining">2012</a>)</span> 참조.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \hat{y} = \begin{cases}
     1, &amp; \text{if } \boldsymbol\mu_1^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac{1}{2} \boldsymbol\mu_1^\top \boldsymbol\Sigma^{-1} \boldsymbol\mu_1 + \ln \pi_1 \ge \boldsymbol\mu_2^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac{1}{2} \boldsymbol\mu_2^\top \boldsymbol\Sigma^{-1} \boldsymbol\mu_2 + \ln \pi_2  \\
     2, &amp; \text{otherwise}
 \end{cases}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>따라서, 각 범주에 대한 판별함수를</p>
-<span class="math display" id="eq:lda-discriminant-function">\[\begin{equation}
+<p><span class="math display" id="eq:lda-discriminant-function">\[\begin{equation}
 u_k(\mathbf{x}) = \boldsymbol\mu_k^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac{1}{2} \boldsymbol\mu_k^\top \boldsymbol\Sigma^{-1} \boldsymbol\mu_k + \ln \pi_k
 \tag{3.7}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>라 하면, 아래와 같이 분류규칙을 정의할 수 있다.</p>
-<span class="math display" id="eq:lda-discriminant-rule">\[\begin{equation}
+<p><span class="math display" id="eq:lda-discriminant-rule">\[\begin{equation}
 \hat{y} = \begin{cases}
     1, &amp; \text{if } u_1(\mathbf{x}) \ge u_2(\mathbf{x})  \\
     2, &amp; \text{otherwise}
 \end{cases}
 \tag{3.8}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Table <a href="da.html#tab:da-train-data-table">3.1</a>의 학습표본에 대해 판별함수값을 계산하고 범주를 추정하면 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">discriminant_func &lt;-<span class="st"> </span><span class="cf">function</span>(X, mu, Sigma, pi) {
+<pre class="sourceCode r"><code class="sourceCode r">discriminant_func &lt;-<span class="st"> </span><span class="cf">function</span>(X, mu, Sigma, pi) {
   Sigma_inv &lt;-<span class="st"> </span><span class="kw">solve</span>(Sigma)
   (<span class="kw">t</span>(mu) <span class="op">%*%</span><span class="st"> </span>Sigma_inv <span class="op">%*%</span><span class="st"> </span>X <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()) <span class="op">-</span><span class="st">  </span>
 <span class="st">    </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>(<span class="kw">t</span>(mu) <span class="op">%*%</span><span class="st"> </span>Sigma_inv <span class="op">%*%</span><span class="st"> </span>mu <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()) <span class="op">+</span><span class="st"> </span>
@@ -912,7 +938,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
   <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,
                 <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$u_1(</span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, <span class="st">&#39;$u_2(</span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
                 <span class="st">&#39;추정범주&#39;</span>),
-  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 판별함수값 및 추정범주&#39;</span>)</code></pre></div>
+  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 판별함수값 및 추정범주&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:lda-disriminant-result">Table 3.4: </span>학습표본에 대한 LDA 적용 결과: 판별함수값 및 추정범주</caption>
 <thead>
@@ -1011,7 +1037,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 </tbody>
 </table>
 <p>또한 식 <a href="da.html#eq:lda-posterior">(3.5)</a>에 따른 사후확률과 식 <a href="da.html#eq:lda-posterior-rule">(3.6)</a>에 따른 추정범주는 아래와 같이 얻어진다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_posterior_result_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">lda_posterior_result_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">f1 =</span> mvtnorm<span class="op">::</span><span class="kw">dmvnorm</span>(
       .[<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],
@@ -1043,7 +1069,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
                 <span class="st">&#39;$P(y = 1 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, 
                 <span class="st">&#39;$P(y = 2 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
                 <span class="st">&#39;추정범주&#39;</span>),
-  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주&#39;</span>)</code></pre></div>
+  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:lda-posterior-result">Table 3.5: </span>학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주</caption>
 <thead>
@@ -1142,7 +1168,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 </tbody>
 </table>
 <p>패키지 <code>MASS</code>내의 함수 <code>lda</code>를 통해 위 Table <a href="da.html#tab:lda-posterior-result">3.5</a> 결과를 간편하게 얻을 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+<pre class="sourceCode r"><code class="sourceCode r">lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
 
 train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_cols</span>(
   <span class="kw">predict</span>(lda_fit, train_df)<span class="op">$</span>posterior <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1150,7 +1176,7 @@ train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"
   ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">predicted_class =</span> <span class="kw">predict</span>(lda_fit, .)<span class="op">$</span>class
-    )</code></pre></div>
+    )</code></pre>
 <pre><code>## # A tibble: 9 x 7
 ##      id    x1    x2 class      p1     p2 predicted_class
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;          
@@ -1164,7 +1190,7 @@ train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"
 ## 8     8     9     6 2     0.00477 0.995  2              
 ## 9     9     5     4 2     0.0838  0.916  2</code></pre>
 <p>위 결과들은 교재 <span class="citation">(전치혁 <a href="#ref-jun2012datamining">2012</a>)</span>의 예제 결과와는 다소 차이가 있는데, 이는 교재에서는 사전확률을 학습표본 내 비율 대신 <span class="math inline">\(\pi_1 = \pi_2 = 0.5\)</span>로 지정하였기 때문이다. 교재와 동일한 결과는 아래의 스크립트처럼 <code>lda</code> 함수 실행 시 사전확률 파리미터 <code>prior</code>의 값을 지정함으로써 얻을 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_fit_equal_prior &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df, <span class="dt">prior =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))
+<pre class="sourceCode r"><code class="sourceCode r">lda_fit_equal_prior &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df, <span class="dt">prior =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))
 
 train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_cols</span>(
   <span class="kw">predict</span>(lda_fit_equal_prior, train_df)<span class="op">$</span>posterior <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1181,7 +1207,7 @@ train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"
                 <span class="st">&#39;$P(y = 1 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, 
                 <span class="st">&#39;$P(y = 2 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
                 <span class="st">&#39;추정범주&#39;</span>),
-    <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주 (사전확률 = 0.5)&#39;</span>)</code></pre></div>
+    <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주 (사전확률 = 0.5)&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:lda-posterior-result-equal-prior">Table 3.6: </span>학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주 (사전확률 = 0.5)</caption>
 <thead>
@@ -1289,32 +1315,32 @@ train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"
 <li><span class="math inline">\(C(2 \, | \, 1)\)</span>: 범주 1를 2로 잘못 분류 시 초래 비용</li>
 </ul>
 <p>이 때 총 기대 오분류 비용은 다음과 같다.</p>
-<span class="math display" id="eq:expected-misclassification-cost">\[\begin{equation}
+<p><span class="math display" id="eq:expected-misclassification-cost">\[\begin{equation}
 C(1 \, | \, 2) \pi_2 \int_{\mathbf{x} \in R_1} f_2(\mathbf{x}) d\mathbf{x} + C(2 \, | \, 1) \pi_1 \int_{\mathbf{x} \in R_2} f_1(\mathbf{x}) d\mathbf{x}
 \tag{3.9}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>여기에서 <span class="math inline">\(R_1 \subset \mathbb{R}^p, R_2 = \mathbb{R}^p - R_{1}\)</span>는 판별함수에 의해 각각 범주 1, 2로 분류되는 판별변수 영역을 나타낸다. 즉,</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \hat{y} = \begin{cases}
     1, &amp; \text{if } \mathbf{x} \in R_1  \\
     2, &amp; \text{otherwise}
 \end{cases}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>식 <a href="da.html#eq:expected-misclassification-cost">(3.9)</a>을 최소화하는 영역 <span class="math inline">\(R_1, R_2\)</span>는 아래와 같다.</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 R_1 &amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{f_1(\mathbf{x})}{f_2(\mathbf{x})} \ge \frac{\pi_2}{\pi_1} \left( \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right) \right\}\\
 R_2 &amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{f_1(\mathbf{x})}{f_2(\mathbf{x})} &lt; \frac{\pi_2}{\pi_1} \left( \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right) \right\}
-\end{eqnarray*}\]</span>
+\end{eqnarray*}\]</span></p>
 <p>위 중 <span class="math inline">\(R_1\)</span>에 대한 식을 아래와 같이 단계적으로 전개할 수 있다.</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 R_1 &amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{\pi_1 f_1(\mathbf{x})}{\pi_2 f_2(\mathbf{x})} \ge \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right\}\\
 &amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{\frac{\pi_1 f_1(\mathbf{x})}{\pi_1 f_1(\mathbf{x}) + \pi_2 f_2(\mathbf{x})}}{\frac{\pi_2 f_2(\mathbf{x})}{\pi_1 f_1(\mathbf{x}) + \pi_2 f_2(\mathbf{x})}} \ge \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right\}\\
 &amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{P(y = 1 \, | \, \mathbf{x})}{P(y = 2 \, | \, \mathbf{x})} \ge \frac{C(1 \, | \, 2)}{C(2 \, | \, 1)} \right\}\\
 &amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, C(2 \, | \, 1) P(y = 1 \, | \, \mathbf{x}) \ge C(1 \, | \, 2) P(y = 2 \, | \, \mathbf{x}) \right\}
-\end{eqnarray*}\]</span>
+\end{eqnarray*}\]</span></p>
 <p>따라서 오분류비용을 고려한 분류규칙은 1) 사후확률에 오분류 비용을 곱한 뒤, 2) 그 값이 큰 범주로 분류하여 오분류비용을 최소화한다.</p>
 <p>Table <a href="da.html#tab:lda-posterior-result">3.5</a>에 오분류비용 <span class="math inline">\(C(1 \, | \, 2) = 1, C(2 \, | \, 1) = 5\)</span>를 적용한 결과는 아래와 같이 구할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+<pre class="sourceCode r"><code class="sourceCode r">lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
 
 misclassification_cost &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>)
 
@@ -1336,7 +1362,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
                 <span class="st">&#39;$C(2 </span><span class="ch">\\</span><span class="st">, | </span><span class="ch">\\</span><span class="st">, 1) P(y = 1 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, 
                 <span class="st">&#39;$C(1 </span><span class="ch">\\</span><span class="st">, | </span><span class="ch">\\</span><span class="st">, 2) P(y = 2 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
                 <span class="st">&#39;추정범주&#39;</span>),
-  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 오분류 비용을 고려한 LDA 적용 결과&#39;</span>)</code></pre></div>
+  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 오분류 비용을 고려한 LDA 적용 결과&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:lda-unequal-cost-result">Table 3.7: </span>학습표본에 대한 오분류 비용을 고려한 LDA 적용 결과</caption>
 <thead>
@@ -1442,9 +1468,9 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 <div id="qda-basic-script" class="section level3">
 <h3><span class="header-section-number">3.6.1</span> 기본 R 스크립트</h3>
 <p>Table <a href="da.html#tab:da-train-data-table">3.1</a>의 학습표본에 대해 이차판별분석을 적용하는 R 스크립트는 아래에 보이는 것과 같이 <code>MASS</code> 패키지의 <code>qda</code> 함수를 사용한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">qda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
+<pre class="sourceCode r"><code class="sourceCode r">qda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">qda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df)
 
-<span class="kw">print</span>(qda_fit)</code></pre></div>
+<span class="kw">print</span>(qda_fit)</code></pre>
 <pre><code>## Call:
 ## qda(class ~ x1 + x2, data = train_df)
 ## 
@@ -1460,33 +1486,33 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 <div id="qda-function" class="section level3">
 <h3><span class="header-section-number">3.6.2</span> 이차 판별함수</h3>
 <p>각 범주의 확률밀도함수는 아래와 같이 다변량 정규분포로 정의된다.</p>
-<span class="math display" id="eq:qda-mv-gaussian-dist">\[\begin{equation}
+<p><span class="math display" id="eq:qda-mv-gaussian-dist">\[\begin{equation}
 f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma_k|^{1/2}} \exp \{ -\frac{1}{2} \left(\mathbf{x} - \boldsymbol\mu_k\right)^\top \boldsymbol\Sigma_k^{-1} \left(\mathbf{x} - \boldsymbol\mu_k\right) \}
 \tag{3.10}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>위 식 <a href="da.html#eq:qda-mv-gaussian-dist">(3.10)</a>이 선형판별함수에서 사용한 식 <a href="da.html#eq:mv-gaussian-dist">(3.4)</a>과 다른 부분은 분산-공분산분포 <span class="math inline">\(\boldsymbol\Sigma_k\)</span>가 범주 <span class="math inline">\(k\)</span>에 대해 각각 정의된다는 점이다.</p>
 <p>이 경우 각 범주에 대한 판별함수는 아래와 같이 정의된다.</p>
-<span class="math display" id="eq:qda-discriminant-function">\[\begin{equation}
+<p><span class="math display" id="eq:qda-discriminant-function">\[\begin{equation}
 u_k(\mathbf{x}) = - \frac{1}{2} (\mathbf{x} - \boldsymbol\mu_k)^\top \boldsymbol\Sigma^{-1} (\mathbf{x} - \boldsymbol\mu_k) - \frac{1}{2} \ln \left| \boldsymbol\Sigma_k \right| + \ln \pi_k
 \tag{3.11}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>데이터 행렬 <span class="math inline">\(X = (\mathbf{x}_1, \mathbf{x}_2, \cdots , \mathbf{x}_N)\)</span>의 각 객체에 대한 판별함수값을 얻는 함수를 아래와 같이 구현할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qda_discriminant_func &lt;-<span class="st"> </span><span class="cf">function</span>(X, mu, Sigma, pi) {
+<pre class="sourceCode r"><code class="sourceCode r">qda_discriminant_func &lt;-<span class="st"> </span><span class="cf">function</span>(X, mu, Sigma, pi) {
   Sigma_inv_sqrt &lt;-<span class="st"> </span><span class="kw">chol</span>(<span class="kw">solve</span>(Sigma))
   <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="kw">rowSums</span>((<span class="kw">t</span>(X <span class="op">-</span><span class="st"> </span>mu) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(Sigma_inv_sqrt))<span class="op">^</span><span class="dv">2</span>) <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">det</span>(Sigma)) <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(pi)
-}</code></pre></div>
+}</code></pre>
 </div>
 <div id="qda-discriminant-rule" class="section level3">
 <h3><span class="header-section-number">3.6.3</span> 이차판별함수에 의한 분류</h3>
 <p>분류기준은 선형판별분석과 마찬가지로 판별함수값이 큰 범주로 분류한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \hat{y} = \begin{cases}
     1, &amp; \text{if } u_1(\mathbf{x}) \ge u_2(\mathbf{x})  \\
     2, &amp; \text{otherwise}
 \end{cases}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>Table <a href="da.html#tab:da-train-data-table">3.1</a>의 학습표본에 대해 이차판별함수값을 계산하고 범주를 추정하면 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qda_discriminant_result_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(
+<pre class="sourceCode r"><code class="sourceCode r">qda_discriminant_result_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(
   <span class="dt">u1 =</span> <span class="kw">qda_discriminant_func</span>(
       .[<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>(),
       mu_hat[<span class="dv">1</span>, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>(),
@@ -1511,7 +1537,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
   <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,
                 <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$u_1(</span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, <span class="st">&#39;$u_2(</span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
                 <span class="st">&#39;추정범주&#39;</span>),
-  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 QDA 적용 결과: 판별함수값 및 추정범주&#39;</span>)</code></pre></div>
+  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 QDA 적용 결과: 판별함수값 및 추정범주&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:qda-discriminant-result">Table 3.8: </span>학습표본에 대한 QDA 적용 결과: 판별함수값 및 추정범주</caption>
 <thead>
@@ -1611,7 +1637,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 </table>
 <p>위 Table <a href="da.html#tab:qda-discriminant-result">3.8</a>에서 보듯이 모든 학습객체가 올바로 분류되고 있다.</p>
 <p>또한 선형판별분석의 경우와 마찬가지로 사후확률 비교를 통한 범주 분류를 수행할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qda_posterior_result_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">qda_posterior_result_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">f1 =</span> mvtnorm<span class="op">::</span><span class="kw">dmvnorm</span>(
       .[<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],
@@ -1643,7 +1669,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
                 <span class="st">&#39;$P(y = 1 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>, 
                 <span class="st">&#39;$P(y = 2 | </span><span class="ch">\\</span><span class="st">mathbf{x})$&#39;</span>,
                 <span class="st">&#39;추정범주&#39;</span>),
-  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 QDA 적용 결과: 사후확률 및 추정범주&#39;</span>)</code></pre></div>
+  <span class="dt">caption =</span> <span class="st">&#39;학습표본에 대한 QDA 적용 결과: 사후확률 및 추정범주&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:qda-posterior-result">Table 3.9: </span>학습표본에 대한 QDA 적용 결과: 사후확률 및 추정범주</caption>
 <thead>
@@ -1742,13 +1768,13 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 </tbody>
 </table>
 <p>이 또한 <code>MASS</code> 패키지의 <code>predict.qda</code> 함수를 통해 아래와 같이 동일한 결과값을 보다 간편하게 얻을 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_cols</span>(
+<pre class="sourceCode r"><code class="sourceCode r">train_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_cols</span>(
   <span class="kw">predict</span>(qda_fit, train_df)<span class="op">$</span>posterior <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">paste0</span>(<span class="st">&quot;p&quot;</span>, <span class="kw">colnames</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_data_frame</span>()
   ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">predicted_class =</span> <span class="kw">predict</span>(qda_fit, .)<span class="op">$</span>class
-    )</code></pre></div>
+    )</code></pre>
 <pre><code>## # A tibble: 9 x 7
 ##      id    x1    x2 class        p1     p2 predicted_class
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;          
@@ -1768,7 +1794,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 <div id="mutliclass-da-basic-script" class="section level3">
 <h3><span class="header-section-number">3.7.1</span> 기본 R 스크립트</h3>
 <p>3개의 범주를 지닌 붓꽃(iris) 데이터에 대해 선형판별분석을 적용하는 R 스크립트는 아래와 같다. 본 예제에서는 각 범주별 50개 데이터 중 첫 30개 관측치만을 학습표본으로 삼아 판별함수를 유도한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_train_df &lt;-<span class="st"> </span>datasets<span class="op">::</span>iris <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">iris_train_df &lt;-<span class="st"> </span>datasets<span class="op">::</span>iris <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">rename</span>(<span class="dt">x1 =</span> Sepal.Length,
          <span class="dt">x2 =</span> Sepal.Width,
          <span class="dt">x3 =</span> Petal.Length,
@@ -1781,7 +1807,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 
 iris_lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>. <span class="op">-</span>id, iris_train_df)
 
-<span class="kw">print</span>(iris_lda_fit)</code></pre></div>
+<span class="kw">print</span>(iris_lda_fit)</code></pre>
 <pre><code>## Call:
 ## lda(class ~ . - id, data = iris_train_df)
 ## 
@@ -1817,29 +1843,29 @@ iris_lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span c
 <li><span class="math inline">\(P(k&#39; \, | \, k) = \int_{\mathbf{x} \in R_{k&#39;}} f_k(\mathbf{x}) d\mathbf{x}\)</span>: 실제범주 <span class="math inline">\(k\)</span>에 속하는 데 범주 <span class="math inline">\(k&#39;\)</span>로 분류할 확률</li>
 </ul>
 <p>이 때, 총 기대 오분류 비용은 아래와 같다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \sum_{k = 1}^{K} \pi_k \sum_{k&#39; \neq k} C(k&#39; \, | \, k) \int_{\mathbf{x} \in R_{k&#39;}} f_k(\mathbf{x}) d\mathbf{x}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>따라서 분류문제는 위 총 기대 오분류 비용을 최소화하는 <span class="math inline">\(R_1, \cdots, R_K\)</span>를 찾는 것이다.</p>
 <p>우선, 범주를 고려하지 않은 <span class="math inline">\(\mathbf{x}\)</span>의 확률밀도함수는 아래와 같이 정의된다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 f(\mathbf{x}) = \sum_{k=1}^{K} \pi_k f_k(\mathbf{x})
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>베이즈 정리에 의하여, 변수 <span class="math inline">\(\mathbf{x}\)</span>가 주어졌을 때 범주 <span class="math inline">\(k\)</span>에 속할 사후확률은 아래와 같다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 P(y = k \,|\, \mathbf{x}) = \frac{\pi_k f_k(\mathbf{x})}{f(\mathbf{x})}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>오분류비용이 동일한 경우에는 각 객체에 대해 위의 사후확률이 가장 큰 범주로 추정한다. 위 식에서</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 P(y = k \,|\, \mathbf{x}) \propto \pi_k f_k(\mathbf{x})
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>이므로, 아래와 같이 범주가 추정된다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \hat{y} = {arg\,max}_{k} \pi_k f_k(\mathbf{x})
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>앞 장들에서 살펴본 것과 마찬가지로, 선형판별분석의 경우 각 범주의 확률밀도함수 <span class="math inline">\(f_k(\mathbf{x})\)</span>가 동일 분산-공분산행렬을 가정하며, 이차판별분석의 경우 서로 다른 분산-공분산행렬을 가정한다.</p>
 <p>아래 스크립트는 <code>MASS</code> 패키지의 <code>lda</code> 함수를 통해 각 범주에 속할 사후확률과 범주 추정값을 얻는 과정을 보여준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3 <span class="op">+</span><span class="st"> </span>x4, iris_train_df)
+<pre class="sourceCode r"><code class="sourceCode r">iris_lda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3 <span class="op">+</span><span class="st"> </span>x4, iris_train_df)
 
 iris_lda_result &lt;-<span class="st"> </span>iris_train_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">bind_cols</span>(
@@ -1850,7 +1876,7 @@ iris_lda_result &lt;-<span class="st"> </span>iris_train_df <span class="op">%&g
     <span class="dt">predicted_class =</span> <span class="kw">predict</span>(iris_lda_fit, .)<span class="op">$</span>class
   )
 
-<span class="kw">print</span>(iris_lda_result)</code></pre></div>
+<span class="kw">print</span>(iris_lda_result)</code></pre>
 <pre><code>## # A tibble: 90 x 10
 ##       x1    x2    x3    x4 class    id setosa versicolor virginica
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
@@ -1865,7 +1891,7 @@ iris_lda_result &lt;-<span class="st"> </span>iris_train_df <span class="op">%&g
 ##  9   4.4   2.9   1.4   0.2 seto…     9  1.000   2.22e-15  3.42e-33
 ## 10   4.9   3.1   1.5   0.1 seto…    10  1       9.36e-19  4.85e-38
 ## # … with 80 more rows, and 1 more variable: predicted_class &lt;fct&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(
+<pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(
   iris_lda_result <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">select</span>(id, class, predicted_class,
            setosa, versicolor, virginica) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1874,7 +1900,7 @@ iris_lda_result &lt;-<span class="st"> </span>iris_train_df <span class="op">%&g
   <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">6</span>),
   <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;추정범주&#39;</span>,
                 <span class="st">&#39;setosa&#39;</span>, <span class="st">&#39;versicolor&#39;</span>, <span class="st">&#39;virginica&#39;</span>),
-  <span class="dt">caption =</span> <span class="st">&#39;붓꽃 학습표본에 대한 LDA 적용 결과 - 오분류 객체 사후 확률&#39;</span>)</code></pre></div>
+  <span class="dt">caption =</span> <span class="st">&#39;붓꽃 학습표본에 대한 LDA 적용 결과 - 오분류 객체 사후 확률&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:iris-lda">Table 3.10: </span>붓꽃 학습표본에 대한 LDA 적용 결과 - 오분류 객체 사후 확률</caption>
 <thead>
@@ -1899,7 +1925,7 @@ iris_lda_result &lt;-<span class="st"> </span>iris_train_df <span class="op">%&g
 </tbody>
 </table>
 <p>아래 스크립트는 <code>MASS</code> 패키지의 <code>qda</code> 함수를 통해 각 범주에 속할 사후확률과 범주 추정값을 얻는 과정을 보여준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_qda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">qda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3 <span class="op">+</span><span class="st"> </span>x4, iris_train_df)
+<pre class="sourceCode r"><code class="sourceCode r">iris_qda_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">qda</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3 <span class="op">+</span><span class="st"> </span>x4, iris_train_df)
 
 iris_qda_result &lt;-<span class="st"> </span>iris_train_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">bind_cols</span>(
@@ -1919,7 +1945,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
   <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">6</span>),
   <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;추정범주&#39;</span>,
                 <span class="st">&#39;setosa&#39;</span>, <span class="st">&#39;versicolor&#39;</span>, <span class="st">&#39;virginica&#39;</span>),
-  <span class="dt">caption =</span> <span class="st">&#39;붓꽃 학습표본에 대한 QDA 적용 결과 - 오분류 객체 사후 확률&#39;</span>)</code></pre></div>
+  <span class="dt">caption =</span> <span class="st">&#39;붓꽃 학습표본에 대한 QDA 적용 결과 - 오분류 객체 사후 확률&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:iris-qda">Table 3.11: </span>붓꽃 학습표본에 대한 QDA 적용 결과 - 오분류 객체 사후 확률</caption>
 <thead>
@@ -2011,7 +2037,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

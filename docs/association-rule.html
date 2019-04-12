@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-04-11">
+<meta name="date" content="2019-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -51,41 +51,67 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -308,7 +334,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="association-rule" class="section level1">
 <h1><span class="header-section-number">Chapter 11</span> 연관규칙</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre>
 <p>연관규칙(association rule)이란 간단히 말하면 항목들 간의 조건-결과 식으로 표현되는 유용한 패턴을 말한다. 연관규칙 탐사는 기업의 활동, 특히 마케팅에서 가장 널리 사용되고 있다.</p>
 <div id="association-packages-install" class="section level2">
 <h2><span class="header-section-number">11.1</span> 필요 R package 설치</h2>
@@ -335,32 +361,32 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="association-rule-definition-metric" class="section level2">
 <h2><span class="header-section-number">11.2</span> 연관규칙의 정의 및 성능척도</h2>
 <p>데이터베이스가 총 <span class="math inline">\(n\)</span>개의 트랜잭션 데이터로 구성되며, 전체 <span class="math inline">\(m\)</span>개의 항목을 포함한다 하자. 전체 항목집합 <span class="math inline">\(I\)</span>를 다음과 같이 정의하자.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 I = \{ i_1, \cdots, i_m \}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>이 때, 각 트랜잭션 <span class="math inline">\(Z_j\)</span>는 <span class="math inline">\(I\)</span>의 부분집합이 된다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 Z_j \subseteq I, \, j = 1, \cdots, n
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>연관규칙 <span class="math inline">\(R\)</span>은 조건부 <span class="math inline">\(X\)</span>와 결과부 <span class="math inline">\(Y\)</span>로 구성되어 (<span class="math inline">\(X, Y \subseteq I\)</span>, <span class="math inline">\(X \cap Y = \emptyset\)</span>) “<span class="math inline">\(X\)</span>가 일어나면 <span class="math inline">\(Y\)</span>도 일어난다”는 의미로 아래와 같이 표현된다.</p>
-<span class="math display" id="eq:association-rule">\[\begin{equation}
+<p><span class="math display" id="eq:association-rule">\[\begin{equation}
 R: X \Rightarrow Y \tag{11.1}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>식 <a href="association-rule.html#eq:association-rule">(11.1)</a>의 연관규칙 <span class="math inline">\(R\)</span>에 대한 성능척도로 지지도(support), 신뢰도(confidence) 및 개선도(lift)가 널리 사용된다.</p>
 <div id="association-rule-support" class="section level3">
 <h3><span class="header-section-number">11.2.1</span> 지지도</h3>
 <p>지지도는 전체 트랜잭션 중 관심있는 항목집합을 포함하는 트랜잭션의 비율을 나타낸다.</p>
 <p>항목 <span class="math inline">\(X \subseteq I\)</span>에 대한 지지도는 아래와 같이 계산된다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 supp(X) = \frac{1}{n} \sum_{j = 1}^{n} \mathbb{I}(X \subseteq Z_j)
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>이 때, <span class="math inline">\(\mathbb{I}(a)\)</span>는 지시함수로 <span class="math inline">\(a\)</span>가 참일 때 1, 거짓일 때 0의 함수값을 가진다.</p>
 <p>식 <a href="association-rule.html#eq:association-rule">(11.1)</a>의 연관규칙 <span class="math inline">\(R\)</span>에 대한 지지도는 아래와 같이 정의된다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 supp(R) = supp(X \cup Y)
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>다음과 같은 5개의 트랜잭션을 고려해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">transaction_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">transaction_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>transaction_id, <span class="op">~</span>item,
   <span class="dv">1</span>, <span class="st">&quot;b&quot;</span>,
   <span class="dv">1</span>, <span class="st">&quot;c&quot;</span>,
@@ -393,7 +419,7 @@ transaction_df <span class="op">%&gt;%</span>
     <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>),
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;트랜잭션&#39;</span>, <span class="st">&#39;항목&#39;</span>),
     <span class="dt">caption =</span> <span class="st">&#39;트랜잭션 데이터&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:transaction-data">Table 11.1: </span>트랜잭션 데이터</caption>
 <thead>
@@ -426,11 +452,11 @@ transaction_df <span class="op">%&gt;%</span>
 </tbody>
 </table>
 <p>이 때, 전체 항목집합 <span class="math inline">\(I\)</span>는 <span class="math inline">\(\{a, b, c, d, e, f, g\}\)</span> 이다. 다음과 같은 규칙을 적용해보자.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 R: \{b, c\} \Rightarrow \{g\}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>이 때, 조건부 <span class="math inline">\(X = \{b, c\}\)</span>에 대한 지지도는 아래와 같이 산출된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">support &lt;-<span class="st"> </span><span class="cf">function</span>(group_df, item, set) {
+<pre class="sourceCode r"><code class="sourceCode r">support &lt;-<span class="st"> </span><span class="cf">function</span>(group_df, item, set) {
   <span class="cf">if</span>(<span class="kw">is_empty</span>(set)) <span class="kw">return</span>(<span class="dv">1</span>)
   
   group_df <span class="op">%&gt;%</span>
@@ -443,36 +469,36 @@ R: \{b, c\} \Rightarrow \{g\}
 X &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>)
 group_transaction_df &lt;-<span class="st"> </span>transaction_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(transaction_id)
 
-<span class="kw">support</span>(group_transaction_df, <span class="dt">item =</span> <span class="st">&quot;item&quot;</span>, <span class="dt">set =</span> X)</code></pre></div>
+<span class="kw">support</span>(group_transaction_df, <span class="dt">item =</span> <span class="st">&quot;item&quot;</span>, <span class="dt">set =</span> X)</code></pre>
 <pre><code>## [1] 0.8</code></pre>
 <p>또한, 규칙 <span class="math inline">\(R\)</span>에 대한 지지도는 아래와 같이 산출할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;g&quot;</span>)
-<span class="kw">support</span>(group_transaction_df, <span class="dt">item =</span> <span class="st">&quot;item&quot;</span>, <span class="dt">set =</span> <span class="kw">union</span>(X, Y))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">Y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;g&quot;</span>)
+<span class="kw">support</span>(group_transaction_df, <span class="dt">item =</span> <span class="st">&quot;item&quot;</span>, <span class="dt">set =</span> <span class="kw">union</span>(X, Y))</code></pre>
 <pre><code>## [1] 0.6</code></pre>
 </div>
 <div id="association-rule-confidence" class="section level3">
 <h3><span class="header-section-number">11.2.2</span> 신뢰도</h3>
 <p>연관규칙 <span class="math inline">\(R\)</span>의 가치를 평가할 때, 통상 다음과 같이 정의되는 신뢰도를 사용한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 conf(R) = \frac{supp(R)}{supp(X)} = \frac{supp(X \cup Y)}{supp(X)}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>이 신뢰도는 조건부 확률의 개념으로, 집합 <span class="math inline">\(X\)</span>(조건부)가 발생할 때 집합 <span class="math inline">\(Y\)</span>(결과부)도 동시에 발생할 확률을 의미한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rule_confidence &lt;-<span class="st"> </span><span class="cf">function</span>(group_df, item, x, y) {
+<pre class="sourceCode r"><code class="sourceCode r">rule_confidence &lt;-<span class="st"> </span><span class="cf">function</span>(group_df, item, x, y) {
   <span class="kw">support</span>(group_df, item, <span class="kw">union</span>(x, y)) <span class="op">/</span><span class="st"> </span><span class="kw">support</span>(group_df, item, x)
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rule_confidence</span>(group_transaction_df, <span class="dt">item =</span> <span class="st">&quot;item&quot;</span>, <span class="dt">x =</span> X, <span class="dt">y =</span> Y)</code></pre></div>
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rule_confidence</span>(group_transaction_df, <span class="dt">item =</span> <span class="st">&quot;item&quot;</span>, <span class="dt">x =</span> X, <span class="dt">y =</span> Y)</code></pre>
 <pre><code>## [1] 0.75</code></pre>
 </div>
 <div id="association-rule-lift" class="section level3">
 <h3><span class="header-section-number">11.2.3</span> 개선도</h3>
 <p>결과가 단독으로 발생할 가능성에 비추어 조건과 연계하여 결과가 발생할 가능성의 빈도 비율로 정의한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 lift(R) = \frac{conf(R)}{supp(Y)} = \frac{supp(X \cup Y)}{supp(X)supp(Y)}
-\end{equation*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rule_lift &lt;-<span class="st"> </span><span class="cf">function</span>(group_df, item, x, y) {
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">rule_lift &lt;-<span class="st"> </span><span class="cf">function</span>(group_df, item, x, y) {
   <span class="kw">rule_confidence</span>(group_df, item, x, y) <span class="op">/</span><span class="st"> </span><span class="kw">support</span>(group_df, item, y)
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rule_lift</span>(group_transaction_df, <span class="dt">item =</span> <span class="st">&quot;item&quot;</span>, <span class="dt">x =</span> X, <span class="dt">y =</span> Y)</code></pre></div>
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rule_lift</span>(group_transaction_df, <span class="dt">item =</span> <span class="st">&quot;item&quot;</span>, <span class="dt">x =</span> X, <span class="dt">y =</span> Y)</code></pre>
 <pre><code>## [1] 1.25</code></pre>
 <p>즉, 항목 <span class="math inline">\(b\)</span>, <span class="math inline">\(c\)</span>가 발생할 때 <span class="math inline">\(g\)</span>가 발생하는 빈도가 25% 높아진다.</p>
 </div>
@@ -489,7 +515,7 @@ lift(R) = \frac{conf(R)}{supp(Y)} = \frac{supp(X \cup Y)}{supp(X)supp(Y)}
 <li>빈발항목집합들 <span class="math inline">\(L_{k}\)</span>내의 각 쌍에 대해 합집합을 구하여 그 합집합의 크기(항목의 수)가 <span class="math inline">\(k + 1\)</span>인 항목집합들을 빈발항목집합 후보군 <span class="math inline">\(C_{k + 1}\)</span>라 한다.</li>
 </ol>
 <p><span class="math inline">\(k\)</span>를 1부터 증가시키면서 더 이상 빈발항목집합을 찾을 수 없을 때까지 위 과정을 반복한다. 이 때, 빈발항목집합 후보군을 생성하는 함수 <code>apriori_gen</code>을 아래와 같이 구현해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">apriori_gen &lt;-<span class="st"> </span><span class="cf">function</span>(L) {
+<pre class="sourceCode r"><code class="sourceCode r">apriori_gen &lt;-<span class="st"> </span><span class="cf">function</span>(L) {
   <span class="cf">if</span>(<span class="kw">length</span>(L) <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>) <span class="kw">return</span>(<span class="ot">NULL</span>)
   
   n_sets &lt;-<span class="st"> </span><span class="kw">length</span>(L)
@@ -509,9 +535,9 @@ lift(R) = \frac{conf(R)}{supp(Y)} = \frac{supp(X \cup Y)}{supp(X)supp(Y)}
 <span class="st">    </span><span class="kw">unique</span>()
 
   C  
-}</code></pre></div>
+}</code></pre>
 <p>위 함수를 이용하여, Table <a href="association-rule.html#tab:transaction-data">11.1</a>에서 최소 지지도 <span class="math inline">\(s_{\text{min}} = 0.4\)</span>를 기준으로 빈발항목집합을 찾아보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_min &lt;-<span class="st"> </span><span class="fl">0.4</span>
+<pre class="sourceCode r"><code class="sourceCode r">s_min &lt;-<span class="st"> </span><span class="fl">0.4</span>
 group_transaction_df &lt;-<span class="st"> </span>transaction_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(transaction_id)
 
 candidate_itemsets &lt;-<span class="st"> </span><span class="kw">as.list</span>(<span class="kw">sort</span>(<span class="kw">unique</span>(transaction_df<span class="op">$</span>item)))
@@ -530,10 +556,10 @@ large_itemsets &lt;-<span class="st"> </span><span class="kw">vector</span>(<spa
   <span class="cf">if</span>(<span class="kw">is.null</span>(candidate_itemsets)) <span class="cf">break</span>
 }
 
-large_itemsets &lt;-<span class="st"> </span><span class="kw">compact</span>(large_itemsets)</code></pre></div>
+large_itemsets &lt;-<span class="st"> </span><span class="kw">compact</span>(large_itemsets)</code></pre>
 <p>찾아진 빈발항목집합들은 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(large_itemsets,
-    <span class="op">~</span><span class="kw">map_chr</span>(.x, <span class="op">~</span><span class="kw">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">str_c</span>(.x, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>)))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(large_itemsets,
+    <span class="op">~</span><span class="kw">map_chr</span>(.x, <span class="op">~</span><span class="kw">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">str_c</span>(.x, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>)))</code></pre>
 <pre><code>## [[1]]
 ## [1] &quot;{a}&quot; &quot;{b}&quot; &quot;{c}&quot; &quot;{e}&quot; &quot;{f}&quot; &quot;{g}&quot;
 ## 
@@ -550,11 +576,11 @@ large_itemsets &lt;-<span class="st"> </span><span class="kw">compact</span>(lar
 <div id="apriori-rule-exploration" class="section level3">
 <h3><span class="header-section-number">11.3.2</span> 규칙의 탐사</h3>
 <p>도출된 빈발항목집합 각각(<span class="math inline">\(L\)</span>)을 조건부(<span class="math inline">\(X\)</span>)와 결과부(<span class="math inline">\(Y = L \backslash A\)</span>)로 나눌 때 미리 결정된 최소 신뢰도 <span class="math inline">\(c_{\text{min}}\)</span> 이상의 신뢰도를 지닌 규칙 <span class="math inline">\(R\)</span>을 찾는다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 R: X \Rightarrow L \backslash X
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>우선, 빈발항목집합 <span class="math inline">\(L\)</span>으로부터 가능한 규칙들을 생성하는 함수 <code>generate_rules</code>를 아래와 같이 구현해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">generate_rules &lt;-<span class="st"> </span><span class="cf">function</span>(L, <span class="dt">n_min_item =</span> <span class="dv">1</span>) {
+<pre class="sourceCode r"><code class="sourceCode r">generate_rules &lt;-<span class="st"> </span><span class="cf">function</span>(L, <span class="dt">n_min_item =</span> <span class="dv">1</span>) {
   n_item &lt;-<span class="st"> </span><span class="kw">length</span>(L)
   <span class="cf">if</span>(n_item <span class="op">&lt;</span><span class="st"> </span>n_min_item) <span class="kw">return</span>(<span class="ot">NULL</span>) <span class="co"># 항목 최소개수 제한</span>
   
@@ -562,21 +588,21 @@ R: X \Rightarrow L \backslash X
   Y &lt;-<span class="st"> </span><span class="kw">map</span>(X, <span class="op">~</span><span class="kw">setdiff</span>(L, .x))
   
   <span class="kw">tibble</span>(<span class="dt">X =</span> X, <span class="dt">Y =</span> Y)
-}</code></pre></div>
+}</code></pre>
 <p>앞 장에서 추출한 모든 빈발항목집합들로부터 규칙을 생성해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rule_list &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(
+<pre class="sourceCode r"><code class="sourceCode r">rule_list &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(
   large_itemsets <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">flatten</span>(),
   generate_rules
-)</code></pre></div>
+)</code></pre>
 <p>각각의 규칙에 대하여 신뢰도를 계산하여, 그 값이 최소 신뢰도 <span class="math inline">\(c_{\text{min}}\)</span> 이상인 규칙만을 <code>conf_rule_list</code>라는 데이터 프레임으로 저장하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rule_list<span class="op">$</span>confidence &lt;-<span class="st"> </span><span class="kw">pmap_dbl</span>(rule_list, <span class="cf">function</span>(X, Y) 
+<pre class="sourceCode r"><code class="sourceCode r">rule_list<span class="op">$</span>confidence &lt;-<span class="st"> </span><span class="kw">pmap_dbl</span>(rule_list, <span class="cf">function</span>(X, Y) 
   <span class="kw">rule_confidence</span>(group_transaction_df, <span class="dt">item =</span> <span class="st">&quot;item&quot;</span>, <span class="dt">x =</span> X, <span class="dt">y =</span> Y)
   )
 
 c_min &lt;-<span class="st"> </span><span class="fl">0.7</span>
-conf_rule_list &lt;-<span class="st"> </span>rule_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(confidence <span class="op">&gt;=</span><span class="st"> </span>c_min)</code></pre></div>
+conf_rule_list &lt;-<span class="st"> </span>rule_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(confidence <span class="op">&gt;=</span><span class="st"> </span>c_min)</code></pre>
 <p>이 결과 최종적으로 도출된 규칙들은 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">conf_rule_list <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">conf_rule_list <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">X =</span> <span class="kw">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">str_c</span>(<span class="kw">unlist</span>(X), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>),
@@ -587,7 +613,7 @@ conf_rule_list &lt;-<span class="st"> </span>rule_list <span class="op">%&gt;%</
     <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>),
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;조건부 $X$&#39;</span>, <span class="st">&#39;결과부 $Y$&#39;</span>, <span class="st">&#39;신뢰도&#39;</span>),
     <span class="dt">caption =</span> <span class="st">&#39;최종 연관규칙&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:confident-rules">Table 11.2: </span>최종 연관규칙</caption>
 <thead>
@@ -766,12 +792,14 @@ conf_rule_list &lt;-<span class="st"> </span>rule_list <span class="op">%&gt;%</
 <h3><span class="header-section-number">11.3.3</span> R 패키지 내 Apriori</h3>
 <p>R 패키지 <code>arules</code>의 <code>apriori</code> 함수를 이용하여 위에서 살펴본 연관규칙 탐사를 수행할 수 있다.</p>
 <p>우선, <a href="association-rule.html#association-rule-support">11.2.1</a> 절에서 생성한 데이터 프레임 <code>transaction_df</code>를 <code>arules</code> 패키지 내에 정의된 <code>transactions</code> 클래스 형태의 데이터로 변환한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">transaction_df2 &lt;-<span class="st"> </span><span class="kw">as</span>(
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">requireNamespace</span>(<span class="st">&quot;arules&quot;</span>)</code></pre>
+<pre><code>## Loading required namespace: arules</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">transaction_df2 &lt;-<span class="st"> </span><span class="kw">as</span>(
   <span class="kw">split</span>(transaction_df<span class="op">$</span>item, transaction_df<span class="op">$</span>transaction_id),
   <span class="st">&quot;transactions&quot;</span>
-)</code></pre></div>
+)</code></pre>
 <p>이후, <code>apriori</code> 함수를 호출하여 연관규칙 탐사를 수행한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rule_results &lt;-<span class="st"> </span>arules<span class="op">::</span><span class="kw">apriori</span>(
+<pre class="sourceCode r"><code class="sourceCode r">rule_results &lt;-<span class="st"> </span>arules<span class="op">::</span><span class="kw">apriori</span>(
   transaction_df2,
   <span class="dt">parameter =</span> <span class="kw">list</span>(
     <span class="dt">support =</span> <span class="fl">0.4</span>,
@@ -781,20 +809,20 @@ conf_rule_list &lt;-<span class="st"> </span>rule_list <span class="op">%&gt;%</
   <span class="dt">control =</span> <span class="kw">list</span>(
     <span class="dt">verbose =</span> <span class="ot">FALSE</span>
   )
-)</code></pre></div>
+)</code></pre>
 <p>결과로 얻어지는 <code>rules</code> 클래스 객체에서 필요한 정보를 추출하여 데이터 프레임으로 저장하자.</p>
 <ul>
 <li><code>lhs</code>: 조건부</li>
 <li><code>rhs</code>: 결과부</li>
 <li><code>quality</code>: 평가척도 (지지도, 신뢰도, 개선도, 관측수)</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rule_results_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">rule_results_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">X =</span> <span class="kw">as</span>(rule_results<span class="op">@</span>lhs, <span class="st">&quot;list&quot;</span>),
   <span class="dt">Y =</span> <span class="kw">as</span>(rule_results<span class="op">@</span>rhs, <span class="st">&quot;list&quot;</span>)
 ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">bind_cols</span>(rule_results<span class="op">@</span>quality)</code></pre></div>
+<span class="st">  </span><span class="kw">bind_cols</span>(rule_results<span class="op">@</span>quality)</code></pre>
 <p>해당 데이터 프레임은 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rule_results_df <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">rule_results_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">X =</span> <span class="kw">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">str_c</span>(<span class="kw">unlist</span>(X), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>),
@@ -806,7 +834,7 @@ conf_rule_list &lt;-<span class="st"> </span>rule_list <span class="op">%&gt;%</
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;조건부 $X$&#39;</span>, <span class="st">&#39;결과부 $Y$&#39;</span>, <span class="st">&#39;지지도&#39;</span>,
                   <span class="st">&#39;신뢰도&#39;</span>, <span class="st">&#39;개선도&#39;</span>, <span class="st">&#39;관측수&#39;</span>),
     <span class="dt">caption =</span> <span class="st">&#39;최종 연관규칙 - arules::apriori&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:apriori-r-results">Table 11.3: </span>최종 연관규칙 - arules::apriori</caption>
 <thead>
@@ -1029,32 +1057,32 @@ conf_rule_list &lt;-<span class="st"> </span>rule_list <span class="op">%&gt;%</
 <h2><span class="header-section-number">11.4</span> 순차적 패턴의 탐사</h2>
 <p>순차적 패턴(sequential pattern)이란 고객들의 시간에 따른 구매 행태를 말하는데, 예를 들어 “냉장고를 구입한 후 김치냉장고를 구매한다”는 식이다.</p>
 <p>순차적 패턴의 탐사를 위해서는 고객별, 시간별 트랜잭션 데이터가 필요하다. 항목 집합을 순서적으로 나열한 리스트를 시퀀스(sequence)라 하는데, <span class="math inline">\(A_j\)</span>를 <span class="math inline">\(j\)</span>번째의 항목집합이라 할 때, 시퀀스는 다음과 같이 표기한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 s = &lt; A_1, A_2, \cdots, A_n &gt;
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>시퀀스에 포함된 항목집합의 수를 시퀀스의 길이라 하며, 길이가 <span class="math inline">\(k\)</span>인 시퀀스를 <span class="math inline">\(k\)</span>-시퀀스라 한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 length(&lt; A_1, A_2, \cdots, A_n &gt;) = n
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>두 시퀀스 <span class="math inline">\(s_1 = &lt; A_1, A_2, \cdots, A_n &gt;\)</span>과 <span class="math inline">\(s_2 = &lt; B_1, B_2, \cdots, B_m &gt;\)</span>에 대하여 (<span class="math inline">\(n \leq m\)</span>),</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 A_1 \subseteq B_{i_1}, A_2 \subseteq B_{i_2}, \cdots,  A_n \subseteq B_{i_n}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>이 성립하는 <span class="math inline">\(i_1 &lt; i_2 &lt; \cdots &lt; i_n\)</span>이 존재할 때, <span class="math inline">\(s_1\)</span>은 <span class="math inline">\(s_2\)</span>에 포함된다고 하며, 이 때 <span class="math inline">\(s_1\)</span>을 <span class="math inline">\(s_2\)</span>의 부분 시퀀스라 하며, 아래와 같이 표현한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 s_1 \prec s_2
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>시퀀스 <span class="math inline">\(s\)</span>가 어떤 다른 시퀀스에 포함되지 않을 경우 최대 시퀀스(maximal sequence)라 한다.</p>
 <p><span class="math inline">\(N\)</span>명의 고객 각자에 대한 트랜잭션 시퀀스를 고객 시퀀스(customer sequence)라 하며, <span class="math inline">\(i\)</span>번째 고객에 대한 고객 시퀀스를 <span class="math inline">\(s_i\)</span>라 할 때 (<span class="math inline">\(i = 1, \cdots, N\)</span>), 임의의 시퀀스 <span class="math inline">\(s\)</span>에 대한 지지도를 다음과 같이 정의한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 supp(s) = \frac{1}{N} \sum_{i = 1}^{N} I(s \prec s_i)
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>그리고, 미리 정한 최소 지지도 이상을 갖는 시퀀스를 빈발 시퀀스(large sequence)라 한다. 따라서, 순차적 패턴 탐사 문제는 빈발 시퀀스 중 최대 시퀀스(maximal sequence)들을 찾는 것이라 할 수 있다.</p>
 <div id="association-aprioriall" class="section level3">
 <h3><span class="header-section-number">11.4.1</span> AprioriAll 알고리즘</h3>
 <p>AprioriAll 알고리즘은 빈발 시퀀스를 탐색하나, 탐색된 시퀀스가 최대 빈발 시퀀스임을 보장하지는 못한다. 따라서, 후에 최대화 단계를 요한다.</p>
 <p>아래와 같은 고객 시퀀스가 존재한다고 하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sequential_transaction_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">sequential_transaction_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>customer_id, <span class="op">~</span>transaction_seq, <span class="op">~</span>item,
   <span class="dv">1</span>, <span class="dv">1</span>, <span class="st">&quot;a&quot;</span>,
   <span class="dv">1</span>, <span class="dv">2</span>, <span class="st">&quot;b&quot;</span>,
@@ -1083,7 +1111,7 @@ sequential_transaction_df <span class="op">%&gt;%</span>
     <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>),
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;고객ID ($i$)&quot;</span>, <span class="st">&quot;고객 시퀀스 ($s_i$)&quot;</span>),
     <span class="dt">caption =</span> <span class="st">&quot;고객별 시퀀스&quot;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:sequential-transaction-data">Table 11.4: </span>고객별 시퀀스</caption>
 <thead>
@@ -1117,7 +1145,7 @@ sequential_transaction_df <span class="op">%&gt;%</span>
 </table>
 <p>고객 시퀀스의 항목집합 또는 이의 부분집합 중 최소 지지도 이상인 것들을 빈발항목 집합으로 도출한다.</p>
 <p>우선 시퀀스가 특정 패턴을 포함하는지 여부를 판단하는 사용자 정의 함수 <code>is_contained</code>와 고객 시퀀스 집합의 특정 패턴에 대한 지지도를 산출하는 사용자 정의 함수 <code>support_sequence</code>를 아래와 같이 구현해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">is_contained &lt;-<span class="st"> </span><span class="cf">function</span>(x, pattern) {
+<pre class="sourceCode r"><code class="sourceCode r">is_contained &lt;-<span class="st"> </span><span class="cf">function</span>(x, pattern) {
   n_x &lt;-<span class="st"> </span><span class="kw">length</span>(x)
   n_pattern &lt;-<span class="st"> </span><span class="kw">length</span>(pattern)
   <span class="cf">if</span> (n_pattern <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="kw">return</span> (<span class="ot">TRUE</span>)
@@ -1145,9 +1173,9 @@ sequential_transaction_df <span class="op">%&gt;%</span>
 
 support_sequence &lt;-<span class="st"> </span><span class="cf">function</span>(sequence_list, pattern) {
   <span class="kw">map_lgl</span>(sequence_list, is_contained, <span class="dt">pattern =</span> pattern) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mean</span>()
-}</code></pre></div>
+}</code></pre>
 <p>앞 <a href="association-rule.html#apriori-large-itemsets">11.3.1</a>절에서와 같이 사용자 정의 함수 <code>apriori_gen</code>을 이용하여 빈발항목집합(시퀀스 지지도 기준)을 아래와 같이 얻는다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_min &lt;-<span class="st"> </span><span class="fl">0.4</span>
+<pre class="sourceCode r"><code class="sourceCode r">s_min &lt;-<span class="st"> </span><span class="fl">0.4</span>
 
 customer_sequence &lt;-<span class="st"> </span>sequential_transaction_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(customer_id, transaction_seq) <span class="op">%&gt;%</span>
@@ -1166,9 +1194,9 @@ large_itemsets &lt;-<span class="st"> </span><span class="kw">vector</span>(<spa
   candidate_itemsets &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="kw">apriori_gen</span>(large_itemsets[[i]]), <span class="op">~</span><span class="kw">list</span>(.x))
 }
 
-large_itemsets &lt;-<span class="st"> </span>large_itemsets <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">flatten</span>()</code></pre></div>
+large_itemsets &lt;-<span class="st"> </span>large_itemsets <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">flatten</span>()</code></pre>
 <p>위 결과, 아래와 같은 빈발항목집합이 얻어진다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">large_itemsets</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">large_itemsets</code></pre>
 <pre><code>## [[1]]
 ## [1] &quot;a&quot;
 ## 
@@ -1184,7 +1212,7 @@ large_itemsets &lt;-<span class="st"> </span>large_itemsets <span class="op">%&g
 ## [[5]]
 ## [1] &quot;e&quot; &quot;g&quot;</code></pre>
 <p>위 빈발항목집합에 일련번호를 부여한 뒤, 고객 시퀀스를 해당 일련번호를 이용한 시퀀스로 변환한다. 우선 아래와 같이 일련번호를 부여해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">large_itemset_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">large_itemset_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">itemset =</span> large_itemsets,
   <span class="dt">mapped_to =</span> <span class="kw">seq_along</span>(large_itemsets)
 )
@@ -1197,7 +1225,7 @@ large_itemset_df <span class="op">%&gt;%</span>
     <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>),
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;빈발항목집합&quot;</span>, <span class="st">&quot;일련번호&quot;</span>),
     <span class="dt">caption =</span> <span class="st">&quot;고객 시퀀스 빈발항목집합&quot;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:association-sequence-large-itemsets">Table 11.5: </span>고객 시퀀스 빈발항목집합</caption>
 <thead>
@@ -1230,14 +1258,14 @@ large_itemset_df <span class="op">%&gt;%</span>
 </tbody>
 </table>
 <p>원 고객 시퀀스에 대해, 각 항목집합이 위 빈발항목집합을 포함하는 경우, 해당 일련번호가 항목으로 포함되는 형태로 변환 시퀀스를 생성한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">customer_sequence<span class="op">$</span>transformed_sequence &lt;-<span class="st"> </span>customer_sequence<span class="op">$</span>sequence <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">customer_sequence<span class="op">$</span>transformed_sequence &lt;-<span class="st"> </span>customer_sequence<span class="op">$</span>sequence <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">map</span>(.x, <span class="cf">function</span>(x) {
     large_itemset_df<span class="op">$</span>mapped_to[
       <span class="kw">map_lgl</span>(large_itemset_df<span class="op">$</span>itemset, <span class="op">~</span><span class="kw">is_contained</span>(x, .x))
       ]
-  }) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compact</span>())</code></pre></div>
+  }) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compact</span>())</code></pre>
 <p>원 고객 시퀀스와 변환 시퀀스는 아래와 같이 표현될 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">print_sequence &lt;-<span class="st"> </span><span class="cf">function</span>(sequence) {
+<pre class="sourceCode r"><code class="sourceCode r">print_sequence &lt;-<span class="st"> </span><span class="cf">function</span>(sequence) {
   <span class="kw">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="kw">str_c</span>(
     <span class="kw">map</span>(sequence, <span class="cf">function</span>(x) 
       <span class="kw">str_c</span>(<span class="kw">map_chr</span>(x, <span class="op">~</span><span class="kw">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">str_c</span>(.x, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>)), 
@@ -1256,7 +1284,7 @@ customer_sequence <span class="op">%&gt;%</span>
     <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>),
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;고객ID&quot;</span>, <span class="st">&quot;고객 시퀀스&quot;</span>, <span class="st">&quot;변환 시퀀스&quot;</span>),
     <span class="dt">caption =</span> <span class="st">&quot;고객 시퀀스의 변환&quot;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:association-transformed-sequence">Table 11.6: </span>고객 시퀀스의 변환</caption>
 <thead>
@@ -1296,12 +1324,12 @@ customer_sequence <span class="op">%&gt;%</span>
 </table>
 <p>변환 시퀀스를 기준으로, 길이가 1인 빈발 시퀀스를 구한다. 최소 지지도를 앞에서 빈발항목집합을 구할 때와 동일하게 설정할 때, 길이가 1인 빈발 시퀀스는 빈발항목집합(의 변환된 일련번호)과 동일하다.</p>
 <p>우선, 최대 시퀀스 길이를 구하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">max_sequence_length &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">map_int</span>(customer_sequence<span class="op">$</span>transformed_sequence, <span class="op">~</span><span class="kw">length</span>(.x)))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">max_sequence_length &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">map_int</span>(customer_sequence<span class="op">$</span>transformed_sequence, <span class="op">~</span><span class="kw">length</span>(.x)))</code></pre>
 <p>1-시퀀스인 빈발시퀀스는 빈발항목집합과 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">large_sequences &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> max_sequence_length)
-large_sequences[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">map</span>(large_itemset_df<span class="op">$</span>mapped_to, <span class="op">~</span><span class="kw">list</span>(.x))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">large_sequences &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> max_sequence_length)
+large_sequences[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">map</span>(large_itemset_df<span class="op">$</span>mapped_to, <span class="op">~</span><span class="kw">list</span>(.x))</code></pre>
 <p>같은 길이의 두 시퀀스를 이용해서 길이가 1 증가한 새로운 시퀀스를 생성하는 함수 <code>generate_sequence</code>를 아래와 같이 구현해보자. 새로운 시퀀스는 첫 번째 시퀀스 후에 두 번째 시퀀스의 가장 마지막 트랜잭션을 추가한 시퀀스이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">generate_sequence &lt;-<span class="st"> </span><span class="cf">function</span>(seq1, seq2) {
+<pre class="sourceCode r"><code class="sourceCode r">generate_sequence &lt;-<span class="st"> </span><span class="cf">function</span>(seq1, seq2) {
   <span class="cf">if</span> (<span class="kw">length</span>(seq1) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(seq2)) <span class="kw">stop</span>(<span class="st">&quot;Two sequences must be the same length.&quot;</span>)
   
   <span class="co"># two k-sequences needs to be the same for first k-1 items to generate new sequence</span>
@@ -1312,9 +1340,9 @@ large_sequences[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span
   }
   
   new_sequence
-}</code></pre></div>
+}</code></pre>
 <p>빈발 <span class="math inline">\(k\)</span>-시퀀스들로부터 <span class="math inline">\((k+1)\)</span>-시퀀스들을 생성하는 함수 <code>apriori_seq_gen</code>을 아래와 같이 구현해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">apriori_seq_gen &lt;-<span class="st"> </span><span class="cf">function</span>(L) {
+<pre class="sourceCode r"><code class="sourceCode r">apriori_seq_gen &lt;-<span class="st"> </span><span class="cf">function</span>(L) {
   n_seqs &lt;-<span class="st"> </span><span class="kw">length</span>(L)
   n_item &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">map_dbl</span>(L, length))
   
@@ -1340,17 +1368,17 @@ large_sequences[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span
   }
   
   <span class="kw">compact</span>(C)
-}</code></pre></div>
+}</code></pre>
 <p>위 <code>apriori_seq_gen</code> 함수 수행결과로 얻어지는 <span class="math inline">\((k+1)\)</span>-시퀀스들이 모두 빈발 시퀀스라는 보장은 없으므로, 새로 생성된 각 시퀀스가 최소 지지도 이상의 지지도를 갖는지 검토하여, 빈발 시퀀스만을 남기기로 하자. 앞에서 정의했던 함수 <code>support_sequence</code>를 활용하여, 새로운 함수 <code>get_large_sequence</code>를 정의하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_large_sequence &lt;-<span class="st"> </span><span class="cf">function</span>(sequence_list, C, s_min) {
+<pre class="sourceCode r"><code class="sourceCode r">get_large_sequence &lt;-<span class="st"> </span><span class="cf">function</span>(sequence_list, C, s_min) {
   is_large &lt;-<span class="st"> </span><span class="kw">map_lgl</span>(
     C, <span class="op">~</span><span class="st"> </span><span class="kw">support_sequence</span>(sequence_list, .x) <span class="op">&gt;=</span><span class="st"> </span>s_min
   )
   
   C[is_large]
-}</code></pre></div>
+}</code></pre>
 <p>위 빈발 <span class="math inline">\(k\)</span>-시퀀스를 과정을 <span class="math inline">\(k\)</span>값을 1씩 증가시켜가며 더 이상 빈발 시퀀스를 찾을 수 없을 때까지 반복한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_min &lt;-<span class="st"> </span><span class="fl">0.4</span>
+<pre class="sourceCode r"><code class="sourceCode r">s_min &lt;-<span class="st"> </span><span class="fl">0.4</span>
 
 large_sequences &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> max_sequence_length)
 large_sequences[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">map</span>(large_itemset_df<span class="op">$</span>mapped_to, <span class="op">~</span><span class="kw">list</span>(.x))
@@ -1365,14 +1393,14 @@ large_sequences[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span
   <span class="cf">if</span>(<span class="kw">is_empty</span>(large_sequences[[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]])) <span class="cf">break</span>
 }
 
-large_sequences &lt;-<span class="st"> </span><span class="kw">flatten</span>(<span class="kw">compact</span>(large_sequences))</code></pre></div>
+large_sequences &lt;-<span class="st"> </span><span class="kw">flatten</span>(<span class="kw">compact</span>(large_sequences))</code></pre>
 <p>결과적으로 찾아진 빈발 시퀀스들은 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_chr</span>(large_sequences, 
-    <span class="op">~</span><span class="kw">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="kw">str_c</span>(<span class="kw">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">unlist</span>(.x), <span class="st">&quot;}&quot;</span>), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;&gt;&quot;</span>))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_chr</span>(large_sequences, 
+    <span class="op">~</span><span class="kw">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="kw">str_c</span>(<span class="kw">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">unlist</span>(.x), <span class="st">&quot;}&quot;</span>), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;&gt;&quot;</span>))</code></pre>
 <pre><code>## [1] &quot;&lt;{1}&gt;&quot;      &quot;&lt;{2}&gt;&quot;      &quot;&lt;{3}&gt;&quot;      &quot;&lt;{4}&gt;&quot;      &quot;&lt;{5}&gt;&quot;     
 ## [6] &quot;&lt;{1}, {2}&gt;&quot; &quot;&lt;{1}, {3}&gt;&quot; &quot;&lt;{1}, {4}&gt;&quot; &quot;&lt;{1}, {5}&gt;&quot;</code></pre>
 <p>이후 최대화 단계를 통해, 빈발 시퀀스 중 최대 시퀀스들만 추출한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">maximal_large_sequences &lt;-<span class="st"> </span>large_sequences
+<pre class="sourceCode r"><code class="sourceCode r">maximal_large_sequences &lt;-<span class="st"> </span>large_sequences
 
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">length</span>(large_sequences), <span class="dt">to =</span> <span class="dv">2</span>)) {
   <span class="cf">if</span>(<span class="op">!</span><span class="kw">is_empty</span>(maximal_large_sequences[i])) {
@@ -1383,10 +1411,10 @@ large_sequences &lt;-<span class="st"> </span><span class="kw">flatten</span>(<s
   }
 }
 
-maximal_large_sequences &lt;-<span class="st"> </span><span class="kw">compact</span>(maximal_large_sequences)</code></pre></div>
+maximal_large_sequences &lt;-<span class="st"> </span><span class="kw">compact</span>(maximal_large_sequences)</code></pre>
 <p>최대 빈발 시퀀스(변환 시퀀스 기준)은 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_chr</span>(maximal_large_sequences, 
-    <span class="op">~</span><span class="kw">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="kw">str_c</span>(<span class="kw">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">unlist</span>(.x), <span class="st">&quot;}&quot;</span>), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;&gt;&quot;</span>))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_chr</span>(maximal_large_sequences, 
+    <span class="op">~</span><span class="kw">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="kw">str_c</span>(<span class="kw">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">unlist</span>(.x), <span class="st">&quot;}&quot;</span>), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;&gt;&quot;</span>))</code></pre>
 <pre><code>## [1] &quot;&lt;{1}, {2}&gt;&quot; &quot;&lt;{1}, {3}&gt;&quot; &quot;&lt;{1}, {4}&gt;&quot; &quot;&lt;{1}, {5}&gt;&quot;</code></pre>
 <p>이외에도 AprioriSome 알고리즘, DynamicSome 알고리즘 등의 시퀀스 탐사 알고리즘 들이 존재한다. 보다 자세한 내용은 <span class="citation">전치혁 (<a href="#ref-jun2012datamining">2012</a>)</span> 및 <span class="citation">Agrawal, Srikant, and others (<a href="#ref-agrawal1995mining">1995</a>)</span> 참고.</p>
 
@@ -1402,7 +1430,7 @@ maximal_large_sequences &lt;-<span class="st"> </span><span class="kw">compact</
 <p>전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.</p>
 </div>
 <div id="ref-agrawal1993mining">
-<p>Agrawal, Rakesh, Tomasz Imieliński, and Arun Swami. 1993. “Mining Association Rules Between Sets of Items in Large Databases.” In <em>Proceedings of the 1993 Acm Sigmod International Conference on Management of Data</em>, 207–16. SIGMOD ’93. New York, NY, USA: ACM. doi:<a href="https://doi.org/10.1145/170035.170072">10.1145/170035.170072</a>.</p>
+<p>Agrawal, Rakesh, Tomasz Imieliński, and Arun Swami. 1993. “Mining Association Rules Between Sets of Items in Large Databases.” In <em>Proceedings of the 1993 Acm Sigmod International Conference on Management of Data</em>, 207–16. SIGMOD ’93. New York, NY, USA: ACM. <a href="https://doi.org/10.1145/170035.170072">https://doi.org/10.1145/170035.170072</a>.</p>
 </div>
 <div id="ref-agrawal1995mining">
 <p>Agrawal, Rakesh, Ramakrishnan Srikant, and others. 1995. “Mining Sequential Patterns.” In <em>Icde</em>, 95:3–14.</p>
@@ -1465,7 +1493,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

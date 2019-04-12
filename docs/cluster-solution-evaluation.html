@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-04-11">
+<meta name="date" content="2019-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -51,41 +51,67 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -326,7 +352,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 <tr class="even">
 <td align="left">cluster</td>
-<td align="left">2.0.7-1</td>
+<td align="left">2.0.8</td>
 </tr>
 <tr class="odd">
 <td align="left">flexclust</td>
@@ -346,26 +372,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">10.2.1</span> 외부평가지수</h3>
 <p>이미 잘 알려진 군집해가 있다고 가정할 때, 새로 제안된 군집해를 기존에 알려진 군집해와 비교하는 평가척도이다.</p>
 <p><span class="math inline">\(n\)</span>개의 객체에 대하여 알려진 기준 군집해를 다음과 같다고 하자.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \mathbf{U} = \{ U_1, U_2, \cdots, U_r \}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>즉, 기준 군집해 <span class="math inline">\(\mathbf{U}\)</span>는 <span class="math inline">\(r\)</span>개의 군집으로 구성되며, <span class="math inline">\(k\)</span>번째 군집을 <span class="math inline">\(U_k\)</span>로 나타낸다.</p>
 <p>유사하게, 비교 대상의 군집해를 다음과 같이 <span class="math inline">\(s\)</span>개의 군집으로 구성된 <span class="math inline">\(\mathbf{V}\)</span>로 나타내자.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \mathbf{V} = \{ V_1, V_2, \cdots, V_s \}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <div id="cluster-external-index-basic-script" class="section level4">
 <h4><span class="header-section-number">10.2.1.1</span> 기본 R 스크립트</h4>
 <p>다음의 두 군집해 간의 유사도를 랜드지수 및 수정랜드지수를 이용하여 표현할 수 있다.</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 U &amp;=&amp; \{ \{1, 2, 3, 4\}, \{5, 6, 7\}, \{8, 9, 10\} \}\\
 V &amp;=&amp; \{ \{1, 2, 5, 8\}, \{3, 6, 9\}, \{4, 7, 10\} \}
-\end{eqnarray*}\]</span>
+\end{eqnarray*}\]</span></p>
 <p>랜드지수 및 수정랜드지수는 <code>flexclust</code> 패키지의 <code>randIndex</code> 함수를 호출하여 계산할 수 있으며, 랜드지수를 계산할 때는 <code>correct = FALSE</code>, 수정랜드지수를 계산할 때는 <code>correct = TRUE</code>로 파라미터 값을 지정하여야 한다. 파라미터값을 지정하지 않을 때는 기본값으로 수정랜드지수를 계산한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sol_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)
+<pre class="sourceCode r"><code class="sourceCode r">sol_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)
 sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
 <span class="kw">map</span>(<span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>), 
-    <span class="op">~</span><span class="st"> </span>flexclust<span class="op">::</span><span class="kw">randIndex</span>(<span class="dt">x =</span> sol_<span class="dv">1</span>, <span class="dt">y =</span> sol_<span class="dv">2</span>, <span class="dt">correct =</span> .x))</code></pre></div>
+    <span class="op">~</span><span class="st"> </span>flexclust<span class="op">::</span><span class="kw">randIndex</span>(<span class="dt">x =</span> sol_<span class="dv">1</span>, <span class="dt">y =</span> sol_<span class="dv">2</span>, <span class="dt">correct =</span> .x))</code></pre>
 <pre><code>## [[1]]
 ##        RI 
 ## 0.5111111 
@@ -377,38 +403,38 @@ sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</
 <div id="cluster-external-rand-index" class="section level4">
 <h4><span class="header-section-number">10.2.1.2</span> 랜드지수</h4>
 <p>두 군집해 <span class="math inline">\(U, V\)</span> 내 에서 각 객체가 속한 군집을 나타내기 위한membership 변수를 아래와 같이 정의하자.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 u_{ik} = \begin{cases}
 1 &amp; \text{ if object $i$ belongs to cluster $U_k$, i.e. } i \in U_k \\
 0 &amp; \text{ otherwise}
 \end{cases}, \, i = 1, \cdots, n, \, k = 1, \cdots, r
-\end{equation*}\]</span>
-<span class="math display">\[\begin{equation*}
+\end{equation*}\]</span></p>
+<p><span class="math display">\[\begin{equation*}
 v_{ik} = \begin{cases}
 1 &amp; \text{ if object $i$ belongs to cluster $V_k$, i.e. } i \in V_k \\
 0 &amp; \text{ otherwise}
 \end{cases}, \, i = 1, \cdots, n, \, k = 1, \cdots, s
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>랜드지수를 산출하기 위해, 우선 다음과 같은 네 가지 값을 정의한다.</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 a &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} u_{jk} v_{il} v_{jl}\\
 b &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} u_{jk} v_{il} (1 - v_{jl})\\
 c &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} (1 - u_{jk}) v_{il} v_{jl}\\
 d &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} (1 - u_{jk}) v_{il} (1 - v_{jl})
-\end{eqnarray*}\]</span>
+\end{eqnarray*}\]</span></p>
 <p>이 때, <span class="citation">Rand (<a href="#ref-rand1971objective">1971</a>)</span> 가 제안한 랜드지수(Rand index)는 다음과 같이 정의된다.</p>
-<span class="math display" id="eq:rand-index">\[\begin{equation}
+<p><span class="math display" id="eq:rand-index">\[\begin{equation}
 RI = \frac{a + d}{a + b + c + d} \tag{10.1}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>여기서, <span class="math inline">\(a + b + c + d\)</span>는 객체 쌍의 전체 수를 의미하므로 다음과 같다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 a + b + c + d = {n \choose 2}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>식 <a href="cluster-solution-evaluation.html#eq:rand-index">(10.1)</a>는 0에서 1 사이의 값을 갖게 되며, 0에 가까울수록 두 군집해가 일치하지 않음을, 1에 가까울수록 두 군집해가 일치함을 나타낸다. 또한 랜드지수는 랜덤하게 작성한 두 군집해 간의 유사도의 기대값이 0보다 크다.</p>
 <p><span class="citation">Hubert and Arabie (<a href="#ref-hubert1985comparing">1985</a>)</span> 는 수정랜드지수(adjusted Rand index)를 아래와 같이 제안하였다.</p>
-<span class="math display" id="eq:adj-rand-index">\[\begin{equation}
+<p><span class="math display" id="eq:adj-rand-index">\[\begin{equation}
 RI_{adj} = \frac{2 (ad - bc)}{(a + b)(b + d) + (a + c)(c + d)} \tag{10.2}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>식 <a href="cluster-solution-evaluation.html#eq:adj-rand-index">(10.2)</a>는 랜덤한 군집해 간의 비교의 경우 0에 가까운 값을 갖는다.</p>
 <p>아래 구현한 <code>rand_index</code> 함수는 임의의 두 군집해 <code>u</code>와 <code>v</code>에 대한 랜드지수 및 수정랜드지수를 계산하는 함수이다.</p>
 <ul>
@@ -419,7 +445,7 @@ RI_{adj} = \frac{2 (ad - bc)}{(a + b)(b + d) + (a + c)(c + d)} \tag{10.2}
 <li><code>adj_ri</code>: 수정랜드지수</li>
 </ul></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rand_index &lt;-<span class="st"> </span><span class="cf">function</span>(u, v) {
+<pre class="sourceCode r"><code class="sourceCode r">rand_index &lt;-<span class="st"> </span><span class="cf">function</span>(u, v) {
   <span class="cf">if</span> (<span class="op">!</span><span class="kw">is_vector</span>(u) <span class="op">||</span><span class="st"> </span><span class="op">!</span><span class="kw">is_vector</span>(v)) {
     <span class="kw">stop</span>(<span class="st">&quot;Input needs to be vector&quot;</span>)
   } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">length</span>(u) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(v)) {
@@ -458,9 +484,9 @@ RI_{adj} = \frac{2 (ad - bc)}{(a + b)(b + d) + (a + c)(c + d)} \tag{10.2}
 <span class="st">    </span>((a <span class="op">+</span><span class="st"> </span>b) <span class="op">*</span><span class="st"> </span>(b <span class="op">+</span><span class="st"> </span>d) <span class="op">+</span><span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>c) <span class="op">*</span><span class="st"> </span>(c <span class="op">+</span><span class="st"> </span>d))
 
   <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">ri =</span> ri, <span class="dt">adj_ri =</span> adj_ri))
-}</code></pre></div>
+}</code></pre>
 <p>50개의 객체에 대해 랜덤하게 할당된 군집해(<code>K = 3</code>) 두 개를 비교하여 랜드지수와 수정랜드지수를 구해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">random_rand_index &lt;-<span class="st"> </span><span class="cf">function</span>(n, r, s) {
+<pre class="sourceCode r"><code class="sourceCode r">random_rand_index &lt;-<span class="st"> </span><span class="cf">function</span>(n, r, s) {
   u &lt;-<span class="st"> </span><span class="kw">sample.int</span>(r, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
   v &lt;-<span class="st"> </span><span class="kw">sample.int</span>(s, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
   <span class="kw">rand_index</span>(u, v)
@@ -483,7 +509,7 @@ RI_{adj} = \frac{2 (ad - bc)}{(a + b)(b + d) + (a + c)(c + d)} \tag{10.2}
     <span class="dt">title =</span> <span class="st">&quot;Distribution of index values from 200 random assignments&quot;</span>,
     <span class="dt">x =</span> <span class="st">&quot;index value&quot;</span>,
     <span class="dt">y =</span> <span class="st">&quot;frequency&quot;</span>
-  )</code></pre></div>
+  )</code></pre>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_bar).</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:rand-index-random"></span>
 <img src="data-mining-book_files/figure-html/rand-index-random-1.png" alt="랜덤한 군집해 간 비교: 랜드지수 및 수정랜드지수" width="672" />
@@ -493,14 +519,14 @@ Figure 10.1: 랜덤한 군집해 간 비교: 랜드지수 및 수정랜드지수
 </div>
 <p>Figure <a href="cluster-solution-evaluation.html#fig:rand-index-random">10.1</a>에 보이듯이, 랜덤한 군집해 간 비교에서 랜드지수는 0보다 큰 값을 나타내는 반면, 수정랜드지수는 0을 중심으로 분포되어 있다.</p>
 <p>다음의 두 군집해에 대하여 랜드지수와 수정랜드지수를 구해보자.</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 U &amp;=&amp; \{(1, 2, 3, 4), (5, 6, 7), (8, 9, 10) \}\\
 V &amp;=&amp; \{(1, 2, 5, 8), (3, 6, 9), (4, 7, 10) \}
-\end{eqnarray*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rand_index</span>(
+\end{eqnarray*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rand_index</span>(
   <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>),
   <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
-)</code></pre></div>
+)</code></pre>
 <pre><code>## $ri
 ## [1] 0.5111111
 ## 
@@ -512,13 +538,13 @@ V &amp;=&amp; \{(1, 2, 5, 8), (3, 6, 9), (4, 7, 10) \}
 <h3><span class="header-section-number">10.2.2</span> 내부평가지수</h3>
 <p>군집해에 대한 내부평가지수는 외부 정보의 도움 없이 입력 데이터만으로 군집해를 평가하는 척도로써, 주로 밀집성(compactness), 연결성(connectedness), 분리성(spatial separation) 등 세 가지 관점에서 평가한다.</p>
 <p>우선 <span class="math inline">\(K\)</span>개의 군집으로 이루어진 군집해 <span class="math inline">\(C\)</span>가 다음과 같다고 하자.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 C = \{ C_1, C_2, \cdots, C_K \}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <div id="cluster-evaluation-internal-index-basic-script" class="section level4">
 <h4><span class="header-section-number">10.2.2.1</span> 기본 R 스크립트</h4>
 <p>아래와 같이 두 개의 변수 <span class="math inline">\(x_1\)</span> 및 <span class="math inline">\(x_2\)</span>로 표현되는 객체 데이터에 대해 군집을 찾고자 한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>id, <span class="op">~</span>x1, <span class="op">~</span>x2,
   <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">15</span>,
   <span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">13</span>,
@@ -539,7 +565,7 @@ df <span class="op">%&gt;%</span>
       <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>
       ),
     <span class="dt">caption =</span> <span class="st">&#39;군집 대상 데이터&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:cluster-eval-data">Table 10.1: </span>군집 대상 데이터</caption>
 <thead>
@@ -593,21 +619,21 @@ df <span class="op">%&gt;%</span>
 </tbody>
 </table>
 <p>위 데이터에 대해 다음과 같은 두 개의 다른 군집해를 얻었다고 하자.</p>
-<span class="math display" id="eq:cluster-eval-two-solutions">\[\begin{equation}
+<p><span class="math display" id="eq:cluster-eval-two-solutions">\[\begin{equation}
 \begin{split}
 U &amp;=&amp; \{ \{1, 3, 6\}, \{2, 5, 7\}, \{4, 8\} \}\\
 V &amp;=&amp; \{ \{1, 3, 6\}, \{2, 4, 5, 7, 8\} \}
 \end{split}
 \tag{10.3}
-\end{equation}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sol_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
-sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</code></pre></div>
+\end{equation}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">sol_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</code></pre>
 <p>본 장에서는 4가지 내부 평가지수를 다룬다. 아래는 R 패키지들에 속한 각각의 함수를 실행하여 그 결과를 리스트 형태로 리턴하는 사용자 정의 함수 <code>cluster_eval</code>를 구현한 것이다. 해당 함수에서 호출하는 R 패키지 함수들은 아래와 같다.</p>
 <ul>
 <li>Dunn index <span class="citation">(Dunn <a href="#ref-dunn1973fuzzy">1973</a>)</span>: <code>clValid::dunn</code></li>
 <li>CH index <span class="citation">(Caliński and Harabasz <a href="#ref-calinski1974dendrite">1974</a>)</span>: <code>fpc::calinhara</code></li>
 <li>Connectivity <span class="citation">(Handl and Knowles <a href="#ref-handl2005exploiting">2005</a>)</span>: <code>clValid::connectivity</code></li>
-<li>Silhouettes <span class="citation">(P. J. Rousseeuw <a href="#ref-rousseeuw1987silhouettes">1987</a>)</span>: <code>cluster::silhouette</code></li>
+<li>Silhouettes <span class="citation">(Rousseeuw <a href="#ref-rousseeuw1987silhouettes">1987</a>)</span>: <code>cluster::silhouette</code></li>
 </ul>
 <p>각각의 평가지수에 대한 자세한 설명은 다음 장에서 하기로 한다.</p>
 <p>아래 구현한 사용자 정의함수는 아래와 같은 입력 파라미터를 요구한다.</p>
@@ -617,7 +643,7 @@ sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</
 <li><code>dist_method</code>: 거리 척도; Dunn, Connectivity, Silhouettes 지수 측정에 사용된다.</li>
 <li><code>nn</code>: 최근 객체 수 (&gt;= 2); Connectivity 측정에 사용된다.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_eval &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="dt">nn =</span> <span class="dv">2</span>) {
+<pre class="sourceCode r"><code class="sourceCode r">cluster_eval &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="dt">nn =</span> <span class="dv">2</span>) {
   dunn_index &lt;-<span class="st"> </span>clValid<span class="op">::</span><span class="kw">dunn</span>(
     <span class="dt">Data =</span> df, 
     <span class="dt">clusters =</span> cluster, 
@@ -648,7 +674,7 @@ sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</
   ))
 }
 
-<span class="kw">map_dfr</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), cluster_eval, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">.id =</span> <span class="st">&quot;solution&quot;</span>)</code></pre></div>
+<span class="kw">map_dfr</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), cluster_eval, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">.id =</span> <span class="st">&quot;solution&quot;</span>)</code></pre>
 <pre><code>## # A tibble: 2 x 5
 ##   solution dunn_index ch_index connectivity   asw
 ##   &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
@@ -658,9 +684,9 @@ sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</
 <div id="cluster-evaluation-internal-index-explanation" class="section level4">
 <h4><span class="header-section-number">10.2.2.2</span> 대표 내부평가지수</h4>
 <p><span class="citation">Dunn (<a href="#ref-dunn1973fuzzy">1973</a>)</span> 은 아래와 같은 지수를 제안하였다.</p>
-<span class="math display" id="eq:cluster-dunn-index">\[\begin{equation}
+<p><span class="math display" id="eq:cluster-dunn-index">\[\begin{equation}
 DI = \frac{\min_{\mathbf{x} \in C_i, \, \mathbf{y} \in C_j \, 1 \leq i \neq j \leq K} d(\mathbf{x}, \mathbf{y})}{\max_{\mathbf{x} \in C_i, \mathbf{y} \in C_i, \, 1 \leq i \leq K} d(\mathbf{x}, \mathbf{y})} \tag{10.4}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>여기서 분자는 군집 간의 분리성(클수록 분리성이 큼), 분모는 군집의 밀집성(작을수록 밀집성이 높음)을 반영하는 것이라 볼 수 있다. 따라서 분리성과 밀집성이 높을 때 식 <a href="cluster-solution-evaluation.html#eq:cluster-dunn-index">(10.4)</a>는 큰 값을 갖게 되며 해당 군집해가 상대적으로 좋게 평가된다.</p>
 <p>군집해로부터 식 <a href="cluster-solution-evaluation.html#eq:cluster-dunn-index">(10.4)</a>를 계산하는 함수 <code>dunn_index</code>를 아래와 같이 구현해보자. 입력 파라미터는 아래와 같다.</p>
 <ul>
@@ -668,7 +694,7 @@ DI = \frac{\min_{\mathbf{x} \in C_i, \, \mathbf{y} \in C_j \, 1 \leq i \neq j \l
 <li><code>df</code>: 객체 데이터를 나타내는 <span class="math inline">\(n\)</span>행의 프레임</li>
 <li><code>dist_method</code>: <code>base::dist</code> 함수의 <code>method</code> 파라미터값으로 사용할 거리 척도</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dunn_index &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {
+<pre class="sourceCode r"><code class="sourceCode r">dunn_index &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {
   <span class="co"># 객체 수</span>
   n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
   
@@ -711,15 +737,15 @@ DI = \frac{\min_{\mathbf{x} \in C_i, \, \mathbf{y} \in C_j \, 1 \leq i \neq j \l
   res &lt;-<span class="st"> </span>numerator <span class="op">/</span><span class="st"> </span>denominator
   
   <span class="kw">return</span>(res)
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), dunn_index, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>])</code></pre></div>
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), dunn_index, <span class="dt">df =</span> df[, <span class="dv">-1</span>])</code></pre>
 <pre><code>## [1] 1.075291 0.822375</code></pre>
 <p><span class="citation">Caliński and Harabasz (<a href="#ref-calinski1974dendrite">1974</a>)</span> 는 다음과 같은 지수를 제안하였다.</p>
-<span class="math display" id="eq:cluster-ch-index">\[\begin{equation}
+<p><span class="math display" id="eq:cluster-ch-index">\[\begin{equation}
 CH = \frac{\frac{1}{K - 1} \sum_{k = 1}^{K} n_k (\mathbf{c}_k - \mathbf{c})^\top (\mathbf{c}_k - \mathbf{c})}{\frac{1}{n - K} \sum_{k = 1}^{K} \sum_{i \in C_k} (\mathbf{x}_i - \mathbf{c}_k)^\top (\mathbf{x}_i - \mathbf{c}_k)} \tag{10.5}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>여기에서 <span class="math inline">\(\mathbf{c}_k\)</span>는 군집 <span class="math inline">\(k\)</span>의 중심좌표(centroid), <span class="math inline">\(\mathbf{c}\)</span>는 전체 객체들의 중심좌표, <span class="math inline">\(n_k\)</span>는 군집 <span class="math inline">\(C_k\)</span>내의 객체 수, <span class="math inline">\(n\)</span>은 전체 객체 수를 나타낸다. 식 <a href="cluster-solution-evaluation.html#eq:cluster-ch-index">(10.5)</a> 또한 분자는 분리성, 분모는 밀집성을 평가하며, 값이 클수록 좋은 군집해로 평가된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_index &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df) {
+<pre class="sourceCode r"><code class="sourceCode r">ch_index &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df) {
   <span class="co"># 전체 데이터 중심</span>
   centroid &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)
   
@@ -755,21 +781,21 @@ CH = \frac{\frac{1}{K - 1} \sum_{k = 1}^{K} n_k (\mathbf{c}_k - \mathbf{c})^\top
   <span class="kw">return</span>(res)
 }
 
-<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), ch_index, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>])</code></pre></div>
+<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), ch_index, <span class="dt">df =</span> df[, <span class="dv">-1</span>])</code></pre>
 <pre><code>## [1] 26.45029 15.36218</code></pre>
 <p><span class="citation">Handl and Knowles (<a href="#ref-handl2005exploiting">2005</a>)</span> 은 연결성을 반영한 아래와 같은 지수를 제시하고 있다.</p>
-<span class="math display" id="eq:cluster-connectivity">\[\begin{equation}
+<p><span class="math display" id="eq:cluster-connectivity">\[\begin{equation}
 Conn = \sum_{i = 1}^{n} \sum_{j = 1}^{L} v_{i, nn_{i}(j)} \tag{10.6}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>이 때, <span class="math inline">\(nn_{i}(j)\)</span>는 객체 <span class="math inline">\(i\)</span>의 <span class="math inline">\(j\)</span>번째 최근 객체(nearest neighbor)를 나타내며, <span class="math inline">\(L\)</span>은 연결성 척도 측정을 위한 사용자 지정 파라미터값이다. 또한 변수 <span class="math inline">\(v_{i, nn_i(j)}\)</span>는 아래와 같이 정의된다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 v_{i, nn_i(j)} = \begin{cases}
 0 &amp; \text{ if } \exists C_k : i, nn_i(j) \in C_k \\
 1 / j &amp; \text{ otherwise} 
 \end{cases}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>즉, 식 <a href="cluster-solution-evaluation.html#eq:cluster-connectivity">(10.6)</a>는 각 객체가 <span class="math inline">\(j (\leq L)\)</span>번째 최근 객체와 다른 객체에 속하면 <span class="math inline">\(1 / j\)</span>의 벌점을 부여하는 방식으로, 작은 값일수록 좋은 군집으로 평가될 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">connectivity &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="dt">n_neighbor =</span> <span class="dv">1</span>) {
+<pre class="sourceCode r"><code class="sourceCode r">connectivity &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="dt">n_neighbor =</span> <span class="dv">1</span>) {
   n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
   
   cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
@@ -805,46 +831,46 @@ v_{i, nn_i(j)} = \begin{cases}
   
 }
 
-<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), connectivity, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">n_neighbor =</span> <span class="dv">1</span>)</code></pre></div>
+<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), connectivity, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">n_neighbor =</span> <span class="dv">1</span>)</code></pre>
 <pre><code>## [1] 0 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), connectivity, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">n_neighbor =</span> <span class="dv">2</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), connectivity, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">n_neighbor =</span> <span class="dv">2</span>)</code></pre>
 <pre><code>## [1] 1 0</code></pre>
-<p><span class="citation">P. J. Rousseeuw (<a href="#ref-rousseeuw1987silhouettes">1987</a>)</span> 은 실루엣(silhouettes)이라는 내부평가지수를 제안하였다. 우선 다음과 같은 기호를 정의하자.</p>
+<p><span class="citation">Rousseeuw (<a href="#ref-rousseeuw1987silhouettes">1987</a>)</span> 은 실루엣(silhouettes)이라는 내부평가지수를 제안하였다. 우선 다음과 같은 기호를 정의하자.</p>
 <ul>
 <li><span class="math inline">\(a(i)\)</span>: 객체 <span class="math inline">\(i\)</span>와 동일 군집에 속한 다른 객체들과의 평균 거리</li>
 <li><span class="math inline">\(d(i, C_k)\)</span>: 객체 <span class="math inline">\(i\)</span>와 다른 군집 <span class="math inline">\(C_k\)</span>에 속한 모든 객체들과의 평균 거리, <span class="math inline">\(i \notin C_k\)</span></li>
 <li><span class="math inline">\(b(i) = \min_{k: i \notin C_k} d(i, C_k)\)</span></li>
 </ul>
 <p>객체의 군집 멤버쉽 변수 <span class="math inline">\(z_{ik}\)</span>를</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 z_{ik} = \begin{cases}
 1 &amp; \text{ if } i \in C_k\\
 0 &amp; \text{ otherwise }
 \end{cases}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>라 정의하면, 위 <span class="math inline">\(a(i)\)</span>와 <span class="math inline">\(b(i)\)</span>를 아래와 같이 수식화할 수 있다.</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 a(i) &amp;=&amp; \sum_{k = 1}^{K} z_{ik} \frac{\sum_{j \neq i} z_{jk} d(\mathbf{x}_i, \mathbf{x}_j)}{\sum_{j \neq i} z_{jk}}\\
 b(i) &amp;=&amp; \max_{k: z_{ik} \neq 1} \frac{\sum_{j \neq i} z_{jk} d(\mathbf{x}_i, \mathbf{x}_j)}{\sum_{j \neq i} z_{jk}}
-\end{eqnarray*}\]</span>
+\end{eqnarray*}\]</span></p>
 <p>이 때 객체 <span class="math inline">\(i\)</span>에 대한 실루엣은 아래와 같이 정의된다.</p>
-<span class="math display" id="eq:cluster-silhouette">\[\begin{equation}
+<p><span class="math display" id="eq:cluster-silhouette">\[\begin{equation}
 s(i) = \frac{b(i) - a(i)}{\max \{ a(i), b(i) \}} \tag{10.7}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>식 <a href="cluster-solution-evaluation.html#eq:cluster-silhouette">(10.7)</a>은 -1과 1 사이의 값을 갖는데, 1에 가까울수록 객체 <span class="math inline">\(i\)</span>가 비슷한 객체들과 군집된 것으로, -1에 가까울수록 먼 객체들과 군집된 것으로 판단할 수 있다.</p>
 <p>객체 <span class="math inline">\(i\)</span>가 어떠한 다른 객체와도 같은 군집에 속하지 않는 경우가 발생할 수 있다 (<span class="math inline">\(i \in C_k, \, \left| C_k \right| = 1\)</span>). 이 경우 <span class="math inline">\(a(i)\)</span>가 정의되지 않으므로 <span class="math inline">\(s(i)\)</span>값이 식 <a href="cluster-solution-evaluation.html#eq:cluster-silhouette">(10.7)</a>에 의해서 정의되지 않는다. 이러한 경우에는 <span class="math inline">\(s(i) = 0\)</span>이라고 실루엣을 정의한다.</p>
-<span class="math display" id="eq:cluster-silhouette-single">\[\begin{equation}
+<p><span class="math display" id="eq:cluster-silhouette-single">\[\begin{equation}
 s(i) = \begin{cases}
 \frac{b(i) - a(i)}{\max \{ a(i), b(i) \}} &amp; \text{ if $a(i)$ is defined}\\
 0 &amp; \text{ otherwise }
 \end{cases}
 \tag{10.8}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>이후 군집해의 평가지표로써 평균실루엣(overall average silhouette width; ASW)을 다음과 같이 정의하여 사용한다.</p>
-<span class="math display" id="eq:cluster-average-silhouette">\[\begin{equation}
+<p><span class="math display" id="eq:cluster-average-silhouette">\[\begin{equation}
 ASW = \frac{1}{n} \sum_{i = 1}^{n} s(i) \tag{10.9}
-\end{equation}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asw &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {
+\end{equation}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">asw &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {
   n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
   
   cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
@@ -884,7 +910,7 @@ ASW = \frac{1}{n} \sum_{i = 1}^{n} s(i) \tag{10.9}
   <span class="kw">mean</span>(s)
 }
 
-<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), asw, <span class="dt">df =</span> df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>)</code></pre></div>
+<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), asw, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>)</code></pre>
 <pre><code>## [1] 0.6507364 0.5864226</code></pre>
 </div>
 </div>
@@ -973,7 +999,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

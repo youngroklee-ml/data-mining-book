@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-04-11">
+<meta name="date" content="2019-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -51,41 +51,67 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -342,11 +368,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">4.3</span> CART 트리 생성</h2>
 <div id="cart-basic-r-script" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>),
   <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>),
   <span class="dt">class =</span> <span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))
-)</code></pre></div>
+)</code></pre>
 <table>
 <caption><span id="tab:tree-train-data-table">Table 4.1: </span>학습표본 데이터</caption>
 <thead>
@@ -410,7 +436,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tbody>
 </table>
 <p>Table <a href="tree-based-method.html#tab:tree-train-data-table">4.1</a>와 같이 두 독립변수 <em>x1</em>, <em>x2</em>와 이분형 종속변수 <em>class</em>의 관측값으로 이루어진 10개의 학습표본을 <em>train_df</em>라는 data frame에 저장한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rpart)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rpart)
 <span class="kw">library</span>(rpart.plot)
 cart.est &lt;-<span class="st"> </span><span class="kw">rpart</span>(
   class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2
@@ -423,7 +449,7 @@ cart.est &lt;-<span class="st"> </span><span class="kw">rpart</span>(
                             , <span class="dt">xval =</span> <span class="dv">0</span>
                             , <span class="dt">maxcompete =</span> <span class="dv">0</span>)
   )
-<span class="kw">rpart.plot</span>(cart.est)</code></pre></div>
+<span class="kw">rpart.plot</span>(cart.est)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:cart-basic"></span>
 <img src="data-mining-book_files/figure-html/cart-basic-1.png" alt="CART 트리" width="672" />
 <p class="caption">
@@ -444,46 +470,51 @@ Figure 4.1: CART 트리
 <li><span class="math inline">\(N(t)\)</span>: 노드 <span class="math inline">\(t\)</span>에서의 객체수</li>
 <li><span class="math inline">\(N_j(t)\)</span>: 노드 <span class="math inline">\(t\)</span>에서 범주 <span class="math inline">\(j\)</span>에 속한 객체수</li>
 <li><span class="math inline">\(p(j,t)\)</span>: 임의의 객체가 범주 <span class="math inline">\(j\)</span>와 노드 <span class="math inline">\(t\)</span>에 속할 확률</li>
-<li><span class="math inline">\(p(t)\)</span>: 임의의 객체가 노드 <span class="math inline">\(t\)</span>에 속할 확률 <span class="math display">\[p(t) = \sum_{j=1}^{J} p(j,t)\]</span></li>
-<li><span class="math inline">\(p(j|t)\)</span>: 임의의 객체가 노드 <span class="math inline">\(t\)</span>에 속할 때 범주 <span class="math inline">\(j\)</span>에 속할 조건부 확률 <span class="math display">\[p(j|t) = \frac{p(j,t)}{p(t)}, \quad \sum_{j=1}^{J} p(j|t) = 1\]</span></li>
+<li><span class="math inline">\(p(t)\)</span>: 임의의 객체가 노드 <span class="math inline">\(t\)</span>에 속할 확률
+<span class="math display">\[p(t) = \sum_{j=1}^{J} p(j,t)\]</span></li>
+<li><span class="math inline">\(p(j|t)\)</span>: 임의의 객체가 노드 <span class="math inline">\(t\)</span>에 속할 때 범주 <span class="math inline">\(j\)</span>에 속할 조건부 확률
+<span class="math display">\[p(j|t) = \frac{p(j,t)}{p(t)}, \quad \sum_{j=1}^{J} p(j|t) = 1\]</span></li>
 </ul>
-이 때, 각 확률은 학습표본에서 아래와 같이 추정할 수 있다.
+<p>이 때, 각 확률은 학습표본에서 아래와 같이 추정할 수 있다.
 <span class="math display">\[\begin{align}
 p(j,t) &amp;\approx \frac{N_j(t)}{N}\\
 p(t) &amp;\approx \frac{N(t)}{N}\\
 p(j|t) &amp;\approx \frac{N_j(t)}{N(t)}
-\end{align}\]</span>
+\end{align}\]</span></p>
 </div>
 <div id="cart-impurity" class="section level3">
 <h3><span class="header-section-number">4.3.3</span> 노드 및 트리의 불순도</h3>
 <div id="-" class="section level4">
 <h4><span class="header-section-number">4.3.3.1</span> 노드의 불순도</h4>
 <p>CART는 지니 지수(Gini index)를 불순도 함수로 사용한다. 총 <span class="math inline">\(J\)</span>개의 범주별 객체비율을 <span class="math inline">\(p_1, \cdots , p_J\)</span>라 할 때 (<span class="math inline">\(\sum_{j=1}^{J} p_j = 1\)</span>), 지니 지수는 식 <a href="tree-based-method.html#eq:gini-index">(4.1)</a>와 같다.</p>
-<span class="math display" id="eq:gini-index">\[\begin{equation}
+<p><span class="math display" id="eq:gini-index">\[\begin{equation}
 G(p_1, \cdots, p_J) = \sum_{j=1}^{J} p_j(1-p_j) = 1 - \sum_{j=1}^{J}p_j^2 \tag{4.1}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>노드 <span class="math inline">\(t\)</span>에서의 범주별 객체비율은 <span class="math inline">\(p(1|t), \cdots, p(J|t)\)</span>이므로, 노드 <span class="math inline">\(t\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:node-impurity">(4.2)</a>와 같이 산출된다.</p>
-<span class="math display" id="eq:node-impurity">\[\begin{equation}
+<p><span class="math display" id="eq:node-impurity">\[\begin{equation}
 \begin{split}
 i(t) &amp;= 1 - \sum_{j=1}^{J} p(j|t)^2\\
 &amp;\approx 1 - \sum_{j=1}^{J} \left[\frac{N_j(t)}{N(t)}\right]^2
 \end{split}
 \tag{4.2}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 </div>
 <div id="-" class="section level4">
 <h4><span class="header-section-number">4.3.3.2</span> 트리 불순도</h4>
 <p>트리 <span class="math inline">\(T\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:tree-impurity">(4.3)</a>와 같이 최종노드들의 불순도의 가중평균으로 정의된다.</p>
-<span class="math display" id="eq:tree-impurity">\[\begin{equation}
+<p><span class="math display" id="eq:tree-impurity">\[\begin{equation}
 I(T) = \sum_{t \in A(T)} i(t)p(t) \tag{4.3}
-\end{equation}\]</span>
-<p>여기서 <span class="math display">\[ I(t) = i(t)p(t) \]</span> 라 하면, 다음이 성립한다. <span class="math display">\[ I(T) = \sum_{t \in A(T)} I(t) \]</span></p>
+\end{equation}\]</span></p>
+<p>여기서
+<span class="math display">\[ I(t) = i(t)p(t) \]</span>
+라 하면, 다음이 성립한다.
+<span class="math display">\[ I(T) = \sum_{t \in A(T)} I(t) \]</span></p>
 </div>
 </div>
 <div id="cart-split" class="section level3">
 <h3><span class="header-section-number">4.3.4</span> 분지기준</h3>
 <p>뿌리 노드에서의 분지만을 살펴보기 위해 control parameter <em>maxdepth</em>의 값을 1으로 설정한다. 이 경우, CART 알고리즘은 뿌리노드에서의 양 갈래 분지만을 선택한 뒤 종료된다. 아래 스크립트를 이용하여 뿌리노드에서 최적분지된 트리를 얻는다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cart.firstsplit &lt;-<span class="st"> </span><span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2
+<pre class="sourceCode r"><code class="sourceCode r">cart.firstsplit &lt;-<span class="st"> </span><span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2
                   , <span class="dt">data =</span> train_df
                   , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>
                   , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)
@@ -495,7 +526,7 @@ I(T) = \sum_{t \in A(T)} i(t)p(t) \tag{4.3}
                                           , <span class="dt">maxcompete =</span> <span class="dv">0</span>
                                           )
                   )
-<span class="kw">rpart.plot</span>(cart.firstsplit)</code></pre></div>
+<span class="kw">rpart.plot</span>(cart.firstsplit)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:firstsplit"></span>
 <img src="data-mining-book_files/figure-html/firstsplit-1.png" alt="뿌리노드 분지" width="672" />
 <p class="caption">
@@ -617,30 +648,30 @@ Figure 4.2: 뿌리노드 분지
 </table>
 <p>위 CART 모델 데이터를 이용하여 트리의 불순도를 계산해보자.</p>
 <p>우선 노드 상세 정보 행렬 <em>yval2</em>의 <em>x</em>번째 노드의 불순도(<span class="math inline">\(i(t)\)</span>)를 계산하는 함수 <em>rpartNodeImpurity</em>를 아래와 같이 구현한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rpartNodeImpurity &lt;-<span class="st"> </span><span class="cf">function</span>(x, yval2) {
+<pre class="sourceCode r"><code class="sourceCode r">rpartNodeImpurity &lt;-<span class="st"> </span><span class="cf">function</span>(x, yval2) {
   node_vec &lt;-<span class="st"> </span>yval2[x, ]
   n.columns &lt;-<span class="st"> </span><span class="kw">length</span>(node_vec)
-  class.prob &lt;-<span class="st"> </span>node_vec[((n.columns<span class="op">/</span><span class="dv">2</span>)<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>(n.columns<span class="op">-</span><span class="dv">1</span>)]
+  class.prob &lt;-<span class="st"> </span>node_vec[((n.columns<span class="op">/</span><span class="dv">2</span>)<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>(n.columns<span class="dv">-1</span>)]
   <span class="kw">return</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(class.prob<span class="op">^</span><span class="dv">2</span>))
-}</code></pre></div>
+}</code></pre>
 <p>CART tree 객체의 각 leaf node에 함수 <em>rpartNodeImpurity</em>를 적용하여 노드 불순도 <span class="math inline">\(i(t)\)</span>를 계산한 뒤, 노드 확률 <span class="math inline">\(p(t)\)</span>을 이용한 가중합을 통해 트리 불순도 <span class="math inline">\(I(T)\)</span>를 계산하는 함수 <em>rpartImpurity</em>를 아래와 같이 구현한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rpartImpurity &lt;-<span class="st"> </span><span class="cf">function</span>(rpart.obj) {
+<pre class="sourceCode r"><code class="sourceCode r">rpartImpurity &lt;-<span class="st"> </span><span class="cf">function</span>(rpart.obj) {
   leaf.nodes &lt;-<span class="st"> </span><span class="kw">which</span>(rpart.obj<span class="op">$</span>frame<span class="op">$</span>var<span class="op">==</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>)
   node.impurity &lt;-<span class="st"> </span><span class="kw">sapply</span>(leaf.nodes, 
                           rpartNodeImpurity, 
                           <span class="dt">yval2 =</span> rpart.obj<span class="op">$</span>frame<span class="op">$</span>yval2)
   node.prob &lt;-<span class="st"> </span>rpart.obj<span class="op">$</span>frame<span class="op">$</span>yval2[leaf.nodes, <span class="st">&#39;nodeprob&#39;</span>]
   <span class="kw">return</span>(<span class="kw">sum</span>(node.prob <span class="op">*</span><span class="st"> </span>node.impurity))
-}</code></pre></div>
+}</code></pre>
 <p>위 함수를 이용하여 계산한 트리 Figure <a href="tree-based-method.html#fig:cart-basic">4.1</a>의 불순도는 0.29이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rpartImpurity</span>(cart.firstsplit)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rpartImpurity</span>(cart.firstsplit)</code></pre>
 <pre><code>## [1] 0.2857143</code></pre>
 <p>분지를 추가할수록 불순도는 감소한다. 분지를 추가하기 위해서는 <em>maxdepth</em>라는 control parameter 값을 증가시키면 된다.</p>
 <ul>
 <li>maxdepth: 뿌리노드부터 임의의 최종노드에 도달하는 최대 가능 분지 수 (default=30)</li>
 </ul>
 <p><em>maxdepth</em> 파라미터의 값을 1부터 4까지 증가시키며 불순도의 변화를 살펴보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 
 tree.impurity &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="cf">function</span>(depth) {
   <span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2
@@ -658,7 +689,7 @@ tree.impurity &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span
 
 <span class="kw">tibble</span>(<span class="dt">maxdepth=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="dt">impurity=</span>tree.impurity) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>maxdepth, <span class="dt">y=</span>impurity)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>()</code></pre></div>
+<span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:impurity-trend"></span>
 <img src="data-mining-book_files/figure-html/impurity-trend-1.png" alt="파라미터 maxdepth값에 따른 트리불순도 변화" width="672" />
 <p class="caption">
@@ -796,14 +827,14 @@ Figure 4.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 </tbody>
 </table>
 <p>Table <a href="tree-based-method.html#tab:max-frame">4.4</a>에서 생성 가능한 가지치기는 최종 노드(<em>var값이 &lt;leaf&gt;</em>)가 아닌 모든 노드(1, 3, 7, 14)에서 가능하며, 함수 <em>snip.rpart</em>를 이용하여 가지치기 된 트리를 생성할 수 있다. 각 내부 노드에서 가지치기된 트리들은 아래와 같이 얻어진다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">internal.node.index &lt;-<span class="st"> </span><span class="kw">rownames</span>(cart.est<span class="op">$</span>frame)[<span class="kw">which</span>(cart.est<span class="op">$</span>frame<span class="op">$</span>var <span class="op">!=</span><span class="st"> &#39;&lt;leaf&gt;&#39;</span>)] <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">internal.node.index &lt;-<span class="st"> </span><span class="kw">rownames</span>(cart.est<span class="op">$</span>frame)[<span class="kw">which</span>(cart.est<span class="op">$</span>frame<span class="op">$</span>var <span class="op">!=</span><span class="st"> &#39;&lt;leaf&gt;&#39;</span>)] <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">as.numeric</span>()
 snipped &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, <span class="cf">function</span>(x){<span class="kw">snip.rpart</span>(cart.est, x)})
 n.trees &lt;-<span class="st"> </span><span class="kw">length</span>(snipped)
 <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
 <span class="kw">invisible</span>(<span class="kw">lapply</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>n.trees), <span class="cf">function</span>(x) {
   <span class="kw">rpart.plot</span>(snipped[[x]])}
-  ))</code></pre></div>
+  ))</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:snipped"></span>
 <img src="data-mining-book_files/figure-html/snipped-1.png" alt="각 내부노드 기준으로 가지치기된 트리" width="672" />
 <p class="caption">
@@ -811,10 +842,10 @@ Figure 4.4: 각 내부노드 기준으로 가지치기된 트리
 </p>
 </div>
 <p>위 각 가지치기 후보 노드의 오분류 비용은 함수 <em>nodeCost</em>를 아래와 같이 구현하여 계산할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nodeCost &lt;-<span class="st"> </span><span class="cf">function</span>(node, tree) {
+<pre class="sourceCode r"><code class="sourceCode r">nodeCost &lt;-<span class="st"> </span><span class="cf">function</span>(node, tree) {
   node_vec &lt;-<span class="st"> </span>tree<span class="op">$</span>frame<span class="op">$</span>yval2[<span class="kw">as.character</span>(node) <span class="op">==</span><span class="st"> </span><span class="kw">row.names</span>(tree<span class="op">$</span>frame), ]
   n.columns &lt;-<span class="st"> </span><span class="kw">length</span>(node_vec)
-  class.prob.max &lt;-<span class="st"> </span><span class="kw">max</span>(node_vec[((n.columns<span class="op">/</span><span class="dv">2</span>)<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>(n.columns<span class="op">-</span><span class="dv">1</span>)])
+  class.prob.max &lt;-<span class="st"> </span><span class="kw">max</span>(node_vec[((n.columns<span class="op">/</span><span class="dv">2</span>)<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>(n.columns<span class="dv">-1</span>)])
   node.prob &lt;-<span class="st"> </span>node_vec[n.columns]
   node.misclassification.cost &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>class.prob.max)<span class="op">*</span>node.prob
   <span class="kw">return</span>(node.misclassification.cost)
@@ -824,7 +855,7 @@ Figure 4.4: 각 내부노드 기준으로 가지치기된 트리
   <span class="dt">pruning_node =</span> internal.node.index,
   <span class="dt">node_cost =</span> <span class="kw">sapply</span>(internal.node.index, nodeCost, <span class="dt">tree=</span>cart.est)
 ) <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -852,7 +883,7 @@ Figure 4.4: 각 내부노드 기준으로 가지치기된 트리
 </tbody>
 </table>
 <p>각 가지치기 노드에 해당하는 하부 트리의 오분류비용 및 복잡도를 구하기 위해 <em>subtreeEval</em>라는 함수를 아래와 같이 구현한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">subtreeEval &lt;-<span class="st"> </span><span class="cf">function</span>(node, tree) {
+<pre class="sourceCode r"><code class="sourceCode r">subtreeEval &lt;-<span class="st"> </span><span class="cf">function</span>(node, tree) {
   snipped &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(tree, node)<span class="op">$</span>frame
   leaf.nodes &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="kw">rownames</span>(tree<span class="op">$</span>frame[tree<span class="op">$</span>frame<span class="op">$</span>var<span class="op">==</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>,]),
           <span class="kw">rownames</span>(snipped)) <span class="op">%&gt;%</span>
@@ -865,10 +896,10 @@ Figure 4.4: 각 내부노드 기준으로 가지치기된 트리
     <span class="dt">subtree.size =</span> <span class="kw">length</span>(leaf.nodes)
   ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">alpha =</span> (node.cost <span class="op">-</span><span class="st"> </span>subtree.cost) <span class="op">/</span><span class="st"> </span>(subtree.size <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
-}</code></pre></div>
+}</code></pre>
 <p>각 노드에 대하여 알파값을 다음과 같이 계산할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df.cost &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, subtreeEval, <span class="dt">tree=</span>cart.est) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">bind_rows</span>()</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">df.cost &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, subtreeEval, <span class="dt">tree=</span>cart.est) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">bind_rows</span>()</code></pre>
 <table>
 <caption><span id="tab:first-prune-candidate-tab">Table 4.5: </span>내부노드 가지치기 평가 (df.cost)</caption>
 <thead>
@@ -912,9 +943,9 @@ Figure 4.4: 각 내부노드 기준으로 가지치기된 트리
 </tbody>
 </table>
 <p>위 Table <a href="tree-based-method.html#tab:first-prune-candidate-tab">4.5</a> 에서 최소 알파값에 해당하는 노드 7에서 가지치기를 한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pruned.tree.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(cart.est,
+<pre class="sourceCode r"><code class="sourceCode r">pruned.tree<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(cart.est,
                             df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])
-<span class="kw">rpart.plot</span>(pruned.tree.<span class="dv">1</span>)</code></pre></div>
+<span class="kw">rpart.plot</span>(pruned.tree<span class="fl">.1</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:first-prune-result"></span>
 <img src="data-mining-book_files/figure-html/first-prune-result-1.png" alt="1단계 가지치기 결과" width="672" />
 <p class="caption">
@@ -922,12 +953,12 @@ Figure 4.5: 1단계 가지치기 결과
 </p>
 </div>
 <p>가지치기로 형성된 트리에서 다시 각 가지치기 노드의 오분류비용, 복잡도 및 알파값을 구한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df.cost &lt;-<span class="st"> </span><span class="kw">rownames</span>(pruned.tree.<span class="dv">1</span><span class="op">$</span>frame)[pruned.tree.<span class="dv">1</span><span class="op">$</span>frame<span class="op">$</span>var<span class="op">!=</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">df.cost &lt;-<span class="st"> </span><span class="kw">rownames</span>(pruned.tree<span class="fl">.1</span><span class="op">$</span>frame)[pruned.tree<span class="fl">.1</span><span class="op">$</span>frame<span class="op">$</span>var<span class="op">!=</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as.numeric</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">lapply</span>(subtreeEval, <span class="dt">tree=</span>pruned.tree.<span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">lapply</span>(subtreeEval, <span class="dt">tree=</span>pruned.tree<span class="fl">.1</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">bind_rows</span>()
 
-knitr<span class="op">::</span><span class="kw">kable</span>(df.cost)</code></pre></div>
+knitr<span class="op">::</span><span class="kw">kable</span>(df.cost)</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -956,9 +987,9 @@ knitr<span class="op">::</span><span class="kw">kable</span>(df.cost)</code></pr
 </tbody>
 </table>
 <p>위 결과에서 다시 최소 알파값에 해당하는 노드 3에서 가지치기를 하면 아래와 같은 트리가 형성된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pruned.tree.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(pruned.tree.<span class="dv">1</span>,
+<pre class="sourceCode r"><code class="sourceCode r">pruned.tree<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(pruned.tree<span class="fl">.1</span>,
                             df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])
-<span class="kw">rpart.plot</span>(pruned.tree.<span class="dv">2</span>)</code></pre></div>
+<span class="kw">rpart.plot</span>(pruned.tree<span class="fl">.2</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:second-prune-result"></span>
 <img src="data-mining-book_files/figure-html/second-prune-result-1.png" alt="2단계 가지치기 결과" width="672" />
 <p class="caption">
@@ -970,11 +1001,11 @@ Figure 4.6: 2단계 가지치기 결과
 <h3><span class="header-section-number">4.4.2</span> 최적 트리의 선정</h3>
 <p>위 가지치기 과정에서 얻는 가지친 트리들이 최종 트리의 후보가 되며, 이 중 테스트 표본에 대한 오분류율이 가장 작은 트리를 최적 트리로 선정하게 된다.</p>
 <p>트리를 학습할 때 사용된 학습데이터 Table <a href="tree-based-method.html#tab:tree-train-data-table">4.1</a> 외에, Table <a href="tree-based-method.html#tab:tree-test-data-table">4.6</a>과 같은 6개의 테스트 데이터가 있다고 하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">test_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>),
   <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">4</span>),
   <span class="dt">class =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">levels=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
-)</code></pre></div>
+)</code></pre>
 <table>
 <caption><span id="tab:tree-test-data-table">Table 4.6: </span>테스트 데이터</caption>
 <thead>
@@ -1018,12 +1049,12 @@ Figure 4.6: 2단계 가지치기 결과
 </tbody>
 </table>
 <p>테스트 데이터에 위에서 학습된 세 개의 트리, 즉 최대 트리 <em>cart.est</em>와 두 개의 가지치기 트리 <em>pruned.tree.1</em> &amp; <em>pruned.tree.2</em>를 적용하여 각 트리가 각각의 테스트 데이터를 어떻게 분류하는지 살펴보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_pred &lt;-<span class="st"> </span>test_df <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">test_pred &lt;-<span class="st"> </span>test_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">bind_cols</span>(
     <span class="dt">pred_maxtree =</span> <span class="kw">predict</span>(cart.est, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>),
-    <span class="dt">pred_prune1 =</span> <span class="kw">predict</span>(pruned.tree.<span class="dv">1</span>, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>),
-    <span class="dt">pred_prune2 =</span> <span class="kw">predict</span>(pruned.tree.<span class="dv">2</span>, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
-  )</code></pre></div>
+    <span class="dt">pred_prune1 =</span> <span class="kw">predict</span>(pruned.tree<span class="fl">.1</span>, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>),
+    <span class="dt">pred_prune2 =</span> <span class="kw">predict</span>(pruned.tree<span class="fl">.2</span>, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
+  )</code></pre>
 <table>
 <caption><span id="tab:tree-class-prediction-table">Table 4.7: </span>테스트 데이터에 대한 예측 결과</caption>
 <thead>
@@ -1091,10 +1122,11 @@ Figure 4.6: 2단계 가지치기 결과
 <p>위 결과를 토대로, 최적의 트리를 선정하는 과정은 아래와 같다.</p>
 <ol style="list-style-type: decimal">
 <li>각각의 트리에 의해 오분류된 테스트 표본의 개수를 전체 테스트 표본의 개수로 나누어 오분류율 <span class="math inline">\(R^{ts}\)</span>를 구한다.</li>
-<li>테스트 표본 수를 <span class="math inline">\(n_{test}\)</span>라 할 때, 오분류의 표준편차를 아래와 같이 계산한다. <span class="math display">\[SE = \sqrt{\frac{R^{ts}(1 - R^{ts})}{n_{test}}}\]</span></li>
+<li>테스트 표본 수를 <span class="math inline">\(n_{test}\)</span>라 할 때, 오분류의 표준편차를 아래와 같이 계산한다.
+<span class="math display">\[SE = \sqrt{\frac{R^{ts}(1 - R^{ts})}{n_{test}}}\]</span></li>
 <li>1에서 구한 오분류율에 2에서 구한 표준편차를 더하여 <span class="math inline">\(R^{ts} + SE\)</span>를 각 트리의 평가척도로 계산한다. 후보 트리들 중 해당 평가척도가 가장 작은 트리를 최종 트리로 선정한다.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test.summary &lt;-<span class="st"> </span>test_pred <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">test.summary &lt;-<span class="st"> </span>test_pred <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n.test =</span> <span class="kw">n</span>(),
             <span class="dt">cart.est =</span> <span class="kw">sum</span>(pred_maxtree <span class="op">!=</span><span class="st"> </span>class) <span class="op">/</span><span class="st"> </span>n.test,
             <span class="dt">pruned.tree.1 =</span> <span class="kw">sum</span>(pred_prune1 <span class="op">!=</span><span class="st"> </span>class) <span class="op">/</span><span class="st"> </span>n.test,
@@ -1102,7 +1134,7 @@ Figure 4.6: 2단계 가지치기 결과
 <span class="st">  </span><span class="kw">gather</span>(<span class="st">&quot;tree&quot;</span>,<span class="st">&quot;R.ts&quot;</span>,<span class="op">-</span>n.test) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">SE =</span> <span class="kw">sqrt</span>((R.ts<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>R.ts))<span class="op">/</span>n.test),
          <span class="dt">score =</span> R.ts <span class="op">+</span><span class="st"> </span>SE) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>n.test)</code></pre></div>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>n.test)</code></pre>
 <table>
 <caption><span id="tab:misclassification-rate-table">Table 4.8: </span>분류 성능</caption>
 <thead>
@@ -1136,7 +1168,7 @@ Figure 4.6: 2단계 가지치기 결과
 </table>
 <p>위 결과, 최적 트리는 최대 트리 혹은 첫 번째 가지치기 트리가 된다.</p>
 <p>위 절차를 임의의 데이터에 대해 수행하는 함수를 구현해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rpart_learn &lt;-<span class="st"> </span><span class="cf">function</span>(formula, train_df, test_df) {
+<pre class="sourceCode r"><code class="sourceCode r">rpart_learn &lt;-<span class="st"> </span><span class="cf">function</span>(formula, train_df, test_df) {
   <span class="co"># 최대 트리 생성</span>
   max_tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(formula
                     , <span class="dt">data =</span> train_df
@@ -1173,7 +1205,7 @@ Figure 4.6: 2단계 가지치기 결과
 }
 
 optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df, test_df)
-<span class="kw">rpart.plot</span>(optimal_tree)</code></pre></div>
+<span class="kw">rpart.plot</span>(optimal_tree)</code></pre>
 <p><img src="data-mining-book_files/figure-html/rpart-learn-1.png" width="672" /></p>
 </div>
 </div>
@@ -1182,31 +1214,47 @@ optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(c
 <p>앞 장에서는 <em>rpart</em>의 결과를 이용하여 교재 8.2 - 8.3장의 예제를 재현해보았다. 실제로 <em>rpart</em> 내부의 기본 트리 방법은 교재의 예제와는 다소 다른 부분이 있다. 이 장에서는 실제 <em>rpart</em> 패키지의 분류 트리 방법에 대해 알아본다.</p>
 <div id="cart-r-pkg-split" class="section level3">
 <h3><span class="header-section-number">4.5.1</span> 트리 확장</h3>
-<p>트리 내 임의의 노드 <span class="math inline">\(t\)</span>에 대한 불순도는 아래와 같이 정의된다. <span class="math display">\[i(t) = \sum_{j=1}^{J} f\left(p(j|t)\right)\]</span> 여기에서 <span class="math inline">\(p(j|t)\)</span>는 노드 <span class="math inline">\(t\)</span> 내 전체 샘플 <span class="math inline">\(N(t)\)</span> 중 범주 <span class="math inline">\(j\)</span>의 샘플 <span class="math inline">\(N_j(t)\)</span>의 비율로 추정된다. <span class="math display">\[p(j|t) \approx \frac{N_j(t)}{N(t)}\]</span> 또한 함수 <span class="math inline">\(f\)</span>는 concave 함수로, <span class="math inline">\(f(0) = f(1) = 0\)</span>의 조건을 만족시켜야 한다. <em>rpart</em> 에서 설정할 수 있는 함수 <span class="math inline">\(f\)</span>의 종류에 대해서는 아래에서 좀 더 자세히 살펴보기로 한다.</p>
+<p>트리 내 임의의 노드 <span class="math inline">\(t\)</span>에 대한 불순도는 아래와 같이 정의된다.
+<span class="math display">\[i(t) = \sum_{j=1}^{J} f\left(p(j|t)\right)\]</span>
+여기에서 <span class="math inline">\(p(j|t)\)</span>는 노드 <span class="math inline">\(t\)</span> 내 전체 샘플 <span class="math inline">\(N(t)\)</span> 중 범주 <span class="math inline">\(j\)</span>의 샘플 <span class="math inline">\(N_j(t)\)</span>의 비율로 추정된다.
+<span class="math display">\[p(j|t) \approx \frac{N_j(t)}{N(t)}\]</span>
+또한 함수 <span class="math inline">\(f\)</span>는 concave 함수로, <span class="math inline">\(f(0) = f(1) = 0\)</span>의 조건을 만족시켜야 한다. <em>rpart</em> 에서 설정할 수 있는 함수 <span class="math inline">\(f\)</span>의 종류에 대해서는 아래에서 좀 더 자세히 살펴보기로 한다.</p>
 <p>트리 내 임의의 노드 <span class="math inline">\(t\)</span>가 분지규칙 <span class="math inline">\(s\)</span>에 따라 두 개의 노드 <span class="math inline">\(t_L\)</span>과 <span class="math inline">\(t_R\)</span>로 분지된다고 할 때, 불순도의 감소량은 아래와 같이 계산된다.</p>
-<span class="math display">\[\begin{eqnarray}
+<p><span class="math display">\[\begin{eqnarray}
 \Delta I(s,t) &amp;=&amp; I(t) - I(t_L) - I(t_R)\\ &amp;=&amp; p(t)i(t) - p(t_L)i(t_L) - p(t_R)i(t_R) 
-\end{eqnarray}\]</span>
+\end{eqnarray}\]</span></p>
 <p><em>rpart</em>는 위 <span class="math inline">\(\Delta I(s,t)\)</span>값이 최대가 되는 분지 기준 <span class="math inline">\(s^*\)</span>를 찾아 노드 <span class="math inline">\(t\)</span>를 분지하여 트리를 확장하고, 확장된 트리의 최종 노드에서 다시 최적 분지를 찾는 과정을 반복한다.</p>
 <div id="-" class="section level4">
 <h4><span class="header-section-number">4.5.1.1</span> 분지 함수</h4>
 <p>함수 <em>rpart</em> 사용 시 <em>parms</em> 파라미터에 <em>split</em> 값으로 분지 방법을 설정할 수 있다.</p>
 <ol style="list-style-type: decimal">
-<li>Gini index (parms=list(split=‘gini’)) 교재의 예제에 사용된 방법으로, 우선 아래와 같은 함수 <span class="math inline">\(f\)</span>를 사용한다. <span class="math display">\[f(p) = p(1-p)\]</span></li>
-<li>information index (parms=list(split=‘information’)) 교재에 엔트로피 지수(Entropy index)로 설명된 지수로, 아래와 같은 함수를 사용한다. <span class="math display">\[f(p) = -p\log(p)\]</span></li>
-<li>user-defined function 사용자가 임의로 함수를 정의하여 사용할 수 있다. 본 장에서는 자세한 설명은 생략한다.</li>
+<li>Gini index (parms=list(split=‘gini’))
+교재의 예제에 사용된 방법으로, 우선 아래와 같은 함수 <span class="math inline">\(f\)</span>를 사용한다.
+<span class="math display">\[f(p) = p(1-p)\]</span></li>
+<li>information index (parms=list(split=‘information’))
+교재에 엔트로피 지수(Entropy index)로 설명된 지수로, 아래와 같은 함수를 사용한다.
+<span class="math display">\[f(p) = -p\log(p)\]</span></li>
+<li>user-defined function
+사용자가 임의로 함수를 정의하여 사용할 수 있다. 본 장에서는 자세한 설명은 생략한다.</li>
 </ol>
 </div>
 </div>
 <div id="cart-r-pkg-pruning" class="section level3">
 <h3><span class="header-section-number">4.5.2</span> 가지치기</h3>
-<p>임의의 노드 <span class="math inline">\(t\)</span>에 대한 위험도(오분류 비용의 기대치)는 아래와 같이 계산된다. <span class="math display">\[r(t) = \sum_{j \neq \tau(t)} p(j|t)C\left(\tau(t)|j\right)\]</span> 여기에서 함수 <span class="math inline">\(C(i|j)\)</span>는 범주 <span class="math inline">\(j\)</span>에 속하는 객체를 범주 <span class="math inline">\(i\)</span>로 분류할 때의 오분류 비용이며, <span class="math inline">\(\tau(t)\)</span>는 노드 <span class="math inline">\(t\)</span> 내의 오분류 비용을 최소화하도록 노드 <span class="math inline">\(t\)</span>에 지정된 범주값이다.</p>
-<p><em>rpart</em>의 오분류 비용 <span class="math inline">\(C(i|j)\)</span>의 기본값은 <span class="math display">\[C(i|j) = 
+<p>임의의 노드 <span class="math inline">\(t\)</span>에 대한 위험도(오분류 비용의 기대치)는 아래와 같이 계산된다.
+<span class="math display">\[r(t) = \sum_{j \neq \tau(t)} p(j|t)C\left(\tau(t)|j\right)\]</span>
+여기에서 함수 <span class="math inline">\(C(i|j)\)</span>는 범주 <span class="math inline">\(j\)</span>에 속하는 객체를 범주 <span class="math inline">\(i\)</span>로 분류할 때의 오분류 비용이며, <span class="math inline">\(\tau(t)\)</span>는 노드 <span class="math inline">\(t\)</span> 내의 오분류 비용을 최소화하도록 노드 <span class="math inline">\(t\)</span>에 지정된 범주값이다.</p>
+<p><em>rpart</em>의 오분류 비용 <span class="math inline">\(C(i|j)\)</span>의 기본값은
+<span class="math display">\[C(i|j) = 
 \begin{cases} 1,  &amp; \text{  if } i \neq j\\
               0,  &amp; \text{  if } i = j
-\end{cases} \]</span> 으로 설정되어 있으며, <em>parms</em> 파라미터에 <em>loss</em> 값으로 오분류 비용 <span class="math inline">\(C(i|j)\)</span>를 재설정할 수 있다. 본 장에서는 기본값을 사용하도록 하자.</p>
-<p><span class="math inline">\(A(T)\)</span>를 트리 <span class="math inline">\(T\)</span>의 최종 노드의 집합이라 정의하고, 트리의 최종 노드의 개수를 <span class="math inline">\(|T|\)</span>라 할 때, 트리 <span class="math inline">\(T\)</span>의 위험도 <span class="math inline">\(R(T)\)</span>는 아래와 같이 정의된다. <span class="math display">\[R(T) = \sum_{t \in A(T)} p(t)r(t)\]</span></p>
-<p>복잡도 계수(complexity parameter) <span class="math inline">\(\alpha \in [0, \infty)\)</span>를 이용하여, 트리의 비용-복합도 척도를 다음과 같이 정의한다. <span class="math display">\[R_\alpha(T) = R(T) + \alpha|T|\]</span> 이 때, 임의의 계수 <span class="math inline">\(\alpha\)</span>에 대해 비용 <span class="math inline">\(R_\alpha(T)\)</span>가 최소가 되게하는 가지치기 트리를 <span class="math inline">\(T_\alpha\)</span>라 하면, 아래와 같은 관계들이 성립한다.</p>
+\end{cases} \]</span>
+으로 설정되어 있으며, <em>parms</em> 파라미터에 <em>loss</em> 값으로 오분류 비용 <span class="math inline">\(C(i|j)\)</span>를 재설정할 수 있다. 본 장에서는 기본값을 사용하도록 하자.</p>
+<p><span class="math inline">\(A(T)\)</span>를 트리 <span class="math inline">\(T\)</span>의 최종 노드의 집합이라 정의하고, 트리의 최종 노드의 개수를 <span class="math inline">\(|T|\)</span>라 할 때, 트리 <span class="math inline">\(T\)</span>의 위험도 <span class="math inline">\(R(T)\)</span>는 아래와 같이 정의된다.
+<span class="math display">\[R(T) = \sum_{t \in A(T)} p(t)r(t)\]</span></p>
+<p>복잡도 계수(complexity parameter) <span class="math inline">\(\alpha \in [0, \infty)\)</span>를 이용하여, 트리의 비용-복합도 척도를 다음과 같이 정의한다.
+<span class="math display">\[R_\alpha(T) = R(T) + \alpha|T|\]</span>
+이 때, 임의의 계수 <span class="math inline">\(\alpha\)</span>에 대해 비용 <span class="math inline">\(R_\alpha(T)\)</span>가 최소가 되게하는 가지치기 트리를 <span class="math inline">\(T_\alpha\)</span>라 하면, 아래와 같은 관계들이 성립한다.</p>
 <ul>
 <li><span class="math inline">\(T_0\)</span>: 최대 트리</li>
 <li><span class="math inline">\(T_\infty\)</span>: 뿌리 노드 트리 (분지 없음)</li>
@@ -1288,7 +1336,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

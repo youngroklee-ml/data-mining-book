@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-04-11">
+<meta name="date" content="2019-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -51,41 +51,67 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -326,7 +352,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 <tr class="even">
 <td align="left">caret</td>
-<td align="left">6.0-81</td>
+<td align="left">6.0-82</td>
 </tr>
 </tbody>
 </table>
@@ -340,26 +366,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><span class="math inline">\(y_i\)</span>: <span class="math inline">\(i\)</span>번째 객체의 범주 변수; <span class="math inline">\(y_i \in \{1, 2, \cdots, J\}\)</span></li>
 </ul>
 <p>분류규칙 <span class="math inline">\(d(\mathbf{x})\)</span>의 성능은 주로 분류오류율(misclassification rate)을 사용하는데, 분류규칙이 추정한 범주와 실제범주가 일치하지 않는 비율을 나타낸다.</p>
-<span class="math display" id="eq:misclassification-rate-train">\[\begin{equation}
+<p><span class="math display" id="eq:misclassification-rate-train">\[\begin{equation}
 R(d) = \frac{1}{N} \sum_{i = 1}^{N} I(d(\mathbf{x}_i) \neq y_i)
 \tag{6.1}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>여기서 함수 지시함수 <span class="math inline">\(I(x)\)</span>는 <span class="math inline">\(x\)</span>가 참(true)일 때 1, 거짓(false)일 때 0의 값을 갖는다.</p>
 <p>식 <a href="classifier-evaluation.html#eq:misclassification-rate-train">(6.1)</a>은 학습표본에 대한 오분류율로, 이를 최소화하려할 경우 분류규칙이 해당 학습데이터에만 과적용(overfitting)되는 문제가 발생할 수 있다. 즉, 새로운 데이터에 적용할 때도 오분류율이 최소화될 것이라는 보장이 없다.</p>
 <p>이 때문에, 통상 관측수가 상당수 있는 데이터에 대해서는 전체 데이터를 두 부분으로 나누어, 분류규칙을 만드는 데 한 부분을 사용하고, 분류오류율을 산출하는 데 다른 한 부분을 사용하는 방안이 일반적이다. 아래와 같이 범주가 알려져있지만 분류규칙 <span class="math inline">\(d(\mathbf{x})\)</span>를 학습하는 데 사용하지 않은 <span class="math inline">\(L\)</span>개의 테스트 표본 <span class="math inline">\(\{(\mathbf{x}_i, y_i)\}_{i = N + 1, \cdots, N + L}\)</span>이 있다고 하자. 이 때 테스트 표본에 대한 분류오류율을 아래와 같이 계산한다.</p>
-<span class="math display" id="eq:misclassification-rate-test">\[\begin{equation}
+<p><span class="math display" id="eq:misclassification-rate-test">\[\begin{equation}
 R^{ts}(d) = \frac{1}{L} \sum_{i = N + 1}^{N + L} I(d(\mathbf{x}_i) \neq y_i)
 \tag{6.2}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>테스트 표본으로 분리하기에 충분하지 않은 데이터의 경우에는 cross validation 기법을 사용한다.</p>
 </div>
 <div id="precision-sensitivity-specificity" class="section level2">
 <h2><span class="header-section-number">6.3</span> 정확도, 민감도 및 특이도</h2>
 <p>의학 분야에서 어떤 질병에 대한 진단방법을 평가할 때 오류율 이와에 정확도, 민감도 및 특이도를 분석하는 경우가 종종 있다. 실제범주가 질병이 있는 경우(<code>1</code> 또는 <code>+</code>로 표기)와 질병이 없는 경우(<code>0</code> 또는 <code>-</code>로 표기)의 두 가지로 분류된다고 하고, 진단 방법이 양성(<code>1</code> 또는 <code>+</code>) 또는 음성(<code>0</code> 또는 <code>-</code>)으로 판정할 때, 아래와 같이 네 가지 경우가 발생한다. 이와 같은 표를 정오분류표(confusion matrix)라 한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cm &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;d&#39;</span>), <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
+<pre class="sourceCode r"><code class="sourceCode r">cm &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;d&#39;</span>), <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 <span class="kw">attr</span>(cm, <span class="st">&quot;dimnames&quot;</span>) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">Prediction =</span> <span class="kw">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;0&quot;</span>), <span class="dt">Reference =</span> <span class="kw">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;0&quot;</span>))
 <span class="kw">class</span>(cm) &lt;-<span class="st"> &quot;table&quot;</span>
-<span class="kw">print</span>(cm)</code></pre></div>
+<span class="kw">print</span>(cm)</code></pre>
 <pre><code>##           Reference
 ## Prediction 1 0
 ##          1 a b
@@ -372,34 +398,34 @@ R^{ts}(d) = \frac{1}{L} \sum_{i = N + 1}^{N + L} I(d(\mathbf{x}_i) \neq y_i)
 <li><span class="math inline">\(d\)</span>: number of true negative prediction</li>
 </ul>
 <p>여기서 “positive” 또는 “negative”는 “양성” 또는 “음성”으로 추정됨을 나타내고, “true” 또는 “false”는 추정의 사실 또는 거짓을 나타낸다. 이 때 분류오류율은 다음과 같이 산출된다.</p>
-<span class="math display" id="eq:cm-misclassification-rate">\[\begin{equation}
+<p><span class="math display" id="eq:cm-misclassification-rate">\[\begin{equation}
 \text{misclassifiction rate} = \frac{b + c}{a + b + c + d}
 \tag{6.3}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>정확도(accuracy)는 오류율의 반대 개념으로, 실제 범주를 제대로 추정한 전체 비율을 나타내며 아래와 같이 산출된다.</p>
-<span class="math display" id="eq:cm-accuracy">\[\begin{equation}
+<p><span class="math display" id="eq:cm-accuracy">\[\begin{equation}
 \text{accuracy} = \frac{a + d}{a + b + c + d} = 1 - \text{misclassifiction rate}
 \tag{6.4}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>한편, 민감도(sensitivity)는 실제 질병이 있는 경우를 양성으로 판정하는 비율을 나타내는 것으로, 다음과 같이 산출된다.</p>
-<span class="math display" id="eq:cm-sensitivity">\[\begin{equation}
+<p><span class="math display" id="eq:cm-sensitivity">\[\begin{equation}
 \text{sensitivity} = \frac{a}{a + c}
 \tag{6.5}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>그리고 특이도(specificity)란 실제 질병이 없는 경우를 음성으로 판정하는 비율을 나타내는 것으로 다음과 같다.</p>
-<span class="math display" id="eq:cm-specificity">\[\begin{equation}
+<p><span class="math display" id="eq:cm-specificity">\[\begin{equation}
 \text{specificity} = \frac{d}{b + d}
 \tag{6.6}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>정확도를 민감도 및 특이도로 표현하면 다음과 같다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \text{accuracy} = \frac{a + c}{a + b + c + d}\text{sensitivity} + \frac{b + d}{a + b + c + d}\text{specificity}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>민감도 및 특이도를 별도로 산출하여 분석하는 이유 중 하나는, 동일한 정확도를 갖는다 하더라도 민감도와 특이도는 다를 수 있기 때문이다. 경우에 따라서는 높은 민감도를 원하거나 높은 특이도를 원할 수 있다.</p>
 <div id="confusion-matrix-r-package" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> R 패키지 내 정오분류표</h3>
 <p>100개의 객체에 대한 실제범주와 추정범주가 아래와 같이 주어진다고 하자.</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 y_i &amp;=&amp; \begin{cases}
 1 &amp; i = 1, \cdots, 20\\
 0 &amp; i = 21, \cdots, 100
@@ -408,25 +434,25 @@ y_i &amp;=&amp; \begin{cases}
 1 &amp; i = 1, \cdots, 15, 91, \cdots, 100\\
 0 &amp; i = 16, \cdots, 90
 \end{cases}
-\end{eqnarray*}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">20</span>), <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">80</span>)), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))
-y_hat &lt;-<span class="kw">factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">15</span>), <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">75</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>)), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))</code></pre></div>
+\end{eqnarray*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">20</span>), <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">80</span>)), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))
+y_hat &lt;-<span class="kw">factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">15</span>), <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">75</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>)), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))</code></pre>
 <p>해당 추정결과에 대한 정오분류표 및 각종 평가지표를 얻기 위해 <code>caret</code> 패키지의 <code>confusionMatrix</code> 함수를 이용한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cm &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> y_hat, <span class="dt">reference =</span> y)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cm &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> y_hat, <span class="dt">reference =</span> y)</code></pre>
 <p>우선 정오분류표는 결과 객체의 <code>table</code> component에 저장된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cm<span class="op">$</span>table</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cm<span class="op">$</span>table</code></pre>
 <pre><code>##           Reference
 ## Prediction  1  0
 ##          1 15 10
 ##          0  5 70</code></pre>
 <p>정확도를 비롯한 각종 전반적인 지표는 <code>overall</code>이라는 component에 벡터 형태로 저장된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cm<span class="op">$</span>overall</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cm<span class="op">$</span>overall</code></pre>
 <pre><code>##       Accuracy          Kappa  AccuracyLower  AccuracyUpper   AccuracyNull 
 ##      0.8500000      0.5714286      0.7646925      0.9135456      0.8000000 
 ## AccuracyPValue  McnemarPValue 
 ##      0.1285055      0.3016996</code></pre>
 <p>또한, 민감도, 특이도를 비롯한 몇 가지 분류성능 지표들은 <code>byClass</code>라는 component에 역시 벡터 형태로 저장된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cm<span class="op">$</span>byClass</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cm<span class="op">$</span>byClass</code></pre>
 <pre><code>##          Sensitivity          Specificity       Pos Pred Value 
 ##            0.7500000            0.8750000            0.6000000 
 ##       Neg Pred Value            Precision               Recall 
@@ -441,7 +467,7 @@ y_hat &lt;-<span class="kw">factor</span>(<span class="kw">c</span>(<span class=
 <h2><span class="header-section-number">6.4</span> ROC 곡선</h2>
 <p>일반적으로 민감도와 특이도를 동시에 증가시키는 것은 불가능하다. 다시 말하면, 민감도를 높이면 특이도가 감소하고, 또한 반대가 성립하게 된다.</p>
 <p>예를 들어 다음과 같이 10개의 객체로 이루어진 학습표본이 있다고 하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>x, <span class="op">~</span>y,
   <span class="dv">24</span>, <span class="dv">0</span>,
   <span class="dv">35</span>, <span class="dv">0</span>,
@@ -454,40 +480,40 @@ y_hat &lt;-<span class="kw">factor</span>(<span class="kw">c</span>(<span class=
   <span class="dv">72</span>, <span class="dv">1</span>,
   <span class="dv">73</span>, <span class="dv">1</span>
 ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">factor</span>(y, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)))</code></pre></div>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">factor</span>(y, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)))</code></pre>
 <p>분류기준이 만약 <span class="math inline">\(x &lt; 40\)</span>이면 범주 <code>0</code>, <span class="math inline">\(x \geq 40\)</span>이면 범주 <code>1</code>로 추정할 때, 정오분류표는 다음과 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cm40 &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(
+<pre class="sourceCode r"><code class="sourceCode r">cm40 &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(
   <span class="kw">factor</span>(<span class="kw">as.integer</span>(train_df<span class="op">$</span>x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">40</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),
   train_df<span class="op">$</span>y
 )
 
-cm40<span class="op">$</span>table</code></pre></div>
+cm40<span class="op">$</span>table</code></pre>
 <pre><code>##           Reference
 ## Prediction 1 0
 ##          1 5 2
 ##          0 1 2</code></pre>
 <p>이 때 구해지는 민감도 및 특이도는 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cm40<span class="op">$</span>byClass[<span class="kw">c</span>(<span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>)]</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cm40<span class="op">$</span>byClass[<span class="kw">c</span>(<span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>)]</code></pre>
 <pre><code>## Sensitivity Specificity 
 ##   0.8333333   0.5000000</code></pre>
 <p>한편, 분류기준이 만약 <span class="math inline">\(x &lt; 50\)</span>이면 범주 <code>0</code>, <span class="math inline">\(x \geq 50\)</span>이면 범주 <code>1</code>로 추정할 때, 정오분류표는 다음과 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cm50 &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(
+<pre class="sourceCode r"><code class="sourceCode r">cm50 &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(
   <span class="kw">factor</span>(<span class="kw">as.integer</span>(train_df<span class="op">$</span>x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">50</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),
   train_df<span class="op">$</span>y
 )
 
-cm50<span class="op">$</span>table</code></pre></div>
+cm50<span class="op">$</span>table</code></pre>
 <pre><code>##           Reference
 ## Prediction 1 0
 ##          1 4 1
 ##          0 2 3</code></pre>
 <p>또한, 이 때 구해지는 민감도 및 특이도는 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cm50<span class="op">$</span>byClass[<span class="kw">c</span>(<span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>)]</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cm50<span class="op">$</span>byClass[<span class="kw">c</span>(<span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>)]</code></pre>
 <pre><code>## Sensitivity Specificity 
 ##   0.6666667   0.7500000</code></pre>
 <p>위 <span class="math inline">\(x\)</span>값 40을 기준으로 분류를 하는 경우와 비교하여 민감도는 감소하고 특이도는 증가함을 관찰할 수 있다.</p>
 <p>분류를 위한 <span class="math inline">\(x\)</span> 기준값(threshold)을 증가시켜가면서 민감도와 특이도가 어떻게 변하는 지 살펴보도록 하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">univariate_binary_rule &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, th) {
+<pre class="sourceCode r"><code class="sourceCode r">univariate_binary_rule &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, th) {
   cm &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(
     <span class="kw">factor</span>(<span class="kw">as.integer</span>(x <span class="op">&gt;=</span><span class="st"> </span>th), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),
     y
@@ -507,7 +533,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
   <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
   <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;분류기준값($x$)&#39;</span>, <span class="st">&#39;민감도(sensitivity)&#39;</span>, <span class="st">&#39;특이도(specificity)&#39;</span>),
   <span class="dt">caption =</span> <span class="st">&#39;분류기준별 민감도 및 특이도&#39;</span>
-)</code></pre></div>
+)</code></pre>
 <table>
 <caption><span id="tab:roc-data">Table 6.1: </span>분류기준별 민감도 및 특이도</caption>
 <thead>
@@ -577,9 +603,9 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 </table>
 <p>민감도와 특이도를 동시에 그래프로 나타낸 것 중 ROC(receiver operating characteristic) 곡선이 널리 사용되는데, 이는 분류기의 경계치를 조정하여 가면서 (1 - 특이도)(또는 false positive rate)을 <span class="math inline">\(x\)</span>축에, 민감도를 <span class="math inline">\(y\)</span>축에 도식화한 것이다.</p>
 <p>위 Table <a href="classifier-evaluation.html#tab:roc-data">6.1</a>를 바탕으로 ROC 곡선을 작성해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">roc_df <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">roc_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>specificity, <span class="dt">y =</span> sensitivity)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_path</span>()</code></pre></div>
+<span class="st">  </span><span class="kw">geom_path</span>()</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:roc-example"></span>
 <img src="data-mining-book_files/figure-html/roc-example-1.png" alt="ROC 곡선" width="672" />
 <p class="caption">
@@ -591,14 +617,14 @@ Figure 6.1: ROC 곡선
 <h2><span class="header-section-number">6.5</span> 이익도표</h2>
 <p>이익도표는 마케팅을 위하여 수익을 창출하는 목표고객(target)을 추출할 목적으로 사용되는데, 단순히 분류를 위한 여러 모형을 비교하기 위한 목적으로도 종종 사용되고 있다. 목표 마케팅의 목적에서는, 특정 범주의 고객을 목표고객으로 할 때, 이러한 목표고객의 비율이 상대적으로 높은 서브그룹을 찾고자 하는 것이다. 이를 위해, 우선 전체 데이터를 특정 범주의 사후확률의 순서로 정렬한 후, <span class="math inline">\(K\)</span>개(주로 <span class="math inline">\(K = 10\)</span>을 사용)의 집단으로 구분하고, 각 집단별로 다음과 같은 통계량을 산출한다.</p>
 <p><span class="math inline">\(k\)</span>번째 집단 내에서 범주 <span class="math inline">\(j\)</span>에 속한 객체의 수를 <span class="math inline">\(n_{kj}\)</span>라 할 때, 다음과 같은 범주 <span class="math inline">\(j\)</span>에 대한 <span class="math inline">\(k\)</span>번째 집단의 통계량들을 산출할 수 있다. (본 장에서 <span class="math inline">\(K\)</span>개의 집단은 동일한 크기라 가정하자. 즉, 모든 집단 <span class="math inline">\(k\)</span>에 대해 <span class="math inline">\(\sum_{j = 1}^{J} n_{kj} = \frac{N}{K}\)</span>가 성립한다고 하자.)</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 \text{% captured response} &amp;=&amp; \frac{n_{kj}}{\sum_{k = 1}^{K} n_{kj}} \times 100\\
 \text{cumulative % captured response} &amp;=&amp; \frac{\sum_{l = 1}^{k} n_{lj}}{\sum_{k = 1}^{K} n_{kj}} \times 100\\
 \text{% response} &amp;=&amp; \frac{n_{kj}}{\sum_{j = 1}^{J} n_{kj}} \times 100\\
 \text{lift} &amp;=&amp; \frac{n_{kj}}{\frac{1}{K} \sum_{k = 1}^{K} n_{kj}}
-\end{eqnarray*}\]</span>
+\end{eqnarray*}\]</span></p>
 <p>1,000개의 객체로 이루어진 어떤 데이터의 실제 범주별 빈도가 다음과 같다고 하자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y_freq &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">y_freq &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>y, <span class="op">~</span>n,
   <span class="dv">1</span>, <span class="dv">437</span>,
   <span class="dv">2</span>, <span class="dv">348</span>,
@@ -606,7 +632,7 @@ Figure 6.1: ROC 곡선
 ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">factor</span>(y, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)))
 
-y_freq</code></pre></div>
+y_freq</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   y         n
 ##   &lt;fct&gt; &lt;dbl&gt;
@@ -614,7 +640,7 @@ y_freq</code></pre></div>
 ## 2 2       348
 ## 3 3       215</code></pre>
 <p>한편, 어떤 분류모형을 사용하여 각 객체의 범주 <code>1</code>(특정 범주)에 대한 사후확률을 산출한 후, 전체 객체를 사후확률의 내림차순으로 정렬한 뒤 100개 객체씩 한 집단으로 구분하였다. 각 집단에 속하는 범주 <code>1</code>의 빈도는 다음과 같았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">freq_within_group &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">freq_within_group &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>k, <span class="op">~</span>n,
   <span class="dv">1</span>, <span class="dv">92</span>,
   <span class="dv">2</span>, <span class="dv">78</span>,
@@ -628,7 +654,7 @@ y_freq</code></pre></div>
   <span class="dv">10</span>, <span class="dv">10</span>
 )
 
-freq_within_group</code></pre></div>
+freq_within_group</code></pre>
 <pre><code>## # A tibble: 10 x 2
 ##        k     n
 ##    &lt;dbl&gt; &lt;dbl&gt;
@@ -643,7 +669,7 @@ freq_within_group</code></pre></div>
 ##  9     9     7
 ## 10    10    10</code></pre>
 <p>이를 바탕으로 각 집단 별 범주 <code>1</code>에 대한 통계량을 산출해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stat_df &lt;-<span class="st"> </span>freq_within_group <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">stat_df &lt;-<span class="st"> </span>freq_within_group <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cum_n =</span> <span class="kw">cumsum</span>(n)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">captured_response_pct =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,
@@ -661,7 +687,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
                 <span class="st">&#39;cum. % captured response&#39;</span>, <span class="st">&#39;% response&#39;</span>, <span class="st">&#39;lift&#39;</span>),
   <span class="dt">caption =</span> <span class="st">&#39;이익도표를 위한 통계량&#39;</span>,
   <span class="dt">digits =</span> <span class="dv">2</span>
-)</code></pre></div>
+)</code></pre>
 <table>
 <caption><span id="tab:gain-chart-stat">Table 6.2: </span>이익도표를 위한 통계량</caption>
 <thead>
@@ -758,7 +784,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 </tbody>
 </table>
 <p>Table <a href="classifier-evaluation.html#tab:gain-chart-stat">6.2</a>를 바탕으로 네 가지 이익도표를 작성해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stat_df <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">stat_df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;stat&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, 
          captured_response_pct<span class="op">:</span>lift) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> k, <span class="dt">y =</span> value)) <span class="op">+</span>
@@ -772,7 +798,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
                  <span class="st">&quot;lift&quot;</span> =<span class="st"> &quot;lift&quot;</span>)
              )) <span class="op">+</span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;집단&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;통계량&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;통계량&quot;</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:gain-chart-plot"></span>
 <img src="data-mining-book_files/figure-html/gain-chart-plot-1.png" alt="이익도표" width="672" />
 <p class="caption">
@@ -839,7 +865,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

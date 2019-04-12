@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-04-11">
+<meta name="date" content="2019-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -51,41 +51,67 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -326,11 +352,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 <tr class="even">
 <td align="left">stats</td>
-<td align="left">3.5.2</td>
+<td align="left">3.5.3</td>
 </tr>
 <tr class="odd">
 <td align="left">cluster</td>
-<td align="left">2.0.7-1</td>
+<td align="left">2.0.8</td>
 </tr>
 </tbody>
 </table>
@@ -378,7 +404,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">8.3</span> 연결법의 군집 알고리즘</h2>
 <div id="linkage-method-basic-script" class="section level3">
 <h3><span class="header-section-number">8.3.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>),
   <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">14</span>, <span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">7</span>, <span class="dv">13</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">3</span>),
   <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">14</span>,<span class="dv">13</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">15</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>)
@@ -387,7 +413,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
              <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
              <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;PC 경력(년, $x_1$)&#39;</span>, <span class="st">&#39;사용시간(시간, $x_2$)&#39;</span>),
-             <span class="dt">caption =</span> <span class="st">&#39;PC 사용자 데이터&#39;</span>)</code></pre></div>
+             <span class="dt">caption =</span> <span class="st">&#39;PC 사용자 데이터&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:pc-user-data">Table 8.2: </span>PC 사용자 데이터</caption>
 <thead>
@@ -450,11 +476,11 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(<span class="kw">theme_gray</span>(<span class="dt">base_family=</span><span class="st">&#39;NanumGothic&#39;</span>))
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(<span class="kw">theme_gray</span>(<span class="dt">base_family=</span><span class="st">&#39;NanumGothic&#39;</span>))
 <span class="kw">ggplot</span>(train_df, <span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> id)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;PC 경력&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;사용시간&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;사용시간&quot;</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:pc-user-data-plot"></span>
 <img src="data-mining-book_files/figure-html/pc-user-data-plot-1.png" alt="PC 사용자 데이터" width="672" />
 <p class="caption">
@@ -467,13 +493,13 @@ Figure 8.1: PC 사용자 데이터
 <li><code>stats</code> 패키지의 함수 <code>dist</code>를 이용하여 객체간 거리를 계산한다.</li>
 <li>1에서 얻은 거리 행렬을 <code>stats</code> 패키지의 <code>hclust</code> 함수에 입력하여 데이터 군집을 분석한다. 이 때, 파라미터 <code>method</code>의 값을 “average”로 설정하면 평균연결법을 이용한다.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dist</span>(train_df[, <span class="op">-</span><span class="dv">1</span>]) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dist</span>(train_df[, <span class="dv">-1</span>]) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">hclust</span>(<span class="dt">method =</span> <span class="st">&quot;average&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">plot</span>(
     <span class="dt">main =</span> <span class="ot">NULL</span>,
     <span class="dt">ylab =</span> <span class="st">&quot;distance&quot;</span>,
     <span class="dt">xlab =</span> <span class="st">&quot;observation&quot;</span>
-  )</code></pre></div>
+  )</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:pc-user-average-linkage"></span>
 <img src="data-mining-book_files/figure-html/pc-user-average-linkage-1.png" alt="PC 사용자 데이터에 대한 평균연결법 덴드로그램" width="672" />
 <p class="caption">
@@ -499,7 +525,7 @@ Figure 8.2: PC 사용자 데이터에 대한 평균연결법 덴드로그램
 <li>단계2: <span class="math inline">\(k = 1\)</span>이면 Stop, 그렇지 않으면 단계 1을 반복한다.</li>
 </ol>
 <p>단계1은 객체 수 <span class="math inline">\(n\)</span>만큼 반복된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> <span class="kw">nrow</span>(train_df))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> <span class="kw">nrow</span>(train_df))</code></pre>
 <p>임의의 군집해에 대하여, 단계1을 수행하는 함수를 아래와 같이 구현해보자. 아래 함수 <code>merge_cluster</code>는 아래와 같은 두 개의 입력변수를 사용한다.</p>
 <ul>
 <li><code>df</code>: 객체 데이터 프레임. 열 이름이 <code>id</code>인 열은 객체번호를 나타내어, 객체간 거리 계산에 포함하지 않는다.</li>
@@ -511,7 +537,7 @@ Figure 8.2: PC 사용자 데이터에 대한 평균연결법 덴드로그램
 <li><code>closest_clusters</code>: 입력된 군집해 내에서 가장 가까운 두 군집을 나타낸 데이터 프레임. 두 열 <code>item1</code>과 <code>item2</code>는 각각 군집 이름을 나타내며, <code>distance</code>는 해당 두 군집간의 거리를 나타낸다.</li>
 <li><code>new_cluster_label</code>: <code>closest_clusters</code>에 포함된 두 군집을 하나로 묶어 새로운 군집을 만든 후 얻어진 군집해.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">merge_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_label) {
+<pre class="sourceCode r"><code class="sourceCode r">merge_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_label) {
   <span class="co"># 군집간 거리 계산한다. - 유클리드 거리 및 평균연결법 기반</span>
   cluster_dist &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">subset</span>(df, <span class="dt">select =</span> <span class="op">-</span>id), <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
@@ -549,30 +575,30 @@ Figure 8.2: PC 사용자 데이터에 대한 평균연결법 덴드로그램
   <span class="kw">list</span>(<span class="dt">cluster_dist =</span> cluster_dist, 
        <span class="dt">closest_clusters =</span> closest_clusters, 
        <span class="dt">new_cluster_label =</span> cluster_label)
-}</code></pre></div>
+}</code></pre>
 <p>우선 단계 0에서 얻어지는 군집해에 대한 데이터를 아래와 같이 생성한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">init_cluster &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">init_cluster &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">id =</span> train_df<span class="op">$</span>id,
   <span class="dt">cluster =</span> <span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(train_df))
 )
 
-<span class="kw">print</span>(<span class="kw">unique</span>(init_cluster<span class="op">$</span>cluster))</code></pre></div>
+<span class="kw">print</span>(<span class="kw">unique</span>(init_cluster<span class="op">$</span>cluster))</code></pre>
 <pre><code>##  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">k &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(init_cluster<span class="op">$</span>cluster))
+<pre class="sourceCode r"><code class="sourceCode r">k &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(init_cluster<span class="op">$</span>cluster))
 
-<span class="kw">print</span>(k)</code></pre></div>
+<span class="kw">print</span>(k)</code></pre>
 <pre><code>## [1] 10</code></pre>
 <p>위와 같이, 초기 군집해에서 군집 수는 전체 객체수와 같은 10개이다.</p>
 <p>위 초기해로부터 단계1을 아래와 같이 수행해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">merge_cluster</span>(train_df, init_cluster)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">merge_cluster</span>(train_df, init_cluster)</code></pre>
 <p>찾아진 가장 가까운 두 군집은 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">1</span>]]<span class="op">$</span>closest_cluster</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">1</span>]]<span class="op">$</span>closest_cluster</code></pre>
 <pre><code>## # A tibble: 1 x 3
 ##   cluster1 cluster2 distance
 ##   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;
 ## 1 10       9               1</code></pre>
 <p>위 두 군집을 하나로 묶은 새로운 군집해는 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">1</span>]]<span class="op">$</span>new_cluster_label</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">1</span>]]<span class="op">$</span>new_cluster_label</code></pre>
 <pre><code>## # A tibble: 10 x 2
 ##       id cluster
 ##    &lt;int&gt; &lt;chr&gt;  
@@ -587,18 +613,18 @@ Figure 8.2: PC 사용자 데이터에 대한 평균연결법 덴드로그램
 ##  9     9 10,9   
 ## 10    10 10,9</code></pre>
 <p>위 새로운 군집해의 군집 수는 9이다. 이는 아직 1보다 크므로, 새로 얻어진 군집해로부터 단계 1을 반복한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw">merge_cluster</span>(
+<pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw">merge_cluster</span>(
   train_df,
   iteration[[<span class="dv">1</span>]]<span class="op">$</span>new_cluster_label
-)</code></pre></div>
+)</code></pre>
 <p>이번에 찾아진 가장 가까운 두 군집은 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">2</span>]]<span class="op">$</span>closest_cluster</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">2</span>]]<span class="op">$</span>closest_cluster</code></pre>
 <pre><code>## # A tibble: 1 x 3
 ##   cluster1 cluster2 distance
 ##   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;
 ## 1 3        7               1</code></pre>
 <p>위 두 군집을 하나로 묶은 새로운 군집해는 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">2</span>]]<span class="op">$</span>new_cluster_label</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">2</span>]]<span class="op">$</span>new_cluster_label</code></pre>
 <pre><code>## # A tibble: 10 x 2
 ##       id cluster
 ##    &lt;int&gt; &lt;chr&gt;  
@@ -613,17 +639,17 @@ Figure 8.2: PC 사용자 데이터에 대한 평균연결법 덴드로그램
 ##  9     9 10,9   
 ## 10    10 10,9</code></pre>
 <p>위 군집해에 기반하여 단계 1을 다시 반복해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="kw">merge_cluster</span>(
+<pre class="sourceCode r"><code class="sourceCode r">iteration[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="kw">merge_cluster</span>(
   train_df,
   iteration[[<span class="dv">2</span>]]<span class="op">$</span>new_cluster_label
 )
 
-<span class="kw">print</span>(iteration[[<span class="dv">3</span>]]<span class="op">$</span>closest_cluster)</code></pre></div>
+<span class="kw">print</span>(iteration[[<span class="dv">3</span>]]<span class="op">$</span>closest_cluster)</code></pre>
 <pre><code>## # A tibble: 1 x 3
 ##   cluster1 cluster2 distance
 ##   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;
 ## 1 1        6            1.41</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(iteration[[<span class="dv">3</span>]]<span class="op">$</span>new_cluster_label)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(iteration[[<span class="dv">3</span>]]<span class="op">$</span>new_cluster_label)</code></pre>
 <pre><code>## # A tibble: 10 x 2
 ##       id cluster
 ##    &lt;int&gt; &lt;chr&gt;  
@@ -638,7 +664,7 @@ Figure 8.2: PC 사용자 데이터에 대한 평균연결법 덴드로그램
 ##  9     9 10,9   
 ## 10    10 10,9</code></pre>
 <p>위와 같은 과정을 전체 객체가 하나의 군집으로 묶일 때까지 아래와 같이 반복하며 군집결과를 출력해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#단계0</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#단계0</span>
 init_cluster &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">id =</span> train_df<span class="op">$</span>id,
   <span class="dt">cluster =</span> <span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(train_df))
@@ -652,9 +678,9 @@ print_clusters &lt;-<span class="st"> </span><span class="cf">function</span>(i,
   <span class="kw">cat</span>(<span class="st">&quot;Iteration: &quot;</span>, i, <span class="st">&quot;, k = &quot;</span>, k, <span class="st">&quot;, clusters = &quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;{&quot;</span>, clusters, <span class="st">&quot;}&quot;</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
 }
 
-<span class="kw">print_clusters</span>(i, k, current_clusters)</code></pre></div>
+<span class="kw">print_clusters</span>(i, k, current_clusters)</code></pre>
 <pre><code>## Iteration:  0 , k =  10 , clusters =  {1} {2} {3} {4} {5} {6} {7} {8} {9} {10}</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#단계1</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#단계1</span>
 iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> <span class="kw">nrow</span>(train_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)
 <span class="cf">while</span>(k <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {
   i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
@@ -666,7 +692,7 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
   } <span class="cf">else</span> {
     iteration[[i]] &lt;-<span class="st"> </span><span class="kw">merge_cluster</span>(
       train_df,
-      iteration[[i<span class="op">-</span><span class="dv">1</span>]]<span class="op">$</span>new_cluster_label
+      iteration[[i<span class="dv">-1</span>]]<span class="op">$</span>new_cluster_label
     )
   }
 
@@ -674,7 +700,7 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
   k &lt;-<span class="st"> </span><span class="kw">length</span>(current_clusters)
   
   <span class="kw">print_clusters</span>(i, k, current_clusters)
-}</code></pre></div>
+}</code></pre>
 <pre><code>## Iteration:  1 , k =  9 , clusters =  {1} {2} {3} {4} {5} {6} {7} {8} {10,9} 
 ## Iteration:  2 , k =  8 , clusters =  {1} {2} {3,7} {4} {5} {6} {8} {10,9} 
 ## Iteration:  3 , k =  7 , clusters =  {1,6} {2} {3,7} {4} {5} {8} {10,9} 
@@ -689,15 +715,15 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
 <h3><span class="header-section-number">8.3.3</span> R 패키지 내 연결법</h3>
 <p>R에서는 <code>stats</code> 패키지의 <code>hclust</code> 함수를 이용하여 군집해를 구할 수 있다.</p>
 <p>우선, 객체간 거리 행렬을 함수 <code>dist</code>를 이용하여 구한다. 아래는 유클리드 거리를 구하는 예이며, 상황에 따라 다른 거리 척도를 이용할 수도 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">distance_matrix &lt;-<span class="st"> </span><span class="kw">dist</span>(train_df[, <span class="op">-</span><span class="dv">1</span>])</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">distance_matrix &lt;-<span class="st"> </span><span class="kw">dist</span>(train_df[, <span class="dv">-1</span>])</code></pre>
 <p>객체간 거리를 구한 후, 함수 <code>hclust</code>를 이용하여 군집분석을 수행한다. 기본설정은 완전연결법이며, 파라미터 <code>method</code>의 값을 설정함으로써 단일연결법, 평균연결법, 중심연결법을 수행할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_solution &lt;-<span class="st"> </span><span class="kw">hclust</span>(distance_matrix, <span class="dt">method =</span> <span class="st">&quot;average&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cluster_solution &lt;-<span class="st"> </span><span class="kw">hclust</span>(distance_matrix, <span class="dt">method =</span> <span class="st">&quot;average&quot;</span>)</code></pre>
 <p>결과 객체 <code>cluster_solution</code>는 아래와 같은 컴포넌트(components)를 지닌 리스트(list) 객체이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(cluster_solution)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(cluster_solution)</code></pre>
 <pre><code>## [1] &quot;merge&quot;       &quot;height&quot;      &quot;order&quot;       &quot;labels&quot;      &quot;method&quot;     
 ## [6] &quot;call&quot;        &quot;dist.method&quot;</code></pre>
 <p>이 중, <code>merge</code>는 2개의 열과 <span class="math inline">\(n - 1\)</span>개의 행으로 이루어진 행렬로, 연결법 알고리즘의 단계1 iteration에서 묶어지는 두 군집을 기록한 것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_solution<span class="op">$</span>merge</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cluster_solution<span class="op">$</span>merge</code></pre>
 <pre><code>##       [,1] [,2]
 ##  [1,]   -3   -7
 ##  [2,]   -9  -10
@@ -710,7 +736,7 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
 ##  [9,]    6    8</code></pre>
 <p>위에서 각 행은 iteration을 나타내며, 두 열은 묶어지는 두 군집을 나타낸다. 값이 0보다 작은 경우에는 번호가 원 객체 번호를 나타내며, 값이 0보다 큰 경우에는 해당 번호의 iteration에서 묶어진 군집을 나타낸다. 예를 들어, 위 결과의 6번째 행 (-8, 2) 은 객체 8과 두 번째 iteration에서 얻어진 군집 (객체 9와 10이 묶여진 군집)이 묶여 하나의 군집(객체 8, 9, 10)을 이루게 됨을 나타낸다.</p>
 <p><code>height</code>는 각 iteration에서 묶이는 두 군집간의 거리를 나타내며, 위 Figure <a href="hierarchical-clustering.html#fig:pc-user-average-linkage">8.2</a>의 덴드로그램에서 세로선의 높이를 나타낸다. Iteration이 증가함에 따라 묶이는 두 군집간의 거리도 증가한다. 일반적으로 이 거리값이 크게 증가하는 iteration에서 두 군집을 묶지 않고 최종 군집해를 도출한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_solution<span class="op">$</span>height</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cluster_solution<span class="op">$</span>height</code></pre>
 <pre><code>## [1]  1.000000  1.000000  1.414214  1.825141  2.236068  2.532248  3.519028
 ## [8]  9.635217 10.881878</code></pre>
 <p>위 결과의 경우 iteration 8에서 거리값이 크게 증가한다. 이는 위 Figure <a href="hierarchical-clustering.html#fig:pc-user-average-linkage">8.2</a>의 덴드로그램에서 3개의 군집에서 2개의 군집으로 묶이는 과정에서 세로선의 높이가 현격히 증가하는 지점이다. 따라서, iteration 7에서 얻어진 3개의 군집이 적절한 군집해라 판단할 수 있겠다.</p>
@@ -722,7 +748,7 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
 <div id="ward-method-basic-script" class="section level3">
 <h3><span class="header-section-number">8.4.1</span> 기본 R 스크립트</h3>
 <p>아래 Table <a href="hierarchical-clustering.html#tab:driver-data">8.3</a>는 8명의 운전자에 대한 운전경력과 교통위반 횟수를 나타낸 것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>),
   <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">19</span>, <span class="dv">17</span>, <span class="dv">8</span>, <span class="dv">19</span>, <span class="dv">18</span>),
   <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">15</span>, <span class="dv">13</span>, <span class="dv">13</span>, <span class="dv">4</span>, <span class="dv">17</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">6</span>)
@@ -731,7 +757,7 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
 knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
              <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
              <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;운전경력($x_1$)&#39;</span>, <span class="st">&#39;위반횟수($x_2$)&#39;</span>),
-             <span class="dt">caption =</span> <span class="st">&#39;운전경력에 따른 교통위반 횟수&#39;</span>)</code></pre></div>
+             <span class="dt">caption =</span> <span class="st">&#39;운전경력에 따른 교통위반 횟수&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:driver-data">Table 8.3: </span>운전경력에 따른 교통위반 횟수</caption>
 <thead>
@@ -785,12 +811,12 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 </tbody>
 </table>
 <p>앞 절의 연결법에서 사용했던 <code>hclust</code> 함수를 이용하여 워드 방법에 의한 군집해도 구할 수 있으며, 이 때 파라미터 <code>method</code>의 값으로 “ward.D2”를 사용한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dist</span>(train_df[, <span class="op">-</span><span class="dv">1</span>]) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dist</span>(train_df[, <span class="dv">-1</span>]) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">hclust</span>(<span class="dt">method =</span> <span class="st">&quot;ward.D2&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">plot</span>(
     <span class="dt">main =</span> <span class="ot">NULL</span>,
     <span class="dt">xlab =</span> <span class="st">&quot;observation&quot;</span>
-  )</code></pre></div>
+  )</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:ward-dendrogram"></span>
 <img src="data-mining-book_files/figure-html/ward-dendrogram-1.png" alt="운전자 데이터에 대한 워드 방법 덴드로그램" width="672" />
 <p class="caption">
@@ -801,13 +827,13 @@ Figure 8.3: 운전자 데이터에 대한 워드 방법 덴드로그램
 <div id="ward-method-algorithm" class="section level3">
 <h3><span class="header-section-number">8.4.2</span> 워드 군집 알고리즘</h3>
 <p>군집결과가 <span class="math inline">\(\mathbf{C} = \{ C_1, C_2, \cdots, C_k \}\)</span>일 때, 군집 <span class="math inline">\(C_i\)</span> 내의 제곱합(within sum of squares)은 다음과 같이 산출된다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 SS(C_i) = \sum_{u \in C_i} \left(\mathbf{x}_u - \mathbf{c}_i\right)^\top\left(\mathbf{x}_u - \mathbf{c}_i\right)
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>이 때, 전체 군집 내 제곱합을 <span class="math inline">\(SSW\)</span>라 할 때, 이는 다음과 같다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 SSW = \sum_{i = 1}^{k} SS(C_i)
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>다음으로, 현 군집의 각 쌍을 묶는다고 할 때의 새로운 <span class="math inline">\(SSW\)</span>를 산출한 후, 이 값이 가장 작게 되는 군집 쌍을 묶는다.</p>
 <ol style="list-style-type: decimal">
 <li>단계0
@@ -827,7 +853,7 @@ SSW = \sum_{i = 1}^{k} SS(C_i)
 <li><code>df</code>: 객체 데이터 프레임. 열 이름이 <code>id</code>인 열은 객체번호를 나타내어, 객체간 거리 계산에 포함하지 않는다.</li>
 <li><code>cluster_label</code>: 두 개의 열로 이루어진 데이터 프레임. 열 <code>id</code>는 객체번호를 나타내며, 열 <code>cluster</code>는 군집 이름을 나타낸다. 하나의 객체는 하나의 군집에만 속할 수 있으나, 하나의 군집은 여러 개의 객체를 포함할 수 있다.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># SSW 계산</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># SSW 계산</span>
 calculate_ssw &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_label) {
   df <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">inner_join</span>(cluster_label, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>) <span class="op">%&gt;%</span>
@@ -838,10 +864,10 @@ calculate_ssw &lt;-<span class="st"> </span><span class="cf">function</span>(df,
 <span class="st">    </span><span class="kw">mutate</span>(<span class="dt">ss =</span> <span class="kw">rowSums</span>(<span class="kw">subset</span>(., <span class="dt">select =</span> <span class="op">-</span>cluster))) <span class="op">%&gt;%</span>
 <span class="st">    `</span><span class="dt">[[</span><span class="st">`</span>(<span class="st">&quot;ss&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">sum</span>()
-}</code></pre></div>
+}</code></pre>
 <p>워드 군집 알고리즘은 현재 군집해 내의 모든 군집쌍에 대하여 두 군집을 하나의 군집으로 묶을 경우의 <span class="math inline">\(SSW\)</span>를 계산해야 한다. 따라서, 우선 고려할 모든 군집해를 생성하는 사용자 정의 함수 <code>generate_clusters</code>를 아래와 같이 구현한다.</p>
 <p>아래 사용자 정의 함수 <code>generate_clusters</code>는 임의의 군집해 <code>cluster_label</code>을 입력변수로 사용하며, 해당 입력변수에 대한 설명은 위 함수 <code>calculate_ssw</code>에서와 같다. 함수 수행 결과, 가능한 각각의 군집쌍 결합의 결과물인 군집해 데이터 프레임을 리스트(list) 형태로 출력한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 임의의 군집해로부터 가능한 다음단계 군집해 생성</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 임의의 군집해로부터 가능한 다음단계 군집해 생성</span>
 generate_clusters &lt;-<span class="st"> </span><span class="cf">function</span>(cluster_label) {
   unique_clusters &lt;-<span class="st"> </span><span class="kw">unique</span>(cluster_label<span class="op">$</span>cluster)
   
@@ -856,25 +882,25 @@ generate_clusters &lt;-<span class="st"> </span><span class="cf">function</span>
 <span class="st">    `</span><span class="dt">[[</span><span class="st">`</span>(<span class="st">&quot;candidate_solution&quot;</span>)
   
   candidate_solutions
-}</code></pre></div>
+}</code></pre>
 <p>위에서 보이는 바와 같이, 함수 <code>generate_clusters</code>는 또 다른 사용자 정의함수 <code>merge_cluster</code>를 호출한다. 이 함수는 두 입력변수 <code>cluster_label</code> 및 <code>cluster_merge</code>를 사용하는데, <code>cluster_label</code>에 대한 설명은 위 다른 사용자 정의 함수에서와 동일하며, <code>cluster_merge</code>에 대한 설명은 아래와 같다.</p>
 <ul>
 <li><code>cluster_merge</code>: 3차원 character 벡터. 첫 두 element는 현재 <code>cluster_label</code>에 존재하는 군집 중 하나의 군집으로 묶일 두 군집의 이름을 나타내며, 세 번째 element는 그 결과 나타나는 군집 이름을 나타낸다.</li>
 </ul>
 <p>함수 수행 결과, 입력된 <code>cluster_label</code>에서 군집이름이 <code>cluster_merge[1]</code> 혹은 <code>cluster_merge[2]</code>에 해당하는 객체들은, 출력된 군집해에서는 군집이름 <code>cluster_merge[3]</code>을 지닌다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 임의의 군집 결합 규칙 cluster_merge에 따른 군집해</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 임의의 군집 결합 규칙 cluster_merge에 따른 군집해</span>
 merge_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(cluster_label, cluster_merge) {
   idx &lt;-<span class="st"> </span>cluster_label<span class="op">$</span>cluster <span class="op">%in%</span><span class="st"> </span>cluster_merge[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]
   cluster_label[idx, <span class="st">&quot;cluster&quot;</span>] &lt;-<span class="st"> </span>cluster_merge[<span class="dv">3</span>]
   cluster_label
-}</code></pre></div>
+}</code></pre>
 <p>마지막으로, 현재 군집해로부터 가장 최적의 다음단계 군집해를 얻는 사용자 함수 <code>best_merge_cluster</code>를 아래와 같이 구현해보자.</p>
 <ol style="list-style-type: decimal">
 <li><code>generate_clusters</code>를 실행하여 다음 단계에 가능한 모든 군집해를 구한다.</li>
 <li>1의 각 군집해에 함수 <code>calculate_ssw</code>를 적용하여 <span class="math inline">\(SSW\)</span>값을 구한다.</li>
 <li><span class="math inline">\(SSW\)</span>값이 최소인 군집해를 최적 군집해로 선정한다.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 최적 군집 결합</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 최적 군집 결합</span>
 best_merge_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_label) {
   candidate_solutions &lt;-<span class="st"> </span><span class="kw">generate_clusters</span>(cluster_label)
   ssw &lt;-<span class="st"> </span><span class="kw">sapply</span>(candidate_solutions, <span class="cf">function</span>(x) <span class="kw">calculate_ssw</span>(df, x))
@@ -882,9 +908,9 @@ best_merge_cluster &lt;-<span class="st"> </span><span class="cf">function</span
     <span class="dt">new_cluster_label =</span> candidate_solutions[[<span class="kw">which.min</span>(ssw)]],
     <span class="dt">new_ssw =</span> <span class="kw">min</span>(ssw)
   )
-}</code></pre></div>
+}</code></pre>
 <p>위 사용자 함수들을 이용하여 Table <a href="hierarchical-clustering.html#tab:driver-data">8.3</a>에 대한 워드 군집 분석을 수행해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#단계0</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#단계0</span>
 init_cluster &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">id =</span> train_df<span class="op">$</span>id,
   <span class="dt">cluster =</span> <span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(train_df))
@@ -898,9 +924,9 @@ print_clusters &lt;-<span class="st"> </span><span class="cf">function</span>(i,
   <span class="kw">cat</span>(<span class="st">&quot;Iteration: &quot;</span>, i, <span class="st">&quot;, k = &quot;</span>, k, <span class="st">&quot;, clusters = &quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;{&quot;</span>, clusters, <span class="st">&quot;}&quot;</span>), <span class="st">&quot;, SSW =&quot;</span>, ssw, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
 }
 
-<span class="kw">print_clusters</span>(i, k, current_clusters, ssw)</code></pre></div>
+<span class="kw">print_clusters</span>(i, k, current_clusters, ssw)</code></pre>
 <pre><code>## Iteration:  0 , k =  8 , clusters =  {1} {2} {3} {4} {5} {6} {7} {8} , SSW = 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#단계1</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#단계1</span>
 iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> <span class="kw">nrow</span>(train_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)
 <span class="cf">while</span>(k <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {
   i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
@@ -912,7 +938,7 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
   } <span class="cf">else</span> {
     iteration[[i]] &lt;-<span class="st"> </span><span class="kw">best_merge_cluster</span>(
       train_df,
-      iteration[[i<span class="op">-</span><span class="dv">1</span>]]<span class="op">$</span>new_cluster_label
+      iteration[[i<span class="dv">-1</span>]]<span class="op">$</span>new_cluster_label
     )
   }
 
@@ -921,7 +947,7 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
   ssw &lt;-<span class="st"> </span>iteration[[i]]<span class="op">$</span>new_ssw
   
   <span class="kw">print_clusters</span>(i, k, current_clusters, ssw)
-}</code></pre></div>
+}</code></pre>
 <pre><code>## Iteration:  1 , k =  7 , clusters =  {1} {2,7} {3} {4} {5} {6} {8} , SSW = 1 
 ## Iteration:  2 , k =  6 , clusters =  {1,3} {2,7} {4} {5} {6} {8} , SSW = 3.5 
 ## Iteration:  3 , k =  5 , clusters =  {1,3} {2,7} {4,8} {5} {6} , SSW = 6 
@@ -934,15 +960,15 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
 <h3><span class="header-section-number">8.4.3</span> R 패키지 내 워드 방법</h3>
 <p>R 패키지로 구현된 워드 군집은 위에서 구현한 <span class="math inline">\(SSW\)</span>와는 다소 다른 metric을 이용하여 군집해를 구한다. 따라서, 우선 워드 방법이 제안된 논문들을 살펴볼 필요가 있다.</p>
 <p>우선 원 논문 <span class="citation">Ward Jr (<a href="#ref-ward1963hierarchical">1963</a>)</span> 는 <span class="math inline">\(ESS\)</span>(error sum of squares)를 아래와 같이 정의하였으며, 이는 위에서 사용한 <span class="math inline">\(SSW\)</span>와 일치한다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \begin{split}
 ESS(\{C_1, \cdots, C_k \}) &amp;=&amp; \sum_{i = 1}^{k} ESS(C_i)\\
 &amp;=&amp; \sum_{i = 1}^{k} \sum_{u \in C_i} \mathbf{x}_u^\top \mathbf{x}_u - |C_i| \mathbf{c}_i^\top \mathbf{c}_i\\
 &amp;=&amp; SSW
 \end{split}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>위 식에서 임의의 두 군집 <span class="math inline">\(C_i\)</span>, <span class="math inline">\(C_j\)</span>를 하나의 군집으로 묶을 때 <span class="math inline">\(SSW\)</span>의 변화는 아래와 같다. <span class="math inline">\(C_i\)</span>와 <span class="math inline">\(C_j\)</span> 외의 군집은 <span class="math inline">\(SSW\)</span>의 변화에 영향을 미치지 않으므로, <span class="math inline">\(SSW\)</span> 변화량은 아래와 같이 군집 <span class="math inline">\(C_i\)</span>와 <span class="math inline">\(C_j\)</span>에 속하는 객체만을 이용하여 구할 수 있으며, 결과적으로 <span class="math inline">\(C_i\)</span>와 <span class="math inline">\(C_j\)</span>의 군집 크기 <span class="math inline">\(|C_i|\)</span>와 <span class="math inline">\(|C_j|\)</span>및 군집 중심벡터 <span class="math inline">\(\mathbf{c}_i\)</span>와 <span class="math inline">\(\mathbf{c}_j\)</span>를 이용하여 구할 수 있다.</p>
-<span class="math display" id="eq:ward-minimand">\[\begin{equation}
+<p><span class="math display" id="eq:ward-minimand">\[\begin{equation}
 \begin{split}
 \Delta SSW &amp;=&amp; ESS(C_i \cup C_j) - ESS(C_i) - ESS(C_j)\\
 &amp;=&amp; \sum_{u \in C_i \cup C_j} \mathbf{x}_u^\top \mathbf{x}_u - (|C_i| + |C_j|)\left[\frac{|C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j}{|C_i| + |C_j|}\right]^\top \left[\frac{|C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j}{|C_i| + |C_j|}\right]\\
@@ -951,10 +977,10 @@ ESS(\{C_1, \cdots, C_k \}) &amp;=&amp; \sum_{i = 1}^{k} ESS(C_i)\\
 &amp;=&amp; \frac{|C_i||C_j|}{|C_i| + |C_j|} \left(\mathbf{c}_i - \mathbf{c}_j\right)^\top \left(\mathbf{c}_i - \mathbf{c}_j\right)
 \end{split}
 \tag{8.1}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>따라서 워드 방법은 각 iteration에서 식 <a href="hierarchical-clustering.html#eq:ward-minimand">(8.1)</a>를 최소화하는 두 군집 <span class="math inline">\(C_i\)</span>, <span class="math inline">\(C_j\)</span>를 선택하여 두 군집을 하나로 묶는 방법이다.</p>
 <p>한편, <span class="math inline">\(SS(C_i)\)</span>는 아래와 같이 군집 <span class="math inline">\(C_i\)</span>내 객체들 간의 제곱 유클리드 거리로 나타낼 수 있다.</p>
-<span class="math display" id="eq:squared-euclidean-within-cluster">\[\begin{equation}
+<p><span class="math display" id="eq:squared-euclidean-within-cluster">\[\begin{equation}
 \begin{split}
 D^2(C_i) &amp;=&amp; \sum_{u, v \in C_i} (\mathbf{x}_u - \mathbf{x}_v)^\top (\mathbf{x}_u - \mathbf{x}_v)\\
 &amp;=&amp; \sum_{u, v \in C_i} \left((\mathbf{x}_u - \mathbf{c}_i) - (\mathbf{x}_v - \mathbf{c}_i)\right)^\top \left((\mathbf{x}_u - \mathbf{c}_i) - (\mathbf{x}_v - \mathbf{c}_i)\right)\\
@@ -963,26 +989,26 @@ D^2(C_i) &amp;=&amp; \sum_{u, v \in C_i} (\mathbf{x}_u - \mathbf{x}_v)^\top (\ma
 &amp;=&amp; 2 SS(C_i)
 \end{split}
 \tag{8.2}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>위 식 <a href="hierarchical-clustering.html#eq:squared-euclidean-within-cluster">(8.2)</a>을 달리 표현하면, 객체간의 제곱 유클리드 거리를 표현한 행렬에서 군집 <span class="math inline">\(i\)</span>에 속한 객체들에 해당하는 부분행렬(submatrix)를 뽑아 행렬의 원소값을 모두 더하면, 그 값이 <span class="math inline">\(2 SS(C_i)\)</span>와 같다. 이를 통해 각 군집의 중심벡터를 계산하지 않고도 각 iteration에서 SSW를 최소화하는 군집 결합을 찾을 수 있다.</p>
 <p>R 패키지 <code>stats</code> 내의 <code>hclust</code> 함수는 워드 방법으로 <code>method</code> 파라미터의 값을 “ward.D” 혹은 “ward.D2”로 설정할 수 있다. 이 두 방법의 차이는 입력 거리행렬을 제곱 유클리드 거리로 사용하는지 일반 유클리드 거리로 사용하는지의 차이로, 아래에서 R 스크립트 예제와 함께 설명하기로 한다.</p>
 <p>우선 <code>method</code>값을 “ward.D2”로 설정하는 경우, <code>dist</code> 함수의 결과를 입력 거리행렬로 그대로 사용하면 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_ward.D2 &lt;-<span class="st"> </span><span class="kw">dist</span>(train_df[, <span class="op">-</span><span class="dv">1</span>]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">hclust</span>(<span class="dt">method =</span> <span class="st">&quot;ward.D2&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">res_ward.D2 &lt;-<span class="st"> </span><span class="kw">dist</span>(train_df[, <span class="dv">-1</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hclust</span>(<span class="dt">method =</span> <span class="st">&quot;ward.D2&quot;</span>)</code></pre>
 <p>이 때, 결과 데이터 <code>res_ward.D2</code>에서 워드 방법의 criterion을 나타내는 <code>height</code> 원소(component)가 표현하는 값은 위에서 계산하였던 <span class="math inline">\(SSW\)</span>와 다르다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_ward.D2<span class="op">$</span>height</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">res_ward.D2<span class="op">$</span>height</code></pre>
 <pre><code>## [1]  1.414214  2.236068  2.236068  5.944185  6.244998 13.945131 26.813243</code></pre>
 <p>이는 <code>height</code>에서 표현하는 값은 전체 <span class="math inline">\(SSW\)</span>가 아니라, 두 군집 <span class="math inline">\(i\)</span>와 <span class="math inline">\(j\)</span>를 하나로 묶을 때 추가로 증가하는 <span class="math inline">\(SSW\)</span> 수치의 변환으로, 아래와 같이 계산되기 때문이다.</p>
-<span class="math display" id="eq:hclust-height">\[\begin{equation}
+<p><span class="math display" id="eq:hclust-height">\[\begin{equation}
 height = \sqrt{D^2(C_i \cup C_j) - \left(D^2(C_i) + D^2(C_j)\right)}
 \tag{8.3}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>따라서, 군집 <span class="math inline">\(i\)</span>와 <span class="math inline">\(j\)</span>를 하나로 묶을 때 증가하는 <span class="math inline">\(SSW\)</span>의 수치 <span class="math inline">\(\Delta SSW\)</span>는 아래와 같이 표현된다.</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 \Delta SSW = \frac{1}{2} height^2
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>각 iteration에서 발생하는 <span class="math inline">\(\Delta SSW\)</span>의 누적합이 위 <a href="hierarchical-clustering.html#ward-method-algorithm">8.4.2</a>절에서 보였던 <span class="math inline">\(SSW\)</span> 결과와 동일함을 아래와 같이 확인해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(
   <span class="dt">iteration =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>(<span class="kw">nrow</span>(train_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)),
   <span class="dt">height =</span> res_ward.D2<span class="op">$</span>height
 ) <span class="op">%&gt;%</span>
@@ -997,7 +1023,7 @@ height = \sqrt{D^2(C_i \cup C_j) - \left(D^2(C_i) + D^2(C_j)\right)}
     <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;iteration&#39;</span>, <span class="st">&#39;$height$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">Delta SSW = </span><span class="ch">\\</span><span class="st">frac{1}{2} height ^ 2$&#39;</span>, <span class="st">&#39;$SSW = </span><span class="ch">\\</span><span class="st">sum </span><span class="ch">\\</span><span class="st">Delta SSW$&#39;</span>),
     <span class="dt">caption =</span> <span class="st">&#39;hclust 함수 ward.D2 방법의 height와 SSW 관계&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:ward-D2-height-ssw">Table 8.4: </span>hclust 함수 ward.D2 방법의 height와 SSW 관계</caption>
 <thead>
@@ -1054,19 +1080,19 @@ height = \sqrt{D^2(C_i \cup C_j) - \left(D^2(C_i) + D^2(C_j)\right)}
 </tbody>
 </table>
 <p>우선 <code>method</code>값을 “ward.D”로 설정하는 경우, <code>dist</code> 함수의 결과를 입력 거리행렬로 그대로 사용하면 아래와 같이 위 “ward.D2”와는 다른 <code>height</code>값을 출력하며, 이는 워드 방법의 criterion을 정확히 반영하지 못한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_ward.D &lt;-<span class="st"> </span><span class="kw">dist</span>(train_df[, <span class="op">-</span><span class="dv">1</span>]) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">res_ward.D &lt;-<span class="st"> </span><span class="kw">dist</span>(train_df[, <span class="dv">-1</span>]) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">hclust</span>(<span class="dt">method =</span> <span class="st">&quot;ward.D&quot;</span>)
 
-res_ward.D<span class="op">$</span>height</code></pre></div>
+res_ward.D<span class="op">$</span>height</code></pre>
 <pre><code>## [1]  1.414214  2.236068  2.236068  6.452039  6.615990 17.358484 39.311447</code></pre>
 <p>이는 “ward.D2”는 워드 방법 수행 전 입력된 유클리드 거리행렬을 내부적으로 제곱하는 반면, “ward.D” 방법은 제곱 유클리드 거리행렬이 입력되는 것을 가정하기 때문이다.</p>
 <p><span class="citation">Lance and Williams (<a href="#ref-lance1967general">1967</a>)</span> 은 군집 <span class="math inline">\(i\)</span>와 <span class="math inline">\(j\)</span>를 하나로 묶을 때, 새로 생성된 군집과 다른 군집들간의 거리는 원 두 군집들과 다른 군집들간의 거리로 아래와 같이 표현됨을 보였다. 이를 Lance-Williams update 공식이라 한다.</p>
-<span class="math display" id="eq:lance-williams-update">\[\begin{equation}
+<p><span class="math display" id="eq:lance-williams-update">\[\begin{equation}
 D(C_i \cup C_j, C_{h \notin \{i, j\}}) = \alpha_i D(C_i, C_h) + \alpha_j D(C_j, C_h) + \beta D(C_i, C_j) + \gamma |D(C_i, C_h) - D(C_j, C_h)|
 \tag{8.4}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>이후 <span class="citation">Wishart (<a href="#ref-wishart1969256">1969</a>)</span> 에서 워드 방법을 위 Lance-Williams update 공식으로 표현하였다.</p>
-<span class="math display" id="eq:wishart">\[\begin{equation}
+<p><span class="math display" id="eq:wishart">\[\begin{equation}
 \begin{split}
 \alpha_i &amp;=&amp; \frac{|C_i| + |C_h|}{|C_i| + |C_j| + |C_h|}\\
 \alpha_j &amp;=&amp; \frac{|C_j| + |C_h|}{|C_i| + |C_j| + |C_h|}\\
@@ -1074,20 +1100,20 @@ D(C_i \cup C_j, C_{h \notin \{i, j\}}) = \alpha_i D(C_i, C_h) + \alpha_j D(C_j, 
 \gamma &amp;=&amp; 0
 \end{split}
 \tag{8.5}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>이 때, 식 <a href="hierarchical-clustering.html#eq:wishart">(8.5)</a>가 기반한 식 <a href="hierarchical-clustering.html#eq:lance-williams-update">(8.4)</a>에서의 거리함수 <span class="math inline">\(D\)</span>는 제곱 유클리드 거리를 사용한다.</p>
 <p>“ward.D” 방법은 제곱 유클리드 거리의 입력을 가정하며, 위의 경우와 같이 제곱 유클리드 거리가 아닌 일반 유클리드 거리행렬을 입력하였을 때, 오류 메시지를 출력하는 대신, 입력된 거리행렬이 제곱 유클리드 거리를 나타낸다 가정하고 Lance-Williams update를 수행한다. 따라서, 이 경우 <code>height</code>는 워드 방법의 criterion을 정확히 표현하지 못한다.</p>
 <p>제곱 유클리드 거리를 “ward.D” 방법의 입력 거리행렬로 설정하고, 구해진 <code>height</code>를 출력해보자</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_ward.D &lt;-<span class="st"> </span><span class="kw">dist</span>(train_df[, <span class="op">-</span><span class="dv">1</span>])<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">res_ward.D &lt;-<span class="st"> </span><span class="kw">dist</span>(train_df[, <span class="dv">-1</span>])<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">hclust</span>(<span class="dt">method =</span> <span class="st">&quot;ward.D&quot;</span>)
 
-res_ward.D<span class="op">$</span>height</code></pre></div>
+res_ward.D<span class="op">$</span>height</code></pre>
 <pre><code>## [1]   2.00000   5.00000   5.00000  35.33333  39.00000 194.46667 718.95000</code></pre>
 <p>위 <code>height</code>값은 “ward.D2” 방법에서 출력된 값보다 크다. 위 값의 제곱근(square root)를 구하면 “ward.D2”에서의 <code>height</code>값과 동일한 값을 얻을 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(res_ward.D<span class="op">$</span>height)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(res_ward.D<span class="op">$</span>height)</code></pre>
 <pre><code>## [1]  1.414214  2.236068  2.236068  5.944185  6.244998 13.945131 26.813243</code></pre>
 <p>제곱 유클리드 거리행렬을 입력한 “ward.D” 방법의 결과로 출력된 criterion <code>height</code>는 <span class="math inline">\(2 \Delta SSW\)</span>의 값에 해당하는 수치이며, 각 iteration 당 <span class="math inline">\(\sum_i D(C_i)\)</span>의 값의 변화량이라고 볼 수 있다. (식 <a href="hierarchical-clustering.html#eq:squared-euclidean-within-cluster">(8.2)</a> 참조)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(
   <span class="dt">iteration =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>(<span class="kw">nrow</span>(train_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)),
   <span class="dt">height =</span> res_ward.D<span class="op">$</span>height
 ) <span class="op">%&gt;%</span>
@@ -1102,7 +1128,7 @@ res_ward.D<span class="op">$</span>height</code></pre></div>
     <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;iteration&#39;</span>, <span class="st">&#39;$height$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">Delta SSW = </span><span class="ch">\\</span><span class="st">frac{1}{2} height$&#39;</span>, <span class="st">&#39;$SSW = </span><span class="ch">\\</span><span class="st">sum </span><span class="ch">\\</span><span class="st">Delta SSW$&#39;</span>),
     <span class="dt">caption =</span> <span class="st">&#39;hclust 함수 ward.D 방법의 height와 SSW 관계&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:ward-D-height-ssw">Table 8.5: </span>hclust 함수 ward.D 방법의 height와 SSW 관계</caption>
 <thead>
@@ -1160,9 +1186,9 @@ res_ward.D<span class="op">$</span>height</code></pre></div>
 </table>
 <p>즉, “ward.D2”와 “ward.D”의 가장 큰 차이는 입력될 거리행렬이 유클리드 거리(ward.D2)인지 제곱 유클리드 거리(ward.D)인지의 차이이다.</p>
 <p>참고로, <code>cluster</code> 패키지의 <code>agnes</code>함수도 워드 방법을 지원하며, 이 경우 파라미터 <code>method</code>의 값을 “ward”로 설정한 결과가 <code>hclust</code>함수의 “ward.D2”의 경우와 동일하다. 본 절에서는 해당 함수의 자세한 사용법은 생략한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_agnes_ward &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">agnes</span>(train_df[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">method =</span> <span class="st">&quot;ward&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r">res_agnes_ward &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">agnes</span>(train_df[, <span class="dv">-1</span>], <span class="dt">method =</span> <span class="st">&quot;ward&quot;</span>)
 
-<span class="kw">sort</span>(res_agnes_ward<span class="op">$</span>height)</code></pre></div>
+<span class="kw">sort</span>(res_agnes_ward<span class="op">$</span>height)</code></pre>
 <pre><code>## [1]  1.414214  2.236068  2.236068  5.944185  6.244998 13.945131 26.813243</code></pre>
 </div>
 </div>
@@ -1171,7 +1197,7 @@ res_ward.D<span class="op">$</span>height</code></pre></div>
 <p>다이아나는 분리적 방법의 하나로, <span class="citation">Kaufman and Rousseeuw (<a href="#ref-kaufman1990finding">1990</a>)</span> 에 의하여 제안된 것이다. 이는 전체의 객체를 하나의 군집으로 시작하여 매번 이분화하는 등 모든 군집이 단독 객체로 구성될 때까지 진행하는 방법이다. 이 때, 비유사성 척도로는 평균거리를 사용한다.</p>
 <div id="diana-basic-script" class="section level3">
 <h3><span class="header-section-number">8.5.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>),
   <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">42</span>),
   <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="dv">12</span>, <span class="dv">24</span>, <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">9</span>)
@@ -1180,7 +1206,7 @@ res_ward.D<span class="op">$</span>height</code></pre></div>
 knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
              <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
              <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>),
-             <span class="dt">caption =</span> <span class="st">&#39;DIANA 군집 대상 객체 데이터&#39;</span>)</code></pre></div>
+             <span class="dt">caption =</span> <span class="st">&#39;DIANA 군집 대상 객체 데이터&#39;</span>)</code></pre>
 <table>
 <caption><span id="tab:diana-data">Table 8.6: </span>DIANA 군집 대상 객체 데이터</caption>
 <thead>
@@ -1229,11 +1255,11 @@ knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span cla
 </tbody>
 </table>
 <p>Table <a href="hierarchical-clustering.html#tab:diana-data">8.6</a>와 같이 두 변수 <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>로 이루어진 7개의 객체 데이터에 대해 DIANA 방법에 의해 군집해를 아래와 같이 <code>cluster</code> 패키지의 <code>diana</code> 함수를 이용하여 간단히 구할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_diana &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">diana</span>(train_df[, <span class="op">-</span><span class="dv">1</span>])
+<pre class="sourceCode r"><code class="sourceCode r">res_diana &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">diana</span>(train_df[, <span class="dv">-1</span>])
 cluster<span class="op">::</span><span class="kw">pltree</span>(res_diana,
                 <span class="dt">main =</span> <span class="ot">NULL</span>,
                 <span class="dt">xlab =</span> <span class="st">&quot;observation&quot;</span>
-                )</code></pre></div>
+                )</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:diana-result-plot"></span>
 <img src="data-mining-book_files/figure-html/diana-result-plot-1.png" alt="DIANA 방법에 의한 군집 덴드로그램" width="672" />
 <p class="caption">
@@ -1245,12 +1271,12 @@ Figure 8.4: DIANA 방법에 의한 군집 덴드로그램
 <h3><span class="header-section-number">8.5.2</span> 다이아나 알고리즘</h3>
 <p>가장 처음 이분화가 이루어질 때, 우선 타 객체와의 평균거리가 가장 큰 객체가 분파되어 새로운 군집을 형성한다. 그리고 다른 객체에 대하여, 군집에 남아있을 때의 평균거리와 새로운 군집으로 분리될 때의 평균거리를 산출하여, 현 군집에 잔류 또는 새로운 군집으로의 합류를 결정한다.</p>
 <p>여기서 객체 <span class="math inline">\(i\)</span>와 군집 <span class="math inline">\(C\)</span>간의 평균거리는 다음과 같이 산출된다.</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 \bar{d}(i, C) = \begin{cases}
 \frac{1}{|C| - 1} \sum_{j \in C} d(i, j) &amp; \text{ if } i \in C\\
 \frac{1}{|C|} \sum_{j \in C} d(i, j) &amp; \text{ if } i \notin C
 \end{cases}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>본 방법의 알고리즘은 다음과 같다.</p>
 <ol style="list-style-type: decimal">
 <li>단계0: <span class="math inline">\(n\)</span>개의 객체를 하나의 군집으로 간주한다. (<span class="math inline">\(k = 1\)</span>)</li>
@@ -1290,7 +1316,7 @@ Figure 8.4: DIANA 방법에 의한 군집 덴드로그램
 <li><code>distance</code>: 군집 내 객체간 최대 거리</li>
 </ul></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">max_distance_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_label) {
+<pre class="sourceCode r"><code class="sourceCode r">max_distance_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(df, cluster_label) {
   unique_cluster &lt;-<span class="st"> </span><span class="kw">unique</span>(cluster_label<span class="op">$</span>cluster)
   
   cluster_df &lt;-<span class="st"> </span><span class="kw">lapply</span>(unique_cluster, <span class="cf">function</span>(x) {
@@ -1311,9 +1337,9 @@ Figure 8.4: DIANA 방법에 의한 군집 덴드로그램
     <span class="dt">cluster =</span> unique_cluster[<span class="kw">which.max</span>(max_distance)],
     <span class="dt">distance =</span> <span class="kw">max</span>(max_distance)
   )
-}</code></pre></div>
+}</code></pre>
 <p>단계 2-1에서 군집 내 평균거리가 가장 큰 객체를 찾는 함수 <code>max_within_distance</code>를 아래와 같이 구현해보자. 이 때 입력변수인 <code>cluster_df</code>는 해당 군집의 객체 데이터로, 객체 번호를 나타내는 열 <code>id</code>와 객체의 각 숫자형 변수를 표현하는 열들로 구성된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">max_within_distance &lt;-<span class="st"> </span><span class="cf">function</span>(cluster_df) {
+<pre class="sourceCode r"><code class="sourceCode r">max_within_distance &lt;-<span class="st"> </span><span class="cf">function</span>(cluster_df) {
   idx &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">subset</span>(cluster_df, <span class="dt">select =</span> <span class="op">-</span>id), <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">group_by</span>(item1) <span class="op">%&gt;%</span>
@@ -1324,13 +1350,13 @@ Figure 8.4: DIANA 방법에 의한 군집 덴드로그램
 <span class="st">    </span>.[<span class="dv">1</span>]
   
   cluster_df<span class="op">$</span>id[idx]
-}</code></pre></div>
+}</code></pre>
 <p>이후 단계2-3에서 정의한 <span class="math inline">\(e(i&#39;) = \bar{d}(i&#39;, A) - \bar{d}(i&#39;, B)\)</span>를 계산하는 함수 <code>e_score</code>를 아래와 같이 구현한다.</p>
 <ul>
 <li><code>object</code>: 객체 번호(<code>id</code>)</li>
 <li><code>A</code>(<code>B</code>): 군집 <span class="math inline">\(A\)</span>(<span class="math inline">\(B\)</span>)의 객체 데이터. 행은 객체를 나타내며, <code>id</code> 열은 객체 번호, 이외의 열들은 변수를 나타낸다.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e_score &lt;-<span class="st"> </span><span class="cf">function</span>(object, A, B) {
+<pre class="sourceCode r"><code class="sourceCode r">e_score &lt;-<span class="st"> </span><span class="cf">function</span>(object, A, B) {
   d_from_A &lt;-<span class="st"> </span>proxy<span class="op">::</span><span class="kw">dist</span>(<span class="kw">subset</span>(A, id <span class="op">==</span><span class="st"> </span>object, <span class="op">-</span>id), 
                           <span class="kw">subset</span>(A, id <span class="op">!=</span><span class="st"> </span>object, <span class="op">-</span>id)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">mean</span>()
@@ -1338,7 +1364,7 @@ Figure 8.4: DIANA 방법에 의한 군집 덴드로그램
                           B <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>id)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">mean</span>()
   <span class="kw">return</span>(d_from_A <span class="op">-</span><span class="st"> </span>d_from_B)
-}</code></pre></div>
+}</code></pre>
 <p>위 두 함수 <code>max_within_distance</code>와 <code>e_score</code>를 이용하여, 주어진 데이터 프레임을 두 군집으로 나누는 함수 <code>split_cluster</code>를 구현해보자.</p>
 <ul>
 <li>입력: 객체 데이터를 나타내는 데이터 프레임 <code>cluster_df</code>. 행은 객체를 나타내며, 객체 번호를 나타내는 열 <code>id</code>와 객체의 각 숫자형 변수를 표현하는 열들로 구성된다.</li>
@@ -1348,7 +1374,7 @@ Figure 8.4: DIANA 방법에 의한 군집 덴드로그램
 <li><code>idx_B</code>: 객체 데이터에서 행렬 <span class="math inline">\(B\)</span>에 속하는 객체 번호</li>
 </ul></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">split_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(cluster_df) {
+<pre class="sourceCode r"><code class="sourceCode r">split_cluster &lt;-<span class="st"> </span><span class="cf">function</span>(cluster_df) {
   n &lt;-<span class="st"> </span><span class="kw">nrow</span>(cluster_df)
   
   idx_A &lt;-<span class="st"> </span>cluster_df<span class="op">$</span>id
@@ -1377,9 +1403,9 @@ Figure 8.4: DIANA 방법에 의한 군집 덴드로그램
   }
   
   <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">idx_A =</span> idx_A, <span class="dt">idx_B =</span> idx_B))
-}</code></pre></div>
+}</code></pre>
 <p>단계1 함수 <code>max_distance_cluster</code>와 단계2 함수 <code>split_cluster</code>를 반복적으로 수행하며 각각의 객체가 군집에 될 때까지 군집을 분리해간다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 단계0</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 단계0</span>
 current_cluster &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">id =</span> train_df<span class="op">$</span>id
 )
@@ -1413,7 +1439,7 @@ k &lt;-<span class="st"> </span>1L
   <span class="kw">cat</span>(<span class="st">&quot;Iteration: &quot;</span>, i, <span class="st">&quot;, k = &quot;</span>, k, <span class="st">&quot;, clusters = &quot;</span>, 
       <span class="kw">paste0</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">unique</span>(current_cluster<span class="op">$</span>cluster), <span class="st">&quot;}&quot;</span>),
       <span class="st">&quot;, height = &quot;</span>, max_cluster<span class="op">$</span>distance, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
-}</code></pre></div>
+}</code></pre>
 <pre><code>## Iteration:  1 , k =  2 , clusters =  {6,3,1} {2,4,5,7} , height =  33.54102 
 ## Iteration:  2 , k =  3 , clusters =  {6,3,1} {2,4,5} {7} , height =  17.88854 
 ## Iteration:  3 , k =  4 , clusters =  {1} {2,4,5} {3,6} {7} , height =  11.18034 
@@ -1429,27 +1455,27 @@ k &lt;-<span class="st"> </span>1L
 <ol style="list-style-type: decimal">
 <li>새 군집의 RMS 표준편차(root-mean-square standard deviation of the new cluster; RMSSTD)</li>
 </ol>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 RMSSTD(C_i, C_j) = \sqrt{\frac{SS(C_i \cup C_j)}{p(|C_i| + |C_j| - 1)}}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Semipartial R-squared(SPR)</li>
 </ol>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 SPR(C_i, C_j) = \frac{SS(C_i \cup C_j) - (SS(C_i) + SS(C_j))}{SST}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>where</p>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 SST = \sum_{i = 1}^{n} \sum_{j = 1}^{p} \left( x_{ji} - \frac{1}{n} \sum_{a = 1}^{n} x_{ja} \right)^2
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <ol start="3" style="list-style-type: decimal">
 <li>R-squared(<span class="math inline">\(R^2\)</span>)</li>
 </ol>
-<span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{equation*}
 1 - \frac{\sum_{i = 1}^{k} SS(C_i)}{SST}
-\end{equation*}\]</span>
+\end{equation*}\]</span></p>
 <p>위 <a href="hierarchical-clustering.html#ward-method-algorithm">8.4.2</a>절에서 워드 군집 알고리즘으로 구현한 군집 과정에 대해 위 통계량을 계산해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>),
   <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">19</span>, <span class="dv">17</span>, <span class="dv">8</span>, <span class="dv">19</span>, <span class="dv">18</span>),
   <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">15</span>, <span class="dv">13</span>, <span class="dv">13</span>, <span class="dv">4</span>, <span class="dv">17</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">6</span>)
@@ -1480,7 +1506,7 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
   <span class="cf">if</span>(i <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {
     old_cluster &lt;-<span class="st"> </span>init_cluster
   } <span class="cf">else</span> {
-    old_cluster &lt;-<span class="st"> </span>iteration[[i<span class="op">-</span><span class="dv">1</span>]]<span class="op">$</span>new_cluster_label
+    old_cluster &lt;-<span class="st"> </span>iteration[[i<span class="dv">-1</span>]]<span class="op">$</span>new_cluster_label
   }
   
   iteration[[i]] &lt;-<span class="st"> </span><span class="kw">best_merge_cluster</span>(
@@ -1508,8 +1534,8 @@ iteration &lt;-<span class="st"> </span><span class="kw">vector</span>(<span cla
   iteration[[i]]<span class="op">$</span>sol &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;{&quot;</span>, <span class="kw">unique</span>(current_clusters), <span class="st">&quot;}&quot;</span>, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>)
   iteration[[i]]<span class="op">$</span>spr &lt;-<span class="st"> </span>(ssw <span class="op">-</span><span class="st"> </span>old_ssw) <span class="op">/</span><span class="st"> </span>sst
   iteration[[i]]<span class="op">$</span>r_sq &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>ssw <span class="op">/</span><span class="st"> </span>sst
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_statistic &lt;-<span class="st"> </span><span class="kw">lapply</span>(iteration, <span class="cf">function</span>(x) x[
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">cluster_statistic &lt;-<span class="st"> </span><span class="kw">lapply</span>(iteration, <span class="cf">function</span>(x) x[
   <span class="kw">c</span>(<span class="st">&quot;iter&quot;</span>, <span class="st">&quot;merge&quot;</span>, <span class="st">&quot;sol&quot;</span>, <span class="st">&quot;rmsstd&quot;</span>, <span class="st">&quot;spr&quot;</span>, <span class="st">&quot;r_sq&quot;</span>)]) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">bind_rows</span>(
     <span class="kw">tibble</span>(
@@ -1526,7 +1552,7 @@ cluster_statistic <span class="op">%&gt;%</span>
     <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;Iteration&#39;</span>, <span class="st">&#39;통합대상군집&#39;</span>, <span class="st">&#39;통합 후 군집&#39;</span>,
                   <span class="st">&#39;$RMSSTD$&#39;</span>, <span class="st">&#39;$SPR$&#39;</span>, <span class="st">&#39;$R^2$&#39;</span>),
     <span class="dt">caption =</span> <span class="st">&#39;군집 과정에 따른 여러 통계량&#39;</span>
-  )</code></pre></div>
+  )</code></pre>
 <table>
 <caption><span id="tab:cluster-statistic">Table 8.7: </span>군집 과정에 따른 여러 통계량</caption>
 <thead>
@@ -1606,7 +1632,7 @@ cluster_statistic <span class="op">%&gt;%</span>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_statistic <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">cluster_statistic <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">rmsstd =</span> <span class="kw">if_else</span>(<span class="kw">is.na</span>(rmsstd), <span class="dv">0</span>, rmsstd),
     <span class="dt">spr =</span> <span class="kw">if_else</span>(<span class="kw">is.na</span>(spr), <span class="dv">0</span>, spr)
@@ -1617,7 +1643,7 @@ cluster_statistic <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> r_sq <span class="op">*</span><span class="st"> </span><span class="dv">6</span>, <span class="dt">color =</span> <span class="st">&quot;R2&quot;</span>)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">sec.axis =</span> <span class="kw">sec_axis</span>(<span class="op">~</span><span class="st"> </span>. <span class="op">/</span><span class="st"> </span><span class="dv">6</span>, <span class="dt">name =</span> <span class="st">&quot;SPR, R2&quot;</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;RMSSTD&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Iteration&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Iteration&quot;</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:cluster-statistic"></span>
 <img src="data-mining-book_files/figure-html/cluster-statistic-1.png" alt="군집 과정에 따른 통계량 추이" width="672" />
 <p class="caption">
@@ -1700,7 +1726,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

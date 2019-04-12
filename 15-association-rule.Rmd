@@ -320,11 +320,14 @@ R 패키지 `arules`의 `apriori` 함수를 이용하여 위에서 살펴본 연
 우선, \@ref(association-rule-support) 절에서 생성한 데이터 프레임 `transaction_df`를 `arules` 패키지 내에 정의된 `transactions` 클래스 형태의 데이터로 변환한다.
 
 ```{r}
+requireNamespace("arules")
 transaction_df2 <- as(
   split(transaction_df$item, transaction_df$transaction_id),
   "transactions"
 )
 ```
+
+
 
 이후, `apriori` 함수를 호출하여 연관규칙 탐사를 수행한다.
 
