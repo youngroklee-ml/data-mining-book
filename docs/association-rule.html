@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-04-15">
+<meta name="date" content="2019-04-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="cluster-solution-evaluation.html">
-<link rel="next" href="references.html">
+<link rel="next" href="recommender-system.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -310,6 +310,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>11.4</b> 순차적 패턴의 탐사</a><ul>
 <li class="chapter" data-level="11.4.1" data-path="association-rule.html"><a href="association-rule.html#association-aprioriall"><i class="fa fa-check"></i><b>11.4.1</b> AprioriAll 알고리즘</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>12</b> 추천시스템</a><ul>
+<li class="chapter" data-level="12.1" data-path="recommender-system.html"><a href="recommender-system.html#recommender-packages-install"><i class="fa fa-check"></i><b>12.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="12.2" data-path="recommender-system.html"><a href="recommender-system.html#content-based-recommender"><i class="fa fa-check"></i><b>12.2</b> 내용기반 추천시스템</a></li>
+<li class="chapter" data-level="12.3" data-path="recommender-system.html"><a href="recommender-system.html#collaborative-filtering"><i class="fa fa-check"></i><b>12.3</b> 협업 필터링</a></li>
+<li class="chapter" data-level="12.4" data-path="recommender-system.html"><a href="recommender-system.html#market-basket"><i class="fa fa-check"></i><b>12.4</b> 시장바구니 데이터를 이용한 협업 필터링</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -792,9 +798,8 @@ conf_rule_list &lt;-<span class="st"> </span>rule_list <span class="op">%&gt;%</
 <h3><span class="header-section-number">11.3.3</span> R 패키지 내 Apriori</h3>
 <p>R 패키지 <code>arules</code>의 <code>apriori</code> 함수를 이용하여 위에서 살펴본 연관규칙 탐사를 수행할 수 있다.</p>
 <p>우선, <a href="association-rule.html#association-rule-support">11.2.1</a> 절에서 생성한 데이터 프레임 <code>transaction_df</code>를 <code>arules</code> 패키지 내에 정의된 <code>transactions</code> 클래스 형태의 데이터로 변환한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">requireNamespace</span>(<span class="st">&quot;arules&quot;</span>)</code></pre>
-<pre><code>## Loading required namespace: arules</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">transaction_df2 &lt;-<span class="st"> </span><span class="kw">as</span>(
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">requireNamespace</span>(<span class="st">&quot;arules&quot;</span>)
+transaction_df2 &lt;-<span class="st"> </span><span class="kw">as</span>(
   <span class="kw">split</span>(transaction_df<span class="op">$</span>item, transaction_df<span class="op">$</span>transaction_id),
   <span class="st">&quot;transactions&quot;</span>
 )</code></pre>
@@ -1442,7 +1447,7 @@ maximal_large_sequences &lt;-<span class="st"> </span><span class="kw">compact</
         </div>
       </div>
 <a href="cluster-solution-evaluation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="recommender-system.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

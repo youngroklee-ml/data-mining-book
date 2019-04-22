@@ -25,7 +25,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
 
 
-<meta name="date" content="2019-04-15">
+<meta name="date" content="2019-04-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -310,6 +310,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>11.4</b> 순차적 패턴의 탐사</a><ul>
 <li class="chapter" data-level="11.4.1" data-path="association-rule.html"><a href="association-rule.html#association-aprioriall"><i class="fa fa-check"></i><b>11.4.1</b> AprioriAll 알고리즘</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>12</b> 추천시스템</a><ul>
+<li class="chapter" data-level="12.1" data-path="recommender-system.html"><a href="recommender-system.html#recommender-packages-install"><i class="fa fa-check"></i><b>12.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="12.2" data-path="recommender-system.html"><a href="recommender-system.html#content-based-recommender"><i class="fa fa-check"></i><b>12.2</b> 내용기반 추천시스템</a></li>
+<li class="chapter" data-level="12.3" data-path="recommender-system.html"><a href="recommender-system.html#collaborative-filtering"><i class="fa fa-check"></i><b>12.3</b> 협업 필터링</a></li>
+<li class="chapter" data-level="12.4" data-path="recommender-system.html"><a href="recommender-system.html#market-basket"><i class="fa fa-check"></i><b>12.4</b> 시장바구니 데이터를 이용한 협업 필터링</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -1129,10 +1135,9 @@ L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_
 <pre class="sourceCode r"><code class="sourceCode r">predict_df &lt;-<span class="st"> </span><span class="kw">predict</span>(multinom_fit, train_df, <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as_data_frame</span>() <span class="op">%&gt;%</span>
 <span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pred_class =</span> <span class="kw">predict</span>(multinom_fit, train_df, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>))</code></pre>
-<pre><code>## Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).
-## This warning is displayed once per session.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bind_cols</span>(train_df, predict_df) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pred_class =</span> <span class="kw">predict</span>(multinom_fit, train_df, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>))
+
+<span class="kw">bind_cols</span>(train_df, predict_df) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>x1, <span class="op">-</span>x2) <span class="op">%&gt;%</span>
 <span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(
     <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,

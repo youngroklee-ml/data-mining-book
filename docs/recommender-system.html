@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 12 추천시스템 | 데이터마이닝 with R</title>
+  <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 12 추천시스템 | 데이터마이닝 with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://youngroklee-ml.github.io/data-mining-book/" />
+  
+  <meta property="og:description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
+  <meta name="github-repo" content="youngroklee-ml/data-mining-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 12 추천시스템 | 데이터마이닝 with R" />
+  
+  <meta name="twitter:description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
+  
+
+<meta name="author" content="전치혁, 이혜선, 이종석, 이영록">
+
+
+<meta name="date" content="2019-04-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="association-rule.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">데이터마이닝 with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>개요</a></li>
+<li class="chapter" data-level="1" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>1</b> 분류분석 개요</a><ul>
+<li class="chapter" data-level="1.1" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-packages-install"><i class="fa fa-check"></i><b>1.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="1.2" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-problem-methods"><i class="fa fa-check"></i><b>1.2</b> 분류문제 및 분류기법</a></li>
+<li class="chapter" data-level="1.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>1.3</b> 기본적인 분류기법</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#nearest-neighbor-classification"><i class="fa fa-check"></i><b>1.3.1</b> 인접객체법</a></li>
+<li class="chapter" data-level="1.3.2" data-path="classification-analysis.html"><a href="classification-analysis.html#naive-bayes"><i class="fa fa-check"></i><b>1.3.2</b> 나이브 베이지안 분류법</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>2</b> 로지스틱 회귀분석</a><ul>
+<li class="chapter" data-level="2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-packages-install"><i class="fa fa-check"></i><b>2.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>2.2</b> 이분 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#bianry-logistic-reg-basic-script"><i class="fa fa-check"></i><b>2.2.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-model"><i class="fa fa-check"></i><b>2.2.2</b> 회귀모형</a></li>
+<li class="chapter" data-level="2.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-estimation"><i class="fa fa-check"></i><b>2.2.3</b> 회귀계수 추정</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>2.3</b> 명목 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-reg-basic-script"><i class="fa fa-check"></i><b>2.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#baseline-category-logit-model"><i class="fa fa-check"></i><b>2.3.2</b> 기준범주 로짓모형</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>2.4</b> 서열 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="2.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#cumulative-logit-model"><i class="fa fa-check"></i><b>2.4.2</b> 누적 로짓모형</a></li>
+<li class="chapter" data-level="2.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#adjacent-categories-logit-model"><i class="fa fa-check"></i><b>2.4.3</b> 인근범주 로짓모형</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>3</b> 판별분석</a><ul>
+<li class="chapter" data-level="3.1" data-path="da.html"><a href="da.html#da-overview"><i class="fa fa-check"></i><b>3.1</b> 개요</a></li>
+<li class="chapter" data-level="3.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>3.2</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="3.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>3.3</b> 피셔 방법</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>3.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>3.3.2</b> 피셔 판별함수</a></li>
+<li class="chapter" data-level="3.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>3.3.3</b> 분류 규칙</a></li>
+<li class="chapter" data-level="3.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>3.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>3.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>3.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>3.4.2</b> 선형판별함수</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>3.5</b> 오분류비용을 고려한 분류규칙</a></li>
+<li class="chapter" data-level="3.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>3.6</b> 이차판별분석</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>3.6.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>3.6.2</b> 이차 판별함수</a></li>
+<li class="chapter" data-level="3.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>3.6.3</b> 이차판별함수에 의한 분류</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>3.7</b> 세 범주 이상의 분류</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="da.html"><a href="da.html#mutliclass-da-basic-script"><i class="fa fa-check"></i><b>3.7.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="3.7.2" data-path="da.html"><a href="da.html#mutliclass-generalized-discriminant-function"><i class="fa fa-check"></i><b>3.7.2</b> 일반화된 판별함수</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>4</b> 트리기반 기법</a><ul>
+<li class="chapter" data-level="4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>4.1</b> CART 개요</a></li>
+<li class="chapter" data-level="4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-packages-install"><i class="fa fa-check"></i><b>4.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="4.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>4.3</b> CART 트리 생성</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>4.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="4.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>4.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="4.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>4.3.3</b> 노드 및 트리의 불순도</a></li>
+<li class="chapter" data-level="4.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>4.3.4</b> 분지기준</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>4.4</b> 가지치기 및 최종 트리 선정</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>4.4.1</b> 가지치기</a></li>
+<li class="chapter" data-level="4.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>4.4.2</b> 최적 트리의 선정</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>4.5</b> R패키지 내 분류 트리 방법</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>4.5.1</b> 트리 확장</a></li>
+<li class="chapter" data-level="4.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>4.5.2</b> 가지치기</a></li>
+<li class="chapter" data-level="4.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>4.5.3</b> 파라미터값 결정</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>5</b> 서포트 벡터 머신</a><ul>
+<li class="chapter" data-level="5.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>5.1</b> 개요</a></li>
+<li class="chapter" data-level="5.2" data-path="svm.html"><a href="svm.html#svm-packages-install"><i class="fa fa-check"></i><b>5.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="5.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>5.3</b> 선형 SVM - 분리 가능 경우</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>5.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="5.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>5.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="5.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>5.3.3</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>5.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>5.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="5.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>5.4.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>5.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>5.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="5.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>5.5.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>5.6</b> R패키지 내 SVM</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>5.6.1</b> 커널함수</a></li>
+<li class="chapter" data-level="5.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>5.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>6</b> 분류규칙의 성능 평가</a><ul>
+<li class="chapter" data-level="6.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-packages-install"><i class="fa fa-check"></i><b>6.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="6.2" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-misclassification-rate"><i class="fa fa-check"></i><b>6.2</b> 분류오류율</a></li>
+<li class="chapter" data-level="6.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>6.3</b> 정확도, 민감도 및 특이도</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#confusion-matrix-r-package"><i class="fa fa-check"></i><b>6.3.1</b> R 패키지 내 정오분류표</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#roc-curve"><i class="fa fa-check"></i><b>6.4</b> ROC 곡선</a></li>
+<li class="chapter" data-level="6.5" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#gain-chart"><i class="fa fa-check"></i><b>6.5</b> 이익도표</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>7</b> 군집분석 개요</a><ul>
+<li class="chapter" data-level="7.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>7.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="7.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>7.2</b> 군집분석 기법</a></li>
+<li class="chapter" data-level="7.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>7.3</b> 객체 간의 유사성 척도</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="clustering-overview.html"><a href="clustering-overview.html#object-distance-metric"><i class="fa fa-check"></i><b>7.3.1</b> 거리 관련 척도</a></li>
+<li class="chapter" data-level="7.3.2" data-path="clustering-overview.html"><a href="clustering-overview.html#object-correlation-metric"><i class="fa fa-check"></i><b>7.3.2</b> 상관계수 관련 척도</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>7.4</b> 범주형 객체의 유사성 척도</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="clustering-overview.html"><a href="clustering-overview.html#binary-similarity-metric"><i class="fa fa-check"></i><b>7.4.1</b> 이분형 변수의 경우</a></li>
+<li class="chapter" data-level="7.4.2" data-path="clustering-overview.html"><a href="clustering-overview.html#ordinal-similarity-metric"><i class="fa fa-check"></i><b>7.4.2</b> 서열형 변수의 경우</a></li>
+<li class="chapter" data-level="7.4.3" data-path="clustering-overview.html"><a href="clustering-overview.html#nominal-similarity-metric"><i class="fa fa-check"></i><b>7.4.3</b> 명목형 변수의 경우</a></li>
+<li class="chapter" data-level="7.4.4" data-path="clustering-overview.html"><a href="clustering-overview.html#mixed-similarity-metric"><i class="fa fa-check"></i><b>7.4.4</b> 혼합형의 경우</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>8</b> 계층적 군집방법</a><ul>
+<li class="chapter" data-level="8.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>8.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="8.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#distance-between-clusters"><i class="fa fa-check"></i><b>8.2</b> 군집 간 거리척도 및 연결법</a></li>
+<li class="chapter" data-level="8.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>8.3</b> 연결법의 군집 알고리즘</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-basic-script"><i class="fa fa-check"></i><b>8.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="8.3.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-algorithm"><i class="fa fa-check"></i><b>8.3.2</b> 연결법 군집 알고리즘</a></li>
+<li class="chapter" data-level="8.3.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hclust"><i class="fa fa-check"></i><b>8.3.3</b> R 패키지 내 연결법</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>8.4</b> 워드 방법</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>8.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="8.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>8.4.2</b> 워드 군집 알고리즘</a></li>
+<li class="chapter" data-level="8.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>8.4.3</b> R 패키지 내 워드 방법</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>8.5</b> 분리적 방법 - 다이아나</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>8.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="8.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>8.5.2</b> 다이아나 알고리즘</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>8.6</b> 군집수의 결정</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>9</b> 비계층적 군집방법</a><ul>
+<li class="chapter" data-level="9.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>9.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="9.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>9.2</b> K-means 알고리즘</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>9.2.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="9.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>9.2.2</b> 알고리즘</a></li>
+<li class="chapter" data-level="9.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>9.2.3</b> R 스크립트 구현</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>9.3</b> K-medoids 군집방법</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>9.3.1</b> PAM 알고리즘</a></li>
+<li class="chapter" data-level="9.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>9.3.2</b> CLARA 알고리즘</a></li>
+<li class="chapter" data-level="9.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>9.3.3</b> CLARANS 알고리즘</a></li>
+<li class="chapter" data-level="9.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>9.3.4</b> K-means-like 알고리즘</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>9.4</b> 퍼지 K-means 알고리즘</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>9.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="9.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>9.4.2</b> 알고리즘</a></li>
+<li class="chapter" data-level="9.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>9.4.3</b> R 스크립트 구현</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>9.5</b> 모형기반 군집방법</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>9.5.1</b> 기본 R script</a></li>
+<li class="chapter" data-level="9.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>9.5.2</b> EM 알고리즘</a></li>
+<li class="chapter" data-level="9.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>9.5.3</b> R 스크립트 구현</a></li>
+<li class="chapter" data-level="9.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>9.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>10</b> 군집해의 평가 및 해석</a><ul>
+<li class="chapter" data-level="10.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>10.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="10.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>10.2</b> 군집해의 평가</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>10.2.1</b> 외부평가지수</a></li>
+<li class="chapter" data-level="10.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>10.2.2</b> 내부평가지수</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>10.3</b> 군집해의 해석</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>11</b> 연관규칙</a><ul>
+<li class="chapter" data-level="11.1" data-path="association-rule.html"><a href="association-rule.html#association-packages-install"><i class="fa fa-check"></i><b>11.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="11.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>11.2</b> 연관규칙의 정의 및 성능척도</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="association-rule.html"><a href="association-rule.html#association-rule-support"><i class="fa fa-check"></i><b>11.2.1</b> 지지도</a></li>
+<li class="chapter" data-level="11.2.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-confidence"><i class="fa fa-check"></i><b>11.2.2</b> 신뢰도</a></li>
+<li class="chapter" data-level="11.2.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-lift"><i class="fa fa-check"></i><b>11.2.3</b> 개선도</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>11.3</b> 연관규칙의 탐사</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="association-rule.html"><a href="association-rule.html#apriori-large-itemsets"><i class="fa fa-check"></i><b>11.3.1</b> 빈발항목집합 생성</a></li>
+<li class="chapter" data-level="11.3.2" data-path="association-rule.html"><a href="association-rule.html#apriori-rule-exploration"><i class="fa fa-check"></i><b>11.3.2</b> 규칙의 탐사</a></li>
+<li class="chapter" data-level="11.3.3" data-path="association-rule.html"><a href="association-rule.html#apriori-r-package"><i class="fa fa-check"></i><b>11.3.3</b> R 패키지 내 Apriori</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>11.4</b> 순차적 패턴의 탐사</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="association-rule.html"><a href="association-rule.html#association-aprioriall"><i class="fa fa-check"></i><b>11.4.1</b> AprioriAll 알고리즘</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>12</b> 추천시스템</a><ul>
+<li class="chapter" data-level="12.1" data-path="recommender-system.html"><a href="recommender-system.html#recommender-packages-install"><i class="fa fa-check"></i><b>12.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="12.2" data-path="recommender-system.html"><a href="recommender-system.html#content-based-recommender"><i class="fa fa-check"></i><b>12.2</b> 내용기반 추천시스템</a></li>
+<li class="chapter" data-level="12.3" data-path="recommender-system.html"><a href="recommender-system.html#collaborative-filtering"><i class="fa fa-check"></i><b>12.3</b> 협업 필터링</a></li>
+<li class="chapter" data-level="12.4" data-path="recommender-system.html"><a href="recommender-system.html#market-basket"><i class="fa fa-check"></i><b>12.4</b> 시장바구니 데이터를 이용한 협업 필터링</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">데이터마이닝 with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="recommender-system" class="section level1">
+<h1><span class="header-section-number">Chapter 12</span> 추천시스템</h1>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre>
+<p>추천시스템(recommender system)은 상품, 웹페이지, 신문 기사 등에 대한 소비자의 성향을 파악하여 그에 부합하는 새로운 상품 등을 추천하고자 하는 목적으로 개발되며, 접근 방식에 따라 내용기반(content-based) 방법, 협업 필터링(collaborative filtering), 결합방식(hybrid) 등으로 분류된다.</p>
+<div id="recommender-packages-install" class="section level2">
+<h2><span class="header-section-number">12.1</span> 필요 R package 설치</h2>
+<p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">package</th>
+<th align="left">version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">tidyverse</td>
+<td align="left">1.2.1</td>
+</tr>
+<tr class="even">
+<td align="left">tidytext</td>
+<td align="left">0.2.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="content-based-recommender" class="section level2">
+<h2><span class="header-section-number">12.2</span> 내용기반 추천시스템</h2>
+<p>내용기반 추천시스템은 주로 문서 등의 추천에 활용되고 있다.</p>
+<ul>
+<li><span class="math inline">\(N\)</span>: 전체 문서의 수</li>
+<li><span class="math inline">\(f_{ij}\)</span>: 문서 <span class="math inline">\(j\)</span>에 나타난 단어 <span class="math inline">\(i\)</span>의 빈도수</li>
+<li><span class="math inline">\(n_i\)</span>: 단어 <span class="math inline">\(i\)</span>가 한 번 이상 나타난 문서의 수</li>
+</ul>
+<p>우선 <code>tidytext</code> 패키지를 로드하자.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidytext)</code></pre>
+<p><code>janeaustenr</code> 패키지에 있는 Jane Austen의 6개 소설에 대한 텍스트 데이터를 로드하자. 해당 데이터는 책 내용이 담긴 <code>text</code>라는 컬럼과 책 제목인 <code>book</code> 컬럼으로 이루어진 데이터 프레임이다.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(janeaustenr)
+tidy_books &lt;-<span class="st"> </span><span class="kw">austen_books</span>()
+<span class="kw">head</span>(tidy_books)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   text                  book               
+##   &lt;chr&gt;                 &lt;fct&gt;              
+## 1 SENSE AND SENSIBILITY Sense &amp; Sensibility
+## 2 &quot;&quot;                    Sense &amp; Sensibility
+## 3 by Jane Austen        Sense &amp; Sensibility
+## 4 &quot;&quot;                    Sense &amp; Sensibility
+## 5 (1811)                Sense &amp; Sensibility
+## 6 &quot;&quot;                    Sense &amp; Sensibility</code></pre>
+<p>해당 데이터 프레임에 담긴 책의 수는 아래와 같다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">n_book &lt;-<span class="st"> </span><span class="kw">nlevels</span>(tidy_books<span class="op">$</span>book)
+<span class="kw">print</span>(n_book)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<p>책의 내용 text를 단어 단위로 나누어 각 행으로 저장하자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tidy_words &lt;-<span class="st"> </span>tidy_books <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest_tokens</span>(word, text)
+  
+<span class="kw">head</span>(tidy_words)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   book                word       
+##   &lt;fct&gt;               &lt;chr&gt;      
+## 1 Sense &amp; Sensibility sense      
+## 2 Sense &amp; Sensibility and        
+## 3 Sense &amp; Sensibility sensibility
+## 4 Sense &amp; Sensibility by         
+## 5 Sense &amp; Sensibility jane       
+## 6 Sense &amp; Sensibility austen</code></pre>
+<p>이 데이터 프레임을 기반으로, 단어 <span class="math inline">\(i\)</span>가 문서 <span class="math inline">\(j\)</span>에 나타난 단어 빈도수(term frequency)를 모든 단어 <span class="math inline">\(i\)</span>와 모든 문서 <span class="math inline">\(j\)</span>에 대해 계산하자.</p>
+<p><span class="math display">\[\begin{equation*}
+TF_{ij} = \frac{f_{ij}}{\sum_k f_{kj}}
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">tf_results &lt;-<span class="st"> </span>tidy_words <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(book, word) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">tf =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>n) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">complete</span>(book, word, <span class="dt">fill =</span> <span class="kw">list</span>(<span class="dt">tf =</span> <span class="dv">0</span>))</code></pre>
+<p>이 때, 단어 빈도수가 높은 단어들은 대체로 너무 흔한 단어들이어서 중요한 의미를 지니지 않은 경우가 많다. 아래와 같이, “the”, “to”, “and” 등의 단어들이 사용 빈도가 매우 높은 단어들이다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tf_results <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(tf)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    book                word      tf
+##    &lt;fct&gt;               &lt;chr&gt;  &lt;dbl&gt;
+##  1 Northanger Abbey    the   0.0409
+##  2 Persuasion          the   0.0398
+##  3 Mansfield Park      the   0.0387
+##  4 Pride &amp; Prejudice   the   0.0354
+##  5 Sense &amp; Sensibility to    0.0343
+##  6 Sense &amp; Sensibility the   0.0342
+##  7 Mansfield Park      to    0.0341
+##  8 Pride &amp; Prejudice   to    0.0341
+##  9 Mansfield Park      and   0.0339
+## 10 Persuasion          to    0.0336</code></pre>
+<p>따라서, 단어의 중요도를 정의할 때 단어 <span class="math inline">\(i\)</span>의 역문서 빈도수(inverse document frequency)를 함께 고려한다.</p>
+<p><span class="math display">\[\begin{equation*}
+IDF_{i} = \log \frac{N}{n_i}
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">idf_results &lt;-<span class="st"> </span>tf_results <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(tf <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(word) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">idf =</span> <span class="kw">log</span>(n_book <span class="op">/</span><span class="st"> </span>n)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>n)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">idf_results <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(idf)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</code></pre>
+<pre><code>## # A tibble: 10 x 2
+##    word           idf
+##    &lt;chr&gt;        &lt;dbl&gt;
+##  1 _accepted_    1.79
+##  2 _accident_    1.79
+##  3 _adair_       1.79
+##  4 _addition_    1.79
+##  5 _advantages_  1.79
+##  6 _affect_      1.79
+##  7 _against_     1.79
+##  8 _agreeable_   1.79
+##  9 _air_         1.79
+## 10 _allow_       1.79</code></pre>
+<p>최종적으로 단어의 중요도를 위에서 정의한 단어 빈도수와 역문서 빈도수의 곱으로 아래와 같이 구하며, 이를 TF-IDF 가중치라 한다.</p>
+<p><span class="math display">\[\begin{equation*}
+w_{ij} = TF_{ij} \times IDF_{i}
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">tf_idf_results &lt;-<span class="st"> </span><span class="kw">inner_join</span>(tf_results, idf_results, <span class="dt">by =</span> <span class="st">&quot;word&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">tf_idf =</span> tf <span class="op">*</span><span class="st"> </span>idf)</code></pre>
+<p>TF-IDF 가중치가 높은 단어들을 살펴보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tf_idf_results <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(tf_idf)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</code></pre>
+<pre><code>## # A tibble: 10 x 5
+##    book                word           tf   idf  tf_idf
+##    &lt;fct&gt;               &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Sense &amp; Sensibility elinor    0.00519  1.79 0.00931
+##  2 Sense &amp; Sensibility marianne  0.00410  1.79 0.00735
+##  3 Mansfield Park      crawford  0.00307  1.79 0.00551
+##  4 Pride &amp; Prejudice   darcy     0.00305  1.79 0.00547
+##  5 Persuasion          elliot    0.00304  1.79 0.00544
+##  6 Emma                emma      0.00488  1.10 0.00536
+##  7 Northanger Abbey    tilney    0.00252  1.79 0.00452
+##  8 Emma                weston    0.00242  1.79 0.00433
+##  9 Pride &amp; Prejudice   bennet    0.00241  1.79 0.00431
+## 10 Persuasion          wentworth 0.00228  1.79 0.00409</code></pre>
+<p>대체로 소설에 나타나는 인물의 이름이 높은 가중치를 보이는데, 이는 인물의 이름이 소설 한 권에 걸쳐 여러 번 나타나 단어 빈도수가 높으며, 또한 각각의 소설이 서로 다른 인물명을 등장시킴으로써 역문서 빈도수 또한 높기 때문이다.</p>
+<p>위와 같은 TF-IDF 가중치 계산은 <code>tidytext</code> 패키지의 <code>bind_tf_idf</code> 함수를 이용하여 간편하게 구할 수 있다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tidy_words <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(book, word) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">bind_tf_idf</span>(word, book, n) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(tf_idf)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</code></pre>
+<pre><code>## # A tibble: 10 x 6
+##    book                word          n      tf   idf  tf_idf
+##    &lt;fct&gt;               &lt;chr&gt;     &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Sense &amp; Sensibility elinor      623 0.00519  1.79 0.00931
+##  2 Sense &amp; Sensibility marianne    492 0.00410  1.79 0.00735
+##  3 Mansfield Park      crawford    493 0.00307  1.79 0.00551
+##  4 Pride &amp; Prejudice   darcy       373 0.00305  1.79 0.00547
+##  5 Persuasion          elliot      254 0.00304  1.79 0.00544
+##  6 Emma                emma        786 0.00488  1.10 0.00536
+##  7 Northanger Abbey    tilney      196 0.00252  1.79 0.00452
+##  8 Emma                weston      389 0.00242  1.79 0.00433
+##  9 Pride &amp; Prejudice   bennet      294 0.00241  1.79 0.00431
+## 10 Persuasion          wentworth   191 0.00228  1.79 0.00409</code></pre>
+<p>임의의 사용자 <span class="math inline">\(u\)</span>가 아래와 같이 다섯 가지 단어에 각기 다른 관심도 <span class="math inline">\(w_{iu}\)</span>를 지닌다고 하자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">words_of_interest &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">word =</span> <span class="kw">c</span>(<span class="st">&quot;kitty&quot;</span>, <span class="st">&quot;cottage&quot;</span>, <span class="st">&quot;judgment&quot;</span>, <span class="st">&quot;war&quot;</span>, <span class="st">&quot;sea&quot;</span>),
+  <span class="dt">weight =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>)
+)
+
+words_of_interest <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(
+    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+    <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>),
+    <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;단어 ($i$)&#39;</span>, <span class="st">&#39;가중치 ($w_{iu}$&#39;</span>),
+    <span class="dt">caption =</span> <span class="st">&#39;목표 사용자의 관심 단어 및 가중치&#39;</span>
+  )</code></pre>
+<table>
+<caption><span id="tab:word-of-interest">Table 12.1: </span>목표 사용자의 관심 단어 및 가중치</caption>
+<thead>
+<tr class="header">
+<th align="center">단어 (<span class="math inline">\(i\)</span>)</th>
+<th align="center">가중치 (<span class="math inline">\(w_{iu}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">kitty</td>
+<td align="center">0.3</td>
+</tr>
+<tr class="even">
+<td align="center">cottage</td>
+<td align="center">0.3</td>
+</tr>
+<tr class="odd">
+<td align="center">judgment</td>
+<td align="center">0.1</td>
+</tr>
+<tr class="even">
+<td align="center">war</td>
+<td align="center">0.1</td>
+</tr>
+<tr class="odd">
+<td align="center">sea</td>
+<td align="center">0.2</td>
+</tr>
+</tbody>
+</table>
+<p>이 때, 목표 사용자 <span class="math inline">\(u\)</span>의 문서 <span class="math inline">\(j\)</span>에 대한 유용도(utility)를 다음과 같이 코사인 유사성 척도(cosine similarity measure)로 산출한다.</p>
+<p><span class="math display">\[\begin{equation*}
+u(a, j) = \frac{\sum_{i = 1}^{K} w_{iu} w_{ij}}{\sqrt{\sum_{i = 1}^{K} w_{iu}^2} \sqrt{\sum_{i = 1}^{K} w_{ij}^2}}
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">utility_results &lt;-<span class="st"> </span>tf_idf_results <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">inner_join</span>(words_of_interest, <span class="dt">by =</span> <span class="st">&quot;word&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(book) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">utility =</span> <span class="kw">sum</span>(weight <span class="op">*</span><span class="st"> </span>tf_idf) <span class="op">/</span><span class="st"> </span>
+<span class="st">              </span>(<span class="kw">sqrt</span>(<span class="kw">sum</span>(weight <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(tf_idf <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(utility))
+
+<span class="kw">print</span>(utility_results)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   book                utility
+##   &lt;fct&gt;                 &lt;dbl&gt;
+## 1 Persuasion            0.753
+## 2 Emma                  0.710
+## 3 Sense &amp; Sensibility   0.640
+## 4 Pride &amp; Prejudice     0.615
+## 5 Northanger Abbey      0.529
+## 6 Mansfield Park        0.404</code></pre>
+<p>위 결과 Persuasion이 목표 사용자의 관심에 가장 유용도 높은 문서로 추천된다.</p>
+<p>교재 <span class="citation">전치혁 (<a href="#ref-jun2012datamining">2012</a>)</span> 에 있는 예제에 대한 R 스크립트를 구현해보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">words_of_interest &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>word, <span class="op">~</span>weight,
+  <span class="st">&quot;word1&quot;</span>, <span class="fl">0.124</span>,
+  <span class="st">&quot;word2&quot;</span>, <span class="fl">0.275</span>,
+  <span class="st">&quot;word3&quot;</span>, <span class="fl">0.019</span>,
+  <span class="st">&quot;word4&quot;</span>, <span class="fl">0.182</span>,
+  <span class="st">&quot;word5&quot;</span>, <span class="fl">0.223</span>
+)
+
+tf_idf_results &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>document, <span class="op">~</span>word, <span class="op">~</span>tf_idf,
+  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0194</span>,
+  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0043</span>,
+  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0054</span>,
+  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0155</span>,
+  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0028</span>,
+  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0082</span>,
+  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0032</span>,
+  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0007</span>,
+  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0104</span>,
+  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0073</span>,
+  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0087</span>,
+  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0174</span>,
+  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0091</span>,
+  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0086</span>,
+  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0268</span>,
+  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0093</span>,
+  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0061</span>,
+  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0172</span>,
+  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0028</span>,
+  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0009</span>,
+  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0185</span>,
+  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0249</span>,
+  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0084</span>,
+  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0167</span>,
+  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0193</span>,
+  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0028</span>,
+  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0003</span>,
+  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0202</span>,
+  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0083</span>,
+  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0054</span>
+)
+
+utility_results &lt;-<span class="st"> </span>tf_idf_results <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">inner_join</span>(words_of_interest, <span class="dt">by =</span> <span class="st">&quot;word&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(document) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">utility =</span> <span class="kw">sum</span>(weight <span class="op">*</span><span class="st"> </span>tf_idf) <span class="op">/</span><span class="st"> </span>
+<span class="st">              </span>(<span class="kw">sqrt</span>(<span class="kw">sum</span>(weight <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(tf_idf <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(utility))
+
+<span class="kw">print</span>(utility_results)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   document utility
+##   &lt;chr&gt;      &lt;dbl&gt;
+## 1 doc5       0.972
+## 2 doc3       0.919
+## 3 doc2       0.841
+## 4 doc1       0.659
+## 5 doc4       0.448
+## 6 doc6       0.373</code></pre>
+<p>위 결과, 두 건의 문서를 추천할 경우 doc5, doc3를 추천할 수 있다.</p>
+</div>
+<div id="collaborative-filtering" class="section level2">
+<h2><span class="header-section-number">12.3</span> 협업 필터링</h2>
+<p>총 <span class="math inline">\(m\)</span>개의 상품에 대한 <span class="math inline">\(n\)</span>명의 소비자의 평점이 있다고 할 때, 관련 기호를 다음과 같이 정의하자.</p>
+<ul>
+<li><span class="math inline">\(v_{ij}\)</span>: 고객 <span class="math inline">\(i\)</span>의 상품 <span class="math inline">\(j\)</span>에 대한 평점</li>
+<li><span class="math inline">\(I_i\)</span>: 고객 <span class="math inline">\(i\)</span>가 평점을 매긴 상품집합</li>
+<li><span class="math inline">\(\left| I_i \right|\)</span>: 집합 <span class="math inline">\(I_i\)</span>에 포함된 상품 수</li>
+</ul>
+<p>이 때, 고객 <span class="math inline">\(i\)</span>의 평균 평점은 다음과 같이 산출된다.</p>
+<p><span class="math display">\[\begin{equation*}
+\bar{v}_i  = \frac{1}{\left| I_i \right|} \sum_{j \in I_i} v_{ij}
+\end{equation*}\]</span></p>
+<p>이 때, 목표고객 <span class="math inline">\(a\)</span>와 <span class="math inline">\(i\)</span>번째 고객과의 유사성은 아래와 같이 평점에서 고객 평점을 뺀(mean-centering) 값에 대한 코사인 유사성 척도를 이용하여 정의한다.</p>
+<p><span class="math display">\[\begin{equation*}
+w(a, i) = \frac{\sum_{j \in I_a \cap I_i} (v_{aj} - \bar{v}_a) (v_{ij} - \bar{v}_i)}{\sqrt{\sum_{j \in I_a \cap I_i} (v_{aj} - \bar{v}_a)^2} \sqrt{\sum_{j \in I_a \cap I_i} (v_{ij} - \bar{v}_i)^2}}
+\end{equation*}\]</span></p>
+<p>이를 이용하여, 목표고객 <span class="math inline">\(a\)</span>가 아직 구매하지 않은 상품 <span class="math inline">\(j\)</span>에 매길 평점을 아래와 같이 추정한다.</p>
+<p><span class="math display">\[\begin{equation*}
+\hat{v}_{aj} = \bar{v}_a + \frac{1}{\sum_{i = 1}^{n} \left| w(a, i) \right|} \sum_{i = 1}^{n} w(a, i) (v_{ij} - \bar{v}_i)
+\end{equation*}\]</span></p>
+<p>교재 @jun2012datamining 에 있는 예제에 대한 R 스크립트를 구현해보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">rating_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>customer, <span class="op">~</span>item, <span class="op">~</span>rating,
+  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">5</span>,
+  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">4</span>,
+  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">0</span>,
+  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">3</span>,
+  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">4</span>,
+  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">4</span>,
+  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">4</span>,
+  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">5</span>,
+  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">4</span>,
+  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">2</span>,
+  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">3</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">2</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">4</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">3</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">5</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">2</span>,
+  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">0</span>,
+  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">3</span>,
+  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">5</span>,
+  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">5</span>,
+  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">2</span>,
+  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">4</span>,
+  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">4</span>,
+  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">2</span>,
+  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">5</span>,
+  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">2</span>
+)</code></pre>
+<p>우선, 각 고객이 매긴 평균 평점 <span class="math inline">\(\bar{v}_i\)</span>을 각 아이템에 대한 평점 <span class="math inline">\(v_{ij}\)</span>에서 제외하여 mean_centered rating을 아래와 같이 구한다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">centered_rating_df &lt;-<span class="st"> </span>rating_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(customer) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">centered_rating =</span> rating <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(rating)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>()
+
+<span class="kw">print</span>(centered_rating_df)</code></pre>
+<pre><code>## # A tibble: 33 x 4
+##    customer item   rating centered_rating
+##    &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;           &lt;dbl&gt;
+##  1 고객 1   상품 1      5           2.4  
+##  2 고객 1   상품 3      4           1.4  
+##  3 고객 1   상품 5      1          -1.6  
+##  4 고객 1   상품 6      0          -2.6  
+##  5 고객 1   상품 7      3           0.400
+##  6 고객 2   상품 1      4           0.75 
+##  7 고객 2   상품 2      4           0.75 
+##  8 고객 2   상품 3      4           0.75 
+##  9 고객 2   상품 7      1          -2.25 
+## 10 고객 3   상품 1      5           2    
+## # … with 23 more rows</code></pre>
+<p>목표 고객과 다른 고객들간의 유사성 척도를 계산한다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">similarity_df &lt;-<span class="st"> </span>centered_rating_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(customer <span class="op">==</span><span class="st"> &quot;목표고객&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">inner_join</span>(centered_rating_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(customer <span class="op">!=</span><span class="st"> &quot;목표고객&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;item&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(customer.y) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">similarity =</span> <span class="kw">sum</span>(centered_rating.x <span class="op">*</span><span class="st"> </span>centered_rating.y) <span class="op">/</span>
+<span class="st">              </span>(<span class="kw">sqrt</span>(<span class="kw">sum</span>(centered_rating.x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(centered_rating.y <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">customer =</span> customer.y)
+
+<span class="kw">print</span>(similarity_df)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   customer similarity
+##   &lt;chr&gt;         &lt;dbl&gt;
+## 1 고객 1        0.903
+## 2 고객 2        0.565
+## 3 고객 3        0.961
+## 4 고객 4       -0.875
+## 5 고객 5       -0.853
+## 6 고객 6        1</code></pre>
+<p>유사성 척도의 절대값의 합이 1이 되도록 normalize한다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">normalized_similarity_df &lt;-<span class="st"> </span>similarity_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">normalized_similarity =</span> similarity <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">abs</span>(similarity)))
+
+<span class="kw">print</span>(normalized_similarity_df)</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   customer similarity normalized_similarity
+##   &lt;chr&gt;         &lt;dbl&gt;                 &lt;dbl&gt;
+## 1 고객 1        0.903                 0.175
+## 2 고객 2        0.565                 0.109
+## 3 고객 3        0.961                 0.186
+## 4 고객 4       -0.875                -0.170
+## 5 고객 5       -0.853                -0.165
+## 6 고객 6        1                     0.194</code></pre>
+<p>이후 목표고객이 아직 평점을 매기지 않은 상품들에 대해 평점을 추정한다. 이 때, 상품 <span class="math inline">\(j\)</span>에 대해 평점을 매기지 않은 고객의 경우, <span class="math inline">\(v_{ij} - \bar{v}_i = 0\)</span>이라 가정하자.</p>
+<p><span class="math display">\[\begin{equation*}
+\hat{v}_{aj} = \bar{v}_a + \frac{1}{\sum_{i = 1}^{n} \left| w(a, i) \right|} \sum_{i = 1}^{n} w(a, i) (v_{ij} - \bar{v}_i)
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">items &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">setdiff</span>(<span class="kw">unique</span>(rating_df<span class="op">$</span>item), 
+                      rating_df<span class="op">$</span>item[rating_df<span class="op">$</span>customer <span class="op">==</span><span class="st"> &quot;목표고객&quot;</span>]))
+
+target_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(rating_df<span class="op">$</span>rating[rating_df<span class="op">$</span>customer <span class="op">==</span><span class="st"> &quot;목표고객&quot;</span>])
+
+centered_rating_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(item <span class="op">%in%</span><span class="st"> </span>items) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">inner_join</span>(normalized_similarity_df, <span class="dt">by =</span> <span class="st">&quot;customer&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(item) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">predicted_rating =</span> target_mean <span class="op">+</span><span class="st"> </span>
+<span class="st">              </span><span class="kw">sum</span>(normalized_similarity <span class="op">*</span><span class="st"> </span>centered_rating)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(predicted_rating))</code></pre>
+<pre><code>## # A tibble: 4 x 2
+##   item   predicted_rating
+##   &lt;chr&gt;             &lt;dbl&gt;
+## 1 상품 3             3.26
+## 2 상품 2             3.14
+## 3 상품 5             1.96
+## 4 상품 6             1.63</code></pre>
+<p>이번에는, 목표상품 <span class="math inline">\(j\)</span>에 대한 평점을 추정할 때, 상품 <span class="math inline">\(j\)</span>에 대해 평점을 매긴 고객과의 유사성만을 아래와 같이 고려하기로 하자.</p>
+<p><span class="math display">\[\begin{equation*}
+\hat{v}_{aj} = \bar{v}_a + \frac{1}{\sum_{i: j \in I_i} \left| w(a, i) \right|} \sum_{i: j \in I_i} w(a, i) (v_{ij} - \bar{v}_i)
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">centered_rating_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(item <span class="op">%in%</span><span class="st"> </span>items) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">inner_join</span>(similarity_df, <span class="dt">by =</span> <span class="st">&quot;customer&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(item) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">predicted_rating =</span> target_mean <span class="op">+</span><span class="st"> </span>
+<span class="st">              </span><span class="kw">sum</span>(similarity <span class="op">*</span><span class="st"> </span>centered_rating) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">abs</span>(similarity))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(predicted_rating))</code></pre>
+<pre><code>## # A tibble: 4 x 2
+##   item   predicted_rating
+##   &lt;chr&gt;             &lt;dbl&gt;
+## 1 상품 3             3.97
+## 2 상품 2             3.24
+## 3 상품 5             1.87
+## 4 상품 6             1.19</code></pre>
+</div>
+<div id="market-basket" class="section level2">
+<h2><span class="header-section-number">12.4</span> 시장바구니 데이터를 이용한 협업 필터링</h2>
+<p>아래와 같은 시장바구니 데이터가 있다.</p>
+<p><span class="math display">\[\begin{equation*}
+v_{ij} = \begin{cases}
+1 &amp; \text{ 고객 $i$가 상품 $j$를 구매한 경우}\\
+0 &amp; \text{ 그렇지 않은 경우}
+\end{cases}
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">market_basket_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>customer, <span class="op">~</span>item, <span class="op">~</span>purchase,
+  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,
+  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>
+)</code></pre>
+<p>이 때, 총 상품의 개수를 <span class="math inline">\(m\)</span>이라 하고, 고객 <span class="math inline">\(i\)</span>에 대해</p>
+<p><span class="math display">\[\begin{equation*}
+p_i = \frac{|I_i|}{m}
+\end{equation*}\]</span></p>
+<p>이라 정의하자. 즉, <span class="math inline">\(p_i\)</span>는 전체 상품 중 고객 <span class="math inline">\(i\)</span>가 구입한 상품의 비율을 뜻한다. 또한, 두 고객 <span class="math inline">\(i\)</span>와 <span class="math inline">\(k\)</span>가 공통적으로 구입한 상품의 비율을 아래와 같이 <span class="math inline">\(p_{ik}\)</span>라 정의하자.</p>
+<p><span class="math display">\[\begin{equation*}
+p_{ik} = \frac{|I_i \cap I_k|}{m}
+\end{equation*}\]</span></p>
+<p>우선 아래와 같이 가중치 <span class="math inline">\(w(a, i)\)</span>를 계산해보자. 이 가중치는 목표고객 <span class="math inline">\(a\)</span>과 각 고객 <span class="math inline">\(i\)</span>간의 유사성 척도이다.</p>
+<p><span class="math display">\[\begin{equation*}
+w(a, i) = \frac{p_{ai} - p_a p_i}{\sqrt{p_a (1 - p_a)} \sqrt{p_i (1 - p_i)}}
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(market_basket_df<span class="op">$</span>item))
+
+n_df &lt;-<span class="st"> </span>market_basket_df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(customer) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p =</span> <span class="kw">n</span>() <span class="op">/</span><span class="st"> </span>m)
+
+common_df &lt;-<span class="st"> </span>market_basket_df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(customer <span class="op">==</span><span class="st"> &quot;목표고객&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">inner_join</span>(market_basket_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(customer <span class="op">!=</span><span class="st"> &quot;목표고객&quot;</span>), 
+             <span class="dt">by =</span> <span class="st">&quot;item&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(customer.y) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p =</span> <span class="kw">n</span>() <span class="op">/</span><span class="st"> </span>m) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">customer =</span> customer.y)
+
+similarity_df &lt;-<span class="st"> </span><span class="kw">crossing</span>(
+  <span class="dt">target_customer =</span> <span class="st">&quot;목표고객&quot;</span>,
+  <span class="dt">ref_customer =</span> n_df<span class="op">$</span>customer[n_df<span class="op">$</span>customer <span class="op">!=</span><span class="st"> &quot;목표고객&quot;</span>]
+) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">inner_join</span>(n_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">target_p =</span> p),
+             <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;target_customer&quot;</span> =<span class="st"> &quot;customer&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">inner_join</span>(n_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">ref_p =</span> p),
+             <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;ref_customer&quot;</span> =<span class="st"> &quot;customer&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">inner_join</span>(common_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">common_p =</span> p),
+             <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;ref_customer&quot;</span> =<span class="st"> &quot;customer&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">similarity =</span> (common_p <span class="op">-</span><span class="st"> </span>target_p <span class="op">*</span><span class="st"> </span>ref_p) <span class="op">/</span>
+<span class="st">      </span>(<span class="kw">sqrt</span>(target_p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>target_p)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(ref_p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>ref_p)))
+  )
+
+<span class="kw">print</span>(similarity_df)</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##   target_customer ref_customer target_p ref_p common_p similarity
+##   &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+## 1 목표고객        고객 1          0.429 0.571    0.286      0.167
+## 2 목표고객        고객 2          0.429 0.571    0.286      0.167
+## 3 목표고객        고객 3          0.429 0.714    0.429      0.548
+## 4 목표고객        고객 4          0.429 0.857    0.429      0.354
+## 5 목표고객        고객 5          0.429 0.571    0.143     -0.417
+## 6 목표고객        고객 6          0.429 0.571    0.143     -0.417</code></pre>
+<p>이후 목표고객이 아직 구매하지 않은 상품에 대해 평점을 추정한다. 목표고객 <span class="math inline">\(a\)</span>의 상품 <span class="math inline">\(j\)</span>에 대한 평점 추정치는 다음과 같이 산출한다.</p>
+<p><span class="math display">\[\begin{equation*}
+P_{aj} = \frac{\sum{i = 1}^{n} w(a, i) v_{ij}}{\sum_{i = 1}^{n} | w(a, i) |}
+\end{equation*}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">denom &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">abs</span>(similarity_df<span class="op">$</span>similarity))
+
+pred_df &lt;-<span class="st"> </span>similarity_df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">inner_join</span>(market_basket_df, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;ref_customer&quot;</span> =<span class="st"> &quot;customer&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">anti_join</span>(market_basket_df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">              </span><span class="kw">filter</span>(customer <span class="op">==</span><span class="st"> &quot;목표고객&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">              </span><span class="kw">select</span>(item),
+            <span class="dt">by =</span> <span class="st">&quot;item&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(item) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">est_score =</span> <span class="kw">sum</span>(similarity <span class="op">*</span><span class="st"> </span>purchase) <span class="op">/</span><span class="st"> </span>denom) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(est_score))
+
+<span class="kw">print</span>(pred_df)</code></pre>
+<pre><code>## # A tibble: 4 x 2
+##   item   est_score
+##   &lt;chr&gt;      &lt;dbl&gt;
+## 1 상품 3    0.332 
+## 2 상품 2    0.113 
+## 3 상품 5   -0.0575
+## 4 상품 6   -0.232</code></pre>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-jun2012datamining">
+<p>전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="association-rule.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"search": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

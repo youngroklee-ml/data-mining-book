@@ -1,0 +1,509 @@
+# 추천시스템 {#recommender-system}
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+추천시스템(recommender system)은 상품, 웹페이지, 신문 기사 등에 대한 소비자의 성향을 파악하여 그에 부합하는 새로운 상품 등을 추천하고자 하는 목적으로 개발되며, 접근 방식에 따라 내용기반(content-based) 방법, 협업 필터링(collaborative filtering), 결합방식(hybrid) 등으로 분류된다.
+
+## 필요 R package 설치 {#recommender-packages-install}
+
+본 장에서 필요한 R 패키지들은 아래와 같다.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+tibble(package = c("tidyverse", "tidytext")) %>%
+  mutate(version = map_chr(
+    package, 
+    ~ packageDescription(.x, fields = c("Version"))[1])) %>%
+  knitr::kable()
+```
+
+
+## 내용기반 추천시스템 {#content-based-recommender}
+
+내용기반 추천시스템은 주로 문서 등의 추천에 활용되고 있다.
+
+- $N$: 전체 문서의 수
+- $f_{ij}$: 문서 $j$에 나타난 단어 $i$의 빈도수
+- $n_i$: 단어 $i$가 한 번 이상 나타난 문서의 수
+
+우선 `tidytext` 패키지를 로드하자.
+
+```{r}
+library(tidytext)
+```
+
+`janeaustenr` 패키지에 있는 Jane Austen의 6개 소설에 대한 텍스트 데이터를 로드하자. 해당 데이터는 책 내용이 담긴 `text`라는 컬럼과 책 제목인 `book` 컬럼으로 이루어진 데이터 프레임이다.
+
+```{r}
+library(janeaustenr)
+tidy_books <- austen_books()
+head(tidy_books)
+```
+
+해당 데이터 프레임에 담긴 책의 수는 아래와 같다.
+
+```{r}
+n_book <- nlevels(tidy_books$book)
+print(n_book)
+```
+
+
+책의 내용 text를 단어 단위로 나누어 각 행으로 저장하자.
+
+```{r}
+tidy_words <- tidy_books %>% unnest_tokens(word, text)
+  
+head(tidy_words)
+```
+
+이 데이터 프레임을 기반으로, 단어 $i$가 문서 $j$에 나타난 단어 빈도수(term frequency)를 모든 단어 $i$와 모든 문서 $j$에 대해 계산하자.
+
+\begin{equation*}
+TF_{ij} = \frac{f_{ij}}{\sum_k f_{kj}}
+\end{equation*}
+
+```{r}
+tf_results <- tidy_words %>%
+  group_by(book, word) %>%
+  summarize(n = n()) %>%
+  mutate(tf = n / sum(n)) %>%
+  select(-n) %>%
+  ungroup() %>%
+  complete(book, word, fill = list(tf = 0))
+```
+
+
+이 때, 단어 빈도수가 높은 단어들은 대체로 너무 흔한 단어들이어서 중요한 의미를 지니지 않은 경우가 많다. 아래와 같이, "the", "to", "and" 등의 단어들이 사용 빈도가 매우 높은 단어들이다.
+
+```{r}
+tf_results %>% arrange(desc(tf)) %>% head(10)
+```
+
+
+따라서, 단어의 중요도를 정의할 때 단어 $i$의 역문서 빈도수(inverse document frequency)를 함께 고려한다.
+
+\begin{equation*}
+IDF_{i} = \log \frac{N}{n_i}
+\end{equation*}
+
+
+```{r}
+idf_results <- tf_results %>%
+  filter(tf > 0) %>%
+  group_by(word) %>%
+  summarize(n = n()) %>%
+  mutate(idf = log(n_book / n)) %>%
+  select(-n)
+```
+
+
+```{r}
+idf_results %>% arrange(desc(idf)) %>% head(10)
+```
+
+
+최종적으로 단어의 중요도를 위에서 정의한 단어 빈도수와 역문서 빈도수의 곱으로 아래와 같이 구하며, 이를 TF-IDF 가중치라 한다.
+
+\begin{equation*}
+w_{ij} = TF_{ij} \times IDF_{i}
+\end{equation*}
+
+
+```{r}
+tf_idf_results <- inner_join(tf_results, idf_results, by = "word") %>%
+  mutate(tf_idf = tf * idf)
+```
+
+TF-IDF 가중치가 높은 단어들을 살펴보자.
+
+```{r}
+tf_idf_results %>%
+  arrange(desc(tf_idf)) %>%
+  head(10)
+```
+
+대체로 소설에 나타나는 인물의 이름이 높은 가중치를 보이는데, 이는 인물의 이름이 소설 한 권에 걸쳐 여러 번 나타나 단어 빈도수가 높으며, 또한 각각의 소설이 서로 다른 인물명을 등장시킴으로써 역문서 빈도수 또한 높기 때문이다. 
+
+위와 같은 TF-IDF 가중치 계산은 `tidytext` 패키지의 `bind_tf_idf` 함수를 이용하여 간편하게 구할 수 있다.
+
+```{r}
+tidy_words %>%
+  group_by(book, word) %>%
+  summarize(n = n()) %>%
+  ungroup() %>%
+  bind_tf_idf(word, book, n) %>%
+  arrange(desc(tf_idf)) %>%
+  head(10)
+```
+
+
+
+
+임의의 사용자 $u$가 아래와 같이 다섯 가지 단어에 각기 다른 관심도 $w_{iu}$를 지닌다고 하자.
+
+```{r word-of-interest}
+words_of_interest <- tibble(
+  word = c("kitty", "cottage", "judgment", "war", "sea"),
+  weight = c(0.3, 0.3, 0.1, 0.1, 0.2)
+)
+
+words_of_interest %>%
+  knitr::kable(
+    booktabs = TRUE,
+    align = c('c', 'c'),
+    col.names = c('단어 ($i$)', '가중치 ($w_{iu}$'),
+    caption = '목표 사용자의 관심 단어 및 가중치'
+  )
+```
+
+
+이 때, 목표 사용자 $u$의 문서 $j$에 대한 유용도(utility)를 다음과 같이 코사인 유사성 척도(cosine similarity measure)로 산출한다.
+
+\begin{equation*}
+u(a, j) = \frac{\sum_{i = 1}^{K} w_{iu} w_{ij}}{\sqrt{\sum_{i = 1}^{K} w_{iu}^2} \sqrt{\sum_{i = 1}^{K} w_{ij}^2}}
+\end{equation*}
+
+
+```{r}
+utility_results <- tf_idf_results %>%
+  inner_join(words_of_interest, by = "word") %>%
+  group_by(book) %>%
+  summarize(utility = sum(weight * tf_idf) / 
+              (sqrt(sum(weight ^ 2)) * sqrt(sum(tf_idf ^ 2)))) %>%
+  arrange(desc(utility))
+
+print(utility_results)
+```
+
+위 결과 `r utility_results$book[1]`이 목표 사용자의 관심에 가장 유용도 높은 문서로 추천된다.
+
+
+교재 @jun2012datamining 에 있는 예제에 대한 R 스크립트를 구현해보자.
+
+```{r}
+words_of_interest <- tribble(
+  ~word, ~weight,
+  "word1", 0.124,
+  "word2", 0.275,
+  "word3", 0.019,
+  "word4", 0.182,
+  "word5", 0.223
+)
+
+tf_idf_results <- tribble(
+  ~document, ~word, ~tf_idf,
+  "doc1", "word1", 0.0194,
+  "doc1", "word2", 0.0043,
+  "doc1", "word3", 0.0054,
+  "doc1", "word4", 0.0155,
+  "doc1", "word5", 0.0028,
+  "doc2", "word1", 0.0082,
+  "doc2", "word2", 0.0032,
+  "doc2", "word3", 0.0007,
+  "doc2", "word4", 0.0104,
+  "doc2", "word5", 0.0073,
+  "doc3", "word1", 0.0087,
+  "doc3", "word2", 0.0174,
+  "doc3", "word3", 0.0091,
+  "doc3", "word4", 0.0086,
+  "doc3", "word5", 0.0268,
+  "doc4", "word1", 0.0093,
+  "doc4", "word2", 0.0061,
+  "doc4", "word3", 0.0172,
+  "doc4", "word4", 0.0028,
+  "doc4", "word5", 0.0009,
+  "doc5", "word1", 0.0185,
+  "doc5", "word2", 0.0249,
+  "doc5", "word3", 0.0084,
+  "doc5", "word4", 0.0167,
+  "doc5", "word5", 0.0193,
+  "doc6", "word1", 0.0028,
+  "doc6", "word2", 0.0003,
+  "doc6", "word3", 0.0202,
+  "doc6", "word4", 0.0083,
+  "doc6", "word5", 0.0054
+)
+
+utility_results <- tf_idf_results %>%
+  inner_join(words_of_interest, by = "word") %>%
+  group_by(document) %>%
+  summarize(utility = sum(weight * tf_idf) / 
+              (sqrt(sum(weight ^ 2)) * sqrt(sum(tf_idf ^ 2)))) %>%
+  arrange(desc(utility))
+
+print(utility_results)
+```
+
+위 결과, 두 건의 문서를 추천할 경우 `r str_c(utility_results$document[1:2], sep = ", ")`를 추천할 수 있다.
+
+
+## 협업 필터링 {#collaborative-filtering}
+
+총 $m$개의 상품에 대한 $n$명의 소비자의 평점이 있다고 할 때, 관련 기호를 다음과 같이 정의하자.
+
+- $v_{ij}$: 고객 $i$의 상품 $j$에 대한 평점
+- $I_i$: 고객 $i$가 평점을 매긴 상품집합
+- $\left| I_i \right|$: 집합 $I_i$에 포함된 상품 수
+
+이 때, 고객 $i$의 평균 평점은 다음과 같이 산출된다.
+
+\begin{equation*}
+\bar{v}_i  = \frac{1}{\left| I_i \right|} \sum_{j \in I_i} v_{ij}
+\end{equation*}
+
+이 때, 목표고객 $a$와 $i$번째 고객과의 유사성은 아래와 같이 평점에서 고객 평점을 뺀(mean-centering) 값에 대한 코사인 유사성 척도를 이용하여 정의한다.
+
+\begin{equation*}
+w(a, i) = \frac{\sum_{j \in I_a \cap I_i} (v_{aj} - \bar{v}_a) (v_{ij} - \bar{v}_i)}{\sqrt{\sum_{j \in I_a \cap I_i} (v_{aj} - \bar{v}_a)^2} \sqrt{\sum_{j \in I_a \cap I_i} (v_{ij} - \bar{v}_i)^2}}
+\end{equation*}
+
+이를 이용하여, 목표고객 $a$가 아직 구매하지 않은 상품 $j$에 매길 평점을 아래와 같이 추정한다.
+
+\begin{equation*}
+\hat{v}_{aj} = \bar{v}_a + \frac{1}{\sum_{i = 1}^{n} \left| w(a, i) \right|} \sum_{i = 1}^{n} w(a, i) (v_{ij} - \bar{v}_i)
+\end{equation*}
+
+
+교재 \@jun2012datamining 에 있는 예제에 대한 R 스크립트를 구현해보자.
+
+```{r}
+rating_df <- tribble(
+  ~customer, ~item, ~rating,
+  "고객 1", "상품 1", 5,
+  "고객 1", "상품 3", 4,
+  "고객 1", "상품 5", 1,
+  "고객 1", "상품 6", 0,
+  "고객 1", "상품 7", 3,
+  "고객 2", "상품 1", 4,
+  "고객 2", "상품 2", 4,
+  "고객 2", "상품 3", 4,
+  "고객 2", "상품 7", 1,
+  "고객 3", "상품 1", 5,
+  "고객 3", "상품 2", 4,
+  "고객 3", "상품 4", 1,
+  "고객 3", "상품 5", 2,
+  "고객 3", "상품 7", 3,
+  "고객 4", "상품 1", 1,
+  "고객 4", "상품 2", 2,
+  "고객 4", "상품 3", 1,
+  "고객 4", "상품 4", 4,
+  "고객 4", "상품 5", 3,
+  "고객 4", "상품 6", 5,
+  "고객 4", "상품 7", 2,
+  "고객 5", "상품 1", 0,
+  "고객 5", "상품 2", 1,
+  "고객 5", "상품 4", 3,
+  "고객 5", "상품 5", 5,
+  "고객 5", "상품 6", 5,
+  "고객 6", "상품 2", 2,
+  "고객 6", "상품 5", 4,
+  "고객 6", "상품 6", 4,
+  "고객 6", "상품 7", 2,
+  "목표고객", "상품 1", 5,
+  "목표고객", "상품 4", 1,
+  "목표고객", "상품 7", 2
+)
+```
+
+
+우선, 각 고객이 매긴 평균 평점 $\bar{v}_i$을 각 아이템에 대한 평점 $v_{ij}$에서 제외하여 mean_centered rating을 아래와 같이 구한다. 
+
+```{r}
+centered_rating_df <- rating_df %>%
+  group_by(customer) %>%
+  mutate(centered_rating = rating - mean(rating)) %>%
+  ungroup()
+
+print(centered_rating_df)
+```
+
+목표 고객과 다른 고객들간의 유사성 척도를 계산한다.
+
+```{r}
+similarity_df <- centered_rating_df %>% filter(customer == "목표고객") %>% 
+  inner_join(centered_rating_df %>% filter(customer != "목표고객"), by = "item") %>%
+  group_by(customer.y) %>%
+  summarize(similarity = sum(centered_rating.x * centered_rating.y) /
+              (sqrt(sum(centered_rating.x ^ 2)) * sqrt(sum(centered_rating.y ^ 2)))) %>%
+  rename(customer = customer.y)
+
+print(similarity_df)
+```
+
+유사성 척도의 절대값의 합이 1이 되도록 normalize한다.
+
+```{r}
+normalized_similarity_df <- similarity_df %>%
+  mutate(normalized_similarity = similarity / sum(abs(similarity)))
+
+print(normalized_similarity_df)
+```
+
+이후 목표고객이 아직 평점을 매기지 않은 상품들에 대해 평점을 추정한다. 이 때, 상품 $j$에 대해 평점을 매기지 않은 고객의 경우, $v_{ij} - \bar{v}_i = 0$이라 가정하자. 
+
+\begin{equation*}
+\hat{v}_{aj} = \bar{v}_a + \frac{1}{\sum_{i = 1}^{n} \left| w(a, i) \right|} \sum_{i = 1}^{n} w(a, i) (v_{ij} - \bar{v}_i)
+\end{equation*}
+
+
+```{r}
+items <- sort(setdiff(unique(rating_df$item), 
+                      rating_df$item[rating_df$customer == "목표고객"]))
+
+target_mean <- mean(rating_df$rating[rating_df$customer == "목표고객"])
+
+centered_rating_df %>%
+  filter(item %in% items) %>%
+  inner_join(normalized_similarity_df, by = "customer") %>%
+  group_by(item) %>%
+  summarize(predicted_rating = target_mean + 
+              sum(normalized_similarity * centered_rating)) %>%
+  arrange(desc(predicted_rating))
+```
+
+
+이번에는, 목표상품 $j$에 대한 평점을 추정할 때, 상품 $j$에 대해 평점을 매긴 고객과의 유사성만을 아래와 같이 고려하기로 하자.
+
+\begin{equation*}
+\hat{v}_{aj} = \bar{v}_a + \frac{1}{\sum_{i: j \in I_i} \left| w(a, i) \right|} \sum_{i: j \in I_i} w(a, i) (v_{ij} - \bar{v}_i)
+\end{equation*}
+
+
+```{r}
+centered_rating_df %>%
+  filter(item %in% items) %>%
+  inner_join(similarity_df, by = "customer") %>%
+  group_by(item) %>%
+  summarize(predicted_rating = target_mean + 
+              sum(similarity * centered_rating) / sum(abs(similarity))) %>%
+  arrange(desc(predicted_rating))
+```
+
+
+## 시장바구니 데이터를 이용한 협업 필터링 {#market-basket}
+
+아래와 같은 시장바구니 데이터가 있다.
+
+\begin{equation*}
+v_{ij} = \begin{cases}
+1 & \text{ 고객 $i$가 상품 $j$를 구매한 경우}\\
+0 & \text{ 그렇지 않은 경우}
+\end{cases}
+\end{equation*}
+
+```{r}
+market_basket_df <- tribble(
+  ~customer, ~item, ~purchase,
+  "고객 1", "상품 1", 1,
+  "고객 1", "상품 3", 1,
+  "고객 1", "상품 5", 1,
+  "고객 1", "상품 7", 1,
+  "고객 2", "상품 1", 1,
+  "고객 2", "상품 2", 1,
+  "고객 2", "상품 3", 1,
+  "고객 2", "상품 7", 1,
+  "고객 3", "상품 1", 1,
+  "고객 3", "상품 2", 1,
+  "고객 3", "상품 4", 1,
+  "고객 3", "상품 5", 1,
+  "고객 3", "상품 7", 1,
+  "고객 4", "상품 1", 1,
+  "고객 4", "상품 2", 1,
+  "고객 4", "상품 3", 1,
+  "고객 4", "상품 4", 1,
+  "고객 4", "상품 6", 1,
+  "고객 4", "상품 7", 1,
+  "고객 5", "상품 2", 1,
+  "고객 5", "상품 4", 1,
+  "고객 5", "상품 5", 1,
+  "고객 5", "상품 6", 1,
+  "고객 6", "상품 2", 1,
+  "고객 6", "상품 5", 1,
+  "고객 6", "상품 6", 1,
+  "고객 6", "상품 7", 1,
+  "목표고객", "상품 1", 1,
+  "목표고객", "상품 4", 1,
+  "목표고객", "상품 7", 1
+)
+```
+
+
+이 때, 총 상품의 개수를 $m$이라 하고, 고객 $i$에 대해 
+
+\begin{equation*}
+p_i = \frac{|I_i|}{m}
+\end{equation*}
+
+이라 정의하자. 즉, $p_i$는 전체 상품 중 고객 $i$가 구입한 상품의 비율을 뜻한다. 또한, 두 고객 $i$와 $k$가 공통적으로 구입한 상품의 비율을 아래와 같이 $p_{ik}$라 정의하자.
+
+\begin{equation*}
+p_{ik} = \frac{|I_i \cap I_k|}{m}
+\end{equation*}
+
+
+우선 아래와 같이 가중치 $w(a, i)$를 계산해보자. 이 가중치는 목표고객 $a$과 각 고객 $i$간의 유사성 척도이다.
+
+\begin{equation*}
+w(a, i) = \frac{p_{ai} - p_a p_i}{\sqrt{p_a (1 - p_a)} \sqrt{p_i (1 - p_i)}}
+\end{equation*}
+
+
+```{r}
+m <- length(unique(market_basket_df$item))
+
+n_df <- market_basket_df %>% 
+  group_by(customer) %>%
+  summarize(p = n() / m)
+
+common_df <- market_basket_df %>% 
+  filter(customer == "목표고객") %>% 
+  inner_join(market_basket_df %>% filter(customer != "목표고객"), 
+             by = "item") %>%
+  group_by(customer.y) %>%
+  summarize(p = n() / m) %>%
+  rename(customer = customer.y)
+
+similarity_df <- crossing(
+  target_customer = "목표고객",
+  ref_customer = n_df$customer[n_df$customer != "목표고객"]
+) %>%
+  inner_join(n_df %>% rename(target_p = p),
+             by = c("target_customer" = "customer")) %>%
+  inner_join(n_df %>% rename(ref_p = p),
+             by = c("ref_customer" = "customer")) %>%
+  inner_join(common_df %>% rename(common_p = p),
+             by = c("ref_customer" = "customer")) %>%
+  mutate(
+    similarity = (common_p - target_p * ref_p) /
+      (sqrt(target_p * (1 - target_p)) * sqrt(ref_p * (1 - ref_p)))
+  )
+
+print(similarity_df)
+```
+
+이후 목표고객이 아직 구매하지 않은 상품에 대해 평점을 추정한다. 목표고객 $a$의 상품 $j$에 대한 평점 추정치는 다음과 같이 산출한다.
+
+\begin{equation*}
+P_{aj} = \frac{\sum{i = 1}^{n} w(a, i) v_{ij}}{\sum_{i = 1}^{n} | w(a, i) |}
+\end{equation*}
+
+
+```{r}
+denom <- sum(abs(similarity_df$similarity))
+
+pred_df <- similarity_df %>% 
+  inner_join(market_basket_df, by = c("ref_customer" = "customer")) %>%
+  anti_join(market_basket_df %>% 
+              filter(customer == "목표고객") %>% 
+              select(item),
+            by = "item") %>%
+  group_by(item) %>%
+  summarize(est_score = sum(similarity * purchase) / denom) %>%
+  arrange(desc(est_score))
+
+print(pred_df)
+```
+
+
+
