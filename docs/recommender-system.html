@@ -875,7 +875,7 @@ similarity_df &lt;-<span class="st"> </span><span class="kw">crossing</span>(
 ## 6 목표고객        고객 6          0.429 0.571    0.143     -0.417</code></pre>
 <p>이후 목표고객이 아직 구매하지 않은 상품에 대해 평점을 추정한다. 목표고객 <span class="math inline">\(a\)</span>의 상품 <span class="math inline">\(j\)</span>에 대한 평점 추정치는 다음과 같이 산출한다.</p>
 <p><span class="math display">\[\begin{equation*}
-P_{aj} = \frac{\sum{i = 1}^{n} w(a, i) v_{ij}}{\sum_{i = 1}^{n} | w(a, i) |}
+P_{aj} = \frac{\sum_{i = 1}^{n} w(a, i) v_{ij}}{\sum_{i = 1}^{n} | w(a, i) |}
 \end{equation*}\]</span></p>
 <pre class="sourceCode r"><code class="sourceCode r">denom &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">abs</span>(similarity_df<span class="op">$</span>similarity))
 

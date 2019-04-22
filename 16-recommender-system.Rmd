@@ -485,7 +485,7 @@ print(similarity_df)
 이후 목표고객이 아직 구매하지 않은 상품에 대해 평점을 추정한다. 목표고객 $a$의 상품 $j$에 대한 평점 추정치는 다음과 같이 산출한다.
 
 \begin{equation*}
-P_{aj} = \frac{\sum{i = 1}^{n} w(a, i) v_{ij}}{\sum_{i = 1}^{n} | w(a, i) |}
+P_{aj} = \frac{\sum_{i = 1}^{n} w(a, i) v_{ij}}{\sum_{i = 1}^{n} | w(a, i) |}
 \end{equation*}
 
 
