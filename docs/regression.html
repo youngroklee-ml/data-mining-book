@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 7 분류규칙의 성능 평가 | 데이터마이닝 with R</title>
+  <title>Chapter 1 회귀분석 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 7 분류규칙의 성능 평가 | 데이터마이닝 with R" />
+  <meta property="og:title" content="Chapter 1 회귀분석 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://youngroklee-ml.github.io/data-mining-book/" />
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="youngroklee-ml/data-mining-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 분류규칙의 성능 평가 | 데이터마이닝 with R" />
+  <meta name="twitter:title" content="Chapter 1 회귀분석 | 데이터마이닝 with R" />
   
   <meta name="twitter:description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="svm.html">
-<link rel="next" href="clustering-overview.html">
+<link rel="prev" href="index.html">
+<link rel="next" href="classification-analysis.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -349,11 +349,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="classifier-evaluation" class="section level1">
-<h1><span class="header-section-number">Chapter 7</span> 분류규칙의 성능 평가</h1>
-<p>도출된 분류규칙에 대한 평가는 범주를 아는 학습표본이 있으므로 비교적 용이하게 이루어진다. 분류정확도 또는 분류오류율이 기본이 되나, 특히 범주가 2개인 경우에는 다양한 성능평가척도가 개발되어 사용되고 있다.</p>
-<div id="classifier-evaluation-packages-install" class="section level2">
-<h2><span class="header-section-number">7.1</span> 필요 R 패키지 설치</h2>
+<div id="regression" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> 회귀분석</h1>
+<div id="regression-packages-install" class="section level2">
+<h2><span class="header-section-number">1.1</span> 필요 R 패키지 설치</h2>
 <p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
 <table>
 <thead>
@@ -368,461 +367,326 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">1.2.1</td>
 </tr>
 <tr class="even">
-<td align="left">caret</td>
-<td align="left">6.0-82</td>
+<td align="left">stats</td>
+<td align="left">3.5.3</td>
+</tr>
+<tr class="odd">
+<td align="left">broom</td>
+<td align="left">0.5.2</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="classifier-evaluation-misclassification-rate" class="section level2">
-<h2><span class="header-section-number">7.2</span> 분류오류율</h2>
-<p>범주를 아는 데이터 <span class="math inline">\(\{(\mathbf{x}_i, y_i)\}_{i = 1, \cdots, N}\)</span>를 학습표본이라 한다.</p>
-<ul>
-<li><span class="math inline">\(\mathbf{x}_i\)</span>: <span class="math inline">\(p\)</span>개의 독립변수로 이루어진 <span class="math inline">\(i\)</span>번째 객체의 변수벡터 (<span class="math inline">\(\mathbf{x}_i = [x_{i1} \, x_{i2} \, \cdots \, x_{ip}]^\top\)</span>)</li>
-<li><span class="math inline">\(J\)</span>: 총 범주 수</li>
-<li><span class="math inline">\(y_i\)</span>: <span class="math inline">\(i\)</span>번째 객체의 범주 변수; <span class="math inline">\(y_i \in \{1, 2, \cdots, J\}\)</span></li>
-</ul>
-<p>분류규칙 <span class="math inline">\(d(\mathbf{x})\)</span>의 성능은 주로 분류오류율(misclassification rate)을 사용하는데, 분류규칙이 추정한 범주와 실제범주가 일치하지 않는 비율을 나타낸다.</p>
-<p><span class="math display" id="eq:misclassification-rate-train">\[\begin{equation}
-R(d) = \frac{1}{N} \sum_{i = 1}^{N} I(d(\mathbf{x}_i) \neq y_i)
-\tag{7.1}
+<div id="section-1.2" class="section level2">
+<h2><span class="header-section-number">1.2</span> 다중회귀모형</h2>
+<p>아래와 같이 <span class="math inline">\(n\)</span>개의 객체와 <span class="math inline">\(k\)</span>개의 독립변수(<span class="math inline">\(\mathbf{x}\)</span>)로 이루어지고 하나의 종속변수(<span class="math inline">\(y\)</span>)로 이루어진 선형 회귀모형을 정의하자.</p>
+<p><span class="math display" id="eq:multiple-linear-regression">\[\begin{equation}
+y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_k x_{ik} + \epsilon_i
+\tag{1.1}
 \end{equation}\]</span></p>
-<p>여기서 함수 지시함수 <span class="math inline">\(I(x)\)</span>는 <span class="math inline">\(x\)</span>가 참(true)일 때 1, 거짓(false)일 때 0의 값을 갖는다.</p>
-<p>식 <a href="classifier-evaluation.html#eq:misclassification-rate-train">(7.1)</a>은 학습표본에 대한 오분류율로, 이를 최소화하려할 경우 분류규칙이 해당 학습데이터에만 과적용(overfitting)되는 문제가 발생할 수 있다. 즉, 새로운 데이터에 적용할 때도 오분류율이 최소화될 것이라는 보장이 없다.</p>
-<p>이 때문에, 통상 관측수가 상당수 있는 데이터에 대해서는 전체 데이터를 두 부분으로 나누어, 분류규칙을 만드는 데 한 부분을 사용하고, 분류오류율을 산출하는 데 다른 한 부분을 사용하는 방안이 일반적이다. 아래와 같이 범주가 알려져있지만 분류규칙 <span class="math inline">\(d(\mathbf{x})\)</span>를 학습하는 데 사용하지 않은 <span class="math inline">\(L\)</span>개의 테스트 표본 <span class="math inline">\(\{(\mathbf{x}_i, y_i)\}_{i = N + 1, \cdots, N + L}\)</span>이 있다고 하자. 이 때 테스트 표본에 대한 분류오류율을 아래와 같이 계산한다.</p>
-<p><span class="math display" id="eq:misclassification-rate-test">\[\begin{equation}
-R^{ts}(d) = \frac{1}{L} \sum_{i = N + 1}^{N + L} I(d(\mathbf{x}_i) \neq y_i)
-\tag{7.2}
+<p>이 때, 오차항 <span class="math inline">\(\epsilon_i\)</span>은 서로 독립이고 동일한 정규분포 <span class="math inline">\(N(0, \sigma^2)\)</span>을 따른다.</p>
+<p>위 회귀모형은 아래와 같이 행렬의 연산으로 표한할 수 있다.</p>
+<p><span class="math display" id="eq:multiple-linear-regression-matrix">\[\begin{equation}
+\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\epsilon} \tag{1.2}
 \end{equation}\]</span></p>
-<p>테스트 표본으로 분리하기에 충분하지 않은 데이터의 경우에는 cross validation 기법을 사용한다.</p>
+<p>이 때,</p>
+<p><span class="math display">\[
+\mathbf{y} = \left[ \begin{array}{c}
+y_1 \\ y_2 \\ y_3 \\ \vdots \\ y_n
+\end{array} \right]
+\]</span></p>
+<p><span class="math display">\[
+\mathbf{X} = \left[ \begin{array}{c c c c c}
+1 &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1k}\\
+1 &amp; x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2k}\\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1 &amp; x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nk}
+\end{array} \right]
+\]</span></p>
+<p><span class="math display">\[
+\boldsymbol{\beta} = \left[ \begin{array}{c}
+\beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_k
+\end{array} \right]
+\]</span></p>
+<p><span class="math display">\[
+\boldsymbol{\epsilon} = \left[ \begin{array}{c}
+\epsilon_1 \\ \epsilon_2 \\ \epsilon_3 \\ \vdots \\ \epsilon_n
+\end{array} \right]
+\]</span></p>
+<p>로 정의되며,</p>
+<p><span class="math display">\[
+E[\boldsymbol{\epsilon}] = \mathbf{0}, \, Var[\boldsymbol{\epsilon}] = \sigma^2 \mathbf{I} 
+\]</span></p>
+<p>이다.</p>
 </div>
-<div id="precision-sensitivity-specificity" class="section level2">
-<h2><span class="header-section-number">7.3</span> 정확도, 민감도 및 특이도</h2>
-<p>의학 분야에서 어떤 질병에 대한 진단방법을 평가할 때 오류율 이와에 정확도, 민감도 및 특이도를 분석하는 경우가 종종 있다. 실제범주가 질병이 있는 경우(<code>1</code> 또는 <code>+</code>로 표기)와 질병이 없는 경우(<code>0</code> 또는 <code>-</code>로 표기)의 두 가지로 분류된다고 하고, 진단 방법이 양성(<code>1</code> 또는 <code>+</code>) 또는 음성(<code>0</code> 또는 <code>-</code>)으로 판정할 때, 아래와 같이 네 가지 경우가 발생한다. 이와 같은 표를 정오분류표(confusion matrix)라 한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cm &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;d&#39;</span>), <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
-<span class="kw">attr</span>(cm, <span class="st">&quot;dimnames&quot;</span>) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">Prediction =</span> <span class="kw">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;0&quot;</span>), <span class="dt">Reference =</span> <span class="kw">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;0&quot;</span>))
-<span class="kw">class</span>(cm) &lt;-<span class="st"> &quot;table&quot;</span>
-<span class="kw">print</span>(cm)</code></pre>
-<pre><code>##           Reference
-## Prediction 1 0
-##          1 a b
-##          0 c d</code></pre>
-<p>위 표의 문자들은 다음과 같이 정의된다.</p>
-<ul>
-<li><span class="math inline">\(a\)</span>: number of true positive prediction</li>
-<li><span class="math inline">\(b\)</span>: number of false positive prediction</li>
-<li><span class="math inline">\(c\)</span>: number of false negative prediction</li>
-<li><span class="math inline">\(d\)</span>: number of true negative prediction</li>
-</ul>
-<p>여기서 “positive” 또는 “negative”는 “양성” 또는 “음성”으로 추정됨을 나타내고, “true” 또는 “false”는 추정의 사실 또는 거짓을 나타낸다. 이 때 분류오류율은 다음과 같이 산출된다.</p>
-<p><span class="math display" id="eq:cm-misclassification-rate">\[\begin{equation}
-\text{misclassifiction rate} = \frac{b + c}{a + b + c + d}
-\tag{7.3}
-\end{equation}\]</span></p>
-<p>정확도(accuracy)는 오류율의 반대 개념으로, 실제 범주를 제대로 추정한 전체 비율을 나타내며 아래와 같이 산출된다.</p>
-<p><span class="math display" id="eq:cm-accuracy">\[\begin{equation}
-\text{accuracy} = \frac{a + d}{a + b + c + d} = 1 - \text{misclassifiction rate}
-\tag{7.4}
-\end{equation}\]</span></p>
-<p>한편, 민감도(sensitivity)는 실제 질병이 있는 경우를 양성으로 판정하는 비율을 나타내는 것으로, 다음과 같이 산출된다.</p>
-<p><span class="math display" id="eq:cm-sensitivity">\[\begin{equation}
-\text{sensitivity} = \frac{a}{a + c}
-\tag{7.5}
-\end{equation}\]</span></p>
-<p>그리고 특이도(specificity)란 실제 질병이 없는 경우를 음성으로 판정하는 비율을 나타내는 것으로 다음과 같다.</p>
-<p><span class="math display" id="eq:cm-specificity">\[\begin{equation}
-\text{specificity} = \frac{d}{b + d}
-\tag{7.6}
-\end{equation}\]</span></p>
-<p>정확도를 민감도 및 특이도로 표현하면 다음과 같다.</p>
-<p><span class="math display">\[\begin{equation*}
-\text{accuracy} = \frac{a + c}{a + b + c + d}\text{sensitivity} + \frac{b + d}{a + b + c + d}\text{specificity}
-\end{equation*}\]</span></p>
-<p>민감도 및 특이도를 별도로 산출하여 분석하는 이유 중 하나는, 동일한 정확도를 갖는다 하더라도 민감도와 특이도는 다를 수 있기 때문이다. 경우에 따라서는 높은 민감도를 원하거나 높은 특이도를 원할 수 있다.</p>
-<div id="confusion-matrix-r-package" class="section level3">
-<h3><span class="header-section-number">7.3.1</span> R 패키지 내 정오분류표</h3>
-<p>100개의 객체에 대한 실제범주와 추정범주가 아래와 같이 주어진다고 하자.</p>
-<p><span class="math display">\[\begin{eqnarray*}
-y_i &amp;=&amp; \begin{cases}
-1 &amp; i = 1, \cdots, 20\\
-0 &amp; i = 21, \cdots, 100
-\end{cases},\\
-\hat{y}_i &amp;=&amp; \begin{cases}
-1 &amp; i = 1, \cdots, 15, 91, \cdots, 100\\
-0 &amp; i = 16, \cdots, 90
-\end{cases}
-\end{eqnarray*}\]</span></p>
-<pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">20</span>), <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">80</span>)), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))
-y_hat &lt;-<span class="kw">factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">15</span>), <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">75</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>)), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))</code></pre>
-<p>해당 추정결과에 대한 정오분류표 및 각종 평가지표를 얻기 위해 <code>caret</code> 패키지의 <code>confusionMatrix</code> 함수를 이용한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cm &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> y_hat, <span class="dt">reference =</span> y)</code></pre>
-<p>우선 정오분류표는 결과 객체의 <code>table</code> component에 저장된다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cm<span class="op">$</span>table</code></pre>
-<pre><code>##           Reference
-## Prediction  1  0
-##          1 15 10
-##          0  5 70</code></pre>
-<p>정확도를 비롯한 각종 전반적인 지표는 <code>overall</code>이라는 component에 벡터 형태로 저장된다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cm<span class="op">$</span>overall</code></pre>
-<pre><code>##       Accuracy          Kappa  AccuracyLower  AccuracyUpper   AccuracyNull 
-##      0.8500000      0.5714286      0.7646925      0.9135456      0.8000000 
-## AccuracyPValue  McnemarPValue 
-##      0.1285055      0.3016996</code></pre>
-<p>또한, 민감도, 특이도를 비롯한 몇 가지 분류성능 지표들은 <code>byClass</code>라는 component에 역시 벡터 형태로 저장된다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cm<span class="op">$</span>byClass</code></pre>
-<pre><code>##          Sensitivity          Specificity       Pos Pred Value 
-##            0.7500000            0.8750000            0.6000000 
-##       Neg Pred Value            Precision               Recall 
-##            0.9333333            0.6000000            0.7500000 
-##                   F1           Prevalence       Detection Rate 
-##            0.6666667            0.2000000            0.1500000 
-## Detection Prevalence    Balanced Accuracy 
-##            0.2500000            0.8125000</code></pre>
-</div>
-</div>
-<div id="roc-curve" class="section level2">
-<h2><span class="header-section-number">7.4</span> ROC 곡선</h2>
-<p>일반적으로 민감도와 특이도를 동시에 증가시키는 것은 불가능하다. 다시 말하면, 민감도를 높이면 특이도가 감소하고, 또한 반대가 성립하게 된다.</p>
-<p>예를 들어 다음과 같이 10개의 객체로 이루어진 학습표본이 있다고 하자.</p>
+<div id="regression-response-confidence-prediction" class="section level2">
+<h2><span class="header-section-number">1.3</span> 반응치에 대한 추정 및 예측</h2>
+<div id="regression-response-confidence" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> 평균반응치의 추정</h3>
+<div id="regression-response-confidence-basic-script" class="section level4">
+<h4><span class="header-section-number">1.3.1.1</span> 기본 R 스트립트</h4>
+<p>다음과 같은 10명의 나이(age), 키(height), 몸무게(weight)에 대한 데이터가 있다.</p>
 <pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
-  <span class="op">~</span>x, <span class="op">~</span>y,
-  <span class="dv">24</span>, <span class="dv">0</span>,
-  <span class="dv">35</span>, <span class="dv">0</span>,
-  <span class="dv">37</span>, <span class="dv">1</span>,
-  <span class="dv">42</span>, <span class="dv">0</span>,
-  <span class="dv">49</span>, <span class="dv">1</span>,
-  <span class="dv">54</span>, <span class="dv">1</span>,
-  <span class="dv">56</span>, <span class="dv">0</span>,
-  <span class="dv">68</span>, <span class="dv">1</span>,
-  <span class="dv">72</span>, <span class="dv">1</span>,
-  <span class="dv">73</span>, <span class="dv">1</span>
-) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">factor</span>(y, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)))</code></pre>
-<p>분류기준이 만약 <span class="math inline">\(x &lt; 40\)</span>이면 범주 <code>0</code>, <span class="math inline">\(x \geq 40\)</span>이면 범주 <code>1</code>로 추정할 때, 정오분류표는 다음과 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cm40 &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(
-  <span class="kw">factor</span>(<span class="kw">as.integer</span>(train_df<span class="op">$</span>x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">40</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),
-  train_df<span class="op">$</span>y
+  <span class="op">~</span>age, <span class="op">~</span>height, <span class="op">~</span>weight,
+  <span class="dv">21</span>, <span class="dv">170</span>, <span class="dv">60</span>,
+  <span class="dv">47</span>, <span class="dv">167</span>, <span class="dv">65</span>,
+  <span class="dv">36</span>, <span class="dv">173</span>, <span class="dv">67</span>,
+  <span class="dv">15</span>, <span class="dv">165</span>, <span class="dv">54</span>,
+  <span class="dv">54</span>, <span class="dv">168</span>, <span class="dv">73</span>,
+  <span class="dv">25</span>, <span class="dv">177</span>, <span class="dv">71</span>,
+  <span class="dv">32</span>, <span class="dv">169</span>, <span class="dv">68</span>,
+  <span class="dv">18</span>, <span class="dv">172</span>, <span class="dv">62</span>,
+  <span class="dv">43</span>, <span class="dv">171</span>, <span class="dv">66</span>,
+  <span class="dv">28</span>, <span class="dv">175</span>, <span class="dv">68</span>
 )
-
-cm40<span class="op">$</span>table</code></pre>
-<pre><code>##           Reference
-## Prediction 1 0
-##          1 5 2
-##          0 1 2</code></pre>
-<p>이 때 구해지는 민감도 및 특이도는 아래와 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cm40<span class="op">$</span>byClass[<span class="kw">c</span>(<span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>)]</code></pre>
-<pre><code>## Sensitivity Specificity 
-##   0.8333333   0.5000000</code></pre>
-<p>한편, 분류기준이 만약 <span class="math inline">\(x &lt; 50\)</span>이면 범주 <code>0</code>, <span class="math inline">\(x \geq 50\)</span>이면 범주 <code>1</code>로 추정할 때, 정오분류표는 다음과 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cm50 &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(
-  <span class="kw">factor</span>(<span class="kw">as.integer</span>(train_df<span class="op">$</span>x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">50</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),
-  train_df<span class="op">$</span>y
-)
-
-cm50<span class="op">$</span>table</code></pre>
-<pre><code>##           Reference
-## Prediction 1 0
-##          1 4 1
-##          0 2 3</code></pre>
-<p>또한, 이 때 구해지는 민감도 및 특이도는 아래와 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cm50<span class="op">$</span>byClass[<span class="kw">c</span>(<span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>)]</code></pre>
-<pre><code>## Sensitivity Specificity 
-##   0.6666667   0.7500000</code></pre>
-<p>위 <span class="math inline">\(x\)</span>값 40을 기준으로 분류를 하는 경우와 비교하여 민감도는 감소하고 특이도는 증가함을 관찰할 수 있다.</p>
-<p>분류를 위한 <span class="math inline">\(x\)</span> 기준값(threshold)을 증가시켜가면서 민감도와 특이도가 어떻게 변하는 지 살펴보도록 하자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">univariate_binary_rule &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, th) {
-  cm &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(
-    <span class="kw">factor</span>(<span class="kw">as.integer</span>(x <span class="op">&gt;=</span><span class="st"> </span>th), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),
-    y
-  )
-  
-  <span class="kw">tibble</span>(<span class="dt">threshold =</span> th, 
-         <span class="dt">sensitivity =</span> cm<span class="op">$</span>byClass[<span class="st">&quot;Sensitivity&quot;</span>],
-         <span class="dt">specificity =</span> cm<span class="op">$</span>byClass[<span class="st">&quot;Specificity&quot;</span>])
-}
-
-th &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">sort</span>(train_df<span class="op">$</span>x), <span class="ot">Inf</span>)
-
-roc_df &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(th, univariate_binary_rule, <span class="dt">x =</span> train_df<span class="op">$</span>x, <span class="dt">y =</span> train_df<span class="op">$</span>y)
 
 knitr<span class="op">::</span><span class="kw">kable</span>(
-  roc_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
-  <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
-  <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;분류기준값($x$)&#39;</span>, <span class="st">&#39;민감도(sensitivity)&#39;</span>, <span class="st">&#39;특이도(specificity)&#39;</span>),
-  <span class="dt">caption =</span> <span class="st">&#39;분류기준별 민감도 및 특이도&#39;</span>
+  train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+  <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
+  <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;나이 (age)&#39;</span>, <span class="st">&#39;키 (height)&#39;</span>, <span class="st">&#39;몸무게 (weight)&#39;</span>),
+  <span class="dt">caption =</span> <span class="st">&#39;나이, 키, 몸무게 데이터&#39;</span>
 )</code></pre>
 <table>
-<caption><span id="tab:roc-data">Table 7.1: </span>분류기준별 민감도 및 특이도</caption>
+<caption><span id="tab:regression-age-height-weight-data">Table 1.1: </span>나이, 키, 몸무게 데이터</caption>
 <thead>
 <tr class="header">
-<th align="center">분류기준값(<span class="math inline">\(x\)</span>)</th>
-<th align="center">민감도(sensitivity)</th>
-<th align="center">특이도(specificity)</th>
+<th align="center">나이 (age)</th>
+<th align="center">키 (height)</th>
+<th align="center">몸무게 (weight)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">24</td>
-<td align="center">1.0000000</td>
-<td align="center">0.00</td>
+<td align="center">21</td>
+<td align="center">170</td>
+<td align="center">60</td>
 </tr>
 <tr class="even">
-<td align="center">35</td>
-<td align="center">1.0000000</td>
-<td align="center">0.25</td>
+<td align="center">47</td>
+<td align="center">167</td>
+<td align="center">65</td>
 </tr>
 <tr class="odd">
-<td align="center">37</td>
-<td align="center">1.0000000</td>
-<td align="center">0.50</td>
+<td align="center">36</td>
+<td align="center">173</td>
+<td align="center">67</td>
 </tr>
 <tr class="even">
-<td align="center">42</td>
-<td align="center">0.8333333</td>
-<td align="center">0.50</td>
-</tr>
-<tr class="odd">
-<td align="center">49</td>
-<td align="center">0.8333333</td>
-<td align="center">0.75</td>
-</tr>
-<tr class="even">
+<td align="center">15</td>
+<td align="center">165</td>
 <td align="center">54</td>
-<td align="center">0.6666667</td>
-<td align="center">0.75</td>
 </tr>
 <tr class="odd">
-<td align="center">56</td>
-<td align="center">0.5000000</td>
-<td align="center">0.75</td>
-</tr>
-<tr class="even">
-<td align="center">68</td>
-<td align="center">0.5000000</td>
-<td align="center">1.00</td>
-</tr>
-<tr class="odd">
-<td align="center">72</td>
-<td align="center">0.3333333</td>
-<td align="center">1.00</td>
-</tr>
-<tr class="even">
+<td align="center">54</td>
+<td align="center">168</td>
 <td align="center">73</td>
-<td align="center">0.1666667</td>
-<td align="center">1.00</td>
+</tr>
+<tr class="even">
+<td align="center">25</td>
+<td align="center">177</td>
+<td align="center">71</td>
 </tr>
 <tr class="odd">
-<td align="center">Inf</td>
-<td align="center">0.0000000</td>
-<td align="center">1.00</td>
+<td align="center">32</td>
+<td align="center">169</td>
+<td align="center">68</td>
+</tr>
+<tr class="even">
+<td align="center">18</td>
+<td align="center">172</td>
+<td align="center">62</td>
+</tr>
+<tr class="odd">
+<td align="center">43</td>
+<td align="center">171</td>
+<td align="center">66</td>
+</tr>
+<tr class="even">
+<td align="center">28</td>
+<td align="center">175</td>
+<td align="center">68</td>
 </tr>
 </tbody>
 </table>
-<p>민감도와 특이도를 동시에 그래프로 나타낸 것 중 ROC(receiver operating characteristic) 곡선이 널리 사용되는데, 이는 분류기의 경계치를 조정하여 가면서 (1 - 특이도)(또는 false positive rate)을 <span class="math inline">\(x\)</span>축에, 민감도를 <span class="math inline">\(y\)</span>축에 도식화한 것이다.</p>
-<p>위 Table <a href="classifier-evaluation.html#tab:roc-data">7.1</a>를 바탕으로 ROC 곡선을 작성해보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">roc_df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>specificity, <span class="dt">y =</span> sensitivity)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_path</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:roc-example"></span>
-<img src="data-mining-book_files/figure-html/roc-example-1.png" alt="ROC 곡선" width="672" />
-<p class="caption">
-Figure 7.1: ROC 곡선
-</p>
+<p>회귀모형을 아래와 같이 학습한다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">lm_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(weight <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>height, <span class="dt">data =</span> train_df)</code></pre>
+<p>추정된 회귀계수는 아래와 같다.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(lm_fit)</code></pre>
+<pre><code>##  (Intercept)          age       height 
+## -108.1671993    0.3291212    0.9552913</code></pre>
+<p>추정계수벡터의 분산-공분산 행렬은 아래와 같다.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vcov</span>(lm_fit)</code></pre>
+<pre><code>##              (Intercept)          age        height
+## (Intercept) 1774.3280624 -0.671107283 -10.264885141
+## age           -0.6711073  0.004794717   0.003035476
+## height       -10.2648851  0.003035476   0.059566804</code></pre>
+<p>나이가 40, 키가 170인 사람들의 평균 몸무게에 대한 95% 신뢰구간은 아래와 같이 구할 수 있다.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(lm_fit, <span class="dt">newdata =</span> <span class="kw">tibble</span>(<span class="dt">age =</span> <span class="dv">40</span>, <span class="dt">height =</span> <span class="dv">170</span>),
+        <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</code></pre>
+<pre><code>##        fit      lwr      upr
+## 1 67.39718 65.01701 69.77735</code></pre>
 </div>
-</div>
-<div id="gain-chart" class="section level2">
-<h2><span class="header-section-number">7.5</span> 이익도표</h2>
-<p>이익도표는 마케팅을 위하여 수익을 창출하는 목표고객(target)을 추출할 목적으로 사용되는데, 단순히 분류를 위한 여러 모형을 비교하기 위한 목적으로도 종종 사용되고 있다. 목표 마케팅의 목적에서는, 특정 범주의 고객을 목표고객으로 할 때, 이러한 목표고객의 비율이 상대적으로 높은 서브그룹을 찾고자 하는 것이다. 이를 위해, 우선 전체 데이터를 특정 범주의 사후확률의 순서로 정렬한 후, <span class="math inline">\(K\)</span>개(주로 <span class="math inline">\(K = 10\)</span>을 사용)의 집단으로 구분하고, 각 집단별로 다음과 같은 통계량을 산출한다.</p>
-<p><span class="math inline">\(k\)</span>번째 집단 내에서 범주 <span class="math inline">\(j\)</span>에 속한 객체의 수를 <span class="math inline">\(n_{kj}\)</span>라 할 때, 다음과 같은 범주 <span class="math inline">\(j\)</span>에 대한 <span class="math inline">\(k\)</span>번째 집단의 통계량들을 산출할 수 있다. (본 장에서 <span class="math inline">\(K\)</span>개의 집단은 동일한 크기라 가정하자. 즉, 모든 집단 <span class="math inline">\(k\)</span>에 대해 <span class="math inline">\(\sum_{j = 1}^{J} n_{kj} = \frac{N}{K}\)</span>가 성립한다고 하자.)</p>
-<p><span class="math display">\[\begin{eqnarray*}
-\text{% captured response} &amp;=&amp; \frac{n_{kj}}{\sum_{k = 1}^{K} n_{kj}} \times 100\\
-\text{cumulative % captured response} &amp;=&amp; \frac{\sum_{l = 1}^{k} n_{lj}}{\sum_{k = 1}^{K} n_{kj}} \times 100\\
-\text{% response} &amp;=&amp; \frac{n_{kj}}{\sum_{j = 1}^{J} n_{kj}} \times 100\\
-\text{lift} &amp;=&amp; \frac{n_{kj}}{\frac{1}{K} \sum_{k = 1}^{K} n_{kj}}
-\end{eqnarray*}\]</span></p>
-<p>1,000개의 객체로 이루어진 어떤 데이터의 실제 범주별 빈도가 다음과 같다고 하자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">y_freq &lt;-<span class="st"> </span><span class="kw">tribble</span>(
-  <span class="op">~</span>y, <span class="op">~</span>n,
-  <span class="dv">1</span>, <span class="dv">437</span>,
-  <span class="dv">2</span>, <span class="dv">348</span>,
-  <span class="dv">3</span>, <span class="dv">215</span>
-) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">factor</span>(y, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)))
+<div id="regression-response-confidence-variance" class="section level4">
+<h4><span class="header-section-number">1.3.1.2</span> 평균 반응치의 분산 추정</h4>
+<p>새로운 독립변수에 대한 벡터를 아래와 같이 <span class="math inline">\(\mathbf{x}_0\)</span>라 하면, 평균반응치의 추정량은 아래와 같이 표현된다.</p>
+<p><span class="math display" id="eq:response-estimate">\[\begin{equation}
+\hat{y}_0 = \mathbf{x}_0^\top \hat{\boldsymbol{\beta}} \tag{1.3}
+\end{equation}\]</span></p>
+<p>식 <a href="regression.html#eq:response-estimate">(1.3)</a>의 분산은 아래와 같다.</p>
+<p><span class="math display" id="eq:response-estimate-variance">\[\begin{eqnarray}
+Var(\hat{y}_0) &amp;=&amp; \mathbf{x}_0^\top Var(\hat{\boldsymbol{\beta}}) \mathbf{x}_0\\
+&amp;=&amp; \sigma^2 \mathbf{x}_0^\top \left(\mathbf{X}^\top \mathbf{X}\right)^{-1} \mathbf{x}_0 \tag{1.4}
+\end{eqnarray}\]</span></p>
+<p>위 식 <a href="regression.html#eq:response-estimate-variance">(1.4)</a>에서 <span class="math inline">\(\sigma^2\)</span> 대신 그 추정값인 <span class="math inline">\(MSE\)</span> (mean squared error)를 대입하여 평균반응치의 분산을 추정한다.</p>
+<p><span class="math display" id="eq:response-estimate-variance-est">\[\begin{equation}
+\hat{Var}(\hat{y}_0) = MSE \times \left( \mathbf{x}_0^\top \left(\mathbf{X}^\top \mathbf{X}\right)^{-1} \mathbf{x}_0 \right) \tag{1.5}
+\end{equation}\]</span></p>
+<p>우선 Table <a href="regression.html#tab:regression-age-height-weight-data">1.1</a>에 대해 회귀모형 추정치 <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>와 <span class="math inline">\(MSE\)</span>값을 구해보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="kw">nrow</span>(train_df)
+X &lt;-<span class="st"> </span><span class="kw">cbind</span>(
+  <span class="dt">intercept =</span> <span class="kw">rep</span>(<span class="dv">1</span>, n), 
+  train_df[, <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;height&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()
+)
+y &lt;-<span class="st"> </span>train_df[, <span class="kw">c</span>(<span class="st">&quot;weight&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()
+k &lt;-<span class="st"> </span><span class="kw">ncol</span>(X) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
 
-y_freq</code></pre>
-<pre><code>## # A tibble: 3 x 2
-##   y         n
-##   &lt;fct&gt; &lt;dbl&gt;
-## 1 1       437
-## 2 2       348
-## 3 3       215</code></pre>
-<p>한편, 어떤 분류모형을 사용하여 각 객체의 범주 <code>1</code>(특정 범주)에 대한 사후확률을 산출한 후, 전체 객체를 사후확률의 내림차순으로 정렬한 뒤 100개 객체씩 한 집단으로 구분하였다. 각 집단에 속하는 범주 <code>1</code>의 빈도는 다음과 같았다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">freq_within_group &lt;-<span class="st"> </span><span class="kw">tribble</span>(
-  <span class="op">~</span>k, <span class="op">~</span>n,
-  <span class="dv">1</span>, <span class="dv">92</span>,
-  <span class="dv">2</span>, <span class="dv">78</span>,
-  <span class="dv">3</span>, <span class="dv">64</span>,
-  <span class="dv">4</span>, <span class="dv">57</span>,
-  <span class="dv">5</span>, <span class="dv">43</span>,
-  <span class="dv">6</span>, <span class="dv">35</span>,
-  <span class="dv">7</span>, <span class="dv">29</span>,
-  <span class="dv">8</span>, <span class="dv">22</span>,
-  <span class="dv">9</span>, <span class="dv">7</span>,
-  <span class="dv">10</span>, <span class="dv">10</span>
+<span class="co"># regression coefficient</span>
+beta_hat &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y
+
+<span class="co"># response estimate</span>
+y_hat &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>beta_hat
+
+<span class="co"># MSE</span>
+MSE &lt;-<span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</code></pre>
+<p>이후, 나이가 40, 키가 170인 객체 <span class="math inline">\(\mathbf{x}_0\)</span>에 대한 평균 반응치 <span class="math inline">\(\hat{y}_0\)</span>의 95% 신뢰구간을 구해보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># variance of y_hat on new_x</span>
+new_x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(
+  <span class="dt">intercept =</span> <span class="dv">1</span>,
+  <span class="dt">age =</span> <span class="dv">40</span>,
+  <span class="dt">height =</span> <span class="dv">170</span>
+), <span class="dt">ncol =</span> <span class="dv">1</span>)
+
+new_y_hat &lt;-<span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span>beta_hat
+
+var_new_y_hat &lt;-<span class="st"> </span>MSE <span class="op">*</span><span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span>new_x
+se_new_y_hat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(var_new_y_hat)
+
+lci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.025</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_hat
+uci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_hat
+
+<span class="kw">str_glue</span>(<span class="st">&quot;({format(lci, nsmall = 3L)}, {format(uci, nsmall = 3L)})&quot;</span>)</code></pre>
+<pre><code>## (65.01701, 69.77735)</code></pre>
+</div>
+</div>
+<div id="regression-response-prediction" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> 미래반응치의 예측</h3>
+<div id="regression-response-prediction-basic-script" class="section level4">
+<h4><span class="header-section-number">1.3.2.1</span> 기본 R 스트립트</h4>
+<p><a href="regression.html#regression-response-confidence">1.3.1</a> 절에서 추정한 회귀모형을 통해, 새로운 독립변수값(나이 = 40, 키 = 170)을 지닌 특정 객체에 대한 몸무게의 예측구간을 구한다. 이는 한 객체의 몸무게의 예측구간으로, <a href="regression.html#regression-response-confidence">1.3.1</a> 절에서 구한 평균 몸무게의 신뢰구간보다 넓다.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(lm_fit, <span class="dt">newdata =</span> <span class="kw">tibble</span>(<span class="dt">age =</span> <span class="dv">40</span>, <span class="dt">height =</span> <span class="dv">170</span>),
+        <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</code></pre>
+<pre><code>##        fit      lwr     upr
+## 1 67.39718 60.68745 74.1069</code></pre>
+</div>
+<div id="regression-response-prediction-interval" class="section level4">
+<h4><span class="header-section-number">1.3.2.2</span> 미래 반응치의 예측구간 추정</h4>
+<p>독립변수값들에 대응하는 미래반응치인 <span class="math inline">\(y_0\)</span>의 예측치는 평균반응치의 추정치와 동일하며, 반응치의 예측구간을 구하기 위해서는 예측오차의 분산을 알아야 하는데, 이는 아래와 같이 식 <a href="regression.html#eq:response-estimate-variance">(1.4)</a>보다 <span class="math inline">\(\sigma^2\)</span>이 더 크게 된다.</p>
+<p><span class="math display" id="eq:response-prediction-variance">\[\begin{eqnarray}
+Var(y_0 - \hat{y}_0) &amp;=&amp; Var(y_0) + Var(\hat{y}_0)\\
+&amp;=&amp; \sigma^2 + \sigma^2 \mathbf{x}_0^\top \left(\mathbf{X}^\top \mathbf{X}\right)^{-1} \mathbf{x}_0 \\
+&amp;=&amp; \sigma^2 \left( 1 + \mathbf{x}_0^\top \left(\mathbf{X}^\top \mathbf{X}\right)^{-1} \mathbf{x}_0 \right)
+\tag{1.6}
+\end{eqnarray}\]</span></p>
+<p>위 식 <a href="regression.html#eq:response-prediction-variance">(1.6)</a>에서 <span class="math inline">\(\sigma^2\)</span> 대신 <span class="math inline">\(MSE\)</span>를 대입함으로써 예측오차 분산을 추정할 수 있다.</p>
+<p><span class="math display" id="eq:response-prediction-variance-est">\[\begin{equation}
+\hat{Var}(y_0 - \hat{y}_0) = MSE \times \left( 1 + \mathbf{x}_0^\top \left(\mathbf{X}^\top \mathbf{X}\right)^{-1} \mathbf{x}_0 \right)
+\tag{1.7}
+\end{equation}\]</span></p>
+<p>앞 절에서 추정한 회귀모형을 이용하여, 나이가 40, 키가 170인 객체 <span class="math inline">\(\mathbf{x}_0\)</span>에 대한 미래 반응치 <span class="math inline">\(y_0\)</span>의 95% 예측구간을 구해보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># variance of y_hat on new_x</span>
+new_x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(
+  <span class="dt">intercept =</span> <span class="dv">1</span>,
+  <span class="dt">age =</span> <span class="dv">40</span>,
+  <span class="dt">height =</span> <span class="dv">170</span>
+), <span class="dt">ncol =</span> <span class="dv">1</span>)
+
+new_y_hat &lt;-<span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span>beta_hat
+
+var_new_y_pred &lt;-<span class="st"> </span>MSE <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span>new_x)
+se_new_y_pred &lt;-<span class="st"> </span><span class="kw">sqrt</span>(var_new_y_pred)
+
+lci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.025</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_pred
+uci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_pred
+
+<span class="kw">str_glue</span>(<span class="st">&quot;({format(lci, nsmall = 3L)}, {format(uci, nsmall = 3L)})&quot;</span>)</code></pre>
+<pre><code>## (60.68745, 74.1069)</code></pre>
+</div>
+</div>
+</div>
+<div id="regression-indicator-variable" class="section level2">
+<h2><span class="header-section-number">1.4</span> 지시변수와 회귀모형</h2>
+<div id="regression-indicator-variable-basic-script" class="section level3">
+<h3><span class="header-section-number">1.4.1</span> 기본 R 스트립트</h3>
+<p>어떤 열연코일의 인장강도(TS)에 권취온도(CT)가 어떤 영향을 미치는가를 조사하기 위해 TS를 종속변수, CT를 독립변수로 하여 회귀분석을 실시하기로 하였다. 수집된 데이터에는 두 개의 두께 그룹(2mm, 6mm)이 포함되어 있다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>ct, <span class="op">~</span>thickness, <span class="op">~</span>ts,
+  <span class="dv">540</span>, <span class="dv">2</span>, <span class="fl">52.5</span>,
+  <span class="dv">660</span>, <span class="dv">2</span>, <span class="fl">50.2</span>,
+  <span class="dv">610</span>, <span class="dv">2</span>, <span class="fl">51.3</span>,
+  <span class="dv">710</span>, <span class="dv">2</span>, <span class="fl">49.1</span>,
+  <span class="dv">570</span>, <span class="dv">6</span>, <span class="fl">50.8</span>,
+  <span class="dv">700</span>, <span class="dv">6</span>, <span class="fl">48.7</span>,
+  <span class="dv">560</span>, <span class="dv">6</span>, <span class="fl">51.2</span>,
+  <span class="dv">600</span>, <span class="dv">6</span>, <span class="fl">50.8</span>,
+  <span class="dv">680</span>, <span class="dv">6</span>, <span class="fl">49.3</span>,
+  <span class="dv">530</span>, <span class="dv">6</span>, <span class="fl">51.5</span>
+) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">thickness =</span> <span class="kw">factor</span>(thickness, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">2</span>)))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(train_df)</code></pre>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    10 obs. of  3 variables:
+##  $ ct       : num  540 660 610 710 570 700 560 600 680 530
+##  $ thickness: Factor w/ 2 levels &quot;6&quot;,&quot;2&quot;: 2 2 2 2 1 1 1 1 1 1
+##  $ ts       : num  52.5 50.2 51.3 49.1 50.8 48.7 51.2 50.8 49.3 51.5</code></pre>
+<p>두께를 <code>factor</code>로 지정하고 회귀모형을 추정하자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">lm_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(ts <span class="op">~</span><span class="st"> </span>ct <span class="op">+</span><span class="st"> </span>thickness, <span class="dt">data =</span> train_df)</code></pre>
+<p>회귀 계수는 아래와 같이 얻어진다.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(lm_fit)</code></pre>
+<pre><code>## (Intercept)          ct  thickness2 
+## 61.10796610 -0.01767797  0.80415254</code></pre>
+<p>두께 그룹에 따라 CT에 대한 TS의 기울기가 다르다고 예상되면 CT와 두께 간에 교호작용(interaction)이 존재한다고 말하며, 이 때 회귀모형은 다음과 같이 추정한다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">lm_interaction_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(
+  ts <span class="op">~</span><span class="st"> </span>ct <span class="op">+</span><span class="st"> </span>thickness <span class="op">+</span><span class="st"> </span>ct<span class="op">:</span>thickness, 
+  <span class="dt">data =</span> train_df
+)</code></pre>
+<p>교호작용이 추가된 회귀 결과는 아래와 같다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">broom<span class="op">::</span><span class="kw">tidy</span>(lm_interaction_fit)</code></pre>
+<pre><code>## # A tibble: 4 x 5
+##   term           estimate std.error statistic  p.value
+##   &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)    60.1       0.750       80.2  2.53e-10
+## 2 ct             -0.0161    0.00123    -13.1  1.23e- 5
+## 3 thickness2      3.28      1.21         2.71 3.52e- 2
+## 4 ct:thickness2  -0.00399   0.00194     -2.05 8.57e- 2</code></pre>
+<p>두께에 따른 CT와 TS의 관계를 그래프로 살펴보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">new_df &lt;-<span class="st"> </span><span class="kw">crossing</span>(
+  <span class="dt">ct =</span> <span class="kw">seq</span>(<span class="dv">500</span>, <span class="dv">750</span>, <span class="dt">by =</span> <span class="dv">10</span>),
+  <span class="dt">thickness =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">2</span>))
 )
 
-freq_within_group</code></pre>
-<pre><code>## # A tibble: 10 x 2
-##        k     n
-##    &lt;dbl&gt; &lt;dbl&gt;
-##  1     1    92
-##  2     2    78
-##  3     3    64
-##  4     4    57
-##  5     5    43
-##  6     6    35
-##  7     7    29
-##  8     8    22
-##  9     9     7
-## 10    10    10</code></pre>
-<p>이를 바탕으로 각 집단 별 범주 <code>1</code>에 대한 통계량을 산출해보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">stat_df &lt;-<span class="st"> </span>freq_within_group <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cum_n =</span> <span class="kw">cumsum</span>(n)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(
-    <span class="dt">captured_response_pct =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,
-    <span class="dt">cum_captured_response_pct =</span> cum_n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,
-    <span class="dt">response_pct =</span> n <span class="op">/</span><span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,
-    <span class="dt">lift =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">mean</span>(n)
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>cum_n)
-
-knitr<span class="op">::</span><span class="kw">kable</span>(
-  stat_df,
-  <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
-  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">6</span>),
-  <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;집단&#39;</span>, <span class="st">&#39;범주 1의 빈도&#39;</span>, <span class="st">&#39;% captured response&#39;</span>, 
-                <span class="st">&#39;cum. % captured response&#39;</span>, <span class="st">&#39;% response&#39;</span>, <span class="st">&#39;lift&#39;</span>),
-  <span class="dt">caption =</span> <span class="st">&#39;이익도표를 위한 통계량&#39;</span>,
-  <span class="dt">digits =</span> <span class="dv">2</span>
-)</code></pre>
-<table>
-<caption><span id="tab:gain-chart-stat">Table 7.2: </span>이익도표를 위한 통계량</caption>
-<thead>
-<tr class="header">
-<th align="center">집단</th>
-<th align="center">범주 1의 빈도</th>
-<th align="right">% captured response</th>
-<th align="right">cum. % captured response</th>
-<th align="right">% response</th>
-<th align="right">lift</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">1</td>
-<td align="center">92</td>
-<td align="right">21.05</td>
-<td align="right">21.05</td>
-<td align="right">92</td>
-<td align="right">2.11</td>
-</tr>
-<tr class="even">
-<td align="center">2</td>
-<td align="center">78</td>
-<td align="right">17.85</td>
-<td align="right">38.90</td>
-<td align="right">78</td>
-<td align="right">1.78</td>
-</tr>
-<tr class="odd">
-<td align="center">3</td>
-<td align="center">64</td>
-<td align="right">14.65</td>
-<td align="right">53.55</td>
-<td align="right">64</td>
-<td align="right">1.46</td>
-</tr>
-<tr class="even">
-<td align="center">4</td>
-<td align="center">57</td>
-<td align="right">13.04</td>
-<td align="right">66.59</td>
-<td align="right">57</td>
-<td align="right">1.30</td>
-</tr>
-<tr class="odd">
-<td align="center">5</td>
-<td align="center">43</td>
-<td align="right">9.84</td>
-<td align="right">76.43</td>
-<td align="right">43</td>
-<td align="right">0.98</td>
-</tr>
-<tr class="even">
-<td align="center">6</td>
-<td align="center">35</td>
-<td align="right">8.01</td>
-<td align="right">84.44</td>
-<td align="right">35</td>
-<td align="right">0.80</td>
-</tr>
-<tr class="odd">
-<td align="center">7</td>
-<td align="center">29</td>
-<td align="right">6.64</td>
-<td align="right">91.08</td>
-<td align="right">29</td>
-<td align="right">0.66</td>
-</tr>
-<tr class="even">
-<td align="center">8</td>
-<td align="center">22</td>
-<td align="right">5.03</td>
-<td align="right">96.11</td>
-<td align="right">22</td>
-<td align="right">0.50</td>
-</tr>
-<tr class="odd">
-<td align="center">9</td>
-<td align="center">7</td>
-<td align="right">1.60</td>
-<td align="right">97.71</td>
-<td align="right">7</td>
-<td align="right">0.16</td>
-</tr>
-<tr class="even">
-<td align="center">10</td>
-<td align="center">10</td>
-<td align="right">2.29</td>
-<td align="right">100.00</td>
-<td align="right">10</td>
-<td align="right">0.23</td>
-</tr>
-</tbody>
-</table>
-<p>Table <a href="classifier-evaluation.html#tab:gain-chart-stat">7.2</a>를 바탕으로 네 가지 이익도표를 작성해보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">stat_df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;stat&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, 
-         captured_response_pct<span class="op">:</span>lift) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> k, <span class="dt">y =</span> value)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="kw">vars</span>(stat), <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>,
-             <span class="dt">labeller =</span> <span class="kw">as_labeller</span>(
-               <span class="kw">c</span>(<span class="st">&quot;captured_response_pct&quot;</span> =<span class="st"> &quot;% captured response&quot;</span>,
-                 <span class="st">&quot;cum_captured_response_pct&quot;</span> =<span class="st"> &quot;cum. % captured response&quot;</span>,
-                 <span class="st">&quot;response_pct&quot;</span> =<span class="st"> &quot;% response&quot;</span>,
-                 <span class="st">&quot;lift&quot;</span> =<span class="st"> &quot;lift&quot;</span>)
-             )) <span class="op">+</span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;집단&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;통계량&quot;</span>)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:gain-chart-plot"></span>
-<img src="data-mining-book_files/figure-html/gain-chart-plot-1.png" alt="이익도표" width="672" />
+new_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ts_hat =</span> <span class="kw">predict</span>(lm_interaction_fit, .)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ct, <span class="dt">y =</span> ts_hat)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> thickness)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ct, <span class="dt">y =</span> ts, <span class="dt">color =</span> thickness), <span class="dt">data =</span> train_df) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">color =</span> <span class="st">&quot;두께&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;CT&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;TS&quot;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:regression-ct-ts-by-thickness-plot"></span>
+<img src="data-mining-book_files/figure-html/regression-ct-ts-by-thickness-plot-1.png" alt="두께에 따른 CT와 TS의 관계" width="672" />
 <p class="caption">
-Figure 7.2: 이익도표
+Figure 1.1: 두께에 따른 CT와 TS의 관계
 </p>
 </div>
 
+</div>
 </div>
 </div>
             </section>
@@ -830,8 +694,8 @@ Figure 7.2: 이익도표
           </div>
         </div>
       </div>
-<a href="svm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="clustering-overview.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="classification-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
