@@ -32,8 +32,8 @@ S = \{O_1, \cdots, O_n\}
 
 \begin{equation*}
 \begin{split}
-C_i \cap C_j &=& \emptyset, \, 1 \leq i \neq j \leq K\\
-\cup_{i = 1}^{K} C_i &=& S
+C_i \cap C_j &= \emptyset, \, 1 \leq i \neq j \leq K\\
+\cup_{i = 1}^{K} C_i &= S
 \end{split}
 \end{equation*}
  

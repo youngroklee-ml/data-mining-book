@@ -480,9 +480,9 @@ K(\mathbf{x}_i, \mathbf{x}_j) = \Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)
 널리 사용되는 커널함수로는 아래와 같은 함수들이 있다.
 
 \begin{eqnarray*}
-\text{Gaussian RBF:} & & K(\mathbf{x}_i, \mathbf{x}_j) &=& \exp \left( \frac{- \left\lVert \mathbf{x}_i - \mathbf{x}_j \right\rVert^2}{2 \sigma^2} \right)\\
-\text{$r$-th order polynomial:} & & K(\mathbf{x}_i, \mathbf{x}_j) &=& \left( \mathbf{x}_i^\top \mathbf{x}_j + 1 \right)^r \\
-\text{Sigmoid:} & & K(\mathbf{x}_i, \mathbf{x}_j) &=& \tanh \left(\kappa \mathbf{x}_i^\top \mathbf{x}_j - \delta \right)
+\text{Gaussian RBF:} & & K(\mathbf{x}_i, \mathbf{x}_j) = \exp \left( \frac{- \left\lVert \mathbf{x}_i - \mathbf{x}_j \right\rVert^2}{2 \sigma^2} \right)\\
+\text{$r$-th order polynomial:} & & K(\mathbf{x}_i, \mathbf{x}_j) = \left( \mathbf{x}_i^\top \mathbf{x}_j + 1 \right)^r \\
+\text{Sigmoid:} & & K(\mathbf{x}_i, \mathbf{x}_j) = \tanh \left(\kappa \mathbf{x}_i^\top \mathbf{x}_j - \delta \right)
 \end{eqnarray*}
 
 커널함수를 이용하여 분리 하이퍼플레인을 찾기 위한 식을 아래와 같이 나타낸다.

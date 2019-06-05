@@ -1,0 +1,22 @@
+# 주성분분석 {#pca}
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+
+## 필요 R 패키지 설치 {#pca-packages-install}
+
+본 장에서 필요한 R 패키지들은 아래와 같다.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+tibble(package = c("tidyverse", "stats", "broom")) %>%
+  mutate(version = map_chr(
+    package, 
+    ~ packageDescription(.x, fields = c("Version"))[1])) %>%
+  knitr::kable()
+```
+
+
+## 변수의 변동과 제곱합 {#pca-ss}
+

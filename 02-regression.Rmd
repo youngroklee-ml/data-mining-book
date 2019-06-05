@@ -18,7 +18,7 @@ tibble(package = c("tidyverse", "stats", "broom")) %>%
 ```
 
 
-## 다중회귀모형
+## 다중회귀모형 {#multiple-linear-regression}
 
 아래와 같이 $n$개의 객체와 $k$개의 독립변수($\mathbf{x}$)로 이루어지고 하나의 종속변수($y$)로 이루어진 선형 회귀모형을 정의하자.
 
@@ -322,7 +322,7 @@ new_df %>%
   ggplot(aes(x = ct, y = ts_hat)) +
   geom_line(aes(color = thickness)) +
   geom_point(aes(x = ct, y = ts, color = thickness), data = train_df) +
-  labs(color = "두께", x = "CT", y = "TS")
+  labs(color = "thickness", x = "CT", y = "TS")
 ```
 
 

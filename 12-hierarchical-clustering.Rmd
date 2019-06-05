@@ -514,9 +514,9 @@ R 패키지로 구현된 워드 군집은 위에서 구현한 $SSW$와는 다소
 
 \begin{equation*}
 \begin{split}
-ESS(\{C_1, \cdots, C_k \}) &=& \sum_{i = 1}^{k} ESS(C_i)\\
-&=& \sum_{i = 1}^{k} \sum_{u \in C_i} \mathbf{x}_u^\top \mathbf{x}_u - |C_i| \mathbf{c}_i^\top \mathbf{c}_i\\
-&=& SSW
+ESS(\{C_1, \cdots, C_k \}) &= \sum_{i = 1}^{k} ESS(C_i)\\
+&= \sum_{i = 1}^{k} \sum_{u \in C_i} \mathbf{x}_u^\top \mathbf{x}_u - |C_i| \mathbf{c}_i^\top \mathbf{c}_i\\
+&= SSW
 \end{split}
 \end{equation*}
 
@@ -524,11 +524,11 @@ ESS(\{C_1, \cdots, C_k \}) &=& \sum_{i = 1}^{k} ESS(C_i)\\
 
 \begin{equation}
 \begin{split}
-\Delta SSW &=& ESS(C_i \cup C_j) - ESS(C_i) - ESS(C_j)\\
-&=& \sum_{u \in C_i \cup C_j} \mathbf{x}_u^\top \mathbf{x}_u - (|C_i| + |C_j|)\left[\frac{|C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j}{|C_i| + |C_j|}\right]^\top \left[\frac{|C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j}{|C_i| + |C_j|}\right]\\
-&& - \left( \sum_{u \in C_i} \mathbf{x}_u^\top \mathbf{x}_u - |C_i| \mathbf{c}_i^\top \mathbf{c}_i \right) - \left( \sum_{u \in C_j} \mathbf{x}_u^\top \mathbf{x}_u - |C_j| \mathbf{c}_j^\top \mathbf{c}_j \right)\\
-&=& -\frac{1}{|C_i| + |C_j|} \left( |C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j \right)^\top \left( |C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j \right) + |C_i| \mathbf{c}_i^\top \mathbf{c}_i + |C_j| \mathbf{c}_j^\top \mathbf{c}_j\\
-&=& \frac{|C_i||C_j|}{|C_i| + |C_j|} \left(\mathbf{c}_i - \mathbf{c}_j\right)^\top \left(\mathbf{c}_i - \mathbf{c}_j\right)
+\Delta SSW =& ESS(C_i \cup C_j) - ESS(C_i) - ESS(C_j)\\
+=& \sum_{u \in C_i \cup C_j} \mathbf{x}_u^\top \mathbf{x}_u - (|C_i| + |C_j|)\left[\frac{|C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j}{|C_i| + |C_j|}\right]^\top \left[\frac{|C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j}{|C_i| + |C_j|}\right]\\
+& - \left( \sum_{u \in C_i} \mathbf{x}_u^\top \mathbf{x}_u - |C_i| \mathbf{c}_i^\top \mathbf{c}_i \right) - \left( \sum_{u \in C_j} \mathbf{x}_u^\top \mathbf{x}_u - |C_j| \mathbf{c}_j^\top \mathbf{c}_j \right)\\
+=& -\frac{1}{|C_i| + |C_j|} \left( |C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j \right)^\top \left( |C_i|\mathbf{c}_i + |C_j|\mathbf{c}_j \right) + |C_i| \mathbf{c}_i^\top \mathbf{c}_i + |C_j| \mathbf{c}_j^\top \mathbf{c}_j\\
+=& \frac{|C_i||C_j|}{|C_i| + |C_j|} \left(\mathbf{c}_i - \mathbf{c}_j\right)^\top \left(\mathbf{c}_i - \mathbf{c}_j\right)
 \end{split}
 (\#eq:ward-minimand)
 \end{equation}
@@ -540,11 +540,11 @@ ESS(\{C_1, \cdots, C_k \}) &=& \sum_{i = 1}^{k} ESS(C_i)\\
 
 \begin{equation}
 \begin{split}
-D^2(C_i) &=& \sum_{u, v \in C_i} (\mathbf{x}_u - \mathbf{x}_v)^\top (\mathbf{x}_u - \mathbf{x}_v)\\
-&=& \sum_{u, v \in C_i} \left((\mathbf{x}_u - \mathbf{c}_i) - (\mathbf{x}_v - \mathbf{c}_i)\right)^\top \left((\mathbf{x}_u - \mathbf{c}_i) - (\mathbf{x}_v - \mathbf{c}_i)\right)\\
-&=& 2 \sum_{u \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_u - \mathbf{c}_i) - 2 \sum_{u, v \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_v - \mathbf{c}_i)\\
-&=& 2 \sum_{u \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_u - \mathbf{c}_i)\\
-&=& 2 SS(C_i)
+D^2(C_i) =& \sum_{u, v \in C_i} (\mathbf{x}_u - \mathbf{x}_v)^\top (\mathbf{x}_u - \mathbf{x}_v)\\
+=& \sum_{u, v \in C_i} \left((\mathbf{x}_u - \mathbf{c}_i) - (\mathbf{x}_v - \mathbf{c}_i)\right)^\top \left((\mathbf{x}_u - \mathbf{c}_i) - (\mathbf{x}_v - \mathbf{c}_i)\right)\\
+=& 2 \sum_{u \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_u - \mathbf{c}_i) - 2 \sum_{u, v \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_v - \mathbf{c}_i)\\
+=& 2 \sum_{u \in C_i} (\mathbf{x}_u - \mathbf{c}_i)^\top (\mathbf{x}_u - \mathbf{c}_i)\\
+=& 2 SS(C_i)
 \end{split}
 (\#eq:squared-euclidean-within-cluster)
 \end{equation}
@@ -623,10 +623,10 @@ D(C_i \cup C_j, C_{h \notin \{i, j\}}) = \alpha_i D(C_i, C_h) + \alpha_j D(C_j, 
 
 \begin{equation}
 \begin{split}
-\alpha_i &=& \frac{|C_i| + |C_h|}{|C_i| + |C_j| + |C_h|}\\
-\alpha_j &=& \frac{|C_j| + |C_h|}{|C_i| + |C_j| + |C_h|}\\
-\beta &=& - \frac{|C_h|}{|C_i| + |C_j| + |C_h|}\\
-\gamma &=& 0
+\alpha_i =& \frac{|C_i| + |C_h|}{|C_i| + |C_j| + |C_h|}\\
+\alpha_j =& \frac{|C_j| + |C_h|}{|C_i| + |C_j| + |C_h|}\\
+\beta =& - \frac{|C_h|}{|C_i| + |C_j| + |C_h|}\\
+\gamma =& 0
 \end{split}
 (\#eq:wishart)
 \end{equation}

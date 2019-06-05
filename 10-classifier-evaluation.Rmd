@@ -255,9 +255,9 @@ roc_df %>%
 $k$번째 집단 내에서 범주 $j$에 속한 객체의 수를 $n_{kj}$라 할 때, 다음과 같은 범주 $j$에 대한 $k$번째 집단의 통계량들을 산출할 수 있다. (본 장에서 $K$개의 집단은 동일한 크기라 가정하자. 즉, 모든 집단 $k$에 대해 $\sum_{j = 1}^{J} n_{kj} = \frac{N}{K}$가 성립한다고 하자.)
 
 \begin{eqnarray*}
-\text{% captured response} &=& \frac{n_{kj}}{\sum_{k = 1}^{K} n_{kj}} \times 100\\
-\text{cumulative % captured response} &=& \frac{\sum_{l = 1}^{k} n_{lj}}{\sum_{k = 1}^{K} n_{kj}} \times 100\\
-\text{% response} &=& \frac{n_{kj}}{\sum_{j = 1}^{J} n_{kj}} \times 100\\
+\text{$\%$ captured response} &=& \frac{n_{kj}}{\sum_{k = 1}^{K} n_{kj}} \times 100\\
+\text{cumulative $\%$ captured response} &=& \frac{\sum_{l = 1}^{k} n_{lj}}{\sum_{k = 1}^{K} n_{kj}} \times 100\\
+\text{$\%$ response} &=& \frac{n_{kj}}{\sum_{j = 1}^{J} n_{kj}} \times 100\\
 \text{lift} &=& \frac{n_{kj}}{\frac{1}{K} \sum_{k = 1}^{K} n_{kj}}
 \end{eqnarray*}
 
@@ -325,7 +325,7 @@ Table \@ref(tab:gain-chart-stat)를 바탕으로 네 가지 이익도표를 작�
 
 ```{r gain-chart-plot, fig.cap='이익도표', fig.align='center'}
 stat_df %>%
-  gather(key = "stat", value = "value", 
+  gather(key = "stat", value = "value",
          captured_response_pct:lift) %>%
   ggplot(aes(x = k, y = value)) +
   geom_point() +
@@ -337,8 +337,8 @@ stat_df %>%
                  "response_pct" = "% response",
                  "lift" = "lift")
              )) +
-  xlab("집단") +
-  ylab("통계량")
+  xlab("group") +
+  ylab("statistics")
 ```
 
 

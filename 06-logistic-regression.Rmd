@@ -62,7 +62,8 @@ glm_fit <- glm(y ~ x1 + x2 + x3, family = binomial(link = "logit"), data = train
 knitr::kable(
   glm_fit %>%  broom::tidy(),
   booktabs = TRUE,
-  caption = "Table \\@ref(tab:binary-logistic-reg-train-data)에 대한 Logistic Regression 결과"
+  caption = "위 우수/보통 학생 설문조사 데이터에 대한 Logistic Regression 결과"
+#  caption = "Table \\@ref(tab:binary-logistic-reg-train-data)에 대한 Logistic Regression 결과"
   )
 ```
 
@@ -406,7 +407,8 @@ multinom_fit <- nnet::multinom(
 knitr::kable(
   multinom_fit %>%  broom::tidy(exponentiate = FALSE),
   booktabs = TRUE,
-  caption = 'Table \\@ref(tab:nominal-logistic-reg-train-data)에 대한 Logistic Regression 결과'
+  caption = '위 공정변수-불량종류 데이터에 대한 Logistic Regression 결과'
+#  caption = 'Table \\@ref(tab:nominal-logistic-reg-train-data)에 대한 Logistic Regression 결과'
   )
 ```
 
@@ -446,8 +448,8 @@ $N$개의 객체로 이루어진 학습데이터 $\{(\mathbf{x}_i, y_i)\}_{i = 1
 
 \begin{equation}
 \begin{split}
-\pi_{ij} &=& \frac{\exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}, \, j = 2, \cdots, J\\
-\pi_{i1} &=& \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}
+\pi_{ij} &= \frac{\exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}, \, j = 2, \cdots, J\\
+\pi_{i1} &= \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}
 \end{split}
 (\#eq:multi-nominal-prob-sol)
 \end{equation}
@@ -465,8 +467,8 @@ v_{ij} = \begin{cases}
 
 \begin{eqnarray*}
 L &=& \prod_{i = 1}^{n} \prod_{j = 1}^{J} \left( \pi_{ij} \right)^{v_{ij}} \\
-&=& \prod_{i = 1}^{n} \pi_{i1}^{1 - \sum{j = 2}^{J} v_{ij}} \prod_{j = 2}^{J} \left( \pi_{ij} \right)^{v_{ij}}\\
-&=& \prod_{i = 1}^{n} \frac{\pi_{i1}}{\pi_{i1}^{\sum{j = 2}^{J} v_{ij}}} \prod_{j = 2}^{J} \left( \pi_{ij} \right)^{v_{ij}}\\
+&=& \prod_{i = 1}^{n} \pi_{i1}^{1 - \sum_{j = 2}^{J} v_{ij}} \prod_{j = 2}^{J} \left( \pi_{ij} \right)^{v_{ij}}\\
+&=& \prod_{i = 1}^{n} \frac{\pi_{i1}}{\pi_{i1}^{\sum_{j = 2}^{J} v_{ij}}} \prod_{j = 2}^{J} \left( \pi_{ij} \right)^{v_{ij}}\\
 &=& \prod_{i = 1}^{n} \frac{\pi_{i1}}{\prod_{j = 2}^{J} \pi_{i1}^{v_{ij}}} \prod_{j = 2}^{J} \left( \pi_{ij} \right)^{v_{ij}}\\
 &=& \prod_{i = 1}^{n} \pi_{i1} \prod_{j = 2}^{J} \left( \frac{\pi_{ij}}{\pi_{i1}} \right)^{v_{ij}}
 \end{eqnarray*}
@@ -489,8 +491,8 @@ L &=& \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + 
 
 \begin{equation}
 \begin{split}
-\frac{\partial \log L}{\partial \beta_{0,j}} &=& \sum_{i = 1}^{n} v_{ij} - \frac{\exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}\\
-\frac{\partial \log L}{\partial \beta_{k,j}} &=& \sum_{i = 1}^{n} v_{ij} x_{ik} - \frac{x_{ik} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}, \, k = 1, \cdots, p
+\frac{\partial \log L}{\partial \beta_{0,j}} &= \sum_{i = 1}^{n} v_{ij} - \frac{\exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}\\
+\frac{\partial \log L}{\partial \beta_{k,j}} &= \sum_{i = 1}^{n} v_{ij} x_{ik} - \frac{x_{ik} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}, \, k = 1, \cdots, p
 \end{split}
 (\#eq:multi-nominal-logit-loglik-diff)
 \end{equation}
@@ -613,14 +615,14 @@ VGAM::vglm(y ~ N + L,
 
 \begin{equation*}
 \begin{split}
-\pi_{ij} &=& \kappa_{ij} - \kappa_{i,j-1}\\
-&=& \frac{\exp (\beta_{0,j} + \boldsymbol\beta^\top \mathbf{x}_i)}{1 + \exp (\beta_{0,j} + \boldsymbol\beta^\top \mathbf{x}_i)} - \frac{\exp (\beta_{0,j-1} + \boldsymbol\beta^\top \mathbf{x}_i)}{1 + \exp (\beta_{0,j-1} + \boldsymbol\beta^\top \mathbf{x}_i)}, \, j = 2, \cdots, J - 1\\
-& &\\
-\pi_{i1} &=& \kappa_{i1}\\
-&=& \frac{\exp (\beta_{0,1} + \boldsymbol\beta^\top \mathbf{x}_i)}{1 + \exp (\beta_{0,1} + \boldsymbol\beta^\top \mathbf{x}_i)}\\
-& &\\
-\pi_{iJ} &=& 1 - \kappa_{i,J-1}\\
-&=& 1 - \frac{\exp (\beta_{0,J-1} + \boldsymbol\beta^\top \mathbf{x}_i)}{1 + \exp (\beta_{0,J-1} + \boldsymbol\beta^\top \mathbf{x}_i)}
+\pi_{ij} &= \kappa_{ij} - \kappa_{i,j-1}\\
+&= \frac{\exp (\beta_{0,j} + \boldsymbol\beta^\top \mathbf{x}_i)}{1 + \exp (\beta_{0,j} + \boldsymbol\beta^\top \mathbf{x}_i)} - \frac{\exp (\beta_{0,j-1} + \boldsymbol\beta^\top \mathbf{x}_i)}{1 + \exp (\beta_{0,j-1} + \boldsymbol\beta^\top \mathbf{x}_i)}, \, j = 2, \cdots, J - 1\\
+& \\
+\pi_{i1} &= \kappa_{i1}\\
+&= \frac{\exp (\beta_{0,1} + \boldsymbol\beta^\top \mathbf{x}_i)}{1 + \exp (\beta_{0,1} + \boldsymbol\beta^\top \mathbf{x}_i)}\\
+& \\
+\pi_{iJ} &= 1 - \kappa_{i,J-1}\\
+&= 1 - \frac{\exp (\beta_{0,J-1} + \boldsymbol\beta^\top \mathbf{x}_i)}{1 + \exp (\beta_{0,J-1} + \boldsymbol\beta^\top \mathbf{x}_i)}
 \end{split}
 (\#eq:cumulative-logit-prob)
 \end{equation*}
@@ -661,7 +663,8 @@ bind_cols(train_df, predict_df) %>%
     align = c('r', 'r', 'r', 'r', 'r', 'r', 'r'),
     col.names = c('잡음(N)', '손실(L)', '실제범주 $y_i$', 
                   '$\\pi_{i1}$', '$\\pi_{i2}$', '$\\pi_{i3}$', '추정범주 $\\hat{y}_i$'),
-    caption = 'Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 누적 로짓모형의 추정범주',
+    caption = '위 통신 만족도 데이터에 대한 누적 로짓모형의 추정범주',
+#    caption = 'Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 누적 로짓모형의 추정범주',
     digits = 4
   )
 ```
@@ -680,9 +683,9 @@ bind_cols(train_df, predict_df) %>%
 
 \begin{equation*}
 \begin{split}
-\pi_{ij} &=& \exp (\beta_{0,j} + \boldsymbol\beta^\top \mathbf{x}_i) \pi_{i,j+1}
-&=& \pi_{iJ} \exp \left(\sum_{k = j}^{J - 1} \beta_{0,k} + (J - j) \boldsymbol\beta^\top \mathbf{x}_i\right), \, j = 1, \cdots, J-1\\
-\sum_{j = 1}^{J} \pi_{ij} &=& 1
+\pi_{ij} &= \exp (\beta_{0,j} + \boldsymbol\beta^\top \mathbf{x}_i) \pi_{i,j+1}\\
+&= \pi_{iJ} \exp \left(\sum_{k = j}^{J - 1} \beta_{0,k} + (J - j) \boldsymbol\beta^\top \mathbf{x}_i\right), \, j = 1, \cdots, J-1\\
+\sum_{j = 1}^{J} \pi_{ij} &= 1
 \end{split}
 \end{equation*}
 
@@ -690,8 +693,8 @@ bind_cols(train_df, predict_df) %>%
 
 \begin{equation}
 \begin{split}
-\pi_{ij} &=& \frac{\exp \left( \sum_{l = j}^{J - 1} \beta_{0,l} + (J - j) \boldsymbol\beta^\top \mathbf{x}_i \right)}{1 + \sum_{k = 1}^{J - 1} \exp \left( \sum_{l = k}^{J - 1} \beta_{0,l} + (J - k) \boldsymbol\beta^\top \mathbf{x}_i \right)}, \, j = 1, \cdots, J - 1\\
-\pi_{iJ} &=& \frac{1}{1 + \sum_{k = 1}^{J - 1} \exp \left( \sum_{l = k}^{J - 1} \beta_{0,l} + (J - k) \boldsymbol\beta^\top \mathbf{x}_i \right)}
+\pi_{ij} &= \frac{\exp \left( \sum_{l = j}^{J - 1} \beta_{0,l} + (J - j) \boldsymbol\beta^\top \mathbf{x}_i \right)}{1 + \sum_{k = 1}^{J - 1} \exp \left( \sum_{l = k}^{J - 1} \beta_{0,l} + (J - k) \boldsymbol\beta^\top \mathbf{x}_i \right)}, \, j = 1, \cdots, J - 1\\
+\pi_{iJ} &= \frac{1}{1 + \sum_{k = 1}^{J - 1} \exp \left( \sum_{l = k}^{J - 1} \beta_{0,l} + (J - k) \boldsymbol\beta^\top \mathbf{x}_i \right)}
 \end{split}
 (\#eq:adjacent-category-prob)
 \end{equation}
@@ -724,7 +727,8 @@ bind_cols(train_df, predict_df) %>%
     align = c('r', 'r', 'r', 'r', 'r', 'r', 'r'),
     col.names = c('잡음(N)', '손실(L)', '실제범주 $y_i$', 
                   '$\\pi_{i1}$', '$\\pi_{i2}$', '$\\pi_{i3}$', '추정범주 $\\hat{y}_i$'),
-    caption = 'Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 인근범주 로짓모형의 추정범주',
+    caption = '위 통신 만족도 데이터에 대한 인근범주 로짓모형의 추정범주',
+#    caption = 'Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 인근범주 로짓모형의 추정범주',
     digits = 4
   )
 ```
@@ -761,7 +765,8 @@ bind_cols(train_df, predict_df) %>%
     align = c('r', 'r', 'r', 'r', 'r', 'r', 'r'),
     col.names = c('잡음(N)', '손실(L)', '실제범주 $y_i$', 
                   '$\\pi_{i1}$', '$\\pi_{i2}$', '$\\pi_{i3}$', '추정범주 $\\hat{y}_i$'),
-    caption = 'Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)',
+    caption = '위 통신 만족도 데이터에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)',
+#    caption = 'Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)',
     digits = 4
   )
 ```
