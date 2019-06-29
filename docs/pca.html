@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2019-06-05" />
+<meta name="date" content="2019-06-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,7 +143,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>2</b> 주성분분석</a><ul>
 <li class="chapter" data-level="2.1" data-path="pca.html"><a href="pca.html#pca-packages-install"><i class="fa fa-check"></i><b>2.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="2.2" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>2.2</b> 변수의 변동과 제곱합</a></li>
+<li class="chapter" data-level="2.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>2.2</b> 행렬의 분해</a></li>
+<li class="chapter" data-level="2.3" data-path="pca.html"><a href="pca.html#pca-matrix-factorization-basic-script"><i class="fa fa-check"></i><b>2.3</b> 기본 R 스트립트</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>2.3.1</b> 변수의 변동과 제곱합</a></li>
+<li class="chapter" data-level="2.3.2" data-path="pca.html"><a href="pca.html#pca-intro"><i class="fa fa-check"></i><b>2.3.2</b> 주성분의 이해 및 행렬의 분해</a></li>
+<li class="chapter" data-level="2.3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>2.3.3</b> 주성분 회귀분석</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>3</b> 분류분석 개요</a><ul>
 <li class="chapter" data-level="3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-packages-install"><i class="fa fa-check"></i><b>3.1</b> 필요 R 패키지 설치</a></li>
@@ -377,12 +382,724 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">broom</td>
 <td align="left">0.5.2</td>
 </tr>
+<tr class="even">
+<td align="left">Matrix</td>
+<td align="left">1.2-17</td>
+</tr>
+<tr class="odd">
+<td align="left">nipals</td>
+<td align="left">0.5</td>
+</tr>
 </tbody>
 </table>
 </div>
-<div id="pca-ss" class="section level2">
-<h2><span class="header-section-number">2.2</span> 변수의 변동과 제곱합</h2>
+<div id="pca-matrix-factorization" class="section level2">
+<h2><span class="header-section-number">2.2</span> 행렬의 분해</h2>
+</div>
+<div id="pca-matrix-factorization-basic-script" class="section level2">
+<h2><span class="header-section-number">2.3</span> 기본 R 스트립트</h2>
+<p>아래 Table <a href="pca.html#tab:pca-matrix-factorization-data">2.1</a>는 국내 18개 증권회사의 주요 재무제표를 나열한 것이다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>company, <span class="op">~</span>roa, <span class="op">~</span>roe, <span class="op">~</span>bis, <span class="op">~</span>de_ratio, <span class="op">~</span>turnover,
+  <span class="st">&quot;SK증권&quot;</span>, <span class="fl">2.43</span>, <span class="fl">11.10</span>, <span class="fl">18.46</span>, <span class="fl">441.67</span>, <span class="fl">0.90</span>,
+  <span class="st">&quot;교보증권&quot;</span>, <span class="fl">3.09</span>, <span class="fl">9.95</span>, <span class="fl">29.46</span>, <span class="fl">239.43</span>, <span class="fl">0.90</span>,
+  <span class="st">&quot;대신증권&quot;</span>, <span class="fl">2.22</span>, <span class="fl">6.86</span>, <span class="fl">28.62</span>, <span class="fl">249.36</span>, <span class="fl">0.69</span>,
+  <span class="st">&quot;대우증권&quot;</span>, <span class="fl">5.76</span>, <span class="fl">23.19</span>, <span class="fl">23.47</span>, <span class="fl">326.09</span>, <span class="fl">1.43</span>,
+  <span class="st">&quot;동부증권&quot;</span>, <span class="fl">1.60</span>, <span class="fl">5.64</span>, <span class="fl">25.64</span>, <span class="fl">289.98</span>, <span class="fl">1.42</span>,
+  <span class="st">&quot;메리츠증권&quot;</span>, <span class="fl">3.53</span>, <span class="fl">10.64</span>, <span class="fl">32.25</span>, <span class="fl">210.10</span>, <span class="fl">1.17</span>,
+  <span class="st">&quot;미래에셋증권&quot;</span>, <span class="fl">4.26</span>, <span class="fl">15.56</span>, <span class="fl">24.40</span>, <span class="fl">309.78</span>, <span class="fl">0.81</span>,
+  <span class="st">&quot;부국증권&quot;</span>, <span class="fl">3.86</span>, <span class="fl">5.50</span>, <span class="fl">70.74</span>, <span class="fl">41.36</span>, <span class="fl">0.81</span>,
+  <span class="st">&quot;브릿지증권&quot;</span>, <span class="fl">4.09</span>, <span class="fl">6.44</span>, <span class="fl">64.38</span>, <span class="fl">55.32</span>, <span class="fl">0.32</span>,
+  <span class="st">&quot;삼성증권&quot;</span>, <span class="fl">2.73</span>, <span class="fl">10.68</span>, <span class="fl">24.41</span>, <span class="fl">309.59</span>, <span class="fl">0.64</span>,
+  <span class="st">&quot;서울증권&quot;</span>, <span class="fl">2.03</span>, <span class="fl">4.50</span>, <span class="fl">42.53</span>, <span class="fl">135.12</span>, <span class="fl">0.59</span>,
+  <span class="st">&quot;신영증권&quot;</span>, <span class="fl">1.96</span>, <span class="fl">8.92</span>, <span class="fl">18.48</span>, <span class="fl">441.19</span>, <span class="fl">1.07</span>,
+  <span class="st">&quot;신흥증권&quot;</span>, <span class="fl">3.25</span>, <span class="fl">7.96</span>, <span class="fl">40.42</span>, <span class="fl">147.41</span>, <span class="fl">1.19</span>,
+  <span class="st">&quot;우리투자증권&quot;</span>, <span class="fl">2.01</span>, <span class="fl">10.28</span>, <span class="fl">17.46</span>, <span class="fl">472.78</span>, <span class="fl">1.25</span>,
+  <span class="st">&quot;유화증권&quot;</span>, <span class="fl">2.28</span>, <span class="fl">3.65</span>, <span class="fl">63.71</span>, <span class="fl">56.96</span>, <span class="fl">0.12</span>,
+  <span class="st">&quot;한양증권&quot;</span>, <span class="fl">4.51</span>, <span class="fl">7.50</span>, <span class="fl">63.52</span>, <span class="fl">57.44</span>, <span class="fl">0.80</span>,
+  <span class="st">&quot;한화증권&quot;</span>, <span class="fl">3.29</span>, <span class="fl">12.37</span>, <span class="fl">24.47</span>, <span class="fl">308.63</span>, <span class="fl">0.57</span>,
+  <span class="st">&quot;현대증권&quot;</span>, <span class="fl">1.73</span>, <span class="fl">7.57</span>, <span class="fl">19.59</span>, <span class="fl">410.45</span>, <span class="fl">1.19</span>
+)
 
+knitr<span class="op">::</span><span class="kw">kable</span>(
+  train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="kw">ncol</span>(train_df)),
+  <span class="dt">col.names =</span> <span class="kw">c</span>(
+    <span class="st">&quot;회사&quot;</span>,
+    <span class="st">&quot;총자본 순이익율 ($x_1$)&quot;</span>,
+    <span class="st">&quot;자기자본 순이익율 ($x_2$)&quot;</span>,
+    <span class="st">&quot;자기자본비율 ($x_3$)&quot;</span>,
+    <span class="st">&quot;부채비율 ($x_4$)&quot;</span>,
+    <span class="st">&quot;자기자본 회전율 ($x_5$)&quot;</span>
+  ),
+  <span class="dt">caption =</span> <span class="st">&quot;국내 증권회사의 주요 재무제표&quot;</span>
+)</code></pre>
+<table>
+<caption><span id="tab:pca-matrix-factorization-data">Table 2.1: </span>국내 증권회사의 주요 재무제표</caption>
+<thead>
+<tr class="header">
+<th align="center">회사</th>
+<th align="center">총자본 순이익율 (<span class="math inline">\(x_1\)</span>)</th>
+<th align="center">자기자본 순이익율 (<span class="math inline">\(x_2\)</span>)</th>
+<th align="center">자기자본비율 (<span class="math inline">\(x_3\)</span>)</th>
+<th align="center">부채비율 (<span class="math inline">\(x_4\)</span>)</th>
+<th align="center">자기자본 회전율 (<span class="math inline">\(x_5\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">SK증권</td>
+<td align="center">2.43</td>
+<td align="center">11.10</td>
+<td align="center">18.46</td>
+<td align="center">441.67</td>
+<td align="center">0.90</td>
+</tr>
+<tr class="even">
+<td align="center">교보증권</td>
+<td align="center">3.09</td>
+<td align="center">9.95</td>
+<td align="center">29.46</td>
+<td align="center">239.43</td>
+<td align="center">0.90</td>
+</tr>
+<tr class="odd">
+<td align="center">대신증권</td>
+<td align="center">2.22</td>
+<td align="center">6.86</td>
+<td align="center">28.62</td>
+<td align="center">249.36</td>
+<td align="center">0.69</td>
+</tr>
+<tr class="even">
+<td align="center">대우증권</td>
+<td align="center">5.76</td>
+<td align="center">23.19</td>
+<td align="center">23.47</td>
+<td align="center">326.09</td>
+<td align="center">1.43</td>
+</tr>
+<tr class="odd">
+<td align="center">동부증권</td>
+<td align="center">1.60</td>
+<td align="center">5.64</td>
+<td align="center">25.64</td>
+<td align="center">289.98</td>
+<td align="center">1.42</td>
+</tr>
+<tr class="even">
+<td align="center">메리츠증권</td>
+<td align="center">3.53</td>
+<td align="center">10.64</td>
+<td align="center">32.25</td>
+<td align="center">210.10</td>
+<td align="center">1.17</td>
+</tr>
+<tr class="odd">
+<td align="center">미래에셋증권</td>
+<td align="center">4.26</td>
+<td align="center">15.56</td>
+<td align="center">24.40</td>
+<td align="center">309.78</td>
+<td align="center">0.81</td>
+</tr>
+<tr class="even">
+<td align="center">부국증권</td>
+<td align="center">3.86</td>
+<td align="center">5.50</td>
+<td align="center">70.74</td>
+<td align="center">41.36</td>
+<td align="center">0.81</td>
+</tr>
+<tr class="odd">
+<td align="center">브릿지증권</td>
+<td align="center">4.09</td>
+<td align="center">6.44</td>
+<td align="center">64.38</td>
+<td align="center">55.32</td>
+<td align="center">0.32</td>
+</tr>
+<tr class="even">
+<td align="center">삼성증권</td>
+<td align="center">2.73</td>
+<td align="center">10.68</td>
+<td align="center">24.41</td>
+<td align="center">309.59</td>
+<td align="center">0.64</td>
+</tr>
+<tr class="odd">
+<td align="center">서울증권</td>
+<td align="center">2.03</td>
+<td align="center">4.50</td>
+<td align="center">42.53</td>
+<td align="center">135.12</td>
+<td align="center">0.59</td>
+</tr>
+<tr class="even">
+<td align="center">신영증권</td>
+<td align="center">1.96</td>
+<td align="center">8.92</td>
+<td align="center">18.48</td>
+<td align="center">441.19</td>
+<td align="center">1.07</td>
+</tr>
+<tr class="odd">
+<td align="center">신흥증권</td>
+<td align="center">3.25</td>
+<td align="center">7.96</td>
+<td align="center">40.42</td>
+<td align="center">147.41</td>
+<td align="center">1.19</td>
+</tr>
+<tr class="even">
+<td align="center">우리투자증권</td>
+<td align="center">2.01</td>
+<td align="center">10.28</td>
+<td align="center">17.46</td>
+<td align="center">472.78</td>
+<td align="center">1.25</td>
+</tr>
+<tr class="odd">
+<td align="center">유화증권</td>
+<td align="center">2.28</td>
+<td align="center">3.65</td>
+<td align="center">63.71</td>
+<td align="center">56.96</td>
+<td align="center">0.12</td>
+</tr>
+<tr class="even">
+<td align="center">한양증권</td>
+<td align="center">4.51</td>
+<td align="center">7.50</td>
+<td align="center">63.52</td>
+<td align="center">57.44</td>
+<td align="center">0.80</td>
+</tr>
+<tr class="odd">
+<td align="center">한화증권</td>
+<td align="center">3.29</td>
+<td align="center">12.37</td>
+<td align="center">24.47</td>
+<td align="center">308.63</td>
+<td align="center">0.57</td>
+</tr>
+<tr class="even">
+<td align="center">현대증권</td>
+<td align="center">1.73</td>
+<td align="center">7.57</td>
+<td align="center">19.59</td>
+<td align="center">410.45</td>
+<td align="center">1.19</td>
+</tr>
+</tbody>
+</table>
+<p>이에 대하여 R 기본 <code>stats</code> 패키지 내의 <code>prcomp</code> 함수를 이용하여 주성분 분석을 수행할 수 있다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">pca_fit &lt;-<span class="st"> </span><span class="kw">prcomp</span>(<span class="op">~</span><span class="st"> </span>roa <span class="op">+</span><span class="st"> </span>roe <span class="op">+</span><span class="st"> </span>bis <span class="op">+</span><span class="st"> </span>de_ratio <span class="op">+</span><span class="st"> </span>turnover,
+                  <span class="dt">data =</span> train_df, <span class="dt">scale =</span> <span class="ot">TRUE</span>)
+
+pca_fit</code></pre>
+<pre><code>## Standard deviations (1, .., p=5):
+## [1] 1.6617648 1.2671437 0.7419994 0.2531070 0.1351235
+## 
+## Rotation (n x k) = (5 x 5):
+##                  PC1         PC2           PC3          PC4         PC5
+## roa       0.07608427 -0.77966993  0.0008915975 -0.140755404  0.60540325
+## roe      -0.39463007 -0.56541218 -0.2953216494  0.117644166 -0.65078503
+## bis       0.56970191 -0.16228156  0.2412221065 -0.637721889 -0.42921686
+## de_ratio -0.55982770  0.19654293 -0.2565972887 -0.748094314  0.14992183
+## turnover -0.44778451 -0.08636803  0.8881182665 -0.003668418 -0.05711464</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(pca_fit)</code></pre>
+<pre><code>## Importance of components:
+##                           PC1    PC2    PC3     PC4     PC5
+## Standard deviation     1.6618 1.2671 0.7420 0.25311 0.13512
+## Proportion of Variance 0.5523 0.3211 0.1101 0.01281 0.00365
+## Cumulative Proportion  0.5523 0.8734 0.9835 0.99635 1.00000</code></pre>
+<p>각 주성분에 대한 고유값을 스크리 도표로 나타내면 아래 Figure <a href="pca.html#fig:pca-screeplot">2.1</a></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">screeplot</span>(pca_fit, <span class="dt">main =</span> <span class="ot">NULL</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:pca-screeplot"></span>
+<img src="data-mining-book_files/figure-html/pca-screeplot-1.png" alt="고유치 스크리 도표" width="672" />
+<p class="caption">
+Figure 2.1: 고유치 스크리 도표
+</p>
+</div>
+<div id="pca-ss" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> 변수의 변동과 제곱합</h3>
+<p>총 <span class="math inline">\(k\)</span>개의 독립변수가 있고 각 독립변수에 대하여 <span class="math inline">\(n\)</span>개의 관측치가 있다고 하자. 이 때, <span class="math inline">\(x_{ij}\)</span>를 <span class="math inline">\(j\)</span>번째 독립변수에 대한 <span class="math inline">\(i\)</span>번째 관측치라 하자. 즉, 관측데이터는 아래와 같은 행렬로 표현할 수 있다.</p>
+<p><span class="math display">\[\begin{equation*}
+\mathbf{X} = \left[ \begin{array}{c c c c}
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1k}\\
+x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2k}\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nk}
+\end{array} \right]
+\end{equation*}\]</span></p>
+<p>주성분분석에서는 통상 원데이터를 그대로 사용하지 않고 적절한 변환을 취하는데, 주로 평균조정(mean-centered) 데이터를 이용한다. 이는 아래와 같이 독립변수에 대하여 표본평균을 뺌으로써 조정된 변수의 평균이 0이 되도록 하는 것이다.</p>
+<p><span class="math display" id="eq:pca-mean-centering">\[\begin{equation}
+x_{ij} \leftarrow x_{ij} - \frac{1}{n} \sum_{l = 1}^{n} x_{lj} \tag{2.1}
+\end{equation}\]</span></p>
+<p>이후에 별도의 언급이 없는 한, 행렬 <span class="math inline">\(\mathbf{X}\)</span> 및 변수값 <span class="math inline">\(x_{ij}\)</span>는 식 <a href="pca.html#eq:pca-mean-centering">(2.1)</a>을 이용하여 평균조정된 것으로 가정한다.</p>
+<p>이 밖에도 다른 변환이 사용되는 경우가 있는데, 특히 단위 등이 서로 상이할 경우에는 평균조정 이후 추가로 각 변수의 분산이 1이 되도록 분산조정을 한다.</p>
+<p><span class="math display" id="eq:pca-scaling">\[\begin{equation*}
+z_{ij} \leftarrow \frac{x_{ij}}{\sqrt{\frac{1}{n - 1} \sum_{l =1}^{n} x_{lj}^2}} \tag{2.2}
+\end{equation*}\]</span></p>
+<p>이 때, 식 <a href="pca.html#eq:pca-scaling">(2.2)</a>에서 분모 부분은 변수의 표본 표준편차로 <span class="math inline">\(s_j\)</span>로 표현된다.</p>
+<p><span class="math display">\[\begin{equation*}
+s_{j} = \sqrt{\frac{1}{n - 1} \sum_{l =1}^{n} x_{lj}^2}
+\end{equation*}\]</span></p>
+<p>이후 분산조정을 이용하는 경우 행렬 <span class="math inline">\(\mathbf{Z}\)</span> 및 변수값 <span class="math inline">\(z_{ij}\)</span>로 표현한다.</p>
+<p><span class="math display">\[\begin{equation*}
+\mathbf{Z} = \left[ \begin{array}{c c c c}
+z_{11} &amp; z_{12} &amp; \cdots &amp; z_{1k}\\
+z_{21} &amp; z_{22} &amp; \cdots &amp; z_{2k}\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+z_{n1} &amp; z_{n2} &amp; \cdots &amp; z_{nk}
+\end{array} \right]
+\end{equation*}\]</span></p>
+<p>변수벡터 <span class="math inline">\(\mathbf{x}_j = [x_{1j} \, x_{2j} \, \cdots \, x_{nj}]^\top\)</span>에 대한 제곱합의 정의는 아래와 같다.</p>
+<p><span class="math display">\[\begin{equation}
+SS(\mathbf{x}_j) = \mathbf{x}_j^\top \mathbf{x}_j = \sum_{i = 1}^{n} x_{ij}^2
+\end{equation}\]</span></p>
+<p>따라서, 평균조정된 변수에 대해 제곱합고 표본분산은 다음과 같은 관계가 있다.</p>
+<p><span class="math display">\[\begin{equation*}
+SS(\mathbf{x}_j) = (n - 1) s_j^2
+\end{equation*}\]</span></p>
+<p>변수행렬 <span class="math inline">\(\mathbf{X}\)</span>에 대한 제곱합은 각 변수들의 제곱합의 총합(총변동)으로 정의된다.</p>
+<p><span class="math display">\[\begin{equation}
+SS(\mathbf{X}) = \sum_{j = 1}^{k} SS(\mathbf{x}_j) = \sum_{j = 1}^{k} \sum_{i = 1}^{n} x_{ij}^2
+\end{equation}\]</span></p>
+<p>Table <a href="pca.html#tab:pca-matrix-factorization-data">2.1</a> 데이터에 대하여 각 변수의 제곱합을 계산해보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">train_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># mean-centering</span>
+<span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="co"># sum of squares by variable</span></code></pre>
+<pre><code>## # A tibble: 1 x 5
+##     roa   roe   bis de_ratio turnover
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1  21.9  355. 5591.  347817.     2.23</code></pre>
+<p>전체 데이터 행렬에 대한 제곱합은 아래와 같다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">train_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># mean-centering</span>
+<span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># sum of squares by variable</span>
+<span class="st">  </span>{<span class="kw">sum</span>(.)}</code></pre>
+<pre><code>## [1] 353786.6</code></pre>
+<p>위 결과에서 부채비율(<code>de_ratio</code>)의 변동이 총변동의 대부분을 차지하고, 자기자본 회전율(<code>turnover</code>)이 총변동에 미치는 영향은 미미한데, 이는 각 변수들이 측정하는 값의 분포(범위)가 크게 다르기 때문이다. 이러한 경우, 일반적으로 분산조정을 추가로 적용한 뒤 주성분분석을 수행한다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">standardized_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># mean-centering</span>
+<span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x))  <span class="co"># scaling</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">standardized_df</code></pre>
+<pre><code>## # A tibble: 18 x 6
+##    company          roa     roe    bis de_ratio turnover
+##    &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1 SK증권       -0.533   0.383  -0.918  1.34      0.0507
+##  2 교보증권      0.0484  0.131  -0.312 -0.0749    0.0507
+##  3 대신증권     -0.718  -0.545  -0.358 -0.00551  -0.530 
+##  4 대우증권      2.40    3.03   -0.642  0.531     1.52  
+##  5 동부증권     -1.26   -0.812  -0.522  0.278     1.49  
+##  6 메리츠증권    0.436   0.282  -0.158 -0.280     0.797 
+##  7 미래에셋증권  1.08    1.36   -0.591  0.417    -0.198 
+##  8 부국증권      0.726  -0.843   1.96  -1.46     -0.198 
+##  9 브릿지증권    0.929  -0.637   1.61  -1.36     -1.55  
+## 10 삼성증권     -0.269   0.291  -0.590  0.416    -0.668 
+## 11 서울증권     -0.885  -1.06    0.409 -0.804    -0.806 
+## 12 신영증권     -0.947  -0.0942 -0.917  1.34      0.521 
+## 13 신흥증권      0.189  -0.304   0.293 -0.718     0.852 
+## 14 우리투자증권 -0.903   0.203  -0.973  1.56      1.02  
+## 15 유화증권     -0.665  -1.25    1.58  -1.35     -2.11  
+## 16 한양증권      1.30   -0.405   1.57  -1.35     -0.226 
+## 17 한화증권      0.225   0.661  -0.587  0.409    -0.861 
+## 18 현대증권     -1.15   -0.390  -0.856  1.12      0.852</code></pre>
+<p>분산조정 이후의 각 변수의 제곱합은 모두 <span class="math inline">\(n - 1\)</span>이 되는데, 이는 각 변수의 표본분산이 모두 1로 조정되기 때문이다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">standardized_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="co"># sum of squares by variable</span></code></pre>
+<pre><code>## # A tibble: 1 x 5
+##     roa   roe   bis de_ratio turnover
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1    17  17.0    17       17      17.</code></pre>
+<p>따라서, 분산조정 이후 총변동은 아래와 같다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">total_ss &lt;-<span class="st"> </span>standardized_df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># sum of squares by variable</span>
+<span class="st">  </span>{<span class="kw">sum</span>(.)}
+
+total_ss</code></pre>
+<pre><code>## [1] 85</code></pre>
+</div>
+<div id="pca-intro" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> 주성분의 이해 및 행렬의 분해</h3>
+<p>주성분분석은 원래의 변수들의 선형조합으로 서로 직교하는 새로운 변수들을 생성하는 것이라 할 수 있다. 이 때, 원래 변수의 수 <span class="math inline">\(k\)</span>보다 작은 <span class="math inline">\(A\)</span>개의 새로운 변수들이 원 데이터 행렬 <span class="math inline">\(\mathbf{X}\)</span> 총변동의 대부분을 설명한다고 하면, 해당 새로운 변수들만을 사용하여 여러 가지 분석을 대신할 수 있다는 것이 주성분분석의 개념이라 하겠다.</p>
+<p>새로운 변수 <span class="math inline">\(\mathbf{t}_1, \cdots, \mathbf{t}_A\)</span>들은 다음과 같은 형태로 표현된다.</p>
+<p><span class="math display">\[\begin{equation}
+\mathbf{t}_a = \sum_{j = 1}^{k} p_{aj} \mathbf{x}_j, \, a = 1, \cdots, A
+\end{equation}\]</span></p>
+<p>결과적으로 주성분분석은 위와 같이 표현되는 새로운 변수를 만들 때 필요한 계수 <span class="math inline">\(p_{aj}\)</span>를 구하는 것이라 할 수 있겠다. <span class="math inline">\(\mathbf{t}_1\)</span>이 <span class="math inline">\(\mathbf{X}\)</span>의 변동을 가장 많이 설명하도록, <span class="math inline">\(\mathbf{t}_2\)</span>는 <span class="math inline">\(\mathbf{t}_1\)</span>이 설명하지 못한 변동을 가장 많이 설명하도록 하는 방식으로 <span class="math inline">\(A\)</span>개의 새로운 변수를 순차적으로 찾아내는 것이 기본적인 원리이다.</p>
+<p>Table <a href="pca.html#tab:pca-matrix-factorization-data">2.1</a> 데이터에 대하여 분산조정을 적용한 후 아래 식을 이용하여 새로운 변수를 도출해보자.</p>
+<p><span class="math display">\[
+t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.55982770 \times de\_ratio - 0.44778451 \times turnover
+\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">new_df &lt;-<span class="st"> </span>standardized_df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">t_1 =</span> <span class="fl">0.07608427</span> <span class="op">*</span><span class="st"> </span>roa <span class="op">-</span><span class="st"> </span><span class="fl">0.39463007</span> <span class="op">*</span><span class="st"> </span>roe 
+         <span class="op">+</span><span class="st"> </span><span class="fl">0.56970191</span> <span class="op">*</span><span class="st"> </span>bis <span class="op">-</span><span class="st"> </span><span class="fl">0.55982770</span> <span class="op">*</span><span class="st"> </span>de_ratio 
+         <span class="op">-</span><span class="st"> </span><span class="fl">0.44778451</span> <span class="op">*</span><span class="st"> </span>turnover) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(company, t_<span class="dv">1</span>) <span class="co"># new variable</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(new_df)</code></pre>
+<pre><code>## # A tibble: 18 x 2
+##    company         t_1
+##    &lt;chr&gt;         &lt;dbl&gt;
+##  1 SK증권       -1.49 
+##  2 교보증권     -0.206
+##  3 대신증권      0.197
+##  4 대우증권     -2.35 
+##  5 동부증권     -0.895
+##  6 메리츠증권   -0.368
+##  7 미래에셋증권 -0.935
+##  8 부국증권      2.41 
+##  9 브릿지증권    2.70 
+## 10 삼성증권     -0.405
+## 11 서울증권      1.40 
+## 12 신영증권     -1.54 
+## 13 신흥증권      0.322
+## 14 우리투자증권 -2.03 
+## 15 유화증권      3.04 
+## 16 한양증권      2.01 
+## 17 한화증권     -0.421
+## 18 현대증권     -1.43</code></pre>
+<p>이 때, 새로운 변수 <span class="math inline">\(\mathbf{t}_1\)</span>는 분산조정된 행렬 <span class="math inline">\(\mathbf{Z}\)</span>의 총변동의 약 55%를 설명한다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">t1_ss &lt;-<span class="st"> </span>new_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))
+
+t1_ss <span class="op">/</span><span class="st"> </span>total_ss</code></pre>
+<pre><code>##         t_1
+## 1 0.5522924</code></pre>
+<p>위 새로운 변수 <span class="math inline">\(\mathbf{t}_1\)</span>는 실제로 행렬 <span class="math inline">\(\mathbf{Z}\)</span>로부터 얻어지는 첫 번째 주성분이며, 행렬 <span class="math inline">\(\mathbf{Z}\)</span>의 변동에 가장 많이 기여하는 하나의 선형조합이다.</p>
+<p>행렬 <span class="math inline">\(\mathbf{Z}\)</span>(혹은 <span class="math inline">\(\mathbf{X}\)</span>)로부터 주성분을 얻는 방법은 여러 가지가 있으며, 아래 세부 챕터에서 하나씩 설명하기로 한다.</p>
+<div id="-singular-value-decomposition-pca-svd" class="section level4">
+<h4><span class="header-section-number">2.3.2.1</span> 특이치분해 (Singular Value Decomposition) {pca-svd}</h4>
+<p>분산조정된 <span class="math inline">\(\mathbf{Z}\)</span>에 대해 주성분분석을 수행한다고 가정하자. 분산조정을 하지 않고 주성분분석을 수행하는 경우 아래 행렬 <span class="math inline">\(\mathbf{Z}\)</span> 대신 <span class="math inline">\(\mathbf{X}\)</span>를 사용하면 된다.</p>
+<p>임의의 <span class="math inline">\((n \times k)\)</span> 행렬 <span class="math inline">\(\mathbf{Z}\)</span>는 다음과 같이 분해된다.</p>
+<p><span class="math display" id="eq:pca-svd">\[\begin{equation}
+\mathbf{Z} = \mathbf{U} \mathbf{D} \mathbf{V}^\top \tag{2.3}
+\end{equation}\]</span></p>
+<p>이 때, <span class="math inline">\(r = \min\{n, k\}\)</span>라 할 때,</p>
+<ul>
+<li><span class="math inline">\(\mathbf{U}\)</span>: <span class="math inline">\((n \times r)\)</span> 직교 (orthogonal) 행렬</li>
+<li><span class="math inline">\(\mathbf{D}\)</span>: <span class="math inline">\((r \times r)\)</span> 대각 (diagonal) 행렬. rank 수만큼의 비음 대각원소들을 가지며, 각 비음 대각원소를 힝렬 <span class="math inline">\(\mathbf{Z}\)</span>의 특이치(singular value)라 하고, 특이치가 내림차순으로 정렬되는 형태로 행렬이 구성된다.</li>
+<li><span class="math inline">\(\mathbf{V}\)</span>: <span class="math inline">\((k \times r)\)</span> 직교 (orthogonal) 행렬</li>
+</ul>
+<p>아래와 같이, R 함수 <code>svd</code>를 이용하여 분해한 행렬들을 곱한 결과가 원래 행렬 <span class="math inline">\(\mathbf{Z}\)</span>와 동일함을 확인할 수 있다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">Z &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(standardized_df[, <span class="dv">-1</span>])
+svd_Z &lt;-<span class="st"> </span><span class="kw">svd</span>(Z)
+Z_rec &lt;-<span class="st"> </span>svd_Z<span class="op">$</span>u <span class="op">%*%</span><span class="st"> </span><span class="kw">diag</span>(svd_Z<span class="op">$</span>d) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(svd_Z<span class="op">$</span>v)
+<span class="kw">all</span>(<span class="kw">near</span>(Z, Z_rec))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>이 때, 행렬 <span class="math inline">\(\mathbf{V}\)</span>의 각 열벡터가 각 주성분을 도출하는 선형식의 계수가 된다. 즉, 행렬 <span class="math inline">\(\mathbf{V}\)</span>의 첫 번째 열이 위에서 살펴본 새로운 변수 <span class="math inline">\(\mathbf{t}_1\)</span>를 도출하는 선형식의 계수이다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">svd_Z<span class="op">$</span>v[, <span class="dv">1</span>]</code></pre>
+<pre><code>## [1]  0.07608427 -0.39463007  0.56970191 -0.55982770 -0.44778451</code></pre>
+<p>특이치는 아래와 같이 추출된다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">svd_Z<span class="op">$</span>d</code></pre>
+<pre><code>## [1] 6.8516318 5.2245674 3.0593417 1.0435870 0.5571285</code></pre>
+<p>이 특이치들은 아래 분광분해에서 살펴볼 고유치의 제곱근이다.</p>
+</div>
+<div id="-spectral-decomposition-pca-spectral" class="section level4">
+<h4><span class="header-section-number">2.3.2.2</span> 분광분해 (Spectral Decomposition) {pca-spectral}</h4>
+<p>임의의 정방행렬 <span class="math inline">\(\mathbf{A}\)</span>에 대하여</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{v} = \lambda\mathbf{v} \]</span></p>
+<p>가 성립하는 벡터 <span class="math inline">\(\mathbf{v} \neq \mathbf{0}\)</span>과 상수 <span class="math inline">\(\lambda\)</span>가 존재할 때, 상수 <span class="math inline">\(\lambda\)</span>를 행렬 <span class="math inline">\(\mathbf{A}\)</span>의 고유치(eigenvalue)라 하며, <span class="math inline">\(\mathbf{v}\)</span>를 이에 대응하는 고유벡터(eigenvector)라 한다. 통상 <span class="math inline">\(\mathbf{v}^\top \mathbf{v} = 1\)</span>을 가정한다.</p>
+<p>분광분해는 정방행렬을 고유치와 고유벡터의 곱으로 분해하는 방법이다. <span class="math inline">\((r \times r)\)</span> 정방행렬 <span class="math inline">\(\mathbf{A}\)</span>에 대해 <span class="math inline">\(r\)</span>개의 고유치 <span class="math inline">\(\lambda_1, \cdots, \lambda_r\)</span>와 고유벡터 <span class="math inline">\(\mathbf{v}_1, \cdots, \mathbf{v}_r\)</span>이 존재한다고 할 때, 행렬 <span class="math inline">\(\mathbf{A}\)</span>는 다음과 같이 정리된다.</p>
+<p><span class="math display">\[
+\mathbf{A}\left[\mathbf{v}_1 \, \cdots \, \mathbf{v}_r\right] = \left[\mathbf{v}_1 \, \cdots \, \mathbf{v}_r\right] \left[ \begin{array}{c c c c}
+\lambda_1 &amp; 0 &amp; \cdots &amp; 0\\
+0 &amp; \lambda_2 &amp;  &amp; 0\\
+\vdots &amp;  &amp; \ddots &amp; 0\\
+0 &amp; 0 &amp; \cdots &amp; \lambda_r
+\end{array} \right] \\
+\mathbf{A} = \mathbf{A} \left[\mathbf{v}_1 \, \cdots \, \mathbf{v}_r\right] \left[\mathbf{v}_1 \, \cdots \, \mathbf{v}_r\right]^{-1} = \left[\mathbf{v}_1 \, \cdots \, \mathbf{v}_r\right] \left[ \begin{array}{c c c c}
+\lambda_1 &amp; 0 &amp; \cdots &amp; 0\\
+0 &amp; \lambda_2 &amp;  &amp; 0\\
+\vdots &amp;  &amp; \ddots &amp; 0\\
+0 &amp; 0 &amp; \cdots &amp; \lambda_r
+\end{array} \right] \left[\mathbf{v}_1 \, \cdots \, \mathbf{v}_r\right]^{-1} = \mathbf{V} \mathbf{\Lambda} \mathbf{V}^{-1}
+\]</span></p>
+<p>특히 행렬 <span class="math inline">\(\mathbf{A}\)</span>가 대칭(symmetric)행렬인 경우, 고유벡터들은 서로 직교하므로 (<span class="math inline">\(\mathbf{V}\mathbf{V}^\top = \mathbf{I}\)</span>), 위 식을 아래와 같이 표현할 수 있다.</p>
+<p><span class="math display">\[ \mathbf{A} = \mathbf{V} \mathbf{\Lambda} \mathbf{V}^\top \]</span></p>
+<p>주성분 분석을 위해 정방행렬 <span class="math inline">\(\mathbf{Z}^\top \mathbf{Z}\)</span>를 분해를 살펴보자. 식 <a href="pca.html#eq:pca-svd">(2.3)</a>로부터,</p>
+<p><span class="math display">\[
+\mathbf{Z}^\top \mathbf{Z} = \mathbf{V} \mathbf{D}^\top \mathbf{U}^\top \mathbf{U} \mathbf{D} \mathbf{V}^\top = \mathbf{V} \mathbf{D}^2 \mathbf{V}^\top = \mathbf{V} \mathbf{\Lambda} \mathbf{V}^\top
+\]</span></p>
+<p>즉, 분광분해를 통해 도출된 고유벡터들의 행렬 <span class="math inline">\(\mathbf{V}\)</span>의 각 열벡터가 각 주성분을 도출하는 선형식의 계수를 나타내며, 대각행렬 <span class="math inline">\(\mathbf{\Lambda}\)</span>의 각 대각원소값인 고유치는 특이치의 제곱임을 알 수 있다.</p>
+<p>R 함수 <code>eigen</code>을 이용하여 분광분해를 아래와 같이 수행하여 보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">eig_Z &lt;-<span class="st"> </span><span class="kw">eigen</span>(<span class="kw">t</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z, <span class="dt">symmetric =</span> <span class="ot">TRUE</span>)
+eig_Z</code></pre>
+<pre><code>## eigen() decomposition
+## $values
+## [1] 46.9448582 27.2961041  9.3595718  1.0890737  0.3103922
+## 
+## $vectors
+##             [,1]        [,2]          [,3]         [,4]        [,5]
+## [1,] -0.07608427 -0.77966993  0.0008915975 -0.140755404  0.60540325
+## [2,]  0.39463007 -0.56541218 -0.2953216494  0.117644166 -0.65078503
+## [3,] -0.56970191 -0.16228156  0.2412221065 -0.637721889 -0.42921686
+## [4,]  0.55982770  0.19654293 -0.2565972887 -0.748094314  0.14992183
+## [5,]  0.44778451 -0.08636803  0.8881182665 -0.003668418 -0.05711464</code></pre>
+<p>결과에서 <code>values</code>는 행렬 <span class="math inline">\(\mathbf{Z}^\top \mathbf{Z}\)</span>의 고유치(eigenvalue)들이다. 이들이 앞 장의 특이치 분해에서 얻은 특이치들의 제곱임을 확인하여 보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">near</span>(eig_Z<span class="op">$</span>values, svd_Z<span class="op">$</span>d <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>또한 분광분해 결과 <code>vectors</code>의 각 열은 행렬 <span class="math inline">\(\mathbf{Z}^\top \mathbf{Z}\)</span>의 고유벡터(eigenvector)들이다. 이들이 앞 장의 특이치 분해에서 얻은 계수 행렬과 동일함을 확인하여 보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">near</span>(eig_Z<span class="op">$</span>vectors, svd_Z<span class="op">$</span>v))</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>이 경우 두 행렬이 동일하지 않게 나타날 수 있는데, 그 이유는 경우에 따라 어떤 주성분을 생성하는 선형계수 부호가 정반대인 형태로 얻어질 수 있기 때문이다. 주성분의 설명력은 선형계수의 부호에 영향을 받지 않는다.</p>
+<p>두 행렬의 계수 부호가 서로 동일하게 조정한 뒤 행렬을 비교해보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">sign_adjust &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>((eig_Z<span class="op">$</span>vectors <span class="op">*</span><span class="st"> </span>svd_Z<span class="op">$</span>v) <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>)
+<span class="kw">all</span>(<span class="kw">near</span>(eig_Z<span class="op">$</span>vectors <span class="op">*</span><span class="st"> </span>sign_adjust, svd_Z<span class="op">$</span>v))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>위 각 고유값들을 고유값들의 총합으로 나누면, 각 고유벡터에 해당하는 주성분이 설명하는 총변동의 비율을 얻을 수 있다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">eig_Z<span class="op">$</span>values <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(eig_Z<span class="op">$</span>values)</code></pre>
+<pre><code>## [1] 0.552292449 0.321130636 0.110112610 0.012812632 0.003651673</code></pre>
+<p>평균 및 분산 조정된 <span class="math inline">\(\mathbf{Z}\)</span>의 분산-공분산 행렬은 아래와 같다.</p>
+<p><span class="math display">\[\frac{1}{n - 1} \mathbf{Z}^\top \mathbf{Z}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">near</span>(<span class="kw">cov</span>(Z), <span class="kw">t</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z <span class="op">/</span><span class="st"> </span>(<span class="kw">nrow</span>(Z) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>여기에 위에서 구한 분광분해를 대입하면,</p>
+<p><span class="math display">\[\frac{1}{n - 1} \mathbf{Z}^\top \mathbf{Z} = \frac{1}{n - 1} \mathbf{V} \mathbf{\Lambda} \mathbf{V}^\top =  \mathbf{V} \left( \frac{1}{n - 1} \mathbf{\Lambda} \right) \mathbf{V}^\top\]</span></p>
+<p>따라서, <span class="math inline">\(\mathbf{Z}\)</span>의 분산-공분산 행렬에 대한 분광분해 결과, 고유벡터 행렬 <span class="math inline">\(\mathbf{V}\)</span>는 앞에서 구한 <span class="math inline">\(\mathbf{Z}^\top \mathbf{Z}\)</span>의 고유벡터 행렬들과 동일하며, 고유값은 앞에서 구한 <span class="math inline">\(\mathbf{Z}^\top \mathbf{Z}\)</span>의 고유값을 <span class="math inline">\((n - 1)\)</span>으로 나눈 값이다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">eig_cov_Z &lt;-<span class="st"> </span><span class="kw">eigen</span>(<span class="kw">cov</span>(Z))
+eig_cov_Z</code></pre>
+<pre><code>## eigen() decomposition
+## $values
+## [1] 2.76146225 1.60565318 0.55056305 0.06406316 0.01825836
+## 
+## $vectors
+##             [,1]        [,2]          [,3]         [,4]        [,5]
+## [1,] -0.07608427  0.77966993  0.0008915975 -0.140755404  0.60540325
+## [2,]  0.39463007  0.56541218 -0.2953216494  0.117644166 -0.65078503
+## [3,] -0.56970191  0.16228156  0.2412221065 -0.637721889 -0.42921686
+## [4,]  0.55982770 -0.19654293 -0.2565972887 -0.748094314  0.14992183
+## [5,]  0.44778451  0.08636803  0.8881182665 -0.003668418 -0.05711464</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">near</span>(eig_cov_Z<span class="op">$</span>values, eig_Z<span class="op">$</span>values <span class="op">/</span><span class="st"> </span>(<span class="kw">nrow</span>(Z) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>또한 이 결과는 평균 및 분산조정 이전 원 데이터의 상관행렬(correlation matrix)에 대해 분광분해를 수행한 결과와 동일하다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">eig_cor_raw &lt;-<span class="st"> </span><span class="kw">eigen</span>(<span class="kw">cor</span>(train_df[, <span class="dv">-1</span>]))
+eig_cor_raw</code></pre>
+<pre><code>## eigen() decomposition
+## $values
+## [1] 2.76146225 1.60565318 0.55056305 0.06406316 0.01825836
+## 
+## $vectors
+##             [,1]        [,2]          [,3]         [,4]        [,5]
+## [1,] -0.07608427  0.77966993  0.0008915975 -0.140755404  0.60540325
+## [2,]  0.39463007  0.56541218 -0.2953216494  0.117644166 -0.65078503
+## [3,] -0.56970191  0.16228156  0.2412221065 -0.637721889 -0.42921686
+## [4,]  0.55982770 -0.19654293 -0.2565972887 -0.748094314  0.14992183
+## [5,]  0.44778451  0.08636803  0.8881182665 -0.003668418 -0.05711464</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">near</span>(eig_cov_Z<span class="op">$</span>values, eig_cor_raw<span class="op">$</span>values))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">near</span>(eig_cov_Z<span class="op">$</span>vectors, eig_cor_raw<span class="op">$</span>vectors))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="pca-nipals" class="section level4">
+<h4><span class="header-section-number">2.3.2.3</span> NIPALS 알고리즘</h4>
+<p>NIPALS(Nonlinear Iterative Paritial Least Squares) 알고리즘은 반복적(iterative) 알고리즘을 이용하여 변동 기여율이 가장 큰 주성분부터 가장 작은 주성분까지 순차적으로 고유벡터와 주성분 스코어를 구하는 방법이다.</p>
+<p>우선, 특이치 분해에서 사용한 식을 단순화하여, 분산조정된 행렬 <span class="math inline">\(\mathbf{Z}\)</span>가 아래와 같이 주성분 스코어 행렬 <span class="math inline">\(\mathbf{T}\)</span>와 고유벡터 행렬 <span class="math inline">\(\mathbf{V}\)</span>로 분해된다고 하자. (분산조정 대신 평균조정만을 원할 경우 <span class="math inline">\(\mathbf{Z}\)</span> 대신 <span class="math inline">\(\mathbf{X}\)</span>를 사용)</p>
+<p><span class="math display">\[ \mathbf{Z} = \mathbf{U} \mathbf{D} \mathbf{V}^\top = \mathbf{T} \mathbf{V}^\top \]</span></p>
+<p>즉, 주성분 스코어 <span class="math inline">\(\mathbf{T}\)</span>는 아래와 같다.</p>
+<p><span class="math display">\[ \mathbf{T} = \mathbf{Z} \mathbf{V} \]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">T_mat &lt;-<span class="st"> </span>Z <span class="op">%*%</span><span class="st"> </span>svd_Z<span class="op">$</span>v
+T_mat</code></pre>
+<pre><code>##             [,1]       [,2]        [,3]        [,4]         [,5]
+##  [1,] -1.4870243  0.6066594 -0.63361774 -0.29625002  0.020293731
+##  [2,] -0.2063797 -0.0804627 -0.04965017  0.26323513  0.063581473
+##  [3,]  0.1968538  0.9704605 -0.39507856  0.27123746  0.103351746
+##  [4,] -2.3542884 -3.5056480  0.16252734  0.02524924 -0.249920974
+##  [5,] -0.8953707  1.4552899  1.36265905  0.20161775 -0.055517167
+##  [6,] -0.3682082 -0.5976313  0.65857722  0.27901317  0.060458248
+##  [7,] -0.9354306 -1.4144519 -0.82574638  0.07358977  0.095960908
+##  [8,]  2.4129728 -0.6785064  0.92207607 -0.36161577 -0.062593521
+##  [9,]  2.6991862 -0.7596591 -0.45091077 -0.21030378  0.168645128
+## [10,] -0.4050098  0.2800099 -0.92835441  0.13993488  0.001811118
+## [11,]  1.3958199  1.1353513 -0.09819177  0.34335126 -0.094986796
+## [12,] -1.5381192  1.1576616 -0.07467334 -0.29404424  0.052430946
+## [13,]  0.3217681 -0.2378023  1.10180230  0.28507243  0.030666763
+## [14,] -2.0306806  0.9646122  0.20906175 -0.39639758 -0.085778570
+## [15,]  3.0389460  0.8841645 -0.77478769 -0.04079854 -0.349688462
+## [16,]  2.0064063 -1.2831337  0.64388897 -0.22077705  0.188366871
+## [17,] -0.4211779 -0.2987099 -1.20644766  0.11766274  0.068250991
+## [18,] -1.4302634  1.4017959  0.37686579 -0.17977686  0.044667568</code></pre>
+<p>NIPALS 알고리즘은 아래와 같이 주성분 스코어 행렬 <span class="math inline">\(\mathbf{T}\)</span>의 열과 고유벡터행렬 <span class="math inline">\(\mathbf{V}\)</span>의 열을 동시에 구한다.</p>
+<ul>
+<li><strong>[단계 0]</strong> 반복알고리즘 수행을 위한 초기화를 한다. <span class="math inline">\(h \leftarrow 1\)</span>, <span class="math inline">\(\mathbf{Z}_h \leftarrow \mathbf{Z}\)</span>.</li>
+<li><strong>[단계 1]</strong> 데이터 행렬 <span class="math inline">\(\mathbf{Z}_h\)</span>의 임의의 열 하나를 주성분 스코어 벡터 <span class="math inline">\(\mathbf{t}_h\)</span>로 선정한다.</li>
+<li><strong>[단계 2]</strong> 로딩벡터를 구한다. <span class="math inline">\(\mathbf{v}_h \leftarrow \mathbf{Z}_h \mathbf{t}_h \left/ \sqrt{\mathbf{t}_h^\top \mathbf{t}_h} \right.\)</span></li>
+<li><strong>[단계 3]</strong> 로딩벡터의 크기가 1이 되도록 한다. <span class="math inline">\(\mathbf{v}_h \leftarrow \mathbf{v}_h \left/ \sqrt{\mathbf{v}_h^\top \mathbf{v}_h} \right.\)</span></li>
+<li><strong>[단계 4]</strong> 주성분 스코어 벡터를 로딩벡터에 기반하여 계산한다. <span class="math inline">\(\mathbf{t}_h \leftarrow \mathbf{Z}_h \mathbf{v}_h\)</span></li>
+<li><strong>[단계 5]</strong> 주성분 스코어 벡터 <span class="math inline">\(\mathbf{t}_h\)</span>가 수렴하였으면 [단계 6]으로 진행하고, 그렇지 않으면 [단계 2]로 돌아간다.</li>
+<li><strong>[단계 6]</strong> 데이터 행렬 <span class="math inline">\(\mathbf{Z}_h\)</span>로부터 새로 얻어진 주성분 벡터 <span class="math inline">\(\mathbf{t}_h\)</span>와 고유벡터 <span class="math inline">\(\mathbf{v}_h\)</span>가 설명하는 부분을 제거하고 나머지 변동만을 담은 새로운 데이터 행렬 <span class="math inline">\(\mathbf{Z}_{h + 1}\)</span>을 구한다.
+<span class="math display">\[ \mathbf{Z}_{h + 1} \leftarrow \mathbf{Z}_{h} - \mathbf{t}_h \mathbf{v}_h^\top \]</span></li>
+<li><strong>[단계 7]</strong> <span class="math inline">\(h \leftarrow h + 1\)</span>로 업데이트하고, [단계 1]로 돌아간다. [단계 1] - [단계 7]의 과정을 <span class="math inline">\(\mathbf{Z}\)</span>의 rank 수만큼의 주성분을 얻을 때까지 반복한다.</li>
+</ul>
+<p>위 반복 알고리즘을 수행하는 함수를 아래와 같이 구성해보자. 아래 함수에서 입력변수 <code>X</code>는 데이터 행렬으로, 평균조정된 행렬 <span class="math inline">\(\mathbf{X}\)</span>나 분산조정된 <span class="math inline">\(\mathbf{Z}\)</span> 모두 사용 가능하다. 입력변수 <code>r</code>은 추출하고자 하는 주성분의 개수이다.</p>
+<pre class="sourceCode r"><code class="sourceCode r">nipals_pca &lt;-<span class="st"> </span><span class="cf">function</span>(X, <span class="dt">r =</span> <span class="ot">NULL</span>) {
+  <span class="cf">if</span> (<span class="kw">is_empty</span>(r) <span class="op">||</span><span class="st"> </span>(r <span class="op">&gt;</span><span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X)))) {
+    r &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X))
+  }
+  
+  Th &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">nrow</span>(X), <span class="dt">ncol =</span> r)
+  Vh &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> r, <span class="dt">ncol =</span> r)
+  
+  <span class="cf">for</span> (h <span class="cf">in</span> <span class="kw">seq_len</span>(<span class="kw">ncol</span>(X))) {
+    <span class="co"># 단계 1</span>
+    j &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">ncol</span>(X), <span class="dv">1</span>)
+    Th[, h] &lt;-<span class="st"> </span>X[, j]
+    
+    <span class="cf">while</span> (<span class="ot">TRUE</span>) {
+      <span class="co"># 단계 2</span>
+      Vh[, h] &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">t</span>(Th[, h]) <span class="op">%*%</span><span class="st"> </span>X <span class="op">/</span><span class="st"> </span>(<span class="kw">norm</span>(Th[, h], <span class="st">&quot;2&quot;</span>) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))
+      
+      <span class="co"># 단계 3</span>
+      Vh[, h] &lt;-<span class="st"> </span>Vh[, h] <span class="op">/</span><span class="st"> </span><span class="kw">norm</span>(Vh[, h], <span class="st">&quot;2&quot;</span>)
+      
+      <span class="co"># 단계 4</span>
+      th &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>Vh[, h]
+      
+      <span class="co"># 단계 5</span>
+      <span class="cf">if</span> (<span class="kw">all</span>(<span class="kw">near</span>(Th[, h], th))) <span class="cf">break</span>
+      Th[, h] &lt;-<span class="st"> </span>th
+    }
+    
+    <span class="co">#단계 6</span>
+    X &lt;-<span class="st"> </span>X <span class="op">-</span><span class="st"> </span>Th[, h] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(Vh[, h])
+  }
+  
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">T =</span> Th, <span class="dt">V =</span> Vh))
+}
+
+nipals_Z &lt;-<span class="st"> </span><span class="kw">nipals_pca</span>(Z)
+nipals_Z</code></pre>
+<pre><code>## $T
+##             [,1]       [,2]        [,3]        [,4]         [,5]
+##  [1,] -1.4870243 -0.6066594 -0.63361774  0.29625002  0.020293728
+##  [2,] -0.2063797  0.0804627 -0.04965018 -0.26323513  0.063581475
+##  [3,]  0.1968538 -0.9704605 -0.39507855 -0.27123746  0.103351748
+##  [4,] -2.3542884  3.5056480  0.16252732 -0.02524925 -0.249920974
+##  [5,] -0.8953708 -1.4552899  1.36265906 -0.20161775 -0.055517165
+##  [6,] -0.3682082  0.5976313  0.65857722 -0.27901317  0.060458250
+##  [7,] -0.9354306  1.4144519 -0.82574638 -0.07358976  0.095960908
+##  [8,]  2.4129728  0.6785064  0.92207607  0.36161576 -0.062593524
+##  [9,]  2.6991862  0.7596591 -0.45091077  0.21030378  0.168645126
+## [10,] -0.4050098 -0.2800099 -0.92835441 -0.13993488  0.001811119
+## [11,]  1.3958199 -1.1353513 -0.09819177 -0.34335126 -0.094986793
+## [12,] -1.5381192 -1.1576616 -0.07467333  0.29404424  0.052430943
+## [13,]  0.3217681  0.2378023  1.10180230 -0.28507243  0.030666765
+## [14,] -2.0306806 -0.9646122  0.20906176  0.39639758 -0.085778573
+## [15,]  3.0389460 -0.8841645 -0.77478769  0.04079853 -0.349688463
+## [16,]  2.0064063  1.2831337  0.64388896  0.22077706  0.188366869
+## [17,] -0.4211779  0.2987099 -1.20644766 -0.11766274  0.068250992
+## [18,] -1.4302634 -1.4017959  0.37686580  0.17977686  0.044667566
+## 
+## $V
+##             [,1]        [,2]          [,3]        [,4]        [,5]
+## [1,]  0.07608428  0.77966993  0.0008915858  0.14075541  0.60540325
+## [2,] -0.39463007  0.56541218 -0.2953216580 -0.11764417 -0.65078502
+## [3,]  0.56970191  0.16228156  0.2412221046  0.63772188 -0.42921688
+## [4,] -0.55982770 -0.19654293 -0.2565972850  0.74809432  0.14992181
+## [5,] -0.44778451  0.08636803  0.8881182652  0.00366841 -0.05711464</code></pre>
+<p>위 분해된 행렬의 곱이 원 데이터 행렬 <span class="math inline">\(\mathbf{Z}\)</span>과 일치하는지 확인해보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">near</span>(Z, nipals_Z<span class="op">$</span>T <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(nipals_Z<span class="op">$</span>V)))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>R 패키지 <code>nipals</code>내의 함수 <code>nipals</code>가 이 장에서 설명한 NIPALS 알고리즘에 기반한 주성분 분석을 아래와 같이 제공한다.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nipals)
+<span class="kw">nipals</span>(Z, <span class="dt">center =</span> <span class="ot">FALSE</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre><code>## $eig
+## [1] 6.8516317 5.2245674 3.0593417 1.0435869 0.5571285
+## 
+## $scores
+##               PC1         PC2         PC3         PC4          PC5
+##  [1,] -0.21705404 -0.11608067 -0.20710543  0.28388475 -0.036368396
+##  [2,] -0.03011834  0.01540551 -0.01623006 -0.25221776 -0.114174269
+##  [3,]  0.02869590 -0.18575892 -0.12913406 -0.25987079 -0.185560165
+##  [4,] -0.34348333  0.67105909  0.05310696 -0.02428657  0.448582844
+##  [5,] -0.13073246 -0.27851123  0.44541637 -0.19321728  0.099609669
+##  [6,] -0.05371865  0.11440401  0.21526389 -0.26733867 -0.108571464
+##  [7,] -0.13647563  0.27074924 -0.26991736 -0.07048155 -0.172255999
+##  [8,]  0.35219939  0.12981093  0.30139420  0.34648877  0.112419837
+##  [9,]  0.39397535  0.14532356 -0.14739177  0.20158102 -0.302663550
+## [10,] -0.05912155 -0.05359220 -0.30344792 -0.13408884 -0.003277662
+## [11,]  0.20367981 -0.21735017 -0.03209051 -0.32904441  0.170427304
+## [12,] -0.22453126 -0.22153804 -0.02440174  0.28178254 -0.094052577
+## [13,]  0.04697085  0.04551641  0.36014173 -0.27315578 -0.055099430
+## [14,] -0.29641393 -0.18457147  0.06834143  0.37981073  0.154041866
+## [15,]  0.44350417 -0.16932257 -0.25324815  0.03896920  0.627670066
+## [16,]  0.29288258  0.24554714  0.21046020  0.21162296 -0.338060584
+## [17,] -0.06146040  0.05717479 -0.39435062 -0.11272299 -0.122527440
+## [18,] -0.20879845 -0.26826541  0.12319285  0.17228468 -0.080140048
+## 
+## $loadings
+##                  PC1        PC2           PC3          PC4         PC5
+## roa       0.07627711  0.7796534  0.0008551484  0.140974596 -0.60534928
+## roe      -0.39449021  0.5654941 -0.2953469599 -0.117893972  0.65074198
+## bis       0.56974203  0.1621586  0.2412197864  0.637556663  0.42945678
+## de_ratio -0.55987629 -0.1964075 -0.2565837179  0.748154680 -0.14963952
+## turnover -0.44776314  0.0865197  0.8881144365  0.003640124  0.05711403
+## 
+## $fitted
+## NULL
+## 
+## $ncomp
+## [1] 5
+## 
+## $R2
+## [1] 0.552292435 0.321130644 0.110112610 0.012812631 0.003651673
+## 
+## $iter
+## [1] 14  4  4  6  3</code></pre>
+<p>평균 및 분산조정 이전의 원래 데이터를 입력하고, 파라미터 <code>center</code>(평균조정) 및 <code>scale</code>(분산조정)의 값을 모두 <code>TRUE</code>로 설정하면 동일한 결과를 얻을 수 있다.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nipals)
+<span class="kw">nipals</span>(train_df[, <span class="dv">-1</span>], <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre><code>## $eig
+## [1] 6.8516317 5.2245674 3.0593417 1.0435869 0.5571285
+## 
+## $scores
+##               PC1         PC2         PC3         PC4          PC5
+##  [1,] -0.21705404 -0.11608067 -0.20710543  0.28388475 -0.036368396
+##  [2,] -0.03011834  0.01540551 -0.01623006 -0.25221776 -0.114174269
+##  [3,]  0.02869590 -0.18575892 -0.12913406 -0.25987079 -0.185560165
+##  [4,] -0.34348333  0.67105909  0.05310696 -0.02428657  0.448582844
+##  [5,] -0.13073246 -0.27851123  0.44541637 -0.19321728  0.099609669
+##  [6,] -0.05371865  0.11440401  0.21526389 -0.26733867 -0.108571464
+##  [7,] -0.13647563  0.27074924 -0.26991736 -0.07048155 -0.172255999
+##  [8,]  0.35219939  0.12981093  0.30139420  0.34648877  0.112419837
+##  [9,]  0.39397535  0.14532356 -0.14739177  0.20158102 -0.302663550
+## [10,] -0.05912155 -0.05359220 -0.30344792 -0.13408884 -0.003277662
+## [11,]  0.20367981 -0.21735017 -0.03209051 -0.32904441  0.170427304
+## [12,] -0.22453126 -0.22153804 -0.02440174  0.28178254 -0.094052577
+## [13,]  0.04697085  0.04551641  0.36014173 -0.27315578 -0.055099430
+## [14,] -0.29641393 -0.18457147  0.06834143  0.37981073  0.154041866
+## [15,]  0.44350417 -0.16932257 -0.25324815  0.03896920  0.627670066
+## [16,]  0.29288258  0.24554714  0.21046020  0.21162296 -0.338060584
+## [17,] -0.06146040  0.05717479 -0.39435062 -0.11272299 -0.122527440
+## [18,] -0.20879845 -0.26826541  0.12319285  0.17228468 -0.080140048
+## 
+## $loadings
+##                  PC1        PC2           PC3          PC4         PC5
+## roa       0.07627711  0.7796534  0.0008551484  0.140974596 -0.60534928
+## roe      -0.39449021  0.5654941 -0.2953469599 -0.117893972  0.65074198
+## bis       0.56974203  0.1621586  0.2412197864  0.637556663  0.42945678
+## de_ratio -0.55987629 -0.1964075 -0.2565837179  0.748154680 -0.14963952
+## turnover -0.44776314  0.0865197  0.8881144365  0.003640124  0.05711403
+## 
+## $fitted
+## NULL
+## 
+## $ncomp
+## [1] 5
+## 
+## $R2
+## [1] 0.552292435 0.321130644 0.110112610 0.012812631 0.003651673
+## 
+## $iter
+## [1] 14  4  4  6  3</code></pre>
+</div>
+</div>
+<div id="pca-regression" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> 주성분 회귀분석</h3>
+
+</div>
 </div>
 </div>
 <div id="disqus_thread"></div>
