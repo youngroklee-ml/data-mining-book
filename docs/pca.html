@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2019-06-27" />
+<meta name="date" content="2019-06-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,12 +143,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>2</b> 주성분분석</a><ul>
 <li class="chapter" data-level="2.1" data-path="pca.html"><a href="pca.html#pca-packages-install"><i class="fa fa-check"></i><b>2.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="2.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>2.2</b> 행렬의 분해</a></li>
-<li class="chapter" data-level="2.3" data-path="pca.html"><a href="pca.html#pca-matrix-factorization-basic-script"><i class="fa fa-check"></i><b>2.3</b> 기본 R 스트립트</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>2.3.1</b> 변수의 변동과 제곱합</a></li>
-<li class="chapter" data-level="2.3.2" data-path="pca.html"><a href="pca.html#pca-intro"><i class="fa fa-check"></i><b>2.3.2</b> 주성분의 이해 및 행렬의 분해</a></li>
-<li class="chapter" data-level="2.3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>2.3.3</b> 주성분 회귀분석</a></li>
+<li class="chapter" data-level="2.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>2.2</b> 행렬의 분해</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="pca.html"><a href="pca.html#pca-matrix-factorization-basic-script"><i class="fa fa-check"></i><b>2.2.1</b> 기본 R 스트립트</a></li>
+<li class="chapter" data-level="2.2.2" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>2.2.2</b> 변수의 변동과 제곱합</a></li>
+<li class="chapter" data-level="2.2.3" data-path="pca.html"><a href="pca.html#pca-intro"><i class="fa fa-check"></i><b>2.2.3</b> 주성분의 이해 및 행렬의 분해</a></li>
+<li class="chapter" data-level="2.2.4" data-path="pca.html"><a href="pca.html#-singular-value-decomposition-pca-svd"><i class="fa fa-check"></i><b>2.2.4</b> 특이치분해 (Singular Value Decomposition) {pca-svd}</a></li>
+<li class="chapter" data-level="2.2.5" data-path="pca.html"><a href="pca.html#-spectral-decomposition-pca-spectral"><i class="fa fa-check"></i><b>2.2.5</b> 분광분해 (Spectral Decomposition) {pca-spectral}</a></li>
+<li class="chapter" data-level="2.2.6" data-path="pca.html"><a href="pca.html#pca-nipals"><i class="fa fa-check"></i><b>2.2.6</b> NIPALS 알고리즘</a></li>
 </ul></li>
+<li class="chapter" data-level="2.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>2.3</b> 주성분 회귀분석</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>3</b> 분류분석 개요</a><ul>
 <li class="chapter" data-level="3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-packages-install"><i class="fa fa-check"></i><b>3.1</b> 필요 R 패키지 설치</a></li>
@@ -395,9 +398,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="pca-matrix-factorization" class="section level2">
 <h2><span class="header-section-number">2.2</span> 행렬의 분해</h2>
-</div>
-<div id="pca-matrix-factorization-basic-script" class="section level2">
-<h2><span class="header-section-number">2.3</span> 기본 R 스트립트</h2>
+<div id="pca-matrix-factorization-basic-script" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> 기본 R 스트립트</h3>
 <p>아래 Table <a href="pca.html#tab:pca-matrix-factorization-data">2.1</a>는 국내 18개 증권회사의 주요 재무제표를 나열한 것이다.</p>
 <pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span>company, <span class="op">~</span>roa, <span class="op">~</span>roe, <span class="op">~</span>bis, <span class="op">~</span>de_ratio, <span class="op">~</span>turnover,
@@ -622,8 +624,9 @@ pca_fit</code></pre>
 Figure 2.1: 고유치 스크리 도표
 </p>
 </div>
+</div>
 <div id="pca-ss" class="section level3">
-<h3><span class="header-section-number">2.3.1</span> 변수의 변동과 제곱합</h3>
+<h3><span class="header-section-number">2.2.2</span> 변수의 변동과 제곱합</h3>
 <p>총 <span class="math inline">\(k\)</span>개의 독립변수가 있고 각 독립변수에 대하여 <span class="math inline">\(n\)</span>개의 관측치가 있다고 하자. 이 때, <span class="math inline">\(x_{ij}\)</span>를 <span class="math inline">\(j\)</span>번째 독립변수에 대한 <span class="math inline">\(i\)</span>번째 관측치라 하자. 즉, 관측데이터는 아래와 같은 행렬로 표현할 수 있다.</p>
 <p><span class="math display">\[\begin{equation*}
 \mathbf{X} = \left[ \begin{array}{c c c c}
@@ -723,7 +726,7 @@ total_ss</code></pre>
 <pre><code>## [1] 85</code></pre>
 </div>
 <div id="pca-intro" class="section level3">
-<h3><span class="header-section-number">2.3.2</span> 주성분의 이해 및 행렬의 분해</h3>
+<h3><span class="header-section-number">2.2.3</span> 주성분의 이해 및 행렬의 분해</h3>
 <p>주성분분석은 원래의 변수들의 선형조합으로 서로 직교하는 새로운 변수들을 생성하는 것이라 할 수 있다. 이 때, 원래 변수의 수 <span class="math inline">\(k\)</span>보다 작은 <span class="math inline">\(A\)</span>개의 새로운 변수들이 원 데이터 행렬 <span class="math inline">\(\mathbf{X}\)</span> 총변동의 대부분을 설명한다고 하면, 해당 새로운 변수들만을 사용하여 여러 가지 분석을 대신할 수 있다는 것이 주성분분석의 개념이라 하겠다.</p>
 <p>새로운 변수 <span class="math inline">\(\mathbf{t}_1, \cdots, \mathbf{t}_A\)</span>들은 다음과 같은 형태로 표현된다.</p>
 <p><span class="math display">\[\begin{equation}
@@ -769,9 +772,10 @@ t1_ss <span class="op">/</span><span class="st"> </span>total_ss</code></pre>
 <pre><code>##         t_1
 ## 1 0.5522924</code></pre>
 <p>위 새로운 변수 <span class="math inline">\(\mathbf{t}_1\)</span>는 실제로 행렬 <span class="math inline">\(\mathbf{Z}\)</span>로부터 얻어지는 첫 번째 주성분이며, 행렬 <span class="math inline">\(\mathbf{Z}\)</span>의 변동에 가장 많이 기여하는 하나의 선형조합이다.</p>
-<p>행렬 <span class="math inline">\(\mathbf{Z}\)</span>(혹은 <span class="math inline">\(\mathbf{X}\)</span>)로부터 주성분을 얻는 방법은 여러 가지가 있으며, 아래 세부 챕터에서 하나씩 설명하기로 한다.</p>
-<div id="-singular-value-decomposition-pca-svd" class="section level4">
-<h4><span class="header-section-number">2.3.2.1</span> 특이치분해 (Singular Value Decomposition) {pca-svd}</h4>
+<p>행렬 <span class="math inline">\(\mathbf{Z}\)</span>(혹은 <span class="math inline">\(\mathbf{X}\)</span>)로부터 주성분을 얻는 방법은 여러 가지가 있으며, 아래에서 하나씩 설명하기로 한다.</p>
+</div>
+<div id="-singular-value-decomposition-pca-svd" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> 특이치분해 (Singular Value Decomposition) {pca-svd}</h3>
 <p>분산조정된 <span class="math inline">\(\mathbf{Z}\)</span>에 대해 주성분분석을 수행한다고 가정하자. 분산조정을 하지 않고 주성분분석을 수행하는 경우 아래 행렬 <span class="math inline">\(\mathbf{Z}\)</span> 대신 <span class="math inline">\(\mathbf{X}\)</span>를 사용하면 된다.</p>
 <p>임의의 <span class="math inline">\((n \times k)\)</span> 행렬 <span class="math inline">\(\mathbf{Z}\)</span>는 다음과 같이 분해된다.</p>
 <p><span class="math display" id="eq:pca-svd">\[\begin{equation}
@@ -797,8 +801,8 @@ Z_rec &lt;-<span class="st"> </span>svd_Z<span class="op">$</span>u <span class=
 <pre><code>## [1] 6.8516318 5.2245674 3.0593417 1.0435870 0.5571285</code></pre>
 <p>이 특이치들은 아래 분광분해에서 살펴볼 고유치의 제곱근이다.</p>
 </div>
-<div id="-spectral-decomposition-pca-spectral" class="section level4">
-<h4><span class="header-section-number">2.3.2.2</span> 분광분해 (Spectral Decomposition) {pca-spectral}</h4>
+<div id="-spectral-decomposition-pca-spectral" class="section level3">
+<h3><span class="header-section-number">2.2.5</span> 분광분해 (Spectral Decomposition) {pca-spectral}</h3>
 <p>임의의 정방행렬 <span class="math inline">\(\mathbf{A}\)</span>에 대하여</p>
 <p><span class="math display">\[\mathbf{A}\mathbf{v} = \lambda\mathbf{v} \]</span></p>
 <p>가 성립하는 벡터 <span class="math inline">\(\mathbf{v} \neq \mathbf{0}\)</span>과 상수 <span class="math inline">\(\lambda\)</span>가 존재할 때, 상수 <span class="math inline">\(\lambda\)</span>를 행렬 <span class="math inline">\(\mathbf{A}\)</span>의 고유치(eigenvalue)라 하며, <span class="math inline">\(\mathbf{v}\)</span>를 이에 대응하는 고유벡터(eigenvector)라 한다. 통상 <span class="math inline">\(\mathbf{v}^\top \mathbf{v} = 1\)</span>을 가정한다.</p>
@@ -893,8 +897,8 @@ eig_cor_raw</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">near</span>(eig_cov_Z<span class="op">$</span>vectors, eig_cor_raw<span class="op">$</span>vectors))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 </div>
-<div id="pca-nipals" class="section level4">
-<h4><span class="header-section-number">2.3.2.3</span> NIPALS 알고리즘</h4>
+<div id="pca-nipals" class="section level3">
+<h3><span class="header-section-number">2.2.6</span> NIPALS 알고리즘</h3>
 <p>NIPALS(Nonlinear Iterative Paritial Least Squares) 알고리즘은 반복적(iterative) 알고리즘을 이용하여 변동 기여율이 가장 큰 주성분부터 가장 작은 주성분까지 순차적으로 고유벡터와 주성분 스코어를 구하는 방법이다.</p>
 <p>우선, 특이치 분해에서 사용한 식을 단순화하여, 분산조정된 행렬 <span class="math inline">\(\mathbf{Z}\)</span>가 아래와 같이 주성분 스코어 행렬 <span class="math inline">\(\mathbf{T}\)</span>와 고유벡터 행렬 <span class="math inline">\(\mathbf{V}\)</span>로 분해된다고 하자. (분산조정 대신 평균조정만을 원할 경우 <span class="math inline">\(\mathbf{Z}\)</span> 대신 <span class="math inline">\(\mathbf{X}\)</span>를 사용)</p>
 <p><span class="math display">\[ \mathbf{Z} = \mathbf{U} \mathbf{D} \mathbf{V}^\top = \mathbf{T} \mathbf{V}^\top \]</span></p>
@@ -972,33 +976,33 @@ T_mat</code></pre>
 nipals_Z &lt;-<span class="st"> </span><span class="kw">nipals_pca</span>(Z)
 nipals_Z</code></pre>
 <pre><code>## $T
-##             [,1]       [,2]        [,3]        [,4]         [,5]
-##  [1,] -1.4870243 -0.6066594 -0.63361774  0.29625002  0.020293728
-##  [2,] -0.2063797  0.0804627 -0.04965018 -0.26323513  0.063581475
-##  [3,]  0.1968538 -0.9704605 -0.39507855 -0.27123746  0.103351748
-##  [4,] -2.3542884  3.5056480  0.16252732 -0.02524925 -0.249920974
-##  [5,] -0.8953708 -1.4552899  1.36265906 -0.20161775 -0.055517165
-##  [6,] -0.3682082  0.5976313  0.65857722 -0.27901317  0.060458250
-##  [7,] -0.9354306  1.4144519 -0.82574638 -0.07358976  0.095960908
-##  [8,]  2.4129728  0.6785064  0.92207607  0.36161576 -0.062593524
-##  [9,]  2.6991862  0.7596591 -0.45091077  0.21030378  0.168645126
-## [10,] -0.4050098 -0.2800099 -0.92835441 -0.13993488  0.001811119
-## [11,]  1.3958199 -1.1353513 -0.09819177 -0.34335126 -0.094986793
-## [12,] -1.5381192 -1.1576616 -0.07467333  0.29404424  0.052430943
-## [13,]  0.3217681  0.2378023  1.10180230 -0.28507243  0.030666765
-## [14,] -2.0306806 -0.9646122  0.20906176  0.39639758 -0.085778573
-## [15,]  3.0389460 -0.8841645 -0.77478769  0.04079853 -0.349688463
-## [16,]  2.0064063  1.2831337  0.64388896  0.22077706  0.188366869
-## [17,] -0.4211779  0.2987099 -1.20644766 -0.11766274  0.068250992
-## [18,] -1.4302634 -1.4017959  0.37686580  0.17977686  0.044667566
+##             [,1]       [,2]        [,3]        [,4]        [,5]
+##  [1,] -1.4870243 -0.6066594 -0.63361774  0.29625002 -0.02029373
+##  [2,] -0.2063797  0.0804627 -0.04965018 -0.26323513 -0.06358148
+##  [3,]  0.1968538 -0.9704605 -0.39507856 -0.27123746 -0.10335175
+##  [4,] -2.3542884  3.5056480  0.16252734 -0.02524925  0.24992097
+##  [5,] -0.8953707 -1.4552900  1.36265905 -0.20161775  0.05551716
+##  [6,] -0.3682082  0.5976313  0.65857722 -0.27901317 -0.06045825
+##  [7,] -0.9354306  1.4144520 -0.82574637 -0.07358976 -0.09596091
+##  [8,]  2.4129728  0.6785064  0.92207607  0.36161576  0.06259353
+##  [9,]  2.6991862  0.7596591 -0.45091077  0.21030379 -0.16864512
+## [10,] -0.4050098 -0.2800099 -0.92835441 -0.13993488 -0.00181112
+## [11,]  1.3958199 -1.1353513 -0.09819178 -0.34335127  0.09498679
+## [12,] -1.5381192 -1.1576616 -0.07467334  0.29404424 -0.05243094
+## [13,]  0.3217681  0.2378023  1.10180230 -0.28507243 -0.03066677
+## [14,] -2.0306806 -0.9646122  0.20906176  0.39639757  0.08577858
+## [15,]  3.0389460 -0.8841645 -0.77478770  0.04079852  0.34968846
+## [16,]  2.0064063  1.2831337  0.64388897  0.22077706 -0.18836687
+## [17,] -0.4211779  0.2987099 -1.20644766 -0.11766274 -0.06825099
+## [18,] -1.4302634 -1.4017959  0.37686579  0.17977686 -0.04466756
 ## 
 ## $V
-##             [,1]        [,2]          [,3]        [,4]        [,5]
-## [1,]  0.07608428  0.77966993  0.0008915858  0.14075541  0.60540325
-## [2,] -0.39463007  0.56541218 -0.2953216580 -0.11764417 -0.65078502
-## [3,]  0.56970191  0.16228156  0.2412221046  0.63772188 -0.42921688
-## [4,] -0.55982770 -0.19654293 -0.2565972850  0.74809432  0.14992181
-## [5,] -0.44778451  0.08636803  0.8881182652  0.00366841 -0.05711464</code></pre>
+##             [,1]        [,2]          [,3]         [,4]        [,5]
+## [1,]  0.07608428  0.77966993  0.0008916027  0.140755413 -0.60540325
+## [2,] -0.39463007  0.56541218 -0.2953216458 -0.117644174  0.65078502
+## [3,]  0.56970191  0.16228156  0.2412221083  0.637721879  0.42921690
+## [4,] -0.55982770 -0.19654293 -0.2565972891  0.748094319 -0.14992178
+## [5,] -0.44778451  0.08636803  0.8881182671  0.003668408  0.05711464</code></pre>
 <p>위 분해된 행렬의 곱이 원 데이터 행렬 <span class="math inline">\(\mathbf{Z}\)</span>과 일치하는지 확인해보자.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">near</span>(Z, nipals_Z<span class="op">$</span>T <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(nipals_Z<span class="op">$</span>V)))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
@@ -1096,10 +1100,9 @@ nipals_Z</code></pre>
 ## [1] 14  4  4  6  3</code></pre>
 </div>
 </div>
-<div id="pca-regression" class="section level3">
-<h3><span class="header-section-number">2.3.3</span> 주성분 회귀분석</h3>
+<div id="pca-regression" class="section level2">
+<h2><span class="header-section-number">2.3</span> 주성분 회귀분석</h2>
 
-</div>
 </div>
 </div>
 <div id="disqus_thread"></div>

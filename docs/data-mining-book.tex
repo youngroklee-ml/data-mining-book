@@ -618,7 +618,7 @@ nipals & 0.5\\
 \section{행렬의 분해}\label{pca-matrix-factorization}}
 
 \hypertarget{pca-matrix-factorization-basic-script}{%
-\section{기본 R 스트립트}\label{pca-matrix-factorization-basic-script}}
+\subsection{기본 R 스트립트}\label{pca-matrix-factorization-basic-script}}
 
 아래 Table \ref{tab:pca-matrix-factorization-data}는 국내 18개 증권회사의 주요 재무제표를 나열한 것이다.
 
@@ -994,10 +994,10 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 
 위 새로운 변수 \(\mathbf{t}_1\)는 실제로 행렬 \(\mathbf{Z}\)로부터 얻어지는 첫 번째 주성분이며, 행렬 \(\mathbf{Z}\)의 변동에 가장 많이 기여하는 하나의 선형조합이다.
 
-행렬 \(\mathbf{Z}\)(혹은 \(\mathbf{X}\))로부터 주성분을 얻는 방법은 여러 가지가 있으며, 아래 세부 챕터에서 하나씩 설명하기로 한다.
+행렬 \(\mathbf{Z}\)(혹은 \(\mathbf{X}\))로부터 주성분을 얻는 방법은 여러 가지가 있으며, 아래에서 하나씩 설명하기로 한다.
 
 \hypertarget{-singular-value-decomposition-pca-svd}{%
-\subsubsection{특이치분해 (Singular Value Decomposition) \{pca-svd\}}\label{-singular-value-decomposition-pca-svd}}
+\subsection{특이치분해 (Singular Value Decomposition) \{pca-svd\}}\label{-singular-value-decomposition-pca-svd}}
 
 분산조정된 \(\mathbf{Z}\)에 대해 주성분분석을 수행한다고 가정하자. 분산조정을 하지 않고 주성분분석을 수행하는 경우 아래 행렬 \(\mathbf{Z}\) 대신 \(\mathbf{X}\)를 사용하면 된다.
 
@@ -1061,7 +1061,7 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 이 특이치들은 아래 분광분해에서 살펴볼 고유치의 제곱근이다.
 
 \hypertarget{-spectral-decomposition-pca-spectral}{%
-\subsubsection{분광분해 (Spectral Decomposition) \{pca-spectral\}}\label{-spectral-decomposition-pca-spectral}}
+\subsection{분광분해 (Spectral Decomposition) \{pca-spectral\}}\label{-spectral-decomposition-pca-spectral}}
 
 임의의 정방행렬 \(\mathbf{A}\)에 대하여
 
@@ -1267,7 +1267,7 @@ R 함수 \texttt{eigen}을 이용하여 분광분해를 아래와 같이 수행�
 \end{verbatim}
 
 \hypertarget{pca-nipals}{%
-\subsubsection{NIPALS 알고리즘}\label{pca-nipals}}
+\subsection{NIPALS 알고리즘}\label{pca-nipals}}
 
 NIPALS(Nonlinear Iterative Paritial Least Squares) 알고리즘은 반복적(iterative) 알고리즘을 이용하여 변동 기여율이 가장 큰 주성분부터 가장 작은 주성분까지 순차적으로 고유벡터와 주성분 스코어를 구하는 방법이다.
 
@@ -1529,7 +1529,7 @@ R 패키지 \texttt{nipals}내의 함수 \texttt{nipals}가 이 장에서 설명
 \end{verbatim}
 
 \hypertarget{pca-regression}{%
-\subsection{주성분 회귀분석}\label{pca-regression}}
+\section{주성분 회귀분석}\label{pca-regression}}
 
 \hypertarget{classification-analysis}{%
 \chapter{분류분석 개요}\label{classification-analysis}}
