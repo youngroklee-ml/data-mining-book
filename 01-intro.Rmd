@@ -1,0 +1,8 @@
+# 데이터마이닝 개요 {#datamining-overview}
+
+데이터마이닝은 다양한 목적으로 사용될 수 있다. 그러나 기본적인 목적에 따라 분류할 때, 예측(prediction), 분류(classification), 군집화(clustering), 연관규칙(association rule) 추출로 구분할 수 있겠다.
+
+추후 내용 추가
+
+
+

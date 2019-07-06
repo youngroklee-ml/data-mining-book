@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 군집분석 개요 | 데이터마이닝 with R</title>
+  <title>Chapter 11 군집분석 개요 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
   <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 군집분석 개요 | 데이터마이닝 with R" />
+  <meta property="og:title" content="Chapter 11 군집분석 개요 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://youngroklee-ml.github.io/data-mining-book/" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="youngroklee-ml/data-mining-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 군집분석 개요 | 데이터마이닝 with R" />
+  <meta name="twitter:title" content="Chapter 11 군집분석 개요 | 데이터마이닝 with R" />
   
   <meta name="twitter:description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2019-06-28" />
+<meta name="date" content="2019-07-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -130,214 +130,232 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>개요</a></li>
-<li class="chapter" data-level="1" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>1</b> 회귀분석</a><ul>
-<li class="chapter" data-level="1.1" data-path="regression.html"><a href="regression.html#regression-packages-install"><i class="fa fa-check"></i><b>1.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="1.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>1.2</b> 다중회귀모형</a></li>
-<li class="chapter" data-level="1.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>1.3</b> 반응치에 대한 추정 및 예측</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="regression.html"><a href="regression.html#regression-response-confidence"><i class="fa fa-check"></i><b>1.3.1</b> 평균반응치의 추정</a></li>
-<li class="chapter" data-level="1.3.2" data-path="regression.html"><a href="regression.html#regression-response-prediction"><i class="fa fa-check"></i><b>1.3.2</b> 미래반응치의 예측</a></li>
+<li class="chapter" data-level="1" data-path="datamining-overview.html"><a href="datamining-overview.html"><i class="fa fa-check"></i><b>1</b> 데이터마이닝 개요</a></li>
+<li class="part"><span><b>I 1부 - 예측</b></span></li>
+<li class="chapter" data-level="2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>2</b> 회귀분석</a><ul>
+<li class="chapter" data-level="2.1" data-path="regression.html"><a href="regression.html#regression-packages-install"><i class="fa fa-check"></i><b>2.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>2.2</b> 다중회귀모형</a></li>
+<li class="chapter" data-level="2.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>2.3</b> 반응치에 대한 추정 및 예측</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="regression.html"><a href="regression.html#regression-response-confidence"><i class="fa fa-check"></i><b>2.3.1</b> 평균반응치의 추정</a></li>
+<li class="chapter" data-level="2.3.2" data-path="regression.html"><a href="regression.html#regression-response-prediction"><i class="fa fa-check"></i><b>2.3.2</b> 미래반응치의 예측</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>1.4</b> 지시변수와 회귀모형</a><ul>
-<li class="chapter" data-level="1.4.1" data-path="regression.html"><a href="regression.html#regression-indicator-variable-basic-script"><i class="fa fa-check"></i><b>1.4.1</b> 기본 R 스트립트</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>2</b> 주성분분석</a><ul>
-<li class="chapter" data-level="2.1" data-path="pca.html"><a href="pca.html#pca-packages-install"><i class="fa fa-check"></i><b>2.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="2.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>2.2</b> 행렬의 분해</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="pca.html"><a href="pca.html#pca-matrix-factorization-basic-script"><i class="fa fa-check"></i><b>2.2.1</b> 기본 R 스트립트</a></li>
-<li class="chapter" data-level="2.2.2" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>2.2.2</b> 변수의 변동과 제곱합</a></li>
-<li class="chapter" data-level="2.2.3" data-path="pca.html"><a href="pca.html#pca-intro"><i class="fa fa-check"></i><b>2.2.3</b> 주성분의 이해 및 행렬의 분해</a></li>
-<li class="chapter" data-level="2.2.4" data-path="pca.html"><a href="pca.html#-singular-value-decomposition-pca-svd"><i class="fa fa-check"></i><b>2.2.4</b> 특이치분해 (Singular Value Decomposition) {pca-svd}</a></li>
-<li class="chapter" data-level="2.2.5" data-path="pca.html"><a href="pca.html#-spectral-decomposition-pca-spectral"><i class="fa fa-check"></i><b>2.2.5</b> 분광분해 (Spectral Decomposition) {pca-spectral}</a></li>
-<li class="chapter" data-level="2.2.6" data-path="pca.html"><a href="pca.html#pca-nipals"><i class="fa fa-check"></i><b>2.2.6</b> NIPALS 알고리즘</a></li>
-</ul></li>
-<li class="chapter" data-level="2.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>2.3</b> 주성분 회귀분석</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>3</b> 분류분석 개요</a><ul>
-<li class="chapter" data-level="3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-packages-install"><i class="fa fa-check"></i><b>3.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="3.2" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-problem-methods"><i class="fa fa-check"></i><b>3.2</b> 분류문제 및 분류기법</a></li>
-<li class="chapter" data-level="3.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>3.3</b> 기본적인 분류기법</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#nearest-neighbor-classification"><i class="fa fa-check"></i><b>3.3.1</b> 인접객체법</a></li>
-<li class="chapter" data-level="3.3.2" data-path="classification-analysis.html"><a href="classification-analysis.html#naive-bayes"><i class="fa fa-check"></i><b>3.3.2</b> 나이브 베이지안 분류법</a></li>
+<li class="chapter" data-level="2.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>2.4</b> 지시변수와 회귀모형</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="regression.html"><a href="regression.html#regression-indicator-variable-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스트립트</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>4</b> 로지스틱 회귀분석</a><ul>
-<li class="chapter" data-level="4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-packages-install"><i class="fa fa-check"></i><b>4.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>4.2</b> 이분 로지스틱 회귀모형</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#bianry-logistic-reg-basic-script"><i class="fa fa-check"></i><b>4.2.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="4.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-model"><i class="fa fa-check"></i><b>4.2.2</b> 회귀모형</a></li>
-<li class="chapter" data-level="4.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-estimation"><i class="fa fa-check"></i><b>4.2.3</b> 회귀계수 추정</a></li>
+<li class="chapter" data-level="3" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3</b> 주성분분석</a><ul>
+<li class="chapter" data-level="3.1" data-path="pca.html"><a href="pca.html#pca-packages-install"><i class="fa fa-check"></i><b>3.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="3.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>3.2</b> 행렬의 분해</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="pca.html"><a href="pca.html#pca-matrix-factorization-basic-script"><i class="fa fa-check"></i><b>3.2.1</b> 기본 R 스트립트</a></li>
+<li class="chapter" data-level="3.2.2" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>3.2.2</b> 변수의 변동과 제곱합</a></li>
+<li class="chapter" data-level="3.2.3" data-path="pca.html"><a href="pca.html#pca-intro"><i class="fa fa-check"></i><b>3.2.3</b> 주성분의 이해 및 행렬의 분해</a></li>
+<li class="chapter" data-level="3.2.4" data-path="pca.html"><a href="pca.html#-singular-value-decomposition-pca-svd"><i class="fa fa-check"></i><b>3.2.4</b> 특이치분해 (Singular Value Decomposition) {pca-svd}</a></li>
+<li class="chapter" data-level="3.2.5" data-path="pca.html"><a href="pca.html#-spectral-decomposition-pca-spectral"><i class="fa fa-check"></i><b>3.2.5</b> 분광분해 (Spectral Decomposition) {pca-spectral}</a></li>
+<li class="chapter" data-level="3.2.6" data-path="pca.html"><a href="pca.html#pca-nipals"><i class="fa fa-check"></i><b>3.2.6</b> NIPALS 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>4.3</b> 명목 로지스틱 회귀모형</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-reg-basic-script"><i class="fa fa-check"></i><b>4.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="4.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#baseline-category-logit-model"><i class="fa fa-check"></i><b>4.3.2</b> 기준범주 로짓모형</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>4.4</b> 서열 로지스틱 회귀모형</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-basic-script"><i class="fa fa-check"></i><b>4.4.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="4.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#cumulative-logit-model"><i class="fa fa-check"></i><b>4.4.2</b> 누적 로짓모형</a></li>
-<li class="chapter" data-level="4.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#adjacent-categories-logit-model"><i class="fa fa-check"></i><b>4.4.3</b> 인근범주 로짓모형</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>5</b> 판별분석</a><ul>
-<li class="chapter" data-level="5.1" data-path="da.html"><a href="da.html#da-overview"><i class="fa fa-check"></i><b>5.1</b> 개요</a></li>
-<li class="chapter" data-level="5.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>5.2</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="5.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>5.3</b> 피셔 방법</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>5.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="5.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>5.3.2</b> 피셔 판별함수</a></li>
-<li class="chapter" data-level="5.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>5.3.3</b> 분류 규칙</a></li>
-<li class="chapter" data-level="5.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>5.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>5.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>5.4.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="5.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>5.4.2</b> 선형판별함수</a></li>
-</ul></li>
-<li class="chapter" data-level="5.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>5.5</b> 오분류비용을 고려한 분류규칙</a></li>
-<li class="chapter" data-level="5.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>5.6</b> 이차판별분석</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>5.6.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="5.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>5.6.2</b> 이차 판별함수</a></li>
-<li class="chapter" data-level="5.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>5.6.3</b> 이차판별함수에 의한 분류</a></li>
-</ul></li>
-<li class="chapter" data-level="5.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>5.7</b> 세 범주 이상의 분류</a><ul>
-<li class="chapter" data-level="5.7.1" data-path="da.html"><a href="da.html#mutliclass-da-basic-script"><i class="fa fa-check"></i><b>5.7.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="5.7.2" data-path="da.html"><a href="da.html#mutliclass-generalized-discriminant-function"><i class="fa fa-check"></i><b>5.7.2</b> 일반화된 판별함수</a></li>
+<li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="pca.html"><a href="pca.html#pcr-basic-script"><i class="fa fa-check"></i><b>3.3.1</b> 기본 R 스트립트</a></li>
+<li class="chapter" data-level="3.3.2" data-path="pca.html"><a href="pca.html#pcr-regression-coefficient"><i class="fa fa-check"></i><b>3.3.2</b> 주성분 회귀계수 추정</a></li>
+<li class="chapter" data-level="3.3.3" data-path="pca.html"><a href="pca.html#pcr-regression-transform"><i class="fa fa-check"></i><b>3.3.3</b> 회귀계수 선형변환</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>6</b> 트리기반 기법</a><ul>
-<li class="chapter" data-level="6.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>6.1</b> CART 개요</a></li>
-<li class="chapter" data-level="6.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-packages-install"><i class="fa fa-check"></i><b>6.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="6.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>6.3</b> CART 트리 생성</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>6.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="6.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>6.3.2</b> 기호 정의</a></li>
-<li class="chapter" data-level="6.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>6.3.3</b> 노드 및 트리의 불순도</a></li>
-<li class="chapter" data-level="6.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>6.3.4</b> 분지기준</a></li>
+<li class="chapter" data-level="4" data-path="plsr.html"><a href="plsr.html"><i class="fa fa-check"></i><b>4</b> 부분최소자승법</a><ul>
+<li class="chapter" data-level="4.1" data-path="plsr.html"><a href="plsr.html#plsr-packages-install"><i class="fa fa-check"></i><b>4.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="4.2" data-path="plsr.html"><a href="plsr.html#plsr-single-target"><i class="fa fa-check"></i><b>4.2</b> 하나의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="plsr.html"><a href="plsr.html#plsr-basic-script"><i class="fa fa-check"></i><b>4.2.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="4.2.2" data-path="plsr.html"><a href="plsr.html#plsr-model"><i class="fa fa-check"></i><b>4.2.2</b> PLS 모형</a></li>
+<li class="chapter" data-level="4.2.3" data-path="plsr.html"><a href="plsr.html#plsr-single-nipals"><i class="fa fa-check"></i><b>4.2.3</b> NIPALS 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>6.4</b> 가지치기 및 최종 트리 선정</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>6.4.1</b> 가지치기</a></li>
-<li class="chapter" data-level="6.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>6.4.2</b> 최적 트리의 선정</a></li>
+<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>6.5</b> R패키지 내 분류 트리 방법</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>6.5.1</b> 트리 확장</a></li>
-<li class="chapter" data-level="6.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>6.5.2</b> 가지치기</a></li>
-<li class="chapter" data-level="6.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>6.5.3</b> 파라미터값 결정</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>7</b> 서포트 벡터 머신</a><ul>
-<li class="chapter" data-level="7.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>7.1</b> 개요</a></li>
-<li class="chapter" data-level="7.2" data-path="svm.html"><a href="svm.html#svm-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="7.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>7.3</b> 선형 SVM - 분리 가능 경우</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="7.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>7.3.2</b> 기호 정의</a></li>
-<li class="chapter" data-level="7.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>7.3.3</b> 최적 하이퍼플레인</a></li>
-</ul></li>
-<li class="chapter" data-level="7.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>7.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="7.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>7.4.2</b> 최적 하이퍼플레인</a></li>
-</ul></li>
-<li class="chapter" data-level="7.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>7.5</b> 비선형 SVM</a><ul>
-<li class="chapter" data-level="7.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>7.5.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="7.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>7.5.2</b> 최적 하이퍼플레인</a></li>
-</ul></li>
-<li class="chapter" data-level="7.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>7.6</b> R패키지 내 SVM</a><ul>
-<li class="chapter" data-level="7.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>7.6.1</b> 커널함수</a></li>
-<li class="chapter" data-level="7.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>7.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
+<li class="part"><span><b>II 2부 - 분류분석</b></span></li>
+<li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a><ul>
+<li class="chapter" data-level="5.1" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-packages-install"><i class="fa fa-check"></i><b>5.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="5.2" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-problem-methods"><i class="fa fa-check"></i><b>5.2</b> 분류문제 및 분류기법</a></li>
+<li class="chapter" data-level="5.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>5.3</b> 기본적인 분류기법</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#nearest-neighbor-classification"><i class="fa fa-check"></i><b>5.3.1</b> 인접객체법</a></li>
+<li class="chapter" data-level="5.3.2" data-path="classification-analysis.html"><a href="classification-analysis.html#naive-bayes"><i class="fa fa-check"></i><b>5.3.2</b> 나이브 베이지안 분류법</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>8</b> 분류규칙의 성능 평가</a><ul>
-<li class="chapter" data-level="8.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-packages-install"><i class="fa fa-check"></i><b>8.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="8.2" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-misclassification-rate"><i class="fa fa-check"></i><b>8.2</b> 분류오류율</a></li>
-<li class="chapter" data-level="8.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>8.3</b> 정확도, 민감도 및 특이도</a><ul>
-<li class="chapter" data-level="8.3.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#confusion-matrix-r-package"><i class="fa fa-check"></i><b>8.3.1</b> R 패키지 내 정오분류표</a></li>
+<li class="chapter" data-level="6" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6</b> 로지스틱 회귀분석</a><ul>
+<li class="chapter" data-level="6.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-packages-install"><i class="fa fa-check"></i><b>6.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="6.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>6.2</b> 이분 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#bianry-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.2.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="6.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-model"><i class="fa fa-check"></i><b>6.2.2</b> 회귀모형</a></li>
+<li class="chapter" data-level="6.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-estimation"><i class="fa fa-check"></i><b>6.2.3</b> 회귀계수 추정</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#roc-curve"><i class="fa fa-check"></i><b>8.4</b> ROC 곡선</a></li>
-<li class="chapter" data-level="8.5" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#gain-chart"><i class="fa fa-check"></i><b>8.5</b> 이익도표</a></li>
+<li class="chapter" data-level="6.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>6.3</b> 명목 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="6.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#baseline-category-logit-model"><i class="fa fa-check"></i><b>6.3.2</b> 기준범주 로짓모형</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>9</b> 군집분석 개요</a><ul>
-<li class="chapter" data-level="9.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>9.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="9.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>9.2</b> 군집분석 기법</a></li>
-<li class="chapter" data-level="9.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>9.3</b> 객체 간의 유사성 척도</a><ul>
-<li class="chapter" data-level="9.3.1" data-path="clustering-overview.html"><a href="clustering-overview.html#object-distance-metric"><i class="fa fa-check"></i><b>9.3.1</b> 거리 관련 척도</a></li>
-<li class="chapter" data-level="9.3.2" data-path="clustering-overview.html"><a href="clustering-overview.html#object-correlation-metric"><i class="fa fa-check"></i><b>9.3.2</b> 상관계수 관련 척도</a></li>
-</ul></li>
-<li class="chapter" data-level="9.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>9.4</b> 범주형 객체의 유사성 척도</a><ul>
-<li class="chapter" data-level="9.4.1" data-path="clustering-overview.html"><a href="clustering-overview.html#binary-similarity-metric"><i class="fa fa-check"></i><b>9.4.1</b> 이분형 변수의 경우</a></li>
-<li class="chapter" data-level="9.4.2" data-path="clustering-overview.html"><a href="clustering-overview.html#ordinal-similarity-metric"><i class="fa fa-check"></i><b>9.4.2</b> 서열형 변수의 경우</a></li>
-<li class="chapter" data-level="9.4.3" data-path="clustering-overview.html"><a href="clustering-overview.html#nominal-similarity-metric"><i class="fa fa-check"></i><b>9.4.3</b> 명목형 변수의 경우</a></li>
-<li class="chapter" data-level="9.4.4" data-path="clustering-overview.html"><a href="clustering-overview.html#mixed-similarity-metric"><i class="fa fa-check"></i><b>9.4.4</b> 혼합형의 경우</a></li>
+<li class="chapter" data-level="6.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>6.4</b> 서열 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-basic-script"><i class="fa fa-check"></i><b>6.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="6.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#cumulative-logit-model"><i class="fa fa-check"></i><b>6.4.2</b> 누적 로짓모형</a></li>
+<li class="chapter" data-level="6.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#adjacent-categories-logit-model"><i class="fa fa-check"></i><b>6.4.3</b> 인근범주 로짓모형</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>10</b> 계층적 군집방법</a><ul>
-<li class="chapter" data-level="10.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>10.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="10.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#distance-between-clusters"><i class="fa fa-check"></i><b>10.2</b> 군집 간 거리척도 및 연결법</a></li>
-<li class="chapter" data-level="10.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>10.3</b> 연결법의 군집 알고리즘</a><ul>
-<li class="chapter" data-level="10.3.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-basic-script"><i class="fa fa-check"></i><b>10.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="10.3.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-algorithm"><i class="fa fa-check"></i><b>10.3.2</b> 연결법 군집 알고리즘</a></li>
-<li class="chapter" data-level="10.3.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hclust"><i class="fa fa-check"></i><b>10.3.3</b> R 패키지 내 연결법</a></li>
+<li class="chapter" data-level="7" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>7</b> 판별분석</a><ul>
+<li class="chapter" data-level="7.1" data-path="da.html"><a href="da.html#da-overview"><i class="fa fa-check"></i><b>7.1</b> 개요</a></li>
+<li class="chapter" data-level="7.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
+<li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
+<li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>10.4</b> 워드 방법</a><ul>
-<li class="chapter" data-level="10.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>10.4.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="10.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>10.4.2</b> 워드 군집 알고리즘</a></li>
-<li class="chapter" data-level="10.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>10.4.3</b> R 패키지 내 워드 방법</a></li>
+<li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="7.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>7.4.2</b> 선형판별함수</a></li>
 </ul></li>
-<li class="chapter" data-level="10.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>10.5</b> 분리적 방법 - 다이아나</a><ul>
-<li class="chapter" data-level="10.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>10.5.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="10.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>10.5.2</b> 다이아나 알고리즘</a></li>
+<li class="chapter" data-level="7.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>7.5</b> 오분류비용을 고려한 분류규칙</a></li>
+<li class="chapter" data-level="7.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>7.6</b> 이차판별분석</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>7.6.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="7.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>7.6.2</b> 이차 판별함수</a></li>
+<li class="chapter" data-level="7.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>7.6.3</b> 이차판별함수에 의한 분류</a></li>
 </ul></li>
-<li class="chapter" data-level="10.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>10.6</b> 군집수의 결정</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>11</b> 비계층적 군집방법</a><ul>
-<li class="chapter" data-level="11.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>11.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="11.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>11.2</b> K-means 알고리즘</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>11.2.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="11.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>11.2.2</b> 알고리즘</a></li>
-<li class="chapter" data-level="11.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>11.2.3</b> R 스크립트 구현</a></li>
-</ul></li>
-<li class="chapter" data-level="11.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>11.3</b> K-medoids 군집방법</a><ul>
-<li class="chapter" data-level="11.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>11.3.1</b> PAM 알고리즘</a></li>
-<li class="chapter" data-level="11.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>11.3.2</b> CLARA 알고리즘</a></li>
-<li class="chapter" data-level="11.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>11.3.3</b> CLARANS 알고리즘</a></li>
-<li class="chapter" data-level="11.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>11.3.4</b> K-means-like 알고리즘</a></li>
-</ul></li>
-<li class="chapter" data-level="11.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>11.4</b> 퍼지 K-means 알고리즘</a><ul>
-<li class="chapter" data-level="11.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>11.4.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="11.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>11.4.2</b> 알고리즘</a></li>
-<li class="chapter" data-level="11.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>11.4.3</b> R 스크립트 구현</a></li>
-</ul></li>
-<li class="chapter" data-level="11.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>11.5</b> 모형기반 군집방법</a><ul>
-<li class="chapter" data-level="11.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>11.5.1</b> 기본 R script</a></li>
-<li class="chapter" data-level="11.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>11.5.2</b> EM 알고리즘</a></li>
-<li class="chapter" data-level="11.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>11.5.3</b> R 스크립트 구현</a></li>
-<li class="chapter" data-level="11.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>11.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
+<li class="chapter" data-level="7.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>7.7</b> 세 범주 이상의 분류</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="da.html"><a href="da.html#mutliclass-da-basic-script"><i class="fa fa-check"></i><b>7.7.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="7.7.2" data-path="da.html"><a href="da.html#mutliclass-generalized-discriminant-function"><i class="fa fa-check"></i><b>7.7.2</b> 일반화된 판별함수</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>12</b> 군집해의 평가 및 해석</a><ul>
-<li class="chapter" data-level="12.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>12.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="12.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>12.2</b> 군집해의 평가</a><ul>
-<li class="chapter" data-level="12.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>12.2.1</b> 외부평가지수</a></li>
-<li class="chapter" data-level="12.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>12.2.2</b> 내부평가지수</a></li>
+<li class="chapter" data-level="8" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>8</b> 트리기반 기법</a><ul>
+<li class="chapter" data-level="8.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>8.1</b> CART 개요</a></li>
+<li class="chapter" data-level="8.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-packages-install"><i class="fa fa-check"></i><b>8.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="8.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>8.3</b> CART 트리 생성</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>8.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="8.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>8.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="8.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>8.3.3</b> 노드 및 트리의 불순도</a></li>
+<li class="chapter" data-level="8.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>8.3.4</b> 분지기준</a></li>
 </ul></li>
-<li class="chapter" data-level="12.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>12.3</b> 군집해의 해석</a></li>
+<li class="chapter" data-level="8.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>8.4</b> 가지치기 및 최종 트리 선정</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>8.4.1</b> 가지치기</a></li>
+<li class="chapter" data-level="8.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>8.4.2</b> 최적 트리의 선정</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>13</b> 연관규칙</a><ul>
-<li class="chapter" data-level="13.1" data-path="association-rule.html"><a href="association-rule.html#association-packages-install"><i class="fa fa-check"></i><b>13.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="13.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>13.2</b> 연관규칙의 정의 및 성능척도</a><ul>
-<li class="chapter" data-level="13.2.1" data-path="association-rule.html"><a href="association-rule.html#association-rule-support"><i class="fa fa-check"></i><b>13.2.1</b> 지지도</a></li>
-<li class="chapter" data-level="13.2.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-confidence"><i class="fa fa-check"></i><b>13.2.2</b> 신뢰도</a></li>
-<li class="chapter" data-level="13.2.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-lift"><i class="fa fa-check"></i><b>13.2.3</b> 개선도</a></li>
-</ul></li>
-<li class="chapter" data-level="13.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>13.3</b> 연관규칙의 탐사</a><ul>
-<li class="chapter" data-level="13.3.1" data-path="association-rule.html"><a href="association-rule.html#apriori-large-itemsets"><i class="fa fa-check"></i><b>13.3.1</b> 빈발항목집합 생성</a></li>
-<li class="chapter" data-level="13.3.2" data-path="association-rule.html"><a href="association-rule.html#apriori-rule-exploration"><i class="fa fa-check"></i><b>13.3.2</b> 규칙의 탐사</a></li>
-<li class="chapter" data-level="13.3.3" data-path="association-rule.html"><a href="association-rule.html#apriori-r-package"><i class="fa fa-check"></i><b>13.3.3</b> R 패키지 내 Apriori</a></li>
-</ul></li>
-<li class="chapter" data-level="13.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>13.4</b> 순차적 패턴의 탐사</a><ul>
-<li class="chapter" data-level="13.4.1" data-path="association-rule.html"><a href="association-rule.html#association-aprioriall"><i class="fa fa-check"></i><b>13.4.1</b> AprioriAll 알고리즘</a></li>
+<li class="chapter" data-level="8.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>8.5</b> R패키지 내 분류 트리 방법</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>8.5.1</b> 트리 확장</a></li>
+<li class="chapter" data-level="8.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>8.5.2</b> 가지치기</a></li>
+<li class="chapter" data-level="8.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>8.5.3</b> 파라미터값 결정</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>14</b> 추천시스템</a><ul>
-<li class="chapter" data-level="14.1" data-path="recommender-system.html"><a href="recommender-system.html#recommender-packages-install"><i class="fa fa-check"></i><b>14.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="14.2" data-path="recommender-system.html"><a href="recommender-system.html#content-based-recommender"><i class="fa fa-check"></i><b>14.2</b> 내용기반 추천시스템</a></li>
-<li class="chapter" data-level="14.3" data-path="recommender-system.html"><a href="recommender-system.html#collaborative-filtering"><i class="fa fa-check"></i><b>14.3</b> 협업 필터링</a></li>
-<li class="chapter" data-level="14.4" data-path="recommender-system.html"><a href="recommender-system.html#market-basket"><i class="fa fa-check"></i><b>14.4</b> 시장바구니 데이터를 이용한 협업 필터링</a></li>
+<li class="chapter" data-level="9" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>9</b> 서포트 벡터 머신</a><ul>
+<li class="chapter" data-level="9.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>9.1</b> 개요</a></li>
+<li class="chapter" data-level="9.2" data-path="svm.html"><a href="svm.html#svm-packages-install"><i class="fa fa-check"></i><b>9.2</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="9.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>9.3</b> 선형 SVM - 분리 가능 경우</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>9.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="9.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>9.3.2</b> 기호 정의</a></li>
+<li class="chapter" data-level="9.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>9.3.3</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>9.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>9.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="9.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>9.4.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>9.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>9.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="9.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>9.5.2</b> 최적 하이퍼플레인</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>9.6</b> R패키지 내 SVM</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>9.6.1</b> 커널함수</a></li>
+<li class="chapter" data-level="9.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>9.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>10</b> 분류규칙의 성능 평가</a><ul>
+<li class="chapter" data-level="10.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-packages-install"><i class="fa fa-check"></i><b>10.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="10.2" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-misclassification-rate"><i class="fa fa-check"></i><b>10.2</b> 분류오류율</a></li>
+<li class="chapter" data-level="10.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>10.3</b> 정확도, 민감도 및 특이도</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#confusion-matrix-r-package"><i class="fa fa-check"></i><b>10.3.1</b> R 패키지 내 정오분류표</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#roc-curve"><i class="fa fa-check"></i><b>10.4</b> ROC 곡선</a></li>
+<li class="chapter" data-level="10.5" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#gain-chart"><i class="fa fa-check"></i><b>10.5</b> 이익도표</a></li>
+</ul></li>
+<li class="part"><span><b>III 3부 - 군집분석</b></span></li>
+<li class="chapter" data-level="11" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>11</b> 군집분석 개요</a><ul>
+<li class="chapter" data-level="11.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>11.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="11.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>11.2</b> 군집분석 기법</a></li>
+<li class="chapter" data-level="11.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>11.3</b> 객체 간의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="clustering-overview.html"><a href="clustering-overview.html#object-distance-metric"><i class="fa fa-check"></i><b>11.3.1</b> 거리 관련 척도</a></li>
+<li class="chapter" data-level="11.3.2" data-path="clustering-overview.html"><a href="clustering-overview.html#object-correlation-metric"><i class="fa fa-check"></i><b>11.3.2</b> 상관계수 관련 척도</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>11.4</b> 범주형 객체의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="clustering-overview.html"><a href="clustering-overview.html#binary-similarity-metric"><i class="fa fa-check"></i><b>11.4.1</b> 이분형 변수의 경우</a></li>
+<li class="chapter" data-level="11.4.2" data-path="clustering-overview.html"><a href="clustering-overview.html#ordinal-similarity-metric"><i class="fa fa-check"></i><b>11.4.2</b> 서열형 변수의 경우</a></li>
+<li class="chapter" data-level="11.4.3" data-path="clustering-overview.html"><a href="clustering-overview.html#nominal-similarity-metric"><i class="fa fa-check"></i><b>11.4.3</b> 명목형 변수의 경우</a></li>
+<li class="chapter" data-level="11.4.4" data-path="clustering-overview.html"><a href="clustering-overview.html#mixed-similarity-metric"><i class="fa fa-check"></i><b>11.4.4</b> 혼합형의 경우</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>12</b> 계층적 군집방법</a><ul>
+<li class="chapter" data-level="12.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>12.1</b> 필요 R 패키지 설치</a></li>
+<li class="chapter" data-level="12.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#distance-between-clusters"><i class="fa fa-check"></i><b>12.2</b> 군집 간 거리척도 및 연결법</a></li>
+<li class="chapter" data-level="12.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>12.3</b> 연결법의 군집 알고리즘</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-basic-script"><i class="fa fa-check"></i><b>12.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="12.3.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-algorithm"><i class="fa fa-check"></i><b>12.3.2</b> 연결법 군집 알고리즘</a></li>
+<li class="chapter" data-level="12.3.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hclust"><i class="fa fa-check"></i><b>12.3.3</b> R 패키지 내 연결법</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>12.4</b> 워드 방법</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>12.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="12.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>12.4.2</b> 워드 군집 알고리즘</a></li>
+<li class="chapter" data-level="12.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>12.4.3</b> R 패키지 내 워드 방법</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>12.5</b> 분리적 방법 - 다이아나</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>12.5.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="12.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>12.5.2</b> 다이아나 알고리즘</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>12.6</b> 군집수의 결정</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>13</b> 비계층적 군집방법</a><ul>
+<li class="chapter" data-level="13.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>13.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="13.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>13.2</b> K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>13.2.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="13.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>13.2.2</b> 알고리즘</a></li>
+<li class="chapter" data-level="13.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>13.2.3</b> R 스크립트 구현</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>13.3</b> K-medoids 군집방법</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>13.3.1</b> PAM 알고리즘</a></li>
+<li class="chapter" data-level="13.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>13.3.2</b> CLARA 알고리즘</a></li>
+<li class="chapter" data-level="13.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>13.3.3</b> CLARANS 알고리즘</a></li>
+<li class="chapter" data-level="13.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>13.3.4</b> K-means-like 알고리즘</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>13.4</b> 퍼지 K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>13.4.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="13.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>13.4.2</b> 알고리즘</a></li>
+<li class="chapter" data-level="13.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>13.4.3</b> R 스크립트 구현</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>13.5</b> 모형기반 군집방법</a><ul>
+<li class="chapter" data-level="13.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>13.5.1</b> 기본 R script</a></li>
+<li class="chapter" data-level="13.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>13.5.2</b> EM 알고리즘</a></li>
+<li class="chapter" data-level="13.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>13.5.3</b> R 스크립트 구현</a></li>
+<li class="chapter" data-level="13.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>13.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>14</b> 군집해의 평가 및 해석</a><ul>
+<li class="chapter" data-level="14.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>14.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="14.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>14.2</b> 군집해의 평가</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>14.2.1</b> 외부평가지수</a></li>
+<li class="chapter" data-level="14.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>14.2.2</b> 내부평가지수</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>14.3</b> 군집해의 해석</a></li>
+</ul></li>
+<li class="part"><span><b>IV 4부 - 연관규칙</b></span></li>
+<li class="chapter" data-level="15" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>15</b> 연관규칙</a><ul>
+<li class="chapter" data-level="15.1" data-path="association-rule.html"><a href="association-rule.html#association-packages-install"><i class="fa fa-check"></i><b>15.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="15.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>15.2</b> 연관규칙의 정의 및 성능척도</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="association-rule.html"><a href="association-rule.html#association-rule-support"><i class="fa fa-check"></i><b>15.2.1</b> 지지도</a></li>
+<li class="chapter" data-level="15.2.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-confidence"><i class="fa fa-check"></i><b>15.2.2</b> 신뢰도</a></li>
+<li class="chapter" data-level="15.2.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-lift"><i class="fa fa-check"></i><b>15.2.3</b> 개선도</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>15.3</b> 연관규칙의 탐사</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="association-rule.html"><a href="association-rule.html#apriori-large-itemsets"><i class="fa fa-check"></i><b>15.3.1</b> 빈발항목집합 생성</a></li>
+<li class="chapter" data-level="15.3.2" data-path="association-rule.html"><a href="association-rule.html#apriori-rule-exploration"><i class="fa fa-check"></i><b>15.3.2</b> 규칙의 탐사</a></li>
+<li class="chapter" data-level="15.3.3" data-path="association-rule.html"><a href="association-rule.html#apriori-r-package"><i class="fa fa-check"></i><b>15.3.3</b> R 패키지 내 Apriori</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>15.4</b> 순차적 패턴의 탐사</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="association-rule.html"><a href="association-rule.html#association-aprioriall"><i class="fa fa-check"></i><b>15.4.1</b> AprioriAll 알고리즘</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>16</b> 추천시스템</a><ul>
+<li class="chapter" data-level="16.1" data-path="recommender-system.html"><a href="recommender-system.html#recommender-packages-install"><i class="fa fa-check"></i><b>16.1</b> 필요 R package 설치</a></li>
+<li class="chapter" data-level="16.2" data-path="recommender-system.html"><a href="recommender-system.html#content-based-recommender"><i class="fa fa-check"></i><b>16.2</b> 내용기반 추천시스템</a></li>
+<li class="chapter" data-level="16.3" data-path="recommender-system.html"><a href="recommender-system.html#collaborative-filtering"><i class="fa fa-check"></i><b>16.3</b> 협업 필터링</a></li>
+<li class="chapter" data-level="16.4" data-path="recommender-system.html"><a href="recommender-system.html#market-basket"><i class="fa fa-check"></i><b>16.4</b> 시장바구니 데이터를 이용한 협업 필터링</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -361,10 +379,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="clustering-overview" class="section level1">
-<h1><span class="header-section-number">Chapter 9</span> 군집분석 개요</h1>
+<h1><span class="header-section-number">Chapter 11</span> 군집분석 개요</h1>
 <p>하나의 객체(object)가 여러 속성(attribute)을 갖는다 하고, 이러한 객체가 다수 있다고 하자. 군집분석이란 유사한 속성들을 갖는 객체들을 묶어 전체의 객체들을 몇 개의 그룹 또는 군집(cluster)으로 나누는 것을 말한다.</p>
 <div id="clustering-overview-packages-install" class="section level2">
-<h2><span class="header-section-number">9.1</span> 필요 R 패키지 설치</h2>
+<h2><span class="header-section-number">11.1</span> 필요 R 패키지 설치</h2>
 <p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
 <table>
 <thead>
@@ -394,7 +412,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="clustering-method" class="section level2">
-<h2><span class="header-section-number">9.2</span> 군집분석 기법</h2>
+<h2><span class="header-section-number">11.2</span> 군집분석 기법</h2>
 <p>전체 객체의 개수를 <span class="math inline">\(n\)</span>이라 하고, <span class="math inline">\(i\)</span>번째 객체를 <span class="math inline">\(O_i\)</span>라 할 때, 전체 객체의 집합 <span class="math inline">\(S\)</span>는 다음과 같다.</p>
 <p><span class="math display">\[\begin{equation*}
 S = \{O_1, \cdots, O_n\}
@@ -421,9 +439,9 @@ C = \{C_1, \cdots, C_K\}
 </ul>
 </div>
 <div id="object-similarity-metric" class="section level2">
-<h2><span class="header-section-number">9.3</span> 객체 간의 유사성 척도</h2>
+<h2><span class="header-section-number">11.3</span> 객체 간의 유사성 척도</h2>
 <div id="object-distance-metric" class="section level3">
-<h3><span class="header-section-number">9.3.1</span> 거리 관련 척도</h3>
+<h3><span class="header-section-number">11.3.1</span> 거리 관련 척도</h3>
 <p>각 객체가 <span class="math inline">\(p\)</span>개의 속성 또는 변수(variable)를 갖는다 하고, <span class="math inline">\(j\)</span>번째 변수의 객체 <span class="math inline">\(i\)</span>에 대한 관측치를 <span class="math inline">\(x_{ji}\)</span>라 하면, 객체 <span class="math inline">\(i\)</span>의 <span class="math inline">\(p\)</span>차원 공간에서의 좌표는 아래와 같은 열벡터로 표현된다.</p>
 <p><span class="math display">\[\begin{equation*}
 \mathbf{x}_{i} = [x_{1i} \, x_{2i} \, \cdots \, x_{pi}]^\top
@@ -515,7 +533,7 @@ df <span class="op">%&gt;%</span>
     <span class="dt">caption =</span> <span class="st">&#39;PC 사용 데이터&#39;</span>
   )</code></pre>
 <table>
-<caption><span id="tab:pc-user">Table 9.1: </span>PC 사용 데이터</caption>
+<caption><span id="tab:pc-user">Table 11.1: </span>PC 사용 데이터</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호</th>
@@ -602,7 +620,7 @@ df <span class="op">%&gt;%</span>
     <span class="dt">caption =</span> <span class="st">&#39;유클리드 거리&#39;</span>
   )</code></pre>
 <table>
-<caption><span id="tab:euclidean-dist">Table 9.2: </span>유클리드 거리</caption>
+<caption><span id="tab:euclidean-dist">Table 11.2: </span>유클리드 거리</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호(from)</th>
@@ -638,7 +656,7 @@ df <span class="op">%&gt;%</span>
     <span class="dt">caption =</span> <span class="st">&#39;표준 유클리드 거리&#39;</span>
   )</code></pre>
 <table>
-<caption><span id="tab:std-euclidean-dist">Table 9.3: </span>표준 유클리드 거리</caption>
+<caption><span id="tab:std-euclidean-dist">Table 11.3: </span>표준 유클리드 거리</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호(from)</th>
@@ -663,18 +681,18 @@ df <span class="op">%&gt;%</span>
 <p>유클리드 거리 외에 민코프스키 거리, 마할라노비스 거리 등은 <code>dist</code>함수의 파라미터 <code>method</code> 및 <code>p</code>값을 설정하여 계산할 수 있다.</p>
 </div>
 <div id="object-correlation-metric" class="section level3">
-<h3><span class="header-section-number">9.3.2</span> 상관계수 관련 척도</h3>
+<h3><span class="header-section-number">11.3.2</span> 상관계수 관련 척도</h3>
 <p>또 다른 유사성 척도로 다음과 같은 객체 간의 상관계수를 사용할 수 있다.</p>
 <p><span class="math display" id="eq:object-correlation">\[\begin{equation}
 sim(\mathbf{x}_i, \mathbf{x}_j) = r_{ij} = \frac{\sum_{a = 1}^{p} (x_{ai} - m_{i})(x_{aj} - m_{j})}{\sqrt{\sum_{a = 1}^{p} (x_{ai} - m_{i})^2} \sqrt{\sum_{a = 1}^{p} (x_{aj} - m_{j})^2}}
-\tag{9.1}
+\tag{11.1}
 \end{equation}\]</span></p>
 <p>여기서 <span class="math inline">\(m_i\)</span>는 객체 <span class="math inline">\(i\)</span>의 평균값으로 다음과 같다.</p>
 <p><span class="math display">\[\begin{equation*}
 m_{i} = \frac{1}{p} \sum_{a = 1}^{p} x_{ai}
 \end{equation*}\]</span></p>
-<p>식 <a href="clustering-overview.html#eq:object-correlation">(9.1)</a>은 -1에서 1 사이의 값을 가지며, 값이 클수록 두 객체의 유사성이 크다고 할 수 있다. 여기서도 데이터를 변수별로 표준화한 후 상관계수를 산출함을 추천한다.</p>
-<p>아래는 Table <a href="clustering-overview.html#tab:pc-user">9.1</a>의 객체 1과 객체 6, 8간의 상관계수를 계산한 것이다.</p>
+<p>식 <a href="clustering-overview.html#eq:object-correlation">(11.1)</a>은 -1에서 1 사이의 값을 가지며, 값이 클수록 두 객체의 유사성이 크다고 할 수 있다. 여기서도 데이터를 변수별로 표준화한 후 상관계수를 산출함을 추천한다.</p>
+<p>아래는 Table <a href="clustering-overview.html#tab:pc-user">11.1</a>의 객체 1과 객체 6, 8간의 상관계수를 계산한 것이다.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t</span>(<span class="kw">scale</span>(df[, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)])) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span>corrr<span class="op">::</span><span class="kw">correlate</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span>corrr<span class="op">::</span><span class="kw">stretch</span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
@@ -696,7 +714,7 @@ m_{i} = \frac{1}{p} \sum_{a = 1}^{p} x_{ai}
 ## Correlation method: &#39;pearson&#39;
 ## Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
 <table>
-<caption><span id="tab:std-correlation-similarity">Table 9.4: </span>객체 간 상관계수</caption>
+<caption><span id="tab:std-correlation-similarity">Table 11.4: </span>객체 간 상관계수</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호(from)</th>
@@ -744,7 +762,7 @@ d(\mathbf{x}_i, \mathbf{x}_j) = 1 - r_{ij}
 ## Correlation method: &#39;pearson&#39;
 ## Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
 <table>
-<caption><span id="tab:std-correlation-dissimilarity">Table 9.5: </span>상관계수 기반 비유사성 척도</caption>
+<caption><span id="tab:std-correlation-dissimilarity">Table 11.5: </span>상관계수 기반 비유사성 척도</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호(from)</th>
@@ -768,10 +786,10 @@ d(\mathbf{x}_i, \mathbf{x}_j) = 1 - r_{ij}
 </div>
 </div>
 <div id="category-similarity-metric" class="section level2">
-<h2><span class="header-section-number">9.4</span> 범주형 객체의 유사성 척도</h2>
+<h2><span class="header-section-number">11.4</span> 범주형 객체의 유사성 척도</h2>
 <p>객체의 변수(속성)들 중 일부 또는 전체가 범주형인 경우에는 유사성 척도를 다소 다르게 정의할 필요가 있다. 범주형 변수는 다시 이분형(binary), 서열형(ordinal), 명목형(nominal)으로 구분된다. 이분형은 서열형 또는 명목형에 속할 수도 있으나, 통상적으로 별도로 구분하고 있다.</p>
 <div id="binary-similarity-metric" class="section level3">
-<h3><span class="header-section-number">9.4.1</span> 이분형 변수의 경우</h3>
+<h3><span class="header-section-number">11.4.1</span> 이분형 변수의 경우</h3>
 <p>이분형 변수란 변수가 취하는 값이 두 개인 것을 의미하며, 통상 0과 1을 부여한다. 이 경우 사용되는 유사성 척도는 다양하나, 단순매칭(simple matching)과 자카드(Jaccard) 척도가 주로 사용된다.</p>
 <ul>
 <li>단순매칭</li>
@@ -818,7 +836,7 @@ df <span class="op">%&gt;%</span>
     <span class="dt">caption =</span> <span class="st">&#39;건강 문진&#39;</span>
   )</code></pre>
 <table>
-<caption><span id="tab:health-question-df">Table 9.6: </span>건강 문진</caption>
+<caption><span id="tab:health-question-df">Table 11.6: </span>건강 문진</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호</th>
@@ -887,7 +905,7 @@ df_pairs <span class="op">%&gt;%</span>
     <span class="dt">caption =</span> <span class="st">&#39;단순매칭 유사성 척도&#39;</span>
   )</code></pre>
 <table>
-<caption><span id="tab:binary-simplematching">Table 9.7: </span>단순매칭 유사성 척도</caption>
+<caption><span id="tab:binary-simplematching">Table 11.7: </span>단순매칭 유사성 척도</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호(from)</th>
@@ -919,7 +937,7 @@ df_pairs <span class="op">%&gt;%</span>
     <span class="dt">caption =</span> <span class="st">&#39;자카드 유사성 척도&#39;</span>
   )</code></pre>
 <table>
-<caption><span id="tab:binary-jaccard">Table 9.8: </span>자카드 유사성 척도</caption>
+<caption><span id="tab:binary-jaccard">Table 11.8: </span>자카드 유사성 척도</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호(from)</th>
@@ -937,7 +955,7 @@ df_pairs <span class="op">%&gt;%</span>
 </table>
 </div>
 <div id="ordinal-similarity-metric" class="section level3">
-<h3><span class="header-section-number">9.4.2</span> 서열형 변수의 경우</h3>
+<h3><span class="header-section-number">11.4.2</span> 서열형 변수의 경우</h3>
 <p>객체의 <span class="math inline">\(k\)</span>번째 변수가 서열형이고 <span class="math inline">\(1, 2, \cdots, M_k\)</span> 중 한 값을 갖는다고 할 때, 거리척도로는 우선 아래와 같은 직접적 방법이 있다.</p>
 <p><span class="math display">\[\begin{equation*}
 d(x_{ki}, x_{kj}) = \frac{|x_{ki} - x_{kj}|}{M_k - 1}
@@ -952,7 +970,7 @@ x_{ki}&#39; = \frac{x_{ki} - 1}{M_k - 1}
 \end{equation*}\]</span></p>
 </div>
 <div id="nominal-similarity-metric" class="section level3">
-<h3><span class="header-section-number">9.4.3</span> 명목형 변수의 경우</h3>
+<h3><span class="header-section-number">11.4.3</span> 명목형 변수의 경우</h3>
 <p>두 객체에 대한 <span class="math inline">\(k\)</span>번째 변수가 명목형인 경우, 이분형 변수의 경우와 같이 두 변수가 일치하면 1, 그렇지 않으면 0으로 유사성을 평가한다. 즉,</p>
 <p><span class="math display">\[\begin{equation*}
 sim(x_{ki}, x_{kj}) = \begin{cases}
@@ -966,7 +984,7 @@ sim(\mathbf{x}_i, \mathbf{x}_j) = \frac{1}{p} \sum_{k: x_{ki} = x_{kj}} 1
 \end{equation*}\]</span></p>
 </div>
 <div id="mixed-similarity-metric" class="section level3">
-<h3><span class="header-section-number">9.4.4</span> 혼합형의 경우</h3>
+<h3><span class="header-section-number">11.4.4</span> 혼합형의 경우</h3>
 <p>두 객체의 유사성 또는 비유사성을 산출하는 데 각 변수의 형태가 연속형, 이분형, 서열형, 명목형 등으로 다른 경우에는, 각 변수의 형태에 따라 위에서 언급한 바와 같이 각기 다른 방법으로 유사성 또는 비유사성을 평가한 후, 최종적으로 합 또는 평균으로 도출하게 된다. 따라서 편의상 각 변수에 대하여 0에서 1 사이의 값을 갖는 척도를 사용하고 있다. 위에서 언급한 이분형, 서열형, 명목형인 경우에는 이미 0에서 1 사이의 유사성 척도가 제시되었다.</p>
 <p>연속형의 경우, 0에서 1 사이의 값을 갖는 거리(비유사성)의 척도로는 아래와 같이 각 변수의 범위를 활용하는 방법을 사용한다.</p>
 <p><span class="math display">\[\begin{equation*}
@@ -1022,7 +1040,7 @@ df <span class="op">%&gt;%</span>
     <span class="dt">caption =</span> <span class="st">&#39;혼합형 Gower 거리&#39;</span>
   )</code></pre>
 <table>
-<caption><span id="tab:mixed-gower">Table 9.9: </span>혼합형 Gower 거리</caption>
+<caption><span id="tab:mixed-gower">Table 11.9: </span>혼합형 Gower 거리</caption>
 <thead>
 <tr class="header">
 <th align="center">객체번호(from)</th>

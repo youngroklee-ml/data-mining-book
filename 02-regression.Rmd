@@ -1,3 +1,5 @@
+# (PART) 1부 - 예측{-}
+
 # 회귀분석 {#regression}
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}

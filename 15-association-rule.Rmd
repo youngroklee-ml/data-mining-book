@@ -1,3 +1,5 @@
+# (PART) 4부 - 연관규칙{-}
+
 # 연관규칙 {#association-rule}
 
 ```{r warning=FALSE, message=FALSE}
