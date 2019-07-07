@@ -165,6 +165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.1" data-path="plsr.html"><a href="plsr.html#plsr-basic-script"><i class="fa fa-check"></i><b>4.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.2.2" data-path="plsr.html"><a href="plsr.html#plsr-model"><i class="fa fa-check"></i><b>4.2.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.2.3" data-path="plsr.html"><a href="plsr.html#plsr-single-nipals"><i class="fa fa-check"></i><b>4.2.3</b> NIPALS 알고리즘</a></li>
+<li class="chapter" data-level="4.2.4" data-path="plsr.html"><a href="plsr.html#plsr-single-transform"><i class="fa fa-check"></i><b>4.2.4</b> 회귀식 변환</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a></li>
 </ul></li>
@@ -501,6 +502,11 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 \mathbf{y} &amp;=&amp; \mathbf{t}_1 b_1 + \mathbf{t}_2 b_2 + \cdots + \mathbf{t}_A b_A + \mathbf{f} \tag{4.2}
 \end{eqnarray}\]</span></p>
 <p>여기서 계수벡터 <span class="math inline">\(\mathbf{p}_a\)</span>는 <span class="math inline">\(\mathbf{X}\)</span>에 해당하는 로딩(loading)을, 그리고 계수 <span class="math inline">\(b_a\)</span>는 <span class="math inline">\(\mathbf{y}\)</span>에 해당하는 로딩을 나타내며, <span class="math inline">\(\mathbf{E}\)</span>와 <span class="math inline">\(\mathbf{f}\)</span>는 각 모형에 해당하는 오차항(행렬 또는 벡터)이다.</p>
+<p>위 모형을 (<span class="math inline">\(n \times A\)</span>) 잠재변수 행렬 <span class="math inline">\(\mathbf{T} = \left[\mathbf{t}_1 \, \cdots \mathbf{t}_A \right]\)</span>와 (<span class="math inline">\(k \times A\)</span>) 로딩행렬 <span class="math inline">\(\mathbf{P} = \left[\mathbf{p}_1 \, \cdots \mathbf{p}_A \right]\)</span>, 그리고 로딩벡터 <span class="math inline">\(\mathbf{b} = \left[b_1 \, \cdots b_A \right]^\top\)</span> 을 이용하여 아래와 같이 행렬식으로 나타낼 수 있다.</p>
+<p><span class="math display" id="eq:plsr-y-single-matrix" id="eq:plsr-x-single-matrix">\[\begin{eqnarray}
+\mathbf{X} &amp;=&amp; \mathbf{T}\mathbf{P}^\top + \mathbf{E} \tag{4.3}\\
+\mathbf{y} &amp;=&amp; \mathbf{T}\mathbf{b} + \mathbf{f} \tag{4.4}
+\end{eqnarray}\]</span></p>
 </div>
 <div id="plsr-single-nipals" class="section level3">
 <h3><span class="header-section-number">4.2.3</span> NIPALS 알고리즘</h3>
@@ -536,7 +542,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
   Th &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">nrow</span>(X), <span class="dt">ncol =</span> A)
   Wh &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(X), <span class="dt">ncol =</span> A)
   Ph &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(X), <span class="dt">ncol =</span> A)
-  bh &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> 1L, <span class="dt">ncol =</span> A)
+  bh &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="dt">length =</span> A)
   
   <span class="cf">for</span> (h <span class="cf">in</span> <span class="kw">seq_len</span>(A)) {
     <span class="co"># 단계 1</span>
@@ -558,11 +564,11 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
     Ph[, h] &lt;-<span class="st"> </span>Ph[, h] <span class="op">/</span><span class="st"> </span>p_size
     
     <span class="co"># 단계 6</span>
-    bh[, h] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Th[, h]))
+    bh[h] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Th[, h]))
 
     <span class="co"># 단계 7</span>
     X &lt;-<span class="st"> </span>X <span class="op">-</span><span class="st"> </span>Th[, h] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(Ph[, h])
-    y &lt;-<span class="st"> </span>y <span class="op">-</span><span class="st"> </span>Th[, h] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(bh[, h])
+    y &lt;-<span class="st"> </span>y <span class="op">-</span><span class="st"> </span>Th[, h] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(bh[h])
   }
   
   <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">T =</span> Th, <span class="dt">W =</span> Wh, <span class="dt">P =</span> Ph, <span class="dt">b =</span> bh))
@@ -594,14 +600,47 @@ nipals_fit</code></pre>
 ## [3,] -0.9240724 0.4193565
 ## 
 ## $b
-##         [,1]     [,2]
-## [1,] 2.92457 2.464658</code></pre>
-<p>위 결과를 원래 독립변수 <span class="math inline">\(X\)</span>와 종속변수 와 <span class="math inline">\(y\)</span>에 대한 식으로 변환하는 식은 아래와 같다.</p>
+## [1] 2.924570 2.464658</code></pre>
+<p>식 <a href="plsr.html#eq:plsr-x-single-matrix">(4.3)</a>과 <a href="plsr.html#eq:plsr-y-single-matrix">(4.4)</a>에서, 잠재변수 행렬 <span class="math inline">\(\mathbf{T}\)</span>가 주어졌다 가정할 때 로딩행렬 및 벡터 <span class="math inline">\(\mathbf{P}\)</span>와 <span class="math inline">\(\mathbf{b}\)</span>는 아래와 같이 추정된다.</p>
+<p><span class="math display" id="eq:plsr-y-single-loading-est" id="eq:plsr-x-single-loading-est">\[\begin{eqnarray}
+\hat{\mathbf{P}}^\top = \left(\mathbf{T}^\top \mathbf{T}\right)^{-1} \mathbf{T}^\top \mathbf{X} \tag{4.5}\\
+\hat{\mathbf{b}} = \left(\mathbf{T}^\top \mathbf{T}\right)^{-1} \mathbf{T}^\top \mathbf{y} \tag{4.6}
+\end{eqnarray}\]</span></p>
+<p>위 NIPALS 알고리즘 수행 결과에서 이를 확인해보자.</p>
+<pre class="sourceCode r"><code class="sourceCode r">P_hat &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>X)
+<span class="kw">all</span>(<span class="kw">near</span>(nipals_fit<span class="op">$</span>P, P_hat))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">b_hat &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">t</span>(<span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>
+<span class="st">                       </span><span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span><span class="kw">as.matrix</span>(y, <span class="dt">ncol =</span> <span class="dv">1</span>)))
+<span class="kw">all</span>(<span class="kw">near</span>(nipals_fit<span class="op">$</span>b, b_hat))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="plsr-single-transform" class="section level3">
+<h3><span class="header-section-number">4.2.4</span> 회귀식 변환</h3>
+<p>위 NIPALS 알고리즘 수행 결과를 원래 독립변수 <span class="math inline">\(\mathbf{X}\)</span>와 종속변수 와 <span class="math inline">\(\mathbf{y}\)</span>에 대한 식으로 변환하는 방법은 아래와 같다.</p>
+<p>잠재변수행렬 <span class="math inline">\(\mathbf{T}\)</span>는 아래와 같이 독립변수 행렬 <span class="math inline">\(\mathbf{X}\)</span>와 가중치행렬 <span class="math inline">\(\mathbf{W}\)</span>, 그리고 로딩행렬 <span class="math inline">\(\mathbf{P}\)</span>의 연산으로 표현된다.</p>
+<p><span class="math display">\[\begin{equation}
+\mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
+\end{equation}\]</span></p>
+<p>이를 식 <a href="plsr.html#eq:plsr-y-single-matrix">(4.4)</a>에 대입하면,</p>
 <p><span class="math display">\[\begin{equation}
 \begin{split}
-
+\mathbf{y} &amp;= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{b} + \mathbf{f}\\
+&amp;= \mathbf{X} \boldsymbol{\beta}_{PLS} + \mathbf{f}
 \end{split}
 \end{equation}\]</span></p>
+<p>따라서, 원 독립변수 행렬 <span class="math inline">\(\mathbf{X}\)</span>에 대한 회귀계수는 아래와 같이 정리된다.</p>
+<p><span class="math display">\[\begin{equation}
+\boldsymbol{\beta}_{PLS} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{b}
+\end{equation}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">beta_pls &lt;-<span class="st"> </span>nipals_fit<span class="op">$</span>W <span class="op">%*%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>P) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>W) <span class="op">%*%</span>
+<span class="st">  </span><span class="kw">as.matrix</span>(nipals_fit<span class="op">$</span>b, <span class="dt">ncol =</span> 1L)
+beta_pls</code></pre>
+<pre><code>##           [,1]
+## [1,]  2.475395
+## [2,]  2.523238
+## [3,] -1.704636</code></pre>
 </div>
 </div>
 <div id="plsr-multivariate-target" class="section level2">

@@ -74,6 +74,14 @@ summary(plsr_fit)
 
 여기서 계수벡터 $\mathbf{p}_a$는 $\mathbf{X}$에 해당하는 로딩(loading)을, 그리고 계수 $b_a$는 $\mathbf{y}$에 해당하는 로딩을 나타내며, $\mathbf{E}$와 $\mathbf{f}$는 각 모형에 해당하는 오차항(행렬 또는 벡터)이다.
 
+위 모형을 ($n \times A$) 잠재변수 행렬 $\mathbf{T} = \left[\mathbf{t}_1 \, \cdots \mathbf{t}_A \right]$와 ($k \times A$) 로딩행렬 $\mathbf{P} = \left[\mathbf{p}_1 \, \cdots \mathbf{p}_A \right]$, 그리고 로딩벡터 $\mathbf{b} = \left[b_1 \, \cdots b_A \right]^\top$ 을 이용하여 아래와 같이 행렬식으로 나타낼 수 있다.
+
+\begin{eqnarray}
+\mathbf{X} &=& \mathbf{T}\mathbf{P}^\top + \mathbf{E} (\#eq:plsr-x-single-matrix)\\
+\mathbf{y} &=& \mathbf{T}\mathbf{b} + \mathbf{f} (\#eq:plsr-y-single-matrix)
+\end{eqnarray}
+
+
 
 ### NIPALS 알고리즘 {#plsr-single-nipals}
 
@@ -111,7 +119,7 @@ nipals_plsr <- function(X, y, A = NULL) {
   Th <- matrix(NA, nrow = nrow(X), ncol = A)
   Wh <- matrix(NA, nrow = ncol(X), ncol = A)
   Ph <- matrix(NA, nrow = ncol(X), ncol = A)
-  bh <- matrix(NA, nrow = 1L, ncol = A)
+  bh <- vector("numeric", length = A)
   
   for (h in seq_len(A)) {
     # 단계 1
@@ -133,11 +141,11 @@ nipals_plsr <- function(X, y, A = NULL) {
     Ph[, h] <- Ph[, h] / p_size
     
     # 단계 6
-    bh[, h] <- coef(lm(y ~ -1 + Th[, h]))
+    bh[h] <- coef(lm(y ~ -1 + Th[, h]))
 
     # 단계 7
     X <- X - Th[, h] %*% t(Ph[, h])
-    y <- y - Th[, h] %*% t(bh[, h])
+    y <- y - Th[, h] %*% t(bh[h])
   }
   
   return(list(T = Th, W = Wh, P = Ph, b = bh))
@@ -150,13 +158,63 @@ nipals_fit
 ```
 
 
-위 결과를 원래 독립변수 $X$와 종속변수 와 $y$에 대한 식으로 변환하는 식은 아래와 같다.
+식 \@ref(eq:plsr-x-single-matrix)과 \@ref(eq:plsr-y-single-matrix)에서, 잠재변수 행렬 $\mathbf{T}$가 주어졌다 가정할 때 로딩행렬 및 벡터 $\mathbf{P}$와 $\mathbf{b}$는 아래와 같이 추정된다.
+
+\begin{eqnarray}
+\hat{\mathbf{P}}^\top = \left(\mathbf{T}^\top \mathbf{T}\right)^{-1} \mathbf{T}^\top \mathbf{X} (\#eq:plsr-x-single-loading-est)\\
+\hat{\mathbf{b}} = \left(\mathbf{T}^\top \mathbf{T}\right)^{-1} \mathbf{T}^\top \mathbf{y} (\#eq:plsr-y-single-loading-est)
+\end{eqnarray}
+
+위 NIPALS 알고리즘 수행 결과에서 이를 확인해보자.
+
+```{r}
+P_hat <- t(solve(t(nipals_fit$T) %*% nipals_fit$T) %*% t(nipals_fit$T) %*% X)
+all(near(nipals_fit$P, P_hat))
+```
+
+```{r}
+b_hat <- as.vector(t(solve(t(nipals_fit$T) %*% nipals_fit$T) %*% 
+                       t(nipals_fit$T) %*% as.matrix(y, ncol = 1)))
+all(near(nipals_fit$b, b_hat))
+```
+
+
+
+### 회귀식 변환 {#plsr-single-transform}
+
+위 NIPALS 알고리즘 수행 결과를 원래 독립변수 $\mathbf{X}$와 종속변수 와 $\mathbf{y}$에 대한 식으로 변환하는 방법은 아래와 같다.
+
+잠재변수행렬 $\mathbf{T}$는 아래와 같이 독립변수 행렬 $\mathbf{X}$와 가중치행렬 $\mathbf{W}$, 그리고 로딩행렬 $\mathbf{P}$의 연산으로 표현된다.
+
+\begin{equation}
+\mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
+\end{equation}
+
+이를 식 \@ref(eq:plsr-y-single-matrix)에 대입하면,
 
 \begin{equation}
 \begin{split}
-
+\mathbf{y} &= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{b} + \mathbf{f}\\
+&= \mathbf{X} \boldsymbol{\beta}_{PLS} + \mathbf{f}
 \end{split}
 \end{equation}
+
+따라서, 원 독립변수 행렬 $\mathbf{X}$에 대한 회귀계수는 아래와 같이 정리된다.
+
+\begin{equation}
+\boldsymbol{\beta}_{PLS} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{b}
+\end{equation}
+
+
+```{r}
+beta_pls <- nipals_fit$W %*% 
+  solve(t(nipals_fit$P) %*% nipals_fit$W) %*%
+  as.matrix(nipals_fit$b, ncol = 1L)
+beta_pls
+```
+
+
+
 
 
 ## 다수의 종속변수의 경우 {#plsr-multivariate-target}

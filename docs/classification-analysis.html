@@ -165,6 +165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.1" data-path="plsr.html"><a href="plsr.html#plsr-basic-script"><i class="fa fa-check"></i><b>4.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.2.2" data-path="plsr.html"><a href="plsr.html#plsr-model"><i class="fa fa-check"></i><b>4.2.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.2.3" data-path="plsr.html"><a href="plsr.html#plsr-single-nipals"><i class="fa fa-check"></i><b>4.2.3</b> NIPALS 알고리즘</a></li>
+<li class="chapter" data-level="4.2.4" data-path="plsr.html"><a href="plsr.html#plsr-single-transform"><i class="fa fa-check"></i><b>4.2.4</b> 회귀식 변환</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a></li>
 </ul></li>
@@ -681,8 +682,8 @@ train_nn_rank</code></pre>
 <pre><code>## # A tibble: 42 x 4
 ##    item1 item2 distance nn_rank
 ##    &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;   &lt;int&gt;
-##  1     1     3     2.24       1
-##  2     1     5     2.24       2
+##  1     1     5     2.24       1
+##  2     1     3     2.24       2
 ##  3     1     4     3.16       3
 ##  4     1     6     3.61       4
 ##  5     1     2     4.12       5
@@ -719,7 +720,7 @@ loo_cv</code></pre>
 <pre><code>## # A tibble: 42 x 5
 ##    item1     k y_hat     n y    
 ##    &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;fct&gt;
-##  1     1     1 2         1 1    
+##  1     1     1 1         1 1    
 ##  2     1     2 1         1 1    
 ##  3     1     3 2         2 1    
 ##  4     1     4 1         2 1    
@@ -739,11 +740,11 @@ loo_cv</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##       k accuracy
 ##   &lt;int&gt;    &lt;dbl&gt;
-## 1     2    0.714
-## 2     3    0.714
-## 3     1    0.571
-## 4     4    0.571
-## 5     5    0.286
+## 1     1    0.714
+## 2     2    0.714
+## 3     3    0.714
+## 4     4    0.714
+## 5     5    0.429
 ## 6     6    0</code></pre>
 <p>위의 결과에 기반하여, 정확도가 가장 높은 경우의 <span class="math inline">\(k\)</span>들 중 가장 큰 값인 <span class="math inline">\(k = 3\)</span> 을 최적 <span class="math inline">\(k\)</span>값으로 선정하자.</p>
 <p>[단계 2] 두 새로운 객체에 대한 3-인접객체법 추정범주를 구해보자.</p>
