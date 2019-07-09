@@ -2559,14 +2559,14 @@ b_{1} & 0 & \cdots & 0\\
 \begin{equation}
 \begin{split}
 \mathbf{Y} &= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} \mathbf{Q}^\top + \mathbf{H} \mathbf{Q}^\top + \mathbf{F}\\
-&= \mathbf{X} \boldsymbol{\Beta}_{PLS} + \mathbf{G}
+&= \mathbf{X} \mathbf{B}_{PLS} + \mathbf{G}
 \end{split} \label{eq:plsr-multivariate-beta}
 \end{equation}
 
 여기에서 \(\mathbf{G} = \mathbf{H} \mathbf{Q}^\top + \mathbf{F}\)는 독립변수 \(\mathbf{X}\)를 종속변수 \(\mathbf{Y}\)에 회귀시킨 뒤 남은 오차항 행렬이다. 따라서, PLS 모형을 원 독립변수 행렬 \(\mathbf{X}\)에 대한 모형으로 변환할 때의 회귀계수는 아래와 같이 정리된다.
 
 \begin{equation}
-\boldsymbol{\Beta}_{PLS} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} \mathbf{Q}^\top
+\mathbf{B}_{PLS} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} \mathbf{Q}^\top
 \end{equation}
 
 \begin{Shaded}
