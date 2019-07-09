@@ -124,7 +124,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-06-28}
+    \date{2019-07-08}
 
 \usepackage{booktabs}
 \usepackage[utf]{kotex}
@@ -150,6 +150,16 @@
 \item
   Advanced R (by Hadley Wickham): \url{https://adv-r.hadley.nz}
 \end{itemize}
+
+\hypertarget{datamining-overview}{%
+\chapter{데이터마이닝 개요}\label{datamining-overview}}
+
+데이터마이닝은 다양한 목적으로 사용될 수 있다. 그러나 기본적인 목적에 따라 분류할 때, 예측(prediction), 분류(classification), 군집화(clustering), 연관규칙(association rule) 추출로 구분할 수 있겠다.
+
+추후 내용 추가
+
+\hypertarget{part-1---}{%
+\part{1부 - 예측}\label{part-1---}}
 
 \hypertarget{regression}{%
 \chapter{회귀분석}\label{regression}}
@@ -996,8 +1006,8 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 
 행렬 \(\mathbf{Z}\)(혹은 \(\mathbf{X}\))로부터 주성분을 얻는 방법은 여러 가지가 있으며, 아래에서 하나씩 설명하기로 한다.
 
-\hypertarget{-singular-value-decomposition-pca-svd}{%
-\subsection{특이치분해 (Singular Value Decomposition) \{pca-svd\}}\label{-singular-value-decomposition-pca-svd}}
+\hypertarget{pca-svd}{%
+\subsection{특이치분해 (Singular Value Decomposition)}\label{pca-svd}}
 
 분산조정된 \(\mathbf{Z}\)에 대해 주성분분석을 수행한다고 가정하자. 분산조정을 하지 않고 주성분분석을 수행하는 경우 아래 행렬 \(\mathbf{Z}\) 대신 \(\mathbf{X}\)를 사용하면 된다.
 
@@ -1060,8 +1070,8 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 
 이 특이치들은 아래 분광분해에서 살펴볼 고유치의 제곱근이다.
 
-\hypertarget{-spectral-decomposition-pca-spectral}{%
-\subsection{분광분해 (Spectral Decomposition) \{pca-spectral\}}\label{-spectral-decomposition-pca-spectral}}
+\hypertarget{pca-spectral}{%
+\subsection{분광분해 (Spectral Decomposition)}\label{pca-spectral}}
 
 임의의 정방행렬 \(\mathbf{A}\)에 대하여
 
@@ -1343,7 +1353,7 @@ NIPALS 알고리즘은 아래와 같이 주성분 스코어 행렬 \(\mathbf{T}\
 \NormalTok{  Th <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \KeywordTok{nrow}\NormalTok{(X), }\DataTypeTok{ncol =}\NormalTok{ r)}
 \NormalTok{  Vh <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =}\NormalTok{ r, }\DataTypeTok{ncol =}\NormalTok{ r)}
   
-  \ControlFlowTok{for}\NormalTok{ (h }\ControlFlowTok{in} \KeywordTok{seq_len}\NormalTok{(}\KeywordTok{ncol}\NormalTok{(X))) \{}
+  \ControlFlowTok{for}\NormalTok{ (h }\ControlFlowTok{in} \KeywordTok{seq_len}\NormalTok{(r)) \{}
     \CommentTok{# 단계 1}
 \NormalTok{    j <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{ncol}\NormalTok{(X), }\DecValTok{1}\NormalTok{)}
 \NormalTok{    Th[, h] <-}\StringTok{ }\NormalTok{X[, j]}
@@ -1530,6 +1540,1150 @@ R 패키지 \texttt{nipals}내의 함수 \texttt{nipals}가 이 장에서 설명
 
 \hypertarget{pca-regression}{%
 \section{주성분 회귀분석}\label{pca-regression}}
+
+\ref{multiple-linear-regression} 장에서 살펴본 다중회귀모형의 식 \eqref{eq:multiple-linear-regression-matrix}을 아래에 다시 살펴보자.
+
+\begin{equation}
+\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\epsilon} \label{eq:pca-multiple-linear-regression-matrix}
+\end{equation}
+
+여기서, \(\boldsymbol{\beta}\) 와 \(\boldsymbol{\epsilon}\)는 각각 회귀계수와 오차항을 나타내는 벡터이며, 독립변수 데이터 행렬 \(\mathbf{X}\)와 종속변수 관측치 벡터 \(\mathbf{y}\) 모두 평균조정한 데이터라 간주하자. \(\mathbf{X}\)의 열벡터 간 다중공선성(multicollinearity)이 높으면 최소자승법에 의한 \(\boldsymbol{\beta}\)의 추정치의 분산이 커지는 문제가 있으며, \(\mathbf{X}\) 행렬의 관측수보다 변수 수가 많을 때는 \(\boldsymbol{\beta}\) 추정치를 구할 수 없다. 이 문제를 해결하기 위해 주성분 회귀분석(principal component regression; PCR)에서는 \(\mathbf{X}\) 변동 대부분을 설명하는 \(A\)개 (\(A \leq rank(\mathbf{X})\))의 주성분 스코어를 다음과 같이 독립변수로 사용한다.
+
+\begin{equation}
+\mathbf{y} = q_1 \mathbf{t}_1 + q_2 \mathbf{t}_2 + \cdots + q_A \mathbf{t}_A + \mathbf{f} \label{eq:pcr-model}
+\end{equation}
+
+여기서 \(\mathbf{f}\)는 오차항을 나타내는 벡터이며, \(q_1, \cdots, q_A\)는 회귀계수들이다. 이 때, \(A\)개의 주성분 스코어로 구성되는 \((n \times A)\) 주성분행렬을 \(\mathbf{T}_A = [\mathbf{t}_1 \, \cdots \, \mathbf{t}_A]\)로, 회귀계수벡터를 \(\mathbf{q} = [q_1 \, \cdots \, q_A]^\top\)으로 표기하면, 식 \eqref{eq:pcr-model}의 모형은 다음과 같이 표현된다.
+
+\begin{equation}
+\mathbf{y} = \mathbf{T}_A \mathbf{q}_A + \mathbf{f} \label{eq:pcr-matrix-model}
+\end{equation}
+
+위 모형은 다중회귀모형으로 볼 수 있으므로, 다중회귀모형에 대한 모든 이론이 적용될 수 있다. 또한 위 모형에서 각 주성분 스코어 벡터 \(\mathbf{t}_1, \cdots, \mathbf{t}_A\)는 서로 선형 독립적(linearly independent)이므로, 회귀성 검정이 용이한 측면이 있다.
+
+\hypertarget{pcr-basic-script}{%
+\subsection{기본 R 스트립트}\label{pcr-basic-script}}
+
+3개의 독립변수와 1개의 종속변수(\texttt{y})를 관측한 데이터가 아래와 같다고 하자.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train_df <-}\StringTok{ }\KeywordTok{tribble}\NormalTok{(}
+  \OperatorTok{~}\NormalTok{x1, }\OperatorTok{~}\NormalTok{x2, }\OperatorTok{~}\NormalTok{x3, }\OperatorTok{~}\NormalTok{y,}
+  \DecValTok{-3}\NormalTok{, }\DecValTok{-3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{-30}\NormalTok{,}
+  \DecValTok{-2}\NormalTok{, }\DecValTok{-3}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{-20}\NormalTok{,}
+  \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+  \DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{,}
+  \DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{-5}\NormalTok{, }\DecValTok{10}\NormalTok{,}
+  \DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{-11}\NormalTok{, }\DecValTok{35}
+\NormalTok{)}
+
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
+\NormalTok{  train_df, }\DataTypeTok{booktabs =} \OtherTok{TRUE}\NormalTok{,}
+  \DataTypeTok{align =} \KeywordTok{rep}\NormalTok{(}\StringTok{"r"}\NormalTok{, }\KeywordTok{ncol}\NormalTok{(train_df)),}
+  \DataTypeTok{caption =} \StringTok{"주성분 회귀분석 예제 데이터"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[t]
+
+\caption{\label{tab:pcr-example-data}주성분 회귀분석 예제 데이터}
+\centering
+\begin{tabular}{rrrr}
+\toprule
+x1 & x2 & x3 & y\\
+\midrule
+-3 & -3 & 5 & -30\\
+-2 & -3 & 7 & -20\\
+0 & 0 & 4 & 0\\
+1 & 2 & 0 & 5\\
+2 & 2 & -5 & 10\\
+\addlinespace
+2 & 2 & -11 & 35\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+3개의 독립변수로 이루어진 데이터에서 2개의 주성분만을 추출하여 회귀모형을 추정하여 보자.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pcr_fit <-}\StringTok{ }\NormalTok{pls}\OperatorTok{::}\KeywordTok{pcr}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{x1 }\OperatorTok{+}\StringTok{ }\NormalTok{x2 }\OperatorTok{+}\StringTok{ }\NormalTok{x3, }\DataTypeTok{data =}\NormalTok{ train_df, }\DataTypeTok{ncomp =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{coef}\NormalTok{(pcr_fit, }\DataTypeTok{intercept =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , 2 comps
+## 
+##                     y
+## (Intercept)  0.000000
+## x1           2.130440
+## x2           2.721789
+## x3          -1.737825
+\end{verbatim}
+
+위 회귀계수들은 주성분을 이용하여 추정한 회귀 모형을 원래 독립변수를 이용한 회귀식(평균조정 이전)으로 다시 선형변환한 결과이다. 이에 대해서는 다음 절에서 좀 더 자세히 살펴보도록 하자.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(pcr_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data:    X dimension: 6 3 
+##  Y dimension: 6 1
+## Fit method: svdpc
+## Number of components considered: 2
+## TRAINING: % variance explained
+##    1 comps  2 comps
+## X    94.98    99.79
+## y    87.94    91.31
+\end{verbatim}
+
+위 요약표는 하나의 주성분과 두 개의 주성분을 이용하였을 때 추정된 회귀모형들이 종속변수의 총 변량을 각각 87.9415591\%와 91.3101613\% 만큼을 설명함을 알려준다.
+
+\hypertarget{pcr-regression-coefficient}{%
+\subsection{주성분 회귀계수 추정}\label{pcr-regression-coefficient}}
+
+우선 Table \ref{tab:pcr-example-data}의 세 독립변수에 대해 주성분 분석을 수행하여 두 개의 주성분을 추출하자.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca_fit <-}\StringTok{ }\KeywordTok{prcomp}\NormalTok{(train_df[, }\KeywordTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{, }\StringTok{"x3"}\NormalTok{)], }\DataTypeTok{rank. =} \DecValTok{2}\NormalTok{,}
+                  \DataTypeTok{center =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{scale. =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{pca_fit}\OperatorTok{$}\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             PC1        PC2
+## [1,] -6.2346992  1.9880169
+## [2,] -7.8320036  0.6817026
+## [3,] -3.6996775 -1.5151642
+## [4,]  0.8208672 -2.0392493
+## [5,]  5.6979984 -0.6940262
+## [6,] 11.2475146  1.5787202
+\end{verbatim}
+
+또한 평균조정된 종속변수 벡터를 계산하자.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y_centered <-}\StringTok{ }\NormalTok{train_df}\OperatorTok{$}\NormalTok{y }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(train_df}\OperatorTok{$}\NormalTok{y)}
+\NormalTok{y_centered}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -30 -20   0   5  10  35
+\end{verbatim}
+
+주성분 스코어와 평균조정된 종속변수를 이용하여 회귀모형을 추정하자. 이 때, intercept가 없는 모형을 가정한다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pc_lm_fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y_centered }\OperatorTok{~}\StringTok{ }\OperatorTok{-}\StringTok{ }\DecValTok{1} \OperatorTok{+}\StringTok{ }\NormalTok{pca_fit}\OperatorTok{$}\NormalTok{x)}
+\KeywordTok{coef}\NormalTok{(pc_lm_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pca_fit$xPC1 pca_fit$xPC2 
+##     2.918798    -2.539206
+\end{verbatim}
+
+위 회귀계수 벡터가 식 \eqref{eq:pcr-matrix-model}의 회귀계수 벡터 \(\mathbf{q}_A\)의 값이다 (\(A = 2\)).
+
+\hypertarget{pcr-regression-transform}{%
+\subsection{회귀계수 선형변환}\label{pcr-regression-transform}}
+
+앞장에서 얻어진 주성분을 이용한 회귀식을 원 데이터에서 관측된 독립변수와 종속변수에 대한 식으로 변환하여 보자.
+
+각 주성분은 평균조정된 독립변수들의 선형조합으로 아래와 같이 얻어진다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca_fit}\OperatorTok{$}\NormalTok{rotation}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           PC1        PC2
+## x1  0.2525343 -0.5487321
+## x2  0.2841664 -0.7452586
+## x3 -0.9249194 -0.3787911
+\end{verbatim}
+
+따라서, 아래와 같이 주성분에 대한 회귀계수를 원레 독립변수(평균조정 이후)에 대한 회귀계수로 변환할 수 있다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beta_x <-}\StringTok{ }\NormalTok{pca_fit}\OperatorTok{$}\NormalTok{rotation }\OperatorTok{%*%}\StringTok{ }\KeywordTok{coef}\NormalTok{(pc_lm_fit)}
+\NormalTok{beta_x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         [,1]
+## x1  2.130440
+## x2  2.721789
+## x3 -1.737825
+\end{verbatim}
+
+Intercept는 평균조정 이전 종속변수의 평균에서 위 회귀계수벡터를 평균조정 이전 독립변수의 평균벡터와 곱한 결과를 뺀 값이다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(train_df}\OperatorTok{$}\NormalTok{y) }\OperatorTok{-}\StringTok{ }\KeywordTok{colMeans}\NormalTok{(train_df[, }\KeywordTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{, }\StringTok{"x3"}\NormalTok{)]) }\OperatorTok{%*%}\StringTok{ }\NormalTok{beta_x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]
+## [1,]    0
+\end{verbatim}
+
+본 장에서 사용한 Table \ref{tab:pcr-example-data}는 이미 평균조정이 되어 있어서 Intercept가 0으로 추정된다.
+
+본 장에서 분산조정된 주성분에 대한 회귀계수 변환은 다루지 않았으나, 이 또한 간단하게 변환할 수 있다.
+
+\hypertarget{plsr}{%
+\chapter{부분최소자승법}\label{plsr}}
+
+회귀분석에서와 같이 하나의 종속변수에 영향을 주는 \(k\)개의 독립변수가 있다고 하자. 모든 변수는 평균조정되었다고 간주한다. 본 장에서 다루고자 하는 부분최소자승법(partial least squares: PLS)는 앞에서 다룬 주성분 회귀분석(PCR)과 유사하나, 도출되는 새로운 잠재변수들이 다르다.
+
+독립변수와 종속변수간의 관계를 설명하기 위해, 우선 독립변수 행렬과 종속변수 행렬(또는 벡터)가 각각 서로 다른 잠재변수들에 의해 설명된다고 가정한 뒤, 두 잠재변수들간의 관계에 대한 모형을 세운다. 이 때, 본 장에서는 두 잠재변수들간의 관계가 선형인 모형(선형 PLS)만을 살펴본다.
+
+\hypertarget{plsr-packages-install}{%
+\section{필요 R 패키지 설치}\label{plsr-packages-install}}
+
+본 장에서 필요한 R 패키지들은 아래와 같다.
+
+\begin{tabular}{l|l}
+\hline
+package & version\\
+\hline
+tidyverse & 1.2.1\\
+\hline
+pls & 2.7-1\\
+\hline
+\end{tabular}
+
+\hypertarget{plsr-single-target}{%
+\section{하나의 종속변수의 경우}\label{plsr-single-target}}
+
+\hypertarget{plsr-basic-script}{%
+\subsection{기본 R 스크립트}\label{plsr-basic-script}}
+
+앞 장의 주성분 회귀분석에서 사용했던 데이터에 대해 부분최소자승 회귀분석을 수행해보도록 하자.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train_df <-}\StringTok{ }\KeywordTok{tribble}\NormalTok{(}
+  \OperatorTok{~}\NormalTok{x1, }\OperatorTok{~}\NormalTok{x2, }\OperatorTok{~}\NormalTok{x3, }\OperatorTok{~}\NormalTok{y,}
+  \DecValTok{-3}\NormalTok{, }\DecValTok{-3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{-30}\NormalTok{,}
+  \DecValTok{-2}\NormalTok{, }\DecValTok{-3}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{-20}\NormalTok{,}
+  \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+  \DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{,}
+  \DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{-5}\NormalTok{, }\DecValTok{10}\NormalTok{,}
+  \DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{-11}\NormalTok{, }\DecValTok{35}
+\NormalTok{)}
+
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
+\NormalTok{  train_df, }\DataTypeTok{booktabs =} \OtherTok{TRUE}\NormalTok{,}
+  \DataTypeTok{align =} \KeywordTok{rep}\NormalTok{(}\StringTok{"r"}\NormalTok{, }\KeywordTok{ncol}\NormalTok{(train_df)),}
+  \DataTypeTok{caption =} \StringTok{"부분최소자승 회귀분석 예제 데이터"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[t]
+
+\caption{\label{tab:plsr-example-data}부분최소자승 회귀분석 예제 데이터}
+\centering
+\begin{tabular}{rrrr}
+\toprule
+x1 & x2 & x3 & y\\
+\midrule
+-3 & -3 & 5 & -30\\
+-2 & -3 & 7 & -20\\
+0 & 0 & 4 & 0\\
+1 & 2 & 0 & 5\\
+2 & 2 & -5 & 10\\
+\addlinespace
+2 & 2 & -11 & 35\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+R 패키지 \texttt{pls} 내의 함수 \texttt{plsr()}을 이용하여 PLS 모형을 아래와 같이 추정할 수 있다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plsr_fit <-}\StringTok{ }\NormalTok{pls}\OperatorTok{::}\KeywordTok{plsr}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{x1 }\OperatorTok{+}\StringTok{ }\NormalTok{x2 }\OperatorTok{+}\StringTok{ }\NormalTok{x3, }\DataTypeTok{data =}\NormalTok{ train_df, }\DataTypeTok{ncomp =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{coef}\NormalTok{(plsr_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , 2 comps
+## 
+##            y
+## x1  2.475395
+## x2  2.523238
+## x3 -1.704636
+\end{verbatim}
+
+수행결과 object에 \texttt{summary()} 함수를 사용하여 학습된 모형의 독립변수 \(\mathbf{X}\) 및 종속변수 \(\mathbf{y}\)의 총변동에 대한 기여율을 확인할 수 있다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(plsr_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data:    X dimension: 6 3 
+##  Y dimension: 6 1
+## Fit method: kernelpls
+## Number of components considered: 2
+## TRAINING: % variance explained
+##    1 comps  2 comps
+## X    94.97    99.78
+## y    88.28    91.46
+\end{verbatim}
+
+위 요약표는 하나의 잠재변수와 두 개의 잠재변수를 이용하였을 때 추정된 회귀모형들이 종속변수의 총 변량을 각각 88.2814529\%와 91.4578959\% 만큼을 설명함을 알려준다. 이는 앞 장에서 살펴보았던 주성분 회귀모형보다 더 높은 수치이다.
+
+\hypertarget{plsr-model}{%
+\subsection{PLS 모형}\label{plsr-model}}
+
+종속변수가 하나만 존재하는 경우에는 데이터 행렬 \(\mathbf{X}\)와 종속변수벡터 \(\mathbf{y}\)가 동일한 잠재변수로 설명된다고 가정할 수 있다. (\(n \times k\)) 데이터 행렬 \(\mathbf{X}\)와 종속변수벡터 \(\mathbf{y}\)에 대하여 동시에 \(A\)개의 잠재변수벡터 \(\mathbf{t}_1, \cdots, \mathbf{t}_A\)로 설명하는 모형을 아래와 같이 기술해보자.
+
+\begin{eqnarray}
+\mathbf{X} &=& \mathbf{t}_1 \mathbf{p}_1^\top + \mathbf{t}_2 \mathbf{p}_2^\top + \cdots + \mathbf{t}_A \mathbf{p}_A^\top + \mathbf{E} \label{eq:plsr-x-single}\\
+\mathbf{y} &=& \mathbf{t}_1 b_1 + \mathbf{t}_2 b_2 + \cdots + \mathbf{t}_A b_A + \mathbf{f} \label{eq:plsr-y-single}
+\end{eqnarray}
+
+여기서 계수벡터 \(\mathbf{p}_a\)는 \(\mathbf{X}\)에 해당하는 로딩(loading)을, 그리고 계수 \(b_a\)는 \(\mathbf{y}\)에 해당하는 로딩을 나타내며, \(\mathbf{E}\)와 \(\mathbf{f}\)는 각 모형에 해당하는 오차항(행렬 또는 벡터)이다.
+
+위 모형을 (\(n \times A\)) 잠재변수 행렬 \(\mathbf{T} = \left[\mathbf{t}_1 \, \cdots \mathbf{t}_A \right]\)와 (\(k \times A\)) 로딩행렬 \(\mathbf{P} = \left[\mathbf{p}_1 \, \cdots \mathbf{p}_A \right]\), 그리고 로딩벡터 \(\mathbf{b} = \left[b_1 \, \cdots b_A \right]^\top\) 을 이용하여 아래와 같이 행렬식으로 나타낼 수 있다.
+
+\begin{eqnarray}
+\mathbf{X} &=& \mathbf{T}\mathbf{P}^\top + \mathbf{E} \label{eq:plsr-x-single-matrix}\\
+\mathbf{y} &=& \mathbf{T}\mathbf{b} + \mathbf{f} \label{eq:plsr-y-single-matrix}
+\end{eqnarray}
+
+\hypertarget{plsr-single-nipals}{%
+\subsection{NIPALS 알고리즘}\label{plsr-single-nipals}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{{[}단계 0{]}} 반복알고리즘 수행을 위한 초기화를 한다. \(a \leftarrow 1\), \(\mathbf{X}_a \leftarrow \mathbf{X}\), \(\mathbf{y}_a \leftarrow \mathbf{y}\).
+\item
+  \textbf{{[}단계 1{]}} \(\mathbf{X}_a\)을 다중종속변수 행렬으로, \(\mathbf{y}_a\)를 독립변수 벡터로 하는 회귀모형으로부터 기울기 \(\mathbf{w}_a = [w_{a1} \, \cdots \, w_{ak}]^\top\)를 산출한다.
+  \[\mathbf{w}_a \leftarrow \left. \mathbf{X}_a^\top \mathbf{y}_a \middle/ \mathbf{y}_a^\top \mathbf{y}_a \right.  \]
+\item
+  \textbf{{[}단계 2{]}} 기울기 벡터 \(\mathbf{w}_a\)의 크기가 1이 되도록 한다.
+  \[\left. \mathbf{w}_a \leftarrow \mathbf{w}_a \middle/ \sqrt{\mathbf{w}_a^\top \mathbf{w}_a} \right.\]
+\item
+  \textbf{{[}단계 3{]}} 잠재변수 \(\mathbf{t}_a\)를 행렬 \(\mathbf{X}_a\)의 각 열의 가중평균으로 구한다. 이 때, 가중치는 기울기 벡터 \(\mathbf{w}_a\)를 이용한다.
+  \[\mathbf{t}_a \leftarrow \mathbf{X}_a \mathbf{w}_a\]
+\item
+  \textbf{{[}단계 4{]}} 식 \eqref{eq:plsr-x-single}와 같이 \(\mathbf{X}_a\)을 다중종속변수 행렬으로, \(\mathbf{t}_a\)를 독립변수 벡터로 하는 회귀모형으로부터 로딩벡터 \(\mathbf{p}_a\)를 구한다.
+  \[\mathbf{p}_a \leftarrow \left. \mathbf{X}_a^\top \mathbf{t}_a \middle/ \mathbf{t}_a^\top \mathbf{t}_a \right.\]
+\item
+  \textbf{{[}단계 5{]}} 로딩벡터 \(\mathbf{p}_a\)의 크기를 1로 조정하고, 잠재변수 벡터 \(\mathbf{t}_a\)와 기울기 벡터 \(\mathbf{w}_a\)의 크기를 그에 따라 보정한다.
+  \[d \leftarrow \sqrt{\mathbf{p}_a^\top \mathbf{p}_a}, \, \mathbf{t}_a \leftarrow \mathbf{t}_a d, \, \mathbf{w}_a \leftarrow \mathbf{w}_a d, \, \mathbf{p}_a \leftarrow \frac{1}{d} \mathbf{p}_a \]
+\item
+  \textbf{{[}단계 6{]}} 식 \eqref{eq:plsr-y-single}와 같이 잠재변수 \(\mathbf{t}_a\)를 종속변수 \(\mathbf{y}_a\)에 회귀시킬 때 계수 \(b_a\)를 산출한다.
+  \[b_a \leftarrow \left. \mathbf{y}_a^\top \mathbf{t}_a \middle/ \mathbf{t}_a^\top \mathbf{t}_a \right. \]
+\item
+  \textbf{{[}단계 7{]}} 독립변수 행렬 \(\mathbf{X}_a\)와 종속변수벡터 \(\mathbf{y}_a\)로부터 새로 얻어진 잠재변수 벡터 \(\mathbf{t}_a\)가 설명하는 부분을 제거하고 나머지 변동만을 담은 독립변수 행렬 \(\mathbf{X}_{a + 1}\)과 종속변수벡터 \(\mathbf{y}_{a + 1}\)을 구한다.
+  \[\mathbf{X}_{a + 1} \leftarrow \mathbf{X}_a - \mathbf{t}_a \mathbf{p}_a^\top, \, \mathbf{y}_{a + 1} \leftarrow \mathbf{y}_a - \mathbf{t}_a b_a\]
+\item
+  \textbf{{[}단계 8{]}} \(a \leftarrow a + 1\)로 업데이트하고, {[}단계 1{]}로 돌아간다. {[}단계 1{]} - {[}단계 8{]}의 과정을 \(A\)개의 잠재변수를 얻을 때까지 반복한다.
+\end{itemize}
+
+위 NIPALS 알고리즘을 아래 \texttt{nipals\_plsr}이라는 함수로 구현해보자. 이 때, 함수의 입력변수는 아래와 같다.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{X}: 평균조정된 (\(n \times k\)) 행렬
+\item
+  \texttt{y}: 평균조정된 종속변수 벡터
+\item
+  \texttt{A}: 잠재변수 개수
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nipals_plsr <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(X, y, }\DataTypeTok{A =} \OtherTok{NULL}\NormalTok{) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is_empty}\NormalTok{(A) }\OperatorTok{||}\StringTok{ }\NormalTok{(A }\OperatorTok{>}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{dim}\NormalTok{(X)))) \{}
+\NormalTok{    A <-}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{dim}\NormalTok{(X))}
+\NormalTok{  \}}
+  
+\NormalTok{  Tmat <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \KeywordTok{nrow}\NormalTok{(X), }\DataTypeTok{ncol =}\NormalTok{ A)}
+\NormalTok{  Wmat <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \KeywordTok{ncol}\NormalTok{(X), }\DataTypeTok{ncol =}\NormalTok{ A)}
+\NormalTok{  Pmat <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \KeywordTok{ncol}\NormalTok{(X), }\DataTypeTok{ncol =}\NormalTok{ A)}
+\NormalTok{  b <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\StringTok{"numeric"}\NormalTok{, }\DataTypeTok{length =}\NormalTok{ A)}
+  
+  \ControlFlowTok{for}\NormalTok{ (a }\ControlFlowTok{in} \KeywordTok{seq_len}\NormalTok{(A)) \{}
+    \CommentTok{# 단계 1}
+\NormalTok{    Wmat[, a] <-}\StringTok{ }\KeywordTok{coef}\NormalTok{(}\KeywordTok{lm}\NormalTok{(X }\OperatorTok{~}\StringTok{ }\DecValTok{-1} \OperatorTok{+}\StringTok{ }\NormalTok{y))}
+    
+    \CommentTok{# 단계 2}
+\NormalTok{    Wmat[, a] <-}\StringTok{ }\NormalTok{Wmat[, a] }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{sum}\NormalTok{(Wmat[, a] }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{))}
+
+    \CommentTok{# 단계 3}
+\NormalTok{    Tmat[, a] <-}\StringTok{ }\NormalTok{X }\OperatorTok{%*%}\StringTok{ }\NormalTok{Wmat[, a]}
+    
+    \CommentTok{# 단계 4}
+\NormalTok{    Pmat[, a] <-}\StringTok{ }\KeywordTok{coef}\NormalTok{(}\KeywordTok{lm}\NormalTok{(X }\OperatorTok{~}\StringTok{ }\DecValTok{-1} \OperatorTok{+}\StringTok{ }\NormalTok{Tmat[, a]))}
+    
+    \CommentTok{# 단계 5}
+\NormalTok{    p_size <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{sum}\NormalTok{(Pmat[, a] }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{))}
+\NormalTok{    Tmat[, a] <-}\StringTok{ }\NormalTok{Tmat[, a] }\OperatorTok{*}\StringTok{ }\NormalTok{p_size}
+\NormalTok{    Wmat[, a] <-}\StringTok{ }\NormalTok{Wmat[, a] }\OperatorTok{*}\StringTok{ }\NormalTok{p_size}
+\NormalTok{    Pmat[, a] <-}\StringTok{ }\NormalTok{Pmat[, a] }\OperatorTok{/}\StringTok{ }\NormalTok{p_size}
+    
+    \CommentTok{# 단계 6}
+\NormalTok{    b[a] <-}\StringTok{ }\KeywordTok{coef}\NormalTok{(}\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\DecValTok{-1} \OperatorTok{+}\StringTok{ }\NormalTok{Tmat[, a]))}
+
+    \CommentTok{# 단계 7}
+\NormalTok{    X <-}\StringTok{ }\NormalTok{X }\OperatorTok{-}\StringTok{ }\NormalTok{Tmat[, a] }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(Pmat[, a])}
+\NormalTok{    y <-}\StringTok{ }\NormalTok{y }\OperatorTok{-}\StringTok{ }\NormalTok{Tmat[, a] }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(b[a])}
+\NormalTok{  \}}
+  
+  \KeywordTok{return}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{T =}\NormalTok{ Tmat, }\DataTypeTok{W =}\NormalTok{ Wmat, }\DataTypeTok{P =}\NormalTok{ Pmat, }\DataTypeTok{b =}\NormalTok{ b))}
+\NormalTok{\}}
+
+\NormalTok{X <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(train_df[, }\KeywordTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{, }\StringTok{"x3"}\NormalTok{)])}
+\NormalTok{y <-}\StringTok{ }\NormalTok{train_df}\OperatorTok{$}\NormalTok{y}
+\NormalTok{nipals_fit <-}\StringTok{ }\KeywordTok{nipals_plsr}\NormalTok{(X, y, }\DataTypeTok{A =} \DecValTok{2}\NormalTok{)}
+\NormalTok{nipals_fit}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $T
+##            [,1]       [,2]
+## [1,] -6.3243200 -2.0380766
+## [2,] -7.8584372 -0.5965965
+## [3,] -3.6317877  1.5429616
+## [4,]  0.9079469  1.9745198
+## [5,]  5.7294582  0.7158171
+## [6,] 11.1771398 -1.5986253
+## 
+## $W
+##            [,1]      [,2]
+## [1,]  0.2817766 0.6579688
+## [2,]  0.3130851 0.6388931
+## [3,] -0.9079469 0.4245052
+## 
+## $P
+##            [,1]      [,2]
+## [1,]  0.2537679 0.5424154
+## [2,]  0.2858180 0.7279599
+## [3,] -0.9240724 0.4193565
+## 
+## $b
+## [1] 2.924570 2.464658
+\end{verbatim}
+
+식 \eqref{eq:plsr-x-single-matrix}과 \eqref{eq:plsr-y-single-matrix}에서, 잠재변수 행렬 \(\mathbf{T}\)가 주어졌다 가정할 때 로딩행렬 및 벡터 \(\mathbf{P}\)와 \(\mathbf{b}\)는 아래와 같이 추정된다.
+
+\begin{eqnarray}
+\hat{\mathbf{P}}^\top = \left(\mathbf{T}^\top \mathbf{T}\right)^{-1} \mathbf{T}^\top \mathbf{X} \label{eq:plsr-x-single-loading-est}\\
+\hat{\mathbf{b}} = \left(\mathbf{T}^\top \mathbf{T}\right)^{-1} \mathbf{T}^\top \mathbf{y} \label{eq:plsr-y-single-loading-est}
+\end{eqnarray}
+
+위 NIPALS 알고리즘 수행 결과에서 이를 확인해보자.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P_hat <-}\StringTok{ }\KeywordTok{t}\NormalTok{(}\KeywordTok{solve}\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{T) }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{T) }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{T) }\OperatorTok{%*%}\StringTok{ }\NormalTok{X)}
+\KeywordTok{all}\NormalTok{(}\KeywordTok{near}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{P, P_hat))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b_hat <-}\StringTok{ }\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{t}\NormalTok{(}\KeywordTok{solve}\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{T) }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{T) }\OperatorTok{%*%}\StringTok{ }
+\StringTok{                       }\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{T) }\OperatorTok{%*%}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(y, }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)))}
+\KeywordTok{all}\NormalTok{(}\KeywordTok{near}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{b, b_hat))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\hypertarget{plsr-single-transform}{%
+\subsection{회귀식 변환}\label{plsr-single-transform}}
+
+위 NIPALS 알고리즘 수행 결과를 원래 독립변수 \(\mathbf{X}\)와 종속변수 \(\mathbf{y}\)에 대한 식으로 변환하는 방법은 아래와 같다.
+
+잠재변수행렬 \(\mathbf{T}\)는 아래와 같이 독립변수 행렬 \(\mathbf{X}\)와 가중치행렬 \(\mathbf{W}\), 그리고 로딩행렬 \(\mathbf{P}\)의 연산으로 표현된다.
+
+\begin{equation}
+\mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
+\end{equation}
+
+이를 식 \eqref{eq:plsr-y-single-matrix}에 대입하면,
+
+\begin{equation}
+\begin{split}
+\mathbf{y} &= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{b} + \mathbf{f}\\
+&= \mathbf{X} \boldsymbol{\beta}_{PLS} + \mathbf{f}
+\end{split} \label{eq:plsr-single-beta}
+\end{equation}
+
+따라서, 원 독립변수 행렬 \(\mathbf{X}\)에 대한 회귀계수는 아래와 같이 정리된다.
+
+\begin{equation}
+\boldsymbol{\beta}_{PLS} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{b}
+\end{equation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beta_pls <-}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{W }\OperatorTok{%*%}\StringTok{ }
+\StringTok{  }\KeywordTok{solve}\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{P) }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{W) }\OperatorTok{%*%}
+\StringTok{  }\KeywordTok{as.matrix}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{b, }\DataTypeTok{ncol =}\NormalTok{ 1L)}
+\NormalTok{beta_pls}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           [,1]
+## [1,]  2.475395
+## [2,]  2.523238
+## [3,] -1.704636
+\end{verbatim}
+
+\hypertarget{plsr-sst}{%
+\subsection{제곱합 분해}\label{plsr-sst}}
+
+\(A\)개의 잠재변수를 사용하는 모형에 대하여 모형이 설명하는 \(\mathbf{y}\)의 변동(제곱합)을 \({SSR}\), 설명하지 못하는 변동을 \({SSE}\)라 할 때, \(\mathbf{y}\)의 전체제곱합(\({SST}\))은 다음과 같이 분해된다.
+
+\[{SST} = {SS}(\mathbf{y}) = {SSR} + {SSE}\]
+
+여기서 \({SS}()\)는 제곱합 함수로, 임의의 벡터 \(\mathbf{x}\)에 대해 아래와 같이 정의된다.
+
+\[
+{SS}(\mathbf{x}) = \mathbf{x}^\top \mathbf{x}
+\]
+
+이 때, \({SSR}\)은 다음과 같이 산출할 수 있다.
+
+\begin{equation}
+\begin{split}
+SSR &= \sum_{a = 1}^{A} SS(b_a \mathbf{t}_a)\\
+&= \sum_{a = 1}^{A} b_a^2 SS(\mathbf{t}_a)
+\end{split} \label{eq:plsr-ssr}
+\end{equation}
+
+\(a\)번째 잠재변수 \(\mathbf{t}_a\)가 \(\mathbf{y}\)를 설명하는 회귀제곱합을 \(SSR_a = b_a^2 SS(\mathbf{t}_a)\)라 할 때, \(SSR\)은 아래와 같이 분해된다.
+
+\[
+SSR = \sum_{a = 1}^{A} SSR_a
+\]
+
+위 예제에서 2개의 잠재변수가 설명하는 \(\mathbf{y}\)의 총변동을 PLS 결과를 이용하여 계산하면 아래와 같다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SSR_a <-}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{b }\OperatorTok{^}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\KeywordTok{diag}\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{T) }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{T)}
+\NormalTok{SSR_a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2339.45850   84.17574
+\end{verbatim}
+
+이 때, 각 주성분이 설명하는 \(\mathbf{y}\) 변동의 기여율을 아래와 같이 정의한다.
+
+\begin{equation}
+\Delta R_a^2 = \frac{SSR_a}{SST} \label{eq:plsr-rsq}
+\end{equation}
+
+앞 예제에서 각 잠재변수의 \(\mathbf{y}\) 변동에 대한 기여율을 계산해보자.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SST <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(y }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\NormalTok{delta_Rsq <-}\StringTok{ }\NormalTok{SSR_a }\OperatorTok{/}\StringTok{ }\NormalTok{SST}
+\NormalTok{delta_Rsq}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.88281453 0.03176443
+\end{verbatim}
+
+잠재변수 \(A\)개를 이용한 PLS 모형이 설명하는 \(\mathbf{y}\)의 총 변동에 대한 기여도(\(SSR / SST\))은 아래와 같이 각 잠재변수의 기여도의 합으로 산출된다.
+
+\[
+R^2 = \frac{SSR}{SST} = \frac{\sum_{a = 1}^{A} SSR_a}{SST} = \sum_{a = 1}^{A} \Delta R_a^2
+\]
+
+따라서, 잠재변수 \(A\)개를 이용한 PLS 모형이 설명하는 \(\mathbf{y}\)의 총 변동에 대한 기여도(\(SSR / SST\))은 아래와 같이 각 잠재변수의 기여도의 합으로 산출된다.
+
+앞 예제에서 잠재변수 2개를 이용한 최종모형이 설명하는 \(\mathbf{y}\)의 변동은 아래와 같다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(delta_Rsq)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.914579
+\end{verbatim}
+
+이는 앞 \ref{plsr-basic-script}절에서 R 패키지 \texttt{pls}를 이용하여 얻어진 결과와 동일함을 확인할 수 있다.
+
+한편, 잠재변수들이 독립변수행렬 \(\mathbf{X}\)의 변동을 얼마나 설명하는지 동시에 검토할 필요가 있다. 각 잠재변수들의 제곱합 \(SS(\mathbf{t}_a)\)의 \(\mathbf{X}\)의 총변동 (\(SS(\mathbf{X})\))에 대한 비율이 그 기여율을 설명한다.
+
+앞 예제에서 각각의 잠재변수의 \(\mathbf{X}\)에 대한 기여율은 아래와 같다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{diag}\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{T) }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{T) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{diag}\NormalTok{(}\KeywordTok{t}\NormalTok{(X) }\OperatorTok{%*%}\StringTok{ }\NormalTok{X))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.94972728 0.04811507
+\end{verbatim}
+
+잠재변수 2개를 이용한 PLS 모형의 \(\mathbf{X}\)에 대한 기여율은 아래와 같다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(}\KeywordTok{diag}\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{T) }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{T)) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{diag}\NormalTok{(}\KeywordTok{t}\NormalTok{(X) }\OperatorTok{%*%}\StringTok{ }\NormalTok{X))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9978423
+\end{verbatim}
+
+잠재변수 2개가 독립변수행렬의 대부분의 변동을 설명함을 알 수 있으며, 위 결과는 역시 앞 \ref{plsr-basic-script}절에서 R 패키지 \texttt{pls}를 이용하여 얻어진 결과와 동일함을 확인할 수 있다.
+
+\hypertarget{plsr-variable-importance}{%
+\subsection{독립변수의 중요도}\label{plsr-variable-importance}}
+
+원래의 각 독립변수가 종속변수를 설명하는 데 얼마나 영향을 미치는지는 공정분석 등에서 매우 중요하다. \(j\)번째 독립변수의 종속변수에 대한 중요도 척도로 \(VIP\)(variable importance in projection)를 다음과 같이 정의한다.
+
+\begin{equation}
+\begin{split}
+VIP_j &= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w_{aj} \middle/ \| \mathbf{w}_a \|  \right)^2}\\
+&= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \frac{w_{aj}^2}{\mathbf{w}_a^\top \mathbf{w}_a}}
+\end{split} \label{eq:plsr-single-vip}
+\end{equation}
+
+위 정의에 의하면 다음이 성립한다.
+
+\[
+\sum_{j = 1}^{k} VIP_j^2 = k
+\]
+
+즉, 독립변수당 중요도 제곱의 평균은 1이 된다. 이에 따라, 통상 \(VIP\)가 1보다 큰 독립변수를 의미있는 변수로 간주한다.
+
+앞 예제에 대해 각 변수의 중요도를 계산해보자.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{k <-}\StringTok{ }\KeywordTok{ncol}\NormalTok{(X)}
+\NormalTok{VIP <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}
+  \KeywordTok{colSums}\NormalTok{(}
+\NormalTok{    k }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(SSR_a) }\OperatorTok{*}\StringTok{ }\NormalTok{SSR_a }\OperatorTok{*}\StringTok{ }
+\StringTok{      }\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{W }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{) }\OperatorTok{/}\StringTok{ }
+\StringTok{         }\KeywordTok{diag}\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{W) }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{W))}
+\NormalTok{    )}
+\NormalTok{  )}
+\NormalTok{VIP}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.5231421 0.5700787 1.5496234
+\end{verbatim}
+
+즉, \(x_3\)가 가장 영향력있는 변수라 할 수 있겠다.
+
+\hypertarget{plsr-multivariate-target}{%
+\section{다수의 종속변수의 경우}\label{plsr-multivariate-target}}
+
+\(m\)개의 종속변수가 존재하여, 종속변수 데이터가 벡터가 아닌 (\(n \times m\)) 행렬
+
+\[\mathbf{Y} = \left[ \mathbf{y}_1 \, \cdots \, \mathbf{y}_m \right]\]
+
+으로 표현될 때, 각각의 종속변수에 대해 따로 잠재변수를 산출하기보다는, 여러 종속변수를 설명하는 공통의 잠재변수행렬 \(\mathbf{T}\)를 산출하는 것이 합리적이라 할 수 있다.
+
+\hypertarget{plsr-multivariate-basic-script}{%
+\subsection{기본 R 스크립트}\label{plsr-multivariate-basic-script}}
+
+4개의 독립변수 및 2개의 종속변수에 대한 평균조정된 데이터가 다음과 같다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train_df <-}\StringTok{ }\KeywordTok{tribble}\NormalTok{(}
+  \OperatorTok{~}\NormalTok{x1, }\OperatorTok{~}\NormalTok{x2, }\OperatorTok{~}\NormalTok{x3, }\OperatorTok{~}\NormalTok{x4, }\OperatorTok{~}\NormalTok{y1, }\OperatorTok{~}\NormalTok{y2,}
+  \DecValTok{-1}\NormalTok{, }\FloatTok{-0.5}\NormalTok{, }\DecValTok{-1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{5.9}\NormalTok{, }\DecValTok{-10}\NormalTok{,}
+  \DecValTok{1}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\DecValTok{-6}\NormalTok{, }\DecValTok{-6}\NormalTok{, }\FloatTok{-3.7}\NormalTok{, }\DecValTok{-2}\NormalTok{,}
+  \DecValTok{0}\NormalTok{, }\FloatTok{0.3}\NormalTok{, }\DecValTok{-5}\NormalTok{, }\DecValTok{-2}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{11}\NormalTok{,}
+  \DecValTok{-3}\NormalTok{, }\FloatTok{-3.2}\NormalTok{, }\DecValTok{-9}\NormalTok{, }\DecValTok{19}\NormalTok{, }\FloatTok{7.7}\NormalTok{, }\DecValTok{-22}\NormalTok{,}
+  \DecValTok{4}\NormalTok{, }\FloatTok{1.2}\NormalTok{, }\DecValTok{14}\NormalTok{, }\DecValTok{-12}\NormalTok{, }\FloatTok{-7.5}\NormalTok{, }\DecValTok{4}\NormalTok{,}
+  \DecValTok{-2}\NormalTok{, }\FloatTok{-2.6}\NormalTok{, }\DecValTok{-2}\NormalTok{, }\DecValTok{9}\NormalTok{, }\FloatTok{2.8}\NormalTok{, }\DecValTok{1}\NormalTok{,}
+  \DecValTok{1}\NormalTok{, }\FloatTok{3.7}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{-9}\NormalTok{, }\FloatTok{-6.2}\NormalTok{, }\DecValTok{18}
+\NormalTok{)}
+
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
+\NormalTok{  train_df, }\DataTypeTok{booktabs =} \OtherTok{TRUE}\NormalTok{,}
+  \DataTypeTok{align =} \KeywordTok{rep}\NormalTok{(}\StringTok{"r"}\NormalTok{, }\KeywordTok{ncol}\NormalTok{(train_df)),}
+  \DataTypeTok{caption =} \StringTok{"다수의 종속변수에 대한 부분최소자승 회귀분석 예제 데이터"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[t]
+
+\caption{\label{tab:plsr-multivariate-example-data}다수의 종속변수에 대한 부분최소자승 회귀분석 예제 데이터}
+\centering
+\begin{tabular}{rrrrrr}
+\toprule
+x1 & x2 & x3 & x4 & y1 & y2\\
+\midrule
+-1 & -0.5 & -1 & 1 & 5.9 & -10\\
+1 & 1.1 & -6 & -6 & -3.7 & -2\\
+0 & 0.3 & -5 & -2 & 1.0 & 11\\
+-3 & -3.2 & -9 & 19 & 7.7 & -22\\
+4 & 1.2 & 14 & -12 & -7.5 & 4\\
+\addlinespace
+-2 & -2.6 & -2 & 9 & 2.8 & 1\\
+1 & 3.7 & 9 & -9 & -6.2 & 18\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+앞서 하나의 종속변수를 다루는 경우와 마찬가지로, R 패키지 \texttt{pls} 내의 함수 \texttt{plsr()}을 이용하여 PLS 모형을 추정할 수 있다. 이 때, \texttt{formula} 입력 시 종속변수의 행렬을 이용한다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(train_df[, }\KeywordTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{, }\StringTok{"x3"}\NormalTok{, }\StringTok{"x4"}\NormalTok{)])}
+\NormalTok{Y <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(train_df[, }\KeywordTok{c}\NormalTok{(}\StringTok{"y1"}\NormalTok{, }\StringTok{"y2"}\NormalTok{)])}
+\NormalTok{plsr_multi_fit <-}\StringTok{ }\NormalTok{pls}\OperatorTok{::}\KeywordTok{plsr}\NormalTok{(Y }\OperatorTok{~}\StringTok{ }\NormalTok{X, }\DataTypeTok{ncomp =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+함수 수행 결과 추정된 PLS 모형으로부터 원 독립변수 \(x_1, \cdots, x_4\)와 종속변수 \(y_1, y_2\)간의 선형관계를 함수 \texttt{coef()}를 적용하여 아래와 같이 얻을 수 있다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{coef}\NormalTok{(plsr_multi_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , 3 comps
+## 
+##             y1         y2
+## x1 -0.26509645 -2.8773570
+## x2  0.08864959  2.7249194
+## x3 -0.14258488  0.3377420
+## x4  0.37330470 -0.7406377
+\end{verbatim}
+
+또한 \texttt{summary()} 함수를 적용하여 잠재변수들이 독립변수행렬 및 각 종속변수의 총변동에 기여하는 비율을 확인할 수 있다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(plsr_multi_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data:    X dimension: 7 4 
+##  Y dimension: 7 2
+## Fit method: kernelpls
+## Number of components considered: 3
+## TRAINING: % variance explained
+##     1 comps  2 comps  3 comps
+## X     86.59    99.00    99.81
+## y1    81.71    81.89    82.19
+## y2    53.98    56.50    65.99
+\end{verbatim}
+
+\hypertarget{plsr-multivariate-model}{%
+\subsection{PLS 모형}\label{plsr-multivariate-model}}
+
+앞 \ref{plsr-model}절의 모형을 일반화하여 아래와 같은 모형을 가정한다.
+
+\begin{eqnarray}
+\mathbf{X} &=& \mathbf{T} \mathbf{P}^\top + \mathbf{E} \label{eq:plsr-x-multivariate-matrix}\\
+\mathbf{Y} &=& \mathbf{U} \mathbf{Q}^\top + \mathbf{F} \label{eq:plsr-y-multivariate-matrix}\\
+\mathbf{U} &=& \mathbf{T} \mathbf{B} + \mathbf{H}  \label{eq:plsr-inner-multivariate-matrix}
+\end{eqnarray}
+
+식 \eqref{eq:plsr-x-multivariate-matrix}의 모형은 앞서 하나의 종속변수의 경우에서 살펴본 모형식 \eqref{eq:plsr-x-single-matrix}와 동일하다. 식 \eqref{eq:plsr-y-multivariate-matrix}에서 (\(n \times A\)) 행렬 \(\mathbf{U}\)는 \(\mathbf{Y}\)를 설명하는 \(A\)개의 잠재변수를 나타내는 행렬이며, (\(m \times A\)) 행렬 \(\mathbf{Q}\)는 종속변수행렬 \(\mathbf{Y}\)와 잠재변수행렬 \(\mathbf{U}\)간의 선형관계를 나타내는 로딩행렬이다. 또한 식 \eqref{eq:plsr-inner-multivariate-matrix}는 잠재변수행렬 \(\mathbf{T}\)와 \(\mathbf{U}\)간의 선형관계를 나타내는데, 특히 \(\mathbf{B}\)는 (\(A \times A\)) 대각행렬(diagonal matrix)로써, \(\mathbf{U}\)와 \(\mathbf{T}\)간에는 서로 대응하는 열 간에만 관계가 성립하며, 그 관계는 아래와 같다.
+
+\begin{equation*}
+\mathbf{u}_a = b_a \mathbf{t}_a + \mathbf{h}_a, \, a = 1, \cdots, A
+\end{equation*}
+
+이 때, \(b_a\)는 행렬 \(\mathbf{B}\)의 \(a\)번째 대각 원소를 나타낸다.
+
+\[\mathbf{B} = \left[ \begin{array}{c c c c}
+b_{1} & 0 & \cdots & 0\\
+0 & b_{2} &  & 0\\
+\vdots &  & \ddots & \vdots \\
+0 & 0 & \cdots & b_{A}
+\end{array} \right]
+\]
+
+행렬 \(\mathbf{E}\), \(\mathbf{F}\), \(\mathbf{H}\)는 오차항에 해당하는 행렬이다.
+
+\hypertarget{plsr-multivariate-nipals}{%
+\subsection{NIPALS 알고리즘}\label{plsr-multivariate-nipals}}
+
+다수의 종속변수가 존재하는 경우에도 NIPALS 알고리즘을 이용하여 모형을 추정한다. 이때는 각 잠재변수 \(\mathbf{t}_a\)를 추출할 때 추출한 잠재변수의 수렴 여부를 확인할 필요가 없었던 위 \ref{plsr-single-nipals}절의 경우와는 달리, 각 잠재변수 \(\mathbf{t}_a\)와 \(\mathbf{u}_a\)를 추출하는 과정에서 반복적인(iterative) 기법으로 두 잠재변수 벡터들을 업데이트하며 수렴 여부를 확인하여야 한다.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{{[}단계 0{]}} 반복알고리즘 수행을 위한 초기화를 한다. \(a \leftarrow 1\), \(\mathbf{X}_a \leftarrow \mathbf{X}\), \(\mathbf{Y}_a \leftarrow \mathbf{Y}\).
+\item
+  \textbf{{[}단계 1{]}} 종속변수 행렬 \(\mathbf{Y}_a\)의 임의의 열 하나를 잠재변수 벡터 \(\mathbf{u}_a\)로 선정한다.
+\item
+  \textbf{{[}단계 2{]}} \(\mathbf{X}_a\)을 다중종속변수 행렬으로, 잠재변수 \(\mathbf{u}_a\)를 독립변수 벡터로 하는 회귀모형으로부터 기울기 \(\mathbf{w}_a = [w_{a1} \, \cdots \, w_{ak}]^\top\)를 산출한다.
+  \[\mathbf{w}_a \leftarrow \left. \mathbf{X}_a^\top \mathbf{u}_a \middle/ \mathbf{u}_a^\top \mathbf{u}_a \right.  \]
+\item
+  \textbf{{[}단계 3{]}} 기울기 벡터 \(\mathbf{w}_a\)의 크기가 1이 되도록 한다.
+  \[\left. \mathbf{w}_a \leftarrow \mathbf{w}_a \middle/ \sqrt{\mathbf{w}_a^\top \mathbf{w}_a} \right.\]
+\item
+  \textbf{{[}단계 4{]}} 잠재변수 \(\mathbf{t}_a\)를 행렬 \(\mathbf{X}_a\)의 각 열의 가중평균으로 구한다. 이 때, 가중치는 기울기 벡터 \(\mathbf{w}_a\)를 이용한다.
+  \[\mathbf{t}_a \leftarrow \mathbf{X}_a \mathbf{w}_a\]
+\item
+  \textbf{{[}단계 5{]}} \(\mathbf{Y}_a\)을 다중종속변수 행렬으로, 잠재변수 \(\mathbf{t}_a\)를 독립변수 벡터로 하는 회귀모형으로부터 기울기 (로딩벡터) \(\mathbf{q}_a = [q_{a1} \, \cdots \, q_{am}]^\top\)를 산출한다.
+  \[\mathbf{q}_a \leftarrow \left. \mathbf{Y}_a^\top \mathbf{t}_a \middle/ \mathbf{t}_a^\top \mathbf{t}_a \right.  \]
+\item
+  \textbf{{[}단계 6{]}} 기울기 벡터 \(\mathbf{q}_a\)의 크기가 1이 되도록 한다.
+  \[\left. \mathbf{q}_a \leftarrow \mathbf{q}_a \middle/ \sqrt{\mathbf{q}_a^\top \mathbf{q}_a} \right.\]
+\item
+  \textbf{{[}단계 7{]}} 잠재변수 \(\mathbf{u}_a\)를 행렬 \(\mathbf{Y}_a\)의 각 열의 가중평균으로 구한다. 이 때, 가중치는 기울기 벡터 \(\mathbf{q}_a\)를 이용한다.
+  \[\mathbf{u}_a \leftarrow \mathbf{Y}_a \mathbf{q}_a\]
+\item
+  \textbf{{[}단계 8{]}} (수렴 확인) {[}단계 2{]}에서 {[}단계 7{]}까지의 과정을 잠재변수 벡터 \(\mathbf{u}_a\)의 모든 원소값이 수렴할 때까지 반복한다. 수렴이 확인되면 {[}단계 9{]}로 진행한다.
+\item
+  \textbf{{[}단계 9{]}} \(\mathbf{t}_a\)를 \(\mathbf{X}_a\)에 회귀시켜, \(\mathbf{X}_a\)을 다중종속변수 행렬으로, \(\mathbf{t}_a\)를 독립변수 벡터로 하는 회귀모형으로부터 로딩벡터 \(\mathbf{p}_a\)를 구한다.
+  \[\mathbf{p}_a \leftarrow \left. \mathbf{X}_a^\top \mathbf{t}_a \middle/ \mathbf{t}_a^\top \mathbf{t}_a \right.\]
+\item
+  \textbf{{[}단계 10{]}} 로딩벡터 \(\mathbf{p}_a\)의 크기를 1로 조정하고, 잠재변수 벡터 \(\mathbf{t}_a\)와 기울기 벡터 \(\mathbf{w}_a\)의 크기를 그에 따라 보정한다.
+  \[d \leftarrow \sqrt{\mathbf{p}_a^\top \mathbf{p}_a}, \, \mathbf{t}_a \leftarrow \mathbf{t}_a d, \, \mathbf{w}_a \leftarrow \mathbf{w}_a d, \, \mathbf{p}_a \leftarrow \frac{1}{d} \mathbf{p}_a \]
+\item
+  \textbf{{[}단계 11{]}} 잠재변수벡터 \(\mathbf{u}_a\)와 \(\mathbf{t}_a\)간의 내부관계 계수 \(b_a\)를 산출한다.
+  \[b_a \leftarrow \left. \mathbf{u}_a^\top \mathbf{t}_a \middle/ \mathbf{t}_a^\top \mathbf{t}_a \right. \]
+\item
+  \textbf{{[}단계 12{]}} 독립변수행렬 \(\mathbf{X}_a\)와 종속변수행렬 \(\mathbf{Y}_a\)로부터 새로 얻어진 잠재변수 벡터 \(\mathbf{t}_a\)가 설명하는 부분을 제거하고 나머지 변동만을 담은 독립변수행렬 \(\mathbf{X}_{a + 1}\)과 종속변수행렬 \(\mathbf{Y}_{a + 1}\)을 구한다.
+  \[\mathbf{X}_{a + 1} \leftarrow \mathbf{X}_a - \mathbf{t}_a \mathbf{p}_a^\top, \, \mathbf{Y}_{a + 1} \leftarrow \mathbf{Y}_a - b_a \mathbf{t}_a \mathbf{q}_a^\top \]
+\item
+  \textbf{{[}단계 13{]}} \(a \leftarrow a + 1\)로 업데이트하고, {[}단계 1{]}로 돌아간다. {[}단계 1{]} - {[}단계 13{]}의 과정을 \(A\)개의 잠재변수를 얻을 때까지 반복한다.
+\end{itemize}
+
+위 알고리즘을 아래 \texttt{nipals\_plsr2}이라는 함수로 구현해보자. 이 때, 함수의 입력변수는 아래와 같다.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{X}: 평균조정된 (\(n \times k\)) 독립변수행렬
+\item
+  \texttt{Y}: 평균조정된 (\(n \times m\)) 종속변수행렬
+\item
+  \texttt{A}: 잠재변수 개수
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nipals_plsr2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(X, Y, }\DataTypeTok{A =} \OtherTok{NULL}\NormalTok{) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.vector}\NormalTok{(Y)) \{}
+\NormalTok{    Y <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(Y, }\DataTypeTok{ncol =}\NormalTok{ 1L)}
+\NormalTok{  \}}
+  
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{nrow}\NormalTok{(X) }\OperatorTok{!=}\StringTok{ }\KeywordTok{nrow}\NormalTok{(Y)) }\KeywordTok{stop}\NormalTok{(}\StringTok{"X and Y must have the same numbers of observations."}\NormalTok{)}
+  
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is_empty}\NormalTok{(A) }\OperatorTok{||}\StringTok{ }\NormalTok{(A }\OperatorTok{>}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{dim}\NormalTok{(X)))) \{}
+\NormalTok{    A <-}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{dim}\NormalTok{(X))}
+\NormalTok{  \}}
+  
+\NormalTok{  Tmat <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \KeywordTok{nrow}\NormalTok{(X), }\DataTypeTok{ncol =}\NormalTok{ A)}
+\NormalTok{  Umat <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \KeywordTok{nrow}\NormalTok{(X), }\DataTypeTok{ncol =}\NormalTok{ A)}
+\NormalTok{  Wmat <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \KeywordTok{ncol}\NormalTok{(X), }\DataTypeTok{ncol =}\NormalTok{ A)}
+\NormalTok{  Pmat <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \KeywordTok{ncol}\NormalTok{(X), }\DataTypeTok{ncol =}\NormalTok{ A)}
+\NormalTok{  Qmat <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \KeywordTok{ncol}\NormalTok{(Y), }\DataTypeTok{ncol =}\NormalTok{ A)}
+\NormalTok{  Bmat <-}\StringTok{ }\KeywordTok{diag}\NormalTok{(}\DataTypeTok{nrow =}\NormalTok{ A)}
+  
+  \ControlFlowTok{for}\NormalTok{ (a }\ControlFlowTok{in} \KeywordTok{seq_len}\NormalTok{(A)) \{}
+    \CommentTok{# 단계 1}
+\NormalTok{    j <-}\StringTok{ }\KeywordTok{sample.int}\NormalTok{(}\KeywordTok{ncol}\NormalTok{(Y), }\DataTypeTok{size =}\NormalTok{ 1L)}
+\NormalTok{    Umat[, a] <-}\StringTok{ }\NormalTok{Y[, j]}
+    
+    \ControlFlowTok{while}\NormalTok{ (}\OtherTok{TRUE}\NormalTok{) \{}
+      \CommentTok{# 단계 2}
+\NormalTok{      Wmat[, a] <-}\StringTok{ }\KeywordTok{coef}\NormalTok{(}\KeywordTok{lm}\NormalTok{(X }\OperatorTok{~}\StringTok{ }\DecValTok{-1} \OperatorTok{+}\StringTok{ }\NormalTok{Umat[, a]))}
+      
+      \CommentTok{# 단계 3}
+\NormalTok{      Wmat[, a] <-}\StringTok{ }\NormalTok{Wmat[, a] }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{sum}\NormalTok{(Wmat[, a] }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{))}
+      
+      \CommentTok{# 단계 4}
+\NormalTok{      Tmat[, a] <-}\StringTok{ }\NormalTok{X }\OperatorTok{%*%}\StringTok{ }\NormalTok{Wmat[, a]}
+      
+      \CommentTok{# 단계 5}
+\NormalTok{      Qmat[, a] <-}\StringTok{ }\KeywordTok{coef}\NormalTok{(}\KeywordTok{lm}\NormalTok{(Y }\OperatorTok{~}\StringTok{ }\DecValTok{-1} \OperatorTok{+}\StringTok{ }\NormalTok{Tmat[, a]))}
+      
+      \CommentTok{# 단계 6}
+\NormalTok{      Qmat[, a] <-}\StringTok{ }\NormalTok{Qmat[, a] }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{sum}\NormalTok{(Qmat[, a] }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{))}
+      
+      \CommentTok{# 단계 7}
+\NormalTok{      u_new <-}\StringTok{ }\NormalTok{Y }\OperatorTok{%*%}\StringTok{ }\NormalTok{Qmat[, a]}
+      
+      \CommentTok{# 단계 8}
+      \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{all}\NormalTok{(}\KeywordTok{near}\NormalTok{(u_new, Umat[, a]))) }\ControlFlowTok{break}
+      
+\NormalTok{      Umat[, a] <-}\StringTok{ }\NormalTok{u_new}
+\NormalTok{    \}}
+
+    \CommentTok{# 단계 9}
+\NormalTok{    Pmat[, a] <-}\StringTok{ }\KeywordTok{coef}\NormalTok{(}\KeywordTok{lm}\NormalTok{(X }\OperatorTok{~}\StringTok{ }\DecValTok{-1} \OperatorTok{+}\StringTok{ }\NormalTok{Tmat[, a]))}
+    
+    \CommentTok{# 단계 10}
+\NormalTok{    p_size <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{sum}\NormalTok{(Pmat[, a] }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{))}
+\NormalTok{    Tmat[, a] <-}\StringTok{ }\NormalTok{Tmat[, a] }\OperatorTok{*}\StringTok{ }\NormalTok{p_size}
+\NormalTok{    Wmat[, a] <-}\StringTok{ }\NormalTok{Wmat[, a] }\OperatorTok{*}\StringTok{ }\NormalTok{p_size}
+\NormalTok{    Pmat[, a] <-}\StringTok{ }\NormalTok{Pmat[, a] }\OperatorTok{/}\StringTok{ }\NormalTok{p_size}
+    
+    \CommentTok{# 단계 11}
+\NormalTok{    Bmat[a, a] <-}\StringTok{ }\KeywordTok{coef}\NormalTok{(}\KeywordTok{lm}\NormalTok{(Umat[, a] }\OperatorTok{~}\StringTok{ }\DecValTok{-1} \OperatorTok{+}\StringTok{ }\NormalTok{Tmat[, a]))}
+
+    \CommentTok{# 단계 12}
+\NormalTok{    X <-}\StringTok{ }\NormalTok{X }\OperatorTok{-}\StringTok{ }\NormalTok{Tmat[, a] }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(Pmat[, a])}
+\NormalTok{    Y <-}\StringTok{ }\NormalTok{Y }\OperatorTok{-}\StringTok{ }\NormalTok{Bmat[a, a] }\OperatorTok{*}\StringTok{ }\NormalTok{Tmat[, a] }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(Qmat[, a])}
+\NormalTok{  \}}
+  
+  \KeywordTok{return}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{T =}\NormalTok{ Tmat, }\DataTypeTok{W =}\NormalTok{ Wmat, }\DataTypeTok{P =}\NormalTok{ Pmat, }
+              \DataTypeTok{U =}\NormalTok{ Umat, }\DataTypeTok{Q =}\NormalTok{ Qmat, }\DataTypeTok{B =}\NormalTok{ Bmat))}
+\NormalTok{\}}
+
+\NormalTok{nipals_fit2 <-}\StringTok{ }\KeywordTok{nipals_plsr2}\NormalTok{(X, Y, }\DataTypeTok{A =} \DecValTok{3}\NormalTok{)}
+\NormalTok{nipals_fit2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $T
+##             [,1]       [,2]        [,3]
+## [1,]   1.5777938  0.4117531  0.44707709
+## [2,]  -2.2993972  8.0194451 -0.79803681
+## [3,]   0.8145895  5.1398023 -0.30016399
+## [4,]  21.3867331 -3.2065797 -0.01083136
+## [5,] -17.8784038 -5.7770058 -1.68928119
+## [6,]   9.2701258 -3.6198261 -0.09042238
+## [7,] -12.8714412 -0.9675888  2.44165865
+## 
+## $W
+##            [,1]       [,2]       [,3]
+## [1,] -0.1476019 -0.4020251 -0.6921766
+## [2,] -0.1848598  0.4862964  0.5027723
+## [3,] -0.5065102 -0.8236460  0.4768770
+## [4,]  0.8312518 -0.4651155  0.2794808
+## 
+## $P
+##            [,1]         [,2]       [,3]
+## [1,] -0.1648502  0.002634502 -0.5484068
+## [2,] -0.1588038  0.130002426  0.6241044
+## [3,] -0.5486716 -0.859489687  0.4559029
+## [4,]  0.8040928 -0.494337847  0.3192118
+## 
+## $U
+##              [,1]      [,2]      [,3]
+## [1,]  11.60599122 -9.401433 -8.559602
+## [2,]  -0.03696152 -3.340983 -7.252566
+## [3,]  -9.14720168 11.437784  9.474719
+## [4,]  22.98172912 -6.021677 -4.914480
+## [5,]  -7.12619591 -9.125035 -6.794076
+## [6,]   0.47754875  7.914057  9.259791
+## [7,] -18.75490997  8.537286  8.786214
+## 
+## $Q
+##            [,1]       [,2]       [,3]
+## [1,]  0.4832295 -0.1202142 0.07948906
+## [2,] -0.8754937  0.9927480 0.99683574
+## 
+## $B
+##           [,1]      [,2]     [,3]
+## [1,] 0.8443757 0.0000000 0.000000
+## [2,] 0.0000000 0.4255916 0.000000
+## [3,] 0.0000000 0.0000000 3.206299
+\end{verbatim}
+
+\hypertarget{plsr-multivariate-transform}{%
+\subsection{회귀식 변환}\label{plsr-multivariate-transform}}
+
+위 NIPALS 알고리즘 수행 결과를 원래 독립변수 \(\mathbf{X}\)와 종속변수 \(\mathbf{Y}\)에 대한 식으로 변환하는 방법은 아래와 같다.
+
+잠재변수행렬 \(\mathbf{T}\)는 하나의 종속변수일 때 살펴봤던 바와 같이 독립변수행렬 \(\mathbf{X}\)와 가중치행렬 \(\mathbf{W}\), 그리고 로딩행렬 \(\mathbf{P}\)의 연산으로 표현된다.
+
+\begin{equation}
+\mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
+\end{equation}
+
+이를 식 \eqref{eq:plsr-inner-multivariate-matrix}에 대입하면,
+
+\begin{equation}
+\mathbf{U} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} + \mathbf{H}
+\end{equation}
+
+이를 다시 식 \eqref{eq:plsr-y-multivariate-matrix}에 대입하면,
+
+\begin{equation}
+\begin{split}
+\mathbf{Y} &= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} \mathbf{Q}^\top + \mathbf{H} \mathbf{Q}^\top + \mathbf{F}\\
+&= \mathbf{X} \boldsymbol{\Beta}_{PLS} + \mathbf{G}
+\end{split} \label{eq:plsr-multivariate-beta}
+\end{equation}
+
+여기에서 \(\mathbf{G} = \mathbf{H} \mathbf{Q}^\top + \mathbf{F}\)는 독립변수 \(\mathbf{X}\)를 종속변수 \(\mathbf{Y}\)에 회귀시킨 뒤 남은 오차항 행렬이다. 따라서, PLS 모형을 원 독립변수 행렬 \(\mathbf{X}\)에 대한 모형으로 변환할 때의 회귀계수는 아래와 같이 정리된다.
+
+\begin{equation}
+\boldsymbol{\Beta}_{PLS} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} \mathbf{Q}^\top
+\end{equation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beta_pls2 <-}\StringTok{ }\NormalTok{nipals_fit2}\OperatorTok{$}\NormalTok{W }\OperatorTok{%*%}\StringTok{ }
+\StringTok{  }\KeywordTok{solve}\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit2}\OperatorTok{$}\NormalTok{P) }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit2}\OperatorTok{$}\NormalTok{W) }\OperatorTok{%*%}\StringTok{ }
+\StringTok{  }\NormalTok{nipals_fit2}\OperatorTok{$}\NormalTok{B }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(nipals_fit2}\OperatorTok{$}\NormalTok{Q)}
+\NormalTok{beta_pls2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             [,1]       [,2]
+## [1,] -0.26509645 -2.8773570
+## [2,]  0.08864959  2.7249194
+## [3,] -0.14258488  0.3377420
+## [4,]  0.37330470 -0.7406377
+\end{verbatim}
+
+이는 앞 \ref{plsr-multivariate-basic-script} 절에서 R 패키지 \texttt{pls}를 통해 얻어진 결과와 동일함을 확인할 수 있다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{all}\NormalTok{(}\KeywordTok{near}\NormalTok{(beta_pls2, }\KeywordTok{coef}\NormalTok{(plsr_multi_fit)[, , }\DecValTok{1}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\hypertarget{plsr-multivariate-sst}{%
+\subsection{제곱합 분해}\label{plsr-multivariate-sst}}
+
+\(\mathbf{Y}\)의 전체제곱합은
+
+\[SST = SSR + SSE\]
+
+로 분해되며, 여기서 \(SSR\)은 다음과 같이 산출된다.
+
+\begin{equation}
+\begin{split}
+SSR &= \sum_{a = 1}^{A} SSR_a\\
+&= \sum_{a = 1}^{A} SS(b_a \mathbf{t}_a \mathbf{q}_a^\top)\\ 
+&= \sum_{a = 1}^{A} b_a^2 SS(\mathbf{t}_a)
+\end{split} \label{eq:plsr-multivariate-ssr}
+\end{equation}
+
+이 때, \(SSR_a\)는 잠재변수 \(\mathbf{t}_a\)에 의해 설명되는 \(\mathbf{Y}\)의 변동을 나타낸다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SSR_a <-}\StringTok{ }\KeywordTok{diag}\NormalTok{(}
+  \KeywordTok{t}\NormalTok{(nipals_fit2}\OperatorTok{$}\NormalTok{T }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit2}\OperatorTok{$}\NormalTok{B) }\OperatorTok{%*%}\StringTok{ }
+\StringTok{    }\NormalTok{(nipals_fit2}\OperatorTok{$}\NormalTok{T }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit2}\OperatorTok{$}\NormalTok{B)}
+\NormalTok{)}
+\NormalTok{SSR_a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 739.40663  26.91455 100.23860
+\end{verbatim}
+
+\(SSR_a\)를 전체제곱합 \(SST\)로 나누면 각 잠재변수가 \(\mathbf{Y}\)의 변동에 기여하는 비율을 산출할 수 있다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SST <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(Y }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\NormalTok{SSR_a }\OperatorTok{/}\StringTok{ }\NormalTok{SST}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.58621653 0.02133840 0.07947119
+\end{verbatim}
+
+또한, 잠재변수 \(\mathbf{t}_a\)가 설명하는 종속변수행렬 \(\mathbf{Y}\)의 \(j\)번째 열의 변동을 \(SSR_{aj}\)라 할 때, 이는 다음과 같이 산출된다.
+
+\begin{equation}
+SSR_{aj} = q_{ja}^2 SSR_a
+\end{equation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SSR_aj <-}\StringTok{ }\KeywordTok{diag}\NormalTok{(SSR_a) }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(nipals_fit2}\OperatorTok{$}\NormalTok{Q }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\NormalTok{SSR_aj}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             [,1]      [,2]
+## [1,] 172.6593685 566.74726
+## [2,]   0.3889542  26.52560
+## [3,]   0.6333587  99.60524
+\end{verbatim}
+
+이렇게 산출된 \(SSR_{aj}\)를 \(j\)번째 종속변수 \(\mathbf{y}_j\)의 제곱합 \(SS(\mathbf{y}_j)\)로 나누면, \(\mathbf{y}_j\)에 대한 \(\mathbf{t}_a\)의 기여도를 얻을 수 있다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SS_j <-}\StringTok{ }\KeywordTok{colSums}\NormalTok{(Y }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\NormalTok{SSR_aj }\OperatorTok{%*%}\StringTok{ }\KeywordTok{diag}\NormalTok{(}\DecValTok{1} \OperatorTok{/}\StringTok{ }\NormalTok{SS_j)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             [,1]       [,2]
+## [1,] 0.817051715 0.53975930
+## [2,] 0.001840593 0.02526248
+## [3,] 0.002997154 0.09486213
+\end{verbatim}
+
+위의 결과에서 \(\mathbf{y}_1\)의 변동은 잠재변수 \(\mathbf{t}_1\)으로 대부분 설명되는 반면, \(\mathbf{y}_2\)의 변동은 잠재변수 \(\mathbf{t}_2\) 및 \(\mathbf{t}_3\)에 의해서도 설명됨을 볼 수 있다.
+
+\hypertarget{part-2---}{%
+\part{2부 - 분류분석}\label{part-2---}}
 
 \hypertarget{classification-analysis}{%
 \chapter{분류분석 개요}\label{classification-analysis}}
@@ -1887,7 +3041,7 @@ class & 7.3-15\\
 ## 2     2    0.714
 ## 3     3    0.714
 ## 4     4    0.714
-## 5     5    0.429
+## 5     5    0.286
 ## 6     6    0
 \end{verbatim}
 
@@ -7105,6 +8259,9 @@ Table \ref{tab:gain-chart-stat}를 바탕으로 네 가지 이익도표를 작�
 
 \caption{이익도표}\label{fig:gain-chart-plot}
 \end{figure}
+
+\hypertarget{part-3---}{%
+\part{3부 - 군집분석}\label{part-3---}}
 
 \hypertarget{clustering-overview}{%
 \chapter{군집분석 개요}\label{clustering-overview}}
@@ -12789,6 +13946,9 @@ ASW = \frac{1}{n} \sum_{i = 1}^{n} s(i) \label{eq:cluster-average-silhouette}
 \section{군집해의 해석}\label{cluster-solution-interpretation}}
 
 군집분석의 주목적을 달성하기 위해서는 군집해를 얻은 후 이에 대한 해석이 가능하여야 할 것이다. 즉, 각 군집의 특성을 파악할 수 있어야 실제 문제에 적용할 수 있을 것이다. 이를 위해서는 특정 응용분야의 전문가 지식을 요하는 경우가 많다. 그러나 첫 출발은 각 군집의 중심좌표, 즉 군집 별 변수별 평균치를 산출하는 것이다. 대부분의 경우 변수별 평균치로 군집들을 비교함으로써 군집의 특성을 파악할 수 있다. 다변량을 처리할 수 있는 그래프 역시 도움이 되며, 특히 다변량인 경우 요인분석(factor analysis)를 활용하기도 한다. 최종적으로 각 군집에 대한 특성이 파악되면 명명(naming)하는 것이 추천된다.
+
+\hypertarget{part-4---}{%
+\part{4부 - 연관규칙}\label{part-4---}}
 
 \hypertarget{association-rule}{%
 \chapter{연관규칙}\label{association-rule}}

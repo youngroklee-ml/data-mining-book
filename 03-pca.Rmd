@@ -250,7 +250,7 @@ t1_ss / total_ss
 행렬 $\mathbf{Z}$(혹은 $\mathbf{X}$)로부터 주성분을 얻는 방법은 여러 가지가 있으며, 아래에서 하나씩 설명하기로 한다.
 
 
-### 특이치분해 (Singular Value Decomposition) {pca-svd}
+### 특이치분해 (Singular Value Decomposition) {#pca-svd}
 
 분산조정된 $\mathbf{Z}$에 대해 주성분분석을 수행한다고 가정하자. 분산조정을 하지 않고 주성분분석을 수행하는 경우 아래 행렬 $\mathbf{Z}$ 대신 $\mathbf{X}$를 사용하면 된다.
 
@@ -292,7 +292,7 @@ svd_Z$d
 
 
 
-### 분광분해 (Spectral Decomposition) {pca-spectral}
+### 분광분해 (Spectral Decomposition) {#pca-spectral}
 
 임의의 정방행렬 $\mathbf{A}$에 대하여 
 

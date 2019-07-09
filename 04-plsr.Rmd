@@ -50,11 +50,15 @@ knitr::kable(
 ```
 
 
+R 패키지 `pls` 내의 함수 `plsr()`을 이용하여 PLS 모형을 아래와 같이 추정할 수 있다.
+
 ```{r}
 plsr_fit <- pls::plsr(y ~ x1 + x2 + x3, data = train_df, ncomp = 2)
-coef(plsr_fit, intercept = TRUE)
+coef(plsr_fit)
 ```
 
+
+수행결과 object에 `summary()` 함수를 사용하여 학습된 모형의 독립변수 $\mathbf{X}$ 및 종속변수 $\mathbf{y}$의 총변동에 대한 기여율을 확인할 수 있다.
 
 ```{r}
 summary(plsr_fit)
@@ -86,22 +90,22 @@ summary(plsr_fit)
 ### NIPALS 알고리즘 {#plsr-single-nipals}
 
 
-- **[단계 0]** 반복알고리즘 수행을 위한 초기화를 한다. $h \leftarrow 1$,  $\mathbf{X}_h \leftarrow \mathbf{X}$, $\mathbf{y}_h \leftarrow \mathbf{y}$.
-- **[단계 1]** $\mathbf{X}_h$을 다중종속변수 행렬으로, $\mathbf{y}_h$를 독립변수 벡터로 하는 회귀모형으로부터 기울기 $\mathbf{w}_h = [w_{h1} \, \cdots \, w_{hk}]^\top$를 산출한다.
-\[\mathbf{w}_h \leftarrow \left. \mathbf{X}_h^\top \mathbf{y}_h \middle/ \mathbf{y}_h^\top \mathbf{y}_h \right.  \]
-- **[단계 2]** 기울기 벡터 $\mathbf{w}_h$의 크기가 1이 되도록 한다. 
-\[\left. \mathbf{w}_h \leftarrow \mathbf{w}_h \middle/ \sqrt{\mathbf{w}_h^\top \mathbf{w}_h} \right.\]
-- **[단계 3]** 잠재변수 $\mathbf{t}_h$를 행렬 $\mathbf{X}_h$의 각 열의 가중평균으로 구한다. 이 때, 가중치는 기울기 벡터 $\mathbf{w}_h$를 이용한다.
-\[\mathbf{t}_h \leftarrow \mathbf{X}_h \mathbf{w}_h\]
-- **[단계 4]** 식 \@ref(eq:plsr-x-single)와 같이 $\mathbf{X}_h$을 다중종속변수 행렬으로, $\mathbf{t}_h$를 독립변수 벡터로 하는 회귀모형으로부터 로딩벡터 $\mathbf{p}_h$를 구한다.
-\[\mathbf{p}_h \leftarrow \left. \mathbf{X}_h^\top \mathbf{t}_h \middle/ \mathbf{t}_h^\top \mathbf{t}_h \right.\]
-- **[단계 5]** 로딩벡터 $\mathbf{p}_h$의 크기를 1로 조정하고, 잠재변수 벡터 $\mathbf{t}_h$와 기울기 벡터 $\mathbf{w}_h$의 크기를 그에 따라 보정한다.
-\[c \leftarrow \sqrt{\mathbf{p}_h^\top \mathbf{p}_h}, \, \mathbf{t}_h \leftarrow \mathbf{t}_h c, \, \mathbf{w}_h \leftarrow \mathbf{w}_h c, \, \mathbf{p}_h \leftarrow \frac{1}{c} \mathbf{p}_h \]
-- **[단계 6]** 식 \@ref(eq:plsr-y-single)와 같이 잠재변수 $\mathbf{t}_h$를 종속변수 $\mathbf{y}_h$에 회귀시킬 때 계수 $b_h$를 산출한다.
-\[b_h \leftarrow \left. \mathbf{y}_h^\top \mathbf{t}_h \middle/ \mathbf{t}_h^\top \mathbf{t}_h \right. \]
-- **[단계 7]** 독립변수 행렬 $\mathbf{X}_h$와 종속변수벡터 $\mathbf{y}_h$로부터 새로 얻어진 잠재변수 벡터 $\mathbf{t}_h$가 설명하는 부분을 제거하고 나머지 변동만을 담은 독립변수 행렬 $\mathbf{X}_{h + 1}$과 종속변수벡터 $\mathbf{y}_{h + 1}$을 구한다.
-\[\mathbf{X}_{h + 1} \leftarrow \mathbf{X}_h - \mathbf{t}_h \mathbf{p}_h^\top, \, \mathbf{y}_{h + 1} \leftarrow \mathbf{y}_h - \mathbf{t}_h b_h\]
-- **[단계 8]** $h \leftarrow h + 1$로 업데이트하고, [단계 1]로 돌아간다. [단계 1] - [단계 8]의 과정을 $A$개의 잠재변수를 얻을 때까지 반복한다.
+- **[단계 0]** 반복알고리즘 수행을 위한 초기화를 한다. $a \leftarrow 1$,  $\mathbf{X}_a \leftarrow \mathbf{X}$, $\mathbf{y}_a \leftarrow \mathbf{y}$.
+- **[단계 1]** $\mathbf{X}_a$을 다중종속변수 행렬으로, $\mathbf{y}_a$를 독립변수 벡터로 하는 회귀모형으로부터 기울기 $\mathbf{w}_a = [w_{a1} \, \cdots \, w_{ak}]^\top$를 산출한다.
+\[\mathbf{w}_a \leftarrow \left. \mathbf{X}_a^\top \mathbf{y}_a \middle/ \mathbf{y}_a^\top \mathbf{y}_a \right.  \]
+- **[단계 2]** 기울기 벡터 $\mathbf{w}_a$의 크기가 1이 되도록 한다. 
+\[\left. \mathbf{w}_a \leftarrow \mathbf{w}_a \middle/ \sqrt{\mathbf{w}_a^\top \mathbf{w}_a} \right.\]
+- **[단계 3]** 잠재변수 $\mathbf{t}_a$를 행렬 $\mathbf{X}_a$의 각 열의 가중평균으로 구한다. 이 때, 가중치는 기울기 벡터 $\mathbf{w}_a$를 이용한다.
+\[\mathbf{t}_a \leftarrow \mathbf{X}_a \mathbf{w}_a\]
+- **[단계 4]** 식 \@ref(eq:plsr-x-single)와 같이 $\mathbf{X}_a$을 다중종속변수 행렬으로, $\mathbf{t}_a$를 독립변수 벡터로 하는 회귀모형으로부터 로딩벡터 $\mathbf{p}_a$를 구한다.
+\[\mathbf{p}_a \leftarrow \left. \mathbf{X}_a^\top \mathbf{t}_a \middle/ \mathbf{t}_a^\top \mathbf{t}_a \right.\]
+- **[단계 5]** 로딩벡터 $\mathbf{p}_a$의 크기를 1로 조정하고, 잠재변수 벡터 $\mathbf{t}_a$와 기울기 벡터 $\mathbf{w}_a$의 크기를 그에 따라 보정한다.
+\[d \leftarrow \sqrt{\mathbf{p}_a^\top \mathbf{p}_a}, \, \mathbf{t}_a \leftarrow \mathbf{t}_a d, \, \mathbf{w}_a \leftarrow \mathbf{w}_a d, \, \mathbf{p}_a \leftarrow \frac{1}{d} \mathbf{p}_a \]
+- **[단계 6]** 식 \@ref(eq:plsr-y-single)와 같이 잠재변수 $\mathbf{t}_a$를 종속변수 $\mathbf{y}_a$에 회귀시킬 때 계수 $b_a$를 산출한다.
+\[b_a \leftarrow \left. \mathbf{y}_a^\top \mathbf{t}_a \middle/ \mathbf{t}_a^\top \mathbf{t}_a \right. \]
+- **[단계 7]** 독립변수 행렬 $\mathbf{X}_a$와 종속변수벡터 $\mathbf{y}_a$로부터 새로 얻어진 잠재변수 벡터 $\mathbf{t}_a$가 설명하는 부분을 제거하고 나머지 변동만을 담은 독립변수 행렬 $\mathbf{X}_{a + 1}$과 종속변수벡터 $\mathbf{y}_{a + 1}$을 구한다.
+\[\mathbf{X}_{a + 1} \leftarrow \mathbf{X}_a - \mathbf{t}_a \mathbf{p}_a^\top, \, \mathbf{y}_{a + 1} \leftarrow \mathbf{y}_a - \mathbf{t}_a b_a\]
+- **[단계 8]** $a \leftarrow a + 1$로 업데이트하고, [단계 1]로 돌아간다. [단계 1] - [단계 8]의 과정을 $A$개의 잠재변수를 얻을 때까지 반복한다.
 
 
 위 NIPALS 알고리즘을 아래 `nipals_plsr`이라는 함수로 구현해보자. 이 때, 함수의 입력변수는 아래와 같다.
@@ -116,39 +120,39 @@ nipals_plsr <- function(X, y, A = NULL) {
     A <- min(dim(X))
   }
   
-  Th <- matrix(NA, nrow = nrow(X), ncol = A)
-  Wh <- matrix(NA, nrow = ncol(X), ncol = A)
-  Ph <- matrix(NA, nrow = ncol(X), ncol = A)
-  bh <- vector("numeric", length = A)
+  Tmat <- matrix(NA, nrow = nrow(X), ncol = A)
+  Wmat <- matrix(NA, nrow = ncol(X), ncol = A)
+  Pmat <- matrix(NA, nrow = ncol(X), ncol = A)
+  b <- vector("numeric", length = A)
   
-  for (h in seq_len(A)) {
+  for (a in seq_len(A)) {
     # 단계 1
-    Wh[, h] <- coef(lm(X ~ -1 + y))
+    Wmat[, a] <- coef(lm(X ~ -1 + y))
     
     # 단계 2
-    Wh[, h] <- Wh[, h] / sqrt(sum(Wh[, h] ^ 2))
+    Wmat[, a] <- Wmat[, a] / sqrt(sum(Wmat[, a] ^ 2))
 
     # 단계 3
-    Th[, h] <- X %*% Wh[, h]
+    Tmat[, a] <- X %*% Wmat[, a]
     
     # 단계 4
-    Ph[, h] <- coef(lm(X ~ -1 + Th[, h]))
+    Pmat[, a] <- coef(lm(X ~ -1 + Tmat[, a]))
     
     # 단계 5
-    p_size <- sqrt(sum(Ph[, h] ^ 2))
-    Th[, h] <- Th[, h] * p_size
-    Wh[, h] <- Wh[, h] * p_size
-    Ph[, h] <- Ph[, h] / p_size
+    p_size <- sqrt(sum(Pmat[, a] ^ 2))
+    Tmat[, a] <- Tmat[, a] * p_size
+    Wmat[, a] <- Wmat[, a] * p_size
+    Pmat[, a] <- Pmat[, a] / p_size
     
     # 단계 6
-    bh[h] <- coef(lm(y ~ -1 + Th[, h]))
+    b[a] <- coef(lm(y ~ -1 + Tmat[, a]))
 
     # 단계 7
-    X <- X - Th[, h] %*% t(Ph[, h])
-    y <- y - Th[, h] %*% t(bh[h])
+    X <- X - Tmat[, a] %*% t(Pmat[, a])
+    y <- y - Tmat[, a] %*% t(b[a])
   }
   
-  return(list(T = Th, W = Wh, P = Ph, b = bh))
+  return(list(T = Tmat, W = Wmat, P = Pmat, b = b))
 }
 
 X <- as.matrix(train_df[, c("x1", "x2", "x3")])
@@ -182,7 +186,7 @@ all(near(nipals_fit$b, b_hat))
 
 ### 회귀식 변환 {#plsr-single-transform}
 
-위 NIPALS 알고리즘 수행 결과를 원래 독립변수 $\mathbf{X}$와 종속변수 와 $\mathbf{y}$에 대한 식으로 변환하는 방법은 아래와 같다.
+위 NIPALS 알고리즘 수행 결과를 원래 독립변수 $\mathbf{X}$와 종속변수 $\mathbf{y}$에 대한 식으로 변환하는 방법은 아래와 같다.
 
 잠재변수행렬 $\mathbf{T}$는 아래와 같이 독립변수 행렬 $\mathbf{X}$와 가중치행렬 $\mathbf{W}$, 그리고 로딩행렬 $\mathbf{P}$의 연산으로 표현된다.
 
@@ -196,7 +200,7 @@ all(near(nipals_fit$b, b_hat))
 \begin{split}
 \mathbf{y} &= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{b} + \mathbf{f}\\
 &= \mathbf{X} \boldsymbol{\beta}_{PLS} + \mathbf{f}
-\end{split}
+\end{split} (\#eq:plsr-single-beta)
 \end{equation}
 
 따라서, 원 독립변수 행렬 $\mathbf{X}$에 대한 회귀계수는 아래와 같이 정리된다.
@@ -214,12 +218,426 @@ beta_pls
 ```
 
 
+### 제곱합 분해 {#plsr-sst}
+
+$A$개의 잠재변수를 사용하는 모형에 대하여 모형이 설명하는 $\mathbf{y}$의 변동(제곱합)을 ${SSR}$, 설명하지 못하는 변동을 ${SSE}$라 할 때, $\mathbf{y}$의 전체제곱합(${SST}$)은 다음과 같이 분해된다.
+
+\[{SST} = {SS}(\mathbf{y}) = {SSR} + {SSE}\]
+
+여기서 ${SS}()$는 제곱합 함수로, 임의의 벡터 $\mathbf{x}$에 대해 아래와 같이 정의된다.
+
+\[
+{SS}(\mathbf{x}) = \mathbf{x}^\top \mathbf{x}
+\]
+
+이 때, ${SSR}$은 다음과 같이 산출할 수 있다.
+
+\begin{equation}
+\begin{split}
+SSR &= \sum_{a = 1}^{A} SS(b_a \mathbf{t}_a)\\
+&= \sum_{a = 1}^{A} b_a^2 SS(\mathbf{t}_a)
+\end{split} (\#eq:plsr-ssr)
+\end{equation}
+
+$a$번째 잠재변수 $\mathbf{t}_a$가 $\mathbf{y}$를 설명하는 회귀제곱합을 $SSR_a = b_a^2 SS(\mathbf{t}_a)$라 할 때, $SSR$은 아래와 같이 분해된다.
+
+\[
+SSR = \sum_{a = 1}^{A} SSR_a
+\]
+
+위 예제에서 2개의 잠재변수가 설명하는 $\mathbf{y}$의 총변동을 PLS 결과를 이용하여 계산하면 아래와 같다.
+
+```{r}
+SSR_a <- nipals_fit$b ^ 2 * diag(t(nipals_fit$T) %*% nipals_fit$T)
+SSR_a
+```
+
+
+이 때, 각 주성분이 설명하는 $\mathbf{y}$ 변동의 기여율을 아래와 같이 정의한다.
+
+\begin{equation}
+\Delta R_a^2 = \frac{SSR_a}{SST} (\#eq:plsr-rsq)
+\end{equation}
+
+
+앞 예제에서 각 잠재변수의 $\mathbf{y}$ 변동에 대한 기여율을 계산해보자.
+
+```{r}
+SST <- sum(y ^ 2)
+delta_Rsq <- SSR_a / SST
+delta_Rsq
+```
+
+잠재변수 $A$개를 이용한 PLS 모형이 설명하는 $\mathbf{y}$의 총 변동에 대한 기여도($SSR / SST$)은 아래와 같이 각 잠재변수의 기여도의 합으로 산출된다.
+
+\[
+R^2 = \frac{SSR}{SST} = \frac{\sum_{a = 1}^{A} SSR_a}{SST} = \sum_{a = 1}^{A} \Delta R_a^2
+\]
+
+따라서, 잠재변수 $A$개를 이용한 PLS 모형이 설명하는 $\mathbf{y}$의 총 변동에 대한 기여도($SSR / SST$)은 아래와 같이 각 잠재변수의 기여도의 합으로 산출된다.
+
+앞 예제에서 잠재변수 2개를 이용한 최종모형이 설명하는 $\mathbf{y}$의 변동은 아래와 같다.
+
+```{r}
+sum(delta_Rsq)
+```
+
+이는 앞 \@ref(plsr-basic-script)절에서 R 패키지 `pls`를 이용하여 얻어진 결과와 동일함을 확인할 수 있다.
+
+
+한편, 잠재변수들이 독립변수행렬 $\mathbf{X}$의 변동을 얼마나 설명하는지 동시에 검토할 필요가 있다. 각 잠재변수들의 제곱합 $SS(\mathbf{t}_a)$의 $\mathbf{X}$의 총변동 ($SS(\mathbf{X})$)에 대한 비율이 그 기여율을 설명한다.
+
+앞 예제에서 각각의 잠재변수의 $\mathbf{X}$에 대한 기여율은 아래와 같다.
+
+```{r}
+diag(t(nipals_fit$T) %*% nipals_fit$T) / sum(diag(t(X) %*% X))
+```
+
+잠재변수 2개를 이용한 PLS 모형의 $\mathbf{X}$에 대한 기여율은 아래와 같다.
+
+```{r}
+sum(diag(t(nipals_fit$T) %*% nipals_fit$T)) / sum(diag(t(X) %*% X))
+```
+
+잠재변수 2개가 독립변수행렬의 대부분의 변동을 설명함을 알 수 있으며, 위 결과는 역시 앞 \@ref(plsr-basic-script)절에서 R 패키지 `pls`를 이용하여 얻어진 결과와 동일함을 확인할 수 있다.
+
+
+
+
+### 독립변수의 중요도 {#plsr-variable-importance}
+
+원래의 각 독립변수가 종속변수를 설명하는 데 얼마나 영향을 미치는지는 공정분석 등에서 매우 중요하다. $j$번째 독립변수의 종속변수에 대한 중요도 척도로 $VIP$(variable importance in projection)를 다음과 같이 정의한다.
+
+\begin{equation}
+\begin{split}
+VIP_j &= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w_{aj} \middle/ \| \mathbf{w}_a \|  \right)^2}\\
+&= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \frac{w_{aj}^2}{\mathbf{w}_a^\top \mathbf{w}_a}}
+\end{split} (\#eq:plsr-single-vip)
+\end{equation}
+
+위 정의에 의하면 다음이 성립한다.
+
+\[
+\sum_{j = 1}^{k} VIP_j^2 = k
+\]
+
+즉, 독립변수당 중요도 제곱의 평균은 1이 된다. 이에 따라, 통상 $VIP$가 1보다 큰 독립변수를 의미있는 변수로 간주한다.
+
+앞 예제에 대해 각 변수의 중요도를 계산해보자.
+
+```{r}
+k <- ncol(X)
+VIP <- sqrt(
+  colSums(
+    k / sum(SSR_a) * SSR_a * 
+      (t(nipals_fit$W ^ 2) / 
+         diag(t(nipals_fit$W) %*% nipals_fit$W))
+    )
+  )
+VIP
+```
+
+즉, $x_3$가 가장 영향력있는 변수라 할 수 있겠다.
 
 
 
 ## 다수의 종속변수의 경우 {#plsr-multivariate-target}
 
+$m$개의 종속변수가 존재하여, 종속변수 데이터가 벡터가 아닌 ($n \times m$) 행렬
+
+\[\mathbf{Y} = \left[ \mathbf{y}_1 \, \cdots \, \mathbf{y}_m \right]\]
+
+으로 표현될 때, 각각의 종속변수에 대해 따로 잠재변수를 산출하기보다는, 여러 종속변수를 설명하는 공통의 잠재변수행렬 $\mathbf{T}$를 산출하는 것이 합리적이라 할 수 있다.
+
+
+### 기본 R 스크립트 {#plsr-multivariate-basic-script}
+
+4개의 독립변수 및 2개의 종속변수에 대한 평균조정된 데이터가 다음과 같다.
+
+```{r plsr-multivariate-example-data}
+train_df <- tribble(
+  ~x1, ~x2, ~x3, ~x4, ~y1, ~y2,
+  -1, -0.5, -1, 1, 5.9, -10,
+  1, 1.1, -6, -6, -3.7, -2,
+  0, 0.3, -5, -2, 1, 11,
+  -3, -3.2, -9, 19, 7.7, -22,
+  4, 1.2, 14, -12, -7.5, 4,
+  -2, -2.6, -2, 9, 2.8, 1,
+  1, 3.7, 9, -9, -6.2, 18
+)
+
+knitr::kable(
+  train_df, booktabs = TRUE,
+  align = rep("r", ncol(train_df)),
+  caption = "다수의 종속변수에 대한 부분최소자승 회귀분석 예제 데이터"
+)
+```
+
+
+앞서 하나의 종속변수를 다루는 경우와 마찬가지로, R 패키지 `pls` 내의 함수 `plsr()`을 이용하여 PLS 모형을 추정할 수 있다. 이 때, `formula` 입력 시 종속변수의 행렬을 이용한다.
+
+```{r}
+X <- as.matrix(train_df[, c("x1", "x2", "x3", "x4")])
+Y <- as.matrix(train_df[, c("y1", "y2")])
+plsr_multi_fit <- pls::plsr(Y ~ X, ncomp = 3)
+```
+
+함수 수행 결과 추정된 PLS 모형으로부터 원 독립변수 $x_1, \cdots, x_4$와 종속변수 $y_1, y_2$간의 선형관계를 함수 `coef()`를 적용하여 아래와 같이 얻을 수 있다.
+
+```{r}
+coef(plsr_multi_fit)
+```
+
+또한 `summary()` 함수를 적용하여 잠재변수들이 독립변수행렬 및 각 종속변수의 총변동에 기여하는 비율을 확인할 수 있다. 
+
+```{r}
+summary(plsr_multi_fit)
+```
 
 
 
+
+### PLS 모형 {#plsr-multivariate-model}
+
+앞 \@ref(plsr-model)절의 모형을 일반화하여 아래와 같은 모형을 가정한다.
+
+\begin{eqnarray}
+\mathbf{X} &=& \mathbf{T} \mathbf{P}^\top + \mathbf{E} (\#eq:plsr-x-multivariate-matrix)\\
+\mathbf{Y} &=& \mathbf{U} \mathbf{Q}^\top + \mathbf{F} (\#eq:plsr-y-multivariate-matrix)\\
+\mathbf{U} &=& \mathbf{T} \mathbf{B} + \mathbf{H}  (\#eq:plsr-inner-multivariate-matrix)
+\end{eqnarray}
+
+식 \@ref(eq:plsr-x-multivariate-matrix)의 모형은 앞서 하나의 종속변수의 경우에서 살펴본 모형식 \@ref(eq:plsr-x-single-matrix)와 동일하다. 식 \@ref(eq:plsr-y-multivariate-matrix)에서 ($n \times A$) 행렬 $\mathbf{U}$는 $\mathbf{Y}$를 설명하는 $A$개의 잠재변수를 나타내는 행렬이며, ($m \times A$) 행렬 $\mathbf{Q}$는 종속변수행렬 $\mathbf{Y}$와 잠재변수행렬 $\mathbf{U}$간의 선형관계를 나타내는 로딩행렬이다. 또한 식 \@ref(eq:plsr-inner-multivariate-matrix)는 잠재변수행렬 $\mathbf{T}$와 $\mathbf{U}$간의 선형관계를 나타내는데, 특히 $\mathbf{B}$는 ($A \times A$) 대각행렬(diagonal matrix)로써, $\mathbf{U}$와 $\mathbf{T}$간에는 서로 대응하는 열 간에만 관계가 성립하며, 그 관계는 아래와 같다.
+
+\begin{equation*}
+\mathbf{u}_a = b_a \mathbf{t}_a + \mathbf{h}_a, \, a = 1, \cdots, A
+\end{equation*}
+
+이 때, $b_a$는 행렬 $\mathbf{B}$의 $a$번째 대각 원소를 나타낸다.
+
+\[\mathbf{B} = \left[ \begin{array}{c c c c}
+b_{1} & 0 & \cdots & 0\\
+0 & b_{2} &  & 0\\
+\vdots &  & \ddots & \vdots \\
+0 & 0 & \cdots & b_{A}
+\end{array} \right]
+\]
+
+행렬 $\mathbf{E}$, $\mathbf{F}$, $\mathbf{H}$는 오차항에 해당하는 행렬이다.
+
+
+### NIPALS 알고리즘 {#plsr-multivariate-nipals}
+
+다수의 종속변수가 존재하는 경우에도 NIPALS 알고리즘을 이용하여 모형을 추정한다. 이때는 각 잠재변수 $\mathbf{t}_a$를 추출할 때 추출한 잠재변수의 수렴 여부를 확인할 필요가 없었던 위 \@ref(plsr-single-nipals)절의 경우와는 달리, 각 잠재변수 $\mathbf{t}_a$와 $\mathbf{u}_a$를 추출하는 과정에서 반복적인(iterative) 기법으로 두 잠재변수 벡터들을 업데이트하며 수렴 여부를 확인하여야 한다. 
+
+
+- **[단계 0]** 반복알고리즘 수행을 위한 초기화를 한다. $a \leftarrow 1$,  $\mathbf{X}_a \leftarrow \mathbf{X}$, $\mathbf{Y}_a \leftarrow \mathbf{Y}$.
+- **[단계 1]** 종속변수 행렬 $\mathbf{Y}_a$의 임의의 열 하나를 잠재변수 벡터 $\mathbf{u}_a$로 선정한다.
+- **[단계 2]** $\mathbf{X}_a$을 다중종속변수 행렬으로, 잠재변수 $\mathbf{u}_a$를 독립변수 벡터로 하는 회귀모형으로부터 기울기 $\mathbf{w}_a = [w_{a1} \, \cdots \, w_{ak}]^\top$를 산출한다.
+\[\mathbf{w}_a \leftarrow \left. \mathbf{X}_a^\top \mathbf{u}_a \middle/ \mathbf{u}_a^\top \mathbf{u}_a \right.  \]
+- **[단계 3]** 기울기 벡터 $\mathbf{w}_a$의 크기가 1이 되도록 한다. 
+\[\left. \mathbf{w}_a \leftarrow \mathbf{w}_a \middle/ \sqrt{\mathbf{w}_a^\top \mathbf{w}_a} \right.\]
+- **[단계 4]** 잠재변수 $\mathbf{t}_a$를 행렬 $\mathbf{X}_a$의 각 열의 가중평균으로 구한다. 이 때, 가중치는 기울기 벡터 $\mathbf{w}_a$를 이용한다.
+\[\mathbf{t}_a \leftarrow \mathbf{X}_a \mathbf{w}_a\]
+- **[단계 5]** $\mathbf{Y}_a$을 다중종속변수 행렬으로, 잠재변수 $\mathbf{t}_a$를 독립변수 벡터로 하는 회귀모형으로부터 기울기 (로딩벡터) $\mathbf{q}_a = [q_{a1} \, \cdots \, q_{am}]^\top$를 산출한다.
+\[\mathbf{q}_a \leftarrow \left. \mathbf{Y}_a^\top \mathbf{t}_a \middle/ \mathbf{t}_a^\top \mathbf{t}_a \right.  \]
+- **[단계 6]** 기울기 벡터 $\mathbf{q}_a$의 크기가 1이 되도록 한다. 
+\[\left. \mathbf{q}_a \leftarrow \mathbf{q}_a \middle/ \sqrt{\mathbf{q}_a^\top \mathbf{q}_a} \right.\]
+- **[단계 7]** 잠재변수 $\mathbf{u}_a$를 행렬 $\mathbf{Y}_a$의 각 열의 가중평균으로 구한다. 이 때, 가중치는 기울기 벡터 $\mathbf{q}_a$를 이용한다.
+\[\mathbf{u}_a \leftarrow \mathbf{Y}_a \mathbf{q}_a\]
+- **[단계 8]** (수렴 확인) [단계 2]에서 [단계 7]까지의 과정을 잠재변수 벡터 $\mathbf{u}_a$의 모든 원소값이 수렴할 때까지 반복한다. 수렴이 확인되면 [단계 9]로 진행한다.
+- **[단계 9]** $\mathbf{t}_a$를 $\mathbf{X}_a$에 회귀시켜, $\mathbf{X}_a$을 다중종속변수 행렬으로, $\mathbf{t}_a$를 독립변수 벡터로 하는 회귀모형으로부터 로딩벡터 $\mathbf{p}_a$를 구한다. 
+\[\mathbf{p}_a \leftarrow \left. \mathbf{X}_a^\top \mathbf{t}_a \middle/ \mathbf{t}_a^\top \mathbf{t}_a \right.\]
+- **[단계 10]** 로딩벡터 $\mathbf{p}_a$의 크기를 1로 조정하고, 잠재변수 벡터 $\mathbf{t}_a$와 기울기 벡터 $\mathbf{w}_a$의 크기를 그에 따라 보정한다.
+\[d \leftarrow \sqrt{\mathbf{p}_a^\top \mathbf{p}_a}, \, \mathbf{t}_a \leftarrow \mathbf{t}_a d, \, \mathbf{w}_a \leftarrow \mathbf{w}_a d, \, \mathbf{p}_a \leftarrow \frac{1}{d} \mathbf{p}_a \]
+- **[단계 11]** 잠재변수벡터 $\mathbf{u}_a$와 $\mathbf{t}_a$간의 내부관계 계수 $b_a$를 산출한다.
+\[b_a \leftarrow \left. \mathbf{u}_a^\top \mathbf{t}_a \middle/ \mathbf{t}_a^\top \mathbf{t}_a \right. \]
+- **[단계 12]** 독립변수행렬 $\mathbf{X}_a$와 종속변수행렬 $\mathbf{Y}_a$로부터 새로 얻어진 잠재변수 벡터 $\mathbf{t}_a$가 설명하는 부분을 제거하고 나머지 변동만을 담은 독립변수행렬 $\mathbf{X}_{a + 1}$과 종속변수행렬 $\mathbf{Y}_{a + 1}$을 구한다.
+\[\mathbf{X}_{a + 1} \leftarrow \mathbf{X}_a - \mathbf{t}_a \mathbf{p}_a^\top, \, \mathbf{Y}_{a + 1} \leftarrow \mathbf{Y}_a - b_a \mathbf{t}_a \mathbf{q}_a^\top \]
+- **[단계 13]** $a \leftarrow a + 1$로 업데이트하고, [단계 1]로 돌아간다. [단계 1] - [단계 13]의 과정을 $A$개의 잠재변수를 얻을 때까지 반복한다.
+
+
+
+위 알고리즘을 아래 `nipals_plsr2`이라는 함수로 구현해보자. 이 때, 함수의 입력변수는 아래와 같다.
+
+- `X`: 평균조정된 ($n \times k$) 독립변수행렬
+- `Y`: 평균조정된 ($n \times m$) 종속변수행렬
+- `A`: 잠재변수 개수
+
+```{r}
+nipals_plsr2 <- function(X, Y, A = NULL) {
+  if (is.vector(Y)) {
+    Y <- as.matrix(Y, ncol = 1L)
+  }
+  
+  if (nrow(X) != nrow(Y)) stop("X and Y must have the same numbers of observations.")
+  
+  if (is_empty(A) || (A > min(dim(X)))) {
+    A <- min(dim(X))
+  }
+  
+  Tmat <- matrix(NA, nrow = nrow(X), ncol = A)
+  Umat <- matrix(NA, nrow = nrow(X), ncol = A)
+  Wmat <- matrix(NA, nrow = ncol(X), ncol = A)
+  Pmat <- matrix(NA, nrow = ncol(X), ncol = A)
+  Qmat <- matrix(NA, nrow = ncol(Y), ncol = A)
+  Bmat <- diag(nrow = A)
+  
+  for (a in seq_len(A)) {
+    # 단계 1
+    j <- sample.int(ncol(Y), size = 1L)
+    Umat[, a] <- Y[, j]
+    
+    while (TRUE) {
+      # 단계 2
+      Wmat[, a] <- coef(lm(X ~ -1 + Umat[, a]))
+      
+      # 단계 3
+      Wmat[, a] <- Wmat[, a] / sqrt(sum(Wmat[, a] ^ 2))
+      
+      # 단계 4
+      Tmat[, a] <- X %*% Wmat[, a]
+      
+      # 단계 5
+      Qmat[, a] <- coef(lm(Y ~ -1 + Tmat[, a]))
+      
+      # 단계 6
+      Qmat[, a] <- Qmat[, a] / sqrt(sum(Qmat[, a] ^ 2))
+      
+      # 단계 7
+      u_new <- Y %*% Qmat[, a]
+      
+      # 단계 8
+      if (all(near(u_new, Umat[, a]))) break
+      
+      Umat[, a] <- u_new
+    }
+
+    # 단계 9
+    Pmat[, a] <- coef(lm(X ~ -1 + Tmat[, a]))
+    
+    # 단계 10
+    p_size <- sqrt(sum(Pmat[, a] ^ 2))
+    Tmat[, a] <- Tmat[, a] * p_size
+    Wmat[, a] <- Wmat[, a] * p_size
+    Pmat[, a] <- Pmat[, a] / p_size
+    
+    # 단계 11
+    Bmat[a, a] <- coef(lm(Umat[, a] ~ -1 + Tmat[, a]))
+
+    # 단계 12
+    X <- X - Tmat[, a] %*% t(Pmat[, a])
+    Y <- Y - Bmat[a, a] * Tmat[, a] %*% t(Qmat[, a])
+  }
+  
+  return(list(T = Tmat, W = Wmat, P = Pmat, 
+              U = Umat, Q = Qmat, B = Bmat))
+}
+
+nipals_fit2 <- nipals_plsr2(X, Y, A = 3)
+nipals_fit2
+```
+
+
+
+### 회귀식 변환 {#plsr-multivariate-transform}
+
+위 NIPALS 알고리즘 수행 결과를 원래 독립변수 $\mathbf{X}$와 종속변수 $\mathbf{Y}$에 대한 식으로 변환하는 방법은 아래와 같다.
+
+잠재변수행렬 $\mathbf{T}$는 하나의 종속변수일 때 살펴봤던 바와 같이 독립변수행렬 $\mathbf{X}$와 가중치행렬 $\mathbf{W}$, 그리고 로딩행렬 $\mathbf{P}$의 연산으로 표현된다.
+
+\begin{equation}
+\mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
+\end{equation}
+
+이를 식 \@ref(eq:plsr-inner-multivariate-matrix)에 대입하면, 
+
+\begin{equation}
+\mathbf{U} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} + \mathbf{H}
+\end{equation}
+
+이를 다시 식 \@ref(eq:plsr-y-multivariate-matrix)에 대입하면,
+
+\begin{equation}
+\begin{split}
+\mathbf{Y} &= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} \mathbf{Q}^\top + \mathbf{H} \mathbf{Q}^\top + \mathbf{F}\\
+&= \mathbf{X} \boldsymbol{\Beta}_{PLS} + \mathbf{G}
+\end{split} (\#eq:plsr-multivariate-beta)
+\end{equation}
+
+여기에서 $\mathbf{G} = \mathbf{H} \mathbf{Q}^\top + \mathbf{F}$는 독립변수 $\mathbf{X}$를 종속변수 $\mathbf{Y}$에 회귀시킨 뒤 남은 오차항 행렬이다. 따라서, PLS 모형을 원 독립변수 행렬 $\mathbf{X}$에 대한 모형으로 변환할 때의 회귀계수는 아래와 같이 정리된다.
+
+\begin{equation}
+\boldsymbol{\Beta}_{PLS} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} \mathbf{Q}^\top
+\end{equation}
+
+
+```{r}
+beta_pls2 <- nipals_fit2$W %*% 
+  solve(t(nipals_fit2$P) %*% nipals_fit2$W) %*% 
+  nipals_fit2$B %*% t(nipals_fit2$Q)
+beta_pls2
+```
+
+이는 앞 \@ref(plsr-multivariate-basic-script) 절에서 R 패키지 `pls`를 통해 얻어진 결과와 동일함을 확인할 수 있다.
+
+```{r}
+all(near(beta_pls2, coef(plsr_multi_fit)[, , 1]))
+```
+
+
+### 제곱합 분해 {#plsr-multivariate-sst}
+
+$\mathbf{Y}$의 전체제곱합은 
+
+\[SST = SSR + SSE\]
+
+로 분해되며, 여기서 $SSR$은 다음과 같이 산출된다.
+
+\begin{equation}
+\begin{split}
+SSR &= \sum_{a = 1}^{A} SSR_a\\
+&= \sum_{a = 1}^{A} SS(b_a \mathbf{t}_a \mathbf{q}_a^\top)\\ 
+&= \sum_{a = 1}^{A} b_a^2 SS(\mathbf{t}_a)
+\end{split} (\#eq:plsr-multivariate-ssr)
+\end{equation}
+
+이 때, $SSR_a$는 잠재변수 $\mathbf{t}_a$에 의해 설명되는 $\mathbf{Y}$의 변동을 나타낸다.
+
+```{r}
+SSR_a <- diag(
+  t(nipals_fit2$T %*% nipals_fit2$B) %*% 
+    (nipals_fit2$T %*% nipals_fit2$B)
+)
+SSR_a
+```
+
+$SSR_a$를 전체제곱합 $SST$로 나누면 각 잠재변수가 $\mathbf{Y}$의 변동에 기여하는 비율을 산출할 수 있다.
+
+```{r}
+SST <- sum(Y ^ 2)
+SSR_a / SST
+```
+
+
+또한, 잠재변수 $\mathbf{t}_a$가 설명하는 종속변수행렬 $\mathbf{Y}$의 $j$번째 열의 변동을 $SSR_{aj}$라 할 때, 이는 다음과 같이 산출된다.
+
+\begin{equation}
+SSR_{aj} = q_{ja}^2 SSR_a
+\end{equation}
+
+
+```{r}
+SSR_aj <- diag(SSR_a) %*% t(nipals_fit2$Q ^ 2)
+SSR_aj
+```
+
+이렇게 산출된 $SSR_{aj}$를 $j$번째 종속변수 $\mathbf{y}_j$의 제곱합 $SS(\mathbf{y}_j)$로 나누면, $\mathbf{y}_j$에 대한 $\mathbf{t}_a$의 기여도를 얻을 수 있다.
+
+```{r}
+SS_j <- colSums(Y ^ 2)
+SSR_aj %*% diag(1 / SS_j)
+```
+
+위의 결과에서 $\mathbf{y}_1$의 변동은 잠재변수 $\mathbf{t}_1$으로 대부분 설명되는 반면, $\mathbf{y}_2$의 변동은 잠재변수 $\mathbf{t}_2$ 및 $\mathbf{t}_3$에 의해서도 설명됨을 볼 수 있다.
 

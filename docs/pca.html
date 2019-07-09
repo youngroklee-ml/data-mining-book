@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2019-07-06" />
+<meta name="date" content="2019-07-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,8 +149,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.1" data-path="pca.html"><a href="pca.html#pca-matrix-factorization-basic-script"><i class="fa fa-check"></i><b>3.2.1</b> 기본 R 스트립트</a></li>
 <li class="chapter" data-level="3.2.2" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>3.2.2</b> 변수의 변동과 제곱합</a></li>
 <li class="chapter" data-level="3.2.3" data-path="pca.html"><a href="pca.html#pca-intro"><i class="fa fa-check"></i><b>3.2.3</b> 주성분의 이해 및 행렬의 분해</a></li>
-<li class="chapter" data-level="3.2.4" data-path="pca.html"><a href="pca.html#-singular-value-decomposition-pca-svd"><i class="fa fa-check"></i><b>3.2.4</b> 특이치분해 (Singular Value Decomposition) {pca-svd}</a></li>
-<li class="chapter" data-level="3.2.5" data-path="pca.html"><a href="pca.html#-spectral-decomposition-pca-spectral"><i class="fa fa-check"></i><b>3.2.5</b> 분광분해 (Spectral Decomposition) {pca-spectral}</a></li>
+<li class="chapter" data-level="3.2.4" data-path="pca.html"><a href="pca.html#pca-svd"><i class="fa fa-check"></i><b>3.2.4</b> 특이치분해 (Singular Value Decomposition)</a></li>
+<li class="chapter" data-level="3.2.5" data-path="pca.html"><a href="pca.html#pca-spectral"><i class="fa fa-check"></i><b>3.2.5</b> 분광분해 (Spectral Decomposition)</a></li>
 <li class="chapter" data-level="3.2.6" data-path="pca.html"><a href="pca.html#pca-nipals"><i class="fa fa-check"></i><b>3.2.6</b> NIPALS 알고리즘</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a><ul>
@@ -166,8 +166,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.2" data-path="plsr.html"><a href="plsr.html#plsr-model"><i class="fa fa-check"></i><b>4.2.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.2.3" data-path="plsr.html"><a href="plsr.html#plsr-single-nipals"><i class="fa fa-check"></i><b>4.2.3</b> NIPALS 알고리즘</a></li>
 <li class="chapter" data-level="4.2.4" data-path="plsr.html"><a href="plsr.html#plsr-single-transform"><i class="fa fa-check"></i><b>4.2.4</b> 회귀식 변환</a></li>
+<li class="chapter" data-level="4.2.5" data-path="plsr.html"><a href="plsr.html#plsr-sst"><i class="fa fa-check"></i><b>4.2.5</b> 제곱합 분해</a></li>
+<li class="chapter" data-level="4.2.6" data-path="plsr.html"><a href="plsr.html#plsr-variable-importance"><i class="fa fa-check"></i><b>4.2.6</b> 독립변수의 중요도</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a></li>
+<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-basic-script"><i class="fa fa-check"></i><b>4.3.1</b> 기본 R 스크립트</a></li>
+<li class="chapter" data-level="4.3.2" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-model"><i class="fa fa-check"></i><b>4.3.2</b> PLS 모형</a></li>
+<li class="chapter" data-level="4.3.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-nipals"><i class="fa fa-check"></i><b>4.3.3</b> NIPALS 알고리즘</a></li>
+<li class="chapter" data-level="4.3.4" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-transform"><i class="fa fa-check"></i><b>4.3.4</b> 회귀식 변환</a></li>
+<li class="chapter" data-level="4.3.5" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-sst"><i class="fa fa-check"></i><b>4.3.5</b> 제곱합 분해</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>II 2부 - 분류분석</b></span></li>
 <li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a><ul>
@@ -793,8 +801,8 @@ t1_ss <span class="op">/</span><span class="st"> </span>total_ss</code></pre>
 <p>위 새로운 변수 <span class="math inline">\(\mathbf{t}_1\)</span>는 실제로 행렬 <span class="math inline">\(\mathbf{Z}\)</span>로부터 얻어지는 첫 번째 주성분이며, 행렬 <span class="math inline">\(\mathbf{Z}\)</span>의 변동에 가장 많이 기여하는 하나의 선형조합이다.</p>
 <p>행렬 <span class="math inline">\(\mathbf{Z}\)</span>(혹은 <span class="math inline">\(\mathbf{X}\)</span>)로부터 주성분을 얻는 방법은 여러 가지가 있으며, 아래에서 하나씩 설명하기로 한다.</p>
 </div>
-<div id="-singular-value-decomposition-pca-svd" class="section level3">
-<h3><span class="header-section-number">3.2.4</span> 특이치분해 (Singular Value Decomposition) {pca-svd}</h3>
+<div id="pca-svd" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> 특이치분해 (Singular Value Decomposition)</h3>
 <p>분산조정된 <span class="math inline">\(\mathbf{Z}\)</span>에 대해 주성분분석을 수행한다고 가정하자. 분산조정을 하지 않고 주성분분석을 수행하는 경우 아래 행렬 <span class="math inline">\(\mathbf{Z}\)</span> 대신 <span class="math inline">\(\mathbf{X}\)</span>를 사용하면 된다.</p>
 <p>임의의 <span class="math inline">\((n \times k)\)</span> 행렬 <span class="math inline">\(\mathbf{Z}\)</span>는 다음과 같이 분해된다.</p>
 <p><span class="math display" id="eq:pca-svd">\[\begin{equation}
@@ -820,8 +828,8 @@ Z_rec &lt;-<span class="st"> </span>svd_Z<span class="op">$</span>u <span class=
 <pre><code>## [1] 6.8516318 5.2245674 3.0593417 1.0435870 0.5571285</code></pre>
 <p>이 특이치들은 아래 분광분해에서 살펴볼 고유치의 제곱근이다.</p>
 </div>
-<div id="-spectral-decomposition-pca-spectral" class="section level3">
-<h3><span class="header-section-number">3.2.5</span> 분광분해 (Spectral Decomposition) {pca-spectral}</h3>
+<div id="pca-spectral" class="section level3">
+<h3><span class="header-section-number">3.2.5</span> 분광분해 (Spectral Decomposition)</h3>
 <p>임의의 정방행렬 <span class="math inline">\(\mathbf{A}\)</span>에 대하여</p>
 <p><span class="math display">\[\mathbf{A}\mathbf{v} = \lambda\mathbf{v} \]</span></p>
 <p>가 성립하는 벡터 <span class="math inline">\(\mathbf{v} \neq \mathbf{0}\)</span>과 상수 <span class="math inline">\(\lambda\)</span>가 존재할 때, 상수 <span class="math inline">\(\lambda\)</span>를 행렬 <span class="math inline">\(\mathbf{A}\)</span>의 고유치(eigenvalue)라 하며, <span class="math inline">\(\mathbf{v}\)</span>를 이에 대응하는 고유벡터(eigenvector)라 한다. 통상 <span class="math inline">\(\mathbf{v}^\top \mathbf{v} = 1\)</span>을 가정한다.</p>
