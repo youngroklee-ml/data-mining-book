@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2019-07-08" />
+<meta name="date" content="2019-07-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -628,15 +628,15 @@ nipals_fit</code></pre>
 <h3><span class="header-section-number">4.2.4</span> 회귀식 변환</h3>
 <p>위 NIPALS 알고리즘 수행 결과를 원래 독립변수 <span class="math inline">\(\mathbf{X}\)</span>와 종속변수 <span class="math inline">\(\mathbf{y}\)</span>에 대한 식으로 변환하는 방법은 아래와 같다.</p>
 <p>잠재변수행렬 <span class="math inline">\(\mathbf{T}\)</span>는 아래와 같이 독립변수 행렬 <span class="math inline">\(\mathbf{X}\)</span>와 가중치행렬 <span class="math inline">\(\mathbf{W}\)</span>, 그리고 로딩행렬 <span class="math inline">\(\mathbf{P}\)</span>의 연산으로 표현된다.</p>
-<p><span class="math display">\[\begin{equation}
-\mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
+<p><span class="math display" id="eq:plsr-x-t-relation">\[\begin{equation}
+\mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \tag{4.7}
 \end{equation}\]</span></p>
 <p>이를 식 <a href="plsr.html#eq:plsr-y-single-matrix">(4.4)</a>에 대입하면,</p>
 <p><span class="math display" id="eq:plsr-single-beta">\[\begin{equation}
 \begin{split}
 \mathbf{y} &amp;= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{b} + \mathbf{f}\\
 &amp;= \mathbf{X} \boldsymbol{\beta}_{PLS} + \mathbf{f}
-\end{split} \tag{4.7}
+\end{split} \tag{4.8}
 \end{equation}\]</span></p>
 <p>따라서, 원 독립변수 행렬 <span class="math inline">\(\mathbf{X}\)</span>에 대한 회귀계수는 아래와 같이 정리된다.</p>
 <p><span class="math display">\[\begin{equation}
@@ -664,7 +664,7 @@ beta_pls</code></pre>
 \begin{split}
 SSR &amp;= \sum_{a = 1}^{A} SS(b_a \mathbf{t}_a)\\
 &amp;= \sum_{a = 1}^{A} b_a^2 SS(\mathbf{t}_a)
-\end{split} \tag{4.8}
+\end{split} \tag{4.9}
 \end{equation}\]</span></p>
 <p><span class="math inline">\(a\)</span>번째 잠재변수 <span class="math inline">\(\mathbf{t}_a\)</span>가 <span class="math inline">\(\mathbf{y}\)</span>를 설명하는 회귀제곱합을 <span class="math inline">\(SSR_a = b_a^2 SS(\mathbf{t}_a)\)</span>라 할 때, <span class="math inline">\(SSR\)</span>은 아래와 같이 분해된다.</p>
 <p><span class="math display">\[
@@ -676,7 +676,7 @@ SSR_a</code></pre>
 <pre><code>## [1] 2339.45850   84.17574</code></pre>
 <p>이 때, 각 주성분이 설명하는 <span class="math inline">\(\mathbf{y}\)</span> 변동의 기여율을 아래와 같이 정의한다.</p>
 <p><span class="math display" id="eq:plsr-rsq">\[\begin{equation}
-\Delta R_a^2 = \frac{SSR_a}{SST} \tag{4.9}
+\Delta R_a^2 = \frac{SSR_a}{SST} \tag{4.10}
 \end{equation}\]</span></p>
 <p>앞 예제에서 각 잠재변수의 <span class="math inline">\(\mathbf{y}\)</span> 변동에 대한 기여율을 계산해보자.</p>
 <pre class="sourceCode r"><code class="sourceCode r">SST &lt;-<span class="st"> </span><span class="kw">sum</span>(y <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
@@ -703,12 +703,20 @@ R^2 = \frac{SSR}{SST} = \frac{\sum_{a = 1}^{A} SSR_a}{SST} = \sum_{a = 1}^{A} \D
 </div>
 <div id="plsr-variable-importance" class="section level3">
 <h3><span class="header-section-number">4.2.6</span> 독립변수의 중요도</h3>
-<p>원래의 각 독립변수가 종속변수를 설명하는 데 얼마나 영향을 미치는지는 공정분석 등에서 매우 중요하다. <span class="math inline">\(j\)</span>번째 독립변수의 종속변수에 대한 중요도 척도로 <span class="math inline">\(VIP\)</span>(variable importance in projection)를 다음과 같이 정의한다.</p>
-<p><span class="math display" id="eq:plsr-single-vip">\[\begin{equation}
+<p>원래의 각 독립변수가 종속변수를 설명하는 데 얼마나 영향을 미치는지는 공정분석 등에서 매우 중요하다. 식 <a href="plsr.html#eq:plsr-x-t-relation">(4.7)</a>의 <span class="math inline">\(\mathbf{T}\)</span>와 <span class="math inline">\(\mathbf{X}\)</span>간의 관계식을 아래와 같이 다시 표현해보자.</p>
+<p><span class="math display">\[\begin{equation}
 \begin{split}
-VIP_j &amp;= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w_{aj} \middle/ \| \mathbf{w}_a \|  \right)^2}\\
-&amp;= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \frac{w_{aj}^2}{\mathbf{w}_a^\top \mathbf{w}_a}}
-\end{split} \tag{4.10}
+\mathbf{T} &amp;= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}\\
+&amp;= \mathbf{X} \mathbf{W}^{*}
+\end{split}
+\end{equation}\]</span></p>
+<p>이 때, <span class="math inline">\(\mathbf{W}^{*} = \left[\mathbf{w}^{*}_1 \, \cdots \, \mathbf{w}^{*}_A \right]\)</span>를 변환가중치행렬이라 한다.</p>
+<p><span class="math display">\[\begin{equation}
+\mathbf{W}^{*} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
+\end{equation}\]</span></p>
+<p>이 때, 각 잠재변수가 설명하는 <span class="math inline">\(\mathbf{y}\)</span>의 변동과 각 독립변수가 각 잠재변수에 기여하는 가중치를 고려하여, <span class="math inline">\(j\)</span>번째 독립변수의 종속변수에 대한 중요도 척도로 <span class="math inline">\(VIP\)</span>(variable importance in projection)를 다음과 같이 정의한다.</p>
+<p><span class="math display" id="eq:plsr-single-vip">\[\begin{equation}
+VIP_j = \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w^{*}_{aj} \middle/ \| \mathbf{w}^{*}_a \|  \right)^2} \tag{4.11}
 \end{equation}\]</span></p>
 <p>위 정의에 의하면 다음이 성립한다.</p>
 <p><span class="math display">\[
@@ -717,15 +725,15 @@ VIP_j &amp;= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w_{aj} \middle/ \
 <p>즉, 독립변수당 중요도 제곱의 평균은 1이 된다. 이에 따라, 통상 <span class="math inline">\(VIP\)</span>가 1보다 큰 독립변수를 의미있는 변수로 간주한다.</p>
 <p>앞 예제에 대해 각 변수의 중요도를 계산해보자.</p>
 <pre class="sourceCode r"><code class="sourceCode r">k &lt;-<span class="st"> </span><span class="kw">ncol</span>(X)
+Wx &lt;-<span class="st"> </span>nipals_fit<span class="op">$</span>W <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>P) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>W)
 VIP &lt;-<span class="st"> </span><span class="kw">sqrt</span>(
   <span class="kw">colSums</span>(
     k <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(SSR_a) <span class="op">*</span><span class="st"> </span>SSR_a <span class="op">*</span><span class="st"> </span>
-<span class="st">      </span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>W <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>
-<span class="st">         </span><span class="kw">diag</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>W) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>W))
+<span class="st">      </span>(<span class="kw">t</span>(Wx <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="kw">diag</span>(<span class="kw">t</span>(Wx) <span class="op">%*%</span><span class="st"> </span>Wx))
     )
   )
 VIP</code></pre>
-<pre><code>## [1] 0.5231421 0.5700787 1.5496234</code></pre>
+<pre><code>## [1] 0.5246196 0.5715532 1.5485804</code></pre>
 <p>즉, <span class="math inline">\(x_3\)</span>가 가장 영향력있는 변수라 할 수 있겠다.</p>
 </div>
 </div>
@@ -853,11 +861,11 @@ plsr_multi_fit &lt;-<span class="st"> </span>pls<span class="op">::</span><span 
 <h3><span class="header-section-number">4.3.2</span> PLS 모형</h3>
 <p>앞 <a href="plsr.html#plsr-model">4.2.2</a>절의 모형을 일반화하여 아래와 같은 모형을 가정한다.</p>
 <p><span class="math display" id="eq:plsr-inner-multivariate-matrix" id="eq:plsr-y-multivariate-matrix" id="eq:plsr-x-multivariate-matrix">\[\begin{eqnarray}
-\mathbf{X} &amp;=&amp; \mathbf{T} \mathbf{P}^\top + \mathbf{E} \tag{4.11}\\
-\mathbf{Y} &amp;=&amp; \mathbf{U} \mathbf{Q}^\top + \mathbf{F} \tag{4.12}\\
-\mathbf{U} &amp;=&amp; \mathbf{T} \mathbf{B} + \mathbf{H}  \tag{4.13}
+\mathbf{X} &amp;=&amp; \mathbf{T} \mathbf{P}^\top + \mathbf{E} \tag{4.12}\\
+\mathbf{Y} &amp;=&amp; \mathbf{U} \mathbf{Q}^\top + \mathbf{F} \tag{4.13}\\
+\mathbf{U} &amp;=&amp; \mathbf{T} \mathbf{B} + \mathbf{H}  \tag{4.14}
 \end{eqnarray}\]</span></p>
-<p>식 <a href="plsr.html#eq:plsr-x-multivariate-matrix">(4.11)</a>의 모형은 앞서 하나의 종속변수의 경우에서 살펴본 모형식 <a href="plsr.html#eq:plsr-x-single-matrix">(4.3)</a>와 동일하다. 식 <a href="plsr.html#eq:plsr-y-multivariate-matrix">(4.12)</a>에서 (<span class="math inline">\(n \times A\)</span>) 행렬 <span class="math inline">\(\mathbf{U}\)</span>는 <span class="math inline">\(\mathbf{Y}\)</span>를 설명하는 <span class="math inline">\(A\)</span>개의 잠재변수를 나타내는 행렬이며, (<span class="math inline">\(m \times A\)</span>) 행렬 <span class="math inline">\(\mathbf{Q}\)</span>는 종속변수행렬 <span class="math inline">\(\mathbf{Y}\)</span>와 잠재변수행렬 <span class="math inline">\(\mathbf{U}\)</span>간의 선형관계를 나타내는 로딩행렬이다. 또한 식 <a href="plsr.html#eq:plsr-inner-multivariate-matrix">(4.13)</a>는 잠재변수행렬 <span class="math inline">\(\mathbf{T}\)</span>와 <span class="math inline">\(\mathbf{U}\)</span>간의 선형관계를 나타내는데, 특히 <span class="math inline">\(\mathbf{B}\)</span>는 (<span class="math inline">\(A \times A\)</span>) 대각행렬(diagonal matrix)로써, <span class="math inline">\(\mathbf{U}\)</span>와 <span class="math inline">\(\mathbf{T}\)</span>간에는 서로 대응하는 열 간에만 관계가 성립하며, 그 관계는 아래와 같다.</p>
+<p>식 <a href="plsr.html#eq:plsr-x-multivariate-matrix">(4.12)</a>의 모형은 앞서 하나의 종속변수의 경우에서 살펴본 모형식 <a href="plsr.html#eq:plsr-x-single-matrix">(4.3)</a>와 동일하다. 식 <a href="plsr.html#eq:plsr-y-multivariate-matrix">(4.13)</a>에서 (<span class="math inline">\(n \times A\)</span>) 행렬 <span class="math inline">\(\mathbf{U}\)</span>는 <span class="math inline">\(\mathbf{Y}\)</span>를 설명하는 <span class="math inline">\(A\)</span>개의 잠재변수를 나타내는 행렬이며, (<span class="math inline">\(m \times A\)</span>) 행렬 <span class="math inline">\(\mathbf{Q}\)</span>는 종속변수행렬 <span class="math inline">\(\mathbf{Y}\)</span>와 잠재변수행렬 <span class="math inline">\(\mathbf{U}\)</span>간의 선형관계를 나타내는 로딩행렬이다. 또한 식 <a href="plsr.html#eq:plsr-inner-multivariate-matrix">(4.14)</a>는 잠재변수행렬 <span class="math inline">\(\mathbf{T}\)</span>와 <span class="math inline">\(\mathbf{U}\)</span>간의 선형관계를 나타내는데, 특히 <span class="math inline">\(\mathbf{B}\)</span>는 (<span class="math inline">\(A \times A\)</span>) 대각행렬(diagonal matrix)로써, <span class="math inline">\(\mathbf{U}\)</span>와 <span class="math inline">\(\mathbf{T}\)</span>간에는 서로 대응하는 열 간에만 관계가 성립하며, 그 관계는 아래와 같다.</p>
 <p><span class="math display">\[\begin{equation*}
 \mathbf{u}_a = b_a \mathbf{t}_a + \mathbf{h}_a, \, a = 1, \cdots, A
 \end{equation*}\]</span></p>
@@ -1029,16 +1037,16 @@ nipals_fit2</code></pre>
 <p><span class="math display">\[\begin{equation}
 \mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
 \end{equation}\]</span></p>
-<p>이를 식 <a href="plsr.html#eq:plsr-inner-multivariate-matrix">(4.13)</a>에 대입하면,</p>
+<p>이를 식 <a href="plsr.html#eq:plsr-inner-multivariate-matrix">(4.14)</a>에 대입하면,</p>
 <p><span class="math display">\[\begin{equation}
 \mathbf{U} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} + \mathbf{H}
 \end{equation}\]</span></p>
-<p>이를 다시 식 <a href="plsr.html#eq:plsr-y-multivariate-matrix">(4.12)</a>에 대입하면,</p>
+<p>이를 다시 식 <a href="plsr.html#eq:plsr-y-multivariate-matrix">(4.13)</a>에 대입하면,</p>
 <p><span class="math display" id="eq:plsr-multivariate-beta">\[\begin{equation}
 \begin{split}
 \mathbf{Y} &amp;= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} \mathbf{Q}^\top + \mathbf{H} \mathbf{Q}^\top + \mathbf{F}\\
 &amp;= \mathbf{X} \mathbf{B}_{PLS} + \mathbf{G}
-\end{split} \tag{4.14}
+\end{split} \tag{4.15}
 \end{equation}\]</span></p>
 <p>여기에서 <span class="math inline">\(\mathbf{G} = \mathbf{H} \mathbf{Q}^\top + \mathbf{F}\)</span>는 독립변수 <span class="math inline">\(\mathbf{X}\)</span>를 종속변수 <span class="math inline">\(\mathbf{Y}\)</span>에 회귀시킨 뒤 남은 오차항 행렬이다. 따라서, PLS 모형을 원 독립변수 행렬 <span class="math inline">\(\mathbf{X}\)</span>에 대한 모형으로 변환할 때의 회귀계수는 아래와 같이 정리된다.</p>
 <p><span class="math display">\[\begin{equation}
@@ -1067,7 +1075,7 @@ beta_pls2</code></pre>
 SSR &amp;= \sum_{a = 1}^{A} SSR_a\\
 &amp;= \sum_{a = 1}^{A} SS(b_a \mathbf{t}_a \mathbf{q}_a^\top)\\ 
 &amp;= \sum_{a = 1}^{A} b_a^2 SS(\mathbf{t}_a)
-\end{split} \tag{4.15}
+\end{split} \tag{4.16}
 \end{equation}\]</span></p>
 <p>이 때, <span class="math inline">\(SSR_a\)</span>는 잠재변수 <span class="math inline">\(\mathbf{t}_a\)</span>에 의해 설명되는 <span class="math inline">\(\mathbf{Y}\)</span>의 변동을 나타낸다.</p>
 <pre class="sourceCode r"><code class="sourceCode r">SSR_a &lt;-<span class="st"> </span><span class="kw">diag</span>(

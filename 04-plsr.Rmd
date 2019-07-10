@@ -191,7 +191,7 @@ all(near(nipals_fit$b, b_hat))
 잠재변수행렬 $\mathbf{T}$는 아래와 같이 독립변수 행렬 $\mathbf{X}$와 가중치행렬 $\mathbf{W}$, 그리고 로딩행렬 $\mathbf{P}$의 연산으로 표현된다.
 
 \begin{equation}
-\mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
+\mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} (\#eq:plsr-x-t-relation)
 \end{equation}
 
 이를 식 \@ref(eq:plsr-y-single-matrix)에 대입하면,
@@ -306,13 +306,26 @@ sum(diag(t(nipals_fit$T) %*% nipals_fit$T)) / sum(diag(t(X) %*% X))
 
 ### 독립변수의 중요도 {#plsr-variable-importance}
 
-원래의 각 독립변수가 종속변수를 설명하는 데 얼마나 영향을 미치는지는 공정분석 등에서 매우 중요하다. $j$번째 독립변수의 종속변수에 대한 중요도 척도로 $VIP$(variable importance in projection)를 다음과 같이 정의한다.
+원래의 각 독립변수가 종속변수를 설명하는 데 얼마나 영향을 미치는지는 공정분석 등에서 매우 중요하다. 식 \@ref(eq:plsr-x-t-relation)의 $\mathbf{T}$와 $\mathbf{X}$간의 관계식을 아래와 같이 다시 표현해보자.
 
 \begin{equation}
 \begin{split}
-VIP_j &= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w_{aj} \middle/ \| \mathbf{w}_a \|  \right)^2}\\
-&= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \frac{w_{aj}^2}{\mathbf{w}_a^\top \mathbf{w}_a}}
-\end{split} (\#eq:plsr-single-vip)
+\mathbf{T} &= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}\\
+&= \mathbf{X} \mathbf{W}^{*}
+\end{split}
+\end{equation}
+
+이 때, $\mathbf{W}^{*} = \left[\mathbf{w}^{*}_1 \, \cdots \, \mathbf{w}^{*}_A \right]$를 변환가중치행렬이라 한다.
+
+\begin{equation}
+\mathbf{W}^{*} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
+\end{equation}
+
+
+이 때, 각 잠재변수가 설명하는 $\mathbf{y}$의 변동과 각 독립변수가 각 잠재변수에 기여하는 가중치를 고려하여, $j$번째 독립변수의 종속변수에 대한 중요도 척도로 $VIP$(variable importance in projection)를 다음과 같이 정의한다.
+
+\begin{equation}
+VIP_j = \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w^{*}_{aj} \middle/ \| \mathbf{w}^{*}_a \|  \right)^2} (\#eq:plsr-single-vip)
 \end{equation}
 
 위 정의에 의하면 다음이 성립한다.
@@ -327,11 +340,11 @@ VIP_j &= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w_{aj} \middle/ \| \m
 
 ```{r}
 k <- ncol(X)
+Wx <- nipals_fit$W %*% solve(t(nipals_fit$P) %*% nipals_fit$W)
 VIP <- sqrt(
   colSums(
     k / sum(SSR_a) * SSR_a * 
-      (t(nipals_fit$W ^ 2) / 
-         diag(t(nipals_fit$W) %*% nipals_fit$W))
+      (t(Wx ^ 2) /diag(t(Wx) %*% Wx))
     )
   )
 VIP

@@ -124,7 +124,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-07-08}
+    \date{2019-07-09}
 
 \usepackage{booktabs}
 \usepackage[utf]{kotex}
@@ -2036,7 +2036,7 @@ R 패키지 \texttt{pls} 내의 함수 \texttt{plsr()}을 이용하여 PLS 모�
 잠재변수행렬 \(\mathbf{T}\)는 아래와 같이 독립변수 행렬 \(\mathbf{X}\)와 가중치행렬 \(\mathbf{W}\), 그리고 로딩행렬 \(\mathbf{P}\)의 연산으로 표현된다.
 
 \begin{equation}
-\mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
+\mathbf{T} = \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \label{eq:plsr-x-t-relation}
 \end{equation}
 
 이를 식 \eqref{eq:plsr-y-single-matrix}에 대입하면,
@@ -2184,13 +2184,25 @@ R^2 = \frac{SSR}{SST} = \frac{\sum_{a = 1}^{A} SSR_a}{SST} = \sum_{a = 1}^{A} \D
 \hypertarget{plsr-variable-importance}{%
 \subsection{독립변수의 중요도}\label{plsr-variable-importance}}
 
-원래의 각 독립변수가 종속변수를 설명하는 데 얼마나 영향을 미치는지는 공정분석 등에서 매우 중요하다. \(j\)번째 독립변수의 종속변수에 대한 중요도 척도로 \(VIP\)(variable importance in projection)를 다음과 같이 정의한다.
+원래의 각 독립변수가 종속변수를 설명하는 데 얼마나 영향을 미치는지는 공정분석 등에서 매우 중요하다. 식 \eqref{eq:plsr-x-t-relation}의 \(\mathbf{T}\)와 \(\mathbf{X}\)간의 관계식을 아래와 같이 다시 표현해보자.
 
 \begin{equation}
 \begin{split}
-VIP_j &= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w_{aj} \middle/ \| \mathbf{w}_a \|  \right)^2}\\
-&= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \frac{w_{aj}^2}{\mathbf{w}_a^\top \mathbf{w}_a}}
-\end{split} \label{eq:plsr-single-vip}
+\mathbf{T} &= \mathbf{X} \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}\\
+&= \mathbf{X} \mathbf{W}^{*}
+\end{split}
+\end{equation}
+
+이 때, \(\mathbf{W}^{*} = \left[\mathbf{w}^{*}_1 \, \cdots \, \mathbf{w}^{*}_A \right]\)를 변환가중치행렬이라 한다.
+
+\begin{equation}
+\mathbf{W}^{*} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1}
+\end{equation}
+
+이 때, 각 잠재변수가 설명하는 \(\mathbf{y}\)의 변동과 각 독립변수가 각 잠재변수에 기여하는 가중치를 고려하여, \(j\)번째 독립변수의 종속변수에 대한 중요도 척도로 \(VIP\)(variable importance in projection)를 다음과 같이 정의한다.
+
+\begin{equation}
+VIP_j = \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w^{*}_{aj} \middle/ \| \mathbf{w}^{*}_a \|  \right)^2} \label{eq:plsr-single-vip}
 \end{equation}
 
 위 정의에 의하면 다음이 성립한다.
@@ -2206,11 +2218,11 @@ VIP_j &= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w_{aj} \middle/ \| \m
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{k <-}\StringTok{ }\KeywordTok{ncol}\NormalTok{(X)}
+\NormalTok{Wx <-}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{W }\OperatorTok{%*%}\StringTok{ }\KeywordTok{solve}\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{P) }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{W)}
 \NormalTok{VIP <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}
   \KeywordTok{colSums}\NormalTok{(}
 \NormalTok{    k }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(SSR_a) }\OperatorTok{*}\StringTok{ }\NormalTok{SSR_a }\OperatorTok{*}\StringTok{ }
-\StringTok{      }\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{W }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{) }\OperatorTok{/}\StringTok{ }
-\StringTok{         }\KeywordTok{diag}\NormalTok{(}\KeywordTok{t}\NormalTok{(nipals_fit}\OperatorTok{$}\NormalTok{W) }\OperatorTok{%*%}\StringTok{ }\NormalTok{nipals_fit}\OperatorTok{$}\NormalTok{W))}
+\StringTok{      }\NormalTok{(}\KeywordTok{t}\NormalTok{(Wx }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{) }\OperatorTok{/}\KeywordTok{diag}\NormalTok{(}\KeywordTok{t}\NormalTok{(Wx) }\OperatorTok{%*%}\StringTok{ }\NormalTok{Wx))}
 \NormalTok{    )}
 \NormalTok{  )}
 \NormalTok{VIP}
@@ -2218,7 +2230,7 @@ VIP_j &= \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w_{aj} \middle/ \| \m
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.5231421 0.5700787 1.5496234
+## [1] 0.5246196 0.5715532 1.5485804
 \end{verbatim}
 
 즉, \(x_3\)가 가장 영향력있는 변수라 할 수 있겠다.

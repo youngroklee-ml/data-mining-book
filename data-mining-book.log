@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.6.2)  8 JUL 2019 23:45
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.6.2)  9 JUL 2019 21:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1759,15 +1759,20 @@ Overfull \hbox (1.5pt too wide) in paragraph at lines 1539--1539
 Chapter 4.
 [45
 
-] [46] [47] [48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [6
-1] [62] [63] [64
+] [46] [47] [48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[59]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[60] [61] [62] [63] [64
 
 ] [65] [66]
 Chapter 5.
 [67
 
 ] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77]
-Overfull \hbox (196.91068pt too wide) in paragraph at lines 3274--3290
+Overfull \hbox (196.91068pt too wide) in paragraph at lines 3286--3302
  [][] 
  []
 
@@ -1776,47 +1781,47 @@ Chapter 6.
 [83
 
 ]
-Overfull \hbox (30.62566pt too wide) in paragraph at lines 3604--3627
+Overfull \hbox (30.62566pt too wide) in paragraph at lines 3616--3639
  [][] 
  []
 
 [84] [85] [86] [87] [88] [89] [90] [91] [92] [93] [94] [95] [96]
-Overfull \hbox (63.78377pt too wide) in paragraph at lines 4263--4290
+Overfull \hbox (63.78377pt too wide) in paragraph at lines 4275--4302
  [][] 
  []
 
 [97]
-Overfull \hbox (33.0pt too wide) in paragraph at lines 4320--4320
+Overfull \hbox (33.0pt too wide) in paragraph at lines 4332--4332
 []\TU/lmtt/m/n/10 ## (Intercept):1 (Intercept):2          x1:1          x1:2   
        x2:1[] 
  []
 
 
-Overfull \hbox (33.0pt too wide) in paragraph at lines 4320--4320
+Overfull \hbox (33.0pt too wide) in paragraph at lines 4332--4332
 []\TU/lmtt/m/n/10 ##     -64.56378    -118.15274     102.65063     133.29235   
    10.86829[] 
  []
 
 [98] [99]
-Overfull \hbox (27.75pt too wide) in paragraph at lines 4439--4439
+Overfull \hbox (27.75pt too wide) in paragraph at lines 4451--4451
 []\TU/lmtt/m/n/10 ## VGAM::vglm(formula = y ~ N + L, family = VGAM::acat(revers
 e = TRUE),[] 
  []
 
 
-Overfull \hbox (33.0pt too wide) in paragraph at lines 4439--4439
+Overfull \hbox (33.0pt too wide) in paragraph at lines 4451--4451
 []\TU/lmtt/m/n/10 ## (Intercept):1 (Intercept):2           N:1           N:2   
         L:1[] 
  []
 
 
-Overfull \hbox (33.0pt too wide) in paragraph at lines 4439--4439
+Overfull \hbox (33.0pt too wide) in paragraph at lines 4451--4451
 []\TU/lmtt/m/n/10 ##  -12.94227208   -6.10597713    0.31431599    0.04643039   
  0.17500408[] 
  []
 
 [100] [101] [102]
-Overfull \hbox (106.93277pt too wide) in paragraph at lines 4541--4561
+Overfull \hbox (106.93277pt too wide) in paragraph at lines 4553--4573
  [][] 
  []
 
@@ -1824,24 +1829,24 @@ Overfull \hbox (106.93277pt too wide) in paragraph at lines 4541--4561
 Underfull \vbox (badness 3000) has occurred while \output is active []
 
 [103] [104]
-Overfull \hbox (106.93277pt too wide) in paragraph at lines 4640--4660
+Overfull \hbox (106.93277pt too wide) in paragraph at lines 4652--4672
  [][] 
  []
 
 [105]
-Overfull \hbox (33.0pt too wide) in paragraph at lines 4688--4688
+Overfull \hbox (33.0pt too wide) in paragraph at lines 4700--4700
 []\TU/lmtt/m/n/10 ## (Intercept):1 (Intercept):2           N:1           N:2   
         L:1[] 
  []
 
 
-Overfull \hbox (33.0pt too wide) in paragraph at lines 4688--4688
+Overfull \hbox (33.0pt too wide) in paragraph at lines 4700--4700
 []\TU/lmtt/m/n/10 ##  -12.94227208   -6.10597713    0.31431599    0.04643039   
  0.17500408[] 
  []
 
 
-Overfull \hbox (106.93277pt too wide) in paragraph at lines 4714--4734
+Overfull \hbox (106.93277pt too wide) in paragraph at lines 4726--4746
  [][] 
  []
 
@@ -1850,29 +1855,29 @@ Chapter 7.
 [107
 
 ] [108] [109]
-Underfull \hbox (badness 2644) in paragraph at lines 4894--4895
+Underfull \hbox (badness 2644) in paragraph at lines 4906--4907
 [] \TU/NanumMyeongjo(0)/m/sl/10 또 한 범 주 별 표 본 분 산\TU/lmr/m/n/10 - \TU/NanumMyeo
 ngjo(0)/m/sl/10 공 분 산 행 렬 $\OT1/lmr/bx/n/10 S[]\OML/lmm/m/it/10 ; \OT1/lmr/bx/n
 /10 S[]$ \TU/NanumMyeongjo(0)/m/sl/10 를 다 음 과 같 이 구 한 다. 리 스 트
  []
 
 [110] [111] [112] [113] [114] [115] [116]
-Overfull \hbox (73.88063pt too wide) in paragraph at lines 5342--5358
+Overfull \hbox (73.88063pt too wide) in paragraph at lines 5354--5370
  [][] 
  []
 
 [117]
-Overfull \hbox (119.70064pt too wide) in paragraph at lines 5404--5420
+Overfull \hbox (119.70064pt too wide) in paragraph at lines 5416--5432
  [][] 
  []
 
 [118] [119]
-Overfull \hbox (119.70064pt too wide) in paragraph at lines 5482--5498
+Overfull \hbox (119.70064pt too wide) in paragraph at lines 5494--5510
  [][] 
  []
 
 [120] [121]
-Overfull \hbox (239.68065pt too wide) in paragraph at lines 5581--5597
+Overfull \hbox (239.68065pt too wide) in paragraph at lines 5593--5609
  [][] 
  []
 
@@ -1880,12 +1885,12 @@ Overfull \hbox (239.68065pt too wide) in paragraph at lines 5581--5597
 Underfull \vbox (badness 2781) has occurred while \output is active []
 
 [122] [123]
-Overfull \hbox (73.88063pt too wide) in paragraph at lines 5712--5728
+Overfull \hbox (73.88063pt too wide) in paragraph at lines 5724--5740
  [][] 
  []
 
 [124]
-Overfull \hbox (119.70064pt too wide) in paragraph at lines 5776--5792
+Overfull \hbox (119.70064pt too wide) in paragraph at lines 5788--5804
  [][] 
  []
 
@@ -1896,79 +1901,79 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [126] [127] [128]
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ##       x1    x2    x3    x4 class    id setosa versicolor v
 irginica[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ##    <dbl> <dbl> <dbl> <dbl> <fct> <int>  <dbl>      <dbl>  
    <dbl>[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ##  1   5.1   3.5   1.4   0.2 seto~     1  1       5.57e-22  
 6.34e-42[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ##  2   4.9   3     1.4   0.2 seto~     2  1       3.32e-17  
 5.67e-36[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ##  3   4.7   3.2   1.3   0.2 seto~     3  1       2.75e-19  
 2.14e-38[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ##  4   4.6   3.1   1.5   0.2 seto~     4  1       8.12e-17  
 5.62e-35[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ##  5   5     3.6   1.4   0.2 seto~     5  1       1.14e-22  
 1.25e-42[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ##  6   5.4   3.9   1.7   0.4 seto~     6  1       3.20e-21  
 4.38e-40[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ##  7   4.6   3.4   1.4   0.3 seto~     7  1       8.74e-19  
 4.07e-37[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ##  8   5     3.4   1.5   0.2 seto~     8  1       3.27e-20  
 1.62e-39[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ##  9   4.4   2.9   1.4   0.2 seto~     9  1.000   2.22e-15  
 3.42e-33[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ## 10   4.9   3.1   1.5   0.1 seto~    10  1       9.36e-19  
 4.85e-38[] 
  []
 
 
-Overfull \hbox (22.5pt too wide) in paragraph at lines 5963--5963
+Overfull \hbox (22.5pt too wide) in paragraph at lines 5975--5975
 []\TU/lmtt/m/n/10 ## # ... with 80 more rows, and 1 more variable: predicted_cl
 ass <fct>[] 
  []
@@ -1993,12 +1998,12 @@ File: data-mining-book_files/figure-latex/impurity-trend-1.pdf Graphic file (ty
 pe pdf)
 <use data-mining-book_files/figure-latex/impurity-trend-1.pdf>
 [137]
-Overfull \hbox (3.68013pt too wide) in paragraph at lines 6417--6433
+Overfull \hbox (3.68013pt too wide) in paragraph at lines 6429--6445
  [][] 
  []
 
 LaTeX Font Info:    Font shape `TU/NanumMyeongjo(0)/m/it' will be
-(Font)              scaled to size 9.19464pt on input line 6435.
+(Font)              scaled to size 9.19464pt on input line 6447.
 [138]
 File: data-mining-book_files/figure-latex/snipped-1.pdf Graphic file (type pdf)
 
@@ -2011,7 +2016,7 @@ File: data-mining-book_files/figure-latex/second-prune-result-1.pdf Graphic fil
 e (type pdf)
 <use data-mining-book_files/figure-latex/second-prune-result-1.pdf>
 [141] [142] [143]
-Overfull \hbox (4.99564pt too wide) in paragraph at lines 6703--6712
+Overfull \hbox (4.99564pt too wide) in paragraph at lines 6715--6724
  [][] 
  []
 
@@ -2031,7 +2036,7 @@ File: data-mining-book_files/figure-latex/linear-svm-basic-1.pdf Graphic file (
 type pdf)
 <use data-mining-book_files/figure-latex/linear-svm-basic-1.pdf>
 [150] [151] [152]
-Underfull \hbox (badness 1424) in paragraph at lines 7074--7075
+Underfull \hbox (badness 1424) in paragraph at lines 7086--7087
 [] \TU/NanumMyeongjo(0)/m/it/10 식 [] 의 제 약 식 은 모 두 \TU/lmr/m/n/10 inequality \T
 U/NanumMyeongjo(0)/m/it/10 형 태 로, 식 [] 의 \TU/lmr/m/n/10 equality constraint
  []
@@ -2041,7 +2046,7 @@ File: data-mining-book_files/figure-latex/linear-svm-basic-inseparable-1.pdf Gr
 aphic file (type pdf)
 <use data-mining-book_files/figure-latex/linear-svm-basic-inseparable-1.pdf>
 [155] [156]
-Overfull \vbox (1.03787pt too high) detected at line 7295
+Overfull \vbox (1.03787pt too high) detected at line 7307
  []
 
 [157] [158]
@@ -2065,15 +2070,15 @@ File: data-mining-book_files/figure-latex/nonlinear-svm-sigmoid-1.pdf Graphic f
 ile (type pdf)
 <use data-mining-book_files/figure-latex/nonlinear-svm-sigmoid-1.pdf>
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 7672.
+(Font)              <12> on input line 7684.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 7672.
+(Font)              <8> on input line 7684.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 7672.
+(Font)              <6> on input line 7684.
 LaTeX Font Info:    Font shape `TU/NanumMyeongjo(0)/m/n' will be
-(Font)              scaled to size 7.35571pt on input line 7672.
+(Font)              scaled to size 7.35571pt on input line 7684.
 LaTeX Font Info:    Font shape `TU/NanumMyeongjo(0)/m/n' will be
-(Font)              scaled to size 5.51678pt on input line 7672.
+(Font)              scaled to size 5.51678pt on input line 7684.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -2086,13 +2091,13 @@ Chapter 10.
 [169
 
 ] [170] [171]
-Overfull \hbox (59.25pt too wide) in paragraph at lines 7917--7917
+Overfull \hbox (59.25pt too wide) in paragraph at lines 7929--7929
 []\TU/lmtt/m/n/10 ##       Accuracy          Kappa  AccuracyLower  AccuracyUppe
 r   AccuracyNull[] 
  []
 
 
-Overfull \hbox (59.25pt too wide) in paragraph at lines 7917--7917
+Overfull \hbox (59.25pt too wide) in paragraph at lines 7929--7929
 []\TU/lmtt/m/n/10 ##      0.8500000      0.5714286      0.7646925      0.913545
 6      0.8000000[] 
  []
@@ -2102,7 +2107,7 @@ File: data-mining-book_files/figure-latex/roc-example-1.pdf Graphic file (type
 pdf)
 <use data-mining-book_files/figure-latex/roc-example-1.pdf>
 [175] [176] [177]
-Overfull \hbox (72.08pt too wide) in paragraph at lines 8213--8230
+Overfull \hbox (72.08pt too wide) in paragraph at lines 8225--8242
  [][] 
  []
 
@@ -2117,7 +2122,7 @@ Chapter 11.
 [183
 
 ] [184] [185] [186] [187] [188] [189] [190]
-Overfull \hbox (136.552pt too wide) in paragraph at lines 8750--8759
+Overfull \hbox (136.552pt too wide) in paragraph at lines 8762--8771
  [][] 
  []
 
@@ -2126,14 +2131,14 @@ Overfull \hbox (136.552pt too wide) in paragraph at lines 8750--8759
 ]
 Chapter 12.
 
-Underfull \hbox (badness 3240) in paragraph at lines 9004--9006
+Underfull \hbox (badness 3240) in paragraph at lines 9016--9018
 []$\OT1/lmr/bx/n/10 c[] \OT1/lmr/m/n/10 = []$\TU/NanumMyeongjo(0)/m/it/10 : 군 집
  $\OML/lmm/m/it/10 i$ \TU/NanumMyeongjo(0)/m/it/10 의 중 심 좌 표 \TU/lmr/m/n/10 (ce
 ntroid) ($[] \OT1/lmr/m/n/10 =
  []
 
 
-Overfull \hbox (124.26306pt too wide) in paragraph at lines 9017--9027
+Overfull \hbox (124.26306pt too wide) in paragraph at lines 9029--9039
  [][] 
  []
 
@@ -2145,61 +2150,61 @@ File: data-mining-book_files/figure-latex/pc-user-average-linkage-1.png Graphic
  file (type bmp)
 <data-mining-book_files/figure-latex/pc-user-average-linkage-1.png>
 [199] [200] [201] [202] [203] [204]
-Overfull \hbox (80.25pt too wide) in paragraph at lines 9431--9431
+Overfull \hbox (80.25pt too wide) in paragraph at lines 9443--9443
 []\TU/lmtt/m/n/10 ## Iteration:  0 , k =  10 , clusters =  {1} {2} {3} {4} {5} 
 {6} {7} {8} {9} {10}[] 
  []
 
 
-Overfull \hbox (64.5pt too wide) in paragraph at lines 9469--9469
+Overfull \hbox (64.5pt too wide) in paragraph at lines 9481--9481
 []\TU/lmtt/m/n/10 ## Iteration:  1 , k =  9 , clusters =  {1} {2} {3} {4} {5} {
 6} {7} {8} {10,9}[] 
  []
 
 
-Overfull \hbox (54.0pt too wide) in paragraph at lines 9469--9469
+Overfull \hbox (54.0pt too wide) in paragraph at lines 9481--9481
 []\TU/lmtt/m/n/10 ## Iteration:  2 , k =  8 , clusters =  {1} {2} {3,7} {4} {5}
  {6} {8} {10,9}[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 9469--9469
+Overfull \hbox (43.5pt too wide) in paragraph at lines 9481--9481
 []\TU/lmtt/m/n/10 ## Iteration:  3 , k =  7 , clusters =  {1,6} {2} {3,7} {4} {
 5} {8} {10,9}[] 
  []
 
 
-Overfull \hbox (33.0pt too wide) in paragraph at lines 9469--9469
+Overfull \hbox (33.0pt too wide) in paragraph at lines 9481--9481
 []\TU/lmtt/m/n/10 ## Iteration:  4 , k =  6 , clusters =  {1,6} {2} {3,7,5} {4}
  {8} {10,9}[] 
  []
 
 [205]
-Overfull \hbox (22.5pt too wide) in paragraph at lines 9469--9469
+Overfull \hbox (22.5pt too wide) in paragraph at lines 9481--9481
 []\TU/lmtt/m/n/10 ## Iteration:  5 , k =  5 , clusters =  {1,6,2} {3,7,5} {4} {
 8} {10,9}[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 9469--9469
+Overfull \hbox (12.0pt too wide) in paragraph at lines 9481--9481
 []\TU/lmtt/m/n/10 ## Iteration:  6 , k =  4 , clusters =  {1,6,2} {3,7,5} {4} {
 10,9,8}[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 9469--9469
+Overfull \hbox (1.5pt too wide) in paragraph at lines 9481--9481
 []\TU/lmtt/m/n/10 ## Iteration:  7 , k =  3 , clusters =  {1,6,2} {3,7,5,4} {10
 ,9,8}[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 9503--9503
+Overfull \hbox (27.75pt too wide) in paragraph at lines 9515--9515
 []\TU/lmtt/m/n/10 ## [1] "merge"       "height"      "order"       "labels"    
   "method"[] 
  []
 
 [206]
-Overfull \hbox (54.0pt too wide) in paragraph at lines 9539--9539
+Overfull \hbox (54.0pt too wide) in paragraph at lines 9551--9551
 []\TU/lmtt/m/n/10 ## [1]  1.000000  1.000000  1.414214  1.825141  2.236068  2.5
 32248  3.519028[] 
  []
@@ -2209,68 +2214,68 @@ File: data-mining-book_files/figure-latex/ward-dendrogram-1.png Graphic file (t
 ype bmp)
 <data-mining-book_files/figure-latex/ward-dendrogram-1.png>
 [208] [209]
-Underfull \hbox (badness 1616) in paragraph at lines 9709--9710
+Underfull \hbox (badness 1616) in paragraph at lines 9721--9722
 \TU/NanumMyeongjo(0)/m/it/10 수 \TU/lmtt/m/n/10 merge_cluster \TU/NanumMyeongjo(
 0)/m/it/10 를 호 출 한 다. 이 함 수 는 두 입 력 변 수 \TU/lmtt/m/n/10 cluster_label \TU/Nanum
 Myeongjo(0)/m/it/10 및
  []
 
 [210]
-Underfull \hbox (badness 1762) in paragraph at lines 9717--9718
+Underfull \hbox (badness 1762) in paragraph at lines 9729--9730
 [] \TU/NanumMyeongjo(0)/m/it/10 함 수 수 행 결 과, 입 력 된 \TU/lmtt/m/n/10 cluster_labe
 l \TU/NanumMyeongjo(0)/m/it/10 에 서 군 집 이 름 이 \TU/lmtt/m/n/10 cluster_merge[1]
  []
 
 [211]
-Overfull \hbox (80.25pt too wide) in paragraph at lines 9781--9781
+Overfull \hbox (80.25pt too wide) in paragraph at lines 9793--9793
 []\TU/lmtt/m/n/10 ## Iteration:  0 , k =  8 , clusters =  {1} {2} {3} {4} {5} {
 6} {7} {8} , SSW = 0[] 
  []
 
 
-Overfull \hbox (69.75pt too wide) in paragraph at lines 9818--9818
+Overfull \hbox (69.75pt too wide) in paragraph at lines 9830--9830
 []\TU/lmtt/m/n/10 ## Iteration:  1 , k =  7 , clusters =  {1} {2,7} {3} {4} {5}
  {6} {8} , SSW = 1[] 
  []
 
 
-Overfull \hbox (69.75pt too wide) in paragraph at lines 9818--9818
+Overfull \hbox (69.75pt too wide) in paragraph at lines 9830--9830
 []\TU/lmtt/m/n/10 ## Iteration:  2 , k =  6 , clusters =  {1,3} {2,7} {4} {5} {
 6} {8} , SSW = 3.5[] 
  []
 
 
-Overfull \hbox (48.75pt too wide) in paragraph at lines 9818--9818
+Overfull \hbox (48.75pt too wide) in paragraph at lines 9830--9830
 []\TU/lmtt/m/n/10 ## Iteration:  3 , k =  5 , clusters =  {1,3} {2,7} {4,8} {5}
  {6} , SSW = 6[] 
  []
 
 
-Overfull \hbox (75.0pt too wide) in paragraph at lines 9818--9818
+Overfull \hbox (75.0pt too wide) in paragraph at lines 9830--9830
 []\TU/lmtt/m/n/10 ## Iteration:  4 , k =  4 , clusters =  {1,3} {2,7,5} {4,8} {
 6} , SSW = 23.66667[] 
  []
 
 
-Overfull \hbox (64.5pt too wide) in paragraph at lines 9818--9818
+Overfull \hbox (64.5pt too wide) in paragraph at lines 9830--9830
 []\TU/lmtt/m/n/10 ## Iteration:  5 , k =  3 , clusters =  {1,3,6} {2,7,5} {4,8}
  , SSW = 43.16667[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 9818--9818
+Overfull \hbox (38.25pt too wide) in paragraph at lines 9830--9830
 []\TU/lmtt/m/n/10 ## Iteration:  6 , k =  2 , clusters =  {1,3,6} {2,7,5,4,8} ,
  SSW = 140.4[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 9818--9818
+Overfull \hbox (38.25pt too wide) in paragraph at lines 9830--9830
 []\TU/lmtt/m/n/10 ## Iteration:  7 , k =  1 , clusters =  {1,3,6,2,7,5,4,8} , S
 SW = 499.875[] 
  []
 
 [212]
-Overfull \hbox (8.32178pt too wide) detected at line 9846
+Overfull \hbox (8.32178pt too wide) detected at line 9858
 []
  []
 
@@ -2278,24 +2283,24 @@ Overfull \hbox (8.32178pt too wide) detected at line 9846
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [213]
-Overfull \hbox (54.0pt too wide) in paragraph at lines 9886--9886
+Overfull \hbox (54.0pt too wide) in paragraph at lines 9898--9898
 []\TU/lmtt/m/n/10 ## [1]  1.414214  2.236068  2.236068  5.944185  6.244998 13.9
 45131 26.813243[] 
  []
 
 [214]
-Overfull \hbox (85.36005pt too wide) in paragraph at lines 9928--9942
+Overfull \hbox (85.36005pt too wide) in paragraph at lines 9940--9954
  [][] 
  []
 
 
-Overfull \hbox (54.0pt too wide) in paragraph at lines 9957--9957
+Overfull \hbox (54.0pt too wide) in paragraph at lines 9969--9969
 []\TU/lmtt/m/n/10 ## [1]  1.414214  2.236068  2.236068  6.452039  6.615990 17.3
 58484 39.311447[] 
  []
 
 [215]
-Overfull \hbox (40.09256pt too wide) detected at line 9966
+Overfull \hbox (40.09256pt too wide) detected at line 9978
 []\OML/lmm/m/it/10 D\OT1/lmr/m/n/10 (\OML/lmm/m/it/10 C[] \OMS/lmsy/m/n/10 [ \O
 ML/lmm/m/it/10 C[]; C[]\OT1/lmr/m/n/10 ) = \OML/lmm/m/it/10 ^^K[]D\OT1/lmr/m/n/
 10 (\OML/lmm/m/it/10 C[]; C[]\OT1/lmr/m/n/10 ) + \OML/lmm/m/it/10 ^^K[]D\OT1/lm
@@ -2307,24 +2312,24 @@ mm/m/it/10 C[]; C[]\OT1/lmr/m/n/10 )\OMS/lmsy/m/n/10 j
  []
 
 
-Overfull \hbox (54.0pt too wide) in paragraph at lines 9997--9997
+Overfull \hbox (54.0pt too wide) in paragraph at lines 10009--10009
 []\TU/lmtt/m/n/10 ## [1]   2.00000   5.00000   5.00000  35.33333  39.00000 194.
 46667 718.95000[] 
  []
 
 [216]
-Overfull \hbox (54.0pt too wide) in paragraph at lines 10009--10009
+Overfull \hbox (54.0pt too wide) in paragraph at lines 10021--10021
 []\TU/lmtt/m/n/10 ## [1]  1.414214  2.236068  2.236068  5.944185  6.244998 13.9
 45131 26.813243[] 
  []
 
 
-Overfull \hbox (68.14005pt too wide) in paragraph at lines 10038--10052
+Overfull \hbox (68.14005pt too wide) in paragraph at lines 10050--10064
  [][] 
  []
 
 [217]
-Overfull \hbox (54.0pt too wide) in paragraph at lines 10068--10068
+Overfull \hbox (54.0pt too wide) in paragraph at lines 10080--10080
 []\TU/lmtt/m/n/10 ## [1]  1.414214  2.236068  2.236068  5.944185  6.244998 13.9
 45131 26.813243[] 
  []
@@ -2334,37 +2339,37 @@ File: data-mining-book_files/figure-latex/diana-result-plot-1.png Graphic file
 (type bmp)
 <data-mining-book_files/figure-latex/diana-result-plot-1.png>
 [219] [220] [221] [222]
-Overfull \hbox (64.5pt too wide) in paragraph at lines 10401--10401
+Overfull \hbox (64.5pt too wide) in paragraph at lines 10413--10413
 []\TU/lmtt/m/n/10 ## Iteration:  1 , k =  2 , clusters =  {6,3,1} {2,4,5,7} , h
 eight =  33.54102[] 
  []
 
 
-Overfull \hbox (75.0pt too wide) in paragraph at lines 10401--10401
+Overfull \hbox (75.0pt too wide) in paragraph at lines 10413--10413
 []\TU/lmtt/m/n/10 ## Iteration:  2 , k =  3 , clusters =  {6,3,1} {2,4,5} {7} ,
  height =  17.88854[] 
  []
 
 
-Overfull \hbox (85.5pt too wide) in paragraph at lines 10401--10401
+Overfull \hbox (85.5pt too wide) in paragraph at lines 10413--10413
 []\TU/lmtt/m/n/10 ## Iteration:  3 , k =  4 , clusters =  {1} {2,4,5} {3,6} {7}
  , height =  11.18034[] 
  []
 
 
-Overfull \hbox (96.0pt too wide) in paragraph at lines 10401--10401
+Overfull \hbox (96.0pt too wide) in paragraph at lines 10413--10413
 []\TU/lmtt/m/n/10 ## Iteration:  4 , k =  5 , clusters =  {1} {2,4} {3,6} {5} {
 7} , height =  10.04988[] 
  []
 
 
-Overfull \hbox (106.5pt too wide) in paragraph at lines 10401--10401
+Overfull \hbox (106.5pt too wide) in paragraph at lines 10413--10413
 []\TU/lmtt/m/n/10 ## Iteration:  5 , k =  6 , clusters =  {1} {2} {3,6} {4} {5}
  {7} , height =  5.385165[] 
  []
 
 
-Overfull \hbox (117.0pt too wide) in paragraph at lines 10401--10401
+Overfull \hbox (117.0pt too wide) in paragraph at lines 10413--10413
 []\TU/lmtt/m/n/10 ## Iteration:  6 , k =  7 , clusters =  {1} {2} {3} {4} {5} {
 6} {7} , height =  5.385165[] 
  []
@@ -2373,11 +2378,11 @@ Overfull \hbox (117.0pt too wide) in paragraph at lines 10401--10401
 Underfull \vbox (badness 3568) has occurred while \output is active []
 
 [223] [224]
-Overfull \vbox (2.28998pt too high) detected at line 10516
+Overfull \vbox (2.28998pt too high) detected at line 10528
  []
 
 [225]
-Overfull \hbox (148.72008pt too wide) in paragraph at lines 10545--10560
+Overfull \hbox (148.72008pt too wide) in paragraph at lines 10557--10572
  [][] 
  []
 
@@ -2395,157 +2400,157 @@ pe bmp)
 <data-mining-book_files/figure-latex/kmeans-cluster-1.png>
 [231] [232] [233] [234] [235] [236] [237] [238] [239] [240] [241] [242] [243] [
 244]
-Underfull \vbox (badness 10000) detected at line 11585
+Underfull \vbox (badness 10000) detected at line 11597
  []
 
 
-Underfull \vbox (badness 10000) detected at line 11585
+Underfull \vbox (badness 10000) detected at line 11597
  []
 
 [245]
-Underfull \vbox (badness 10000) detected at line 11585
+Underfull \vbox (badness 10000) detected at line 11597
  []
 
 
-Underfull \vbox (badness 10000) detected at line 11585
+Underfull \vbox (badness 10000) detected at line 11597
  []
 
 [246]
-Overfull \vbox (0.78995pt too high) detected at line 11598
+Overfull \vbox (0.78995pt too high) detected at line 11610
  []
 
 [247] [248] [249] [250] [251] [252]
-Overfull \vbox (1.63493pt too high) detected at line 11956
+Overfull \vbox (1.63493pt too high) detected at line 11968
  []
 
 [253]
-Underfull \vbox (badness 10000) detected at line 11956
+Underfull \vbox (badness 10000) detected at line 11968
  []
 
 
-Underfull \vbox (badness 10000) detected at line 11956
+Underfull \vbox (badness 10000) detected at line 11968
  []
 
 [254] [255]
-Overfull \hbox (38.25pt too wide) in paragraph at lines 12066--12066
+Overfull \hbox (38.25pt too wide) in paragraph at lines 12078--12078
 []\TU/lmtt/m/n/10 ##  [1] "membership"  "coeff"       "memb.exp"    "clustering
 "  "k.crisp"[] 
  []
 
 [256]
-Overfull \hbox (38.25pt too wide) in paragraph at lines 12066--12066
+Overfull \hbox (38.25pt too wide) in paragraph at lines 12078--12078
 []\TU/lmtt/m/n/10 ##  [6] "objective"   "convergence" "diss"        "call"     
    "silinfo"[] 
  []
 
 [257] [258] [259] [260] [261] [262] [263] [264]
-Overfull \hbox (2.39355pt too wide) in paragraph at lines 12569--12578
+Overfull \hbox (2.39355pt too wide) in paragraph at lines 12581--12590
  [][] 
  []
 
 [265] [266] [267] [268]
-Underfull \vbox (badness 10000) detected at line 12798
+Underfull \vbox (badness 10000) detected at line 12810
  []
 
 
-Underfull \vbox (badness 10000) detected at line 12798
+Underfull \vbox (badness 10000) detected at line 12810
  []
 
 [269] [270] [271] [272] [273] [274] [275]
 Underfull \vbox (badness 1694) has occurred while \output is active []
 
 [276]
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ##         EII       VII       EEI       VEI       EVI       
 VVI       EEE[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 1 -85.40006 -85.40006 -85.70851 -85.70851 -85.70851 -85.70
 851 -75.27433[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 2 -62.00992 -63.86240 -63.37677 -65.22485 -65.32204 -67.17
 013 -64.66516[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 3 -65.47796        NA -66.01911        NA        NA       
  NA -67.87781[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 4 -69.04346        NA -70.17240        NA        NA       
  NA -67.31282[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 5 -72.02226        NA -73.96817        NA        NA       
  NA        NA[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 6 -62.27998        NA -64.22589        NA        NA       
  NA        NA[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 7        NA        NA        NA        NA        NA       
  NA        NA[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ##         EVE       VEE       VVE       EEV       VEV       
 EVV       VVV[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 1 -75.27433 -75.27433 -75.27433 -75.27433 -75.27433 -75.27
 433 -75.27433[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 2 -65.06811 -66.60332 -66.92481 -65.42506 -67.34154 -66.55
 375 -68.44666[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 3        NA        NA        NA -71.48895        NA       
  NA        NA[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 4        NA        NA        NA        NA        NA       
  NA        NA[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 5        NA        NA        NA        NA        NA       
  NA        NA[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 6        NA        NA        NA        NA        NA       
  NA        NA[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 13194--13194
+Overfull \hbox (43.5pt too wide) in paragraph at lines 13206--13206
 []\TU/lmtt/m/n/10 ## 7        NA        NA        NA        NA        NA       
  NA        NA[] 
  []
@@ -2558,14 +2563,14 @@ Chapter 14.
 [279
 
 ]
-Overfull \hbox (15.52649pt too wide) detected at line 13305
+Overfull \hbox (15.52649pt too wide) detected at line 13317
 \OML/lmm/m/it/10 u[] \OT1/lmr/m/n/10 = [] \OML/lmm/m/it/10 ;  i \OT1/lmr/m/n/10
  = 1\OML/lmm/m/it/10 ; []  ; n;  k \OT1/lmr/m/n/10 = 1\OML/lmm/m/it/10 ; []  ; 
 r
  []
 
 
-Overfull \hbox (12.55838pt too wide) detected at line 13312
+Overfull \hbox (12.55838pt too wide) detected at line 13324
 \OML/lmm/m/it/10 v[] \OT1/lmr/m/n/10 = [] \OML/lmm/m/it/10 ;  i \OT1/lmr/m/n/10
  = 1\OML/lmm/m/it/10 ; []  ; n;  k \OT1/lmr/m/n/10 = 1\OML/lmm/m/it/10 ; []  ; 
 s
@@ -2575,7 +2580,7 @@ s
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 13332.
+(amsmath)                 on input line 13344.
 
 [281] [282]
 File: data-mining-book_files/figure-latex/rand-index-random-1.png Graphic file 
@@ -2588,23 +2593,23 @@ Chapter 15.
 [297
 
 ] [298] [299] [300] [301]
-Overfull \hbox (64.5pt too wide) in paragraph at lines 14279--14279
+Overfull \hbox (64.5pt too wide) in paragraph at lines 14291--14291
 []\TU/lmtt/m/n/10 ## [1] "{a, b}" "{b, c}" "{b, e}" "{b, f}" "{b, g}" "{c, e}" 
 "{c, f}" "{c, g}"[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 14279--14279
+Overfull \hbox (1.5pt too wide) in paragraph at lines 14291--14291
 []\TU/lmtt/m/n/10 ## [1] "{b, c, e}" "{b, c, f}" "{b, c, g}" "{b, e, f}" "{c, e
 , f}"[] 
  []
 
 [302] [303] [304] [305] [306]
-Overfull \vbox (0.25995pt too high) detected at line 14655
+Overfull \vbox (0.25995pt too high) detected at line 14667
  []
 
 [307] [308] [309] [310] [311]
-Overfull \hbox (1.5pt too wide) in paragraph at lines 14925--14925
+Overfull \hbox (1.5pt too wide) in paragraph at lines 14937--14937
 []\TU/lmtt/m/n/10 ## [1] "<{1}>"      "<{2}>"      "<{3}>"      "<{4}>"      "<
 {5}>"[] 
  []
@@ -2614,21 +2619,21 @@ Chapter 16.
 [317
 
 ] [318] [319] [320] [321] [322]
-Underfull \vbox (badness 10000) detected at line 15344
+Underfull \vbox (badness 10000) detected at line 15356
  []
 
 
-Underfull \vbox (badness 10000) detected at line 15344
+Underfull \vbox (badness 10000) detected at line 15356
  []
 
 [323] [324] [325] [326] [327] [328] [329]
-Overfull \hbox (12.0pt too wide) in paragraph at lines 15690--15690
+Overfull \hbox (12.0pt too wide) in paragraph at lines 15702--15702
 []\TU/lmtt/m/n/10 ##   target_customer ref_customer target_p ref_p common_p sim
 ilarity[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 15690--15690
+Overfull \hbox (12.0pt too wide) in paragraph at lines 15702--15702
 []\TU/lmtt/m/n/10 ##   <chr>           <chr>           <dbl> <dbl>    <dbl>    
   <dbl>[] 
  []
@@ -2636,12 +2641,12 @@ Overfull \hbox (12.0pt too wide) in paragraph at lines 15690--15690
 [330] (./data-mining-book.bbl [331] [332
 
 ] [333] [334])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 15729.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 15741.
 [335]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 15729.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 15741.
 (./data-mining-book.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 15729.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 15729
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 15741.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 15741
 .
 Package rerunfilecheck Info: File `data-mining-book.out' has not changed.
 (rerunfilecheck)             Checksum: D9CFCE145D3B59DB5B5491138A5D1FE4.
@@ -2653,10 +2658,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 26451 strings out of 494894
- 475238 string characters out of 6173844
- 576363 words of memory out of 5000000
- 30055 multiletter control sequences out of 15000+600000
+ 26452 strings out of 494894
+ 475260 string characters out of 6173844
+ 576400 words of memory out of 5000000
+ 30056 multiletter control sequences out of 15000+600000
  576990 words of font info for 116 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  50i,21n,125p,813b,2559s stack positions out of 5000i,500n,10000p,200000b,80000s
