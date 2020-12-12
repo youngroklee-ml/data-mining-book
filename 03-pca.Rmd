@@ -449,7 +449,7 @@ nipals_pca <- function(X, r = NULL) {
   }
   
   Th <- matrix(NA, nrow = nrow(X), ncol = r)
-  Vh <- matrix(NA, nrow = r, ncol = r)
+  Vh <- matrix(NA, nrow = ncol(X), ncol = r)
   
   for (h in seq_len(r)) {
     # 단계 1
