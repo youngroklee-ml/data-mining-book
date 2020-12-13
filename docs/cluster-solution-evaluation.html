@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 14 군집해의 평가 및 해석 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 14 군집해의 평가 및 해석 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2019-07-09" />
+<meta name="date" content="2020-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="nonhierarchical-clustering.html">
-<link rel="next" href="association-rule.html">
+<link rel="prev" href="nonhierarchical-clustering.html"/>
+<link rel="next" href="association-rule.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,29 +48,35 @@
 
 
 
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -78,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -208,9 +215,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
-<li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
-<li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
+<li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#피셔-판별함수"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
+<li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#분류-규칙"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
+<li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r-패키지를-이용한-분류규칙-도출"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
@@ -403,11 +410,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td align="left">tidyverse</td>
-<td align="left">1.2.1</td>
+<td align="left">1.3.0</td>
 </tr>
 <tr class="even">
 <td align="left">cluster</td>
-<td align="left">2.0.8</td>
+<td align="left">2.1.0</td>
 </tr>
 <tr class="odd">
 <td align="left">flexclust</td>
@@ -415,7 +422,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td align="left">clValid</td>
-<td align="left">0.6-6</td>
+<td align="left">0.6-9</td>
 </tr>
 </tbody>
 </table>
@@ -443,10 +450,10 @@ U &amp;=&amp; \{ \{1, 2, 3, 4\}, \{5, 6, 7\}, \{8, 9, 10\} \}\\
 V &amp;=&amp; \{ \{1, 2, 5, 8\}, \{3, 6, 9\}, \{4, 7, 10\} \}
 \end{eqnarray*}\]</span></p>
 <p>랜드지수 및 수정랜드지수는 <code>flexclust</code> 패키지의 <code>randIndex</code> 함수를 호출하여 계산할 수 있으며, 랜드지수를 계산할 때는 <code>correct = FALSE</code>, 수정랜드지수를 계산할 때는 <code>correct = TRUE</code>로 파라미터 값을 지정하여야 한다. 파라미터값을 지정하지 않을 때는 기본값으로 수정랜드지수를 계산한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">sol_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)
-sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
-<span class="kw">map</span>(<span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>), 
-    <span class="op">~</span><span class="st"> </span>flexclust<span class="op">::</span><span class="kw">randIndex</span>(<span class="dt">x =</span> sol_<span class="dv">1</span>, <span class="dt">y =</span> sol_<span class="dv">2</span>, <span class="dt">correct =</span> .x))</code></pre>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="cluster-solution-evaluation.html#cb612-1"></a>sol_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb612-2"><a href="cluster-solution-evaluation.html#cb612-2"></a>sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb612-3"><a href="cluster-solution-evaluation.html#cb612-3"></a><span class="kw">map</span>(<span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>), </span>
+<span id="cb612-4"><a href="cluster-solution-evaluation.html#cb612-4"></a>    <span class="op">~</span><span class="st"> </span>flexclust<span class="op">::</span><span class="kw">randIndex</span>(<span class="dt">x =</span> sol_<span class="dv">1</span>, <span class="dt">y =</span> sol_<span class="dv">2</span>, <span class="dt">correct =</span> .x))</span></code></pre></div>
 <pre><code>## [[1]]
 ##        RI 
 ## 0.5111111 
@@ -477,7 +484,7 @@ b &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l
 c &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} (1 - u_{jk}) v_{il} v_{jl}\\
 d &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} (1 - u_{jk}) v_{il} (1 - v_{jl})
 \end{eqnarray*}\]</span></p>
-<p>이 때, <span class="citation">Rand (<a href="#ref-rand1971objective">1971</a>)</span> 가 제안한 랜드지수(Rand index)는 다음과 같이 정의된다.</p>
+<p>이 때, <span class="citation">Rand (<a href="#ref-rand1971objective" role="doc-biblioref">1971</a>)</span> 가 제안한 랜드지수(Rand index)는 다음과 같이 정의된다.</p>
 <p><span class="math display" id="eq:rand-index">\[\begin{equation}
 RI = \frac{a + d}{a + b + c + d} \tag{14.1}
 \end{equation}\]</span></p>
@@ -486,7 +493,7 @@ RI = \frac{a + d}{a + b + c + d} \tag{14.1}
 a + b + c + d = {n \choose 2}
 \end{equation*}\]</span></p>
 <p>식 <a href="cluster-solution-evaluation.html#eq:rand-index">(14.1)</a>는 0에서 1 사이의 값을 갖게 되며, 0에 가까울수록 두 군집해가 일치하지 않음을, 1에 가까울수록 두 군집해가 일치함을 나타낸다. 또한 랜드지수는 랜덤하게 작성한 두 군집해 간의 유사도의 기대값이 0보다 크다.</p>
-<p><span class="citation">Hubert and Arabie (<a href="#ref-hubert1985comparing">1985</a>)</span> 는 수정랜드지수(adjusted Rand index)를 아래와 같이 제안하였다.</p>
+<p><span class="citation">Hubert and Arabie (<a href="#ref-hubert1985comparing" role="doc-biblioref">1985</a>)</span> 는 수정랜드지수(adjusted Rand index)를 아래와 같이 제안하였다.</p>
 <p><span class="math display" id="eq:adj-rand-index">\[\begin{equation}
 RI_{adj} = \frac{2 (ad - bc)}{(a + b)(b + d) + (a + c)(c + d)} \tag{14.2}
 \end{equation}\]</span></p>
@@ -500,71 +507,71 @@ RI_{adj} = \frac{2 (ad - bc)}{(a + b)(b + d) + (a + c)(c + d)} \tag{14.2}
 <li><code>adj_ri</code>: 수정랜드지수</li>
 </ul></li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r">rand_index &lt;-<span class="st"> </span><span class="cf">function</span>(u, v) {
-  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is_vector</span>(u) <span class="op">||</span><span class="st"> </span><span class="op">!</span><span class="kw">is_vector</span>(v)) {
-    <span class="kw">stop</span>(<span class="st">&quot;Input needs to be vector&quot;</span>)
-  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">length</span>(u) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(v)) {
-    <span class="kw">stop</span>(<span class="st">&quot;Vectors u and v must have the same length.&quot;</span>)
-  }
-  
-  U &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-    <span class="dt">i =</span> <span class="kw">seq_along</span>(u),
-    <span class="dt">cluster =</span> u
-  ) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">inner_join</span>(
-      <span class="kw">rename</span>(., <span class="dt">j =</span> i),
-      <span class="dt">by =</span> <span class="st">&quot;cluster&quot;</span>
-    ) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>cluster) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(i <span class="op">&lt;</span><span class="st"> </span>j) 
-  
-  V &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-    <span class="dt">i =</span> <span class="kw">seq_along</span>(v),
-    <span class="dt">cluster =</span> v
-  ) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">inner_join</span>(
-      <span class="kw">rename</span>(., <span class="dt">j =</span> i),
-      <span class="dt">by =</span> <span class="st">&quot;cluster&quot;</span>
-    ) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>cluster) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(i <span class="op">&lt;</span><span class="st"> </span>j) 
-  
-  a &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">inner_join</span>(U, V, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))
-  b &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">anti_join</span>(U, V, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))
-  c &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">anti_join</span>(V, U, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))
-  d &lt;-<span class="st"> </span><span class="kw">choose</span>(<span class="kw">length</span>(u), <span class="dv">2</span>) <span class="op">-</span><span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span>c)
-  
-  ri &lt;-<span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>d) <span class="op">/</span><span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span>c <span class="op">+</span><span class="st"> </span>d)
-  adj_ri &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(a <span class="op">*</span><span class="st"> </span>d <span class="op">-</span><span class="st"> </span>b <span class="op">*</span><span class="st"> </span>c) <span class="op">/</span><span class="st"> </span>
-<span class="st">    </span>((a <span class="op">+</span><span class="st"> </span>b) <span class="op">*</span><span class="st"> </span>(b <span class="op">+</span><span class="st"> </span>d) <span class="op">+</span><span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>c) <span class="op">*</span><span class="st"> </span>(c <span class="op">+</span><span class="st"> </span>d))
-
-  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">ri =</span> ri, <span class="dt">adj_ri =</span> adj_ri))
-}</code></pre>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="cluster-solution-evaluation.html#cb614-1"></a>rand_index &lt;-<span class="st"> </span><span class="cf">function</span>(u, v) {</span>
+<span id="cb614-2"><a href="cluster-solution-evaluation.html#cb614-2"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is_vector</span>(u) <span class="op">||</span><span class="st"> </span><span class="op">!</span><span class="kw">is_vector</span>(v)) {</span>
+<span id="cb614-3"><a href="cluster-solution-evaluation.html#cb614-3"></a>    <span class="kw">stop</span>(<span class="st">&quot;Input needs to be vector&quot;</span>)</span>
+<span id="cb614-4"><a href="cluster-solution-evaluation.html#cb614-4"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">length</span>(u) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(v)) {</span>
+<span id="cb614-5"><a href="cluster-solution-evaluation.html#cb614-5"></a>    <span class="kw">stop</span>(<span class="st">&quot;Vectors u and v must have the same length.&quot;</span>)</span>
+<span id="cb614-6"><a href="cluster-solution-evaluation.html#cb614-6"></a>  }</span>
+<span id="cb614-7"><a href="cluster-solution-evaluation.html#cb614-7"></a>  </span>
+<span id="cb614-8"><a href="cluster-solution-evaluation.html#cb614-8"></a>  U &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb614-9"><a href="cluster-solution-evaluation.html#cb614-9"></a>    <span class="dt">i =</span> <span class="kw">seq_along</span>(u),</span>
+<span id="cb614-10"><a href="cluster-solution-evaluation.html#cb614-10"></a>    <span class="dt">cluster =</span> u</span>
+<span id="cb614-11"><a href="cluster-solution-evaluation.html#cb614-11"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb614-12"><a href="cluster-solution-evaluation.html#cb614-12"></a><span class="st">    </span><span class="kw">inner_join</span>(</span>
+<span id="cb614-13"><a href="cluster-solution-evaluation.html#cb614-13"></a>      <span class="kw">rename</span>(., <span class="dt">j =</span> i),</span>
+<span id="cb614-14"><a href="cluster-solution-evaluation.html#cb614-14"></a>      <span class="dt">by =</span> <span class="st">&quot;cluster&quot;</span></span>
+<span id="cb614-15"><a href="cluster-solution-evaluation.html#cb614-15"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb614-16"><a href="cluster-solution-evaluation.html#cb614-16"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>cluster) <span class="op">%&gt;%</span></span>
+<span id="cb614-17"><a href="cluster-solution-evaluation.html#cb614-17"></a><span class="st">    </span><span class="kw">filter</span>(i <span class="op">&lt;</span><span class="st"> </span>j) </span>
+<span id="cb614-18"><a href="cluster-solution-evaluation.html#cb614-18"></a>  </span>
+<span id="cb614-19"><a href="cluster-solution-evaluation.html#cb614-19"></a>  V &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb614-20"><a href="cluster-solution-evaluation.html#cb614-20"></a>    <span class="dt">i =</span> <span class="kw">seq_along</span>(v),</span>
+<span id="cb614-21"><a href="cluster-solution-evaluation.html#cb614-21"></a>    <span class="dt">cluster =</span> v</span>
+<span id="cb614-22"><a href="cluster-solution-evaluation.html#cb614-22"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb614-23"><a href="cluster-solution-evaluation.html#cb614-23"></a><span class="st">    </span><span class="kw">inner_join</span>(</span>
+<span id="cb614-24"><a href="cluster-solution-evaluation.html#cb614-24"></a>      <span class="kw">rename</span>(., <span class="dt">j =</span> i),</span>
+<span id="cb614-25"><a href="cluster-solution-evaluation.html#cb614-25"></a>      <span class="dt">by =</span> <span class="st">&quot;cluster&quot;</span></span>
+<span id="cb614-26"><a href="cluster-solution-evaluation.html#cb614-26"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb614-27"><a href="cluster-solution-evaluation.html#cb614-27"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>cluster) <span class="op">%&gt;%</span></span>
+<span id="cb614-28"><a href="cluster-solution-evaluation.html#cb614-28"></a><span class="st">    </span><span class="kw">filter</span>(i <span class="op">&lt;</span><span class="st"> </span>j) </span>
+<span id="cb614-29"><a href="cluster-solution-evaluation.html#cb614-29"></a>  </span>
+<span id="cb614-30"><a href="cluster-solution-evaluation.html#cb614-30"></a>  a &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">inner_join</span>(U, V, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))</span>
+<span id="cb614-31"><a href="cluster-solution-evaluation.html#cb614-31"></a>  b &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">anti_join</span>(U, V, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))</span>
+<span id="cb614-32"><a href="cluster-solution-evaluation.html#cb614-32"></a>  c &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">anti_join</span>(V, U, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))</span>
+<span id="cb614-33"><a href="cluster-solution-evaluation.html#cb614-33"></a>  d &lt;-<span class="st"> </span><span class="kw">choose</span>(<span class="kw">length</span>(u), <span class="dv">2</span>) <span class="op">-</span><span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span>c)</span>
+<span id="cb614-34"><a href="cluster-solution-evaluation.html#cb614-34"></a>  </span>
+<span id="cb614-35"><a href="cluster-solution-evaluation.html#cb614-35"></a>  ri &lt;-<span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>d) <span class="op">/</span><span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span>c <span class="op">+</span><span class="st"> </span>d)</span>
+<span id="cb614-36"><a href="cluster-solution-evaluation.html#cb614-36"></a>  adj_ri &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(a <span class="op">*</span><span class="st"> </span>d <span class="op">-</span><span class="st"> </span>b <span class="op">*</span><span class="st"> </span>c) <span class="op">/</span><span class="st"> </span></span>
+<span id="cb614-37"><a href="cluster-solution-evaluation.html#cb614-37"></a><span class="st">    </span>((a <span class="op">+</span><span class="st"> </span>b) <span class="op">*</span><span class="st"> </span>(b <span class="op">+</span><span class="st"> </span>d) <span class="op">+</span><span class="st"> </span>(a <span class="op">+</span><span class="st"> </span>c) <span class="op">*</span><span class="st"> </span>(c <span class="op">+</span><span class="st"> </span>d))</span>
+<span id="cb614-38"><a href="cluster-solution-evaluation.html#cb614-38"></a></span>
+<span id="cb614-39"><a href="cluster-solution-evaluation.html#cb614-39"></a>  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">ri =</span> ri, <span class="dt">adj_ri =</span> adj_ri))</span>
+<span id="cb614-40"><a href="cluster-solution-evaluation.html#cb614-40"></a>}</span></code></pre></div>
 <p>50개의 객체에 대해 랜덤하게 할당된 군집해(<code>K = 3</code>) 두 개를 비교하여 랜드지수와 수정랜드지수를 구해보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">random_rand_index &lt;-<span class="st"> </span><span class="cf">function</span>(n, r, s) {
-  u &lt;-<span class="st"> </span><span class="kw">sample.int</span>(r, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
-  v &lt;-<span class="st"> </span><span class="kw">sample.int</span>(s, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
-  <span class="kw">rand_index</span>(u, v)
-}
-
-<span class="kw">set.seed</span>(<span class="dv">500</span>)
-
-<span class="kw">rerun</span>(<span class="dv">200</span>, <span class="kw">random_rand_index</span>(<span class="dv">50</span>, <span class="dv">3</span>, <span class="dv">3</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">bind_rows</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;metric&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> value, <span class="dt">fill =</span> metric)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.05</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_fill_discrete</span>(
-    <span class="dt">name =</span> <span class="st">&quot;index&quot;</span>,
-    <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="st">&quot;ri&quot;</span>, <span class="st">&quot;adj_ri&quot;</span>),
-    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Rand Index&quot;</span>, <span class="st">&quot;adjusted Rand Index&quot;</span>)
-  ) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(
-    <span class="dt">title =</span> <span class="st">&quot;Distribution of index values from 200 random assignments&quot;</span>,
-    <span class="dt">x =</span> <span class="st">&quot;index value&quot;</span>,
-    <span class="dt">y =</span> <span class="st">&quot;frequency&quot;</span>
-  )</code></pre>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="cluster-solution-evaluation.html#cb615-1"></a>random_rand_index &lt;-<span class="st"> </span><span class="cf">function</span>(n, r, s) {</span>
+<span id="cb615-2"><a href="cluster-solution-evaluation.html#cb615-2"></a>  u &lt;-<span class="st"> </span><span class="kw">sample.int</span>(r, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb615-3"><a href="cluster-solution-evaluation.html#cb615-3"></a>  v &lt;-<span class="st"> </span><span class="kw">sample.int</span>(s, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb615-4"><a href="cluster-solution-evaluation.html#cb615-4"></a>  <span class="kw">rand_index</span>(u, v)</span>
+<span id="cb615-5"><a href="cluster-solution-evaluation.html#cb615-5"></a>}</span>
+<span id="cb615-6"><a href="cluster-solution-evaluation.html#cb615-6"></a></span>
+<span id="cb615-7"><a href="cluster-solution-evaluation.html#cb615-7"></a><span class="kw">set.seed</span>(<span class="dv">500</span>)</span>
+<span id="cb615-8"><a href="cluster-solution-evaluation.html#cb615-8"></a></span>
+<span id="cb615-9"><a href="cluster-solution-evaluation.html#cb615-9"></a><span class="kw">rerun</span>(<span class="dv">200</span>, <span class="kw">random_rand_index</span>(<span class="dv">50</span>, <span class="dv">3</span>, <span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb615-10"><a href="cluster-solution-evaluation.html#cb615-10"></a><span class="st">  </span><span class="kw">bind_rows</span>() <span class="op">%&gt;%</span></span>
+<span id="cb615-11"><a href="cluster-solution-evaluation.html#cb615-11"></a><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;metric&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb615-12"><a href="cluster-solution-evaluation.html#cb615-12"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> value, <span class="dt">fill =</span> metric)) <span class="op">+</span></span>
+<span id="cb615-13"><a href="cluster-solution-evaluation.html#cb615-13"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.05</span>) <span class="op">+</span></span>
+<span id="cb615-14"><a href="cluster-solution-evaluation.html#cb615-14"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span></span>
+<span id="cb615-15"><a href="cluster-solution-evaluation.html#cb615-15"></a><span class="st">  </span><span class="kw">scale_fill_discrete</span>(</span>
+<span id="cb615-16"><a href="cluster-solution-evaluation.html#cb615-16"></a>    <span class="dt">name =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb615-17"><a href="cluster-solution-evaluation.html#cb615-17"></a>    <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="st">&quot;ri&quot;</span>, <span class="st">&quot;adj_ri&quot;</span>),</span>
+<span id="cb615-18"><a href="cluster-solution-evaluation.html#cb615-18"></a>    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Rand Index&quot;</span>, <span class="st">&quot;adjusted Rand Index&quot;</span>)</span>
+<span id="cb615-19"><a href="cluster-solution-evaluation.html#cb615-19"></a>  ) <span class="op">+</span></span>
+<span id="cb615-20"><a href="cluster-solution-evaluation.html#cb615-20"></a><span class="st">  </span><span class="kw">labs</span>(</span>
+<span id="cb615-21"><a href="cluster-solution-evaluation.html#cb615-21"></a>    <span class="dt">title =</span> <span class="st">&quot;Distribution of index values from 200 random assignments&quot;</span>,</span>
+<span id="cb615-22"><a href="cluster-solution-evaluation.html#cb615-22"></a>    <span class="dt">x =</span> <span class="st">&quot;index value&quot;</span>,</span>
+<span id="cb615-23"><a href="cluster-solution-evaluation.html#cb615-23"></a>    <span class="dt">y =</span> <span class="st">&quot;frequency&quot;</span></span>
+<span id="cb615-24"><a href="cluster-solution-evaluation.html#cb615-24"></a>  )</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_bar).</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:rand-index-random"></span>
 <img src="data-mining-book_files/figure-html/rand-index-random-1.png" alt="랜덤한 군집해 간 비교: 랜드지수 및 수정랜드지수" width="672" />
@@ -578,10 +585,10 @@ Figure 14.1: 랜덤한 군집해 간 비교: 랜드지수 및 수정랜드지수
 U &amp;=&amp; \{(1, 2, 3, 4), (5, 6, 7), (8, 9, 10) \}\\
 V &amp;=&amp; \{(1, 2, 5, 8), (3, 6, 9), (4, 7, 10) \}
 \end{eqnarray*}\]</span></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rand_index</span>(
-  <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>),
-  <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
-)</code></pre>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="cluster-solution-evaluation.html#cb617-1"></a><span class="kw">rand_index</span>(</span>
+<span id="cb617-2"><a href="cluster-solution-evaluation.html#cb617-2"></a>  <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>),</span>
+<span id="cb617-3"><a href="cluster-solution-evaluation.html#cb617-3"></a>  <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb617-4"><a href="cluster-solution-evaluation.html#cb617-4"></a>)</span></code></pre></div>
 <pre><code>## $ri
 ## [1] 0.5111111
 ## 
@@ -599,75 +606,75 @@ C = \{ C_1, C_2, \cdots, C_K \}
 <div id="cluster-evaluation-internal-index-basic-script" class="section level4">
 <h4><span class="header-section-number">14.2.2.1</span> 기본 R 스크립트</h4>
 <p>아래와 같이 두 개의 변수 <span class="math inline">\(x_1\)</span> 및 <span class="math inline">\(x_2\)</span>로 표현되는 객체 데이터에 대해 군집을 찾고자 한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
-  <span class="op">~</span>id, <span class="op">~</span>x1, <span class="op">~</span>x2,
-  <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">15</span>,
-  <span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">13</span>,
-  <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">13</span>,
-  <span class="dv">4</span>, <span class="dv">19</span>, <span class="dv">4</span>,
-  <span class="dv">5</span>, <span class="dv">17</span>, <span class="dv">17</span>,
-  <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">11</span>,
-  <span class="dv">7</span>, <span class="dv">19</span>, <span class="dv">12</span>,
-  <span class="dv">8</span>, <span class="dv">18</span>, <span class="dv">6</span>
-)
-
-df <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(
-    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
-    <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
-    <span class="dt">col.names =</span> <span class="kw">c</span>(
-      <span class="st">&#39;객체번호&#39;</span>, 
-      <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>
-      ),
-    <span class="dt">caption =</span> <span class="st">&#39;군집 대상 데이터&#39;</span>
-  )</code></pre>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="cluster-solution-evaluation.html#cb619-1"></a>df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
+<span id="cb619-2"><a href="cluster-solution-evaluation.html#cb619-2"></a>  <span class="op">~</span>id, <span class="op">~</span>x1, <span class="op">~</span>x2,</span>
+<span id="cb619-3"><a href="cluster-solution-evaluation.html#cb619-3"></a>  <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">15</span>,</span>
+<span id="cb619-4"><a href="cluster-solution-evaluation.html#cb619-4"></a>  <span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">13</span>,</span>
+<span id="cb619-5"><a href="cluster-solution-evaluation.html#cb619-5"></a>  <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">13</span>,</span>
+<span id="cb619-6"><a href="cluster-solution-evaluation.html#cb619-6"></a>  <span class="dv">4</span>, <span class="dv">19</span>, <span class="dv">4</span>,</span>
+<span id="cb619-7"><a href="cluster-solution-evaluation.html#cb619-7"></a>  <span class="dv">5</span>, <span class="dv">17</span>, <span class="dv">17</span>,</span>
+<span id="cb619-8"><a href="cluster-solution-evaluation.html#cb619-8"></a>  <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">11</span>,</span>
+<span id="cb619-9"><a href="cluster-solution-evaluation.html#cb619-9"></a>  <span class="dv">7</span>, <span class="dv">19</span>, <span class="dv">12</span>,</span>
+<span id="cb619-10"><a href="cluster-solution-evaluation.html#cb619-10"></a>  <span class="dv">8</span>, <span class="dv">18</span>, <span class="dv">6</span></span>
+<span id="cb619-11"><a href="cluster-solution-evaluation.html#cb619-11"></a>)</span>
+<span id="cb619-12"><a href="cluster-solution-evaluation.html#cb619-12"></a></span>
+<span id="cb619-13"><a href="cluster-solution-evaluation.html#cb619-13"></a>df <span class="op">%&gt;%</span></span>
+<span id="cb619-14"><a href="cluster-solution-evaluation.html#cb619-14"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb619-15"><a href="cluster-solution-evaluation.html#cb619-15"></a>    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb619-16"><a href="cluster-solution-evaluation.html#cb619-16"></a>    <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb619-17"><a href="cluster-solution-evaluation.html#cb619-17"></a>    <span class="dt">col.names =</span> <span class="kw">c</span>(</span>
+<span id="cb619-18"><a href="cluster-solution-evaluation.html#cb619-18"></a>      <span class="st">&#39;객체번호&#39;</span>, </span>
+<span id="cb619-19"><a href="cluster-solution-evaluation.html#cb619-19"></a>      <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span></span>
+<span id="cb619-20"><a href="cluster-solution-evaluation.html#cb619-20"></a>      ),</span>
+<span id="cb619-21"><a href="cluster-solution-evaluation.html#cb619-21"></a>    <span class="dt">caption =</span> <span class="st">&#39;군집 대상 데이터&#39;</span></span>
+<span id="cb619-22"><a href="cluster-solution-evaluation.html#cb619-22"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:cluster-eval-data">Table 14.1: </span>군집 대상 데이터</caption>
 <thead>
 <tr class="header">
-<th align="center">객체번호</th>
+<th align="right">객체번호</th>
 <th align="right"><span class="math inline">\(x_1\)</span></th>
 <th align="right"><span class="math inline">\(x_2\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">1</td>
+<td align="right">1</td>
 <td align="right">4</td>
 <td align="right">15</td>
 </tr>
 <tr class="even">
-<td align="center">2</td>
+<td align="right">2</td>
 <td align="right">20</td>
 <td align="right">13</td>
 </tr>
 <tr class="odd">
-<td align="center">3</td>
+<td align="right">3</td>
 <td align="right">3</td>
 <td align="right">13</td>
 </tr>
 <tr class="even">
-<td align="center">4</td>
+<td align="right">4</td>
 <td align="right">19</td>
 <td align="right">4</td>
 </tr>
 <tr class="odd">
-<td align="center">5</td>
+<td align="right">5</td>
 <td align="right">17</td>
 <td align="right">17</td>
 </tr>
 <tr class="even">
-<td align="center">6</td>
+<td align="right">6</td>
 <td align="right">8</td>
 <td align="right">11</td>
 </tr>
 <tr class="odd">
-<td align="center">7</td>
+<td align="right">7</td>
 <td align="right">19</td>
 <td align="right">12</td>
 </tr>
 <tr class="even">
-<td align="center">8</td>
+<td align="right">8</td>
 <td align="right">18</td>
 <td align="right">6</td>
 </tr>
@@ -681,14 +688,14 @@ V =&amp; \{ \{1, 3, 6\}, \{2, 4, 5, 7, 8\} \}
 \end{split}
 \tag{14.3}
 \end{equation}\]</span></p>
-<pre class="sourceCode r"><code class="sourceCode r">sol_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
-sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</code></pre>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="cluster-solution-evaluation.html#cb620-1"></a>sol_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb620-2"><a href="cluster-solution-evaluation.html#cb620-2"></a>sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span></code></pre></div>
 <p>본 장에서는 4가지 내부 평가지수를 다룬다. 아래는 R 패키지들에 속한 각각의 함수를 실행하여 그 결과를 리스트 형태로 리턴하는 사용자 정의 함수 <code>cluster_eval</code>를 구현한 것이다. 해당 함수에서 호출하는 R 패키지 함수들은 아래와 같다.</p>
 <ul>
-<li>Dunn index <span class="citation">(Dunn <a href="#ref-dunn1973fuzzy">1973</a>)</span>: <code>clValid::dunn</code></li>
-<li>CH index <span class="citation">(Caliński and Harabasz <a href="#ref-calinski1974dendrite">1974</a>)</span>: <code>fpc::calinhara</code></li>
-<li>Connectivity <span class="citation">(Handl and Knowles <a href="#ref-handl2005exploiting">2005</a>)</span>: <code>clValid::connectivity</code></li>
-<li>Silhouettes <span class="citation">(Rousseeuw <a href="#ref-rousseeuw1987silhouettes">1987</a>)</span>: <code>cluster::silhouette</code></li>
+<li>Dunn index <span class="citation">(Dunn <a href="#ref-dunn1973fuzzy" role="doc-biblioref">1973</a>)</span>: <code>clValid::dunn</code></li>
+<li>CH index <span class="citation">(Caliński and Harabasz <a href="#ref-calinski1974dendrite" role="doc-biblioref">1974</a>)</span>: <code>fpc::calinhara</code></li>
+<li>Connectivity <span class="citation">(Handl and Knowles <a href="#ref-handl2005exploiting" role="doc-biblioref">2005</a>)</span>: <code>clValid::connectivity</code></li>
+<li>Silhouettes <span class="citation">(Rousseeuw <a href="#ref-rousseeuw1987silhouettes" role="doc-biblioref">1987</a>)</span>: <code>cluster::silhouette</code></li>
 </ul>
 <p>각각의 평가지수에 대한 자세한 설명은 다음 장에서 하기로 한다.</p>
 <p>아래 구현한 사용자 정의함수는 아래와 같은 입력 파라미터를 요구한다.</p>
@@ -698,38 +705,49 @@ sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</
 <li><code>dist_method</code>: 거리 척도; Dunn, Connectivity, Silhouettes 지수 측정에 사용된다.</li>
 <li><code>nn</code>: 최근 객체 수 (&gt;= 2); Connectivity 측정에 사용된다.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r">cluster_eval &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="dt">nn =</span> <span class="dv">2</span>) {
-  dunn_index &lt;-<span class="st"> </span>clValid<span class="op">::</span><span class="kw">dunn</span>(
-    <span class="dt">Data =</span> df, 
-    <span class="dt">clusters =</span> cluster, 
-    <span class="dt">method =</span> dist_method
-  )
-  
-  ch_index &lt;-<span class="st"> </span>fpc<span class="op">::</span><span class="kw">calinhara</span>(
-    <span class="dt">x =</span> df, 
-    <span class="dt">clustering =</span> cluster
-  )
-  
-  connectivity &lt;-<span class="st"> </span>clValid<span class="op">::</span><span class="kw">connectivity</span>(
-    <span class="dt">Data =</span> df, 
-    <span class="dt">clusters =</span> cluster, 
-    <span class="dt">neighbSize =</span> nn
-  )
-  
-  asw &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">silhouette</span>(
-    <span class="dt">x =</span> cluster, 
-    <span class="dt">dist =</span> <span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method)
-  )[, <span class="st">&quot;sil_width&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mean</span>()
-  
-  <span class="kw">return</span>(<span class="kw">list</span>(
-    <span class="dt">dunn_index =</span> dunn_index,
-    <span class="dt">ch_index =</span> ch_index,
-    <span class="dt">connectivity =</span> connectivity,
-    <span class="dt">asw =</span> asw
-  ))
-}
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="cluster-solution-evaluation.html#cb621-1"></a>cluster_eval &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="dt">nn =</span> <span class="dv">2</span>) {</span>
+<span id="cb621-2"><a href="cluster-solution-evaluation.html#cb621-2"></a>  dunn_index &lt;-<span class="st"> </span>clValid<span class="op">::</span><span class="kw">dunn</span>(</span>
+<span id="cb621-3"><a href="cluster-solution-evaluation.html#cb621-3"></a>    <span class="dt">Data =</span> df, </span>
+<span id="cb621-4"><a href="cluster-solution-evaluation.html#cb621-4"></a>    <span class="dt">clusters =</span> cluster, </span>
+<span id="cb621-5"><a href="cluster-solution-evaluation.html#cb621-5"></a>    <span class="dt">method =</span> dist_method</span>
+<span id="cb621-6"><a href="cluster-solution-evaluation.html#cb621-6"></a>  )</span>
+<span id="cb621-7"><a href="cluster-solution-evaluation.html#cb621-7"></a>  </span>
+<span id="cb621-8"><a href="cluster-solution-evaluation.html#cb621-8"></a>  ch_index &lt;-<span class="st"> </span>fpc<span class="op">::</span><span class="kw">calinhara</span>(</span>
+<span id="cb621-9"><a href="cluster-solution-evaluation.html#cb621-9"></a>    <span class="dt">x =</span> df, </span>
+<span id="cb621-10"><a href="cluster-solution-evaluation.html#cb621-10"></a>    <span class="dt">clustering =</span> cluster</span>
+<span id="cb621-11"><a href="cluster-solution-evaluation.html#cb621-11"></a>  )</span>
+<span id="cb621-12"><a href="cluster-solution-evaluation.html#cb621-12"></a>  </span>
+<span id="cb621-13"><a href="cluster-solution-evaluation.html#cb621-13"></a>  connectivity &lt;-<span class="st"> </span>clValid<span class="op">::</span><span class="kw">connectivity</span>(</span>
+<span id="cb621-14"><a href="cluster-solution-evaluation.html#cb621-14"></a>    <span class="dt">Data =</span> df, </span>
+<span id="cb621-15"><a href="cluster-solution-evaluation.html#cb621-15"></a>    <span class="dt">clusters =</span> cluster, </span>
+<span id="cb621-16"><a href="cluster-solution-evaluation.html#cb621-16"></a>    <span class="dt">neighbSize =</span> nn</span>
+<span id="cb621-17"><a href="cluster-solution-evaluation.html#cb621-17"></a>  )</span>
+<span id="cb621-18"><a href="cluster-solution-evaluation.html#cb621-18"></a>  </span>
+<span id="cb621-19"><a href="cluster-solution-evaluation.html#cb621-19"></a>  asw &lt;-<span class="st"> </span>cluster<span class="op">::</span><span class="kw">silhouette</span>(</span>
+<span id="cb621-20"><a href="cluster-solution-evaluation.html#cb621-20"></a>    <span class="dt">x =</span> cluster, </span>
+<span id="cb621-21"><a href="cluster-solution-evaluation.html#cb621-21"></a>    <span class="dt">dist =</span> <span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method)</span>
+<span id="cb621-22"><a href="cluster-solution-evaluation.html#cb621-22"></a>  )[, <span class="st">&quot;sil_width&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mean</span>()</span>
+<span id="cb621-23"><a href="cluster-solution-evaluation.html#cb621-23"></a>  </span>
+<span id="cb621-24"><a href="cluster-solution-evaluation.html#cb621-24"></a>  <span class="kw">return</span>(<span class="kw">list</span>(</span>
+<span id="cb621-25"><a href="cluster-solution-evaluation.html#cb621-25"></a>    <span class="dt">dunn_index =</span> dunn_index,</span>
+<span id="cb621-26"><a href="cluster-solution-evaluation.html#cb621-26"></a>    <span class="dt">ch_index =</span> ch_index,</span>
+<span id="cb621-27"><a href="cluster-solution-evaluation.html#cb621-27"></a>    <span class="dt">connectivity =</span> connectivity,</span>
+<span id="cb621-28"><a href="cluster-solution-evaluation.html#cb621-28"></a>    <span class="dt">asw =</span> asw</span>
+<span id="cb621-29"><a href="cluster-solution-evaluation.html#cb621-29"></a>  ))</span>
+<span id="cb621-30"><a href="cluster-solution-evaluation.html#cb621-30"></a>}</span>
+<span id="cb621-31"><a href="cluster-solution-evaluation.html#cb621-31"></a></span>
+<span id="cb621-32"><a href="cluster-solution-evaluation.html#cb621-32"></a><span class="kw">map_dfr</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), cluster_eval, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">.id =</span> <span class="st">&quot;solution&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in if (class(distance) == &quot;dist&quot;) distance &lt;- as.matrix(distance): the
+## condition has length &gt; 1 and only the first element will be used
 
-<span class="kw">map_dfr</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), cluster_eval, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">.id =</span> <span class="st">&quot;solution&quot;</span>)</code></pre>
+## Warning in if (class(distance) == &quot;dist&quot;) distance &lt;- as.matrix(distance): the
+## condition has length &gt; 1 and only the first element will be used
+
+## Warning in if (class(distance) == &quot;dist&quot;) distance &lt;- as.matrix(distance): the
+## condition has length &gt; 1 and only the first element will be used
+
+## Warning in if (class(distance) == &quot;dist&quot;) distance &lt;- as.matrix(distance): the
+## condition has length &gt; 1 and only the first element will be used</code></pre>
 <pre><code>## # A tibble: 2 x 5
 ##   solution dunn_index ch_index connectivity   asw
 ##   &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
@@ -738,7 +756,7 @@ sol_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">c</
 </div>
 <div id="cluster-evaluation-internal-index-explanation" class="section level4">
 <h4><span class="header-section-number">14.2.2.2</span> 대표 내부평가지수</h4>
-<p><span class="citation">Dunn (<a href="#ref-dunn1973fuzzy">1973</a>)</span> 은 아래와 같은 지수를 제안하였다.</p>
+<p><span class="citation">Dunn (<a href="#ref-dunn1973fuzzy" role="doc-biblioref">1973</a>)</span> 은 아래와 같은 지수를 제안하였다.</p>
 <p><span class="math display" id="eq:cluster-dunn-index">\[\begin{equation}
 DI = \frac{\min_{\mathbf{x} \in C_i, \, \mathbf{y} \in C_j \, 1 \leq i \neq j \leq K} d(\mathbf{x}, \mathbf{y})}{\max_{\mathbf{x} \in C_i, \mathbf{y} \in C_i, \, 1 \leq i \leq K} d(\mathbf{x}, \mathbf{y})} \tag{14.4}
 \end{equation}\]</span></p>
@@ -749,96 +767,97 @@ DI = \frac{\min_{\mathbf{x} \in C_i, \, \mathbf{y} \in C_j \, 1 \leq i \neq j \l
 <li><code>df</code>: 객체 데이터를 나타내는 <span class="math inline">\(n\)</span>행의 프레임</li>
 <li><code>dist_method</code>: <code>base::dist</code> 함수의 <code>method</code> 파라미터값으로 사용할 거리 척도</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r">dunn_index &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {
-  <span class="co"># 객체 수</span>
-  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
-  
-  <span class="co"># 각 객체의 군집해</span>
-  cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-    <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span>n,
-    <span class="dt">cluster =</span> cluster
-  )
-  
-  <span class="co"># 각 객체 간 거리 데이터 프레임</span>
-  <span class="co"># 위 군집해 데이터 프레임과 `inner_join` 을 통해</span>
-  <span class="co"># 두 객체가 동일 군집에 속하는지 서로 다른 군집에 속하는 지 표현</span>
-  dist_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method, <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">inner_join</span>(
-      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item1 =</span> id, <span class="dt">item1_cluster =</span> cluster),
-      <span class="dt">by =</span> <span class="st">&quot;item1&quot;</span>
-      ) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">inner_join</span>(
-      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item2 =</span> id, <span class="dt">item2_cluster =</span> cluster),
-      <span class="dt">by =</span> <span class="st">&quot;item2&quot;</span>
-    )
-  
-  <span class="co"># 서로 다른 군집에 속한 객체 쌍 중</span>
-  <span class="co"># 가장 가까운 객체 간의 거리</span>
-  numerator &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">!=</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">1</span>, distance) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span>.<span class="op">$</span>distance
-  
-  <span class="co"># 서로 같은 군집에 속한 객체 쌍 중</span>
-  <span class="co"># 가장 먼 객체 간의 거리</span>
-  denominator &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">==</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">top_n</span>(<span class="dv">1</span>, distance) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span>.<span class="op">$</span>distance
-  
-  res &lt;-<span class="st"> </span>numerator <span class="op">/</span><span class="st"> </span>denominator
-  
-  <span class="kw">return</span>(res)
-}</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), dunn_index, <span class="dt">df =</span> df[, <span class="dv">-1</span>])</code></pre>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="cluster-solution-evaluation.html#cb624-1"></a>dunn_index &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {</span>
+<span id="cb624-2"><a href="cluster-solution-evaluation.html#cb624-2"></a>  <span class="co"># 객체 수</span></span>
+<span id="cb624-3"><a href="cluster-solution-evaluation.html#cb624-3"></a>  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb624-4"><a href="cluster-solution-evaluation.html#cb624-4"></a>  </span>
+<span id="cb624-5"><a href="cluster-solution-evaluation.html#cb624-5"></a>  <span class="co"># 각 객체의 군집해</span></span>
+<span id="cb624-6"><a href="cluster-solution-evaluation.html#cb624-6"></a>  cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb624-7"><a href="cluster-solution-evaluation.html#cb624-7"></a>    <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span>n,</span>
+<span id="cb624-8"><a href="cluster-solution-evaluation.html#cb624-8"></a>    <span class="dt">cluster =</span> cluster</span>
+<span id="cb624-9"><a href="cluster-solution-evaluation.html#cb624-9"></a>  )</span>
+<span id="cb624-10"><a href="cluster-solution-evaluation.html#cb624-10"></a>  </span>
+<span id="cb624-11"><a href="cluster-solution-evaluation.html#cb624-11"></a>  <span class="co"># 각 객체 간 거리 데이터 프레임</span></span>
+<span id="cb624-12"><a href="cluster-solution-evaluation.html#cb624-12"></a>  <span class="co"># 위 군집해 데이터 프레임과 `inner_join` 을 통해</span></span>
+<span id="cb624-13"><a href="cluster-solution-evaluation.html#cb624-13"></a>  <span class="co"># 두 객체가 동일 군집에 속하는지 서로 다른 군집에 속하는 지 표현</span></span>
+<span id="cb624-14"><a href="cluster-solution-evaluation.html#cb624-14"></a>  dist_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method, <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb624-15"><a href="cluster-solution-evaluation.html#cb624-15"></a><span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></span>
+<span id="cb624-16"><a href="cluster-solution-evaluation.html#cb624-16"></a><span class="st">    </span><span class="kw">mutate_if</span>(is.factor, <span class="op">~</span><span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">as.character</span>(.))) <span class="op">%&gt;%</span></span>
+<span id="cb624-17"><a href="cluster-solution-evaluation.html#cb624-17"></a><span class="st">    </span><span class="kw">inner_join</span>(</span>
+<span id="cb624-18"><a href="cluster-solution-evaluation.html#cb624-18"></a>      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item1 =</span> id, <span class="dt">item1_cluster =</span> cluster),</span>
+<span id="cb624-19"><a href="cluster-solution-evaluation.html#cb624-19"></a>      <span class="dt">by =</span> <span class="st">&quot;item1&quot;</span></span>
+<span id="cb624-20"><a href="cluster-solution-evaluation.html#cb624-20"></a>      ) <span class="op">%&gt;%</span></span>
+<span id="cb624-21"><a href="cluster-solution-evaluation.html#cb624-21"></a><span class="st">    </span><span class="kw">inner_join</span>(</span>
+<span id="cb624-22"><a href="cluster-solution-evaluation.html#cb624-22"></a>      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item2 =</span> id, <span class="dt">item2_cluster =</span> cluster),</span>
+<span id="cb624-23"><a href="cluster-solution-evaluation.html#cb624-23"></a>      <span class="dt">by =</span> <span class="st">&quot;item2&quot;</span></span>
+<span id="cb624-24"><a href="cluster-solution-evaluation.html#cb624-24"></a>    )</span>
+<span id="cb624-25"><a href="cluster-solution-evaluation.html#cb624-25"></a>  </span>
+<span id="cb624-26"><a href="cluster-solution-evaluation.html#cb624-26"></a>  <span class="co"># 서로 다른 군집에 속한 객체 쌍 중</span></span>
+<span id="cb624-27"><a href="cluster-solution-evaluation.html#cb624-27"></a>  <span class="co"># 가장 가까운 객체 간의 거리</span></span>
+<span id="cb624-28"><a href="cluster-solution-evaluation.html#cb624-28"></a>  numerator &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span></span>
+<span id="cb624-29"><a href="cluster-solution-evaluation.html#cb624-29"></a><span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">!=</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span></span>
+<span id="cb624-30"><a href="cluster-solution-evaluation.html#cb624-30"></a><span class="st">    </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">1</span>, distance) <span class="op">%&gt;%</span></span>
+<span id="cb624-31"><a href="cluster-solution-evaluation.html#cb624-31"></a><span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb624-32"><a href="cluster-solution-evaluation.html#cb624-32"></a><span class="st">    </span>.<span class="op">$</span>distance</span>
+<span id="cb624-33"><a href="cluster-solution-evaluation.html#cb624-33"></a>  </span>
+<span id="cb624-34"><a href="cluster-solution-evaluation.html#cb624-34"></a>  <span class="co"># 서로 같은 군집에 속한 객체 쌍 중</span></span>
+<span id="cb624-35"><a href="cluster-solution-evaluation.html#cb624-35"></a>  <span class="co"># 가장 먼 객체 간의 거리</span></span>
+<span id="cb624-36"><a href="cluster-solution-evaluation.html#cb624-36"></a>  denominator &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span></span>
+<span id="cb624-37"><a href="cluster-solution-evaluation.html#cb624-37"></a><span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">==</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span></span>
+<span id="cb624-38"><a href="cluster-solution-evaluation.html#cb624-38"></a><span class="st">    </span><span class="kw">top_n</span>(<span class="dv">1</span>, distance) <span class="op">%&gt;%</span></span>
+<span id="cb624-39"><a href="cluster-solution-evaluation.html#cb624-39"></a><span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb624-40"><a href="cluster-solution-evaluation.html#cb624-40"></a><span class="st">    </span>.<span class="op">$</span>distance</span>
+<span id="cb624-41"><a href="cluster-solution-evaluation.html#cb624-41"></a>  </span>
+<span id="cb624-42"><a href="cluster-solution-evaluation.html#cb624-42"></a>  res &lt;-<span class="st"> </span>numerator <span class="op">/</span><span class="st"> </span>denominator</span>
+<span id="cb624-43"><a href="cluster-solution-evaluation.html#cb624-43"></a>  </span>
+<span id="cb624-44"><a href="cluster-solution-evaluation.html#cb624-44"></a>  <span class="kw">return</span>(res)</span>
+<span id="cb624-45"><a href="cluster-solution-evaluation.html#cb624-45"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="cluster-solution-evaluation.html#cb625-1"></a><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), dunn_index, <span class="dt">df =</span> df[, <span class="dv">-1</span>])</span></code></pre></div>
 <pre><code>## [1] 1.075291 0.822375</code></pre>
-<p><span class="citation">Caliński and Harabasz (<a href="#ref-calinski1974dendrite">1974</a>)</span> 는 다음과 같은 지수를 제안하였다.</p>
+<p><span class="citation">Caliński and Harabasz (<a href="#ref-calinski1974dendrite" role="doc-biblioref">1974</a>)</span> 는 다음과 같은 지수를 제안하였다.</p>
 <p><span class="math display" id="eq:cluster-ch-index">\[\begin{equation}
 CH = \frac{\frac{1}{K - 1} \sum_{k = 1}^{K} n_k (\mathbf{c}_k - \mathbf{c})^\top (\mathbf{c}_k - \mathbf{c})}{\frac{1}{n - K} \sum_{k = 1}^{K} \sum_{i \in C_k} (\mathbf{x}_i - \mathbf{c}_k)^\top (\mathbf{x}_i - \mathbf{c}_k)} \tag{14.5}
 \end{equation}\]</span></p>
 <p>여기에서 <span class="math inline">\(\mathbf{c}_k\)</span>는 군집 <span class="math inline">\(k\)</span>의 중심좌표(centroid), <span class="math inline">\(\mathbf{c}\)</span>는 전체 객체들의 중심좌표, <span class="math inline">\(n_k\)</span>는 군집 <span class="math inline">\(C_k\)</span>내의 객체 수, <span class="math inline">\(n\)</span>은 전체 객체 수를 나타낸다. 식 <a href="cluster-solution-evaluation.html#eq:cluster-ch-index">(14.5)</a> 또한 분자는 분리성, 분모는 밀집성을 평가하며, 값이 클수록 좋은 군집해로 평가된다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">ch_index &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df) {
-  <span class="co"># 전체 데이터 중심</span>
-  centroid &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)
-  
-  cluster_df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cluster =</span> cluster) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(cluster) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">nest</span>()
-  
-  <span class="co"># 군집 중심</span>
-  cluster_centroid_df &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(cluster_df<span class="op">$</span>data, <span class="op">~</span><span class="st"> </span><span class="kw">summarize_all</span>(., mean))
-  
-  <span class="co"># 각 군집 중심과 전체 데이터 중심 간 제곱 유클리드 거리</span>
-  centroid_dist &lt;-<span class="st"> </span>flexclust<span class="op">::</span><span class="kw">dist2</span>(
-    cluster_centroid_df, 
-    centroid
-    )<span class="op">^</span><span class="dv">2</span>
-  
-  <span class="co"># 각 군집 크기</span>
-  cluster_size &lt;-<span class="st"> </span><span class="kw">map_dbl</span>(cluster_df<span class="op">$</span>data, nrow)
-  
-  numerator &lt;-<span class="st"> </span><span class="kw">sum</span>(centroid_dist <span class="op">*</span><span class="st"> </span>cluster_size) <span class="op">/</span><span class="st"> </span>(<span class="kw">nrow</span>(cluster_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)
-  
-  denominator &lt;-<span class="st"> </span><span class="kw">map_dbl</span>(
-    cluster_df<span class="op">$</span>data,
-    <span class="co"># 각 군집 내의 객체와 군집 중심 간 제곱 유클리드 거리의 합</span>
-    <span class="op">~</span><span class="st"> </span>flexclust<span class="op">::</span><span class="kw">dist2</span>(., <span class="kw">summarize_all</span>(., mean))<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>()
-    ) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">sum</span>() <span class="op">%&gt;%</span>
-<span class="st">    `</span><span class="dt">/</span><span class="st">`</span>(<span class="kw">nrow</span>(df) <span class="op">-</span><span class="st"> </span><span class="kw">nrow</span>(cluster_df))
-
-  res &lt;-<span class="st"> </span>numerator <span class="op">/</span><span class="st"> </span>denominator
-  
-  <span class="kw">return</span>(res)
-}
-
-<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), ch_index, <span class="dt">df =</span> df[, <span class="dv">-1</span>])</code></pre>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="cluster-solution-evaluation.html#cb627-1"></a>ch_index &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df) {</span>
+<span id="cb627-2"><a href="cluster-solution-evaluation.html#cb627-2"></a>  <span class="co"># 전체 데이터 중심</span></span>
+<span id="cb627-3"><a href="cluster-solution-evaluation.html#cb627-3"></a>  centroid &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</span>
+<span id="cb627-4"><a href="cluster-solution-evaluation.html#cb627-4"></a>  </span>
+<span id="cb627-5"><a href="cluster-solution-evaluation.html#cb627-5"></a>  cluster_df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb627-6"><a href="cluster-solution-evaluation.html#cb627-6"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cluster =</span> cluster) <span class="op">%&gt;%</span></span>
+<span id="cb627-7"><a href="cluster-solution-evaluation.html#cb627-7"></a><span class="st">    </span><span class="kw">group_by</span>(cluster) <span class="op">%&gt;%</span></span>
+<span id="cb627-8"><a href="cluster-solution-evaluation.html#cb627-8"></a><span class="st">    </span><span class="kw">nest</span>()</span>
+<span id="cb627-9"><a href="cluster-solution-evaluation.html#cb627-9"></a>  </span>
+<span id="cb627-10"><a href="cluster-solution-evaluation.html#cb627-10"></a>  <span class="co"># 군집 중심</span></span>
+<span id="cb627-11"><a href="cluster-solution-evaluation.html#cb627-11"></a>  cluster_centroid_df &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(cluster_df<span class="op">$</span>data, <span class="op">~</span><span class="st"> </span><span class="kw">summarize_all</span>(., mean))</span>
+<span id="cb627-12"><a href="cluster-solution-evaluation.html#cb627-12"></a>  </span>
+<span id="cb627-13"><a href="cluster-solution-evaluation.html#cb627-13"></a>  <span class="co"># 각 군집 중심과 전체 데이터 중심 간 제곱 유클리드 거리</span></span>
+<span id="cb627-14"><a href="cluster-solution-evaluation.html#cb627-14"></a>  centroid_dist &lt;-<span class="st"> </span>flexclust<span class="op">::</span><span class="kw">dist2</span>(</span>
+<span id="cb627-15"><a href="cluster-solution-evaluation.html#cb627-15"></a>    cluster_centroid_df, </span>
+<span id="cb627-16"><a href="cluster-solution-evaluation.html#cb627-16"></a>    centroid</span>
+<span id="cb627-17"><a href="cluster-solution-evaluation.html#cb627-17"></a>    )<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb627-18"><a href="cluster-solution-evaluation.html#cb627-18"></a>  </span>
+<span id="cb627-19"><a href="cluster-solution-evaluation.html#cb627-19"></a>  <span class="co"># 각 군집 크기</span></span>
+<span id="cb627-20"><a href="cluster-solution-evaluation.html#cb627-20"></a>  cluster_size &lt;-<span class="st"> </span><span class="kw">map_dbl</span>(cluster_df<span class="op">$</span>data, nrow)</span>
+<span id="cb627-21"><a href="cluster-solution-evaluation.html#cb627-21"></a>  </span>
+<span id="cb627-22"><a href="cluster-solution-evaluation.html#cb627-22"></a>  numerator &lt;-<span class="st"> </span><span class="kw">sum</span>(centroid_dist <span class="op">*</span><span class="st"> </span>cluster_size) <span class="op">/</span><span class="st"> </span>(<span class="kw">nrow</span>(cluster_df) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb627-23"><a href="cluster-solution-evaluation.html#cb627-23"></a>  </span>
+<span id="cb627-24"><a href="cluster-solution-evaluation.html#cb627-24"></a>  denominator &lt;-<span class="st"> </span><span class="kw">map_dbl</span>(</span>
+<span id="cb627-25"><a href="cluster-solution-evaluation.html#cb627-25"></a>    cluster_df<span class="op">$</span>data,</span>
+<span id="cb627-26"><a href="cluster-solution-evaluation.html#cb627-26"></a>    <span class="co"># 각 군집 내의 객체와 군집 중심 간 제곱 유클리드 거리의 합</span></span>
+<span id="cb627-27"><a href="cluster-solution-evaluation.html#cb627-27"></a>    <span class="op">~</span><span class="st"> </span>flexclust<span class="op">::</span><span class="kw">dist2</span>(., <span class="kw">summarize_all</span>(., mean))<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>()</span>
+<span id="cb627-28"><a href="cluster-solution-evaluation.html#cb627-28"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb627-29"><a href="cluster-solution-evaluation.html#cb627-29"></a><span class="st">    </span><span class="kw">sum</span>() <span class="op">%&gt;%</span></span>
+<span id="cb627-30"><a href="cluster-solution-evaluation.html#cb627-30"></a><span class="st">    `</span><span class="dt">/</span><span class="st">`</span>(<span class="kw">nrow</span>(df) <span class="op">-</span><span class="st"> </span><span class="kw">nrow</span>(cluster_df))</span>
+<span id="cb627-31"><a href="cluster-solution-evaluation.html#cb627-31"></a></span>
+<span id="cb627-32"><a href="cluster-solution-evaluation.html#cb627-32"></a>  res &lt;-<span class="st"> </span>numerator <span class="op">/</span><span class="st"> </span>denominator</span>
+<span id="cb627-33"><a href="cluster-solution-evaluation.html#cb627-33"></a>  </span>
+<span id="cb627-34"><a href="cluster-solution-evaluation.html#cb627-34"></a>  <span class="kw">return</span>(res)</span>
+<span id="cb627-35"><a href="cluster-solution-evaluation.html#cb627-35"></a>}</span>
+<span id="cb627-36"><a href="cluster-solution-evaluation.html#cb627-36"></a></span>
+<span id="cb627-37"><a href="cluster-solution-evaluation.html#cb627-37"></a><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), ch_index, <span class="dt">df =</span> df[, <span class="dv">-1</span>])</span></code></pre></div>
 <pre><code>## [1] 26.45029 15.36218</code></pre>
-<p><span class="citation">Handl and Knowles (<a href="#ref-handl2005exploiting">2005</a>)</span> 은 연결성을 반영한 아래와 같은 지수를 제시하고 있다.</p>
+<p><span class="citation">Handl and Knowles (<a href="#ref-handl2005exploiting" role="doc-biblioref">2005</a>)</span> 은 연결성을 반영한 아래와 같은 지수를 제시하고 있다.</p>
 <p><span class="math display" id="eq:cluster-connectivity">\[\begin{equation}
 Conn = \sum_{i = 1}^{n} \sum_{j = 1}^{L} v_{i, nn_{i}(j)} \tag{14.6}
 \end{equation}\]</span></p>
@@ -850,47 +869,48 @@ v_{i, nn_i(j)} = \begin{cases}
 \end{cases}
 \end{equation*}\]</span></p>
 <p>즉, 식 <a href="cluster-solution-evaluation.html#eq:cluster-connectivity">(14.6)</a>는 각 객체가 <span class="math inline">\(j (\leq L)\)</span>번째 최근 객체와 다른 객체에 속하면 <span class="math inline">\(1 / j\)</span>의 벌점을 부여하는 방식으로, 작은 값일수록 좋은 군집으로 평가될 수 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">connectivity &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="dt">n_neighbor =</span> <span class="dv">1</span>) {
-  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
-  
-  cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-    <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span>n,
-    <span class="dt">cluster =</span> cluster
-  )
-
-  <span class="co"># 객체간 거리</span>
-  distance_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method, <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>()
-  
-  <span class="co"># 최근 객체</span>
-  nn_df &lt;-<span class="st"> </span>distance_df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(item1) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">nearest =</span> <span class="kw">rank</span>(distance, <span class="dt">ties.method =</span> <span class="st">&quot;random&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(nearest <span class="op">&lt;=</span><span class="st"> </span>n_neighbor) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">inner_join</span>(
-      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item1 =</span> id, <span class="dt">item1_cluster =</span> cluster),
-      <span class="dt">by =</span> <span class="st">&quot;item1&quot;</span>
-      ) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">inner_join</span>(
-      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item2 =</span> id, <span class="dt">item2_cluster =</span> cluster),
-      <span class="dt">by =</span> <span class="st">&quot;item2&quot;</span>
-    )
-  
-  <span class="co"># 연결성 계산</span>
-  nn_df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">!=</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">v =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span>nearest) <span class="op">%&gt;%</span>
-<span class="st">    </span>.<span class="op">$</span>v <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">sum</span>()
-  
-}
-
-<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), connectivity, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">n_neighbor =</span> <span class="dv">1</span>)</code></pre>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="cluster-solution-evaluation.html#cb629-1"></a>connectivity &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="dt">n_neighbor =</span> <span class="dv">1</span>) {</span>
+<span id="cb629-2"><a href="cluster-solution-evaluation.html#cb629-2"></a>  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb629-3"><a href="cluster-solution-evaluation.html#cb629-3"></a>  </span>
+<span id="cb629-4"><a href="cluster-solution-evaluation.html#cb629-4"></a>  cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb629-5"><a href="cluster-solution-evaluation.html#cb629-5"></a>    <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span>n,</span>
+<span id="cb629-6"><a href="cluster-solution-evaluation.html#cb629-6"></a>    <span class="dt">cluster =</span> cluster</span>
+<span id="cb629-7"><a href="cluster-solution-evaluation.html#cb629-7"></a>  )</span>
+<span id="cb629-8"><a href="cluster-solution-evaluation.html#cb629-8"></a></span>
+<span id="cb629-9"><a href="cluster-solution-evaluation.html#cb629-9"></a>  <span class="co"># 객체간 거리</span></span>
+<span id="cb629-10"><a href="cluster-solution-evaluation.html#cb629-10"></a>  distance_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method, <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb629-11"><a href="cluster-solution-evaluation.html#cb629-11"></a><span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></span>
+<span id="cb629-12"><a href="cluster-solution-evaluation.html#cb629-12"></a><span class="st">    </span><span class="kw">mutate_if</span>(is.factor, <span class="op">~</span><span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">as.character</span>(.)))</span>
+<span id="cb629-13"><a href="cluster-solution-evaluation.html#cb629-13"></a>  </span>
+<span id="cb629-14"><a href="cluster-solution-evaluation.html#cb629-14"></a>  <span class="co"># 최근 객체</span></span>
+<span id="cb629-15"><a href="cluster-solution-evaluation.html#cb629-15"></a>  nn_df &lt;-<span class="st"> </span>distance_df <span class="op">%&gt;%</span></span>
+<span id="cb629-16"><a href="cluster-solution-evaluation.html#cb629-16"></a><span class="st">    </span><span class="kw">group_by</span>(item1) <span class="op">%&gt;%</span></span>
+<span id="cb629-17"><a href="cluster-solution-evaluation.html#cb629-17"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">nearest =</span> <span class="kw">rank</span>(distance, <span class="dt">ties.method =</span> <span class="st">&quot;random&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb629-18"><a href="cluster-solution-evaluation.html#cb629-18"></a><span class="st">    </span><span class="kw">filter</span>(nearest <span class="op">&lt;=</span><span class="st"> </span>n_neighbor) <span class="op">%&gt;%</span></span>
+<span id="cb629-19"><a href="cluster-solution-evaluation.html#cb629-19"></a><span class="st">    </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
+<span id="cb629-20"><a href="cluster-solution-evaluation.html#cb629-20"></a><span class="st">    </span><span class="kw">inner_join</span>(</span>
+<span id="cb629-21"><a href="cluster-solution-evaluation.html#cb629-21"></a>      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item1 =</span> id, <span class="dt">item1_cluster =</span> cluster),</span>
+<span id="cb629-22"><a href="cluster-solution-evaluation.html#cb629-22"></a>      <span class="dt">by =</span> <span class="st">&quot;item1&quot;</span></span>
+<span id="cb629-23"><a href="cluster-solution-evaluation.html#cb629-23"></a>      ) <span class="op">%&gt;%</span></span>
+<span id="cb629-24"><a href="cluster-solution-evaluation.html#cb629-24"></a><span class="st">    </span><span class="kw">inner_join</span>(</span>
+<span id="cb629-25"><a href="cluster-solution-evaluation.html#cb629-25"></a>      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item2 =</span> id, <span class="dt">item2_cluster =</span> cluster),</span>
+<span id="cb629-26"><a href="cluster-solution-evaluation.html#cb629-26"></a>      <span class="dt">by =</span> <span class="st">&quot;item2&quot;</span></span>
+<span id="cb629-27"><a href="cluster-solution-evaluation.html#cb629-27"></a>    )</span>
+<span id="cb629-28"><a href="cluster-solution-evaluation.html#cb629-28"></a>  </span>
+<span id="cb629-29"><a href="cluster-solution-evaluation.html#cb629-29"></a>  <span class="co"># 연결성 계산</span></span>
+<span id="cb629-30"><a href="cluster-solution-evaluation.html#cb629-30"></a>  nn_df <span class="op">%&gt;%</span></span>
+<span id="cb629-31"><a href="cluster-solution-evaluation.html#cb629-31"></a><span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">!=</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span></span>
+<span id="cb629-32"><a href="cluster-solution-evaluation.html#cb629-32"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">v =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span>nearest) <span class="op">%&gt;%</span></span>
+<span id="cb629-33"><a href="cluster-solution-evaluation.html#cb629-33"></a><span class="st">    </span>.<span class="op">$</span>v <span class="op">%&gt;%</span></span>
+<span id="cb629-34"><a href="cluster-solution-evaluation.html#cb629-34"></a><span class="st">    </span><span class="kw">sum</span>()</span>
+<span id="cb629-35"><a href="cluster-solution-evaluation.html#cb629-35"></a>  </span>
+<span id="cb629-36"><a href="cluster-solution-evaluation.html#cb629-36"></a>}</span>
+<span id="cb629-37"><a href="cluster-solution-evaluation.html#cb629-37"></a></span>
+<span id="cb629-38"><a href="cluster-solution-evaluation.html#cb629-38"></a><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), connectivity, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">n_neighbor =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 0 0</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), connectivity, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">n_neighbor =</span> <span class="dv">2</span>)</code></pre>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="cluster-solution-evaluation.html#cb631-1"></a><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), connectivity, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">n_neighbor =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 1 0</code></pre>
-<p><span class="citation">Rousseeuw (<a href="#ref-rousseeuw1987silhouettes">1987</a>)</span> 은 실루엣(silhouettes)이라는 내부평가지수를 제안하였다. 우선 다음과 같은 기호를 정의하자.</p>
+<p><span class="citation">Rousseeuw (<a href="#ref-rousseeuw1987silhouettes" role="doc-biblioref">1987</a>)</span> 은 실루엣(silhouettes)이라는 내부평가지수를 제안하였다. 우선 다음과 같은 기호를 정의하자.</p>
 <ul>
 <li><span class="math inline">\(a(i)\)</span>: 객체 <span class="math inline">\(i\)</span>와 동일 군집에 속한 다른 객체들과의 평균 거리</li>
 <li><span class="math inline">\(d(i, C_k)\)</span>: 객체 <span class="math inline">\(i\)</span>와 다른 군집 <span class="math inline">\(C_k\)</span>에 속한 모든 객체들과의 평균 거리, <span class="math inline">\(i \notin C_k\)</span></li>
@@ -925,47 +945,50 @@ s(i) = \begin{cases}
 <p><span class="math display" id="eq:cluster-average-silhouette">\[\begin{equation}
 ASW = \frac{1}{n} \sum_{i = 1}^{n} s(i) \tag{14.9}
 \end{equation}\]</span></p>
-<pre class="sourceCode r"><code class="sourceCode r">asw &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {
-  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
-  
-  cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-    <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span>n,
-    <span class="dt">cluster =</span> cluster
-  )
-  
-  dist_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method, <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">inner_join</span>(
-      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item1 =</span> id, <span class="dt">item1_cluster =</span> cluster),
-      <span class="dt">by =</span> <span class="st">&quot;item1&quot;</span>
-      ) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">inner_join</span>(
-      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item2 =</span> id, <span class="dt">item2_cluster =</span> cluster),
-      <span class="dt">by =</span> <span class="st">&quot;item2&quot;</span>
-    )
-  
-  dist_df &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(item1, item1_cluster, item2_cluster) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">summarize</span>(
-      <span class="dt">avg_distance =</span> <span class="kw">mean</span>(distance)
-    )
-  
-  a &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">==</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span>
-<span class="st">    </span>.<span class="op">$</span>avg_distance
-  
-  b &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">!=</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">1</span>, avg_distance) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span>.<span class="op">$</span>avg_distance
-  
-  s &lt;-<span class="st"> </span><span class="kw">map2_dbl</span>(a, b, <span class="op">~</span><span class="st"> </span>(.y <span class="op">-</span><span class="st"> </span>.x) <span class="op">/</span><span class="st"> </span><span class="kw">max</span>(.x, .y))
-  
-  <span class="kw">mean</span>(s)
-}
-
-<span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), asw, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="cluster-solution-evaluation.html#cb633-1"></a>asw &lt;-<span class="st"> </span><span class="cf">function</span>(cluster, df, <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {</span>
+<span id="cb633-2"><a href="cluster-solution-evaluation.html#cb633-2"></a>  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb633-3"><a href="cluster-solution-evaluation.html#cb633-3"></a>  </span>
+<span id="cb633-4"><a href="cluster-solution-evaluation.html#cb633-4"></a>  cluster_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb633-5"><a href="cluster-solution-evaluation.html#cb633-5"></a>    <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span>n,</span>
+<span id="cb633-6"><a href="cluster-solution-evaluation.html#cb633-6"></a>    <span class="dt">cluster =</span> cluster</span>
+<span id="cb633-7"><a href="cluster-solution-evaluation.html#cb633-7"></a>  )</span>
+<span id="cb633-8"><a href="cluster-solution-evaluation.html#cb633-8"></a>  </span>
+<span id="cb633-9"><a href="cluster-solution-evaluation.html#cb633-9"></a>  dist_df &lt;-<span class="st"> </span><span class="kw">dist</span>(df, <span class="dt">method =</span> dist_method, <span class="dt">upper =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb633-10"><a href="cluster-solution-evaluation.html#cb633-10"></a><span class="st">    </span>broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></span>
+<span id="cb633-11"><a href="cluster-solution-evaluation.html#cb633-11"></a><span class="st">    </span><span class="kw">mutate_if</span>(is.factor, <span class="op">~</span><span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">as.character</span>(.))) <span class="op">%&gt;%</span></span>
+<span id="cb633-12"><a href="cluster-solution-evaluation.html#cb633-12"></a><span class="st">    </span><span class="kw">inner_join</span>(</span>
+<span id="cb633-13"><a href="cluster-solution-evaluation.html#cb633-13"></a>      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item1 =</span> id, <span class="dt">item1_cluster =</span> cluster),</span>
+<span id="cb633-14"><a href="cluster-solution-evaluation.html#cb633-14"></a>      <span class="dt">by =</span> <span class="st">&quot;item1&quot;</span></span>
+<span id="cb633-15"><a href="cluster-solution-evaluation.html#cb633-15"></a>      ) <span class="op">%&gt;%</span></span>
+<span id="cb633-16"><a href="cluster-solution-evaluation.html#cb633-16"></a><span class="st">    </span><span class="kw">inner_join</span>(</span>
+<span id="cb633-17"><a href="cluster-solution-evaluation.html#cb633-17"></a>      cluster_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">item2 =</span> id, <span class="dt">item2_cluster =</span> cluster),</span>
+<span id="cb633-18"><a href="cluster-solution-evaluation.html#cb633-18"></a>      <span class="dt">by =</span> <span class="st">&quot;item2&quot;</span></span>
+<span id="cb633-19"><a href="cluster-solution-evaluation.html#cb633-19"></a>    )</span>
+<span id="cb633-20"><a href="cluster-solution-evaluation.html#cb633-20"></a>  </span>
+<span id="cb633-21"><a href="cluster-solution-evaluation.html#cb633-21"></a>  dist_df &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span></span>
+<span id="cb633-22"><a href="cluster-solution-evaluation.html#cb633-22"></a><span class="st">    </span><span class="kw">group_by</span>(item1, item1_cluster, item2_cluster) <span class="op">%&gt;%</span></span>
+<span id="cb633-23"><a href="cluster-solution-evaluation.html#cb633-23"></a><span class="st">    </span><span class="kw">summarize</span>(</span>
+<span id="cb633-24"><a href="cluster-solution-evaluation.html#cb633-24"></a>      <span class="dt">avg_distance =</span> <span class="kw">mean</span>(distance)</span>
+<span id="cb633-25"><a href="cluster-solution-evaluation.html#cb633-25"></a>    )</span>
+<span id="cb633-26"><a href="cluster-solution-evaluation.html#cb633-26"></a>  </span>
+<span id="cb633-27"><a href="cluster-solution-evaluation.html#cb633-27"></a>  a &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span></span>
+<span id="cb633-28"><a href="cluster-solution-evaluation.html#cb633-28"></a><span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">==</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span></span>
+<span id="cb633-29"><a href="cluster-solution-evaluation.html#cb633-29"></a><span class="st">    </span>.<span class="op">$</span>avg_distance</span>
+<span id="cb633-30"><a href="cluster-solution-evaluation.html#cb633-30"></a>  </span>
+<span id="cb633-31"><a href="cluster-solution-evaluation.html#cb633-31"></a>  b &lt;-<span class="st"> </span>dist_df <span class="op">%&gt;%</span></span>
+<span id="cb633-32"><a href="cluster-solution-evaluation.html#cb633-32"></a><span class="st">    </span><span class="kw">filter</span>(item1_cluster <span class="op">!=</span><span class="st"> </span>item2_cluster) <span class="op">%&gt;%</span></span>
+<span id="cb633-33"><a href="cluster-solution-evaluation.html#cb633-33"></a><span class="st">    </span><span class="kw">top_n</span>(<span class="op">-</span><span class="dv">1</span>, avg_distance) <span class="op">%&gt;%</span></span>
+<span id="cb633-34"><a href="cluster-solution-evaluation.html#cb633-34"></a><span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb633-35"><a href="cluster-solution-evaluation.html#cb633-35"></a><span class="st">    </span>.<span class="op">$</span>avg_distance</span>
+<span id="cb633-36"><a href="cluster-solution-evaluation.html#cb633-36"></a>  </span>
+<span id="cb633-37"><a href="cluster-solution-evaluation.html#cb633-37"></a>  s &lt;-<span class="st"> </span><span class="kw">map2_dbl</span>(a, b, <span class="op">~</span><span class="st"> </span>(.y <span class="op">-</span><span class="st"> </span>.x) <span class="op">/</span><span class="st"> </span><span class="kw">max</span>(.x, .y))</span>
+<span id="cb633-38"><a href="cluster-solution-evaluation.html#cb633-38"></a>  </span>
+<span id="cb633-39"><a href="cluster-solution-evaluation.html#cb633-39"></a>  <span class="kw">mean</span>(s)</span>
+<span id="cb633-40"><a href="cluster-solution-evaluation.html#cb633-40"></a>}</span>
+<span id="cb633-41"><a href="cluster-solution-evaluation.html#cb633-41"></a></span>
+<span id="cb633-42"><a href="cluster-solution-evaluation.html#cb633-42"></a><span class="kw">map_dbl</span>(<span class="kw">list</span>(sol_<span class="dv">1</span>, sol_<span class="dv">2</span>), asw, <span class="dt">df =</span> df[, <span class="dv">-1</span>], <span class="dt">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>)</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;item1&#39;, &#39;item1_cluster&#39; (override with `.groups` argument)
+## `summarise()` regrouping output by &#39;item1&#39;, &#39;item1_cluster&#39; (override with `.groups` argument)</code></pre>
 <pre><code>## [1] 0.6507364 0.5864226</code></pre>
 </div>
 </div>
@@ -982,22 +1005,22 @@ ASW = \frac{1}{n} \sum_{i = 1}^{n} s(i) \tag{14.9}
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-calinski1974dendrite">
-<p>Caliński, Tadeusz, and Jerzy Harabasz. 1974. “A Dendrite Method for Cluster Analysis.” <em>Communications in Statistics</em> 3 (1). Taylor &amp; Francis: 1–27.</p>
+<p>Caliński, Tadeusz, and Jerzy Harabasz. 1974. “A Dendrite Method for Cluster Analysis.” <em>Communications in Statistics</em> 3 (1): 1–27.</p>
 </div>
 <div id="ref-dunn1973fuzzy">
-<p>Dunn, Joseph C. 1973. “A Fuzzy Relative of the Isodata Process and Its Use in Detecting Compact Well-Separated Clusters.” Taylor &amp; Francis.</p>
+<p>Dunn, Joseph C. 1973. “A Fuzzy Relative of the Isodata Process and Its Use in Detecting Compact Well-Separated Clusters.”</p>
 </div>
 <div id="ref-handl2005exploiting">
 <p>Handl, Julia, and Joshua Knowles. 2005. “Exploiting the Trade-Off—the Benefits of Multiple Objectives in Data Clustering.” In <em>International Conference on Evolutionary Multi-Criterion Optimization</em>, 547–60. Springer.</p>
 </div>
 <div id="ref-hubert1985comparing">
-<p>Hubert, Lawrence, and Phipps Arabie. 1985. “Comparing Partitions.” <em>Journal of Classification</em> 2 (1). Springer: 193–218.</p>
+<p>Hubert, Lawrence, and Phipps Arabie. 1985. “Comparing Partitions.” <em>Journal of Classification</em> 2 (1): 193–218.</p>
 </div>
 <div id="ref-rand1971objective">
-<p>Rand, William M. 1971. “Objective Criteria for the Evaluation of Clustering Methods.” <em>Journal of the American Statistical Association</em> 66 (336). Taylor &amp; Francis Group: 846–50.</p>
+<p>Rand, William M. 1971. “Objective Criteria for the Evaluation of Clustering Methods.” <em>Journal of the American Statistical Association</em> 66 (336): 846–50.</p>
 </div>
 <div id="ref-rousseeuw1987silhouettes">
-<p>Rousseeuw, Peter J. 1987. “Silhouettes: A Graphical Aid to the Interpretation and Validation of Cluster Analysis.” <em>Journal of Computational and Applied Mathematics</em> 20. Elsevier: 53–65.</p>
+<p>Rousseeuw, Peter J. 1987. “Silhouettes: A Graphical Aid to the Interpretation and Validation of Cluster Analysis.” <em>Journal of Computational and Applied Mathematics</em> 20: 53–65.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -1030,11 +1053,13 @@ s.setAttribute('data-timestamp', +new Date());
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -1042,12 +1067,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -1059,6 +1083,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -1078,8 +1106,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 부분최소자승법 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 부분최소자승법 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2019-07-09" />
+<meta name="date" content="2020-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="pca.html">
-<link rel="next" href="classification-analysis.html">
+<link rel="prev" href="pca.html"/>
+<link rel="next" href="classification-analysis.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,29 +48,35 @@
 
 
 
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -78,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -208,9 +215,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
-<li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
-<li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
+<li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#피셔-판별함수"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
+<li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#분류-규칙"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
+<li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r-패키지를-이용한-분류규칙-도출"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
@@ -404,11 +411,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td align="left">tidyverse</td>
-<td align="left">1.2.1</td>
+<td align="left">1.3.0</td>
 </tr>
 <tr class="even">
 <td align="left">pls</td>
-<td align="left">2.7-1</td>
+<td align="left">2.7-3</td>
 </tr>
 </tbody>
 </table>
@@ -418,21 +425,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="plsr-basic-script" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> 기본 R 스크립트</h3>
 <p>앞 장의 주성분 회귀분석에서 사용했던 데이터에 대해 부분최소자승 회귀분석을 수행해보도록 하자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
-  <span class="op">~</span>x1, <span class="op">~</span>x2, <span class="op">~</span>x3, <span class="op">~</span>y,
-  <span class="dv">-3</span>, <span class="dv">-3</span>, <span class="dv">5</span>, <span class="dv">-30</span>,
-  <span class="dv">-2</span>, <span class="dv">-3</span>, <span class="dv">7</span>, <span class="dv">-20</span>,
-  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">0</span>,
-  <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">5</span>,
-  <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">-5</span>, <span class="dv">10</span>,
-  <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">-11</span>, <span class="dv">35</span>
-)
-
-knitr<span class="op">::</span><span class="kw">kable</span>(
-  train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
-  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="kw">ncol</span>(train_df)),
-  <span class="dt">caption =</span> <span class="st">&quot;부분최소자승 회귀분석 예제 데이터&quot;</span>
-)</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="plsr.html#cb103-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
+<span id="cb103-2"><a href="plsr.html#cb103-2"></a>  <span class="op">~</span>x1, <span class="op">~</span>x2, <span class="op">~</span>x3, <span class="op">~</span>y,</span>
+<span id="cb103-3"><a href="plsr.html#cb103-3"></a>  <span class="dv">-3</span>, <span class="dv">-3</span>, <span class="dv">5</span>, <span class="dv">-30</span>,</span>
+<span id="cb103-4"><a href="plsr.html#cb103-4"></a>  <span class="dv">-2</span>, <span class="dv">-3</span>, <span class="dv">7</span>, <span class="dv">-20</span>,</span>
+<span id="cb103-5"><a href="plsr.html#cb103-5"></a>  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">0</span>,</span>
+<span id="cb103-6"><a href="plsr.html#cb103-6"></a>  <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">5</span>,</span>
+<span id="cb103-7"><a href="plsr.html#cb103-7"></a>  <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">-5</span>, <span class="dv">10</span>,</span>
+<span id="cb103-8"><a href="plsr.html#cb103-8"></a>  <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">-11</span>, <span class="dv">35</span></span>
+<span id="cb103-9"><a href="plsr.html#cb103-9"></a>)</span>
+<span id="cb103-10"><a href="plsr.html#cb103-10"></a></span>
+<span id="cb103-11"><a href="plsr.html#cb103-11"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb103-12"><a href="plsr.html#cb103-12"></a>  train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb103-13"><a href="plsr.html#cb103-13"></a>  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="kw">ncol</span>(train_df)),</span>
+<span id="cb103-14"><a href="plsr.html#cb103-14"></a>  <span class="dt">caption =</span> <span class="st">&quot;부분최소자승 회귀분석 예제 데이터&quot;</span></span>
+<span id="cb103-15"><a href="plsr.html#cb103-15"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:plsr-example-data">Table 4.1: </span>부분최소자승 회귀분석 예제 데이터</caption>
 <thead>
@@ -483,8 +490,8 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 </tbody>
 </table>
 <p>R 패키지 <code>pls</code> 내의 함수 <code>plsr()</code>을 이용하여 PLS 모형을 아래와 같이 추정할 수 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">plsr_fit &lt;-<span class="st"> </span>pls<span class="op">::</span><span class="kw">plsr</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3, <span class="dt">data =</span> train_df, <span class="dt">ncomp =</span> <span class="dv">2</span>)
-<span class="kw">coef</span>(plsr_fit)</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="plsr.html#cb104-1"></a>plsr_fit &lt;-<span class="st"> </span>pls<span class="op">::</span><span class="kw">plsr</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3, <span class="dt">data =</span> train_df, <span class="dt">ncomp =</span> <span class="dv">2</span>)</span>
+<span id="cb104-2"><a href="plsr.html#cb104-2"></a><span class="kw">coef</span>(plsr_fit)</span></code></pre></div>
 <pre><code>## , , 2 comps
 ## 
 ##            y
@@ -492,7 +499,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 ## x2  2.523238
 ## x3 -1.704636</code></pre>
 <p>수행결과 object에 <code>summary()</code> 함수를 사용하여 학습된 모형의 독립변수 <span class="math inline">\(\mathbf{X}\)</span> 및 종속변수 <span class="math inline">\(\mathbf{y}\)</span>의 총변동에 대한 기여율을 확인할 수 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(plsr_fit)</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="plsr.html#cb106-1"></a><span class="kw">summary</span>(plsr_fit)</span></code></pre></div>
 <pre><code>## Data:    X dimension: 6 3 
 ##  Y dimension: 6 1
 ## Fit method: kernelpls
@@ -543,50 +550,50 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 <li><code>y</code>: 평균조정된 종속변수 벡터</li>
 <li><code>A</code>: 잠재변수 개수</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r">nipals_plsr &lt;-<span class="st"> </span><span class="cf">function</span>(X, y, <span class="dt">A =</span> <span class="ot">NULL</span>) {
-  <span class="cf">if</span> (<span class="kw">is_empty</span>(A) <span class="op">||</span><span class="st"> </span>(A <span class="op">&gt;</span><span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X)))) {
-    A &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X))
-  }
-  
-  Tmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">nrow</span>(X), <span class="dt">ncol =</span> A)
-  Wmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(X), <span class="dt">ncol =</span> A)
-  Pmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(X), <span class="dt">ncol =</span> A)
-  b &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="dt">length =</span> A)
-  
-  <span class="cf">for</span> (a <span class="cf">in</span> <span class="kw">seq_len</span>(A)) {
-    <span class="co"># 단계 1</span>
-    Wmat[, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(X <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>y))
-    
-    <span class="co"># 단계 2</span>
-    Wmat[, a] &lt;-<span class="st"> </span>Wmat[, a] <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(Wmat[, a] <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))
-
-    <span class="co"># 단계 3</span>
-    Tmat[, a] &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>Wmat[, a]
-    
-    <span class="co"># 단계 4</span>
-    Pmat[, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(X <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Tmat[, a]))
-    
-    <span class="co"># 단계 5</span>
-    p_size &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(Pmat[, a] <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))
-    Tmat[, a] &lt;-<span class="st"> </span>Tmat[, a] <span class="op">*</span><span class="st"> </span>p_size
-    Wmat[, a] &lt;-<span class="st"> </span>Wmat[, a] <span class="op">*</span><span class="st"> </span>p_size
-    Pmat[, a] &lt;-<span class="st"> </span>Pmat[, a] <span class="op">/</span><span class="st"> </span>p_size
-    
-    <span class="co"># 단계 6</span>
-    b[a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Tmat[, a]))
-
-    <span class="co"># 단계 7</span>
-    X &lt;-<span class="st"> </span>X <span class="op">-</span><span class="st"> </span>Tmat[, a] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(Pmat[, a])
-    y &lt;-<span class="st"> </span>y <span class="op">-</span><span class="st"> </span>Tmat[, a] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(b[a])
-  }
-  
-  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">T =</span> Tmat, <span class="dt">W =</span> Wmat, <span class="dt">P =</span> Pmat, <span class="dt">b =</span> b))
-}
-
-X &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(train_df[, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)])
-y &lt;-<span class="st"> </span>train_df<span class="op">$</span>y
-nipals_fit &lt;-<span class="st"> </span><span class="kw">nipals_plsr</span>(X, y, <span class="dt">A =</span> <span class="dv">2</span>)
-nipals_fit</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="plsr.html#cb108-1"></a>nipals_plsr &lt;-<span class="st"> </span><span class="cf">function</span>(X, y, <span class="dt">A =</span> <span class="ot">NULL</span>) {</span>
+<span id="cb108-2"><a href="plsr.html#cb108-2"></a>  <span class="cf">if</span> (<span class="kw">is_empty</span>(A) <span class="op">||</span><span class="st"> </span>(A <span class="op">&gt;</span><span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X)))) {</span>
+<span id="cb108-3"><a href="plsr.html#cb108-3"></a>    A &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X))</span>
+<span id="cb108-4"><a href="plsr.html#cb108-4"></a>  }</span>
+<span id="cb108-5"><a href="plsr.html#cb108-5"></a>  </span>
+<span id="cb108-6"><a href="plsr.html#cb108-6"></a>  Tmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">nrow</span>(X), <span class="dt">ncol =</span> A)</span>
+<span id="cb108-7"><a href="plsr.html#cb108-7"></a>  Wmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(X), <span class="dt">ncol =</span> A)</span>
+<span id="cb108-8"><a href="plsr.html#cb108-8"></a>  Pmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(X), <span class="dt">ncol =</span> A)</span>
+<span id="cb108-9"><a href="plsr.html#cb108-9"></a>  b &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="dt">length =</span> A)</span>
+<span id="cb108-10"><a href="plsr.html#cb108-10"></a>  </span>
+<span id="cb108-11"><a href="plsr.html#cb108-11"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="kw">seq_len</span>(A)) {</span>
+<span id="cb108-12"><a href="plsr.html#cb108-12"></a>    <span class="co"># 단계 1</span></span>
+<span id="cb108-13"><a href="plsr.html#cb108-13"></a>    Wmat[, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(X <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>y))</span>
+<span id="cb108-14"><a href="plsr.html#cb108-14"></a>    </span>
+<span id="cb108-15"><a href="plsr.html#cb108-15"></a>    <span class="co"># 단계 2</span></span>
+<span id="cb108-16"><a href="plsr.html#cb108-16"></a>    Wmat[, a] &lt;-<span class="st"> </span>Wmat[, a] <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(Wmat[, a] <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))</span>
+<span id="cb108-17"><a href="plsr.html#cb108-17"></a></span>
+<span id="cb108-18"><a href="plsr.html#cb108-18"></a>    <span class="co"># 단계 3</span></span>
+<span id="cb108-19"><a href="plsr.html#cb108-19"></a>    Tmat[, a] &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>Wmat[, a]</span>
+<span id="cb108-20"><a href="plsr.html#cb108-20"></a>    </span>
+<span id="cb108-21"><a href="plsr.html#cb108-21"></a>    <span class="co"># 단계 4</span></span>
+<span id="cb108-22"><a href="plsr.html#cb108-22"></a>    Pmat[, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(X <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Tmat[, a]))</span>
+<span id="cb108-23"><a href="plsr.html#cb108-23"></a>    </span>
+<span id="cb108-24"><a href="plsr.html#cb108-24"></a>    <span class="co"># 단계 5</span></span>
+<span id="cb108-25"><a href="plsr.html#cb108-25"></a>    p_size &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(Pmat[, a] <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))</span>
+<span id="cb108-26"><a href="plsr.html#cb108-26"></a>    Tmat[, a] &lt;-<span class="st"> </span>Tmat[, a] <span class="op">*</span><span class="st"> </span>p_size</span>
+<span id="cb108-27"><a href="plsr.html#cb108-27"></a>    Wmat[, a] &lt;-<span class="st"> </span>Wmat[, a] <span class="op">*</span><span class="st"> </span>p_size</span>
+<span id="cb108-28"><a href="plsr.html#cb108-28"></a>    Pmat[, a] &lt;-<span class="st"> </span>Pmat[, a] <span class="op">/</span><span class="st"> </span>p_size</span>
+<span id="cb108-29"><a href="plsr.html#cb108-29"></a>    </span>
+<span id="cb108-30"><a href="plsr.html#cb108-30"></a>    <span class="co"># 단계 6</span></span>
+<span id="cb108-31"><a href="plsr.html#cb108-31"></a>    b[a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Tmat[, a]))</span>
+<span id="cb108-32"><a href="plsr.html#cb108-32"></a></span>
+<span id="cb108-33"><a href="plsr.html#cb108-33"></a>    <span class="co"># 단계 7</span></span>
+<span id="cb108-34"><a href="plsr.html#cb108-34"></a>    X &lt;-<span class="st"> </span>X <span class="op">-</span><span class="st"> </span>Tmat[, a] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(Pmat[, a])</span>
+<span id="cb108-35"><a href="plsr.html#cb108-35"></a>    y &lt;-<span class="st"> </span>y <span class="op">-</span><span class="st"> </span>Tmat[, a] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(b[a])</span>
+<span id="cb108-36"><a href="plsr.html#cb108-36"></a>  }</span>
+<span id="cb108-37"><a href="plsr.html#cb108-37"></a>  </span>
+<span id="cb108-38"><a href="plsr.html#cb108-38"></a>  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">T =</span> Tmat, <span class="dt">W =</span> Wmat, <span class="dt">P =</span> Pmat, <span class="dt">b =</span> b))</span>
+<span id="cb108-39"><a href="plsr.html#cb108-39"></a>}</span>
+<span id="cb108-40"><a href="plsr.html#cb108-40"></a></span>
+<span id="cb108-41"><a href="plsr.html#cb108-41"></a>X &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(train_df[, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)])</span>
+<span id="cb108-42"><a href="plsr.html#cb108-42"></a>y &lt;-<span class="st"> </span>train_df<span class="op">$</span>y</span>
+<span id="cb108-43"><a href="plsr.html#cb108-43"></a>nipals_fit &lt;-<span class="st"> </span><span class="kw">nipals_plsr</span>(X, y, <span class="dt">A =</span> <span class="dv">2</span>)</span>
+<span id="cb108-44"><a href="plsr.html#cb108-44"></a>nipals_fit</span></code></pre></div>
 <pre><code>## $T
 ##            [,1]       [,2]
 ## [1,] -6.3243200 -2.0380766
@@ -616,12 +623,12 @@ nipals_fit</code></pre>
 \hat{\mathbf{b}} = \left(\mathbf{T}^\top \mathbf{T}\right)^{-1} \mathbf{T}^\top \mathbf{y} \tag{4.6}
 \end{eqnarray}\]</span></p>
 <p>위 NIPALS 알고리즘 수행 결과에서 이를 확인해보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">P_hat &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>X)
-<span class="kw">all</span>(<span class="kw">near</span>(nipals_fit<span class="op">$</span>P, P_hat))</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="plsr.html#cb110-1"></a>P_hat &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>X)</span>
+<span id="cb110-2"><a href="plsr.html#cb110-2"></a><span class="kw">all</span>(<span class="kw">near</span>(nipals_fit<span class="op">$</span>P, P_hat))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">b_hat &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">t</span>(<span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>
-<span class="st">                       </span><span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span><span class="kw">as.matrix</span>(y, <span class="dt">ncol =</span> <span class="dv">1</span>)))
-<span class="kw">all</span>(<span class="kw">near</span>(nipals_fit<span class="op">$</span>b, b_hat))</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="plsr.html#cb112-1"></a>b_hat &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">t</span>(<span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span></span>
+<span id="cb112-2"><a href="plsr.html#cb112-2"></a><span class="st">                       </span><span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span><span class="kw">as.matrix</span>(y, <span class="dt">ncol =</span> <span class="dv">1</span>)))</span>
+<span id="cb112-3"><a href="plsr.html#cb112-3"></a><span class="kw">all</span>(<span class="kw">near</span>(nipals_fit<span class="op">$</span>b, b_hat))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="plsr-single-transform" class="section level3">
@@ -642,10 +649,10 @@ nipals_fit</code></pre>
 <p><span class="math display">\[\begin{equation}
 \boldsymbol{\beta}_{PLS} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{b}
 \end{equation}\]</span></p>
-<pre class="sourceCode r"><code class="sourceCode r">beta_pls &lt;-<span class="st"> </span>nipals_fit<span class="op">$</span>W <span class="op">%*%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>P) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>W) <span class="op">%*%</span>
-<span class="st">  </span><span class="kw">as.matrix</span>(nipals_fit<span class="op">$</span>b, <span class="dt">ncol =</span> 1L)
-beta_pls</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="plsr.html#cb114-1"></a>beta_pls &lt;-<span class="st"> </span>nipals_fit<span class="op">$</span>W <span class="op">%*%</span><span class="st"> </span></span>
+<span id="cb114-2"><a href="plsr.html#cb114-2"></a><span class="st">  </span><span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>P) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>W) <span class="op">%*%</span></span>
+<span id="cb114-3"><a href="plsr.html#cb114-3"></a><span class="st">  </span><span class="kw">as.matrix</span>(nipals_fit<span class="op">$</span>b, <span class="dt">ncol =</span> 1L)</span>
+<span id="cb114-4"><a href="plsr.html#cb114-4"></a>beta_pls</span></code></pre></div>
 <pre><code>##           [,1]
 ## [1,]  2.475395
 ## [2,]  2.523238
@@ -671,17 +678,17 @@ SSR &amp;= \sum_{a = 1}^{A} SS(b_a \mathbf{t}_a)\\
 SSR = \sum_{a = 1}^{A} SSR_a
 \]</span></p>
 <p>위 예제에서 2개의 잠재변수가 설명하는 <span class="math inline">\(\mathbf{y}\)</span>의 총변동을 PLS 결과를 이용하여 계산하면 아래와 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">SSR_a &lt;-<span class="st"> </span>nipals_fit<span class="op">$</span>b <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">diag</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T)
-SSR_a</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="plsr.html#cb116-1"></a>SSR_a &lt;-<span class="st"> </span>nipals_fit<span class="op">$</span>b <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">diag</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T)</span>
+<span id="cb116-2"><a href="plsr.html#cb116-2"></a>SSR_a</span></code></pre></div>
 <pre><code>## [1] 2339.45850   84.17574</code></pre>
 <p>이 때, 각 주성분이 설명하는 <span class="math inline">\(\mathbf{y}\)</span> 변동의 기여율을 아래와 같이 정의한다.</p>
 <p><span class="math display" id="eq:plsr-rsq">\[\begin{equation}
 \Delta R_a^2 = \frac{SSR_a}{SST} \tag{4.10}
 \end{equation}\]</span></p>
 <p>앞 예제에서 각 잠재변수의 <span class="math inline">\(\mathbf{y}\)</span> 변동에 대한 기여율을 계산해보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">SST &lt;-<span class="st"> </span><span class="kw">sum</span>(y <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
-delta_Rsq &lt;-<span class="st"> </span>SSR_a <span class="op">/</span><span class="st"> </span>SST
-delta_Rsq</code></pre>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="plsr.html#cb118-1"></a>SST &lt;-<span class="st"> </span><span class="kw">sum</span>(y <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
+<span id="cb118-2"><a href="plsr.html#cb118-2"></a>delta_Rsq &lt;-<span class="st"> </span>SSR_a <span class="op">/</span><span class="st"> </span>SST</span>
+<span id="cb118-3"><a href="plsr.html#cb118-3"></a>delta_Rsq</span></code></pre></div>
 <pre><code>## [1] 0.88281453 0.03176443</code></pre>
 <p>잠재변수 <span class="math inline">\(A\)</span>개를 이용한 PLS 모형이 설명하는 <span class="math inline">\(\mathbf{y}\)</span>의 총 변동에 대한 기여도(<span class="math inline">\(SSR / SST\)</span>)은 아래와 같이 각 잠재변수의 기여도의 합으로 산출된다.</p>
 <p><span class="math display">\[
@@ -689,15 +696,15 @@ R^2 = \frac{SSR}{SST} = \frac{\sum_{a = 1}^{A} SSR_a}{SST} = \sum_{a = 1}^{A} \D
 \]</span></p>
 <p>따라서, 잠재변수 <span class="math inline">\(A\)</span>개를 이용한 PLS 모형이 설명하는 <span class="math inline">\(\mathbf{y}\)</span>의 총 변동에 대한 기여도(<span class="math inline">\(SSR / SST\)</span>)은 아래와 같이 각 잠재변수의 기여도의 합으로 산출된다.</p>
 <p>앞 예제에서 잠재변수 2개를 이용한 최종모형이 설명하는 <span class="math inline">\(\mathbf{y}\)</span>의 변동은 아래와 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(delta_Rsq)</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="plsr.html#cb120-1"></a><span class="kw">sum</span>(delta_Rsq)</span></code></pre></div>
 <pre><code>## [1] 0.914579</code></pre>
 <p>이는 앞 <a href="plsr.html#plsr-basic-script">4.2.1</a>절에서 R 패키지 <code>pls</code>를 이용하여 얻어진 결과와 동일함을 확인할 수 있다.</p>
 <p>한편, 잠재변수들이 독립변수행렬 <span class="math inline">\(\mathbf{X}\)</span>의 변동을 얼마나 설명하는지 동시에 검토할 필요가 있다. 각 잠재변수들의 제곱합 <span class="math inline">\(SS(\mathbf{t}_a)\)</span>의 <span class="math inline">\(\mathbf{X}\)</span>의 총변동 (<span class="math inline">\(SS(\mathbf{X})\)</span>)에 대한 비율이 그 기여율을 설명한다.</p>
 <p>앞 예제에서 각각의 잠재변수의 <span class="math inline">\(\mathbf{X}\)</span>에 대한 기여율은 아래와 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diag</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X))</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="plsr.html#cb122-1"></a><span class="kw">diag</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X))</span></code></pre></div>
 <pre><code>## [1] 0.94972728 0.04811507</code></pre>
 <p>잠재변수 2개를 이용한 PLS 모형의 <span class="math inline">\(\mathbf{X}\)</span>에 대한 기여율은 아래와 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="kw">diag</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X))</code></pre>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="plsr.html#cb124-1"></a><span class="kw">sum</span>(<span class="kw">diag</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>T) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>T)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X))</span></code></pre></div>
 <pre><code>## [1] 0.9978423</code></pre>
 <p>잠재변수 2개가 독립변수행렬의 대부분의 변동을 설명함을 알 수 있으며, 위 결과는 역시 앞 <a href="plsr.html#plsr-basic-script">4.2.1</a>절에서 R 패키지 <code>pls</code>를 이용하여 얻어진 결과와 동일함을 확인할 수 있다.</p>
 </div>
@@ -724,15 +731,15 @@ VIP_j = \sqrt{\frac{k}{SSR} \sum_{a = 1}^{A} SSR_a \left( w^{*}_{aj} \middle/ \|
 \]</span></p>
 <p>즉, 독립변수당 중요도 제곱의 평균은 1이 된다. 이에 따라, 통상 <span class="math inline">\(VIP\)</span>가 1보다 큰 독립변수를 의미있는 변수로 간주한다.</p>
 <p>앞 예제에 대해 각 변수의 중요도를 계산해보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">k &lt;-<span class="st"> </span><span class="kw">ncol</span>(X)
-Wx &lt;-<span class="st"> </span>nipals_fit<span class="op">$</span>W <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>P) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>W)
-VIP &lt;-<span class="st"> </span><span class="kw">sqrt</span>(
-  <span class="kw">colSums</span>(
-    k <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(SSR_a) <span class="op">*</span><span class="st"> </span>SSR_a <span class="op">*</span><span class="st"> </span>
-<span class="st">      </span>(<span class="kw">t</span>(Wx <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="kw">diag</span>(<span class="kw">t</span>(Wx) <span class="op">%*%</span><span class="st"> </span>Wx))
-    )
-  )
-VIP</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="plsr.html#cb126-1"></a>k &lt;-<span class="st"> </span><span class="kw">ncol</span>(X)</span>
+<span id="cb126-2"><a href="plsr.html#cb126-2"></a>Wx &lt;-<span class="st"> </span>nipals_fit<span class="op">$</span>W <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit<span class="op">$</span>P) <span class="op">%*%</span><span class="st"> </span>nipals_fit<span class="op">$</span>W)</span>
+<span id="cb126-3"><a href="plsr.html#cb126-3"></a>VIP &lt;-<span class="st"> </span><span class="kw">sqrt</span>(</span>
+<span id="cb126-4"><a href="plsr.html#cb126-4"></a>  <span class="kw">colSums</span>(</span>
+<span id="cb126-5"><a href="plsr.html#cb126-5"></a>    k <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(SSR_a) <span class="op">*</span><span class="st"> </span>SSR_a <span class="op">*</span><span class="st"> </span></span>
+<span id="cb126-6"><a href="plsr.html#cb126-6"></a><span class="st">      </span>(<span class="kw">t</span>(Wx <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="kw">diag</span>(<span class="kw">t</span>(Wx) <span class="op">%*%</span><span class="st"> </span>Wx))</span>
+<span id="cb126-7"><a href="plsr.html#cb126-7"></a>    )</span>
+<span id="cb126-8"><a href="plsr.html#cb126-8"></a>  )</span>
+<span id="cb126-9"><a href="plsr.html#cb126-9"></a>VIP</span></code></pre></div>
 <pre><code>## [1] 0.5246196 0.5715532 1.5485804</code></pre>
 <p>즉, <span class="math inline">\(x_3\)</span>가 가장 영향력있는 변수라 할 수 있겠다.</p>
 </div>
@@ -745,22 +752,22 @@ VIP</code></pre>
 <div id="plsr-multivariate-basic-script" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> 기본 R 스크립트</h3>
 <p>4개의 독립변수 및 2개의 종속변수에 대한 평균조정된 데이터가 다음과 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
-  <span class="op">~</span>x1, <span class="op">~</span>x2, <span class="op">~</span>x3, <span class="op">~</span>x4, <span class="op">~</span>y1, <span class="op">~</span>y2,
-  <span class="dv">-1</span>, <span class="fl">-0.5</span>, <span class="dv">-1</span>, <span class="dv">1</span>, <span class="fl">5.9</span>, <span class="dv">-10</span>,
-  <span class="dv">1</span>, <span class="fl">1.1</span>, <span class="dv">-6</span>, <span class="dv">-6</span>, <span class="fl">-3.7</span>, <span class="dv">-2</span>,
-  <span class="dv">0</span>, <span class="fl">0.3</span>, <span class="dv">-5</span>, <span class="dv">-2</span>, <span class="dv">1</span>, <span class="dv">11</span>,
-  <span class="dv">-3</span>, <span class="fl">-3.2</span>, <span class="dv">-9</span>, <span class="dv">19</span>, <span class="fl">7.7</span>, <span class="dv">-22</span>,
-  <span class="dv">4</span>, <span class="fl">1.2</span>, <span class="dv">14</span>, <span class="dv">-12</span>, <span class="fl">-7.5</span>, <span class="dv">4</span>,
-  <span class="dv">-2</span>, <span class="fl">-2.6</span>, <span class="dv">-2</span>, <span class="dv">9</span>, <span class="fl">2.8</span>, <span class="dv">1</span>,
-  <span class="dv">1</span>, <span class="fl">3.7</span>, <span class="dv">9</span>, <span class="dv">-9</span>, <span class="fl">-6.2</span>, <span class="dv">18</span>
-)
-
-knitr<span class="op">::</span><span class="kw">kable</span>(
-  train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
-  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="kw">ncol</span>(train_df)),
-  <span class="dt">caption =</span> <span class="st">&quot;다수의 종속변수에 대한 부분최소자승 회귀분석 예제 데이터&quot;</span>
-)</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="plsr.html#cb128-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
+<span id="cb128-2"><a href="plsr.html#cb128-2"></a>  <span class="op">~</span>x1, <span class="op">~</span>x2, <span class="op">~</span>x3, <span class="op">~</span>x4, <span class="op">~</span>y1, <span class="op">~</span>y2,</span>
+<span id="cb128-3"><a href="plsr.html#cb128-3"></a>  <span class="dv">-1</span>, <span class="fl">-0.5</span>, <span class="dv">-1</span>, <span class="dv">1</span>, <span class="fl">5.9</span>, <span class="dv">-10</span>,</span>
+<span id="cb128-4"><a href="plsr.html#cb128-4"></a>  <span class="dv">1</span>, <span class="fl">1.1</span>, <span class="dv">-6</span>, <span class="dv">-6</span>, <span class="fl">-3.7</span>, <span class="dv">-2</span>,</span>
+<span id="cb128-5"><a href="plsr.html#cb128-5"></a>  <span class="dv">0</span>, <span class="fl">0.3</span>, <span class="dv">-5</span>, <span class="dv">-2</span>, <span class="dv">1</span>, <span class="dv">11</span>,</span>
+<span id="cb128-6"><a href="plsr.html#cb128-6"></a>  <span class="dv">-3</span>, <span class="fl">-3.2</span>, <span class="dv">-9</span>, <span class="dv">19</span>, <span class="fl">7.7</span>, <span class="dv">-22</span>,</span>
+<span id="cb128-7"><a href="plsr.html#cb128-7"></a>  <span class="dv">4</span>, <span class="fl">1.2</span>, <span class="dv">14</span>, <span class="dv">-12</span>, <span class="fl">-7.5</span>, <span class="dv">4</span>,</span>
+<span id="cb128-8"><a href="plsr.html#cb128-8"></a>  <span class="dv">-2</span>, <span class="fl">-2.6</span>, <span class="dv">-2</span>, <span class="dv">9</span>, <span class="fl">2.8</span>, <span class="dv">1</span>,</span>
+<span id="cb128-9"><a href="plsr.html#cb128-9"></a>  <span class="dv">1</span>, <span class="fl">3.7</span>, <span class="dv">9</span>, <span class="dv">-9</span>, <span class="fl">-6.2</span>, <span class="dv">18</span></span>
+<span id="cb128-10"><a href="plsr.html#cb128-10"></a>)</span>
+<span id="cb128-11"><a href="plsr.html#cb128-11"></a></span>
+<span id="cb128-12"><a href="plsr.html#cb128-12"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb128-13"><a href="plsr.html#cb128-13"></a>  train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb128-14"><a href="plsr.html#cb128-14"></a>  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="kw">ncol</span>(train_df)),</span>
+<span id="cb128-15"><a href="plsr.html#cb128-15"></a>  <span class="dt">caption =</span> <span class="st">&quot;다수의 종속변수에 대한 부분최소자승 회귀분석 예제 데이터&quot;</span></span>
+<span id="cb128-16"><a href="plsr.html#cb128-16"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:plsr-multivariate-example-data">Table 4.2: </span>다수의 종속변수에 대한 부분최소자승 회귀분석 예제 데이터</caption>
 <thead>
@@ -833,11 +840,11 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 </tbody>
 </table>
 <p>앞서 하나의 종속변수를 다루는 경우와 마찬가지로, R 패키지 <code>pls</code> 내의 함수 <code>plsr()</code>을 이용하여 PLS 모형을 추정할 수 있다. 이 때, <code>formula</code> 입력 시 종속변수의 행렬을 이용한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(train_df[, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>, <span class="st">&quot;x4&quot;</span>)])
-Y &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(train_df[, <span class="kw">c</span>(<span class="st">&quot;y1&quot;</span>, <span class="st">&quot;y2&quot;</span>)])
-plsr_multi_fit &lt;-<span class="st"> </span>pls<span class="op">::</span><span class="kw">plsr</span>(Y <span class="op">~</span><span class="st"> </span>X, <span class="dt">ncomp =</span> <span class="dv">3</span>)</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="plsr.html#cb129-1"></a>X &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(train_df[, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>, <span class="st">&quot;x4&quot;</span>)])</span>
+<span id="cb129-2"><a href="plsr.html#cb129-2"></a>Y &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(train_df[, <span class="kw">c</span>(<span class="st">&quot;y1&quot;</span>, <span class="st">&quot;y2&quot;</span>)])</span>
+<span id="cb129-3"><a href="plsr.html#cb129-3"></a>plsr_multi_fit &lt;-<span class="st"> </span>pls<span class="op">::</span><span class="kw">plsr</span>(Y <span class="op">~</span><span class="st"> </span>X, <span class="dt">ncomp =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p>함수 수행 결과 추정된 PLS 모형으로부터 원 독립변수 <span class="math inline">\(x_1, \cdots, x_4\)</span>와 종속변수 <span class="math inline">\(y_1, y_2\)</span>간의 선형관계를 함수 <code>coef()</code>를 적용하여 아래와 같이 얻을 수 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(plsr_multi_fit)</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="plsr.html#cb130-1"></a><span class="kw">coef</span>(plsr_multi_fit)</span></code></pre></div>
 <pre><code>## , , 3 comps
 ## 
 ##             y1         y2
@@ -846,7 +853,7 @@ plsr_multi_fit &lt;-<span class="st"> </span>pls<span class="op">::</span><span 
 ## x3 -0.14258488  0.3377420
 ## x4  0.37330470 -0.7406377</code></pre>
 <p>또한 <code>summary()</code> 함수를 적용하여 잠재변수들이 독립변수행렬 및 각 종속변수의 총변동에 기여하는 비율을 확인할 수 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(plsr_multi_fit)</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="plsr.html#cb132-1"></a><span class="kw">summary</span>(plsr_multi_fit)</span></code></pre></div>
 <pre><code>## Data:    X dimension: 7 4 
 ##  Y dimension: 7 2
 ## Fit method: kernelpls
@@ -914,115 +921,115 @@ b_{1} &amp; 0 &amp; \cdots &amp; 0\\
 <li><code>Y</code>: 평균조정된 (<span class="math inline">\(n \times m\)</span>) 종속변수행렬</li>
 <li><code>A</code>: 잠재변수 개수</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r">nipals_plsr2 &lt;-<span class="st"> </span><span class="cf">function</span>(X, Y, <span class="dt">A =</span> <span class="ot">NULL</span>) {
-  <span class="cf">if</span> (<span class="kw">is.vector</span>(Y)) {
-    Y &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(Y, <span class="dt">ncol =</span> 1L)
-  }
-  
-  <span class="cf">if</span> (<span class="kw">nrow</span>(X) <span class="op">!=</span><span class="st"> </span><span class="kw">nrow</span>(Y)) <span class="kw">stop</span>(<span class="st">&quot;X and Y must have the same numbers of observations.&quot;</span>)
-  
-  <span class="cf">if</span> (<span class="kw">is_empty</span>(A) <span class="op">||</span><span class="st"> </span>(A <span class="op">&gt;</span><span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X)))) {
-    A &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X))
-  }
-  
-  Tmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">nrow</span>(X), <span class="dt">ncol =</span> A)
-  Umat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">nrow</span>(X), <span class="dt">ncol =</span> A)
-  Wmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(X), <span class="dt">ncol =</span> A)
-  Pmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(X), <span class="dt">ncol =</span> A)
-  Qmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(Y), <span class="dt">ncol =</span> A)
-  Bmat &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dt">nrow =</span> A)
-  
-  <span class="cf">for</span> (a <span class="cf">in</span> <span class="kw">seq_len</span>(A)) {
-    <span class="co"># 단계 1</span>
-    j &lt;-<span class="st"> </span><span class="kw">sample.int</span>(<span class="kw">ncol</span>(Y), <span class="dt">size =</span> 1L)
-    Umat[, a] &lt;-<span class="st"> </span>Y[, j]
-    
-    <span class="cf">while</span> (<span class="ot">TRUE</span>) {
-      <span class="co"># 단계 2</span>
-      Wmat[, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(X <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Umat[, a]))
-      
-      <span class="co"># 단계 3</span>
-      Wmat[, a] &lt;-<span class="st"> </span>Wmat[, a] <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(Wmat[, a] <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))
-      
-      <span class="co"># 단계 4</span>
-      Tmat[, a] &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>Wmat[, a]
-      
-      <span class="co"># 단계 5</span>
-      Qmat[, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Tmat[, a]))
-      
-      <span class="co"># 단계 6</span>
-      Qmat[, a] &lt;-<span class="st"> </span>Qmat[, a] <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(Qmat[, a] <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))
-      
-      <span class="co"># 단계 7</span>
-      u_new &lt;-<span class="st"> </span>Y <span class="op">%*%</span><span class="st"> </span>Qmat[, a]
-      
-      <span class="co"># 단계 8</span>
-      <span class="cf">if</span> (<span class="kw">all</span>(<span class="kw">near</span>(u_new, Umat[, a]))) <span class="cf">break</span>
-      
-      Umat[, a] &lt;-<span class="st"> </span>u_new
-    }
-
-    <span class="co"># 단계 9</span>
-    Pmat[, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(X <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Tmat[, a]))
-    
-    <span class="co"># 단계 10</span>
-    p_size &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(Pmat[, a] <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))
-    Tmat[, a] &lt;-<span class="st"> </span>Tmat[, a] <span class="op">*</span><span class="st"> </span>p_size
-    Wmat[, a] &lt;-<span class="st"> </span>Wmat[, a] <span class="op">*</span><span class="st"> </span>p_size
-    Pmat[, a] &lt;-<span class="st"> </span>Pmat[, a] <span class="op">/</span><span class="st"> </span>p_size
-    
-    <span class="co"># 단계 11</span>
-    Bmat[a, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(Umat[, a] <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Tmat[, a]))
-
-    <span class="co"># 단계 12</span>
-    X &lt;-<span class="st"> </span>X <span class="op">-</span><span class="st"> </span>Tmat[, a] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(Pmat[, a])
-    Y &lt;-<span class="st"> </span>Y <span class="op">-</span><span class="st"> </span>Bmat[a, a] <span class="op">*</span><span class="st"> </span>Tmat[, a] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(Qmat[, a])
-  }
-  
-  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">T =</span> Tmat, <span class="dt">W =</span> Wmat, <span class="dt">P =</span> Pmat, 
-              <span class="dt">U =</span> Umat, <span class="dt">Q =</span> Qmat, <span class="dt">B =</span> Bmat))
-}
-
-nipals_fit2 &lt;-<span class="st"> </span><span class="kw">nipals_plsr2</span>(X, Y, <span class="dt">A =</span> <span class="dv">3</span>)
-nipals_fit2</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="plsr.html#cb134-1"></a>nipals_plsr2 &lt;-<span class="st"> </span><span class="cf">function</span>(X, Y, <span class="dt">A =</span> <span class="ot">NULL</span>) {</span>
+<span id="cb134-2"><a href="plsr.html#cb134-2"></a>  <span class="cf">if</span> (<span class="kw">is.vector</span>(Y)) {</span>
+<span id="cb134-3"><a href="plsr.html#cb134-3"></a>    Y &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(Y, <span class="dt">ncol =</span> 1L)</span>
+<span id="cb134-4"><a href="plsr.html#cb134-4"></a>  }</span>
+<span id="cb134-5"><a href="plsr.html#cb134-5"></a>  </span>
+<span id="cb134-6"><a href="plsr.html#cb134-6"></a>  <span class="cf">if</span> (<span class="kw">nrow</span>(X) <span class="op">!=</span><span class="st"> </span><span class="kw">nrow</span>(Y)) <span class="kw">stop</span>(<span class="st">&quot;X and Y must have the same numbers of observations.&quot;</span>)</span>
+<span id="cb134-7"><a href="plsr.html#cb134-7"></a>  </span>
+<span id="cb134-8"><a href="plsr.html#cb134-8"></a>  <span class="cf">if</span> (<span class="kw">is_empty</span>(A) <span class="op">||</span><span class="st"> </span>(A <span class="op">&gt;</span><span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X)))) {</span>
+<span id="cb134-9"><a href="plsr.html#cb134-9"></a>    A &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X))</span>
+<span id="cb134-10"><a href="plsr.html#cb134-10"></a>  }</span>
+<span id="cb134-11"><a href="plsr.html#cb134-11"></a>  </span>
+<span id="cb134-12"><a href="plsr.html#cb134-12"></a>  Tmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">nrow</span>(X), <span class="dt">ncol =</span> A)</span>
+<span id="cb134-13"><a href="plsr.html#cb134-13"></a>  Umat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">nrow</span>(X), <span class="dt">ncol =</span> A)</span>
+<span id="cb134-14"><a href="plsr.html#cb134-14"></a>  Wmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(X), <span class="dt">ncol =</span> A)</span>
+<span id="cb134-15"><a href="plsr.html#cb134-15"></a>  Pmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(X), <span class="dt">ncol =</span> A)</span>
+<span id="cb134-16"><a href="plsr.html#cb134-16"></a>  Qmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(Y), <span class="dt">ncol =</span> A)</span>
+<span id="cb134-17"><a href="plsr.html#cb134-17"></a>  Bmat &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dt">nrow =</span> A)</span>
+<span id="cb134-18"><a href="plsr.html#cb134-18"></a>  </span>
+<span id="cb134-19"><a href="plsr.html#cb134-19"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="kw">seq_len</span>(A)) {</span>
+<span id="cb134-20"><a href="plsr.html#cb134-20"></a>    <span class="co"># 단계 1</span></span>
+<span id="cb134-21"><a href="plsr.html#cb134-21"></a>    j &lt;-<span class="st"> </span><span class="kw">sample.int</span>(<span class="kw">ncol</span>(Y), <span class="dt">size =</span> 1L)</span>
+<span id="cb134-22"><a href="plsr.html#cb134-22"></a>    Umat[, a] &lt;-<span class="st"> </span>Y[, j]</span>
+<span id="cb134-23"><a href="plsr.html#cb134-23"></a>    </span>
+<span id="cb134-24"><a href="plsr.html#cb134-24"></a>    <span class="cf">while</span> (<span class="ot">TRUE</span>) {</span>
+<span id="cb134-25"><a href="plsr.html#cb134-25"></a>      <span class="co"># 단계 2</span></span>
+<span id="cb134-26"><a href="plsr.html#cb134-26"></a>      Wmat[, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(X <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Umat[, a]))</span>
+<span id="cb134-27"><a href="plsr.html#cb134-27"></a>      </span>
+<span id="cb134-28"><a href="plsr.html#cb134-28"></a>      <span class="co"># 단계 3</span></span>
+<span id="cb134-29"><a href="plsr.html#cb134-29"></a>      Wmat[, a] &lt;-<span class="st"> </span>Wmat[, a] <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(Wmat[, a] <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))</span>
+<span id="cb134-30"><a href="plsr.html#cb134-30"></a>      </span>
+<span id="cb134-31"><a href="plsr.html#cb134-31"></a>      <span class="co"># 단계 4</span></span>
+<span id="cb134-32"><a href="plsr.html#cb134-32"></a>      Tmat[, a] &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>Wmat[, a]</span>
+<span id="cb134-33"><a href="plsr.html#cb134-33"></a>      </span>
+<span id="cb134-34"><a href="plsr.html#cb134-34"></a>      <span class="co"># 단계 5</span></span>
+<span id="cb134-35"><a href="plsr.html#cb134-35"></a>      Qmat[, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Tmat[, a]))</span>
+<span id="cb134-36"><a href="plsr.html#cb134-36"></a>      </span>
+<span id="cb134-37"><a href="plsr.html#cb134-37"></a>      <span class="co"># 단계 6</span></span>
+<span id="cb134-38"><a href="plsr.html#cb134-38"></a>      Qmat[, a] &lt;-<span class="st"> </span>Qmat[, a] <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(Qmat[, a] <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))</span>
+<span id="cb134-39"><a href="plsr.html#cb134-39"></a>      </span>
+<span id="cb134-40"><a href="plsr.html#cb134-40"></a>      <span class="co"># 단계 7</span></span>
+<span id="cb134-41"><a href="plsr.html#cb134-41"></a>      u_new &lt;-<span class="st"> </span>Y <span class="op">%*%</span><span class="st"> </span>Qmat[, a]</span>
+<span id="cb134-42"><a href="plsr.html#cb134-42"></a>      </span>
+<span id="cb134-43"><a href="plsr.html#cb134-43"></a>      <span class="co"># 단계 8</span></span>
+<span id="cb134-44"><a href="plsr.html#cb134-44"></a>      <span class="cf">if</span> (<span class="kw">all</span>(<span class="kw">near</span>(u_new, Umat[, a]))) <span class="cf">break</span></span>
+<span id="cb134-45"><a href="plsr.html#cb134-45"></a>      </span>
+<span id="cb134-46"><a href="plsr.html#cb134-46"></a>      Umat[, a] &lt;-<span class="st"> </span>u_new</span>
+<span id="cb134-47"><a href="plsr.html#cb134-47"></a>    }</span>
+<span id="cb134-48"><a href="plsr.html#cb134-48"></a></span>
+<span id="cb134-49"><a href="plsr.html#cb134-49"></a>    <span class="co"># 단계 9</span></span>
+<span id="cb134-50"><a href="plsr.html#cb134-50"></a>    Pmat[, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(X <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Tmat[, a]))</span>
+<span id="cb134-51"><a href="plsr.html#cb134-51"></a>    </span>
+<span id="cb134-52"><a href="plsr.html#cb134-52"></a>    <span class="co"># 단계 10</span></span>
+<span id="cb134-53"><a href="plsr.html#cb134-53"></a>    p_size &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(Pmat[, a] <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))</span>
+<span id="cb134-54"><a href="plsr.html#cb134-54"></a>    Tmat[, a] &lt;-<span class="st"> </span>Tmat[, a] <span class="op">*</span><span class="st"> </span>p_size</span>
+<span id="cb134-55"><a href="plsr.html#cb134-55"></a>    Wmat[, a] &lt;-<span class="st"> </span>Wmat[, a] <span class="op">*</span><span class="st"> </span>p_size</span>
+<span id="cb134-56"><a href="plsr.html#cb134-56"></a>    Pmat[, a] &lt;-<span class="st"> </span>Pmat[, a] <span class="op">/</span><span class="st"> </span>p_size</span>
+<span id="cb134-57"><a href="plsr.html#cb134-57"></a>    </span>
+<span id="cb134-58"><a href="plsr.html#cb134-58"></a>    <span class="co"># 단계 11</span></span>
+<span id="cb134-59"><a href="plsr.html#cb134-59"></a>    Bmat[a, a] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(Umat[, a] <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Tmat[, a]))</span>
+<span id="cb134-60"><a href="plsr.html#cb134-60"></a></span>
+<span id="cb134-61"><a href="plsr.html#cb134-61"></a>    <span class="co"># 단계 12</span></span>
+<span id="cb134-62"><a href="plsr.html#cb134-62"></a>    X &lt;-<span class="st"> </span>X <span class="op">-</span><span class="st"> </span>Tmat[, a] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(Pmat[, a])</span>
+<span id="cb134-63"><a href="plsr.html#cb134-63"></a>    Y &lt;-<span class="st"> </span>Y <span class="op">-</span><span class="st"> </span>Bmat[a, a] <span class="op">*</span><span class="st"> </span>Tmat[, a] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(Qmat[, a])</span>
+<span id="cb134-64"><a href="plsr.html#cb134-64"></a>  }</span>
+<span id="cb134-65"><a href="plsr.html#cb134-65"></a>  </span>
+<span id="cb134-66"><a href="plsr.html#cb134-66"></a>  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">T =</span> Tmat, <span class="dt">W =</span> Wmat, <span class="dt">P =</span> Pmat, </span>
+<span id="cb134-67"><a href="plsr.html#cb134-67"></a>              <span class="dt">U =</span> Umat, <span class="dt">Q =</span> Qmat, <span class="dt">B =</span> Bmat))</span>
+<span id="cb134-68"><a href="plsr.html#cb134-68"></a>}</span>
+<span id="cb134-69"><a href="plsr.html#cb134-69"></a></span>
+<span id="cb134-70"><a href="plsr.html#cb134-70"></a>nipals_fit2 &lt;-<span class="st"> </span><span class="kw">nipals_plsr2</span>(X, Y, <span class="dt">A =</span> <span class="dv">3</span>)</span>
+<span id="cb134-71"><a href="plsr.html#cb134-71"></a>nipals_fit2</span></code></pre></div>
 <pre><code>## $T
 ##             [,1]       [,2]        [,3]
-## [1,]   1.5777938  0.4117531  0.44707709
-## [2,]  -2.2993972  8.0194451 -0.79803681
-## [3,]   0.8145895  5.1398023 -0.30016399
-## [4,]  21.3867331 -3.2065797 -0.01083136
-## [5,] -17.8784038 -5.7770058 -1.68928119
-## [6,]   9.2701258 -3.6198261 -0.09042238
-## [7,] -12.8714412 -0.9675888  2.44165865
+## [1,]  -1.5777938 -0.4117531  0.44707709
+## [2,]   2.2993972 -8.0194451 -0.79803681
+## [3,]  -0.8145895 -5.1398023 -0.30016399
+## [4,] -21.3867331  3.2065797 -0.01083136
+## [5,]  17.8784038  5.7770058 -1.68928119
+## [6,]  -9.2701258  3.6198261 -0.09042238
+## [7,]  12.8714412  0.9675888  2.44165865
 ## 
 ## $W
 ##            [,1]       [,2]       [,3]
-## [1,] -0.1476019 -0.4020251 -0.6921766
-## [2,] -0.1848598  0.4862964  0.5027723
-## [3,] -0.5065102 -0.8236460  0.4768770
-## [4,]  0.8312518 -0.4651155  0.2794808
+## [1,]  0.1476019  0.4020251 -0.6921766
+## [2,]  0.1848598 -0.4862964  0.5027723
+## [3,]  0.5065102  0.8236460  0.4768770
+## [4,] -0.8312518  0.4651155  0.2794808
 ## 
 ## $P
 ##            [,1]         [,2]       [,3]
-## [1,] -0.1648502  0.002634502 -0.5484068
-## [2,] -0.1588038  0.130002426  0.6241044
-## [3,] -0.5486716 -0.859489687  0.4559029
-## [4,]  0.8040928 -0.494337847  0.3192118
+## [1,]  0.1648502 -0.002634502 -0.5484068
+## [2,]  0.1588038 -0.130002426  0.6241044
+## [3,]  0.5486716  0.859489687  0.4559029
+## [4,] -0.8040928  0.494337847  0.3192118
 ## 
 ## $U
-##              [,1]      [,2]      [,3]
-## [1,]  11.60599122 -9.401433 -8.559602
-## [2,]  -0.03696152 -3.340983 -7.252566
-## [3,]  -9.14720168 11.437784  9.474719
-## [4,]  22.98172912 -6.021677 -4.914480
-## [5,]  -7.12619591 -9.125035 -6.794076
-## [6,]   0.47754875  7.914057  9.259791
-## [7,] -18.75490997  8.537286  8.786214
+##              [,1]       [,2]      [,3]
+## [1,] -11.60599122   9.401433 -8.559602
+## [2,]   0.03696152   3.340983 -7.252566
+## [3,]   9.14720168 -11.437784  9.474719
+## [4,] -22.98172913   6.021677 -4.914480
+## [5,]   7.12619591   9.125035 -6.794076
+## [6,]  -0.47754875  -7.914057  9.259791
+## [7,]  18.75490997  -8.537286  8.786214
 ## 
 ## $Q
 ##            [,1]       [,2]       [,3]
-## [1,]  0.4832295 -0.1202142 0.07948906
-## [2,] -0.8754937  0.9927480 0.99683574
+## [1,] -0.4832295  0.1202142 0.07948906
+## [2,]  0.8754937 -0.9927480 0.99683574
 ## 
 ## $B
 ##           [,1]      [,2]     [,3]
@@ -1052,17 +1059,17 @@ nipals_fit2</code></pre>
 <p><span class="math display">\[\begin{equation}
 \mathbf{B}_{PLS} = \mathbf{W} \left(\mathbf{P}^\top \mathbf{W}\right)^{-1} \mathbf{B} \mathbf{Q}^\top
 \end{equation}\]</span></p>
-<pre class="sourceCode r"><code class="sourceCode r">beta_pls2 &lt;-<span class="st"> </span>nipals_fit2<span class="op">$</span>W <span class="op">%*%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit2<span class="op">$</span>P) <span class="op">%*%</span><span class="st"> </span>nipals_fit2<span class="op">$</span>W) <span class="op">%*%</span><span class="st"> </span>
-<span class="st">  </span>nipals_fit2<span class="op">$</span>B <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(nipals_fit2<span class="op">$</span>Q)
-beta_pls2</code></pre>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="plsr.html#cb136-1"></a>beta_pls2 &lt;-<span class="st"> </span>nipals_fit2<span class="op">$</span>W <span class="op">%*%</span><span class="st"> </span></span>
+<span id="cb136-2"><a href="plsr.html#cb136-2"></a><span class="st">  </span><span class="kw">solve</span>(<span class="kw">t</span>(nipals_fit2<span class="op">$</span>P) <span class="op">%*%</span><span class="st"> </span>nipals_fit2<span class="op">$</span>W) <span class="op">%*%</span><span class="st"> </span></span>
+<span id="cb136-3"><a href="plsr.html#cb136-3"></a><span class="st">  </span>nipals_fit2<span class="op">$</span>B <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(nipals_fit2<span class="op">$</span>Q)</span>
+<span id="cb136-4"><a href="plsr.html#cb136-4"></a>beta_pls2</span></code></pre></div>
 <pre><code>##             [,1]       [,2]
 ## [1,] -0.26509645 -2.8773570
 ## [2,]  0.08864959  2.7249194
 ## [3,] -0.14258488  0.3377420
 ## [4,]  0.37330470 -0.7406377</code></pre>
 <p>이는 앞 <a href="plsr.html#plsr-multivariate-basic-script">4.3.1</a> 절에서 R 패키지 <code>pls</code>를 통해 얻어진 결과와 동일함을 확인할 수 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">near</span>(beta_pls2, <span class="kw">coef</span>(plsr_multi_fit)[, , <span class="dv">1</span>]))</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="plsr.html#cb138-1"></a><span class="kw">all</span>(<span class="kw">near</span>(beta_pls2, <span class="kw">coef</span>(plsr_multi_fit)[, , <span class="dv">1</span>]))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="plsr-multivariate-sst" class="section level3">
@@ -1078,29 +1085,29 @@ SSR &amp;= \sum_{a = 1}^{A} SSR_a\\
 \end{split} \tag{4.16}
 \end{equation}\]</span></p>
 <p>이 때, <span class="math inline">\(SSR_a\)</span>는 잠재변수 <span class="math inline">\(\mathbf{t}_a\)</span>에 의해 설명되는 <span class="math inline">\(\mathbf{Y}\)</span>의 변동을 나타낸다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">SSR_a &lt;-<span class="st"> </span><span class="kw">diag</span>(
-  <span class="kw">t</span>(nipals_fit2<span class="op">$</span>T <span class="op">%*%</span><span class="st"> </span>nipals_fit2<span class="op">$</span>B) <span class="op">%*%</span><span class="st"> </span>
-<span class="st">    </span>(nipals_fit2<span class="op">$</span>T <span class="op">%*%</span><span class="st"> </span>nipals_fit2<span class="op">$</span>B)
-)
-SSR_a</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="plsr.html#cb140-1"></a>SSR_a &lt;-<span class="st"> </span><span class="kw">diag</span>(</span>
+<span id="cb140-2"><a href="plsr.html#cb140-2"></a>  <span class="kw">t</span>(nipals_fit2<span class="op">$</span>T <span class="op">%*%</span><span class="st"> </span>nipals_fit2<span class="op">$</span>B) <span class="op">%*%</span><span class="st"> </span></span>
+<span id="cb140-3"><a href="plsr.html#cb140-3"></a><span class="st">    </span>(nipals_fit2<span class="op">$</span>T <span class="op">%*%</span><span class="st"> </span>nipals_fit2<span class="op">$</span>B)</span>
+<span id="cb140-4"><a href="plsr.html#cb140-4"></a>)</span>
+<span id="cb140-5"><a href="plsr.html#cb140-5"></a>SSR_a</span></code></pre></div>
 <pre><code>## [1] 739.40663  26.91455 100.23860</code></pre>
 <p><span class="math inline">\(SSR_a\)</span>를 전체제곱합 <span class="math inline">\(SST\)</span>로 나누면 각 잠재변수가 <span class="math inline">\(\mathbf{Y}\)</span>의 변동에 기여하는 비율을 산출할 수 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">SST &lt;-<span class="st"> </span><span class="kw">sum</span>(Y <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
-SSR_a <span class="op">/</span><span class="st"> </span>SST</code></pre>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="plsr.html#cb142-1"></a>SST &lt;-<span class="st"> </span><span class="kw">sum</span>(Y <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
+<span id="cb142-2"><a href="plsr.html#cb142-2"></a>SSR_a <span class="op">/</span><span class="st"> </span>SST</span></code></pre></div>
 <pre><code>## [1] 0.58621653 0.02133840 0.07947119</code></pre>
 <p>또한, 잠재변수 <span class="math inline">\(\mathbf{t}_a\)</span>가 설명하는 종속변수행렬 <span class="math inline">\(\mathbf{Y}\)</span>의 <span class="math inline">\(j\)</span>번째 열의 변동을 <span class="math inline">\(SSR_{aj}\)</span>라 할 때, 이는 다음과 같이 산출된다.</p>
 <p><span class="math display">\[\begin{equation}
 SSR_{aj} = q_{ja}^2 SSR_a
 \end{equation}\]</span></p>
-<pre class="sourceCode r"><code class="sourceCode r">SSR_aj &lt;-<span class="st"> </span><span class="kw">diag</span>(SSR_a) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(nipals_fit2<span class="op">$</span>Q <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
-SSR_aj</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="plsr.html#cb144-1"></a>SSR_aj &lt;-<span class="st"> </span><span class="kw">diag</span>(SSR_a) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(nipals_fit2<span class="op">$</span>Q <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
+<span id="cb144-2"><a href="plsr.html#cb144-2"></a>SSR_aj</span></code></pre></div>
 <pre><code>##             [,1]      [,2]
 ## [1,] 172.6593685 566.74726
 ## [2,]   0.3889542  26.52560
 ## [3,]   0.6333587  99.60524</code></pre>
 <p>이렇게 산출된 <span class="math inline">\(SSR_{aj}\)</span>를 <span class="math inline">\(j\)</span>번째 종속변수 <span class="math inline">\(\mathbf{y}_j\)</span>의 제곱합 <span class="math inline">\(SS(\mathbf{y}_j)\)</span>로 나누면, <span class="math inline">\(\mathbf{y}_j\)</span>에 대한 <span class="math inline">\(\mathbf{t}_a\)</span>의 기여도를 얻을 수 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">SS_j &lt;-<span class="st"> </span><span class="kw">colSums</span>(Y <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
-SSR_aj <span class="op">%*%</span><span class="st"> </span><span class="kw">diag</span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>SS_j)</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="plsr.html#cb146-1"></a>SS_j &lt;-<span class="st"> </span><span class="kw">colSums</span>(Y <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
+<span id="cb146-2"><a href="plsr.html#cb146-2"></a>SSR_aj <span class="op">%*%</span><span class="st"> </span><span class="kw">diag</span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>SS_j)</span></code></pre></div>
 <pre><code>##             [,1]       [,2]
 ## [1,] 0.817051715 0.53975930
 ## [2,] 0.001840593 0.02526248
@@ -1143,11 +1150,13 @@ s.setAttribute('data-timestamp', +new Date());
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -1155,12 +1164,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -1172,6 +1180,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -1191,8 +1203,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

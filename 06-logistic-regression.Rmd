@@ -131,7 +131,7 @@ L = \prod_{i = 1}^{N} P_i^{y_i} (1 - P_i)^{1 - y_i}
 (\#eq:binary-logistic-reg-loglik)
 \end{eqnarray}
 
-식 (eq:binary-logistic-reg-loglik)을 각 회귀계수 $\beta_0, \beta_1, \cdots, \beta_p$에 대해 편미분하여 최적해를 얻는다. 이를 위해 주로 뉴턴-랩슨 알고리즘(Newton-Raphson algorithm)이나 quasi-Newton 알고리즘이 사용되나 [@jun2012datamining], 본 장에서는 우선 안정성은 떨어지지만 보다 간편한 방법으로 경사하강법(gradient descent)을 소개한다.
+식 \@ref(eq:binary-logistic-reg-loglik)을 각 회귀계수 $\beta_0, \beta_1, \cdots, \beta_p$에 대해 편미분하여 최적해를 얻는다. 이를 위해 주로 뉴턴-랩슨 알고리즘(Newton-Raphson algorithm)이나 quasi-Newton 알고리즘이 사용되나 [@jun2012datamining], 본 장에서는 우선 안정성은 떨어지지만 보다 간편한 방법으로 경사하강법(gradient descent)을 소개한다.
 
 #### 경사하강법 {#binary-logistic-gradient-descent}
 
@@ -630,7 +630,7 @@ VGAM::vglm(y ~ N + L,
 로그 우도함수는
 
 \begin{equation*}
-\sum_{i = 1}^{n} \sum_{j = 1}^{J} \log \pi_{ij}
+\sum_{i = 1}^{n} \sum_{j = 1}^{J} y_i \log \pi_{ij}
 \end{equation*}
 
 이며, 이에 위에서 정리한 $\pi_{ij}$식을 대입하여 전개할 수 있다. 이 로그 우도함수는 concave 함수이므로[@pratt1981concavity], 각 계수에 대해 편미분하여 0이 되도록 하는 값을 구하는 방식으로 회귀모형을 추정할 수 있다.

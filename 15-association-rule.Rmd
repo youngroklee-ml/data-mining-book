@@ -372,9 +372,9 @@ rule_results_df %>%
   ) %>%
   knitr::kable(
     booktabs = TRUE,
-    align = c('c', 'c', 'c', 'c', 'c', 'c'),
+    align = c('c', 'c', 'c', 'c', 'c', 'c', 'c'),
     col.names = c('조건부 $X$', '결과부 $Y$', '지지도',
-                  '신뢰도', '개선도', '관측수'),
+                  '신뢰도', '포함률', '개선도', '관측수'),
     caption = '최종 연관규칙 - arules::apriori'
   )
 ```

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 회귀분석 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 회귀분석 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2019-07-09" />
+<meta name="date" content="2020-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="datamining-overview.html">
-<link rel="next" href="pca.html">
+<link rel="prev" href="datamining-overview.html"/>
+<link rel="next" href="pca.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,29 +48,35 @@
 
 
 
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -78,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -208,9 +215,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
-<li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
-<li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
+<li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#피셔-판별함수"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
+<li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#분류-규칙"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
+<li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r-패키지를-이용한-분류규칙-도출"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
@@ -402,15 +409,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td align="left">tidyverse</td>
-<td align="left">1.2.1</td>
+<td align="left">1.3.0</td>
 </tr>
 <tr class="even">
 <td align="left">stats</td>
-<td align="left">3.6.0</td>
+<td align="left">4.0.3</td>
 </tr>
 <tr class="odd">
 <td align="left">broom</td>
-<td align="left">0.5.2</td>
+<td align="left">0.7.2</td>
 </tr>
 </tbody>
 </table>
@@ -464,103 +471,103 @@ E[\boldsymbol{\epsilon}] = \mathbf{0}, \, Var[\boldsymbol{\epsilon}] = \sigma^2 
 <div id="regression-response-confidence-basic-script" class="section level4">
 <h4><span class="header-section-number">2.3.1.1</span> 기본 R 스트립트</h4>
 <p>다음과 같은 10명의 나이(age), 키(height), 몸무게(weight)에 대한 데이터가 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
-  <span class="op">~</span>age, <span class="op">~</span>height, <span class="op">~</span>weight,
-  <span class="dv">21</span>, <span class="dv">170</span>, <span class="dv">60</span>,
-  <span class="dv">47</span>, <span class="dv">167</span>, <span class="dv">65</span>,
-  <span class="dv">36</span>, <span class="dv">173</span>, <span class="dv">67</span>,
-  <span class="dv">15</span>, <span class="dv">165</span>, <span class="dv">54</span>,
-  <span class="dv">54</span>, <span class="dv">168</span>, <span class="dv">73</span>,
-  <span class="dv">25</span>, <span class="dv">177</span>, <span class="dv">71</span>,
-  <span class="dv">32</span>, <span class="dv">169</span>, <span class="dv">68</span>,
-  <span class="dv">18</span>, <span class="dv">172</span>, <span class="dv">62</span>,
-  <span class="dv">43</span>, <span class="dv">171</span>, <span class="dv">66</span>,
-  <span class="dv">28</span>, <span class="dv">175</span>, <span class="dv">68</span>
-)
-
-knitr<span class="op">::</span><span class="kw">kable</span>(
-  train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
-  <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),
-  <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;나이 (age)&#39;</span>, <span class="st">&#39;키 (height)&#39;</span>, <span class="st">&#39;몸무게 (weight)&#39;</span>),
-  <span class="dt">caption =</span> <span class="st">&#39;나이, 키, 몸무게 데이터&#39;</span>
-)</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="regression.html#cb1-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
+<span id="cb1-2"><a href="regression.html#cb1-2"></a>  <span class="op">~</span>age, <span class="op">~</span>height, <span class="op">~</span>weight,</span>
+<span id="cb1-3"><a href="regression.html#cb1-3"></a>  <span class="dv">21</span>, <span class="dv">170</span>, <span class="dv">60</span>,</span>
+<span id="cb1-4"><a href="regression.html#cb1-4"></a>  <span class="dv">47</span>, <span class="dv">167</span>, <span class="dv">65</span>,</span>
+<span id="cb1-5"><a href="regression.html#cb1-5"></a>  <span class="dv">36</span>, <span class="dv">173</span>, <span class="dv">67</span>,</span>
+<span id="cb1-6"><a href="regression.html#cb1-6"></a>  <span class="dv">15</span>, <span class="dv">165</span>, <span class="dv">54</span>,</span>
+<span id="cb1-7"><a href="regression.html#cb1-7"></a>  <span class="dv">54</span>, <span class="dv">168</span>, <span class="dv">73</span>,</span>
+<span id="cb1-8"><a href="regression.html#cb1-8"></a>  <span class="dv">25</span>, <span class="dv">177</span>, <span class="dv">71</span>,</span>
+<span id="cb1-9"><a href="regression.html#cb1-9"></a>  <span class="dv">32</span>, <span class="dv">169</span>, <span class="dv">68</span>,</span>
+<span id="cb1-10"><a href="regression.html#cb1-10"></a>  <span class="dv">18</span>, <span class="dv">172</span>, <span class="dv">62</span>,</span>
+<span id="cb1-11"><a href="regression.html#cb1-11"></a>  <span class="dv">43</span>, <span class="dv">171</span>, <span class="dv">66</span>,</span>
+<span id="cb1-12"><a href="regression.html#cb1-12"></a>  <span class="dv">28</span>, <span class="dv">175</span>, <span class="dv">68</span></span>
+<span id="cb1-13"><a href="regression.html#cb1-13"></a>)</span>
+<span id="cb1-14"><a href="regression.html#cb1-14"></a></span>
+<span id="cb1-15"><a href="regression.html#cb1-15"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb1-16"><a href="regression.html#cb1-16"></a>  train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb1-17"><a href="regression.html#cb1-17"></a>  <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb1-18"><a href="regression.html#cb1-18"></a>  <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;나이 (age)&#39;</span>, <span class="st">&#39;키 (height)&#39;</span>, <span class="st">&#39;몸무게 (weight)&#39;</span>),</span>
+<span id="cb1-19"><a href="regression.html#cb1-19"></a>  <span class="dt">caption =</span> <span class="st">&#39;나이, 키, 몸무게 데이터&#39;</span></span>
+<span id="cb1-20"><a href="regression.html#cb1-20"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:regression-age-height-weight-data">Table 2.1: </span>나이, 키, 몸무게 데이터</caption>
 <thead>
 <tr class="header">
-<th align="center">나이 (age)</th>
-<th align="center">키 (height)</th>
-<th align="center">몸무게 (weight)</th>
+<th align="right">나이 (age)</th>
+<th align="right">키 (height)</th>
+<th align="right">몸무게 (weight)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">21</td>
-<td align="center">170</td>
-<td align="center">60</td>
+<td align="right">21</td>
+<td align="right">170</td>
+<td align="right">60</td>
 </tr>
 <tr class="even">
-<td align="center">47</td>
-<td align="center">167</td>
-<td align="center">65</td>
+<td align="right">47</td>
+<td align="right">167</td>
+<td align="right">65</td>
 </tr>
 <tr class="odd">
-<td align="center">36</td>
-<td align="center">173</td>
-<td align="center">67</td>
+<td align="right">36</td>
+<td align="right">173</td>
+<td align="right">67</td>
 </tr>
 <tr class="even">
-<td align="center">15</td>
-<td align="center">165</td>
-<td align="center">54</td>
+<td align="right">15</td>
+<td align="right">165</td>
+<td align="right">54</td>
 </tr>
 <tr class="odd">
-<td align="center">54</td>
-<td align="center">168</td>
-<td align="center">73</td>
+<td align="right">54</td>
+<td align="right">168</td>
+<td align="right">73</td>
 </tr>
 <tr class="even">
-<td align="center">25</td>
-<td align="center">177</td>
-<td align="center">71</td>
+<td align="right">25</td>
+<td align="right">177</td>
+<td align="right">71</td>
 </tr>
 <tr class="odd">
-<td align="center">32</td>
-<td align="center">169</td>
-<td align="center">68</td>
+<td align="right">32</td>
+<td align="right">169</td>
+<td align="right">68</td>
 </tr>
 <tr class="even">
-<td align="center">18</td>
-<td align="center">172</td>
-<td align="center">62</td>
+<td align="right">18</td>
+<td align="right">172</td>
+<td align="right">62</td>
 </tr>
 <tr class="odd">
-<td align="center">43</td>
-<td align="center">171</td>
-<td align="center">66</td>
+<td align="right">43</td>
+<td align="right">171</td>
+<td align="right">66</td>
 </tr>
 <tr class="even">
-<td align="center">28</td>
-<td align="center">175</td>
-<td align="center">68</td>
+<td align="right">28</td>
+<td align="right">175</td>
+<td align="right">68</td>
 </tr>
 </tbody>
 </table>
 <p>회귀모형을 아래와 같이 학습한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">lm_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(weight <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>height, <span class="dt">data =</span> train_df)</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="regression.html#cb2-1"></a>lm_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(weight <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>height, <span class="dt">data =</span> train_df)</span></code></pre></div>
 <p>추정된 회귀계수는 아래와 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(lm_fit)</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regression.html#cb3-1"></a><span class="kw">coef</span>(lm_fit)</span></code></pre></div>
 <pre><code>##  (Intercept)          age       height 
 ## -108.1671993    0.3291212    0.9552913</code></pre>
 <p>추정계수벡터의 분산-공분산 행렬은 아래와 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vcov</span>(lm_fit)</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="regression.html#cb5-1"></a><span class="kw">vcov</span>(lm_fit)</span></code></pre></div>
 <pre><code>##              (Intercept)          age        height
 ## (Intercept) 1774.3280624 -0.671107283 -10.264885141
 ## age           -0.6711073  0.004794717   0.003035476
 ## height       -10.2648851  0.003035476   0.059566804</code></pre>
 <p>나이가 40, 키가 170인 사람들의 평균 몸무게에 대한 95% 신뢰구간은 아래와 같이 구할 수 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(lm_fit, <span class="dt">newdata =</span> <span class="kw">tibble</span>(<span class="dt">age =</span> <span class="dv">40</span>, <span class="dt">height =</span> <span class="dv">170</span>),
-        <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="regression.html#cb7-1"></a><span class="kw">predict</span>(lm_fit, <span class="dt">newdata =</span> <span class="kw">tibble</span>(<span class="dt">age =</span> <span class="dv">40</span>, <span class="dt">height =</span> <span class="dv">170</span>),</span>
+<span id="cb7-2"><a href="regression.html#cb7-2"></a>        <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>##        fit      lwr      upr
 ## 1 67.39718 65.01701 69.77735</code></pre>
 </div>
@@ -580,39 +587,39 @@ Var(\hat{y}_0) &amp;=&amp; \mathbf{x}_0^\top Var(\hat{\boldsymbol{\beta}}) \math
 \hat{Var}(\hat{y}_0) = MSE \times \left( \mathbf{x}_0^\top \left(\mathbf{X}^\top \mathbf{X}\right)^{-1} \mathbf{x}_0 \right) \tag{2.5}
 \end{equation}\]</span></p>
 <p>우선 Table <a href="regression.html#tab:regression-age-height-weight-data">2.1</a>에 대해 회귀모형 추정치 <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>와 <span class="math inline">\(MSE\)</span>값을 구해보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="kw">nrow</span>(train_df)
-X &lt;-<span class="st"> </span><span class="kw">cbind</span>(
-  <span class="dt">intercept =</span> <span class="kw">rep</span>(<span class="dv">1</span>, n), 
-  train_df[, <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;height&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()
-)
-y &lt;-<span class="st"> </span>train_df[, <span class="kw">c</span>(<span class="st">&quot;weight&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()
-k &lt;-<span class="st"> </span><span class="kw">ncol</span>(X) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
-
-<span class="co"># regression coefficient</span>
-beta_hat &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y
-
-<span class="co"># response estimate</span>
-y_hat &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>beta_hat
-
-<span class="co"># MSE</span>
-MSE &lt;-<span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regression.html#cb9-1"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(train_df)</span>
+<span id="cb9-2"><a href="regression.html#cb9-2"></a>X &lt;-<span class="st"> </span><span class="kw">cbind</span>(</span>
+<span id="cb9-3"><a href="regression.html#cb9-3"></a>  <span class="dt">intercept =</span> <span class="kw">rep</span>(<span class="dv">1</span>, n), </span>
+<span id="cb9-4"><a href="regression.html#cb9-4"></a>  train_df[, <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;height&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</span>
+<span id="cb9-5"><a href="regression.html#cb9-5"></a>)</span>
+<span id="cb9-6"><a href="regression.html#cb9-6"></a>y &lt;-<span class="st"> </span>train_df[, <span class="kw">c</span>(<span class="st">&quot;weight&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</span>
+<span id="cb9-7"><a href="regression.html#cb9-7"></a>k &lt;-<span class="st"> </span><span class="kw">ncol</span>(X) <span class="op">-</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb9-8"><a href="regression.html#cb9-8"></a></span>
+<span id="cb9-9"><a href="regression.html#cb9-9"></a><span class="co"># regression coefficient</span></span>
+<span id="cb9-10"><a href="regression.html#cb9-10"></a>beta_hat &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y</span>
+<span id="cb9-11"><a href="regression.html#cb9-11"></a></span>
+<span id="cb9-12"><a href="regression.html#cb9-12"></a><span class="co"># response estimate</span></span>
+<span id="cb9-13"><a href="regression.html#cb9-13"></a>y_hat &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>beta_hat</span>
+<span id="cb9-14"><a href="regression.html#cb9-14"></a></span>
+<span id="cb9-15"><a href="regression.html#cb9-15"></a><span class="co"># MSE</span></span>
+<span id="cb9-16"><a href="regression.html#cb9-16"></a>MSE &lt;-<span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span></code></pre></div>
 <p>이후, 나이가 40, 키가 170인 객체 <span class="math inline">\(\mathbf{x}_0\)</span>에 대한 평균 반응치 <span class="math inline">\(\hat{y}_0\)</span>의 95% 신뢰구간을 구해보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># variance of y_hat on new_x</span>
-new_x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(
-  <span class="dt">intercept =</span> <span class="dv">1</span>,
-  <span class="dt">age =</span> <span class="dv">40</span>,
-  <span class="dt">height =</span> <span class="dv">170</span>
-), <span class="dt">ncol =</span> <span class="dv">1</span>)
-
-new_y_hat &lt;-<span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span>beta_hat
-
-var_new_y_hat &lt;-<span class="st"> </span>MSE <span class="op">*</span><span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span>new_x
-se_new_y_hat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(var_new_y_hat)
-
-lci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.025</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_hat
-uci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_hat
-
-<span class="kw">str_glue</span>(<span class="st">&quot;({format(lci, nsmall = 3L)}, {format(uci, nsmall = 3L)})&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regression.html#cb10-1"></a><span class="co"># variance of y_hat on new_x</span></span>
+<span id="cb10-2"><a href="regression.html#cb10-2"></a>new_x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(</span>
+<span id="cb10-3"><a href="regression.html#cb10-3"></a>  <span class="dt">intercept =</span> <span class="dv">1</span>,</span>
+<span id="cb10-4"><a href="regression.html#cb10-4"></a>  <span class="dt">age =</span> <span class="dv">40</span>,</span>
+<span id="cb10-5"><a href="regression.html#cb10-5"></a>  <span class="dt">height =</span> <span class="dv">170</span></span>
+<span id="cb10-6"><a href="regression.html#cb10-6"></a>), <span class="dt">ncol =</span> <span class="dv">1</span>)</span>
+<span id="cb10-7"><a href="regression.html#cb10-7"></a></span>
+<span id="cb10-8"><a href="regression.html#cb10-8"></a>new_y_hat &lt;-<span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span>beta_hat</span>
+<span id="cb10-9"><a href="regression.html#cb10-9"></a></span>
+<span id="cb10-10"><a href="regression.html#cb10-10"></a>var_new_y_hat &lt;-<span class="st"> </span>MSE <span class="op">*</span><span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span>new_x</span>
+<span id="cb10-11"><a href="regression.html#cb10-11"></a>se_new_y_hat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(var_new_y_hat)</span>
+<span id="cb10-12"><a href="regression.html#cb10-12"></a></span>
+<span id="cb10-13"><a href="regression.html#cb10-13"></a>lci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.025</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_hat</span>
+<span id="cb10-14"><a href="regression.html#cb10-14"></a>uci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_hat</span>
+<span id="cb10-15"><a href="regression.html#cb10-15"></a></span>
+<span id="cb10-16"><a href="regression.html#cb10-16"></a><span class="kw">str_glue</span>(<span class="st">&quot;({format(lci, nsmall = 3L)}, {format(uci, nsmall = 3L)})&quot;</span>)</span></code></pre></div>
 <pre><code>## (65.01701, 69.77735)</code></pre>
 </div>
 </div>
@@ -621,8 +628,8 @@ uci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class
 <div id="regression-response-prediction-basic-script" class="section level4">
 <h4><span class="header-section-number">2.3.2.1</span> 기본 R 스트립트</h4>
 <p><a href="regression.html#regression-response-confidence">2.3.1</a> 절에서 추정한 회귀모형을 통해, 새로운 독립변수값(나이 = 40, 키 = 170)을 지닌 특정 객체에 대한 몸무게의 예측구간을 구한다. 이는 한 객체의 몸무게의 예측구간으로, <a href="regression.html#regression-response-confidence">2.3.1</a> 절에서 구한 평균 몸무게의 신뢰구간보다 넓다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(lm_fit, <span class="dt">newdata =</span> <span class="kw">tibble</span>(<span class="dt">age =</span> <span class="dv">40</span>, <span class="dt">height =</span> <span class="dv">170</span>),
-        <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="regression.html#cb12-1"></a><span class="kw">predict</span>(lm_fit, <span class="dt">newdata =</span> <span class="kw">tibble</span>(<span class="dt">age =</span> <span class="dv">40</span>, <span class="dt">height =</span> <span class="dv">170</span>),</span>
+<span id="cb12-2"><a href="regression.html#cb12-2"></a>        <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>##        fit      lwr     upr
 ## 1 67.39718 60.68745 74.1069</code></pre>
 </div>
@@ -641,22 +648,22 @@ Var(y_0 - \hat{y}_0) &amp;=&amp; Var(y_0) + Var(\hat{y}_0)\\
 \tag{2.7}
 \end{equation}\]</span></p>
 <p>앞 절에서 추정한 회귀모형을 이용하여, 나이가 40, 키가 170인 객체 <span class="math inline">\(\mathbf{x}_0\)</span>에 대한 미래 반응치 <span class="math inline">\(y_0\)</span>의 95% 예측구간을 구해보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># variance of y_hat on new_x</span>
-new_x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(
-  <span class="dt">intercept =</span> <span class="dv">1</span>,
-  <span class="dt">age =</span> <span class="dv">40</span>,
-  <span class="dt">height =</span> <span class="dv">170</span>
-), <span class="dt">ncol =</span> <span class="dv">1</span>)
-
-new_y_hat &lt;-<span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span>beta_hat
-
-var_new_y_pred &lt;-<span class="st"> </span>MSE <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span>new_x)
-se_new_y_pred &lt;-<span class="st"> </span><span class="kw">sqrt</span>(var_new_y_pred)
-
-lci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.025</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_pred
-uci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_pred
-
-<span class="kw">str_glue</span>(<span class="st">&quot;({format(lci, nsmall = 3L)}, {format(uci, nsmall = 3L)})&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="regression.html#cb14-1"></a><span class="co"># variance of y_hat on new_x</span></span>
+<span id="cb14-2"><a href="regression.html#cb14-2"></a>new_x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(</span>
+<span id="cb14-3"><a href="regression.html#cb14-3"></a>  <span class="dt">intercept =</span> <span class="dv">1</span>,</span>
+<span id="cb14-4"><a href="regression.html#cb14-4"></a>  <span class="dt">age =</span> <span class="dv">40</span>,</span>
+<span id="cb14-5"><a href="regression.html#cb14-5"></a>  <span class="dt">height =</span> <span class="dv">170</span></span>
+<span id="cb14-6"><a href="regression.html#cb14-6"></a>), <span class="dt">ncol =</span> <span class="dv">1</span>)</span>
+<span id="cb14-7"><a href="regression.html#cb14-7"></a></span>
+<span id="cb14-8"><a href="regression.html#cb14-8"></a>new_y_hat &lt;-<span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span>beta_hat</span>
+<span id="cb14-9"><a href="regression.html#cb14-9"></a></span>
+<span id="cb14-10"><a href="regression.html#cb14-10"></a>var_new_y_pred &lt;-<span class="st"> </span>MSE <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">t</span>(new_x) <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span>new_x)</span>
+<span id="cb14-11"><a href="regression.html#cb14-11"></a>se_new_y_pred &lt;-<span class="st"> </span><span class="kw">sqrt</span>(var_new_y_pred)</span>
+<span id="cb14-12"><a href="regression.html#cb14-12"></a></span>
+<span id="cb14-13"><a href="regression.html#cb14-13"></a>lci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.025</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_pred</span>
+<span id="cb14-14"><a href="regression.html#cb14-14"></a>uci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>se_new_y_pred</span>
+<span id="cb14-15"><a href="regression.html#cb14-15"></a></span>
+<span id="cb14-16"><a href="regression.html#cb14-16"></a><span class="kw">str_glue</span>(<span class="st">&quot;({format(lci, nsmall = 3L)}, {format(uci, nsmall = 3L)})&quot;</span>)</span></code></pre></div>
 <pre><code>## (60.68745, 74.1069)</code></pre>
 </div>
 </div>
@@ -666,38 +673,38 @@ uci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class
 <div id="regression-indicator-variable-basic-script" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> 기본 R 스트립트</h3>
 <p>어떤 열연코일의 인장강도(TS)에 권취온도(CT)가 어떤 영향을 미치는가를 조사하기 위해 TS를 종속변수, CT를 독립변수로 하여 회귀분석을 실시하기로 하였다. 수집된 데이터에는 두 개의 두께 그룹(2mm, 6mm)이 포함되어 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
-  <span class="op">~</span>ct, <span class="op">~</span>thickness, <span class="op">~</span>ts,
-  <span class="dv">540</span>, <span class="dv">2</span>, <span class="fl">52.5</span>,
-  <span class="dv">660</span>, <span class="dv">2</span>, <span class="fl">50.2</span>,
-  <span class="dv">610</span>, <span class="dv">2</span>, <span class="fl">51.3</span>,
-  <span class="dv">710</span>, <span class="dv">2</span>, <span class="fl">49.1</span>,
-  <span class="dv">570</span>, <span class="dv">6</span>, <span class="fl">50.8</span>,
-  <span class="dv">700</span>, <span class="dv">6</span>, <span class="fl">48.7</span>,
-  <span class="dv">560</span>, <span class="dv">6</span>, <span class="fl">51.2</span>,
-  <span class="dv">600</span>, <span class="dv">6</span>, <span class="fl">50.8</span>,
-  <span class="dv">680</span>, <span class="dv">6</span>, <span class="fl">49.3</span>,
-  <span class="dv">530</span>, <span class="dv">6</span>, <span class="fl">51.5</span>
-) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">thickness =</span> <span class="kw">factor</span>(thickness, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">2</span>)))</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(train_df)</code></pre>
-<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    10 obs. of  3 variables:
-##  $ ct       : num  540 660 610 710 570 700 560 600 680 530
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="regression.html#cb16-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
+<span id="cb16-2"><a href="regression.html#cb16-2"></a>  <span class="op">~</span>ct, <span class="op">~</span>thickness, <span class="op">~</span>ts,</span>
+<span id="cb16-3"><a href="regression.html#cb16-3"></a>  <span class="dv">540</span>, <span class="dv">2</span>, <span class="fl">52.5</span>,</span>
+<span id="cb16-4"><a href="regression.html#cb16-4"></a>  <span class="dv">660</span>, <span class="dv">2</span>, <span class="fl">50.2</span>,</span>
+<span id="cb16-5"><a href="regression.html#cb16-5"></a>  <span class="dv">610</span>, <span class="dv">2</span>, <span class="fl">51.3</span>,</span>
+<span id="cb16-6"><a href="regression.html#cb16-6"></a>  <span class="dv">710</span>, <span class="dv">2</span>, <span class="fl">49.1</span>,</span>
+<span id="cb16-7"><a href="regression.html#cb16-7"></a>  <span class="dv">570</span>, <span class="dv">6</span>, <span class="fl">50.8</span>,</span>
+<span id="cb16-8"><a href="regression.html#cb16-8"></a>  <span class="dv">700</span>, <span class="dv">6</span>, <span class="fl">48.7</span>,</span>
+<span id="cb16-9"><a href="regression.html#cb16-9"></a>  <span class="dv">560</span>, <span class="dv">6</span>, <span class="fl">51.2</span>,</span>
+<span id="cb16-10"><a href="regression.html#cb16-10"></a>  <span class="dv">600</span>, <span class="dv">6</span>, <span class="fl">50.8</span>,</span>
+<span id="cb16-11"><a href="regression.html#cb16-11"></a>  <span class="dv">680</span>, <span class="dv">6</span>, <span class="fl">49.3</span>,</span>
+<span id="cb16-12"><a href="regression.html#cb16-12"></a>  <span class="dv">530</span>, <span class="dv">6</span>, <span class="fl">51.5</span></span>
+<span id="cb16-13"><a href="regression.html#cb16-13"></a>) <span class="op">%&gt;%</span></span>
+<span id="cb16-14"><a href="regression.html#cb16-14"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">thickness =</span> <span class="kw">factor</span>(thickness, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="regression.html#cb17-1"></a><span class="kw">str</span>(train_df)</span></code></pre></div>
+<pre><code>## tibble [10 × 3] (S3: tbl_df/tbl/data.frame)
+##  $ ct       : num [1:10] 540 660 610 710 570 700 560 600 680 530
 ##  $ thickness: Factor w/ 2 levels &quot;6&quot;,&quot;2&quot;: 2 2 2 2 1 1 1 1 1 1
-##  $ ts       : num  52.5 50.2 51.3 49.1 50.8 48.7 51.2 50.8 49.3 51.5</code></pre>
+##  $ ts       : num [1:10] 52.5 50.2 51.3 49.1 50.8 48.7 51.2 50.8 49.3 51.5</code></pre>
 <p>두께를 <code>factor</code>로 지정하고 회귀모형을 추정하자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">lm_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(ts <span class="op">~</span><span class="st"> </span>ct <span class="op">+</span><span class="st"> </span>thickness, <span class="dt">data =</span> train_df)</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="regression.html#cb19-1"></a>lm_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(ts <span class="op">~</span><span class="st"> </span>ct <span class="op">+</span><span class="st"> </span>thickness, <span class="dt">data =</span> train_df)</span></code></pre></div>
 <p>회귀 계수는 아래와 같이 얻어진다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(lm_fit)</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="regression.html#cb20-1"></a><span class="kw">coef</span>(lm_fit)</span></code></pre></div>
 <pre><code>## (Intercept)          ct  thickness2 
 ## 61.10796610 -0.01767797  0.80415254</code></pre>
 <p>두께 그룹에 따라 CT에 대한 TS의 기울기가 다르다고 예상되면 CT와 두께 간에 교호작용(interaction)이 존재한다고 말하며, 이 때 회귀모형은 다음과 같이 추정한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">lm_interaction_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(
-  ts <span class="op">~</span><span class="st"> </span>ct <span class="op">+</span><span class="st"> </span>thickness <span class="op">+</span><span class="st"> </span>ct<span class="op">:</span>thickness, 
-  <span class="dt">data =</span> train_df
-)</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="regression.html#cb22-1"></a>lm_interaction_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(</span>
+<span id="cb22-2"><a href="regression.html#cb22-2"></a>  ts <span class="op">~</span><span class="st"> </span>ct <span class="op">+</span><span class="st"> </span>thickness <span class="op">+</span><span class="st"> </span>ct<span class="op">:</span>thickness, </span>
+<span id="cb22-3"><a href="regression.html#cb22-3"></a>  <span class="dt">data =</span> train_df</span>
+<span id="cb22-4"><a href="regression.html#cb22-4"></a>)</span></code></pre></div>
 <p>교호작용이 추가된 회귀 결과는 아래와 같다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">broom<span class="op">::</span><span class="kw">tidy</span>(lm_interaction_fit)</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="regression.html#cb23-1"></a>broom<span class="op">::</span><span class="kw">tidy</span>(lm_interaction_fit)</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 5
 ##   term          estimate std.error statistic  p.value
 ##   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -706,17 +713,17 @@ uci &lt;-<span class="st"> </span>new_y_hat <span class="op">+</span><span class
 ## 3 thickness2     3.28      1.21         2.71 3.52e- 2
 ## 4 ct:thickness2 -0.00399   0.00194     -2.05 8.57e- 2</code></pre>
 <p>두께에 따른 CT와 TS의 관계를 그래프로 살펴보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">new_df &lt;-<span class="st"> </span><span class="kw">crossing</span>(
-  <span class="dt">ct =</span> <span class="kw">seq</span>(<span class="dv">500</span>, <span class="dv">750</span>, <span class="dt">by =</span> <span class="dv">10</span>),
-  <span class="dt">thickness =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">2</span>))
-)
-
-new_df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ts_hat =</span> <span class="kw">predict</span>(lm_interaction_fit, .)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ct, <span class="dt">y =</span> ts_hat)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> thickness)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ct, <span class="dt">y =</span> ts, <span class="dt">color =</span> thickness), <span class="dt">data =</span> train_df) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">color =</span> <span class="st">&quot;thickness&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;CT&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;TS&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="regression.html#cb25-1"></a>new_df &lt;-<span class="st"> </span><span class="kw">crossing</span>(</span>
+<span id="cb25-2"><a href="regression.html#cb25-2"></a>  <span class="dt">ct =</span> <span class="kw">seq</span>(<span class="dv">500</span>, <span class="dv">750</span>, <span class="dt">by =</span> <span class="dv">10</span>),</span>
+<span id="cb25-3"><a href="regression.html#cb25-3"></a>  <span class="dt">thickness =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">2</span>))</span>
+<span id="cb25-4"><a href="regression.html#cb25-4"></a>)</span>
+<span id="cb25-5"><a href="regression.html#cb25-5"></a></span>
+<span id="cb25-6"><a href="regression.html#cb25-6"></a>new_df <span class="op">%&gt;%</span></span>
+<span id="cb25-7"><a href="regression.html#cb25-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ts_hat =</span> <span class="kw">predict</span>(lm_interaction_fit, .)) <span class="op">%&gt;%</span></span>
+<span id="cb25-8"><a href="regression.html#cb25-8"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ct, <span class="dt">y =</span> ts_hat)) <span class="op">+</span></span>
+<span id="cb25-9"><a href="regression.html#cb25-9"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> thickness)) <span class="op">+</span></span>
+<span id="cb25-10"><a href="regression.html#cb25-10"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ct, <span class="dt">y =</span> ts, <span class="dt">color =</span> thickness), <span class="dt">data =</span> train_df) <span class="op">+</span></span>
+<span id="cb25-11"><a href="regression.html#cb25-11"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">color =</span> <span class="st">&quot;thickness&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;CT&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;TS&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:regression-ct-ts-by-thickness-plot"></span>
 <img src="data-mining-book_files/figure-html/regression-ct-ts-by-thickness-plot-1.png" alt="두께에 따른 CT와 TS의 관계" width="672" />
 <p class="caption">
@@ -757,11 +764,13 @@ s.setAttribute('data-timestamp', +new Date());
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -769,12 +778,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -786,6 +794,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -805,8 +817,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

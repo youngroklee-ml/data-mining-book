@@ -131,6 +131,7 @@ merge_cluster <- function(df, cluster_label) {
   # 군집간 거리 계산한다. - 유클리드 거리 및 평균연결법 기반
   cluster_dist <- dist(subset(df, select = -id), upper = TRUE) %>% 
     broom::tidy() %>%
+    mutate_if(is.factor, ~ as.integer(as.character(.))) %>%
     inner_join(
       cluster_label %>% rename(
         item1 = id, cluster1 = cluster

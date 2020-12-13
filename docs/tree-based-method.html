@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 트리기반 기법 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 트리기반 기법 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2019-07-09" />
+<meta name="date" content="2020-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="da.html">
-<link rel="next" href="svm.html">
+<link rel="prev" href="da.html"/>
+<link rel="next" href="svm.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,29 +48,35 @@
 
 
 
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -78,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -208,9 +215,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
-<li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
-<li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
+<li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#피셔-판별함수"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
+<li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#분류-규칙"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
+<li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r-패키지를-이용한-분류규칙-도출"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
@@ -391,7 +398,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 8</span> 트리기반 기법</h1>
 <div id="cart-overview" class="section level2">
 <h2><span class="header-section-number">8.1</span> CART 개요</h2>
-<p>CART(Classification and Regression Trees)는 <span class="citation">Breiman et al. (<a href="#ref-breiman1984classification">1984</a>)</span> 에 의하여 개발된 것인데, 각 (독립)변수를 이분화(binary split)하는 과정을 반복하여 트리 형태를 형성함으로써 분류(종속변수가 범주형일 때) 또는 회귀분석(종속변수가 연속형일 때)을 수행하는 것이다. 이 때 독립변수들은 범주형 또는 연속형 모두에 적용될 수 있다. 본 장에서는 분류를 위한 목적만을 설명하도록 한다.</p>
+<p>CART(Classification and Regression Trees)는 <span class="citation">Breiman et al. (<a href="#ref-breiman1984classification" role="doc-biblioref">1984</a>)</span> 에 의하여 개발된 것인데, 각 (독립)변수를 이분화(binary split)하는 과정을 반복하여 트리 형태를 형성함으로써 분류(종속변수가 범주형일 때) 또는 회귀분석(종속변수가 연속형일 때)을 수행하는 것이다. 이 때 독립변수들은 범주형 또는 연속형 모두에 적용될 수 있다. 본 장에서는 분류를 위한 목적만을 설명하도록 한다.</p>
 </div>
 <div id="cart-packages-install" class="section level2">
 <h2><span class="header-section-number">8.2</span> 필요 R package 설치</h2>
@@ -406,7 +413,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td align="left">tidyverse</td>
-<td align="left">1.2.1</td>
+<td align="left">1.3.0</td>
 </tr>
 <tr class="even">
 <td align="left">rpart</td>
@@ -414,7 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td align="left">rpart.plot</td>
-<td align="left">3.0.7</td>
+<td align="left">3.0.9</td>
 </tr>
 </tbody>
 </table>
@@ -423,11 +430,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">8.3</span> CART 트리 생성</h2>
 <div id="cart-basic-r-script" class="section level3">
 <h3><span class="header-section-number">8.3.1</span> 기본 R 스크립트</h3>
-<pre class="sourceCode r"><code class="sourceCode r">train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>),
-  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>),
-  <span class="dt">class =</span> <span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))
-)</code></pre>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="tree-based-method.html#cb287-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb287-2"><a href="tree-based-method.html#cb287-2"></a>  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>),</span>
+<span id="cb287-3"><a href="tree-based-method.html#cb287-3"></a>  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>),</span>
+<span id="cb287-4"><a href="tree-based-method.html#cb287-4"></a>  <span class="dt">class =</span> <span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb287-5"><a href="tree-based-method.html#cb287-5"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tree-train-data-table">Table 8.1: </span>학습표본 데이터</caption>
 <thead>
@@ -491,20 +498,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Table <a href="tree-based-method.html#tab:tree-train-data-table">8.1</a>와 같이 두 독립변수 <em>x1</em>, <em>x2</em>와 이분형 종속변수 <em>class</em>의 관측값으로 이루어진 10개의 학습표본을 <em>train_df</em>라는 data frame에 저장한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rpart)
-<span class="kw">library</span>(rpart.plot)
-cart.est &lt;-<span class="st"> </span><span class="kw">rpart</span>(
-  class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2
-  , <span class="dt">data =</span> train_df
-  , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>
-  , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)
-  , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span>
-                            , <span class="dt">minbucket =</span> <span class="dv">1</span>
-                            , <span class="dt">cp =</span> <span class="dv">0</span>
-                            , <span class="dt">xval =</span> <span class="dv">0</span>
-                            , <span class="dt">maxcompete =</span> <span class="dv">0</span>)
-  )
-<span class="kw">rpart.plot</span>(cart.est)</code></pre>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="tree-based-method.html#cb288-1"></a><span class="kw">library</span>(rpart)</span>
+<span id="cb288-2"><a href="tree-based-method.html#cb288-2"></a><span class="kw">library</span>(rpart.plot)</span>
+<span id="cb288-3"><a href="tree-based-method.html#cb288-3"></a>cart.est &lt;-<span class="st"> </span><span class="kw">rpart</span>(</span>
+<span id="cb288-4"><a href="tree-based-method.html#cb288-4"></a>  class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2</span>
+<span id="cb288-5"><a href="tree-based-method.html#cb288-5"></a>  , <span class="dt">data =</span> train_df</span>
+<span id="cb288-6"><a href="tree-based-method.html#cb288-6"></a>  , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span></span>
+<span id="cb288-7"><a href="tree-based-method.html#cb288-7"></a>  , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
+<span id="cb288-8"><a href="tree-based-method.html#cb288-8"></a>  , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span></span>
+<span id="cb288-9"><a href="tree-based-method.html#cb288-9"></a>                            , <span class="dt">minbucket =</span> <span class="dv">1</span></span>
+<span id="cb288-10"><a href="tree-based-method.html#cb288-10"></a>                            , <span class="dt">cp =</span> <span class="dv">0</span></span>
+<span id="cb288-11"><a href="tree-based-method.html#cb288-11"></a>                            , <span class="dt">xval =</span> <span class="dv">0</span></span>
+<span id="cb288-12"><a href="tree-based-method.html#cb288-12"></a>                            , <span class="dt">maxcompete =</span> <span class="dv">0</span>)</span>
+<span id="cb288-13"><a href="tree-based-method.html#cb288-13"></a>  )</span>
+<span id="cb288-14"><a href="tree-based-method.html#cb288-14"></a><span class="kw">rpart.plot</span>(cart.est)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:cart-basic"></span>
 <img src="data-mining-book_files/figure-html/cart-basic-1.png" alt="CART 트리" width="672" />
 <p class="caption">
@@ -539,7 +546,7 @@ p(j|t) &amp;\approx \frac{N_j(t)}{N(t)}
 </div>
 <div id="cart-impurity" class="section level3">
 <h3><span class="header-section-number">8.3.3</span> 노드 및 트리의 불순도</h3>
-<div id="-" class="section level4">
+<div id="노드의-불순도" class="section level4">
 <h4><span class="header-section-number">8.3.3.1</span> 노드의 불순도</h4>
 <p>CART는 지니 지수(Gini index)를 불순도 함수로 사용한다. 총 <span class="math inline">\(J\)</span>개의 범주별 객체비율을 <span class="math inline">\(p_1, \cdots , p_J\)</span>라 할 때 (<span class="math inline">\(\sum_{j=1}^{J} p_j = 1\)</span>), 지니 지수는 식 <a href="tree-based-method.html#eq:gini-index">(8.1)</a>와 같다.</p>
 <p><span class="math display" id="eq:gini-index">\[\begin{equation}
@@ -554,7 +561,7 @@ i(t) &amp;= 1 - \sum_{j=1}^{J} p(j|t)^2\\
 \tag{8.2}
 \end{equation}\]</span></p>
 </div>
-<div id="-" class="section level4">
+<div id="트리-불순도" class="section level4">
 <h4><span class="header-section-number">8.3.3.2</span> 트리 불순도</h4>
 <p>트리 <span class="math inline">\(T\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:tree-impurity">(8.3)</a>와 같이 최종노드들의 불순도의 가중평균으로 정의된다.</p>
 <p><span class="math display" id="eq:tree-impurity">\[\begin{equation}
@@ -569,19 +576,19 @@ I(T) = \sum_{t \in A(T)} i(t)p(t) \tag{8.3}
 <div id="cart-split" class="section level3">
 <h3><span class="header-section-number">8.3.4</span> 분지기준</h3>
 <p>뿌리 노드에서의 분지만을 살펴보기 위해 control parameter <em>maxdepth</em>의 값을 1으로 설정한다. 이 경우, CART 알고리즘은 뿌리노드에서의 양 갈래 분지만을 선택한 뒤 종료된다. 아래 스크립트를 이용하여 뿌리노드에서 최적분지된 트리를 얻는다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cart.firstsplit &lt;-<span class="st"> </span><span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2
-                  , <span class="dt">data =</span> train_df
-                  , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>
-                  , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)
-                  , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span>
-                                          , <span class="dt">minbucket =</span> <span class="dv">1</span>
-                                          , <span class="dt">maxdepth =</span> <span class="dv">1</span>
-                                          , <span class="dt">cp =</span> <span class="dv">0</span>
-                                          , <span class="dt">xval =</span> <span class="dv">0</span>
-                                          , <span class="dt">maxcompete =</span> <span class="dv">0</span>
-                                          )
-                  )
-<span class="kw">rpart.plot</span>(cart.firstsplit)</code></pre>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="tree-based-method.html#cb289-1"></a>cart.firstsplit &lt;-<span class="st"> </span><span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2</span>
+<span id="cb289-2"><a href="tree-based-method.html#cb289-2"></a>                  , <span class="dt">data =</span> train_df</span>
+<span id="cb289-3"><a href="tree-based-method.html#cb289-3"></a>                  , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span></span>
+<span id="cb289-4"><a href="tree-based-method.html#cb289-4"></a>                  , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
+<span id="cb289-5"><a href="tree-based-method.html#cb289-5"></a>                  , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span></span>
+<span id="cb289-6"><a href="tree-based-method.html#cb289-6"></a>                                          , <span class="dt">minbucket =</span> <span class="dv">1</span></span>
+<span id="cb289-7"><a href="tree-based-method.html#cb289-7"></a>                                          , <span class="dt">maxdepth =</span> <span class="dv">1</span></span>
+<span id="cb289-8"><a href="tree-based-method.html#cb289-8"></a>                                          , <span class="dt">cp =</span> <span class="dv">0</span></span>
+<span id="cb289-9"><a href="tree-based-method.html#cb289-9"></a>                                          , <span class="dt">xval =</span> <span class="dv">0</span></span>
+<span id="cb289-10"><a href="tree-based-method.html#cb289-10"></a>                                          , <span class="dt">maxcompete =</span> <span class="dv">0</span></span>
+<span id="cb289-11"><a href="tree-based-method.html#cb289-11"></a>                                          )</span>
+<span id="cb289-12"><a href="tree-based-method.html#cb289-12"></a>                  )</span>
+<span id="cb289-13"><a href="tree-based-method.html#cb289-13"></a><span class="kw">rpart.plot</span>(cart.firstsplit)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:firstsplit"></span>
 <img src="data-mining-book_files/figure-html/firstsplit-1.png" alt="뿌리노드 분지" width="672" />
 <p class="caption">
@@ -601,7 +608,7 @@ Figure 8.2: 뿌리노드 분지
 <caption><span id="tab:firstsplit-frame">Table 8.2: </span>뿌리노드 분지 상세 (frame)</caption>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="left">var</th>
 <th align="right">n</th>
 <th align="right">wt</th>
@@ -614,7 +621,7 @@ Figure 8.2: 뿌리노드 분지
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
+<td align="left">1</td>
 <td align="left">x2</td>
 <td align="right">10</td>
 <td align="right">10</td>
@@ -625,7 +632,7 @@ Figure 8.2: 뿌리노드 분지
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td>2</td>
+<td align="left">2</td>
 <td align="left">&lt;leaf&gt;</td>
 <td align="right">3</td>
 <td align="right">3</td>
@@ -636,7 +643,7 @@ Figure 8.2: 뿌리노드 분지
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td>3</td>
+<td align="left">3</td>
 <td align="left">&lt;leaf&gt;</td>
 <td align="right">7</td>
 <td align="right">7</td>
@@ -662,89 +669,89 @@ Figure 8.2: 뿌리노드 분지
 <caption><span id="tab:firstsplit-yval2">Table 8.3: </span>노드 내 객체 및 범주 정보 (yval2)</caption>
 <thead>
 <tr class="header">
-<th></th>
-<th align="center">열1</th>
-<th align="center">열2</th>
-<th align="center">열3</th>
-<th align="center">열4</th>
-<th align="center">열5</th>
+<th align="left"></th>
+<th align="right">열1</th>
+<th align="right">열2</th>
+<th align="right">열3</th>
+<th align="right">열4</th>
+<th align="right">열5</th>
 <th align="right">nodeprob</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td align="center">1</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">0.50</td>
-<td align="center">0.50</td>
+<td align="left">1</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">0.50</td>
+<td align="right">0.50</td>
 <td align="right">1.0</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td align="center">1</td>
-<td align="center">3</td>
-<td align="center">0</td>
-<td align="center">1.00</td>
-<td align="center">0.00</td>
+<td align="left">2</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">0.00</td>
 <td align="right">0.3</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">5</td>
-<td align="center">0.29</td>
-<td align="center">0.71</td>
+<td align="left">3</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">0.29</td>
+<td align="right">0.71</td>
 <td align="right">0.7</td>
 </tr>
 </tbody>
 </table>
 <p>위 CART 모델 데이터를 이용하여 트리의 불순도를 계산해보자.</p>
 <p>우선 노드 상세 정보 행렬 <em>yval2</em>의 <em>x</em>번째 노드의 불순도(<span class="math inline">\(i(t)\)</span>)를 계산하는 함수 <em>rpartNodeImpurity</em>를 아래와 같이 구현한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">rpartNodeImpurity &lt;-<span class="st"> </span><span class="cf">function</span>(x, yval2) {
-  node_vec &lt;-<span class="st"> </span>yval2[x, ]
-  n.columns &lt;-<span class="st"> </span><span class="kw">length</span>(node_vec)
-  class.prob &lt;-<span class="st"> </span>node_vec[((n.columns<span class="op">/</span><span class="dv">2</span>)<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>(n.columns<span class="dv">-1</span>)]
-  <span class="kw">return</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(class.prob<span class="op">^</span><span class="dv">2</span>))
-}</code></pre>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="tree-based-method.html#cb291-1"></a>rpartNodeImpurity &lt;-<span class="st"> </span><span class="cf">function</span>(x, yval2) {</span>
+<span id="cb291-2"><a href="tree-based-method.html#cb291-2"></a>  node_vec &lt;-<span class="st"> </span>yval2[x, ]</span>
+<span id="cb291-3"><a href="tree-based-method.html#cb291-3"></a>  n.columns &lt;-<span class="st"> </span><span class="kw">length</span>(node_vec)</span>
+<span id="cb291-4"><a href="tree-based-method.html#cb291-4"></a>  class.prob &lt;-<span class="st"> </span>node_vec[((n.columns<span class="op">/</span><span class="dv">2</span>)<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>(n.columns<span class="dv">-1</span>)]</span>
+<span id="cb291-5"><a href="tree-based-method.html#cb291-5"></a>  <span class="kw">return</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(class.prob<span class="op">^</span><span class="dv">2</span>))</span>
+<span id="cb291-6"><a href="tree-based-method.html#cb291-6"></a>}</span></code></pre></div>
 <p>CART tree 객체의 각 leaf node에 함수 <em>rpartNodeImpurity</em>를 적용하여 노드 불순도 <span class="math inline">\(i(t)\)</span>를 계산한 뒤, 노드 확률 <span class="math inline">\(p(t)\)</span>을 이용한 가중합을 통해 트리 불순도 <span class="math inline">\(I(T)\)</span>를 계산하는 함수 <em>rpartImpurity</em>를 아래와 같이 구현한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">rpartImpurity &lt;-<span class="st"> </span><span class="cf">function</span>(rpart.obj) {
-  leaf.nodes &lt;-<span class="st"> </span><span class="kw">which</span>(rpart.obj<span class="op">$</span>frame<span class="op">$</span>var<span class="op">==</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>)
-  node.impurity &lt;-<span class="st"> </span><span class="kw">sapply</span>(leaf.nodes, 
-                          rpartNodeImpurity, 
-                          <span class="dt">yval2 =</span> rpart.obj<span class="op">$</span>frame<span class="op">$</span>yval2)
-  node.prob &lt;-<span class="st"> </span>rpart.obj<span class="op">$</span>frame<span class="op">$</span>yval2[leaf.nodes, <span class="st">&#39;nodeprob&#39;</span>]
-  <span class="kw">return</span>(<span class="kw">sum</span>(node.prob <span class="op">*</span><span class="st"> </span>node.impurity))
-}</code></pre>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="tree-based-method.html#cb292-1"></a>rpartImpurity &lt;-<span class="st"> </span><span class="cf">function</span>(rpart.obj) {</span>
+<span id="cb292-2"><a href="tree-based-method.html#cb292-2"></a>  leaf.nodes &lt;-<span class="st"> </span><span class="kw">which</span>(rpart.obj<span class="op">$</span>frame<span class="op">$</span>var<span class="op">==</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>)</span>
+<span id="cb292-3"><a href="tree-based-method.html#cb292-3"></a>  node.impurity &lt;-<span class="st"> </span><span class="kw">sapply</span>(leaf.nodes, </span>
+<span id="cb292-4"><a href="tree-based-method.html#cb292-4"></a>                          rpartNodeImpurity, </span>
+<span id="cb292-5"><a href="tree-based-method.html#cb292-5"></a>                          <span class="dt">yval2 =</span> rpart.obj<span class="op">$</span>frame<span class="op">$</span>yval2)</span>
+<span id="cb292-6"><a href="tree-based-method.html#cb292-6"></a>  node.prob &lt;-<span class="st"> </span>rpart.obj<span class="op">$</span>frame<span class="op">$</span>yval2[leaf.nodes, <span class="st">&#39;nodeprob&#39;</span>]</span>
+<span id="cb292-7"><a href="tree-based-method.html#cb292-7"></a>  <span class="kw">return</span>(<span class="kw">sum</span>(node.prob <span class="op">*</span><span class="st"> </span>node.impurity))</span>
+<span id="cb292-8"><a href="tree-based-method.html#cb292-8"></a>}</span></code></pre></div>
 <p>위 함수를 이용하여 계산한 트리 Figure <a href="tree-based-method.html#fig:cart-basic">8.1</a>의 불순도는 0.29이다.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rpartImpurity</span>(cart.firstsplit)</code></pre>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="tree-based-method.html#cb293-1"></a><span class="kw">rpartImpurity</span>(cart.firstsplit)</span></code></pre></div>
 <pre><code>## [1] 0.2857143</code></pre>
 <p>분지를 추가할수록 불순도는 감소한다. 분지를 추가하기 위해서는 <em>maxdepth</em>라는 control parameter 값을 증가시키면 된다.</p>
 <ul>
 <li>maxdepth: 뿌리노드부터 임의의 최종노드에 도달하는 최대 가능 분지 수 (default=30)</li>
 </ul>
 <p><em>maxdepth</em> 파라미터의 값을 1부터 4까지 증가시키며 불순도의 변화를 살펴보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-
-tree.impurity &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="cf">function</span>(depth) {
-  <span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2
-        , <span class="dt">data =</span> train_df
-        , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>
-        , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)
-        , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span>
-                                  , <span class="dt">minbucket =</span> <span class="dv">1</span>
-                                  , <span class="dt">maxdepth =</span> depth
-                                  , <span class="dt">cp =</span> <span class="dv">0</span>
-                                  , <span class="dt">xval =</span> <span class="dv">0</span>
-                                  , <span class="dt">maxcompete =</span> <span class="dv">0</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">rpartImpurity</span>()
-})
-
-<span class="kw">tibble</span>(<span class="dt">maxdepth=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="dt">impurity=</span>tree.impurity) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>maxdepth, <span class="dt">y=</span>impurity)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="tree-based-method.html#cb295-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb295-2"><a href="tree-based-method.html#cb295-2"></a></span>
+<span id="cb295-3"><a href="tree-based-method.html#cb295-3"></a>tree.impurity &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="cf">function</span>(depth) {</span>
+<span id="cb295-4"><a href="tree-based-method.html#cb295-4"></a>  <span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2</span>
+<span id="cb295-5"><a href="tree-based-method.html#cb295-5"></a>        , <span class="dt">data =</span> train_df</span>
+<span id="cb295-6"><a href="tree-based-method.html#cb295-6"></a>        , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span></span>
+<span id="cb295-7"><a href="tree-based-method.html#cb295-7"></a>        , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
+<span id="cb295-8"><a href="tree-based-method.html#cb295-8"></a>        , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span></span>
+<span id="cb295-9"><a href="tree-based-method.html#cb295-9"></a>                                  , <span class="dt">minbucket =</span> <span class="dv">1</span></span>
+<span id="cb295-10"><a href="tree-based-method.html#cb295-10"></a>                                  , <span class="dt">maxdepth =</span> depth</span>
+<span id="cb295-11"><a href="tree-based-method.html#cb295-11"></a>                                  , <span class="dt">cp =</span> <span class="dv">0</span></span>
+<span id="cb295-12"><a href="tree-based-method.html#cb295-12"></a>                                  , <span class="dt">xval =</span> <span class="dv">0</span></span>
+<span id="cb295-13"><a href="tree-based-method.html#cb295-13"></a>                                  , <span class="dt">maxcompete =</span> <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb295-14"><a href="tree-based-method.html#cb295-14"></a><span class="st">  </span><span class="kw">rpartImpurity</span>()</span>
+<span id="cb295-15"><a href="tree-based-method.html#cb295-15"></a>})</span>
+<span id="cb295-16"><a href="tree-based-method.html#cb295-16"></a></span>
+<span id="cb295-17"><a href="tree-based-method.html#cb295-17"></a><span class="kw">tibble</span>(<span class="dt">maxdepth=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="dt">impurity=</span>tree.impurity) <span class="op">%&gt;%</span></span>
+<span id="cb295-18"><a href="tree-based-method.html#cb295-18"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>maxdepth, <span class="dt">y=</span>impurity)) <span class="op">+</span></span>
+<span id="cb295-19"><a href="tree-based-method.html#cb295-19"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:impurity-trend"></span>
 <img src="data-mining-book_files/figure-html/impurity-trend-1.png" alt="파라미터 maxdepth값에 따른 트리불순도 변화" width="672" />
 <p class="caption">
@@ -768,7 +775,7 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 <caption><span id="tab:max-frame">Table 8.4: </span>최대 트리 분지 상세 (frame)</caption>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="left">var</th>
 <th align="right">n</th>
 <th align="right">wt</th>
@@ -781,7 +788,7 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
+<td align="left">1</td>
 <td align="left">x2</td>
 <td align="right">10</td>
 <td align="right">10</td>
@@ -792,7 +799,7 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td>2</td>
+<td align="left">2</td>
 <td align="left">&lt;leaf&gt;</td>
 <td align="right">3</td>
 <td align="right">3</td>
@@ -803,7 +810,7 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td>3</td>
+<td align="left">3</td>
 <td align="left">x1</td>
 <td align="right">7</td>
 <td align="right">7</td>
@@ -814,7 +821,7 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td>6</td>
+<td align="left">6</td>
 <td align="left">&lt;leaf&gt;</td>
 <td align="right">1</td>
 <td align="right">1</td>
@@ -825,7 +832,7 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td>7</td>
+<td align="left">7</td>
 <td align="left">x2</td>
 <td align="right">6</td>
 <td align="right">6</td>
@@ -836,7 +843,7 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td>14</td>
+<td align="left">14</td>
 <td align="left">x1</td>
 <td align="right">2</td>
 <td align="right">2</td>
@@ -847,7 +854,7 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td>28</td>
+<td align="left">28</td>
 <td align="left">&lt;leaf&gt;</td>
 <td align="right">1</td>
 <td align="right">1</td>
@@ -858,7 +865,7 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td>29</td>
+<td align="left">29</td>
 <td align="left">&lt;leaf&gt;</td>
 <td align="right">1</td>
 <td align="right">1</td>
@@ -869,7 +876,7 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td>15</td>
+<td align="left">15</td>
 <td align="left">&lt;leaf&gt;</td>
 <td align="right">4</td>
 <td align="right">4</td>
@@ -882,14 +889,14 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 </tbody>
 </table>
 <p>Table <a href="tree-based-method.html#tab:max-frame">8.4</a>에서 생성 가능한 가지치기는 최종 노드(<em>var값이 &lt;leaf&gt;</em>)가 아닌 모든 노드(1, 3, 7, 14)에서 가능하며, 함수 <em>snip.rpart</em>를 이용하여 가지치기 된 트리를 생성할 수 있다. 각 내부 노드에서 가지치기된 트리들은 아래와 같이 얻어진다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">internal.node.index &lt;-<span class="st"> </span><span class="kw">rownames</span>(cart.est<span class="op">$</span>frame)[<span class="kw">which</span>(cart.est<span class="op">$</span>frame<span class="op">$</span>var <span class="op">!=</span><span class="st"> &#39;&lt;leaf&gt;&#39;</span>)] <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">as.numeric</span>()
-snipped &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, <span class="cf">function</span>(x){<span class="kw">snip.rpart</span>(cart.est, x)})
-n.trees &lt;-<span class="st"> </span><span class="kw">length</span>(snipped)
-<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
-<span class="kw">invisible</span>(<span class="kw">lapply</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>n.trees), <span class="cf">function</span>(x) {
-  <span class="kw">rpart.plot</span>(snipped[[x]])}
-  ))</code></pre>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="tree-based-method.html#cb296-1"></a>internal.node.index &lt;-<span class="st"> </span><span class="kw">rownames</span>(cart.est<span class="op">$</span>frame)[<span class="kw">which</span>(cart.est<span class="op">$</span>frame<span class="op">$</span>var <span class="op">!=</span><span class="st"> &#39;&lt;leaf&gt;&#39;</span>)] <span class="op">%&gt;%</span></span>
+<span id="cb296-2"><a href="tree-based-method.html#cb296-2"></a><span class="st">  </span><span class="kw">as.numeric</span>()</span>
+<span id="cb296-3"><a href="tree-based-method.html#cb296-3"></a>snipped &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, <span class="cf">function</span>(x){<span class="kw">snip.rpart</span>(cart.est, x)})</span>
+<span id="cb296-4"><a href="tree-based-method.html#cb296-4"></a>n.trees &lt;-<span class="st"> </span><span class="kw">length</span>(snipped)</span>
+<span id="cb296-5"><a href="tree-based-method.html#cb296-5"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb296-6"><a href="tree-based-method.html#cb296-6"></a><span class="kw">invisible</span>(<span class="kw">lapply</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>n.trees), <span class="cf">function</span>(x) {</span>
+<span id="cb296-7"><a href="tree-based-method.html#cb296-7"></a>  <span class="kw">rpart.plot</span>(snipped[[x]])}</span>
+<span id="cb296-8"><a href="tree-based-method.html#cb296-8"></a>  ))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:snipped"></span>
 <img src="data-mining-book_files/figure-html/snipped-1.png" alt="각 내부노드 기준으로 가지치기된 트리" width="672" />
 <p class="caption">
@@ -897,20 +904,20 @@ Figure 8.4: 각 내부노드 기준으로 가지치기된 트리
 </p>
 </div>
 <p>위 각 가지치기 후보 노드의 오분류 비용은 함수 <em>nodeCost</em>를 아래와 같이 구현하여 계산할 수 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">nodeCost &lt;-<span class="st"> </span><span class="cf">function</span>(node, tree) {
-  node_vec &lt;-<span class="st"> </span>tree<span class="op">$</span>frame<span class="op">$</span>yval2[<span class="kw">as.character</span>(node) <span class="op">==</span><span class="st"> </span><span class="kw">row.names</span>(tree<span class="op">$</span>frame), ]
-  n.columns &lt;-<span class="st"> </span><span class="kw">length</span>(node_vec)
-  class.prob.max &lt;-<span class="st"> </span><span class="kw">max</span>(node_vec[((n.columns<span class="op">/</span><span class="dv">2</span>)<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>(n.columns<span class="dv">-1</span>)])
-  node.prob &lt;-<span class="st"> </span>node_vec[n.columns]
-  node.misclassification.cost &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>class.prob.max)<span class="op">*</span>node.prob
-  <span class="kw">return</span>(node.misclassification.cost)
-}
-
-<span class="kw">tibble</span>(
-  <span class="dt">pruning_node =</span> internal.node.index,
-  <span class="dt">node_cost =</span> <span class="kw">sapply</span>(internal.node.index, nodeCost, <span class="dt">tree=</span>cart.est)
-) <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="tree-based-method.html#cb297-1"></a>nodeCost &lt;-<span class="st"> </span><span class="cf">function</span>(node, tree) {</span>
+<span id="cb297-2"><a href="tree-based-method.html#cb297-2"></a>  node_vec &lt;-<span class="st"> </span>tree<span class="op">$</span>frame<span class="op">$</span>yval2[<span class="kw">as.character</span>(node) <span class="op">==</span><span class="st"> </span><span class="kw">row.names</span>(tree<span class="op">$</span>frame), ]</span>
+<span id="cb297-3"><a href="tree-based-method.html#cb297-3"></a>  n.columns &lt;-<span class="st"> </span><span class="kw">length</span>(node_vec)</span>
+<span id="cb297-4"><a href="tree-based-method.html#cb297-4"></a>  class.prob.max &lt;-<span class="st"> </span><span class="kw">max</span>(node_vec[((n.columns<span class="op">/</span><span class="dv">2</span>)<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>(n.columns<span class="dv">-1</span>)])</span>
+<span id="cb297-5"><a href="tree-based-method.html#cb297-5"></a>  node.prob &lt;-<span class="st"> </span>node_vec[n.columns]</span>
+<span id="cb297-6"><a href="tree-based-method.html#cb297-6"></a>  node.misclassification.cost &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>class.prob.max)<span class="op">*</span>node.prob</span>
+<span id="cb297-7"><a href="tree-based-method.html#cb297-7"></a>  <span class="kw">return</span>(node.misclassification.cost)</span>
+<span id="cb297-8"><a href="tree-based-method.html#cb297-8"></a>}</span>
+<span id="cb297-9"><a href="tree-based-method.html#cb297-9"></a></span>
+<span id="cb297-10"><a href="tree-based-method.html#cb297-10"></a><span class="kw">tibble</span>(</span>
+<span id="cb297-11"><a href="tree-based-method.html#cb297-11"></a>  <span class="dt">pruning_node =</span> internal.node.index,</span>
+<span id="cb297-12"><a href="tree-based-method.html#cb297-12"></a>  <span class="dt">node_cost =</span> <span class="kw">sapply</span>(internal.node.index, nodeCost, <span class="dt">tree=</span>cart.est)</span>
+<span id="cb297-13"><a href="tree-based-method.html#cb297-13"></a>) <span class="op">%&gt;%</span></span>
+<span id="cb297-14"><a href="tree-based-method.html#cb297-14"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -938,23 +945,23 @@ Figure 8.4: 각 내부노드 기준으로 가지치기된 트리
 </tbody>
 </table>
 <p>각 가지치기 노드에 해당하는 하부 트리의 오분류비용 및 복잡도를 구하기 위해 <em>subtreeEval</em>라는 함수를 아래와 같이 구현한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">subtreeEval &lt;-<span class="st"> </span><span class="cf">function</span>(node, tree) {
-  snipped &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(tree, node)<span class="op">$</span>frame
-  leaf.nodes &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="kw">rownames</span>(tree<span class="op">$</span>frame[tree<span class="op">$</span>frame<span class="op">$</span>var<span class="op">==</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>,]),
-          <span class="kw">rownames</span>(snipped)) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">as.numeric</span>()
-
-  <span class="kw">tibble</span>(
-    <span class="dt">pruning_node =</span> node,
-    <span class="dt">node.cost =</span> <span class="kw">nodeCost</span>(node, tree),
-    <span class="dt">subtree.cost =</span> <span class="kw">sapply</span>(leaf.nodes, nodeCost, <span class="dt">tree=</span>tree) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>(),
-    <span class="dt">subtree.size =</span> <span class="kw">length</span>(leaf.nodes)
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">alpha =</span> (node.cost <span class="op">-</span><span class="st"> </span>subtree.cost) <span class="op">/</span><span class="st"> </span>(subtree.size <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
-}</code></pre>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="tree-based-method.html#cb298-1"></a>subtreeEval &lt;-<span class="st"> </span><span class="cf">function</span>(node, tree) {</span>
+<span id="cb298-2"><a href="tree-based-method.html#cb298-2"></a>  snipped &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(tree, node)<span class="op">$</span>frame</span>
+<span id="cb298-3"><a href="tree-based-method.html#cb298-3"></a>  leaf.nodes &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="kw">rownames</span>(tree<span class="op">$</span>frame[tree<span class="op">$</span>frame<span class="op">$</span>var<span class="op">==</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>,]),</span>
+<span id="cb298-4"><a href="tree-based-method.html#cb298-4"></a>          <span class="kw">rownames</span>(snipped)) <span class="op">%&gt;%</span></span>
+<span id="cb298-5"><a href="tree-based-method.html#cb298-5"></a><span class="st">    </span><span class="kw">as.numeric</span>()</span>
+<span id="cb298-6"><a href="tree-based-method.html#cb298-6"></a></span>
+<span id="cb298-7"><a href="tree-based-method.html#cb298-7"></a>  <span class="kw">tibble</span>(</span>
+<span id="cb298-8"><a href="tree-based-method.html#cb298-8"></a>    <span class="dt">pruning_node =</span> node,</span>
+<span id="cb298-9"><a href="tree-based-method.html#cb298-9"></a>    <span class="dt">node.cost =</span> <span class="kw">nodeCost</span>(node, tree),</span>
+<span id="cb298-10"><a href="tree-based-method.html#cb298-10"></a>    <span class="dt">subtree.cost =</span> <span class="kw">sapply</span>(leaf.nodes, nodeCost, <span class="dt">tree=</span>tree) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>(),</span>
+<span id="cb298-11"><a href="tree-based-method.html#cb298-11"></a>    <span class="dt">subtree.size =</span> <span class="kw">length</span>(leaf.nodes)</span>
+<span id="cb298-12"><a href="tree-based-method.html#cb298-12"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb298-13"><a href="tree-based-method.html#cb298-13"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">alpha =</span> (node.cost <span class="op">-</span><span class="st"> </span>subtree.cost) <span class="op">/</span><span class="st"> </span>(subtree.size <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</span>
+<span id="cb298-14"><a href="tree-based-method.html#cb298-14"></a>}</span></code></pre></div>
 <p>각 노드에 대하여 알파값을 다음과 같이 계산할 수 있다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">df.cost &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, subtreeEval, <span class="dt">tree=</span>cart.est) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">bind_rows</span>()</code></pre>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="tree-based-method.html#cb299-1"></a>df.cost &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, subtreeEval, <span class="dt">tree=</span>cart.est) <span class="op">%&gt;%</span></span>
+<span id="cb299-2"><a href="tree-based-method.html#cb299-2"></a><span class="st">  </span><span class="kw">bind_rows</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:first-prune-candidate-tab">Table 8.5: </span>내부노드 가지치기 평가 (df.cost)</caption>
 <thead>
@@ -998,9 +1005,9 @@ Figure 8.4: 각 내부노드 기준으로 가지치기된 트리
 </tbody>
 </table>
 <p>위 Table <a href="tree-based-method.html#tab:first-prune-candidate-tab">8.5</a> 에서 최소 알파값에 해당하는 노드 7에서 가지치기를 한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">pruned.tree<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(cart.est,
-                            df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])
-<span class="kw">rpart.plot</span>(pruned.tree<span class="fl">.1</span>)</code></pre>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="tree-based-method.html#cb300-1"></a>pruned.tree<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(cart.est,</span>
+<span id="cb300-2"><a href="tree-based-method.html#cb300-2"></a>                            df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])</span>
+<span id="cb300-3"><a href="tree-based-method.html#cb300-3"></a><span class="kw">rpart.plot</span>(pruned.tree<span class="fl">.1</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:first-prune-result"></span>
 <img src="data-mining-book_files/figure-html/first-prune-result-1.png" alt="1단계 가지치기 결과" width="672" />
 <p class="caption">
@@ -1008,12 +1015,12 @@ Figure 8.5: 1단계 가지치기 결과
 </p>
 </div>
 <p>가지치기로 형성된 트리에서 다시 각 가지치기 노드의 오분류비용, 복잡도 및 알파값을 구한다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">df.cost &lt;-<span class="st"> </span><span class="kw">rownames</span>(pruned.tree<span class="fl">.1</span><span class="op">$</span>frame)[pruned.tree<span class="fl">.1</span><span class="op">$</span>frame<span class="op">$</span>var<span class="op">!=</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">as.numeric</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">lapply</span>(subtreeEval, <span class="dt">tree=</span>pruned.tree<span class="fl">.1</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">bind_rows</span>()
-
-knitr<span class="op">::</span><span class="kw">kable</span>(df.cost)</code></pre>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="tree-based-method.html#cb301-1"></a>df.cost &lt;-<span class="st"> </span><span class="kw">rownames</span>(pruned.tree<span class="fl">.1</span><span class="op">$</span>frame)[pruned.tree<span class="fl">.1</span><span class="op">$</span>frame<span class="op">$</span>var<span class="op">!=</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb301-2"><a href="tree-based-method.html#cb301-2"></a><span class="st">  </span><span class="kw">as.numeric</span>() <span class="op">%&gt;%</span></span>
+<span id="cb301-3"><a href="tree-based-method.html#cb301-3"></a><span class="st">  </span><span class="kw">lapply</span>(subtreeEval, <span class="dt">tree=</span>pruned.tree<span class="fl">.1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb301-4"><a href="tree-based-method.html#cb301-4"></a><span class="st">  </span><span class="kw">bind_rows</span>()</span>
+<span id="cb301-5"><a href="tree-based-method.html#cb301-5"></a></span>
+<span id="cb301-6"><a href="tree-based-method.html#cb301-6"></a>knitr<span class="op">::</span><span class="kw">kable</span>(df.cost)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1042,9 +1049,9 @@ knitr<span class="op">::</span><span class="kw">kable</span>(df.cost)</code></pr
 </tbody>
 </table>
 <p>위 결과에서 다시 최소 알파값에 해당하는 노드 3에서 가지치기를 하면 아래와 같은 트리가 형성된다.</p>
-<pre class="sourceCode r"><code class="sourceCode r">pruned.tree<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(pruned.tree<span class="fl">.1</span>,
-                            df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])
-<span class="kw">rpart.plot</span>(pruned.tree<span class="fl">.2</span>)</code></pre>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="tree-based-method.html#cb302-1"></a>pruned.tree<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(pruned.tree<span class="fl">.1</span>,</span>
+<span id="cb302-2"><a href="tree-based-method.html#cb302-2"></a>                            df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])</span>
+<span id="cb302-3"><a href="tree-based-method.html#cb302-3"></a><span class="kw">rpart.plot</span>(pruned.tree<span class="fl">.2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:second-prune-result"></span>
 <img src="data-mining-book_files/figure-html/second-prune-result-1.png" alt="2단계 가지치기 결과" width="672" />
 <p class="caption">
@@ -1056,11 +1063,11 @@ Figure 8.6: 2단계 가지치기 결과
 <h3><span class="header-section-number">8.4.2</span> 최적 트리의 선정</h3>
 <p>위 가지치기 과정에서 얻는 가지친 트리들이 최종 트리의 후보가 되며, 이 중 테스트 표본에 대한 오분류율이 가장 작은 트리를 최적 트리로 선정하게 된다.</p>
 <p>트리를 학습할 때 사용된 학습데이터 Table <a href="tree-based-method.html#tab:tree-train-data-table">8.1</a> 외에, Table <a href="tree-based-method.html#tab:tree-test-data-table">8.6</a>과 같은 6개의 테스트 데이터가 있다고 하자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">test_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>),
-  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">4</span>),
-  <span class="dt">class =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">levels=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
-)</code></pre>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="tree-based-method.html#cb303-1"></a>test_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb303-2"><a href="tree-based-method.html#cb303-2"></a>  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>),</span>
+<span id="cb303-3"><a href="tree-based-method.html#cb303-3"></a>  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">4</span>),</span>
+<span id="cb303-4"><a href="tree-based-method.html#cb303-4"></a>  <span class="dt">class =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">levels=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb303-5"><a href="tree-based-method.html#cb303-5"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tree-test-data-table">Table 8.6: </span>테스트 데이터</caption>
 <thead>
@@ -1104,12 +1111,12 @@ Figure 8.6: 2단계 가지치기 결과
 </tbody>
 </table>
 <p>테스트 데이터에 위에서 학습된 세 개의 트리, 즉 최대 트리 <em>cart.est</em>와 두 개의 가지치기 트리 <em>pruned.tree.1</em> &amp; <em>pruned.tree.2</em>를 적용하여 각 트리가 각각의 테스트 데이터를 어떻게 분류하는지 살펴보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">test_pred &lt;-<span class="st"> </span>test_df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">bind_cols</span>(
-    <span class="dt">pred_maxtree =</span> <span class="kw">predict</span>(cart.est, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>),
-    <span class="dt">pred_prune1 =</span> <span class="kw">predict</span>(pruned.tree<span class="fl">.1</span>, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>),
-    <span class="dt">pred_prune2 =</span> <span class="kw">predict</span>(pruned.tree<span class="fl">.2</span>, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
-  )</code></pre>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="tree-based-method.html#cb304-1"></a>test_pred &lt;-<span class="st"> </span>test_df <span class="op">%&gt;%</span></span>
+<span id="cb304-2"><a href="tree-based-method.html#cb304-2"></a><span class="st">  </span><span class="kw">bind_cols</span>(</span>
+<span id="cb304-3"><a href="tree-based-method.html#cb304-3"></a>    <span class="dt">pred_maxtree =</span> <span class="kw">predict</span>(cart.est, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>),</span>
+<span id="cb304-4"><a href="tree-based-method.html#cb304-4"></a>    <span class="dt">pred_prune1 =</span> <span class="kw">predict</span>(pruned.tree<span class="fl">.1</span>, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>),</span>
+<span id="cb304-5"><a href="tree-based-method.html#cb304-5"></a>    <span class="dt">pred_prune2 =</span> <span class="kw">predict</span>(pruned.tree<span class="fl">.2</span>, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)</span>
+<span id="cb304-6"><a href="tree-based-method.html#cb304-6"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tree-class-prediction-table">Table 8.7: </span>테스트 데이터에 대한 예측 결과</caption>
 <thead>
@@ -1181,86 +1188,86 @@ Figure 8.6: 2단계 가지치기 결과
 <span class="math display">\[SE = \sqrt{\frac{R^{ts}(1 - R^{ts})}{n_{test}}}\]</span></li>
 <li>1에서 구한 오분류율에 2에서 구한 표준편차를 더하여 <span class="math inline">\(R^{ts} + SE\)</span>를 각 트리의 평가척도로 계산한다. 후보 트리들 중 해당 평가척도가 가장 작은 트리를 최종 트리로 선정한다.</li>
 </ol>
-<pre class="sourceCode r"><code class="sourceCode r">test.summary &lt;-<span class="st"> </span>test_pred <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n.test =</span> <span class="kw">n</span>(),
-            <span class="dt">cart.est =</span> <span class="kw">sum</span>(pred_maxtree <span class="op">!=</span><span class="st"> </span>class) <span class="op">/</span><span class="st"> </span>n.test,
-            <span class="dt">pruned.tree.1 =</span> <span class="kw">sum</span>(pred_prune1 <span class="op">!=</span><span class="st"> </span>class) <span class="op">/</span><span class="st"> </span>n.test,
-            <span class="dt">pruned.tree.2 =</span> <span class="kw">sum</span>(pred_prune2 <span class="op">!=</span><span class="st"> </span>class) <span class="op">/</span><span class="st"> </span>n.test) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(<span class="st">&quot;tree&quot;</span>,<span class="st">&quot;R.ts&quot;</span>,<span class="op">-</span>n.test) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">SE =</span> <span class="kw">sqrt</span>((R.ts<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>R.ts))<span class="op">/</span>n.test),
-         <span class="dt">score =</span> R.ts <span class="op">+</span><span class="st"> </span>SE) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>n.test)</code></pre>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="tree-based-method.html#cb305-1"></a>test.summary &lt;-<span class="st"> </span>test_pred <span class="op">%&gt;%</span></span>
+<span id="cb305-2"><a href="tree-based-method.html#cb305-2"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n.test =</span> <span class="kw">n</span>(),</span>
+<span id="cb305-3"><a href="tree-based-method.html#cb305-3"></a>            <span class="dt">cart.est =</span> <span class="kw">sum</span>(pred_maxtree <span class="op">!=</span><span class="st"> </span>class) <span class="op">/</span><span class="st"> </span>n.test,</span>
+<span id="cb305-4"><a href="tree-based-method.html#cb305-4"></a>            <span class="dt">pruned.tree.1 =</span> <span class="kw">sum</span>(pred_prune1 <span class="op">!=</span><span class="st"> </span>class) <span class="op">/</span><span class="st"> </span>n.test,</span>
+<span id="cb305-5"><a href="tree-based-method.html#cb305-5"></a>            <span class="dt">pruned.tree.2 =</span> <span class="kw">sum</span>(pred_prune2 <span class="op">!=</span><span class="st"> </span>class) <span class="op">/</span><span class="st"> </span>n.test) <span class="op">%&gt;%</span></span>
+<span id="cb305-6"><a href="tree-based-method.html#cb305-6"></a><span class="st">  </span><span class="kw">gather</span>(<span class="st">&quot;tree&quot;</span>,<span class="st">&quot;R.ts&quot;</span>,<span class="op">-</span>n.test) <span class="op">%&gt;%</span></span>
+<span id="cb305-7"><a href="tree-based-method.html#cb305-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">SE =</span> <span class="kw">sqrt</span>((R.ts<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>R.ts))<span class="op">/</span>n.test),</span>
+<span id="cb305-8"><a href="tree-based-method.html#cb305-8"></a>         <span class="dt">score =</span> R.ts <span class="op">+</span><span class="st"> </span>SE) <span class="op">%&gt;%</span></span>
+<span id="cb305-9"><a href="tree-based-method.html#cb305-9"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>n.test)</span></code></pre></div>
 <table>
 <caption><span id="tab:misclassification-rate-table">Table 8.8: </span>분류 성능</caption>
 <thead>
 <tr class="header">
 <th align="left">트리</th>
-<th align="center">오분류율(<span class="math inline">\(R^{ts}\)</span>)</th>
-<th align="center">표준편차(<span class="math inline">\(SE\)</span>)</th>
-<th align="center">척도(<span class="math inline">\(R^{ts} + SE\)</span>)</th>
+<th align="right">오분류율(<span class="math inline">\(R^{ts}\)</span>)</th>
+<th align="right">표준편차(<span class="math inline">\(SE\)</span>)</th>
+<th align="right">척도(<span class="math inline">\(R^{ts} + SE\)</span>)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">cart.est</td>
-<td align="center">0.17</td>
-<td align="center">0.15</td>
-<td align="center">0.32</td>
+<td align="right">0.17</td>
+<td align="right">0.15</td>
+<td align="right">0.32</td>
 </tr>
 <tr class="even">
 <td align="left">pruned.tree.1</td>
-<td align="center">0.17</td>
-<td align="center">0.15</td>
-<td align="center">0.32</td>
+<td align="right">0.17</td>
+<td align="right">0.15</td>
+<td align="right">0.32</td>
 </tr>
 <tr class="odd">
 <td align="left">pruned.tree.2</td>
-<td align="center">0.33</td>
-<td align="center">0.19</td>
-<td align="center">0.53</td>
+<td align="right">0.33</td>
+<td align="right">0.19</td>
+<td align="right">0.53</td>
 </tr>
 </tbody>
 </table>
 <p>위 결과, 최적 트리는 최대 트리 혹은 첫 번째 가지치기 트리가 된다.</p>
 <p>위 절차를 임의의 데이터에 대해 수행하는 함수를 구현해보자.</p>
-<pre class="sourceCode r"><code class="sourceCode r">rpart_learn &lt;-<span class="st"> </span><span class="cf">function</span>(formula, train_df, test_df) {
-  <span class="co"># 최대 트리 생성</span>
-  max_tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(formula
-                    , <span class="dt">data =</span> train_df
-                    , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>
-                    , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)
-                    , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span>
-                                              , <span class="dt">minbucket =</span> <span class="dv">1</span>
-                                              , <span class="dt">cp =</span> <span class="dv">0</span>
-                                              , <span class="dt">xval =</span> <span class="dv">0</span>
-                                              , <span class="dt">maxcompete =</span> <span class="dv">0</span>
-                    )
-  )
-  
-  <span class="co"># 가지치기</span>
-  curr_tree &lt;-<span class="st"> </span><span class="kw">list</span>()
-  k &lt;-<span class="st"> </span><span class="dv">1</span>
-  curr_tree[[k]] &lt;-<span class="st"> </span>max_tree
-  <span class="cf">while</span>(<span class="kw">dim</span>(curr_tree[[k]]<span class="op">$</span>frame)[<span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {
-    internal.node.index &lt;-<span class="st"> </span><span class="kw">rownames</span>(curr_tree[[k]]<span class="op">$</span>frame)[<span class="kw">which</span>(curr_tree[[k]]<span class="op">$</span>frame<span class="op">$</span>var <span class="op">!=</span><span class="st"> &#39;&lt;leaf&gt;&#39;</span>)] <span class="op">%&gt;%</span>
-<span class="st">      </span><span class="kw">as.numeric</span>()
-    df.cost &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, subtreeEval, <span class="dt">tree=</span>curr_tree[[k]]) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_rows</span>()
-    curr_tree[[k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(curr_tree[[k]],
-               df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])
-    k &lt;-<span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
-  }
-
-  <span class="co"># 최적 가지치기 트리 선정</span>
-  n.test &lt;-<span class="st"> </span><span class="kw">dim</span>(test_df)[<span class="dv">1</span>]
-  R.ts &lt;-<span class="st"> </span><span class="kw">lapply</span>(curr_tree, <span class="cf">function</span>(x) {
-    <span class="kw">sum</span>(<span class="kw">predict</span>(x, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>) <span class="op">!=</span><span class="st"> </span>test_df<span class="op">$</span>class) <span class="op">/</span><span class="st"> </span>n.test
-    }) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>()
-  score &lt;-<span class="st"> </span>R.ts <span class="op">+</span><span class="st"> </span><span class="kw">sqrt</span>((R.ts<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>R.ts))<span class="op">/</span>n.test)
-  <span class="kw">return</span>(curr_tree[[<span class="kw">max</span>(<span class="kw">which</span>(score <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(score)))]])
-}
-
-optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df, test_df)
-<span class="kw">rpart.plot</span>(optimal_tree)</code></pre>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="tree-based-method.html#cb306-1"></a>rpart_learn &lt;-<span class="st"> </span><span class="cf">function</span>(formula, train_df, test_df) {</span>
+<span id="cb306-2"><a href="tree-based-method.html#cb306-2"></a>  <span class="co"># 최대 트리 생성</span></span>
+<span id="cb306-3"><a href="tree-based-method.html#cb306-3"></a>  max_tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(formula</span>
+<span id="cb306-4"><a href="tree-based-method.html#cb306-4"></a>                    , <span class="dt">data =</span> train_df</span>
+<span id="cb306-5"><a href="tree-based-method.html#cb306-5"></a>                    , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span></span>
+<span id="cb306-6"><a href="tree-based-method.html#cb306-6"></a>                    , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
+<span id="cb306-7"><a href="tree-based-method.html#cb306-7"></a>                    , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span></span>
+<span id="cb306-8"><a href="tree-based-method.html#cb306-8"></a>                                              , <span class="dt">minbucket =</span> <span class="dv">1</span></span>
+<span id="cb306-9"><a href="tree-based-method.html#cb306-9"></a>                                              , <span class="dt">cp =</span> <span class="dv">0</span></span>
+<span id="cb306-10"><a href="tree-based-method.html#cb306-10"></a>                                              , <span class="dt">xval =</span> <span class="dv">0</span></span>
+<span id="cb306-11"><a href="tree-based-method.html#cb306-11"></a>                                              , <span class="dt">maxcompete =</span> <span class="dv">0</span></span>
+<span id="cb306-12"><a href="tree-based-method.html#cb306-12"></a>                    )</span>
+<span id="cb306-13"><a href="tree-based-method.html#cb306-13"></a>  )</span>
+<span id="cb306-14"><a href="tree-based-method.html#cb306-14"></a>  </span>
+<span id="cb306-15"><a href="tree-based-method.html#cb306-15"></a>  <span class="co"># 가지치기</span></span>
+<span id="cb306-16"><a href="tree-based-method.html#cb306-16"></a>  curr_tree &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
+<span id="cb306-17"><a href="tree-based-method.html#cb306-17"></a>  k &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb306-18"><a href="tree-based-method.html#cb306-18"></a>  curr_tree[[k]] &lt;-<span class="st"> </span>max_tree</span>
+<span id="cb306-19"><a href="tree-based-method.html#cb306-19"></a>  <span class="cf">while</span>(<span class="kw">dim</span>(curr_tree[[k]]<span class="op">$</span>frame)[<span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {</span>
+<span id="cb306-20"><a href="tree-based-method.html#cb306-20"></a>    internal.node.index &lt;-<span class="st"> </span><span class="kw">rownames</span>(curr_tree[[k]]<span class="op">$</span>frame)[<span class="kw">which</span>(curr_tree[[k]]<span class="op">$</span>frame<span class="op">$</span>var <span class="op">!=</span><span class="st"> &#39;&lt;leaf&gt;&#39;</span>)] <span class="op">%&gt;%</span></span>
+<span id="cb306-21"><a href="tree-based-method.html#cb306-21"></a><span class="st">      </span><span class="kw">as.numeric</span>()</span>
+<span id="cb306-22"><a href="tree-based-method.html#cb306-22"></a>    df.cost &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, subtreeEval, <span class="dt">tree=</span>curr_tree[[k]]) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_rows</span>()</span>
+<span id="cb306-23"><a href="tree-based-method.html#cb306-23"></a>    curr_tree[[k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(curr_tree[[k]],</span>
+<span id="cb306-24"><a href="tree-based-method.html#cb306-24"></a>               df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])</span>
+<span id="cb306-25"><a href="tree-based-method.html#cb306-25"></a>    k &lt;-<span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb306-26"><a href="tree-based-method.html#cb306-26"></a>  }</span>
+<span id="cb306-27"><a href="tree-based-method.html#cb306-27"></a></span>
+<span id="cb306-28"><a href="tree-based-method.html#cb306-28"></a>  <span class="co"># 최적 가지치기 트리 선정</span></span>
+<span id="cb306-29"><a href="tree-based-method.html#cb306-29"></a>  n.test &lt;-<span class="st"> </span><span class="kw">dim</span>(test_df)[<span class="dv">1</span>]</span>
+<span id="cb306-30"><a href="tree-based-method.html#cb306-30"></a>  R.ts &lt;-<span class="st"> </span><span class="kw">lapply</span>(curr_tree, <span class="cf">function</span>(x) {</span>
+<span id="cb306-31"><a href="tree-based-method.html#cb306-31"></a>    <span class="kw">sum</span>(<span class="kw">predict</span>(x, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>) <span class="op">!=</span><span class="st"> </span>test_df<span class="op">$</span>class) <span class="op">/</span><span class="st"> </span>n.test</span>
+<span id="cb306-32"><a href="tree-based-method.html#cb306-32"></a>    }) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>()</span>
+<span id="cb306-33"><a href="tree-based-method.html#cb306-33"></a>  score &lt;-<span class="st"> </span>R.ts <span class="op">+</span><span class="st"> </span><span class="kw">sqrt</span>((R.ts<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>R.ts))<span class="op">/</span>n.test)</span>
+<span id="cb306-34"><a href="tree-based-method.html#cb306-34"></a>  <span class="kw">return</span>(curr_tree[[<span class="kw">max</span>(<span class="kw">which</span>(score <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(score)))]])</span>
+<span id="cb306-35"><a href="tree-based-method.html#cb306-35"></a>}</span>
+<span id="cb306-36"><a href="tree-based-method.html#cb306-36"></a></span>
+<span id="cb306-37"><a href="tree-based-method.html#cb306-37"></a>optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df, test_df)</span>
+<span id="cb306-38"><a href="tree-based-method.html#cb306-38"></a><span class="kw">rpart.plot</span>(optimal_tree)</span></code></pre></div>
 <p><img src="data-mining-book_files/figure-html/rpart-learn-1.png" width="672" /></p>
 </div>
 </div>
@@ -1279,7 +1286,7 @@ optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(c
 \Delta I(s,t) &amp;=&amp; I(t) - I(t_L) - I(t_R)\\ &amp;=&amp; p(t)i(t) - p(t_L)i(t_L) - p(t_R)i(t_R) 
 \end{eqnarray}\]</span></p>
 <p><em>rpart</em>는 위 <span class="math inline">\(\Delta I(s,t)\)</span>값이 최대가 되는 분지 기준 <span class="math inline">\(s^*\)</span>를 찾아 노드 <span class="math inline">\(t\)</span>를 분지하여 트리를 확장하고, 확장된 트리의 최종 노드에서 다시 최적 분지를 찾는 과정을 반복한다.</p>
-<div id="-" class="section level4">
+<div id="분지-함수" class="section level4">
 <h4><span class="header-section-number">8.5.1.1</span> 분지 함수</h4>
 <p>함수 <em>rpart</em> 사용 시 <em>parms</em> 파라미터에 <em>split</em> 값으로 분지 방법을 설정할 수 있다.</p>
 <ol style="list-style-type: decimal">
@@ -1364,11 +1371,13 @@ s.setAttribute('data-timestamp', +new Date());
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -1376,12 +1385,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -1393,6 +1401,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -1412,8 +1424,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

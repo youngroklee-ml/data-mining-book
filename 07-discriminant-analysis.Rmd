@@ -557,7 +557,7 @@ f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma_k|^{1/2}} \exp \{ -\fr
 이 경우 각 범주에 대한 판별함수는 아래와 같이 정의된다.
 
 \begin{equation}
-u_k(\mathbf{x}) = - \frac{1}{2} (\mathbf{x} - \boldsymbol\mu_k)^\top \boldsymbol\Sigma^{-1} (\mathbf{x} - \boldsymbol\mu_k) - \frac{1}{2} \ln \left| \boldsymbol\Sigma_k \right| + \ln \pi_k
+u_k(\mathbf{x}) = - \frac{1}{2} (\mathbf{x} - \boldsymbol\mu_k)^\top \boldsymbol\Sigma_k^{-1} (\mathbf{x} - \boldsymbol\mu_k) - \frac{1}{2} \ln \left| \boldsymbol\Sigma_k \right| + \ln \pi_k
 (\#eq:qda-discriminant-function)
 \end{equation}
 

@@ -363,6 +363,7 @@ dunn_index <- function(cluster, df, dist_method = "euclidean") {
   # 두 객체가 동일 군집에 속하는지 서로 다른 군집에 속하는 지 표현
   dist_df <- dist(df, method = dist_method, upper = TRUE) %>% 
     broom::tidy() %>%
+    mutate_if(is.factor, ~ as.integer(as.character(.))) %>%
     inner_join(
       cluster_df %>% rename(item1 = id, item1_cluster = cluster),
       by = "item1"
@@ -483,7 +484,8 @@ connectivity <- function(cluster, df, dist_method = "euclidean", n_neighbor = 1)
 
   # 객체간 거리
   distance_df <- dist(df, method = dist_method, upper = TRUE) %>%
-    broom::tidy()
+    broom::tidy() %>%
+    mutate_if(is.factor, ~ as.integer(as.character(.)))
   
   # 최근 객체
   nn_df <- distance_df %>%
@@ -573,6 +575,7 @@ asw <- function(cluster, df, dist_method = "euclidean") {
   
   dist_df <- dist(df, method = dist_method, upper = TRUE) %>% 
     broom::tidy() %>%
+    mutate_if(is.factor, ~ as.integer(as.character(.))) %>%
     inner_join(
       cluster_df %>% rename(item1 = id, item1_cluster = cluster),
       by = "item1"

@@ -330,7 +330,8 @@ BUILD는 다음 절차들을 거쳐서 $K$개의 초기 대표객체를 구하�
 
 ```{r}
 pairwise_distance_df <- dist(df[, -1], upper = TRUE) %>%
-  broom::tidy()
+  broom::tidy() %>%
+  mutate_if(is.factor, ~ as.integer(as.character(.)))
 
 M_idx <- pairwise_distance_df %>%
   group_by(item1) %>%
@@ -679,7 +680,8 @@ pam_medoids <- function(distance_df, k = 1L) {
 
 ```{r}
 pairwise_distance_df <- dist(df[, -1], upper = TRUE) %>%
-  broom::tidy()
+  broom::tidy() %>%
+  mutate_if(is.factor, ~ as.integer(as.character(.)))
 
 medoids_ids <- pam_medoids(pairwise_distance_df, k = 2)
 
@@ -764,7 +766,8 @@ clara_solution$clustering
 
 ```{r}
 pairwise_distance_df <- dist(df[, -1], upper = TRUE) %>%
-  broom::tidy()
+  broom::tidy() %>%
+  mutate_if(is.factor, ~ as.integer(as.character(.)))
 ```
 
 각 객체 $j = 1, \cdots, n$에 대하여 다음을 산출한다.
@@ -967,7 +970,8 @@ kmeans_like_kmedoids <- function(distance_df, k = 1) {
 
 ```{r}
 pairwise_distance_df <- dist(df[, -1], upper = TRUE) %>%
-  broom::tidy()
+  broom::tidy() %>%
+  mutate_if(is.factor, ~ as.integer(as.character(.)))
 
 medoids_ids <- kmeans_like_kmedoids(pairwise_distance_df, k = 2)
 

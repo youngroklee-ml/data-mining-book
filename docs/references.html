@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>References | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="References | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
@@ -24,14 +24,14 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2019-07-09" />
+<meta name="date" content="2020-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="recommender-system.html">
+<link rel="prev" href="recommender-system.html"/>
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,29 +48,35 @@
 
 
 
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -78,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -208,9 +215,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
-<li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
-<li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#-"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
-<li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r----"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
+<li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#피셔-판별함수"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
+<li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#분류-규칙"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
+<li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r-패키지를-이용한-분류규칙-도출"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
@@ -401,76 +408,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>———. 1995. “Mining Sequential Patterns.” In <em>Icde</em>, 95:3–14.</p>
 </div>
 <div>
-<p>Banfield, Jeffrey D, and Adrian E Raftery. 1993. “Model-Based Gaussian and Non-Gaussian Clustering.” <em>Biometrics</em>. JSTOR, 803–21.</p>
+<p>Banfield, Jeffrey D, and Adrian E Raftery. 1993. “Model-Based Gaussian and Non-Gaussian Clustering.” <em>Biometrics</em>, 803–21.</p>
 </div>
 <div>
 <p>Breiman, Leo, Jerome Friedman, Charles J Stone, and Richard A Olshen. 1984. <em>Classification and Regression Trees</em>. CRC press.</p>
 </div>
 <div>
-<p>Caliński, Tadeusz, and Jerzy Harabasz. 1974. “A Dendrite Method for Cluster Analysis.” <em>Communications in Statistics</em> 3 (1). Taylor &amp; Francis: 1–27.</p>
+<p>Caliński, Tadeusz, and Jerzy Harabasz. 1974. “A Dendrite Method for Cluster Analysis.” <em>Communications in Statistics</em> 3 (1): 1–27.</p>
 </div>
 <div>
-<p>Cavanaugh, JR, RW Hatch, and JL Sullivan. 1976. “Models for the Subjective Effects of Loss, Noise, and Talker Echo on Telephone Connections.” <em>Bell System Technical Journal</em> 55 (9). Wiley Online Library: 1319–71.</p>
+<p>Cavanaugh, JR, RW Hatch, and JL Sullivan. 1976. “Models for the Subjective Effects of Loss, Noise, and Talker Echo on Telephone Connections.” <em>Bell System Technical Journal</em> 55 (9): 1319–71.</p>
 </div>
 <div>
-<p>Celeux, Gilles, and Gérard Govaert. 1995. “Gaussian Parsimonious Clustering Models.” <em>Pattern Recognition</em> 28 (5). Elsevier: 781–93.</p>
+<p>Celeux, Gilles, and Gérard Govaert. 1995. “Gaussian Parsimonious Clustering Models.” <em>Pattern Recognition</em> 28 (5): 781–93.</p>
 </div>
 <div>
-<p>Chang, Chih-Chung, and Chih-Jen Lin. 2001. “Training V-Support Vector Classifiers: Theory and Algorithms.” <em>Neural Computation</em> 13 (9). MIT Press: 2119–47.</p>
+<p>Chang, Chih-Chung, and Chih-Jen Lin. 2001. “Training V-Support Vector Classifiers: Theory and Algorithms.” <em>Neural Computation</em> 13 (9): 2119–47.</p>
 </div>
 <div>
-<p>———. 2011. “LIBSVM: A Library for Support Vector Machines.” <em>ACM Transactions on Intelligent Systems and Technology (TIST)</em> 2 (3). Acm: 27.</p>
+<p>———. 2011. “LIBSVM: A Library for Support Vector Machines.” <em>ACM Transactions on Intelligent Systems and Technology (TIST)</em> 2 (3): 27.</p>
 </div>
 <div>
 <p>Czepiel, Scott A. 2002. “Maximum Likelihood Estimation of Logistic Regression Models: Theory and Implementation.” <em>Available at Czep. Net/Stat/Mlelr. Pdf</em>.</p>
 </div>
 <div>
-<p>Dunn, Joseph C. 1973. “A Fuzzy Relative of the Isodata Process and Its Use in Detecting Compact Well-Separated Clusters.” Taylor &amp; Francis.</p>
+<p>Dunn, Joseph C. 1973. “A Fuzzy Relative of the Isodata Process and Its Use in Detecting Compact Well-Separated Clusters.”</p>
 </div>
 <div>
 <p>Fan, Rong-En, Pai-Hsuen Chen, and Chih-Jen Lin. 2005. “Working Set Selection Using Second Order Information for Training Support Vector Machines.” <em>Journal of Machine Learning Research</em> 6 (Dec): 1889–1918.</p>
 </div>
 <div>
-<p>Goldfarb, Donald, and Ashok Idnani. 1983. “A Numerically Stable Dual Method for Solving Strictly Convex Quadratic Programs.” <em>Mathematical Programming</em> 27 (1). Springer: 1–33.</p>
+<p>Goldfarb, Donald, and Ashok Idnani. 1983. “A Numerically Stable Dual Method for Solving Strictly Convex Quadratic Programs.” <em>Mathematical Programming</em> 27 (1): 1–33.</p>
 </div>
 <div>
-<p>Gower, John C. 1971. “A General Coefficient of Similarity and Some of Its Properties.” <em>Biometrics</em>. JSTOR, 857–71.</p>
+<p>Gower, John C. 1971. “A General Coefficient of Similarity and Some of Its Properties.” <em>Biometrics</em>, 857–71.</p>
 </div>
 <div>
 <p>Handl, Julia, and Joshua Knowles. 2005. “Exploiting the Trade-Off—the Benefits of Multiple Objectives in Data Clustering.” In <em>International Conference on Evolutionary Multi-Criterion Optimization</em>, 547–60. Springer.</p>
 </div>
 <div>
-<p>Hubert, Lawrence, and Phipps Arabie. 1985. “Comparing Partitions.” <em>Journal of Classification</em> 2 (1). Springer: 193–218.</p>
+<p>Hubert, Lawrence, and Phipps Arabie. 1985. “Comparing Partitions.” <em>Journal of Classification</em> 2 (1): 193–218.</p>
 </div>
 <div>
-<p>Kaufman, L, and P. J. Rousseeuw. 1990. “Finding Groups in Data: An Introduction to Cluster Analysis.” Wiley.</p>
+<p>Kaufman, L, and P. J. Rousseeuw. 1990. “Finding Groups in Data: An Introduction to Cluster Analysis.”</p>
 </div>
 <div>
-<p>Lance, Godfrey N, and William Thomas Williams. 1967. “A General Theory of Classificatory Sorting Strategies: 1. Hierarchical Systems.” <em>The Computer Journal</em> 9 (4). The British Computer Society: 373–80.</p>
+<p>Lance, Godfrey N, and William Thomas Williams. 1967. “A General Theory of Classificatory Sorting Strategies: 1. Hierarchical Systems.” <em>The Computer Journal</em> 9 (4): 373–80.</p>
 </div>
 <div>
-<p>Park, Hae-Sang, and Chi-Hyuck Jun. 2009. “A Simple and Fast Algorithm for K-Medoids Clustering.” <em>Expert Systems with Applications</em> 36 (2). Elsevier: 3336–41.</p>
+<p>Park, Hae-Sang, and Chi-Hyuck Jun. 2009. “A Simple and Fast Algorithm for K-Medoids Clustering.” <em>Expert Systems with Applications</em> 36 (2): 3336–41.</p>
 </div>
 <div>
-<p>Pratt, John W. 1981. “Concavity of the Log Likelihood.” <em>Journal of the American Statistical Association</em> 76 (373). Taylor &amp; Francis: 103–6.</p>
+<p>Pratt, John W. 1981. “Concavity of the Log Likelihood.” <em>Journal of the American Statistical Association</em> 76 (373): 103–6.</p>
 </div>
 <div>
-<p>Rand, William M. 1971. “Objective Criteria for the Evaluation of Clustering Methods.” <em>Journal of the American Statistical Association</em> 66 (336). Taylor &amp; Francis Group: 846–50.</p>
+<p>Rand, William M. 1971. “Objective Criteria for the Evaluation of Clustering Methods.” <em>Journal of the American Statistical Association</em> 66 (336): 846–50.</p>
 </div>
 <div>
-<p>Rousseeuw, Peter J. 1987. “Silhouettes: A Graphical Aid to the Interpretation and Validation of Cluster Analysis.” <em>Journal of Computational and Applied Mathematics</em> 20. Elsevier: 53–65.</p>
+<p>Rousseeuw, Peter J. 1987. “Silhouettes: A Graphical Aid to the Interpretation and Validation of Cluster Analysis.” <em>Journal of Computational and Applied Mathematics</em> 20: 53–65.</p>
 </div>
 <div>
-<p>Schölkopf, Bernhard, Alex J Smola, Robert C Williamson, and Peter L Bartlett. 2000. “New Support Vector Algorithms.” <em>Neural Computation</em> 12 (5). MIT Press: 1207–45.</p>
+<p>Schölkopf, Bernhard, Alex J Smola, Robert C Williamson, and Peter L Bartlett. 2000. “New Support Vector Algorithms.” <em>Neural Computation</em> 12 (5): 1207–45.</p>
 </div>
 <div>
-<p>Scrucca, Luca, Michael Fop, T Brendan Murphy, and Adrian E Raftery. 2016. “Mclust 5: Clustering, Classification and Density Estimation Using Gaussian Finite Mixture Models.” <em>The R Journal</em> 8 (1). NIH Public Access: 289.</p>
+<p>Scrucca, Luca, Michael Fop, T Brendan Murphy, and Adrian E Raftery. 2016. “Mclust 5: Clustering, Classification and Density Estimation Using Gaussian Finite Mixture Models.” <em>The R Journal</em> 8 (1): 289.</p>
 </div>
 <div>
-<p>Ward Jr, Joe H. 1963. “Hierarchical Grouping to Optimize an Objective Function.” <em>Journal of the American Statistical Association</em> 58 (301). Taylor &amp; Francis Group: 236–44.</p>
+<p>Ward Jr, Joe H. 1963. “Hierarchical Grouping to Optimize an Objective Function.” <em>Journal of the American Statistical Association</em> 58 (301): 236–44.</p>
 </div>
 <div>
-<p>Wishart, David. 1969. “256. Note: An Algorithm for Hierarchical Classifications.” <em>Biometrics</em>. JSTOR, 165–70.</p>
+<p>Wishart, David. 1969. “256. Note: An Algorithm for Hierarchical Classifications.” <em>Biometrics</em>, 165–70.</p>
 </div>
 <div>
 <p>전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.</p>
@@ -507,11 +514,13 @@ s.setAttribute('data-timestamp', +new Date());
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -519,12 +528,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -536,6 +544,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -555,8 +567,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
