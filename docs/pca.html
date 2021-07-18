@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 주성분분석 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 주성분분석 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2020-12-12" />
+<meta name="date" content="2021-07-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="regression.html"/>
 <link rel="next" href="plsr.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,24 +51,23 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,7 +87,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -120,6 +120,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -139,20 +162,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>개요</a></li>
 <li class="chapter" data-level="1" data-path="datamining-overview.html"><a href="datamining-overview.html"><i class="fa fa-check"></i><b>1</b> 데이터마이닝 개요</a></li>
 <li class="part"><span><b>I 1부 - 예측</b></span></li>
-<li class="chapter" data-level="2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>2</b> 회귀분석</a><ul>
+<li class="chapter" data-level="2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>2</b> 회귀분석</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="regression.html"><a href="regression.html#regression-packages-install"><i class="fa fa-check"></i><b>2.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>2.2</b> 다중회귀모형</a></li>
-<li class="chapter" data-level="2.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>2.3</b> 반응치에 대한 추정 및 예측</a><ul>
+<li class="chapter" data-level="2.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>2.3</b> 반응치에 대한 추정 및 예측</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="regression.html"><a href="regression.html#regression-response-confidence"><i class="fa fa-check"></i><b>2.3.1</b> 평균반응치의 추정</a></li>
 <li class="chapter" data-level="2.3.2" data-path="regression.html"><a href="regression.html#regression-response-prediction"><i class="fa fa-check"></i><b>2.3.2</b> 미래반응치의 예측</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>2.4</b> 지시변수와 회귀모형</a><ul>
+<li class="chapter" data-level="2.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>2.4</b> 지시변수와 회귀모형</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="regression.html"><a href="regression.html#regression-indicator-variable-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스트립트</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3</b> 주성분분석</a><ul>
+<li class="chapter" data-level="3" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3</b> 주성분분석</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="pca.html"><a href="pca.html#pca-packages-install"><i class="fa fa-check"></i><b>3.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="3.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>3.2</b> 행렬의 분해</a><ul>
+<li class="chapter" data-level="3.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>3.2</b> 행렬의 분해</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="pca.html"><a href="pca.html#pca-matrix-factorization-basic-script"><i class="fa fa-check"></i><b>3.2.1</b> 기본 R 스트립트</a></li>
 <li class="chapter" data-level="3.2.2" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>3.2.2</b> 변수의 변동과 제곱합</a></li>
 <li class="chapter" data-level="3.2.3" data-path="pca.html"><a href="pca.html#pca-intro"><i class="fa fa-check"></i><b>3.2.3</b> 주성분의 이해 및 행렬의 분해</a></li>
@@ -160,15 +188,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.5" data-path="pca.html"><a href="pca.html#pca-spectral"><i class="fa fa-check"></i><b>3.2.5</b> 분광분해 (Spectral Decomposition)</a></li>
 <li class="chapter" data-level="3.2.6" data-path="pca.html"><a href="pca.html#pca-nipals"><i class="fa fa-check"></i><b>3.2.6</b> NIPALS 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a><ul>
+<li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="pca.html"><a href="pca.html#pcr-basic-script"><i class="fa fa-check"></i><b>3.3.1</b> 기본 R 스트립트</a></li>
 <li class="chapter" data-level="3.3.2" data-path="pca.html"><a href="pca.html#pcr-regression-coefficient"><i class="fa fa-check"></i><b>3.3.2</b> 주성분 회귀계수 추정</a></li>
 <li class="chapter" data-level="3.3.3" data-path="pca.html"><a href="pca.html#pcr-regression-transform"><i class="fa fa-check"></i><b>3.3.3</b> 회귀계수 선형변환</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="plsr.html"><a href="plsr.html"><i class="fa fa-check"></i><b>4</b> 부분최소자승법</a><ul>
+<li class="chapter" data-level="4" data-path="plsr.html"><a href="plsr.html"><i class="fa fa-check"></i><b>4</b> 부분최소자승법</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="plsr.html"><a href="plsr.html#plsr-packages-install"><i class="fa fa-check"></i><b>4.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="4.2" data-path="plsr.html"><a href="plsr.html#plsr-single-target"><i class="fa fa-check"></i><b>4.2</b> 하나의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.2" data-path="plsr.html"><a href="plsr.html#plsr-single-target"><i class="fa fa-check"></i><b>4.2</b> 하나의 종속변수의 경우</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="plsr.html"><a href="plsr.html#plsr-basic-script"><i class="fa fa-check"></i><b>4.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.2.2" data-path="plsr.html"><a href="plsr.html#plsr-model"><i class="fa fa-check"></i><b>4.2.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.2.3" data-path="plsr.html"><a href="plsr.html#plsr-single-nipals"><i class="fa fa-check"></i><b>4.2.3</b> NIPALS 알고리즘</a></li>
@@ -176,7 +207,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.5" data-path="plsr.html"><a href="plsr.html#plsr-sst"><i class="fa fa-check"></i><b>4.2.5</b> 제곱합 분해</a></li>
 <li class="chapter" data-level="4.2.6" data-path="plsr.html"><a href="plsr.html#plsr-variable-importance"><i class="fa fa-check"></i><b>4.2.6</b> 독립변수의 중요도</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-basic-script"><i class="fa fa-check"></i><b>4.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.3.2" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-model"><i class="fa fa-check"></i><b>4.3.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.3.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-nipals"><i class="fa fa-check"></i><b>4.3.3</b> NIPALS 알고리즘</a></li>
@@ -185,189 +217,230 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II 2부 - 분류분석</b></span></li>
-<li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a><ul>
+<li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-packages-install"><i class="fa fa-check"></i><b>5.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="5.2" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-problem-methods"><i class="fa fa-check"></i><b>5.2</b> 분류문제 및 분류기법</a></li>
-<li class="chapter" data-level="5.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>5.3</b> 기본적인 분류기법</a><ul>
+<li class="chapter" data-level="5.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>5.3</b> 기본적인 분류기법</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#nearest-neighbor-classification"><i class="fa fa-check"></i><b>5.3.1</b> 인접객체법</a></li>
 <li class="chapter" data-level="5.3.2" data-path="classification-analysis.html"><a href="classification-analysis.html#naive-bayes"><i class="fa fa-check"></i><b>5.3.2</b> 나이브 베이지안 분류법</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6</b> 로지스틱 회귀분석</a><ul>
+<li class="chapter" data-level="6" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6</b> 로지스틱 회귀분석</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-packages-install"><i class="fa fa-check"></i><b>6.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="6.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>6.2</b> 이분 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>6.2</b> 이분 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#bianry-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-model"><i class="fa fa-check"></i><b>6.2.2</b> 회귀모형</a></li>
 <li class="chapter" data-level="6.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-estimation"><i class="fa fa-check"></i><b>6.2.3</b> 회귀계수 추정</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>6.3</b> 명목 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>6.3</b> 명목 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#baseline-category-logit-model"><i class="fa fa-check"></i><b>6.3.2</b> 기준범주 로짓모형</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>6.4</b> 서열 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>6.4</b> 서열 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-basic-script"><i class="fa fa-check"></i><b>6.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#cumulative-logit-model"><i class="fa fa-check"></i><b>6.4.2</b> 누적 로짓모형</a></li>
 <li class="chapter" data-level="6.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#adjacent-categories-logit-model"><i class="fa fa-check"></i><b>6.4.3</b> 인근범주 로짓모형</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>7</b> 판별분석</a><ul>
+<li class="chapter" data-level="7" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>7</b> 판별분석</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="da.html"><a href="da.html#da-overview"><i class="fa fa-check"></i><b>7.1</b> 개요</a></li>
 <li class="chapter" data-level="7.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a><ul>
+<li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#피셔-판별함수"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
 <li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#분류-규칙"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
 <li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r-패키지를-이용한-분류규칙-도출"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
+<li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>7.4.2</b> 선형판별함수</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>7.5</b> 오분류비용을 고려한 분류규칙</a></li>
-<li class="chapter" data-level="7.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>7.6</b> 이차판별분석</a><ul>
+<li class="chapter" data-level="7.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>7.6</b> 이차판별분석</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>7.6.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>7.6.2</b> 이차 판별함수</a></li>
 <li class="chapter" data-level="7.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>7.6.3</b> 이차판별함수에 의한 분류</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>7.7</b> 세 범주 이상의 분류</a><ul>
+<li class="chapter" data-level="7.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>7.7</b> 세 범주 이상의 분류</a>
+<ul>
 <li class="chapter" data-level="7.7.1" data-path="da.html"><a href="da.html#mutliclass-da-basic-script"><i class="fa fa-check"></i><b>7.7.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.7.2" data-path="da.html"><a href="da.html#mutliclass-generalized-discriminant-function"><i class="fa fa-check"></i><b>7.7.2</b> 일반화된 판별함수</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>8</b> 트리기반 기법</a><ul>
+<li class="chapter" data-level="8" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>8</b> 트리기반 기법</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>8.1</b> CART 개요</a></li>
 <li class="chapter" data-level="8.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-packages-install"><i class="fa fa-check"></i><b>8.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="8.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>8.3</b> CART 트리 생성</a><ul>
+<li class="chapter" data-level="8.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>8.3</b> CART 트리 생성</a>
+<ul>
 <li class="chapter" data-level="8.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>8.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="8.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>8.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="8.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>8.3.3</b> 노드 및 트리의 불순도</a></li>
 <li class="chapter" data-level="8.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>8.3.4</b> 분지기준</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>8.4</b> 가지치기 및 최종 트리 선정</a><ul>
+<li class="chapter" data-level="8.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>8.4</b> 가지치기 및 최종 트리 선정</a>
+<ul>
 <li class="chapter" data-level="8.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>8.4.1</b> 가지치기</a></li>
 <li class="chapter" data-level="8.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>8.4.2</b> 최적 트리의 선정</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>8.5</b> R패키지 내 분류 트리 방법</a><ul>
+<li class="chapter" data-level="8.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>8.5</b> R패키지 내 분류 트리 방법</a>
+<ul>
 <li class="chapter" data-level="8.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>8.5.1</b> 트리 확장</a></li>
 <li class="chapter" data-level="8.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>8.5.2</b> 가지치기</a></li>
 <li class="chapter" data-level="8.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>8.5.3</b> 파라미터값 결정</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>9</b> 서포트 벡터 머신</a><ul>
+<li class="chapter" data-level="9" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>9</b> 서포트 벡터 머신</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>9.1</b> 개요</a></li>
 <li class="chapter" data-level="9.2" data-path="svm.html"><a href="svm.html#svm-packages-install"><i class="fa fa-check"></i><b>9.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="9.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>9.3</b> 선형 SVM - 분리 가능 경우</a><ul>
+<li class="chapter" data-level="9.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>9.3</b> 선형 SVM - 분리 가능 경우</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>9.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>9.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="9.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>9.3.3</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>9.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="9.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>9.4</b> 선형 SVM - 분리 불가능 경우</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>9.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>9.4.2</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>9.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="9.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>9.5</b> 비선형 SVM</a>
+<ul>
 <li class="chapter" data-level="9.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>9.5.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>9.5.2</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>9.6</b> R패키지 내 SVM</a><ul>
+<li class="chapter" data-level="9.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>9.6</b> R패키지 내 SVM</a>
+<ul>
 <li class="chapter" data-level="9.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>9.6.1</b> 커널함수</a></li>
 <li class="chapter" data-level="9.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>9.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>10</b> 분류규칙의 성능 평가</a><ul>
+<li class="chapter" data-level="10" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>10</b> 분류규칙의 성능 평가</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-packages-install"><i class="fa fa-check"></i><b>10.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="10.2" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-misclassification-rate"><i class="fa fa-check"></i><b>10.2</b> 분류오류율</a></li>
-<li class="chapter" data-level="10.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>10.3</b> 정확도, 민감도 및 특이도</a><ul>
+<li class="chapter" data-level="10.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>10.3</b> 정확도, 민감도 및 특이도</a>
+<ul>
 <li class="chapter" data-level="10.3.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#confusion-matrix-r-package"><i class="fa fa-check"></i><b>10.3.1</b> R 패키지 내 정오분류표</a></li>
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#roc-curve"><i class="fa fa-check"></i><b>10.4</b> ROC 곡선</a></li>
 <li class="chapter" data-level="10.5" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#gain-chart"><i class="fa fa-check"></i><b>10.5</b> 이익도표</a></li>
 </ul></li>
 <li class="part"><span><b>III 3부 - 군집분석</b></span></li>
-<li class="chapter" data-level="11" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>11</b> 군집분석 개요</a><ul>
+<li class="chapter" data-level="11" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>11</b> 군집분석 개요</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>11.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="11.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>11.2</b> 군집분석 기법</a></li>
-<li class="chapter" data-level="11.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>11.3</b> 객체 간의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>11.3</b> 객체 간의 유사성 척도</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="clustering-overview.html"><a href="clustering-overview.html#object-distance-metric"><i class="fa fa-check"></i><b>11.3.1</b> 거리 관련 척도</a></li>
 <li class="chapter" data-level="11.3.2" data-path="clustering-overview.html"><a href="clustering-overview.html#object-correlation-metric"><i class="fa fa-check"></i><b>11.3.2</b> 상관계수 관련 척도</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>11.4</b> 범주형 객체의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>11.4</b> 범주형 객체의 유사성 척도</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="clustering-overview.html"><a href="clustering-overview.html#binary-similarity-metric"><i class="fa fa-check"></i><b>11.4.1</b> 이분형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.2" data-path="clustering-overview.html"><a href="clustering-overview.html#ordinal-similarity-metric"><i class="fa fa-check"></i><b>11.4.2</b> 서열형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.3" data-path="clustering-overview.html"><a href="clustering-overview.html#nominal-similarity-metric"><i class="fa fa-check"></i><b>11.4.3</b> 명목형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.4" data-path="clustering-overview.html"><a href="clustering-overview.html#mixed-similarity-metric"><i class="fa fa-check"></i><b>11.4.4</b> 혼합형의 경우</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>12</b> 계층적 군집방법</a><ul>
+<li class="chapter" data-level="12" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>12</b> 계층적 군집방법</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>12.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="12.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#distance-between-clusters"><i class="fa fa-check"></i><b>12.2</b> 군집 간 거리척도 및 연결법</a></li>
-<li class="chapter" data-level="12.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>12.3</b> 연결법의 군집 알고리즘</a><ul>
+<li class="chapter" data-level="12.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>12.3</b> 연결법의 군집 알고리즘</a>
+<ul>
 <li class="chapter" data-level="12.3.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-basic-script"><i class="fa fa-check"></i><b>12.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.3.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-algorithm"><i class="fa fa-check"></i><b>12.3.2</b> 연결법 군집 알고리즘</a></li>
 <li class="chapter" data-level="12.3.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hclust"><i class="fa fa-check"></i><b>12.3.3</b> R 패키지 내 연결법</a></li>
 </ul></li>
-<li class="chapter" data-level="12.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>12.4</b> 워드 방법</a><ul>
+<li class="chapter" data-level="12.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>12.4</b> 워드 방법</a>
+<ul>
 <li class="chapter" data-level="12.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>12.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>12.4.2</b> 워드 군집 알고리즘</a></li>
 <li class="chapter" data-level="12.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>12.4.3</b> R 패키지 내 워드 방법</a></li>
 </ul></li>
-<li class="chapter" data-level="12.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>12.5</b> 분리적 방법 - 다이아나</a><ul>
+<li class="chapter" data-level="12.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>12.5</b> 분리적 방법 - 다이아나</a>
+<ul>
 <li class="chapter" data-level="12.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>12.5.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>12.5.2</b> 다이아나 알고리즘</a></li>
 </ul></li>
 <li class="chapter" data-level="12.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>12.6</b> 군집수의 결정</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>13</b> 비계층적 군집방법</a><ul>
+<li class="chapter" data-level="13" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>13</b> 비계층적 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>13.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="13.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>13.2</b> K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>13.2</b> K-means 알고리즘</a>
+<ul>
 <li class="chapter" data-level="13.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>13.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="13.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>13.2.2</b> 알고리즘</a></li>
 <li class="chapter" data-level="13.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>13.2.3</b> R 스크립트 구현</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>13.3</b> K-medoids 군집방법</a><ul>
+<li class="chapter" data-level="13.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>13.3</b> K-medoids 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>13.3.1</b> PAM 알고리즘</a></li>
 <li class="chapter" data-level="13.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>13.3.2</b> CLARA 알고리즘</a></li>
 <li class="chapter" data-level="13.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>13.3.3</b> CLARANS 알고리즘</a></li>
 <li class="chapter" data-level="13.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>13.3.4</b> K-means-like 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>13.4</b> 퍼지 K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>13.4</b> 퍼지 K-means 알고리즘</a>
+<ul>
 <li class="chapter" data-level="13.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>13.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="13.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>13.4.2</b> 알고리즘</a></li>
 <li class="chapter" data-level="13.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>13.4.3</b> R 스크립트 구현</a></li>
 </ul></li>
-<li class="chapter" data-level="13.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>13.5</b> 모형기반 군집방법</a><ul>
+<li class="chapter" data-level="13.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>13.5</b> 모형기반 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>13.5.1</b> 기본 R script</a></li>
 <li class="chapter" data-level="13.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>13.5.2</b> EM 알고리즘</a></li>
 <li class="chapter" data-level="13.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>13.5.3</b> R 스크립트 구현</a></li>
 <li class="chapter" data-level="13.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>13.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>14</b> 군집해의 평가 및 해석</a><ul>
+<li class="chapter" data-level="14" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>14</b> 군집해의 평가 및 해석</a>
+<ul>
 <li class="chapter" data-level="14.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>14.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="14.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>14.2</b> 군집해의 평가</a><ul>
+<li class="chapter" data-level="14.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>14.2</b> 군집해의 평가</a>
+<ul>
 <li class="chapter" data-level="14.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>14.2.1</b> 외부평가지수</a></li>
 <li class="chapter" data-level="14.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>14.2.2</b> 내부평가지수</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>14.3</b> 군집해의 해석</a></li>
 </ul></li>
 <li class="part"><span><b>IV 4부 - 연관규칙</b></span></li>
-<li class="chapter" data-level="15" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>15</b> 연관규칙</a><ul>
+<li class="chapter" data-level="15" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>15</b> 연관규칙</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="association-rule.html"><a href="association-rule.html#association-packages-install"><i class="fa fa-check"></i><b>15.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="15.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>15.2</b> 연관규칙의 정의 및 성능척도</a><ul>
+<li class="chapter" data-level="15.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>15.2</b> 연관규칙의 정의 및 성능척도</a>
+<ul>
 <li class="chapter" data-level="15.2.1" data-path="association-rule.html"><a href="association-rule.html#association-rule-support"><i class="fa fa-check"></i><b>15.2.1</b> 지지도</a></li>
 <li class="chapter" data-level="15.2.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-confidence"><i class="fa fa-check"></i><b>15.2.2</b> 신뢰도</a></li>
 <li class="chapter" data-level="15.2.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-lift"><i class="fa fa-check"></i><b>15.2.3</b> 개선도</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>15.3</b> 연관규칙의 탐사</a><ul>
+<li class="chapter" data-level="15.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>15.3</b> 연관규칙의 탐사</a>
+<ul>
 <li class="chapter" data-level="15.3.1" data-path="association-rule.html"><a href="association-rule.html#apriori-large-itemsets"><i class="fa fa-check"></i><b>15.3.1</b> 빈발항목집합 생성</a></li>
 <li class="chapter" data-level="15.3.2" data-path="association-rule.html"><a href="association-rule.html#apriori-rule-exploration"><i class="fa fa-check"></i><b>15.3.2</b> 규칙의 탐사</a></li>
 <li class="chapter" data-level="15.3.3" data-path="association-rule.html"><a href="association-rule.html#apriori-r-package"><i class="fa fa-check"></i><b>15.3.3</b> R 패키지 내 Apriori</a></li>
 </ul></li>
-<li class="chapter" data-level="15.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>15.4</b> 순차적 패턴의 탐사</a><ul>
+<li class="chapter" data-level="15.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>15.4</b> 순차적 패턴의 탐사</a>
+<ul>
 <li class="chapter" data-level="15.4.1" data-path="association-rule.html"><a href="association-rule.html#association-aprioriall"><i class="fa fa-check"></i><b>15.4.1</b> AprioriAll 알고리즘</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>16</b> 추천시스템</a><ul>
+<li class="chapter" data-level="16" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>16</b> 추천시스템</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="recommender-system.html"><a href="recommender-system.html#recommender-packages-install"><i class="fa fa-check"></i><b>16.1</b> 필요 R package 설치</a></li>
 <li class="chapter" data-level="16.2" data-path="recommender-system.html"><a href="recommender-system.html#content-based-recommender"><i class="fa fa-check"></i><b>16.2</b> 내용기반 추천시스템</a></li>
 <li class="chapter" data-level="16.3" data-path="recommender-system.html"><a href="recommender-system.html#collaborative-filtering"><i class="fa fa-check"></i><b>16.3</b> 협업 필터링</a></li>
@@ -394,9 +467,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pca" class="section level1">
+<div id="pca" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> 주성분분석</h1>
-<div id="pca-packages-install" class="section level2">
+<div id="pca-packages-install" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> 필요 R 패키지 설치</h2>
 <p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
 <table>
@@ -409,19 +482,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td align="left">tidyverse</td>
-<td align="left">1.3.0</td>
+<td align="left">1.3.1</td>
 </tr>
 <tr class="even">
 <td align="left">stats</td>
-<td align="left">4.0.3</td>
+<td align="left">4.1.0</td>
 </tr>
 <tr class="odd">
 <td align="left">broom</td>
-<td align="left">0.7.2</td>
+<td align="left">0.7.8</td>
 </tr>
 <tr class="even">
 <td align="left">Matrix</td>
-<td align="left">1.2-18</td>
+<td align="left">1.3-4</td>
 </tr>
 <tr class="odd">
 <td align="left">nipals</td>
@@ -430,46 +503,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<div id="pca-matrix-factorization" class="section level2">
+<div id="pca-matrix-factorization" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> 행렬의 분해</h2>
-<div id="pca-matrix-factorization-basic-script" class="section level3">
+<div id="pca-matrix-factorization-basic-script" class="section level3" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> 기본 R 스트립트</h3>
 <p>아래 Table <a href="pca.html#tab:pca-matrix-factorization-data">3.1</a>는 국내 18개 증권회사의 주요 재무제표를 나열한 것이다.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="pca.html#cb26-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb26-2"><a href="pca.html#cb26-2"></a>  <span class="op">~</span>company, <span class="op">~</span>roa, <span class="op">~</span>roe, <span class="op">~</span>bis, <span class="op">~</span>de_ratio, <span class="op">~</span>turnover,</span>
-<span id="cb26-3"><a href="pca.html#cb26-3"></a>  <span class="st">&quot;SK증권&quot;</span>, <span class="fl">2.43</span>, <span class="fl">11.10</span>, <span class="fl">18.46</span>, <span class="fl">441.67</span>, <span class="fl">0.90</span>,</span>
-<span id="cb26-4"><a href="pca.html#cb26-4"></a>  <span class="st">&quot;교보증권&quot;</span>, <span class="fl">3.09</span>, <span class="fl">9.95</span>, <span class="fl">29.46</span>, <span class="fl">239.43</span>, <span class="fl">0.90</span>,</span>
-<span id="cb26-5"><a href="pca.html#cb26-5"></a>  <span class="st">&quot;대신증권&quot;</span>, <span class="fl">2.22</span>, <span class="fl">6.86</span>, <span class="fl">28.62</span>, <span class="fl">249.36</span>, <span class="fl">0.69</span>,</span>
-<span id="cb26-6"><a href="pca.html#cb26-6"></a>  <span class="st">&quot;대우증권&quot;</span>, <span class="fl">5.76</span>, <span class="fl">23.19</span>, <span class="fl">23.47</span>, <span class="fl">326.09</span>, <span class="fl">1.43</span>,</span>
-<span id="cb26-7"><a href="pca.html#cb26-7"></a>  <span class="st">&quot;동부증권&quot;</span>, <span class="fl">1.60</span>, <span class="fl">5.64</span>, <span class="fl">25.64</span>, <span class="fl">289.98</span>, <span class="fl">1.42</span>,</span>
-<span id="cb26-8"><a href="pca.html#cb26-8"></a>  <span class="st">&quot;메리츠증권&quot;</span>, <span class="fl">3.53</span>, <span class="fl">10.64</span>, <span class="fl">32.25</span>, <span class="fl">210.10</span>, <span class="fl">1.17</span>,</span>
-<span id="cb26-9"><a href="pca.html#cb26-9"></a>  <span class="st">&quot;미래에셋증권&quot;</span>, <span class="fl">4.26</span>, <span class="fl">15.56</span>, <span class="fl">24.40</span>, <span class="fl">309.78</span>, <span class="fl">0.81</span>,</span>
-<span id="cb26-10"><a href="pca.html#cb26-10"></a>  <span class="st">&quot;부국증권&quot;</span>, <span class="fl">3.86</span>, <span class="fl">5.50</span>, <span class="fl">70.74</span>, <span class="fl">41.36</span>, <span class="fl">0.81</span>,</span>
-<span id="cb26-11"><a href="pca.html#cb26-11"></a>  <span class="st">&quot;브릿지증권&quot;</span>, <span class="fl">4.09</span>, <span class="fl">6.44</span>, <span class="fl">64.38</span>, <span class="fl">55.32</span>, <span class="fl">0.32</span>,</span>
-<span id="cb26-12"><a href="pca.html#cb26-12"></a>  <span class="st">&quot;삼성증권&quot;</span>, <span class="fl">2.73</span>, <span class="fl">10.68</span>, <span class="fl">24.41</span>, <span class="fl">309.59</span>, <span class="fl">0.64</span>,</span>
-<span id="cb26-13"><a href="pca.html#cb26-13"></a>  <span class="st">&quot;서울증권&quot;</span>, <span class="fl">2.03</span>, <span class="fl">4.50</span>, <span class="fl">42.53</span>, <span class="fl">135.12</span>, <span class="fl">0.59</span>,</span>
-<span id="cb26-14"><a href="pca.html#cb26-14"></a>  <span class="st">&quot;신영증권&quot;</span>, <span class="fl">1.96</span>, <span class="fl">8.92</span>, <span class="fl">18.48</span>, <span class="fl">441.19</span>, <span class="fl">1.07</span>,</span>
-<span id="cb26-15"><a href="pca.html#cb26-15"></a>  <span class="st">&quot;신흥증권&quot;</span>, <span class="fl">3.25</span>, <span class="fl">7.96</span>, <span class="fl">40.42</span>, <span class="fl">147.41</span>, <span class="fl">1.19</span>,</span>
-<span id="cb26-16"><a href="pca.html#cb26-16"></a>  <span class="st">&quot;우리투자증권&quot;</span>, <span class="fl">2.01</span>, <span class="fl">10.28</span>, <span class="fl">17.46</span>, <span class="fl">472.78</span>, <span class="fl">1.25</span>,</span>
-<span id="cb26-17"><a href="pca.html#cb26-17"></a>  <span class="st">&quot;유화증권&quot;</span>, <span class="fl">2.28</span>, <span class="fl">3.65</span>, <span class="fl">63.71</span>, <span class="fl">56.96</span>, <span class="fl">0.12</span>,</span>
-<span id="cb26-18"><a href="pca.html#cb26-18"></a>  <span class="st">&quot;한양증권&quot;</span>, <span class="fl">4.51</span>, <span class="fl">7.50</span>, <span class="fl">63.52</span>, <span class="fl">57.44</span>, <span class="fl">0.80</span>,</span>
-<span id="cb26-19"><a href="pca.html#cb26-19"></a>  <span class="st">&quot;한화증권&quot;</span>, <span class="fl">3.29</span>, <span class="fl">12.37</span>, <span class="fl">24.47</span>, <span class="fl">308.63</span>, <span class="fl">0.57</span>,</span>
-<span id="cb26-20"><a href="pca.html#cb26-20"></a>  <span class="st">&quot;현대증권&quot;</span>, <span class="fl">1.73</span>, <span class="fl">7.57</span>, <span class="fl">19.59</span>, <span class="fl">410.45</span>, <span class="fl">1.19</span></span>
-<span id="cb26-21"><a href="pca.html#cb26-21"></a>)</span>
-<span id="cb26-22"><a href="pca.html#cb26-22"></a></span>
-<span id="cb26-23"><a href="pca.html#cb26-23"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb26-24"><a href="pca.html#cb26-24"></a>  train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb26-25"><a href="pca.html#cb26-25"></a>  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="kw">ncol</span>(train_df)),</span>
-<span id="cb26-26"><a href="pca.html#cb26-26"></a>  <span class="dt">col.names =</span> <span class="kw">c</span>(</span>
-<span id="cb26-27"><a href="pca.html#cb26-27"></a>    <span class="st">&quot;회사&quot;</span>,</span>
-<span id="cb26-28"><a href="pca.html#cb26-28"></a>    <span class="st">&quot;총자본 순이익율 ($x_1$)&quot;</span>,</span>
-<span id="cb26-29"><a href="pca.html#cb26-29"></a>    <span class="st">&quot;자기자본 순이익율 ($x_2$)&quot;</span>,</span>
-<span id="cb26-30"><a href="pca.html#cb26-30"></a>    <span class="st">&quot;자기자본비율 ($x_3$)&quot;</span>,</span>
-<span id="cb26-31"><a href="pca.html#cb26-31"></a>    <span class="st">&quot;부채비율 ($x_4$)&quot;</span>,</span>
-<span id="cb26-32"><a href="pca.html#cb26-32"></a>    <span class="st">&quot;자기자본 회전율 ($x_5$)&quot;</span></span>
-<span id="cb26-33"><a href="pca.html#cb26-33"></a>  ),</span>
-<span id="cb26-34"><a href="pca.html#cb26-34"></a>  <span class="dt">caption =</span> <span class="st">&quot;국내 증권회사의 주요 재무제표&quot;</span></span>
-<span id="cb26-35"><a href="pca.html#cb26-35"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="pca.html#cb26-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb26-2"><a href="pca.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>company, <span class="sc">~</span>roa, <span class="sc">~</span>roe, <span class="sc">~</span>bis, <span class="sc">~</span>de_ratio, <span class="sc">~</span>turnover,</span>
+<span id="cb26-3"><a href="pca.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;SK증권&quot;</span>, <span class="fl">2.43</span>, <span class="fl">11.10</span>, <span class="fl">18.46</span>, <span class="fl">441.67</span>, <span class="fl">0.90</span>,</span>
+<span id="cb26-4"><a href="pca.html#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;교보증권&quot;</span>, <span class="fl">3.09</span>, <span class="fl">9.95</span>, <span class="fl">29.46</span>, <span class="fl">239.43</span>, <span class="fl">0.90</span>,</span>
+<span id="cb26-5"><a href="pca.html#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;대신증권&quot;</span>, <span class="fl">2.22</span>, <span class="fl">6.86</span>, <span class="fl">28.62</span>, <span class="fl">249.36</span>, <span class="fl">0.69</span>,</span>
+<span id="cb26-6"><a href="pca.html#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;대우증권&quot;</span>, <span class="fl">5.76</span>, <span class="fl">23.19</span>, <span class="fl">23.47</span>, <span class="fl">326.09</span>, <span class="fl">1.43</span>,</span>
+<span id="cb26-7"><a href="pca.html#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;동부증권&quot;</span>, <span class="fl">1.60</span>, <span class="fl">5.64</span>, <span class="fl">25.64</span>, <span class="fl">289.98</span>, <span class="fl">1.42</span>,</span>
+<span id="cb26-8"><a href="pca.html#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;메리츠증권&quot;</span>, <span class="fl">3.53</span>, <span class="fl">10.64</span>, <span class="fl">32.25</span>, <span class="fl">210.10</span>, <span class="fl">1.17</span>,</span>
+<span id="cb26-9"><a href="pca.html#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;미래에셋증권&quot;</span>, <span class="fl">4.26</span>, <span class="fl">15.56</span>, <span class="fl">24.40</span>, <span class="fl">309.78</span>, <span class="fl">0.81</span>,</span>
+<span id="cb26-10"><a href="pca.html#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;부국증권&quot;</span>, <span class="fl">3.86</span>, <span class="fl">5.50</span>, <span class="fl">70.74</span>, <span class="fl">41.36</span>, <span class="fl">0.81</span>,</span>
+<span id="cb26-11"><a href="pca.html#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;브릿지증권&quot;</span>, <span class="fl">4.09</span>, <span class="fl">6.44</span>, <span class="fl">64.38</span>, <span class="fl">55.32</span>, <span class="fl">0.32</span>,</span>
+<span id="cb26-12"><a href="pca.html#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;삼성증권&quot;</span>, <span class="fl">2.73</span>, <span class="fl">10.68</span>, <span class="fl">24.41</span>, <span class="fl">309.59</span>, <span class="fl">0.64</span>,</span>
+<span id="cb26-13"><a href="pca.html#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;서울증권&quot;</span>, <span class="fl">2.03</span>, <span class="fl">4.50</span>, <span class="fl">42.53</span>, <span class="fl">135.12</span>, <span class="fl">0.59</span>,</span>
+<span id="cb26-14"><a href="pca.html#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;신영증권&quot;</span>, <span class="fl">1.96</span>, <span class="fl">8.92</span>, <span class="fl">18.48</span>, <span class="fl">441.19</span>, <span class="fl">1.07</span>,</span>
+<span id="cb26-15"><a href="pca.html#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;신흥증권&quot;</span>, <span class="fl">3.25</span>, <span class="fl">7.96</span>, <span class="fl">40.42</span>, <span class="fl">147.41</span>, <span class="fl">1.19</span>,</span>
+<span id="cb26-16"><a href="pca.html#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;우리투자증권&quot;</span>, <span class="fl">2.01</span>, <span class="fl">10.28</span>, <span class="fl">17.46</span>, <span class="fl">472.78</span>, <span class="fl">1.25</span>,</span>
+<span id="cb26-17"><a href="pca.html#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;유화증권&quot;</span>, <span class="fl">2.28</span>, <span class="fl">3.65</span>, <span class="fl">63.71</span>, <span class="fl">56.96</span>, <span class="fl">0.12</span>,</span>
+<span id="cb26-18"><a href="pca.html#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;한양증권&quot;</span>, <span class="fl">4.51</span>, <span class="fl">7.50</span>, <span class="fl">63.52</span>, <span class="fl">57.44</span>, <span class="fl">0.80</span>,</span>
+<span id="cb26-19"><a href="pca.html#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;한화증권&quot;</span>, <span class="fl">3.29</span>, <span class="fl">12.37</span>, <span class="fl">24.47</span>, <span class="fl">308.63</span>, <span class="fl">0.57</span>,</span>
+<span id="cb26-20"><a href="pca.html#cb26-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;현대증권&quot;</span>, <span class="fl">1.73</span>, <span class="fl">7.57</span>, <span class="fl">19.59</span>, <span class="fl">410.45</span>, <span class="fl">1.19</span></span>
+<span id="cb26-21"><a href="pca.html#cb26-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-22"><a href="pca.html#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="pca.html#cb26-23" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb26-24"><a href="pca.html#cb26-24" aria-hidden="true" tabindex="-1"></a>  train_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb26-25"><a href="pca.html#cb26-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="fu">ncol</span>(train_df)),</span>
+<span id="cb26-26"><a href="pca.html#cb26-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(</span>
+<span id="cb26-27"><a href="pca.html#cb26-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;회사&quot;</span>,</span>
+<span id="cb26-28"><a href="pca.html#cb26-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;총자본 순이익율 ($x_1$)&quot;</span>,</span>
+<span id="cb26-29"><a href="pca.html#cb26-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;자기자본 순이익율 ($x_2$)&quot;</span>,</span>
+<span id="cb26-30"><a href="pca.html#cb26-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;자기자본비율 ($x_3$)&quot;</span>,</span>
+<span id="cb26-31"><a href="pca.html#cb26-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;부채비율 ($x_4$)&quot;</span>,</span>
+<span id="cb26-32"><a href="pca.html#cb26-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;자기자본 회전율 ($x_5$)&quot;</span></span>
+<span id="cb26-33"><a href="pca.html#cb26-33" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb26-34"><a href="pca.html#cb26-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&quot;국내 증권회사의 주요 재무제표&quot;</span></span>
+<span id="cb26-35"><a href="pca.html#cb26-35" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:pca-matrix-factorization-data">Table 3.1: </span>국내 증권회사의 주요 재무제표</caption>
 <thead>
@@ -630,10 +703,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>이에 대하여 R 기본 <code>stats</code> 패키지 내의 <code>prcomp</code> 함수를 이용하여 주성분 분석을 수행할 수 있다.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="pca.html#cb27-1"></a>pca_fit &lt;-<span class="st"> </span><span class="kw">prcomp</span>(<span class="op">~</span><span class="st"> </span>roa <span class="op">+</span><span class="st"> </span>roe <span class="op">+</span><span class="st"> </span>bis <span class="op">+</span><span class="st"> </span>de_ratio <span class="op">+</span><span class="st"> </span>turnover,</span>
-<span id="cb27-2"><a href="pca.html#cb27-2"></a>                  <span class="dt">data =</span> train_df, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb27-3"><a href="pca.html#cb27-3"></a></span>
-<span id="cb27-4"><a href="pca.html#cb27-4"></a>pca_fit</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="pca.html#cb27-1" aria-hidden="true" tabindex="-1"></a>pca_fit <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(<span class="sc">~</span> roa <span class="sc">+</span> roe <span class="sc">+</span> bis <span class="sc">+</span> de_ratio <span class="sc">+</span> turnover,</span>
+<span id="cb27-2"><a href="pca.html#cb27-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> train_df, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-3"><a href="pca.html#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="pca.html#cb27-4" aria-hidden="true" tabindex="-1"></a>pca_fit</span></code></pre></div>
 <pre><code>## Standard deviations (1, .., p=5):
 ## [1] 1.6617648 1.2671437 0.7419994 0.2531070 0.1351235
 ## 
@@ -644,14 +717,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## bis       0.56970191 -0.16228156  0.2412221065 -0.637721889 -0.42921686
 ## de_ratio -0.55982770  0.19654293 -0.2565972887 -0.748094314  0.14992183
 ## turnover -0.44778451 -0.08636803  0.8881182665 -0.003668418 -0.05711464</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="pca.html#cb29-1"></a><span class="kw">summary</span>(pca_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="pca.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca_fit)</span></code></pre></div>
 <pre><code>## Importance of components:
 ##                           PC1    PC2    PC3     PC4     PC5
 ## Standard deviation     1.6618 1.2671 0.7420 0.25311 0.13512
 ## Proportion of Variance 0.5523 0.3211 0.1101 0.01281 0.00365
 ## Cumulative Proportion  0.5523 0.8734 0.9835 0.99635 1.00000</code></pre>
 <p>각 주성분에 대한 고유값을 스크리 도표로 나타내면 아래 Figure <a href="pca.html#fig:pca-screeplot">3.1</a></p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="pca.html#cb31-1"></a><span class="kw">screeplot</span>(pca_fit, <span class="dt">main =</span> <span class="ot">NULL</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="pca.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">screeplot</span>(pca_fit, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pca-screeplot"></span>
 <img src="data-mining-book_files/figure-html/pca-screeplot-1.png" alt="고유치 스크리 도표" width="672" />
 <p class="caption">
@@ -659,7 +732,7 @@ Figure 3.1: 고유치 스크리 도표
 </p>
 </div>
 </div>
-<div id="pca-ss" class="section level3">
+<div id="pca-ss" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> 변수의 변동과 제곱합</h3>
 <p>총 <span class="math inline">\(k\)</span>개의 독립변수가 있고 각 독립변수에 대하여 <span class="math inline">\(n\)</span>개의 관측치가 있다고 하자. 이 때, <span class="math inline">\(x_{ij}\)</span>를 <span class="math inline">\(j\)</span>번째 독립변수에 대한 <span class="math inline">\(i\)</span>번째 관측치라 하자. 즉, 관측데이터는 아래와 같은 행렬로 표현할 수 있다.</p>
 <p><span class="math display">\[\begin{equation*}
@@ -705,24 +778,24 @@ SS(\mathbf{x}_j) = (n - 1) s_j^2
 SS(\mathbf{X}) = \sum_{j = 1}^{k} SS(\mathbf{x}_j) = \sum_{j = 1}^{k} \sum_{i = 1}^{n} x_{ij}^2
 \end{equation}\]</span></p>
 <p>Table <a href="pca.html#tab:pca-matrix-factorization-data">3.1</a> 데이터에 대하여 각 변수의 제곱합을 계산해보자.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="pca.html#cb32-1"></a>train_df <span class="op">%&gt;%</span></span>
-<span id="cb32-2"><a href="pca.html#cb32-2"></a><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># mean-centering</span></span>
-<span id="cb32-3"><a href="pca.html#cb32-3"></a><span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="co"># sum of squares by variable</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="pca.html#cb32-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="pca.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">%&gt;%</span>  <span class="co"># mean-centering</span></span>
+<span id="cb32-3"><a href="pca.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="fu">sum</span>(x <span class="sc">^</span> <span class="dv">2</span>)) <span class="co"># sum of squares by variable</span></span></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##     roa   roe   bis de_ratio turnover
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1  21.9  355. 5591.  347817.     2.23</code></pre>
 <p>전체 데이터 행렬에 대한 제곱합은 아래와 같다.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="pca.html#cb34-1"></a>train_df <span class="op">%&gt;%</span></span>
-<span id="cb34-2"><a href="pca.html#cb34-2"></a><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># mean-centering</span></span>
-<span id="cb34-3"><a href="pca.html#cb34-3"></a><span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># sum of squares by variable</span></span>
-<span id="cb34-4"><a href="pca.html#cb34-4"></a><span class="st">  </span>{<span class="kw">sum</span>(.)}</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="pca.html#cb34-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="pca.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">%&gt;%</span>  <span class="co"># mean-centering</span></span>
+<span id="cb34-3"><a href="pca.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="fu">sum</span>(x <span class="sc">^</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span> <span class="co"># sum of squares by variable</span></span>
+<span id="cb34-4"><a href="pca.html#cb34-4" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">sum</span>(.)}</span></code></pre></div>
 <pre><code>## [1] 353786.6</code></pre>
 <p>위 결과에서 부채비율(<code>de_ratio</code>)의 변동이 총변동의 대부분을 차지하고, 자기자본 회전율(<code>turnover</code>)이 총변동에 미치는 영향은 미미한데, 이는 각 변수들이 측정하는 값의 분포(범위)가 크게 다르기 때문이다. 이러한 경우, 일반적으로 분산조정을 추가로 적용한 뒤 주성분분석을 수행한다.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="pca.html#cb36-1"></a>standardized_df &lt;-<span class="st"> </span>train_df <span class="op">%&gt;%</span></span>
-<span id="cb36-2"><a href="pca.html#cb36-2"></a><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># mean-centering</span></span>
-<span id="cb36-3"><a href="pca.html#cb36-3"></a><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x))  <span class="co"># scaling</span></span></code></pre></div>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="pca.html#cb37-1"></a>standardized_df</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="pca.html#cb36-1" aria-hidden="true" tabindex="-1"></a>standardized_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="pca.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">%&gt;%</span>  <span class="co"># mean-centering</span></span>
+<span id="cb36-3"><a href="pca.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.numeric, <span class="cf">function</span>(x) x <span class="sc">/</span> <span class="fu">sd</span>(x))  <span class="co"># scaling</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="pca.html#cb37-1" aria-hidden="true" tabindex="-1"></a>standardized_df</span></code></pre></div>
 <pre><code>## # A tibble: 18 x 6
 ##    company          roa     roe    bis de_ratio turnover
 ##    &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -745,21 +818,21 @@ SS(\mathbf{X}) = \sum_{j = 1}^{k} SS(\mathbf{x}_j) = \sum_{j = 1}^{k} \sum_{i = 
 ## 17 한화증권      0.225   0.661  -0.587  0.409    -0.861 
 ## 18 현대증권     -1.15   -0.390  -0.856  1.12      0.852</code></pre>
 <p>분산조정 이후의 각 변수의 제곱합은 모두 <span class="math inline">\(n - 1\)</span>이 되는데, 이는 각 변수의 표본분산이 모두 1로 조정되기 때문이다.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="pca.html#cb39-1"></a>standardized_df <span class="op">%&gt;%</span></span>
-<span id="cb39-2"><a href="pca.html#cb39-2"></a><span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="co"># sum of squares by variable</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="pca.html#cb39-1" aria-hidden="true" tabindex="-1"></a>standardized_df <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="pca.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="fu">sum</span>(x <span class="sc">^</span> <span class="dv">2</span>)) <span class="co"># sum of squares by variable</span></span></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##     roa   roe   bis de_ratio turnover
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1    17  17.0    17       17      17.</code></pre>
+## 1    17    17    17       17       17</code></pre>
 <p>따라서, 분산조정 이후 총변동은 아래와 같다.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="pca.html#cb41-1"></a>total_ss &lt;-<span class="st"> </span>standardized_df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb41-2"><a href="pca.html#cb41-2"></a><span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># sum of squares by variable</span></span>
-<span id="cb41-3"><a href="pca.html#cb41-3"></a><span class="st">  </span>{<span class="kw">sum</span>(.)}</span>
-<span id="cb41-4"><a href="pca.html#cb41-4"></a></span>
-<span id="cb41-5"><a href="pca.html#cb41-5"></a>total_ss</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="pca.html#cb41-1" aria-hidden="true" tabindex="-1"></a>total_ss <span class="ot">&lt;-</span> standardized_df <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="pca.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="fu">sum</span>(x <span class="sc">^</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span> <span class="co"># sum of squares by variable</span></span>
+<span id="cb41-3"><a href="pca.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">sum</span>(.)}</span>
+<span id="cb41-4"><a href="pca.html#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="pca.html#cb41-5" aria-hidden="true" tabindex="-1"></a>total_ss</span></code></pre></div>
 <pre><code>## [1] 85</code></pre>
 </div>
-<div id="pca-intro" class="section level3">
+<div id="pca-intro" class="section level3" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> 주성분의 이해 및 행렬의 분해</h3>
 <p>주성분분석은 원래의 변수들의 선형조합으로 서로 직교하는 새로운 변수들을 생성하는 것이라 할 수 있다. 이 때, 원래 변수의 수 <span class="math inline">\(k\)</span>보다 작은 <span class="math inline">\(A\)</span>개의 새로운 변수들이 원 데이터 행렬 <span class="math inline">\(\mathbf{X}\)</span> 총변동의 대부분을 설명한다고 하면, 해당 새로운 변수들만을 사용하여 여러 가지 분석을 대신할 수 있다는 것이 주성분분석의 개념이라 하겠다.</p>
 <p>새로운 변수 <span class="math inline">\(\mathbf{t}_1, \cdots, \mathbf{t}_A\)</span>들은 다음과 같은 형태로 표현된다.</p>
@@ -771,12 +844,12 @@ SS(\mathbf{X}) = \sum_{j = 1}^{k} SS(\mathbf{x}_j) = \sum_{j = 1}^{k} \sum_{i = 
 <p><span class="math display">\[
 t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.55982770 \times de\_ratio - 0.44778451 \times turnover
 \]</span></p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="pca.html#cb43-1"></a>new_df &lt;-<span class="st"> </span>standardized_df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb43-2"><a href="pca.html#cb43-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">t_1 =</span> <span class="fl">0.07608427</span> <span class="op">*</span><span class="st"> </span>roa <span class="op">-</span><span class="st"> </span><span class="fl">0.39463007</span> <span class="op">*</span><span class="st"> </span>roe </span>
-<span id="cb43-3"><a href="pca.html#cb43-3"></a>         <span class="op">+</span><span class="st"> </span><span class="fl">0.56970191</span> <span class="op">*</span><span class="st"> </span>bis <span class="op">-</span><span class="st"> </span><span class="fl">0.55982770</span> <span class="op">*</span><span class="st"> </span>de_ratio </span>
-<span id="cb43-4"><a href="pca.html#cb43-4"></a>         <span class="op">-</span><span class="st"> </span><span class="fl">0.44778451</span> <span class="op">*</span><span class="st"> </span>turnover) <span class="op">%&gt;%</span></span>
-<span id="cb43-5"><a href="pca.html#cb43-5"></a><span class="st">  </span><span class="kw">select</span>(company, t_<span class="dv">1</span>) <span class="co"># new variable</span></span></code></pre></div>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="pca.html#cb44-1"></a><span class="kw">print</span>(new_df)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="pca.html#cb43-1" aria-hidden="true" tabindex="-1"></a>new_df <span class="ot">&lt;-</span> standardized_df <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="pca.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">t_1 =</span> <span class="fl">0.07608427</span> <span class="sc">*</span> roa <span class="sc">-</span> <span class="fl">0.39463007</span> <span class="sc">*</span> roe </span>
+<span id="cb43-3"><a href="pca.html#cb43-3" aria-hidden="true" tabindex="-1"></a>         <span class="sc">+</span> <span class="fl">0.56970191</span> <span class="sc">*</span> bis <span class="sc">-</span> <span class="fl">0.55982770</span> <span class="sc">*</span> de_ratio </span>
+<span id="cb43-4"><a href="pca.html#cb43-4" aria-hidden="true" tabindex="-1"></a>         <span class="sc">-</span> <span class="fl">0.44778451</span> <span class="sc">*</span> turnover) <span class="sc">%&gt;%</span></span>
+<span id="cb43-5"><a href="pca.html#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(company, t_1) <span class="co"># new variable</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="pca.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(new_df)</span></code></pre></div>
 <pre><code>## # A tibble: 18 x 2
 ##    company         t_1
 ##    &lt;chr&gt;         &lt;dbl&gt;
@@ -799,16 +872,16 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 ## 17 한화증권     -0.421
 ## 18 현대증권     -1.43</code></pre>
 <p>이 때, 새로운 변수 <span class="math inline">\(\mathbf{t}_1\)</span>는 분산조정된 행렬 <span class="math inline">\(\mathbf{Z}\)</span>의 총변동의 약 55%를 설명한다.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="pca.html#cb46-1"></a>t1_ss &lt;-<span class="st"> </span>new_df <span class="op">%&gt;%</span></span>
-<span id="cb46-2"><a href="pca.html#cb46-2"></a><span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))</span>
-<span id="cb46-3"><a href="pca.html#cb46-3"></a></span>
-<span id="cb46-4"><a href="pca.html#cb46-4"></a>t1_ss <span class="op">/</span><span class="st"> </span>total_ss</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="pca.html#cb46-1" aria-hidden="true" tabindex="-1"></a>t1_ss <span class="ot">&lt;-</span> new_df <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="pca.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_if</span>(is.numeric, <span class="cf">function</span>(x) <span class="fu">sum</span>(x <span class="sc">^</span> <span class="dv">2</span>))</span>
+<span id="cb46-3"><a href="pca.html#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="pca.html#cb46-4" aria-hidden="true" tabindex="-1"></a>t1_ss <span class="sc">/</span> total_ss</span></code></pre></div>
 <pre><code>##         t_1
 ## 1 0.5522924</code></pre>
 <p>위 새로운 변수 <span class="math inline">\(\mathbf{t}_1\)</span>는 실제로 행렬 <span class="math inline">\(\mathbf{Z}\)</span>로부터 얻어지는 첫 번째 주성분이며, 행렬 <span class="math inline">\(\mathbf{Z}\)</span>의 변동에 가장 많이 기여하는 하나의 선형조합이다.</p>
 <p>행렬 <span class="math inline">\(\mathbf{Z}\)</span>(혹은 <span class="math inline">\(\mathbf{X}\)</span>)로부터 주성분을 얻는 방법은 여러 가지가 있으며, 아래에서 하나씩 설명하기로 한다.</p>
 </div>
-<div id="pca-svd" class="section level3">
+<div id="pca-svd" class="section level3" number="3.2.4">
 <h3><span class="header-section-number">3.2.4</span> 특이치분해 (Singular Value Decomposition)</h3>
 <p>분산조정된 <span class="math inline">\(\mathbf{Z}\)</span>에 대해 주성분분석을 수행한다고 가정하자. 분산조정을 하지 않고 주성분분석을 수행하는 경우 아래 행렬 <span class="math inline">\(\mathbf{Z}\)</span> 대신 <span class="math inline">\(\mathbf{X}\)</span>를 사용하면 된다.</p>
 <p>임의의 <span class="math inline">\((n \times k)\)</span> 행렬 <span class="math inline">\(\mathbf{Z}\)</span>는 다음과 같이 분해된다.</p>
@@ -822,20 +895,20 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 <li><span class="math inline">\(\mathbf{V}\)</span>: <span class="math inline">\((k \times r)\)</span> 직교 (orthogonal) 행렬</li>
 </ul>
 <p>아래와 같이, R 함수 <code>svd</code>를 이용하여 분해한 행렬들을 곱한 결과가 원래 행렬 <span class="math inline">\(\mathbf{Z}\)</span>와 동일함을 확인할 수 있다.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="pca.html#cb48-1"></a>Z &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(standardized_df[, <span class="dv">-1</span>])</span>
-<span id="cb48-2"><a href="pca.html#cb48-2"></a>svd_Z &lt;-<span class="st"> </span><span class="kw">svd</span>(Z)</span>
-<span id="cb48-3"><a href="pca.html#cb48-3"></a>Z_rec &lt;-<span class="st"> </span>svd_Z<span class="op">$</span>u <span class="op">%*%</span><span class="st"> </span><span class="kw">diag</span>(svd_Z<span class="op">$</span>d) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(svd_Z<span class="op">$</span>v)</span>
-<span id="cb48-4"><a href="pca.html#cb48-4"></a><span class="kw">all</span>(<span class="kw">near</span>(Z, Z_rec))</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="pca.html#cb48-1" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(standardized_df[, <span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb48-2"><a href="pca.html#cb48-2" aria-hidden="true" tabindex="-1"></a>svd_Z <span class="ot">&lt;-</span> <span class="fu">svd</span>(Z)</span>
+<span id="cb48-3"><a href="pca.html#cb48-3" aria-hidden="true" tabindex="-1"></a>Z_rec <span class="ot">&lt;-</span> svd_Z<span class="sc">$</span>u <span class="sc">%*%</span> <span class="fu">diag</span>(svd_Z<span class="sc">$</span>d) <span class="sc">%*%</span> <span class="fu">t</span>(svd_Z<span class="sc">$</span>v)</span>
+<span id="cb48-4"><a href="pca.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">near</span>(Z, Z_rec))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>이 때, 행렬 <span class="math inline">\(\mathbf{V}\)</span>의 각 열벡터가 각 주성분을 도출하는 선형식의 계수가 된다. 즉, 행렬 <span class="math inline">\(\mathbf{V}\)</span>의 첫 번째 열이 위에서 살펴본 새로운 변수 <span class="math inline">\(\mathbf{t}_1\)</span>를 도출하는 선형식의 계수이다.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="pca.html#cb50-1"></a>svd_Z<span class="op">$</span>v[, <span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="pca.html#cb50-1" aria-hidden="true" tabindex="-1"></a>svd_Z<span class="sc">$</span>v[, <span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1]  0.07608427 -0.39463007  0.56970191 -0.55982770 -0.44778451</code></pre>
 <p>특이치는 아래와 같이 추출된다.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="pca.html#cb52-1"></a>svd_Z<span class="op">$</span>d</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="pca.html#cb52-1" aria-hidden="true" tabindex="-1"></a>svd_Z<span class="sc">$</span>d</span></code></pre></div>
 <pre><code>## [1] 6.8516318 5.2245674 3.0593417 1.0435870 0.5571285</code></pre>
 <p>이 특이치들은 아래 분광분해에서 살펴볼 고유치의 제곱근이다.</p>
 </div>
-<div id="pca-spectral" class="section level3">
+<div id="pca-spectral" class="section level3" number="3.2.5">
 <h3><span class="header-section-number">3.2.5</span> 분광분해 (Spectral Decomposition)</h3>
 <p>임의의 정방행렬 <span class="math inline">\(\mathbf{A}\)</span>에 대하여</p>
 <p><span class="math display">\[\mathbf{A}\mathbf{v} = \lambda\mathbf{v} \]</span></p>
@@ -863,8 +936,8 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 \]</span></p>
 <p>즉, 분광분해를 통해 도출된 고유벡터들의 행렬 <span class="math inline">\(\mathbf{V}\)</span>의 각 열벡터가 각 주성분을 도출하는 선형식의 계수를 나타내며, 대각행렬 <span class="math inline">\(\mathbf{\Lambda}\)</span>의 각 대각원소값인 고유치는 특이치의 제곱임을 알 수 있다.</p>
 <p>R 함수 <code>eigen</code>을 이용하여 분광분해를 아래와 같이 수행하여 보자.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="pca.html#cb54-1"></a>eig_Z &lt;-<span class="st"> </span><span class="kw">eigen</span>(<span class="kw">t</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z, <span class="dt">symmetric =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb54-2"><a href="pca.html#cb54-2"></a>eig_Z</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="pca.html#cb54-1" aria-hidden="true" tabindex="-1"></a>eig_Z <span class="ot">&lt;-</span> <span class="fu">eigen</span>(<span class="fu">t</span>(Z) <span class="sc">%*%</span> Z, <span class="at">symmetric =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb54-2"><a href="pca.html#cb54-2" aria-hidden="true" tabindex="-1"></a>eig_Z</span></code></pre></div>
 <pre><code>## eigen() decomposition
 ## $values
 ## [1] 46.9448582 27.2961041  9.3595718  1.0890737  0.3103922
@@ -877,28 +950,28 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 ## [4,]  0.55982770  0.19654293 -0.2565972887 -0.748094314  0.14992183
 ## [5,]  0.44778451 -0.08636803  0.8881182665 -0.003668418 -0.05711464</code></pre>
 <p>결과에서 <code>values</code>는 행렬 <span class="math inline">\(\mathbf{Z}^\top \mathbf{Z}\)</span>의 고유치(eigenvalue)들이다. 이들이 앞 장의 특이치 분해에서 얻은 특이치들의 제곱임을 확인하여 보자.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="pca.html#cb56-1"></a><span class="kw">all</span>(<span class="kw">near</span>(eig_Z<span class="op">$</span>values, svd_Z<span class="op">$</span>d <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="pca.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">near</span>(eig_Z<span class="sc">$</span>values, svd_Z<span class="sc">$</span>d <span class="sc">^</span> <span class="dv">2</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>또한 분광분해 결과 <code>vectors</code>의 각 열은 행렬 <span class="math inline">\(\mathbf{Z}^\top \mathbf{Z}\)</span>의 고유벡터(eigenvector)들이다. 이들이 앞 장의 특이치 분해에서 얻은 계수 행렬과 동일함을 확인하여 보자.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="pca.html#cb58-1"></a><span class="kw">all</span>(<span class="kw">near</span>(eig_Z<span class="op">$</span>vectors, svd_Z<span class="op">$</span>v))</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="pca.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">near</span>(eig_Z<span class="sc">$</span>vectors, svd_Z<span class="sc">$</span>v))</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>이 경우 두 행렬이 동일하지 않게 나타날 수 있는데, 그 이유는 경우에 따라 어떤 주성분을 생성하는 선형계수 부호가 정반대인 형태로 얻어질 수 있기 때문이다. 주성분의 설명력은 선형계수의 부호에 영향을 받지 않는다.</p>
 <p>두 행렬의 계수 부호가 서로 동일하게 조정한 뒤 행렬을 비교해보자.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="pca.html#cb60-1"></a>sign_adjust &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>((eig_Z<span class="op">$</span>vectors <span class="op">*</span><span class="st"> </span>svd_Z<span class="op">$</span>v) <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>)</span>
-<span id="cb60-2"><a href="pca.html#cb60-2"></a><span class="kw">all</span>(<span class="kw">near</span>(eig_Z<span class="op">$</span>vectors <span class="op">*</span><span class="st"> </span>sign_adjust, svd_Z<span class="op">$</span>v))</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="pca.html#cb60-1" aria-hidden="true" tabindex="-1"></a>sign_adjust <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> ((eig_Z<span class="sc">$</span>vectors <span class="sc">*</span> svd_Z<span class="sc">$</span>v) <span class="sc">&lt;</span> <span class="dv">0</span>)</span>
+<span id="cb60-2"><a href="pca.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">near</span>(eig_Z<span class="sc">$</span>vectors <span class="sc">*</span> sign_adjust, svd_Z<span class="sc">$</span>v))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>위 각 고유값들을 고유값들의 총합으로 나누면, 각 고유벡터에 해당하는 주성분이 설명하는 총변동의 비율을 얻을 수 있다.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="pca.html#cb62-1"></a>eig_Z<span class="op">$</span>values <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(eig_Z<span class="op">$</span>values)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="pca.html#cb62-1" aria-hidden="true" tabindex="-1"></a>eig_Z<span class="sc">$</span>values <span class="sc">/</span> <span class="fu">sum</span>(eig_Z<span class="sc">$</span>values)</span></code></pre></div>
 <pre><code>## [1] 0.552292449 0.321130636 0.110112610 0.012812632 0.003651673</code></pre>
 <p>평균 및 분산 조정된 <span class="math inline">\(\mathbf{Z}\)</span>의 분산-공분산 행렬은 아래와 같다.</p>
 <p><span class="math display">\[\frac{1}{n - 1} \mathbf{Z}^\top \mathbf{Z}\]</span></p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="pca.html#cb64-1"></a><span class="kw">all</span>(<span class="kw">near</span>(<span class="kw">cov</span>(Z), <span class="kw">t</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z <span class="op">/</span><span class="st"> </span>(<span class="kw">nrow</span>(Z) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="pca.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">near</span>(<span class="fu">cov</span>(Z), <span class="fu">t</span>(Z) <span class="sc">%*%</span> Z <span class="sc">/</span> (<span class="fu">nrow</span>(Z) <span class="sc">-</span> <span class="dv">1</span>)))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>여기에 위에서 구한 분광분해를 대입하면,</p>
 <p><span class="math display">\[\frac{1}{n - 1} \mathbf{Z}^\top \mathbf{Z} = \frac{1}{n - 1} \mathbf{V} \mathbf{\Lambda} \mathbf{V}^\top =  \mathbf{V} \left( \frac{1}{n - 1} \mathbf{\Lambda} \right) \mathbf{V}^\top\]</span></p>
 <p>따라서, <span class="math inline">\(\mathbf{Z}\)</span>의 분산-공분산 행렬에 대한 분광분해 결과, 고유벡터 행렬 <span class="math inline">\(\mathbf{V}\)</span>는 앞에서 구한 <span class="math inline">\(\mathbf{Z}^\top \mathbf{Z}\)</span>의 고유벡터 행렬들과 동일하며, 고유값은 앞에서 구한 <span class="math inline">\(\mathbf{Z}^\top \mathbf{Z}\)</span>의 고유값을 <span class="math inline">\((n - 1)\)</span>으로 나눈 값이다.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="pca.html#cb66-1"></a>eig_cov_Z &lt;-<span class="st"> </span><span class="kw">eigen</span>(<span class="kw">cov</span>(Z))</span>
-<span id="cb66-2"><a href="pca.html#cb66-2"></a>eig_cov_Z</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="pca.html#cb66-1" aria-hidden="true" tabindex="-1"></a>eig_cov_Z <span class="ot">&lt;-</span> <span class="fu">eigen</span>(<span class="fu">cov</span>(Z))</span>
+<span id="cb66-2"><a href="pca.html#cb66-2" aria-hidden="true" tabindex="-1"></a>eig_cov_Z</span></code></pre></div>
 <pre><code>## eigen() decomposition
 ## $values
 ## [1] 2.76146225 1.60565318 0.55056305 0.06406316 0.01825836
@@ -910,11 +983,11 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 ## [3,] -0.56970191  0.16228156  0.2412221065 -0.637721889 -0.42921686
 ## [4,]  0.55982770 -0.19654293 -0.2565972887 -0.748094314  0.14992183
 ## [5,]  0.44778451  0.08636803  0.8881182665 -0.003668418 -0.05711464</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="pca.html#cb68-1"></a><span class="kw">all</span>(<span class="kw">near</span>(eig_cov_Z<span class="op">$</span>values, eig_Z<span class="op">$</span>values <span class="op">/</span><span class="st"> </span>(<span class="kw">nrow</span>(Z) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="pca.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">near</span>(eig_cov_Z<span class="sc">$</span>values, eig_Z<span class="sc">$</span>values <span class="sc">/</span> (<span class="fu">nrow</span>(Z) <span class="sc">-</span> <span class="dv">1</span>)))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>또한 이 결과는 평균 및 분산조정 이전 원 데이터의 상관행렬(correlation matrix)에 대해 분광분해를 수행한 결과와 동일하다.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="pca.html#cb70-1"></a>eig_cor_raw &lt;-<span class="st"> </span><span class="kw">eigen</span>(<span class="kw">cor</span>(train_df[, <span class="dv">-1</span>]))</span>
-<span id="cb70-2"><a href="pca.html#cb70-2"></a>eig_cor_raw</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="pca.html#cb70-1" aria-hidden="true" tabindex="-1"></a>eig_cor_raw <span class="ot">&lt;-</span> <span class="fu">eigen</span>(<span class="fu">cor</span>(train_df[, <span class="sc">-</span><span class="dv">1</span>]))</span>
+<span id="cb70-2"><a href="pca.html#cb70-2" aria-hidden="true" tabindex="-1"></a>eig_cor_raw</span></code></pre></div>
 <pre><code>## eigen() decomposition
 ## $values
 ## [1] 2.76146225 1.60565318 0.55056305 0.06406316 0.01825836
@@ -926,20 +999,20 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 ## [3,] -0.56970191  0.16228156  0.2412221065 -0.637721889 -0.42921686
 ## [4,]  0.55982770 -0.19654293 -0.2565972887 -0.748094314  0.14992183
 ## [5,]  0.44778451  0.08636803  0.8881182665 -0.003668418 -0.05711464</code></pre>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="pca.html#cb72-1"></a><span class="kw">all</span>(<span class="kw">near</span>(eig_cov_Z<span class="op">$</span>values, eig_cor_raw<span class="op">$</span>values))</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="pca.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">near</span>(eig_cov_Z<span class="sc">$</span>values, eig_cor_raw<span class="sc">$</span>values))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="pca.html#cb74-1"></a><span class="kw">all</span>(<span class="kw">near</span>(eig_cov_Z<span class="op">$</span>vectors, eig_cor_raw<span class="op">$</span>vectors))</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="pca.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">near</span>(eig_cov_Z<span class="sc">$</span>vectors, eig_cor_raw<span class="sc">$</span>vectors))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
-<div id="pca-nipals" class="section level3">
+<div id="pca-nipals" class="section level3" number="3.2.6">
 <h3><span class="header-section-number">3.2.6</span> NIPALS 알고리즘</h3>
 <p>NIPALS(Nonlinear Iterative Paritial Least Squares) 알고리즘은 반복적(iterative) 알고리즘을 이용하여 변동 기여율이 가장 큰 주성분부터 가장 작은 주성분까지 순차적으로 고유벡터와 주성분 스코어를 구하는 방법이다.</p>
 <p>우선, 특이치 분해에서 사용한 식을 단순화하여, 분산조정된 행렬 <span class="math inline">\(\mathbf{Z}\)</span>가 아래와 같이 주성분 스코어 행렬 <span class="math inline">\(\mathbf{T}\)</span>와 고유벡터 행렬 <span class="math inline">\(\mathbf{V}\)</span>로 분해된다고 하자. (분산조정 대신 평균조정만을 원할 경우 <span class="math inline">\(\mathbf{Z}\)</span> 대신 <span class="math inline">\(\mathbf{X}\)</span>를 사용)</p>
 <p><span class="math display">\[ \mathbf{Z} = \mathbf{U} \mathbf{D} \mathbf{V}^\top = \mathbf{T} \mathbf{V}^\top \]</span></p>
 <p>즉, 주성분 스코어 <span class="math inline">\(\mathbf{T}\)</span>는 아래와 같다.</p>
 <p><span class="math display">\[ \mathbf{T} = \mathbf{Z} \mathbf{V} \]</span></p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="pca.html#cb76-1"></a>T_mat &lt;-<span class="st"> </span>Z <span class="op">%*%</span><span class="st"> </span>svd_Z<span class="op">$</span>v</span>
-<span id="cb76-2"><a href="pca.html#cb76-2"></a>T_mat</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="pca.html#cb76-1" aria-hidden="true" tabindex="-1"></a>T_mat <span class="ot">&lt;-</span> Z <span class="sc">%*%</span> svd_Z<span class="sc">$</span>v</span>
+<span id="cb76-2"><a href="pca.html#cb76-2" aria-hidden="true" tabindex="-1"></a>T_mat</span></code></pre></div>
 <pre><code>##             [,1]       [,2]        [,3]        [,4]         [,5]
 ##  [1,] -1.4870243  0.6066594 -0.63361774 -0.29625002  0.020293731
 ##  [2,] -0.2063797 -0.0804627 -0.04965017  0.26323513  0.063581473
@@ -972,77 +1045,77 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 <li><strong>[단계 7]</strong> <span class="math inline">\(h \leftarrow h + 1\)</span>로 업데이트하고, [단계 1]로 돌아간다. [단계 1] - [단계 7]의 과정을 <span class="math inline">\(\mathbf{Z}\)</span>의 rank 수만큼의 주성분을 얻을 때까지 반복한다.</li>
 </ul>
 <p>위 반복 알고리즘을 수행하는 함수를 아래와 같이 구성해보자. 아래 함수에서 입력변수 <code>X</code>는 데이터 행렬으로, 평균조정된 행렬 <span class="math inline">\(\mathbf{X}\)</span>나 분산조정된 <span class="math inline">\(\mathbf{Z}\)</span> 모두 사용 가능하다. 입력변수 <code>r</code>은 추출하고자 하는 주성분의 개수이다.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="pca.html#cb78-1"></a>nipals_pca &lt;-<span class="st"> </span><span class="cf">function</span>(X, <span class="dt">r =</span> <span class="ot">NULL</span>) {</span>
-<span id="cb78-2"><a href="pca.html#cb78-2"></a>  <span class="cf">if</span> (<span class="kw">is_empty</span>(r) <span class="op">||</span><span class="st"> </span>(r <span class="op">&gt;</span><span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X)))) {</span>
-<span id="cb78-3"><a href="pca.html#cb78-3"></a>    r &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">dim</span>(X))</span>
-<span id="cb78-4"><a href="pca.html#cb78-4"></a>  }</span>
-<span id="cb78-5"><a href="pca.html#cb78-5"></a>  </span>
-<span id="cb78-6"><a href="pca.html#cb78-6"></a>  Th &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">nrow</span>(X), <span class="dt">ncol =</span> r)</span>
-<span id="cb78-7"><a href="pca.html#cb78-7"></a>  Vh &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="kw">ncol</span>(X), <span class="dt">ncol =</span> r)</span>
-<span id="cb78-8"><a href="pca.html#cb78-8"></a>  </span>
-<span id="cb78-9"><a href="pca.html#cb78-9"></a>  <span class="cf">for</span> (h <span class="cf">in</span> <span class="kw">seq_len</span>(r)) {</span>
-<span id="cb78-10"><a href="pca.html#cb78-10"></a>    <span class="co"># 단계 1</span></span>
-<span id="cb78-11"><a href="pca.html#cb78-11"></a>    j &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">ncol</span>(X), <span class="dv">1</span>)</span>
-<span id="cb78-12"><a href="pca.html#cb78-12"></a>    Th[, h] &lt;-<span class="st"> </span>X[, j]</span>
-<span id="cb78-13"><a href="pca.html#cb78-13"></a>    </span>
-<span id="cb78-14"><a href="pca.html#cb78-14"></a>    <span class="cf">while</span> (<span class="ot">TRUE</span>) {</span>
-<span id="cb78-15"><a href="pca.html#cb78-15"></a>      <span class="co"># 단계 2</span></span>
-<span id="cb78-16"><a href="pca.html#cb78-16"></a>      Vh[, h] &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">t</span>(Th[, h]) <span class="op">%*%</span><span class="st"> </span>X <span class="op">/</span><span class="st"> </span>(<span class="kw">norm</span>(Th[, h], <span class="st">&quot;2&quot;</span>) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))</span>
-<span id="cb78-17"><a href="pca.html#cb78-17"></a>      </span>
-<span id="cb78-18"><a href="pca.html#cb78-18"></a>      <span class="co"># 단계 3</span></span>
-<span id="cb78-19"><a href="pca.html#cb78-19"></a>      Vh[, h] &lt;-<span class="st"> </span>Vh[, h] <span class="op">/</span><span class="st"> </span><span class="kw">norm</span>(Vh[, h], <span class="st">&quot;2&quot;</span>)</span>
-<span id="cb78-20"><a href="pca.html#cb78-20"></a>      </span>
-<span id="cb78-21"><a href="pca.html#cb78-21"></a>      <span class="co"># 단계 4</span></span>
-<span id="cb78-22"><a href="pca.html#cb78-22"></a>      th &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>Vh[, h]</span>
-<span id="cb78-23"><a href="pca.html#cb78-23"></a>      </span>
-<span id="cb78-24"><a href="pca.html#cb78-24"></a>      <span class="co"># 단계 5</span></span>
-<span id="cb78-25"><a href="pca.html#cb78-25"></a>      <span class="cf">if</span> (<span class="kw">all</span>(<span class="kw">near</span>(Th[, h], th))) <span class="cf">break</span></span>
-<span id="cb78-26"><a href="pca.html#cb78-26"></a>      Th[, h] &lt;-<span class="st"> </span>th</span>
-<span id="cb78-27"><a href="pca.html#cb78-27"></a>    }</span>
-<span id="cb78-28"><a href="pca.html#cb78-28"></a>    </span>
-<span id="cb78-29"><a href="pca.html#cb78-29"></a>    <span class="co">#단계 6</span></span>
-<span id="cb78-30"><a href="pca.html#cb78-30"></a>    X &lt;-<span class="st"> </span>X <span class="op">-</span><span class="st"> </span>Th[, h] <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(Vh[, h])</span>
-<span id="cb78-31"><a href="pca.html#cb78-31"></a>  }</span>
-<span id="cb78-32"><a href="pca.html#cb78-32"></a>  </span>
-<span id="cb78-33"><a href="pca.html#cb78-33"></a>  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">T =</span> Th, <span class="dt">V =</span> Vh))</span>
-<span id="cb78-34"><a href="pca.html#cb78-34"></a>}</span>
-<span id="cb78-35"><a href="pca.html#cb78-35"></a></span>
-<span id="cb78-36"><a href="pca.html#cb78-36"></a>nipals_Z &lt;-<span class="st"> </span><span class="kw">nipals_pca</span>(Z)</span>
-<span id="cb78-37"><a href="pca.html#cb78-37"></a>nipals_Z</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="pca.html#cb78-1" aria-hidden="true" tabindex="-1"></a>nipals_pca <span class="ot">&lt;-</span> <span class="cf">function</span>(X, <span class="at">r =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb78-2"><a href="pca.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is_empty</span>(r) <span class="sc">||</span> (r <span class="sc">&gt;</span> <span class="fu">min</span>(<span class="fu">dim</span>(X)))) {</span>
+<span id="cb78-3"><a href="pca.html#cb78-3" aria-hidden="true" tabindex="-1"></a>    r <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">dim</span>(X))</span>
+<span id="cb78-4"><a href="pca.html#cb78-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb78-5"><a href="pca.html#cb78-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb78-6"><a href="pca.html#cb78-6" aria-hidden="true" tabindex="-1"></a>  Th <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">nrow</span>(X), <span class="at">ncol =</span> r)</span>
+<span id="cb78-7"><a href="pca.html#cb78-7" aria-hidden="true" tabindex="-1"></a>  Vh <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">ncol</span>(X), <span class="at">ncol =</span> r)</span>
+<span id="cb78-8"><a href="pca.html#cb78-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb78-9"><a href="pca.html#cb78-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (h <span class="cf">in</span> <span class="fu">seq_len</span>(r)) {</span>
+<span id="cb78-10"><a href="pca.html#cb78-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 단계 1</span></span>
+<span id="cb78-11"><a href="pca.html#cb78-11" aria-hidden="true" tabindex="-1"></a>    j <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">ncol</span>(X), <span class="dv">1</span>)</span>
+<span id="cb78-12"><a href="pca.html#cb78-12" aria-hidden="true" tabindex="-1"></a>    Th[, h] <span class="ot">&lt;-</span> X[, j]</span>
+<span id="cb78-13"><a href="pca.html#cb78-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb78-14"><a href="pca.html#cb78-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (<span class="cn">TRUE</span>) {</span>
+<span id="cb78-15"><a href="pca.html#cb78-15" aria-hidden="true" tabindex="-1"></a>      <span class="co"># 단계 2</span></span>
+<span id="cb78-16"><a href="pca.html#cb78-16" aria-hidden="true" tabindex="-1"></a>      Vh[, h] <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">t</span>(Th[, h]) <span class="sc">%*%</span> X <span class="sc">/</span> (<span class="fu">norm</span>(Th[, h], <span class="st">&quot;2&quot;</span>) <span class="sc">^</span> <span class="dv">2</span>))</span>
+<span id="cb78-17"><a href="pca.html#cb78-17" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb78-18"><a href="pca.html#cb78-18" aria-hidden="true" tabindex="-1"></a>      <span class="co"># 단계 3</span></span>
+<span id="cb78-19"><a href="pca.html#cb78-19" aria-hidden="true" tabindex="-1"></a>      Vh[, h] <span class="ot">&lt;-</span> Vh[, h] <span class="sc">/</span> <span class="fu">norm</span>(Vh[, h], <span class="st">&quot;2&quot;</span>)</span>
+<span id="cb78-20"><a href="pca.html#cb78-20" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb78-21"><a href="pca.html#cb78-21" aria-hidden="true" tabindex="-1"></a>      <span class="co"># 단계 4</span></span>
+<span id="cb78-22"><a href="pca.html#cb78-22" aria-hidden="true" tabindex="-1"></a>      th <span class="ot">&lt;-</span> X <span class="sc">%*%</span> Vh[, h]</span>
+<span id="cb78-23"><a href="pca.html#cb78-23" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb78-24"><a href="pca.html#cb78-24" aria-hidden="true" tabindex="-1"></a>      <span class="co"># 단계 5</span></span>
+<span id="cb78-25"><a href="pca.html#cb78-25" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">all</span>(<span class="fu">near</span>(Th[, h], th))) <span class="cf">break</span></span>
+<span id="cb78-26"><a href="pca.html#cb78-26" aria-hidden="true" tabindex="-1"></a>      Th[, h] <span class="ot">&lt;-</span> th</span>
+<span id="cb78-27"><a href="pca.html#cb78-27" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb78-28"><a href="pca.html#cb78-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb78-29"><a href="pca.html#cb78-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">#단계 6</span></span>
+<span id="cb78-30"><a href="pca.html#cb78-30" aria-hidden="true" tabindex="-1"></a>    X <span class="ot">&lt;-</span> X <span class="sc">-</span> Th[, h] <span class="sc">%*%</span> <span class="fu">t</span>(Vh[, h])</span>
+<span id="cb78-31"><a href="pca.html#cb78-31" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb78-32"><a href="pca.html#cb78-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb78-33"><a href="pca.html#cb78-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">T =</span> Th, <span class="at">V =</span> Vh))</span>
+<span id="cb78-34"><a href="pca.html#cb78-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb78-35"><a href="pca.html#cb78-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-36"><a href="pca.html#cb78-36" aria-hidden="true" tabindex="-1"></a>nipals_Z <span class="ot">&lt;-</span> <span class="fu">nipals_pca</span>(Z)</span>
+<span id="cb78-37"><a href="pca.html#cb78-37" aria-hidden="true" tabindex="-1"></a>nipals_Z</span></code></pre></div>
 <pre><code>## $T
-##             [,1]       [,2]        [,3]        [,4]        [,5]
-##  [1,]  1.4870243 -0.6066594 -0.63361774  0.29625002  0.02029373
-##  [2,]  0.2063797  0.0804627 -0.04965018 -0.26323513  0.06358148
-##  [3,] -0.1968538 -0.9704605 -0.39507856 -0.27123746  0.10335175
-##  [4,]  2.3542885  3.5056480  0.16252734 -0.02524925 -0.24992097
-##  [5,]  0.8953707 -1.4552900  1.36265905 -0.20161775 -0.05551716
-##  [6,]  0.3682082  0.5976313  0.65857722 -0.27901317  0.06045825
-##  [7,]  0.9354306  1.4144519 -0.82574637 -0.07358976  0.09596091
-##  [8,] -2.4129727  0.6785064  0.92207607  0.36161576 -0.06259353
-##  [9,] -2.6991862  0.7596591 -0.45091077  0.21030379  0.16864512
-## [10,]  0.4050098 -0.2800099 -0.92835441 -0.13993488  0.00181112
-## [11,] -1.3958199 -1.1353513 -0.09819178 -0.34335127 -0.09498679
-## [12,]  1.5381192 -1.1576616 -0.07467334  0.29404424  0.05243094
-## [13,] -0.3217681  0.2378023  1.10180230 -0.28507243  0.03066677
-## [14,]  2.0306806 -0.9646122  0.20906176  0.39639757 -0.08577858
-## [15,] -3.0389460 -0.8841645 -0.77478770  0.04079852 -0.34968846
-## [16,] -2.0064062  1.2831337  0.64388897  0.22077706  0.18836687
-## [17,]  0.4211779  0.2987099 -1.20644766 -0.11766274  0.06825099
-## [18,]  1.4302634 -1.4017959  0.37686579  0.17977686  0.04466756
+##             [,1]       [,2]        [,3]        [,4]         [,5]
+##  [1,]  1.4870243 -0.6066594 -0.63361774  0.29625002 -0.020293733
+##  [2,]  0.2063797  0.0804627 -0.04965018 -0.26323513 -0.063581471
+##  [3,] -0.1968538 -0.9704605 -0.39507856 -0.27123747 -0.103351743
+##  [4,]  2.3542884  3.5056480  0.16252733 -0.02524923  0.249920974
+##  [5,]  0.8953707 -1.4552899  1.36265906 -0.20161775  0.055517169
+##  [6,]  0.3682082  0.5976313  0.65857722 -0.27901317 -0.060458246
+##  [7,]  0.9354306  1.4144519 -0.82574638 -0.07358977 -0.095960907
+##  [8,] -2.4129728  0.6785064  0.92207607  0.36161577  0.062593518
+##  [9,] -2.6991862  0.7596591 -0.45091077  0.21030377 -0.168645129
+## [10,]  0.4050098 -0.2800099 -0.92835441 -0.13993488 -0.001811117
+## [11,] -1.3958199 -1.1353513 -0.09819177 -0.34335126  0.094986799
+## [12,]  1.5381192 -1.1576616 -0.07467333  0.29404424 -0.052430948
+## [13,] -0.3217681  0.2378023  1.10180230 -0.28507243 -0.030666760
+## [14,]  2.0306806 -0.9646122  0.20906176  0.39639758  0.085778567
+## [15,] -3.0389460 -0.8841645 -0.77478769  0.04079855  0.349688462
+## [16,] -2.0064063  1.2831337  0.64388897  0.22077704 -0.188366873
+## [17,]  0.4211779  0.2987099 -1.20644766 -0.11766274 -0.068250990
+## [18,]  1.4302634 -1.4017959  0.37686580  0.17977686 -0.044667569
 ## 
 ## $V
 ##             [,1]        [,2]          [,3]         [,4]        [,5]
-## [1,] -0.07608427  0.77966993  0.0008916027  0.140755413  0.60540325
-## [2,]  0.39463007  0.56541217 -0.2953216458 -0.117644174 -0.65078502
-## [3,] -0.56970191  0.16228157  0.2412221083  0.637721879 -0.42921690
-## [4,]  0.55982770 -0.19654294 -0.2565972891  0.748094319  0.14992178
-## [5,]  0.44778451  0.08636802  0.8881182671  0.003668408 -0.05711464</code></pre>
+## [1,] -0.07608427  0.77966993  0.0008915907  0.140755398 -0.60540326
+## [2,]  0.39463007  0.56541218 -0.2953216544 -0.117644158  0.65078503
+## [3,] -0.56970191  0.16228156  0.2412221057  0.637721890  0.42921684
+## [4,]  0.55982770 -0.19654293 -0.2565972862  0.748094314 -0.14992185
+## [5,]  0.44778451  0.08636803  0.8881182657  0.003668411  0.05711464</code></pre>
 <p>위 분해된 행렬의 곱이 원 데이터 행렬 <span class="math inline">\(\mathbf{Z}\)</span>과 일치하는지 확인해보자.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="pca.html#cb80-1"></a><span class="kw">all</span>(<span class="kw">near</span>(Z, nipals_Z<span class="op">$</span>T <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(nipals_Z<span class="op">$</span>V)))</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="pca.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">near</span>(Z, nipals_Z<span class="sc">$</span>T <span class="sc">%*%</span> <span class="fu">t</span>(nipals_Z<span class="sc">$</span>V)))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>R 패키지 <code>nipals</code>내의 함수 <code>nipals</code>가 이 장에서 설명한 NIPALS 알고리즘에 기반한 주성분 분석을 아래와 같이 제공한다.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="pca.html#cb82-1"></a><span class="kw">library</span>(nipals)</span>
-<span id="cb82-2"><a href="pca.html#cb82-2"></a><span class="kw">nipals</span>(Z, <span class="dt">center =</span> <span class="ot">FALSE</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="pca.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nipals)</span>
+<span id="cb82-2"><a href="pca.html#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nipals</span>(Z, <span class="at">center =</span> <span class="cn">FALSE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## $eig
 ## [1] 6.8516317 5.2245674 3.0593417 1.0435869 0.5571285
 ## 
@@ -1093,8 +1166,8 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 ## $scale
 ## [1] NA</code></pre>
 <p>평균 및 분산조정 이전의 원래 데이터를 입력하고, 파라미터 <code>center</code>(평균조정) 및 <code>scale</code>(분산조정)의 값을 모두 <code>TRUE</code>로 설정하면 동일한 결과를 얻을 수 있다.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="pca.html#cb84-1"></a><span class="kw">library</span>(nipals)</span>
-<span id="cb84-2"><a href="pca.html#cb84-2"></a><span class="kw">nipals</span>(train_df[, <span class="dv">-1</span>], <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="pca.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nipals)</span>
+<span id="cb84-2"><a href="pca.html#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nipals</span>(train_df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## $eig
 ## [1] 6.8516317 5.2245674 3.0593417 1.0435869 0.5571285
 ## 
@@ -1148,7 +1221,7 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 ##   1.1356949   4.5692430  18.1343662 143.0378269   0.3618132</code></pre>
 </div>
 </div>
-<div id="pca-regression" class="section level2">
+<div id="pca-regression" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> 주성분 회귀분석</h2>
 <p><a href="regression.html#multiple-linear-regression">2.2</a> 장에서 살펴본 다중회귀모형의 식 <a href="regression.html#eq:multiple-linear-regression-matrix">(2.2)</a>을 아래에 다시 살펴보자.</p>
 <p><span class="math display" id="eq:pca-multiple-linear-regression-matrix">\[\begin{equation}
@@ -1163,24 +1236,24 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 \mathbf{y} = \mathbf{T}_A \mathbf{q}_A + \mathbf{f} \tag{3.6}
 \end{equation}\]</span></p>
 <p>위 모형은 다중회귀모형으로 볼 수 있으므로, 다중회귀모형에 대한 모든 이론이 적용될 수 있다. 또한 위 모형에서 각 주성분 스코어 벡터 <span class="math inline">\(\mathbf{t}_1, \cdots, \mathbf{t}_A\)</span>는 서로 선형 독립적(linearly independent)이므로, 회귀성 검정이 용이한 측면이 있다.</p>
-<div id="pcr-basic-script" class="section level3">
+<div id="pcr-basic-script" class="section level3" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> 기본 R 스트립트</h3>
 <p>3개의 독립변수와 1개의 종속변수(<code>y</code>)를 관측한 데이터가 아래와 같다고 하자.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="pca.html#cb86-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb86-2"><a href="pca.html#cb86-2"></a>  <span class="op">~</span>x1, <span class="op">~</span>x2, <span class="op">~</span>x3, <span class="op">~</span>y,</span>
-<span id="cb86-3"><a href="pca.html#cb86-3"></a>  <span class="dv">-3</span>, <span class="dv">-3</span>, <span class="dv">5</span>, <span class="dv">-30</span>,</span>
-<span id="cb86-4"><a href="pca.html#cb86-4"></a>  <span class="dv">-2</span>, <span class="dv">-3</span>, <span class="dv">7</span>, <span class="dv">-20</span>,</span>
-<span id="cb86-5"><a href="pca.html#cb86-5"></a>  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">0</span>,</span>
-<span id="cb86-6"><a href="pca.html#cb86-6"></a>  <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">5</span>,</span>
-<span id="cb86-7"><a href="pca.html#cb86-7"></a>  <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">-5</span>, <span class="dv">10</span>,</span>
-<span id="cb86-8"><a href="pca.html#cb86-8"></a>  <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">-11</span>, <span class="dv">35</span></span>
-<span id="cb86-9"><a href="pca.html#cb86-9"></a>)</span>
-<span id="cb86-10"><a href="pca.html#cb86-10"></a></span>
-<span id="cb86-11"><a href="pca.html#cb86-11"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb86-12"><a href="pca.html#cb86-12"></a>  train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb86-13"><a href="pca.html#cb86-13"></a>  <span class="dt">align =</span> <span class="kw">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="kw">ncol</span>(train_df)),</span>
-<span id="cb86-14"><a href="pca.html#cb86-14"></a>  <span class="dt">caption =</span> <span class="st">&quot;주성분 회귀분석 예제 데이터&quot;</span></span>
-<span id="cb86-15"><a href="pca.html#cb86-15"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="pca.html#cb86-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb86-2"><a href="pca.html#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>x1, <span class="sc">~</span>x2, <span class="sc">~</span>x3, <span class="sc">~</span>y,</span>
+<span id="cb86-3"><a href="pca.html#cb86-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>, <span class="sc">-</span><span class="dv">30</span>,</span>
+<span id="cb86-4"><a href="pca.html#cb86-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">7</span>, <span class="sc">-</span><span class="dv">20</span>,</span>
+<span id="cb86-5"><a href="pca.html#cb86-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">0</span>,</span>
+<span id="cb86-6"><a href="pca.html#cb86-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">5</span>,</span>
+<span id="cb86-7"><a href="pca.html#cb86-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">5</span>, <span class="dv">10</span>,</span>
+<span id="cb86-8"><a href="pca.html#cb86-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">11</span>, <span class="dv">35</span></span>
+<span id="cb86-9"><a href="pca.html#cb86-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb86-10"><a href="pca.html#cb86-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-11"><a href="pca.html#cb86-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb86-12"><a href="pca.html#cb86-12" aria-hidden="true" tabindex="-1"></a>  train_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb86-13"><a href="pca.html#cb86-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="fu">ncol</span>(train_df)),</span>
+<span id="cb86-14"><a href="pca.html#cb86-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&quot;주성분 회귀분석 예제 데이터&quot;</span></span>
+<span id="cb86-15"><a href="pca.html#cb86-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:pcr-example-data">Table 3.2: </span>주성분 회귀분석 예제 데이터</caption>
 <thead>
@@ -1231,8 +1304,8 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 </tbody>
 </table>
 <p>3개의 독립변수로 이루어진 데이터에서 2개의 주성분만을 추출하여 회귀모형을 추정하여 보자.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="pca.html#cb87-1"></a>pcr_fit &lt;-<span class="st"> </span>pls<span class="op">::</span><span class="kw">pcr</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3, <span class="dt">data =</span> train_df, <span class="dt">ncomp =</span> <span class="dv">2</span>)</span>
-<span id="cb87-2"><a href="pca.html#cb87-2"></a><span class="kw">coef</span>(pcr_fit, <span class="dt">intercept =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="pca.html#cb87-1" aria-hidden="true" tabindex="-1"></a>pcr_fit <span class="ot">&lt;-</span> pls<span class="sc">::</span><span class="fu">pcr</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> train_df, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
+<span id="cb87-2"><a href="pca.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(pcr_fit, <span class="at">intercept =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## , , 2 comps
 ## 
 ##                     y
@@ -1241,7 +1314,7 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 ## x2           2.721789
 ## x3          -1.737825</code></pre>
 <p>위 회귀계수들은 주성분을 이용하여 추정한 회귀 모형을 원래 독립변수를 이용한 회귀식(평균조정 이전)으로 다시 선형변환한 결과이다. 이에 대해서는 다음 절에서 좀 더 자세히 살펴보도록 하자.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="pca.html#cb89-1"></a><span class="kw">summary</span>(pcr_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="pca.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pcr_fit)</span></code></pre></div>
 <pre><code>## Data:    X dimension: 6 3 
 ##  Y dimension: 6 1
 ## Fit method: svdpc
@@ -1252,12 +1325,12 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 ## y    87.94    91.31</code></pre>
 <p>위 요약표는 하나의 주성분과 두 개의 주성분을 이용하였을 때 추정된 회귀모형들이 종속변수의 총 변량을 각각 87.9415591%와 91.3101613% 만큼을 설명함을 알려준다.</p>
 </div>
-<div id="pcr-regression-coefficient" class="section level3">
+<div id="pcr-regression-coefficient" class="section level3" number="3.3.2">
 <h3><span class="header-section-number">3.3.2</span> 주성분 회귀계수 추정</h3>
 <p>우선 Table <a href="pca.html#tab:pcr-example-data">3.2</a>의 세 독립변수에 대해 주성분 분석을 수행하여 두 개의 주성분을 추출하자.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="pca.html#cb91-1"></a>pca_fit &lt;-<span class="st"> </span><span class="kw">prcomp</span>(train_df[, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)], <span class="dt">rank. =</span> <span class="dv">2</span>,</span>
-<span id="cb91-2"><a href="pca.html#cb91-2"></a>                  <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale. =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb91-3"><a href="pca.html#cb91-3"></a>pca_fit<span class="op">$</span>x</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="pca.html#cb91-1" aria-hidden="true" tabindex="-1"></a>pca_fit <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(train_df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)], <span class="at">rank. =</span> <span class="dv">2</span>,</span>
+<span id="cb91-2"><a href="pca.html#cb91-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb91-3"><a href="pca.html#cb91-3" aria-hidden="true" tabindex="-1"></a>pca_fit<span class="sc">$</span>x</span></code></pre></div>
 <pre><code>##             PC1        PC2
 ## [1,] -6.2346992  1.9880169
 ## [2,] -7.8320036  0.6817026
@@ -1266,34 +1339,34 @@ t_1 = 0.07608427 \times roa - 0.39463007 \times roe + 0.56970191 \times bis - 0.
 ## [5,]  5.6979984 -0.6940262
 ## [6,] 11.2475146  1.5787202</code></pre>
 <p>또한 평균조정된 종속변수 벡터를 계산하자.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="pca.html#cb93-1"></a>y_centered &lt;-<span class="st"> </span>train_df<span class="op">$</span>y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(train_df<span class="op">$</span>y)</span>
-<span id="cb93-2"><a href="pca.html#cb93-2"></a>y_centered</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="pca.html#cb93-1" aria-hidden="true" tabindex="-1"></a>y_centered <span class="ot">&lt;-</span> train_df<span class="sc">$</span>y <span class="sc">-</span> <span class="fu">mean</span>(train_df<span class="sc">$</span>y)</span>
+<span id="cb93-2"><a href="pca.html#cb93-2" aria-hidden="true" tabindex="-1"></a>y_centered</span></code></pre></div>
 <pre><code>## [1] -30 -20   0   5  10  35</code></pre>
 <p>주성분 스코어와 평균조정된 종속변수를 이용하여 회귀모형을 추정하자. 이 때, intercept가 없는 모형을 가정한다.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="pca.html#cb95-1"></a>pc_lm_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(y_centered <span class="op">~</span><span class="st"> </span><span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>pca_fit<span class="op">$</span>x)</span>
-<span id="cb95-2"><a href="pca.html#cb95-2"></a><span class="kw">coef</span>(pc_lm_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="pca.html#cb95-1" aria-hidden="true" tabindex="-1"></a>pc_lm_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y_centered <span class="sc">~</span> <span class="sc">-</span> <span class="dv">1</span> <span class="sc">+</span> pca_fit<span class="sc">$</span>x)</span>
+<span id="cb95-2"><a href="pca.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(pc_lm_fit)</span></code></pre></div>
 <pre><code>## pca_fit$xPC1 pca_fit$xPC2 
 ##     2.918798    -2.539206</code></pre>
 <p>위 회귀계수 벡터가 식 <a href="pca.html#eq:pcr-matrix-model">(3.6)</a>의 회귀계수 벡터 <span class="math inline">\(\mathbf{q}_A\)</span>의 값이다 (<span class="math inline">\(A = 2\)</span>).</p>
 </div>
-<div id="pcr-regression-transform" class="section level3">
+<div id="pcr-regression-transform" class="section level3" number="3.3.3">
 <h3><span class="header-section-number">3.3.3</span> 회귀계수 선형변환</h3>
 <p>앞장에서 얻어진 주성분을 이용한 회귀식을 원 데이터에서 관측된 독립변수와 종속변수에 대한 식으로 변환하여 보자.</p>
 <p>각 주성분은 평균조정된 독립변수들의 선형조합으로 아래와 같이 얻어진다.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="pca.html#cb97-1"></a>pca_fit<span class="op">$</span>rotation</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="pca.html#cb97-1" aria-hidden="true" tabindex="-1"></a>pca_fit<span class="sc">$</span>rotation</span></code></pre></div>
 <pre><code>##           PC1        PC2
 ## x1  0.2525343 -0.5487321
 ## x2  0.2841664 -0.7452586
 ## x3 -0.9249194 -0.3787911</code></pre>
-<p>따라서, 아래와 같이 주성분에 대한 회귀계수를 원레 독립변수(평균조정 이후)에 대한 회귀계수로 변환할 수 있다.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="pca.html#cb99-1"></a>beta_x &lt;-<span class="st"> </span>pca_fit<span class="op">$</span>rotation <span class="op">%*%</span><span class="st"> </span><span class="kw">coef</span>(pc_lm_fit)</span>
-<span id="cb99-2"><a href="pca.html#cb99-2"></a>beta_x</span></code></pre></div>
+<p>따라서, 아래와 같이 주성분에 대한 회귀계수를 원래 독립변수(평균조정 이후)에 대한 회귀계수로 변환할 수 있다.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="pca.html#cb99-1" aria-hidden="true" tabindex="-1"></a>beta_x <span class="ot">&lt;-</span> pca_fit<span class="sc">$</span>rotation <span class="sc">%*%</span> <span class="fu">coef</span>(pc_lm_fit)</span>
+<span id="cb99-2"><a href="pca.html#cb99-2" aria-hidden="true" tabindex="-1"></a>beta_x</span></code></pre></div>
 <pre><code>##         [,1]
 ## x1  2.130440
 ## x2  2.721789
 ## x3 -1.737825</code></pre>
 <p>Intercept는 평균조정 이전 종속변수의 평균에서 위 회귀계수벡터를 평균조정 이전 독립변수의 평균벡터와 곱한 결과를 뺀 값이다.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="pca.html#cb101-1"></a><span class="kw">mean</span>(train_df<span class="op">$</span>y) <span class="op">-</span><span class="st"> </span><span class="kw">colMeans</span>(train_df[, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)]) <span class="op">%*%</span><span class="st"> </span>beta_x</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="pca.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(train_df<span class="sc">$</span>y) <span class="sc">-</span> <span class="fu">colMeans</span>(train_df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)]) <span class="sc">%*%</span> beta_x</span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    0</code></pre>
 <p>본 장에서 사용한 Table <a href="pca.html#tab:pcr-example-data">3.2</a>는 이미 평균조정이 되어 있어서 Intercept가 0으로 추정된다.</p>
@@ -1321,6 +1394,7 @@ s.setAttribute('data-timestamp', +new Date());
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
             </section>
 
           </div>
@@ -1350,6 +1424,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1369,7 +1444,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["data-mining-book.pdf"],
+"download": ["data-mining-book.pdf", "data-mining-book.epub"],
 "toc": {
 "collapse": "subsection"
 },

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 서포트 벡터 머신 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 서포트 벡터 머신 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2020-12-12" />
+<meta name="date" content="2021-07-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="tree-based-method.html"/>
 <link rel="next" href="classifier-evaluation.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,24 +51,23 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,7 +87,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -120,6 +120,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -139,20 +162,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>개요</a></li>
 <li class="chapter" data-level="1" data-path="datamining-overview.html"><a href="datamining-overview.html"><i class="fa fa-check"></i><b>1</b> 데이터마이닝 개요</a></li>
 <li class="part"><span><b>I 1부 - 예측</b></span></li>
-<li class="chapter" data-level="2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>2</b> 회귀분석</a><ul>
+<li class="chapter" data-level="2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>2</b> 회귀분석</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="regression.html"><a href="regression.html#regression-packages-install"><i class="fa fa-check"></i><b>2.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>2.2</b> 다중회귀모형</a></li>
-<li class="chapter" data-level="2.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>2.3</b> 반응치에 대한 추정 및 예측</a><ul>
+<li class="chapter" data-level="2.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>2.3</b> 반응치에 대한 추정 및 예측</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="regression.html"><a href="regression.html#regression-response-confidence"><i class="fa fa-check"></i><b>2.3.1</b> 평균반응치의 추정</a></li>
 <li class="chapter" data-level="2.3.2" data-path="regression.html"><a href="regression.html#regression-response-prediction"><i class="fa fa-check"></i><b>2.3.2</b> 미래반응치의 예측</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>2.4</b> 지시변수와 회귀모형</a><ul>
+<li class="chapter" data-level="2.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>2.4</b> 지시변수와 회귀모형</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="regression.html"><a href="regression.html#regression-indicator-variable-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스트립트</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3</b> 주성분분석</a><ul>
+<li class="chapter" data-level="3" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3</b> 주성분분석</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="pca.html"><a href="pca.html#pca-packages-install"><i class="fa fa-check"></i><b>3.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="3.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>3.2</b> 행렬의 분해</a><ul>
+<li class="chapter" data-level="3.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>3.2</b> 행렬의 분해</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="pca.html"><a href="pca.html#pca-matrix-factorization-basic-script"><i class="fa fa-check"></i><b>3.2.1</b> 기본 R 스트립트</a></li>
 <li class="chapter" data-level="3.2.2" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>3.2.2</b> 변수의 변동과 제곱합</a></li>
 <li class="chapter" data-level="3.2.3" data-path="pca.html"><a href="pca.html#pca-intro"><i class="fa fa-check"></i><b>3.2.3</b> 주성분의 이해 및 행렬의 분해</a></li>
@@ -160,15 +188,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.5" data-path="pca.html"><a href="pca.html#pca-spectral"><i class="fa fa-check"></i><b>3.2.5</b> 분광분해 (Spectral Decomposition)</a></li>
 <li class="chapter" data-level="3.2.6" data-path="pca.html"><a href="pca.html#pca-nipals"><i class="fa fa-check"></i><b>3.2.6</b> NIPALS 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a><ul>
+<li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="pca.html"><a href="pca.html#pcr-basic-script"><i class="fa fa-check"></i><b>3.3.1</b> 기본 R 스트립트</a></li>
 <li class="chapter" data-level="3.3.2" data-path="pca.html"><a href="pca.html#pcr-regression-coefficient"><i class="fa fa-check"></i><b>3.3.2</b> 주성분 회귀계수 추정</a></li>
 <li class="chapter" data-level="3.3.3" data-path="pca.html"><a href="pca.html#pcr-regression-transform"><i class="fa fa-check"></i><b>3.3.3</b> 회귀계수 선형변환</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="plsr.html"><a href="plsr.html"><i class="fa fa-check"></i><b>4</b> 부분최소자승법</a><ul>
+<li class="chapter" data-level="4" data-path="plsr.html"><a href="plsr.html"><i class="fa fa-check"></i><b>4</b> 부분최소자승법</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="plsr.html"><a href="plsr.html#plsr-packages-install"><i class="fa fa-check"></i><b>4.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="4.2" data-path="plsr.html"><a href="plsr.html#plsr-single-target"><i class="fa fa-check"></i><b>4.2</b> 하나의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.2" data-path="plsr.html"><a href="plsr.html#plsr-single-target"><i class="fa fa-check"></i><b>4.2</b> 하나의 종속변수의 경우</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="plsr.html"><a href="plsr.html#plsr-basic-script"><i class="fa fa-check"></i><b>4.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.2.2" data-path="plsr.html"><a href="plsr.html#plsr-model"><i class="fa fa-check"></i><b>4.2.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.2.3" data-path="plsr.html"><a href="plsr.html#plsr-single-nipals"><i class="fa fa-check"></i><b>4.2.3</b> NIPALS 알고리즘</a></li>
@@ -176,7 +207,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.5" data-path="plsr.html"><a href="plsr.html#plsr-sst"><i class="fa fa-check"></i><b>4.2.5</b> 제곱합 분해</a></li>
 <li class="chapter" data-level="4.2.6" data-path="plsr.html"><a href="plsr.html#plsr-variable-importance"><i class="fa fa-check"></i><b>4.2.6</b> 독립변수의 중요도</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-basic-script"><i class="fa fa-check"></i><b>4.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.3.2" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-model"><i class="fa fa-check"></i><b>4.3.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.3.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-nipals"><i class="fa fa-check"></i><b>4.3.3</b> NIPALS 알고리즘</a></li>
@@ -185,189 +217,230 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II 2부 - 분류분석</b></span></li>
-<li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a><ul>
+<li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-packages-install"><i class="fa fa-check"></i><b>5.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="5.2" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-problem-methods"><i class="fa fa-check"></i><b>5.2</b> 분류문제 및 분류기법</a></li>
-<li class="chapter" data-level="5.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>5.3</b> 기본적인 분류기법</a><ul>
+<li class="chapter" data-level="5.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>5.3</b> 기본적인 분류기법</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#nearest-neighbor-classification"><i class="fa fa-check"></i><b>5.3.1</b> 인접객체법</a></li>
 <li class="chapter" data-level="5.3.2" data-path="classification-analysis.html"><a href="classification-analysis.html#naive-bayes"><i class="fa fa-check"></i><b>5.3.2</b> 나이브 베이지안 분류법</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6</b> 로지스틱 회귀분석</a><ul>
+<li class="chapter" data-level="6" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6</b> 로지스틱 회귀분석</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-packages-install"><i class="fa fa-check"></i><b>6.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="6.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>6.2</b> 이분 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>6.2</b> 이분 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#bianry-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-model"><i class="fa fa-check"></i><b>6.2.2</b> 회귀모형</a></li>
 <li class="chapter" data-level="6.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-estimation"><i class="fa fa-check"></i><b>6.2.3</b> 회귀계수 추정</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>6.3</b> 명목 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>6.3</b> 명목 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#baseline-category-logit-model"><i class="fa fa-check"></i><b>6.3.2</b> 기준범주 로짓모형</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>6.4</b> 서열 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>6.4</b> 서열 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-basic-script"><i class="fa fa-check"></i><b>6.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#cumulative-logit-model"><i class="fa fa-check"></i><b>6.4.2</b> 누적 로짓모형</a></li>
 <li class="chapter" data-level="6.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#adjacent-categories-logit-model"><i class="fa fa-check"></i><b>6.4.3</b> 인근범주 로짓모형</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>7</b> 판별분석</a><ul>
+<li class="chapter" data-level="7" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>7</b> 판별분석</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="da.html"><a href="da.html#da-overview"><i class="fa fa-check"></i><b>7.1</b> 개요</a></li>
 <li class="chapter" data-level="7.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a><ul>
+<li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#피셔-판별함수"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
 <li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#분류-규칙"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
 <li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r-패키지를-이용한-분류규칙-도출"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
+<li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>7.4.2</b> 선형판별함수</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>7.5</b> 오분류비용을 고려한 분류규칙</a></li>
-<li class="chapter" data-level="7.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>7.6</b> 이차판별분석</a><ul>
+<li class="chapter" data-level="7.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>7.6</b> 이차판별분석</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>7.6.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>7.6.2</b> 이차 판별함수</a></li>
 <li class="chapter" data-level="7.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>7.6.3</b> 이차판별함수에 의한 분류</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>7.7</b> 세 범주 이상의 분류</a><ul>
+<li class="chapter" data-level="7.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>7.7</b> 세 범주 이상의 분류</a>
+<ul>
 <li class="chapter" data-level="7.7.1" data-path="da.html"><a href="da.html#mutliclass-da-basic-script"><i class="fa fa-check"></i><b>7.7.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.7.2" data-path="da.html"><a href="da.html#mutliclass-generalized-discriminant-function"><i class="fa fa-check"></i><b>7.7.2</b> 일반화된 판별함수</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>8</b> 트리기반 기법</a><ul>
+<li class="chapter" data-level="8" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>8</b> 트리기반 기법</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>8.1</b> CART 개요</a></li>
 <li class="chapter" data-level="8.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-packages-install"><i class="fa fa-check"></i><b>8.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="8.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>8.3</b> CART 트리 생성</a><ul>
+<li class="chapter" data-level="8.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>8.3</b> CART 트리 생성</a>
+<ul>
 <li class="chapter" data-level="8.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>8.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="8.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>8.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="8.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>8.3.3</b> 노드 및 트리의 불순도</a></li>
 <li class="chapter" data-level="8.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>8.3.4</b> 분지기준</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>8.4</b> 가지치기 및 최종 트리 선정</a><ul>
+<li class="chapter" data-level="8.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>8.4</b> 가지치기 및 최종 트리 선정</a>
+<ul>
 <li class="chapter" data-level="8.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>8.4.1</b> 가지치기</a></li>
 <li class="chapter" data-level="8.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>8.4.2</b> 최적 트리의 선정</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>8.5</b> R패키지 내 분류 트리 방법</a><ul>
+<li class="chapter" data-level="8.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>8.5</b> R패키지 내 분류 트리 방법</a>
+<ul>
 <li class="chapter" data-level="8.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>8.5.1</b> 트리 확장</a></li>
 <li class="chapter" data-level="8.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>8.5.2</b> 가지치기</a></li>
 <li class="chapter" data-level="8.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>8.5.3</b> 파라미터값 결정</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>9</b> 서포트 벡터 머신</a><ul>
+<li class="chapter" data-level="9" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>9</b> 서포트 벡터 머신</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>9.1</b> 개요</a></li>
 <li class="chapter" data-level="9.2" data-path="svm.html"><a href="svm.html#svm-packages-install"><i class="fa fa-check"></i><b>9.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="9.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>9.3</b> 선형 SVM - 분리 가능 경우</a><ul>
+<li class="chapter" data-level="9.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>9.3</b> 선형 SVM - 분리 가능 경우</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>9.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>9.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="9.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>9.3.3</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>9.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="9.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>9.4</b> 선형 SVM - 분리 불가능 경우</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>9.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>9.4.2</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>9.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="9.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>9.5</b> 비선형 SVM</a>
+<ul>
 <li class="chapter" data-level="9.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>9.5.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>9.5.2</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>9.6</b> R패키지 내 SVM</a><ul>
+<li class="chapter" data-level="9.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>9.6</b> R패키지 내 SVM</a>
+<ul>
 <li class="chapter" data-level="9.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>9.6.1</b> 커널함수</a></li>
 <li class="chapter" data-level="9.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>9.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>10</b> 분류규칙의 성능 평가</a><ul>
+<li class="chapter" data-level="10" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>10</b> 분류규칙의 성능 평가</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-packages-install"><i class="fa fa-check"></i><b>10.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="10.2" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-misclassification-rate"><i class="fa fa-check"></i><b>10.2</b> 분류오류율</a></li>
-<li class="chapter" data-level="10.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>10.3</b> 정확도, 민감도 및 특이도</a><ul>
+<li class="chapter" data-level="10.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>10.3</b> 정확도, 민감도 및 특이도</a>
+<ul>
 <li class="chapter" data-level="10.3.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#confusion-matrix-r-package"><i class="fa fa-check"></i><b>10.3.1</b> R 패키지 내 정오분류표</a></li>
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#roc-curve"><i class="fa fa-check"></i><b>10.4</b> ROC 곡선</a></li>
 <li class="chapter" data-level="10.5" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#gain-chart"><i class="fa fa-check"></i><b>10.5</b> 이익도표</a></li>
 </ul></li>
 <li class="part"><span><b>III 3부 - 군집분석</b></span></li>
-<li class="chapter" data-level="11" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>11</b> 군집분석 개요</a><ul>
+<li class="chapter" data-level="11" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>11</b> 군집분석 개요</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>11.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="11.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>11.2</b> 군집분석 기법</a></li>
-<li class="chapter" data-level="11.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>11.3</b> 객체 간의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>11.3</b> 객체 간의 유사성 척도</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="clustering-overview.html"><a href="clustering-overview.html#object-distance-metric"><i class="fa fa-check"></i><b>11.3.1</b> 거리 관련 척도</a></li>
 <li class="chapter" data-level="11.3.2" data-path="clustering-overview.html"><a href="clustering-overview.html#object-correlation-metric"><i class="fa fa-check"></i><b>11.3.2</b> 상관계수 관련 척도</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>11.4</b> 범주형 객체의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>11.4</b> 범주형 객체의 유사성 척도</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="clustering-overview.html"><a href="clustering-overview.html#binary-similarity-metric"><i class="fa fa-check"></i><b>11.4.1</b> 이분형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.2" data-path="clustering-overview.html"><a href="clustering-overview.html#ordinal-similarity-metric"><i class="fa fa-check"></i><b>11.4.2</b> 서열형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.3" data-path="clustering-overview.html"><a href="clustering-overview.html#nominal-similarity-metric"><i class="fa fa-check"></i><b>11.4.3</b> 명목형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.4" data-path="clustering-overview.html"><a href="clustering-overview.html#mixed-similarity-metric"><i class="fa fa-check"></i><b>11.4.4</b> 혼합형의 경우</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>12</b> 계층적 군집방법</a><ul>
+<li class="chapter" data-level="12" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>12</b> 계층적 군집방법</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>12.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="12.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#distance-between-clusters"><i class="fa fa-check"></i><b>12.2</b> 군집 간 거리척도 및 연결법</a></li>
-<li class="chapter" data-level="12.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>12.3</b> 연결법의 군집 알고리즘</a><ul>
+<li class="chapter" data-level="12.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>12.3</b> 연결법의 군집 알고리즘</a>
+<ul>
 <li class="chapter" data-level="12.3.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-basic-script"><i class="fa fa-check"></i><b>12.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.3.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-algorithm"><i class="fa fa-check"></i><b>12.3.2</b> 연결법 군집 알고리즘</a></li>
 <li class="chapter" data-level="12.3.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hclust"><i class="fa fa-check"></i><b>12.3.3</b> R 패키지 내 연결법</a></li>
 </ul></li>
-<li class="chapter" data-level="12.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>12.4</b> 워드 방법</a><ul>
+<li class="chapter" data-level="12.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>12.4</b> 워드 방법</a>
+<ul>
 <li class="chapter" data-level="12.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>12.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>12.4.2</b> 워드 군집 알고리즘</a></li>
 <li class="chapter" data-level="12.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>12.4.3</b> R 패키지 내 워드 방법</a></li>
 </ul></li>
-<li class="chapter" data-level="12.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>12.5</b> 분리적 방법 - 다이아나</a><ul>
+<li class="chapter" data-level="12.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>12.5</b> 분리적 방법 - 다이아나</a>
+<ul>
 <li class="chapter" data-level="12.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>12.5.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>12.5.2</b> 다이아나 알고리즘</a></li>
 </ul></li>
 <li class="chapter" data-level="12.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>12.6</b> 군집수의 결정</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>13</b> 비계층적 군집방법</a><ul>
+<li class="chapter" data-level="13" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>13</b> 비계층적 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>13.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="13.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>13.2</b> K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>13.2</b> K-means 알고리즘</a>
+<ul>
 <li class="chapter" data-level="13.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>13.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="13.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>13.2.2</b> 알고리즘</a></li>
 <li class="chapter" data-level="13.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>13.2.3</b> R 스크립트 구현</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>13.3</b> K-medoids 군집방법</a><ul>
+<li class="chapter" data-level="13.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>13.3</b> K-medoids 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>13.3.1</b> PAM 알고리즘</a></li>
 <li class="chapter" data-level="13.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>13.3.2</b> CLARA 알고리즘</a></li>
 <li class="chapter" data-level="13.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>13.3.3</b> CLARANS 알고리즘</a></li>
 <li class="chapter" data-level="13.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>13.3.4</b> K-means-like 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>13.4</b> 퍼지 K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>13.4</b> 퍼지 K-means 알고리즘</a>
+<ul>
 <li class="chapter" data-level="13.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>13.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="13.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>13.4.2</b> 알고리즘</a></li>
 <li class="chapter" data-level="13.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>13.4.3</b> R 스크립트 구현</a></li>
 </ul></li>
-<li class="chapter" data-level="13.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>13.5</b> 모형기반 군집방법</a><ul>
+<li class="chapter" data-level="13.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>13.5</b> 모형기반 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>13.5.1</b> 기본 R script</a></li>
 <li class="chapter" data-level="13.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>13.5.2</b> EM 알고리즘</a></li>
 <li class="chapter" data-level="13.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>13.5.3</b> R 스크립트 구현</a></li>
 <li class="chapter" data-level="13.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>13.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>14</b> 군집해의 평가 및 해석</a><ul>
+<li class="chapter" data-level="14" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>14</b> 군집해의 평가 및 해석</a>
+<ul>
 <li class="chapter" data-level="14.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>14.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="14.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>14.2</b> 군집해의 평가</a><ul>
+<li class="chapter" data-level="14.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>14.2</b> 군집해의 평가</a>
+<ul>
 <li class="chapter" data-level="14.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>14.2.1</b> 외부평가지수</a></li>
 <li class="chapter" data-level="14.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>14.2.2</b> 내부평가지수</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>14.3</b> 군집해의 해석</a></li>
 </ul></li>
 <li class="part"><span><b>IV 4부 - 연관규칙</b></span></li>
-<li class="chapter" data-level="15" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>15</b> 연관규칙</a><ul>
+<li class="chapter" data-level="15" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>15</b> 연관규칙</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="association-rule.html"><a href="association-rule.html#association-packages-install"><i class="fa fa-check"></i><b>15.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="15.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>15.2</b> 연관규칙의 정의 및 성능척도</a><ul>
+<li class="chapter" data-level="15.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>15.2</b> 연관규칙의 정의 및 성능척도</a>
+<ul>
 <li class="chapter" data-level="15.2.1" data-path="association-rule.html"><a href="association-rule.html#association-rule-support"><i class="fa fa-check"></i><b>15.2.1</b> 지지도</a></li>
 <li class="chapter" data-level="15.2.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-confidence"><i class="fa fa-check"></i><b>15.2.2</b> 신뢰도</a></li>
 <li class="chapter" data-level="15.2.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-lift"><i class="fa fa-check"></i><b>15.2.3</b> 개선도</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>15.3</b> 연관규칙의 탐사</a><ul>
+<li class="chapter" data-level="15.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>15.3</b> 연관규칙의 탐사</a>
+<ul>
 <li class="chapter" data-level="15.3.1" data-path="association-rule.html"><a href="association-rule.html#apriori-large-itemsets"><i class="fa fa-check"></i><b>15.3.1</b> 빈발항목집합 생성</a></li>
 <li class="chapter" data-level="15.3.2" data-path="association-rule.html"><a href="association-rule.html#apriori-rule-exploration"><i class="fa fa-check"></i><b>15.3.2</b> 규칙의 탐사</a></li>
 <li class="chapter" data-level="15.3.3" data-path="association-rule.html"><a href="association-rule.html#apriori-r-package"><i class="fa fa-check"></i><b>15.3.3</b> R 패키지 내 Apriori</a></li>
 </ul></li>
-<li class="chapter" data-level="15.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>15.4</b> 순차적 패턴의 탐사</a><ul>
+<li class="chapter" data-level="15.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>15.4</b> 순차적 패턴의 탐사</a>
+<ul>
 <li class="chapter" data-level="15.4.1" data-path="association-rule.html"><a href="association-rule.html#association-aprioriall"><i class="fa fa-check"></i><b>15.4.1</b> AprioriAll 알고리즘</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>16</b> 추천시스템</a><ul>
+<li class="chapter" data-level="16" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>16</b> 추천시스템</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="recommender-system.html"><a href="recommender-system.html#recommender-packages-install"><i class="fa fa-check"></i><b>16.1</b> 필요 R package 설치</a></li>
 <li class="chapter" data-level="16.2" data-path="recommender-system.html"><a href="recommender-system.html#content-based-recommender"><i class="fa fa-check"></i><b>16.2</b> 내용기반 추천시스템</a></li>
 <li class="chapter" data-level="16.3" data-path="recommender-system.html"><a href="recommender-system.html#collaborative-filtering"><i class="fa fa-check"></i><b>16.3</b> 협업 필터링</a></li>
@@ -394,13 +467,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="svm" class="section level1">
+<div id="svm" class="section level1" number="9">
 <h1><span class="header-section-number">Chapter 9</span> 서포트 벡터 머신</h1>
-<div id="svm-overview" class="section level2">
+<div id="svm-overview" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> 개요</h2>
 <p>서포트 벡터 머신(suuport vector machine; 이하 SVM)은 기본적으로 두 범주를 갖는 객체들을 분류하는 방법이다. 물론 세 범주 이상의 경우로 확장이 가능하다.</p>
 </div>
-<div id="svm-packages-install" class="section level2">
+<div id="svm-packages-install" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> 필요 R package 설치</h2>
 <p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
 <table>
@@ -413,15 +486,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td align="left">tidyverse</td>
-<td align="left">1.3.0</td>
+<td align="left">1.3.1</td>
 </tr>
 <tr class="even">
 <td align="left">e1071</td>
-<td align="left">1.7-4</td>
+<td align="left">1.7-7</td>
 </tr>
 <tr class="odd">
 <td align="left">Matrix</td>
-<td align="left">1.2-18</td>
+<td align="left">1.3-4</td>
 </tr>
 <tr class="even">
 <td align="left">quadprog</td>
@@ -430,19 +503,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<div id="linear-svm-separable" class="section level2">
+<div id="linear-svm-separable" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> 선형 SVM - 분리 가능 경우</h2>
-<div id="linear-svm-separable-basic-script" class="section level3">
+<div id="linear-svm-separable-basic-script" class="section level3" number="9.3.1">
 <h3><span class="header-section-number">9.3.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="svm.html#cb307-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb307-2"><a href="svm.html#cb307-2"></a>  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">5</span>),</span>
-<span id="cb307-3"><a href="svm.html#cb307-3"></a>  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">4</span>),</span>
-<span id="cb307-4"><a href="svm.html#cb307-4"></a>  <span class="dt">class =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">-1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">-1</span>, <span class="dv">-1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">-1</span>)</span>
-<span id="cb307-5"><a href="svm.html#cb307-5"></a>)</span>
-<span id="cb307-6"><a href="svm.html#cb307-6"></a></span>
-<span id="cb307-7"><a href="svm.html#cb307-7"></a>knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb307-8"><a href="svm.html#cb307-8"></a>             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb307-9"><a href="svm.html#cb307-9"></a>             <span class="dt">caption =</span> <span class="st">&#39;선형분리가능 학습표본 데이터&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="svm.html#cb302-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb302-2"><a href="svm.html#cb302-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x1 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">5</span>),</span>
+<span id="cb302-3"><a href="svm.html#cb302-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">4</span>),</span>
+<span id="cb302-4"><a href="svm.html#cb302-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb302-5"><a href="svm.html#cb302-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb302-6"><a href="svm.html#cb302-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb302-7"><a href="svm.html#cb302-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(train_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb302-8"><a href="svm.html#cb302-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb302-9"><a href="svm.html#cb302-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;선형분리가능 학습표본 데이터&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:svm-train-data-table">Table 9.1: </span>선형분리가능 학습표본 데이터</caption>
 <thead>
@@ -501,9 +574,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Table <a href="svm.html#tab:svm-train-data-table">9.1</a>와 같이 두 독립변수 <em>x1</em>, <em>x2</em>와 이분형 종속변수 <em>class</em>의 관측값으로 이루어진 9개의 학습표본을 <em>train_df</em>라는 data frame에 저장한다.</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="svm.html#cb308-1"></a><span class="kw">library</span>(e1071)</span>
-<span id="cb308-2"><a href="svm.html#cb308-2"></a>svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> train_df, <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb308-3"><a href="svm.html#cb308-3"></a><span class="kw">plot</span>(svm_model, <span class="dt">data =</span> train_df, <span class="dt">formula =</span> x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="svm.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
+<span id="cb303-2"><a href="svm.html#cb303-2" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm</span>(<span class="fu">as.factor</span>(class) <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> train_df, <span class="at">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb303-3"><a href="svm.html#cb303-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(svm_model, <span class="at">data =</span> train_df, <span class="at">formula =</span> x2 <span class="sc">~</span> x1, <span class="at">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:linear-svm-basic"></span>
 <img src="data-mining-book_files/figure-html/linear-svm-basic-1.png" alt="선형 SVM 분리 하이퍼플레인" width="672" />
 <p class="caption">
@@ -515,7 +588,7 @@ Figure 9.1: 선형 SVM 분리 하이퍼플레인
 0.6666667 x_{1} + 0.6666667 x_{2} = 7
 \]</span></p>
 </div>
-<div id="linear-svm-notation" class="section level3">
+<div id="linear-svm-notation" class="section level3" number="9.3.2">
 <h3><span class="header-section-number">9.3.2</span> 기호 정의</h3>
 <p>본 장에서 사용될 수학적 기호는 아래와 같다.</p>
 <ul>
@@ -525,7 +598,7 @@ Figure 9.1: 선형 SVM 분리 하이퍼플레인
 <li><span class="math inline">\((\mathbf{x}_i, y_i)\)</span>: <span class="math inline">\(i\)</span>번째 객체의 변수벡터와 범주값</li>
 </ul>
 </div>
-<div id="linear-svm-separable-hyperplane" class="section level3">
+<div id="linear-svm-separable-hyperplane" class="section level3" number="9.3.3">
 <h3><span class="header-section-number">9.3.3</span> 최적 하이퍼플레인</h3>
 <p>선형 SVM은 주어진 객체들의 두 범주를 완벽하게 분리하는 하이퍼플레인 중 각 범주의 서포트 벡터들로부터의 거리가 최대가 되는 하이퍼플레인을 찾는 문제로 귀착된다.</p>
 <p>우선 아래와 같이 하이퍼플레인을 정의한다.</p>
@@ -566,7 +639,7 @@ H_2: \mathbf{w}^\top \mathbf{x} + b = -1
 \end{split}
 \tag{9.2}
 \end{equation}\]</span></p>
-<p>원문제 식 <a href="svm.html#eq:linear-svm-primal">(9.2)</a>에 대한 울프쌍대문제(Wolfe dual problem)는 아래 식 <a href="svm.html#eq:linear-svm-dual">(9.3)</a>과 같이 도출된다. 보다 자세한 내용은 교재<span class="citation">(전치혁 <a href="#ref-jun2012datamining" role="doc-biblioref">2012</a>)</span> 참고.</p>
+<p>원문제 식 <a href="svm.html#eq:linear-svm-primal">(9.2)</a>에 대한 울프쌍대문제(Wolfe dual problem)는 아래 식 <a href="svm.html#eq:linear-svm-dual">(9.3)</a>과 같이 도출된다. 보다 자세한 내용은 교재<span class="citation">(<a href="#ref-jun2012datamining" role="doc-biblioref">전치혁 2012</a>)</span> 참고.</p>
 <p><span class="math display" id="eq:linear-svm-dual">\[\begin{equation}
 \begin{split}
 \max \text{  } &amp; L_D = \sum_{i = 1}^{N} \alpha_i - \frac{1}{2} \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j\\
@@ -577,7 +650,7 @@ H_2: \mathbf{w}^\top \mathbf{x} + b = -1
 \tag{9.3}
 \end{equation}\]</span></p>
 <p>식 <a href="svm.html#eq:linear-svm-dual">(9.3)</a>은 이차계획(quadratic programming) 문제로, 각종 소프트웨어와 알고리즘을 이용하여 구할 수 있다. 본 장에서는 <code>quadprog</code> 패키지를 이용하여 해를 구하기로 한다. 이는 실제로 <code>e1071</code>의 <code>svm</code> 함수 호출 시 사용하는 방법은 아니며, 실제 <code>svm</code> 함수가 호출하는 알고리즘은 다음 장에서 다시 설명하기로 한다.</p>
-<p><code>quadprog</code>의 <code>solve.QP</code> 함수는 아래와 같은 형태로 formulation된 문제<span class="citation">(Goldfarb and Idnani <a href="#ref-goldfarb1983numerically" role="doc-biblioref">1983</a>)</span>에 대한 최적해를 구한다.</p>
+<p><code>quadprog</code>의 <code>solve.QP</code> 함수는 아래와 같은 형태로 formulation된 문제<span class="citation">(<a href="#ref-goldfarb1983numerically" role="doc-biblioref">Goldfarb and Idnani 1983</a>)</span>에 대한 최적해를 구한다.</p>
 <p><span class="math display" id="eq:quadprog">\[\begin{equation}
 \begin{split}
 \min \text{  } &amp; -\mathbf{d}^{\top}\boldsymbol{\alpha} + \frac{1}{2} \boldsymbol{\alpha}^{\top}\mathbf{D}\boldsymbol{\alpha}\\
@@ -595,14 +668,14 @@ where
 \mathbf{y} &amp;=&amp; \left[ \begin{array}{c c c c} y_1 &amp; y_2 &amp; \cdots &amp; y_N \end{array} \right]^\top\\
 \mathbf{X} &amp;=&amp; \left[ \begin{array}{c c c c} \mathbf{x}_1 &amp; \mathbf{x}_2 &amp; \cdots &amp; \mathbf{x}_N \end{array} \right]^{\top}
 \end{eqnarray*}\]</span></p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="svm.html#cb309-1"></a>N &lt;-<span class="st"> </span><span class="kw">dim</span>(train_df)[<span class="dv">1</span>]</span>
-<span id="cb309-2"><a href="svm.html#cb309-2"></a>X &lt;-<span class="st"> </span>train_df[<span class="kw">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</span>
-<span id="cb309-3"><a href="svm.html#cb309-3"></a>y &lt;-<span class="st"> </span>train_df[[<span class="st">&#39;class&#39;</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()</span>
-<span id="cb309-4"><a href="svm.html#cb309-4"></a></span>
-<span id="cb309-5"><a href="svm.html#cb309-5"></a>d &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, N)</span>
-<span id="cb309-6"><a href="svm.html#cb309-6"></a>D &lt;-<span class="st"> </span>(y <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(y)) <span class="op">*</span><span class="st"> </span>(X <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X))</span></code></pre></div>
-<p>여기에서 행렬 <span class="math inline">\(\mathbf{D}\)</span>의 determinant 값은 0으로, <span class="citation">Goldfarb and Idnani (<a href="#ref-goldfarb1983numerically" role="doc-biblioref">1983</a>)</span> 가 가정하는 symmetric positive definite matrix 조건에 위배되어 <code>solve.QP</code> 함수 실행 시 오류가 발생한다. 이를 방지하기 위해 아래 예에서는 <code>Matrix</code> 패키지의 <code>nearPD</code>함수를 이용하여 행렬 <span class="math inline">\(\mathbf{D}\)</span>와 근사한 symmetric positive definite matrix를 아래와 같이 찾는다.</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="svm.html#cb310-1"></a>D_pd &lt;-<span class="st"> </span>Matrix<span class="op">::</span><span class="kw">nearPD</span>(D, <span class="dt">doSym =</span> T)<span class="op">$</span>mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="svm.html#cb304-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">dim</span>(train_df)[<span class="dv">1</span>]</span>
+<span id="cb304-2"><a href="svm.html#cb304-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> train_df[<span class="fu">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)] <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb304-3"><a href="svm.html#cb304-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> train_df[[<span class="st">&#39;class&#39;</span>]] <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>()</span>
+<span id="cb304-4"><a href="svm.html#cb304-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-5"><a href="svm.html#cb304-5" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, N)</span>
+<span id="cb304-6"><a href="svm.html#cb304-6" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> (y <span class="sc">%*%</span> <span class="fu">t</span>(y)) <span class="sc">*</span> (X <span class="sc">%*%</span> <span class="fu">t</span>(X))</span></code></pre></div>
+<p>여기에서 행렬 <span class="math inline">\(\mathbf{D}\)</span>의 determinant 값은 0으로, <span class="citation"><a href="#ref-goldfarb1983numerically" role="doc-biblioref">Goldfarb and Idnani</a> (<a href="#ref-goldfarb1983numerically" role="doc-biblioref">1983</a>)</span> 가 가정하는 symmetric positive definite matrix 조건에 위배되어 <code>solve.QP</code> 함수 실행 시 오류가 발생한다. 이를 방지하기 위해 아래 예에서는 <code>Matrix</code> 패키지의 <code>nearPD</code>함수를 이용하여 행렬 <span class="math inline">\(\mathbf{D}\)</span>와 근사한 symmetric positive definite matrix를 아래와 같이 찾는다.</p>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="svm.html#cb305-1" aria-hidden="true" tabindex="-1"></a>D_pd <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">nearPD</span>(D, <span class="at">doSym =</span> T)<span class="sc">$</span>mat <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span></code></pre></div>
 <p>식 <a href="svm.html#eq:quadprog">(9.4)</a>의 제약식은 모두 inequality 형태로, 식 <a href="svm.html#eq:linear-svm-dual">(9.3)</a>의 equality constraint <span class="math inline">\(\sum_{i = 1}^{N} \alpha_i y_i = 0\)</span>를 표현하기 위해서 두 개의 제약식 <span class="math inline">\(\sum_{i = 1}^{N} \alpha_i y_i \ge 0\)</span>와 <span class="math inline">\(\sum_{i = 1}^{N} - \alpha_i y_i \ge 0\)</span>를 생성한다.</p>
 <p><span class="math display">\[\begin{equation*}
 \mathbf{A}^\top = \left[ 
@@ -620,16 +693,16 @@ y_1 &amp; y_2 &amp; \cdots &amp; y_N\\
 \end{array}
 \right]
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="svm.html#cb311-1"></a>A &lt;-<span class="st"> </span><span class="kw">cbind</span>(</span>
-<span id="cb311-2"><a href="svm.html#cb311-2"></a>  y,</span>
-<span id="cb311-3"><a href="svm.html#cb311-3"></a>  <span class="op">-</span>y,</span>
-<span id="cb311-4"><a href="svm.html#cb311-4"></a>  <span class="kw">diag</span>(N)</span>
-<span id="cb311-5"><a href="svm.html#cb311-5"></a>)</span>
-<span id="cb311-6"><a href="svm.html#cb311-6"></a>b_zero &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span>N)</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="svm.html#cb306-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
+<span id="cb306-2"><a href="svm.html#cb306-2" aria-hidden="true" tabindex="-1"></a>  y,</span>
+<span id="cb306-3"><a href="svm.html#cb306-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>y,</span>
+<span id="cb306-4"><a href="svm.html#cb306-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diag</span>(N)</span>
+<span id="cb306-5"><a href="svm.html#cb306-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb306-6"><a href="svm.html#cb306-6" aria-hidden="true" tabindex="-1"></a>b_zero <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">2</span> <span class="sc">+</span> N)</span></code></pre></div>
 <p>이제 위에서 구한 행렬과 벡터들을 <code>solve.QP</code> 함수에 입력하여 최적해를 구한다.</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="svm.html#cb312-1"></a>res &lt;-<span class="st"> </span>quadprog<span class="op">::</span><span class="kw">solve.QP</span>(D_pd, d, A, b_zero)</span>
-<span id="cb312-2"><a href="svm.html#cb312-2"></a>alpha_sol &lt;-<span class="st"> </span>res<span class="op">$</span>solution</span>
-<span id="cb312-3"><a href="svm.html#cb312-3"></a>obj_val &lt;-<span class="st"> </span><span class="op">-</span>res<span class="op">$</span>value</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="svm.html#cb307-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> quadprog<span class="sc">::</span><span class="fu">solve.QP</span>(D_pd, d, A, b_zero)</span>
+<span id="cb307-2"><a href="svm.html#cb307-2" aria-hidden="true" tabindex="-1"></a>alpha_sol <span class="ot">&lt;-</span> res<span class="sc">$</span>solution</span>
+<span id="cb307-3"><a href="svm.html#cb307-3" aria-hidden="true" tabindex="-1"></a>obj_val <span class="ot">&lt;-</span> <span class="sc">-</span>res<span class="sc">$</span>value</span></code></pre></div>
 <table>
 <caption><span id="tab:svm-separable-alpha">Table 9.2: </span>이차계획문제의 최적해</caption>
 <thead>
@@ -677,35 +750,35 @@ y_1 &amp; y_2 &amp; \cdots &amp; y_N\\
 </tr>
 </tbody>
 </table>
-<p>표 <a href="svm.html#tab:svm-separable-alpha">9.2</a>의 결과는 교재<span class="citation">(전치혁 <a href="#ref-jun2012datamining" role="doc-biblioref">2012</a>)</span>에 나타난 최적해와는 다소 차이가 있으나, 결과적으로 목적함수값은 0.4444로 동일하다.</p>
+<p>표 <a href="svm.html#tab:svm-separable-alpha">9.2</a>의 결과는 교재<span class="citation">(<a href="#ref-jun2012datamining" role="doc-biblioref">전치혁 2012</a>)</span>에 나타난 최적해와는 다소 차이가 있으나, 결과적으로 목적함수값은 0.4444로 동일하다.</p>
 <p>위의 과정으로 최적해 <span class="math inline">\(\alpha_{i}^{*}\)</span>를 구한 뒤, 아래와 같이 분리 하이퍼플레인의 계수를 결정할 수 있다.</p>
 <p><span class="math display">\[\begin{eqnarray*}
 \mathbf{w} &amp;=&amp; \sum_{i = 1}^{N} \alpha_{i}^{*} y_{i} \mathbf{x}_{i}\\
 b &amp;=&amp; \sum_{i: \alpha_{i}^{*} &gt; 0} \frac{1 - y_{i} \mathbf{w}^{\top} \mathbf{x}_{i}}{y_{i}} \left/ \sum_{i: \alpha_{i}^{*} &gt; 0} 1 \right. 
 \end{eqnarray*}\]</span></p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="svm.html#cb313-1"></a>w &lt;-<span class="st"> </span><span class="kw">colSums</span>(alpha_sol <span class="op">*</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>X)</span>
-<span id="cb313-2"><a href="svm.html#cb313-2"></a><span class="kw">print</span>(w)</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="svm.html#cb308-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">colSums</span>(alpha_sol <span class="sc">*</span> y <span class="sc">*</span> X)</span>
+<span id="cb308-2"><a href="svm.html#cb308-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(w)</span></code></pre></div>
 <pre><code>##        x1        x2 
 ## 0.6666658 0.6666657</code></pre>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="svm.html#cb315-1"></a>sv_ind &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">round</span>(alpha_sol, <span class="dt">digits =</span> <span class="dv">4</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</span>
-<span id="cb315-2"><a href="svm.html#cb315-2"></a>b &lt;-<span class="st"> </span><span class="kw">mean</span>((<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>y[sv_ind] <span class="op">*</span><span class="st"> </span>(X[sv_ind, ] <span class="op">%*%</span><span class="st"> </span>w)) <span class="op">/</span><span class="st"> </span>y[sv_ind])</span>
-<span id="cb315-3"><a href="svm.html#cb315-3"></a><span class="kw">print</span>(b)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="svm.html#cb310-1" aria-hidden="true" tabindex="-1"></a>sv_ind <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">round</span>(alpha_sol, <span class="at">digits =</span> <span class="dv">4</span>) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb310-2"><a href="svm.html#cb310-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">mean</span>((<span class="dv">1</span> <span class="sc">-</span> y[sv_ind] <span class="sc">*</span> (X[sv_ind, ] <span class="sc">%*%</span> w)) <span class="sc">/</span> y[sv_ind])</span>
+<span id="cb310-3"><a href="svm.html#cb310-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(b)</span></code></pre></div>
 <pre><code>## [1] -6.99999</code></pre>
 <p>위 결과와 같이, 분리 하이퍼플레인은 교재와 동일하게 얻어진다.</p>
 </div>
 </div>
-<div id="linear-svm-inseparable" class="section level2">
+<div id="linear-svm-inseparable" class="section level2" number="9.4">
 <h2><span class="header-section-number">9.4</span> 선형 SVM - 분리 불가능 경우</h2>
 <p>본 장에서는 학습표본 내의 두 범주가 어떠한 선형 하이퍼플레인으로도 완전하게 분리되지 않아 식 <a href="svm.html#eq:linear-svm-primal">(9.2)</a>이 해를 갖지 못하는 경우에 대한 문제를 다룬다.</p>
-<div id="linear-svm-inseparable-basic-script" class="section level3">
+<div id="linear-svm-inseparable-basic-script" class="section level3" number="9.4.1">
 <h3><span class="header-section-number">9.4.1</span> 기본 R 스크립트</h3>
 <p>앞 장에서 사용한 학습표본에 아래와 같이 하나의 객체를 추가하여 전체 학습표본이 선형 하이퍼플레인으로 분리될 수 없도록 하자.</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="svm.html#cb317-1"></a>inseparable_train_df &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(train_df, </span>
-<span id="cb317-2"><a href="svm.html#cb317-2"></a>                                  <span class="kw">tibble</span>(<span class="dt">x1 =</span> <span class="dv">7</span>, <span class="dt">x2 =</span> <span class="dv">6</span>, <span class="dt">class =</span> <span class="dv">-1</span>))</span>
-<span id="cb317-3"><a href="svm.html#cb317-3"></a></span>
-<span id="cb317-4"><a href="svm.html#cb317-4"></a>knitr<span class="op">::</span><span class="kw">kable</span>(inseparable_train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb317-5"><a href="svm.html#cb317-5"></a>             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb317-6"><a href="svm.html#cb317-6"></a>             <span class="dt">caption =</span> <span class="st">&#39;선형분리불가능 학습표본 데이터&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="svm.html#cb312-1" aria-hidden="true" tabindex="-1"></a>inseparable_train_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(train_df, </span>
+<span id="cb312-2"><a href="svm.html#cb312-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">tibble</span>(<span class="at">x1 =</span> <span class="dv">7</span>, <span class="at">x2 =</span> <span class="dv">6</span>, <span class="at">class =</span> <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb312-3"><a href="svm.html#cb312-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb312-4"><a href="svm.html#cb312-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(inseparable_train_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb312-5"><a href="svm.html#cb312-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb312-6"><a href="svm.html#cb312-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;선형분리불가능 학습표본 데이터&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:svm-inseparable-train-data-table">Table 9.3: </span>선형분리불가능 학습표본 데이터</caption>
 <thead>
@@ -768,10 +841,10 @@ b &amp;=&amp; \sum_{i: \alpha_{i}^{*} &gt; 0} \frac{1 - y_{i} \mathbf{w}^{\top} 
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="svm.html#cb318-1"></a><span class="kw">library</span>(e1071)</span>
-<span id="cb318-2"><a href="svm.html#cb318-2"></a>svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> inseparable_train_df, </span>
-<span id="cb318-3"><a href="svm.html#cb318-3"></a>                 <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="dt">cost =</span> <span class="dv">1</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb318-4"><a href="svm.html#cb318-4"></a><span class="kw">plot</span>(svm_model, <span class="dt">data =</span> inseparable_train_df, <span class="dt">formula =</span> x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="svm.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
+<span id="cb313-2"><a href="svm.html#cb313-2" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm</span>(<span class="fu">as.factor</span>(class) <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> inseparable_train_df, </span>
+<span id="cb313-3"><a href="svm.html#cb313-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="at">cost =</span> <span class="dv">1</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb313-4"><a href="svm.html#cb313-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(svm_model, <span class="at">data =</span> inseparable_train_df, <span class="at">formula =</span> x2 <span class="sc">~</span> x1, <span class="at">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:linear-svm-basic-inseparable"></span>
 <img src="data-mining-book_files/figure-html/linear-svm-basic-inseparable-1.png" alt="선형 SVM 분리 불가능 경우의 하이퍼플레인" width="672" />
 <p class="caption">
@@ -783,7 +856,7 @@ Figure 9.2: 선형 SVM 분리 불가능 경우의 하이퍼플레인
 0.6 x_{1} + 0.8 x_{2} = 7.6
 \]</span></p>
 </div>
-<div id="linear-svm-inseparable-hyperplane" class="section level3">
+<div id="linear-svm-inseparable-hyperplane" class="section level3" number="9.4.2">
 <h3><span class="header-section-number">9.4.2</span> 최적 하이퍼플레인</h3>
 <p>여유변수(slack variable) <span class="math inline">\(\xi_i\)</span> 를 각 학습객체 <span class="math inline">\(i = 1, \cdots, N\)</span>에 대해 아래와 같이 정의한다.</p>
 <p><span class="math display">\[\begin{equation*}
@@ -808,19 +881,19 @@ Figure 9.2: 선형 SVM 분리 불가능 경우의 하이퍼플레인
 \end{split}
 \tag{9.5}
 \end{equation}\]</span></p>
-<p>이는 분리 가능 경우의 식 <a href="svm.html#eq:linear-svm-dual">(9.3)</a>에 변수 <span class="math inline">\(\alpha_i\)</span>에 대한 상한값 <span class="math inline">\(C\)</span>의 제약이 추가된 문제로, 이는 <code>e1071</code> 패키지의 <code>svm</code> 함수가 기본 방법으로 사용하는 <code>LIBSVM</code> 라이브러리<span class="citation">(Chang and Lin <a href="#ref-chang2011libsvm" role="doc-biblioref">2011</a>)</span>의 <span class="math inline">\(C\)</span>-support vector classification(<span class="math inline">\(C\)</span>-SVC)이 사용하는 문제식이며, <code>LIBSVM</code> 라이브러리는 특정 알고리즘<span class="citation">(Fan, Chen, and Lin <a href="#ref-fan2005working" role="doc-biblioref">2005</a>)</span>을 이용하여 해를 제공한다.</p>
+<p>이는 분리 가능 경우의 식 <a href="svm.html#eq:linear-svm-dual">(9.3)</a>에 변수 <span class="math inline">\(\alpha_i\)</span>에 대한 상한값 <span class="math inline">\(C\)</span>의 제약이 추가된 문제로, 이는 <code>e1071</code> 패키지의 <code>svm</code> 함수가 기본 방법으로 사용하는 <code>LIBSVM</code> 라이브러리<span class="citation">(<a href="#ref-chang2011libsvm" role="doc-biblioref">Chang and Lin 2011</a>)</span>의 <span class="math inline">\(C\)</span>-support vector classification(<span class="math inline">\(C\)</span>-SVC)이 사용하는 문제식이며, <code>LIBSVM</code> 라이브러리는 특정 알고리즘<span class="citation">(<a href="#ref-fan2005working" role="doc-biblioref">Fan, Chen, and Lin 2005</a>)</span>을 이용하여 해를 제공한다.</p>
 <p>아래 <code>svm</code> 함수의 입력 변수에서 <code>type = "C-classification"</code>은 식 <a href="svm.html#eq:linear-svm-dual">(9.3)</a>를 최적화하겠다는 것을 나타내며, <code>cost = 1</code>은 페널티 단가 <span class="math inline">\(C\)</span>의 값을 1로 설정하겠다는 것을 나타낸다.</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="svm.html#cb319-1"></a>svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> inseparable_train_df,</span>
-<span id="cb319-2"><a href="svm.html#cb319-2"></a>                 <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb319-3"><a href="svm.html#cb319-3"></a>                 <span class="dt">type =</span> <span class="st">&quot;C-classification&quot;</span>, <span class="dt">cost =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="svm.html#cb314-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm</span>(<span class="fu">as.factor</span>(class) <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> inseparable_train_df,</span>
+<span id="cb314-2"><a href="svm.html#cb314-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb314-3"><a href="svm.html#cb314-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">type =</span> <span class="st">&quot;C-classification&quot;</span>, <span class="at">cost =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p>위 결과 모델 객체 <code>svm_model</code>의 원소 중 <code>index</code>는 학습표본 중 서포트 벡터에 해당하는 인덱스 <span class="math inline">\(i\)</span>를 나타내며, <code>coefs</code>는 각 서포트 벡터의 <span class="math inline">\(\alpha_i y_i\)</span> 값을 나타낸다. 따라서, <code>coefs</code>를 각 서포트 벡터의 범주값 <span class="math inline">\(y_i\)</span>로 나누면 식 <a href="svm.html#eq:linear-svm-inseparable-dual">(9.5)</a>의 최적해를 아래와 같이 볼 수 있다.</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="svm.html#cb320-1"></a>N &lt;-<span class="st"> </span><span class="kw">dim</span>(inseparable_train_df)[<span class="dv">1</span>]</span>
-<span id="cb320-2"><a href="svm.html#cb320-2"></a>X &lt;-<span class="st"> </span>inseparable_train_df[<span class="kw">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</span>
-<span id="cb320-3"><a href="svm.html#cb320-3"></a>y &lt;-<span class="st"> </span>inseparable_train_df[[<span class="st">&#39;class&#39;</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()</span>
-<span id="cb320-4"><a href="svm.html#cb320-4"></a></span>
-<span id="cb320-5"><a href="svm.html#cb320-5"></a>sv_ind &lt;-<span class="st"> </span>svm_model<span class="op">$</span>index</span>
-<span id="cb320-6"><a href="svm.html#cb320-6"></a>alpha_sol &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, N)</span>
-<span id="cb320-7"><a href="svm.html#cb320-7"></a>alpha_sol[sv_ind] &lt;-<span class="st"> </span><span class="kw">drop</span>(svm_model<span class="op">$</span>coefs[, <span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>y[sv_ind]</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="svm.html#cb315-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">dim</span>(inseparable_train_df)[<span class="dv">1</span>]</span>
+<span id="cb315-2"><a href="svm.html#cb315-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> inseparable_train_df[<span class="fu">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)] <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb315-3"><a href="svm.html#cb315-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> inseparable_train_df[[<span class="st">&#39;class&#39;</span>]] <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>()</span>
+<span id="cb315-4"><a href="svm.html#cb315-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb315-5"><a href="svm.html#cb315-5" aria-hidden="true" tabindex="-1"></a>sv_ind <span class="ot">&lt;-</span> svm_model<span class="sc">$</span>index</span>
+<span id="cb315-6"><a href="svm.html#cb315-6" aria-hidden="true" tabindex="-1"></a>alpha_sol <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;numeric&quot;</span>, N)</span>
+<span id="cb315-7"><a href="svm.html#cb315-7" aria-hidden="true" tabindex="-1"></a>alpha_sol[sv_ind] <span class="ot">&lt;-</span> <span class="fu">drop</span>(svm_model<span class="sc">$</span>coefs[, <span class="dv">1</span>]) <span class="sc">/</span> y[sv_ind]</span></code></pre></div>
 <table>
 <caption><span id="tab:svm-inseparable-alpha">Table 9.4: </span>이차계획문제의 최적해: 선형 분리 불가능 경우</caption>
 <thead>
@@ -876,41 +949,41 @@ Figure 9.2: 선형 SVM 분리 불가능 경우의 하이퍼플레인
 <p><span class="math display">\[\begin{equation*}
 \mathbf{w} = \sum_{i = 1}^{N} \alpha_{i}^{*} y_{i} \mathbf{x}_{i}
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="svm.html#cb321-1"></a>w &lt;-<span class="st"> </span><span class="kw">colSums</span>(alpha_sol <span class="op">*</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>X)</span>
-<span id="cb321-2"><a href="svm.html#cb321-2"></a><span class="kw">print</span>(w)</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="svm.html#cb316-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">colSums</span>(alpha_sol <span class="sc">*</span> y <span class="sc">*</span> X)</span>
+<span id="cb316-2"><a href="svm.html#cb316-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(w)</span></code></pre></div>
 <pre><code>##  x1  x2 
 ## 0.6 0.8</code></pre>
 <p>상수 <span class="math inline">\(b\)</span>는 아래와 같이 <span class="math inline">\(0 &lt; \alpha_{i}^{*} &lt; C\)</span>인 객체들을 이용해 산출할 수 있다.</p>
 <p><span class="math display">\[\begin{equation*}
 b = \sum_{i: 0 &lt; \alpha_{i}^{*} &lt; C} \frac{1 - y_{i} \mathbf{w}^{\top} \mathbf{x}_{i}}{y_{i}} \left/ \sum_{i: 0 &lt; \alpha_{i}^{*} &lt; C} 1 \right. 
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="svm.html#cb323-1"></a>ind &lt;-<span class="st"> </span>sv_ind[alpha_sol[sv_ind] <span class="op">&lt;</span><span class="st"> </span>svm_model<span class="op">$</span>cost]</span>
-<span id="cb323-2"><a href="svm.html#cb323-2"></a>b &lt;-<span class="st"> </span><span class="kw">mean</span>((<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>y[ind] <span class="op">*</span><span class="st"> </span>(X[ind, ] <span class="op">%*%</span><span class="st"> </span>w)) <span class="op">/</span><span class="st"> </span>y[ind])</span>
-<span id="cb323-3"><a href="svm.html#cb323-3"></a><span class="kw">print</span>(b)</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="svm.html#cb318-1" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> sv_ind[alpha_sol[sv_ind] <span class="sc">&lt;</span> svm_model<span class="sc">$</span>cost]</span>
+<span id="cb318-2"><a href="svm.html#cb318-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">mean</span>((<span class="dv">1</span> <span class="sc">-</span> y[ind] <span class="sc">*</span> (X[ind, ] <span class="sc">%*%</span> w)) <span class="sc">/</span> y[ind])</span>
+<span id="cb318-3"><a href="svm.html#cb318-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(b)</span></code></pre></div>
 <pre><code>## [1] -7.6</code></pre>
 <p>위와 같은 하이퍼플레인의 계수 <span class="math inline">\(\mathbf{w}\)</span>와 상수 <span class="math inline">\(b\)</span>값은 <code>svm</code> 객체에 원소들을 이용하여 보다 쉽게 확인할 수 있다.</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="svm.html#cb325-1"></a>w &lt;-<span class="st"> </span><span class="kw">t</span>(svm_model<span class="op">$</span>coefs) <span class="op">%*%</span><span class="st"> </span>svm_model<span class="op">$</span>SV</span>
-<span id="cb325-2"><a href="svm.html#cb325-2"></a><span class="kw">print</span>(w)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="svm.html#cb320-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">t</span>(svm_model<span class="sc">$</span>coefs) <span class="sc">%*%</span> svm_model<span class="sc">$</span>SV</span>
+<span id="cb320-2"><a href="svm.html#cb320-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(w)</span></code></pre></div>
 <pre><code>##       x1  x2
 ## [1,] 0.6 0.8</code></pre>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="svm.html#cb327-1"></a>b &lt;-<span class="st"> </span><span class="op">-</span>svm_model<span class="op">$</span>rho</span>
-<span id="cb327-2"><a href="svm.html#cb327-2"></a><span class="kw">print</span>(b)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="svm.html#cb322-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="sc">-</span>svm_model<span class="sc">$</span>rho</span>
+<span id="cb322-2"><a href="svm.html#cb322-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(b)</span></code></pre></div>
 <pre><code>## [1] -7.6</code></pre>
 <p>선형 하이퍼플레인으로 분리 불가능한 경우, 페널티 단가 <span class="math inline">\(C\)</span>의 값에 따라 도출되는 분리 하이퍼플레인이 달라진다. <span class="math inline">\(C\)</span>의 값이 1, 5, 100일 때의 하이퍼플레인을 비교해보자.</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="svm.html#cb329-1"></a>svm_models &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">100</span>), <span class="cf">function</span>(C)</span>
-<span id="cb329-2"><a href="svm.html#cb329-2"></a>  <span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> inseparable_train_df,</span>
-<span id="cb329-3"><a href="svm.html#cb329-3"></a>      <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb329-4"><a href="svm.html#cb329-4"></a>      <span class="dt">type =</span> <span class="st">&quot;C-classification&quot;</span>, <span class="dt">cost =</span> C))</span>
-<span id="cb329-5"><a href="svm.html#cb329-5"></a></span>
-<span id="cb329-6"><a href="svm.html#cb329-6"></a>getHyperplane &lt;-<span class="st"> </span><span class="cf">function</span>(model) {</span>
-<span id="cb329-7"><a href="svm.html#cb329-7"></a>  <span class="kw">list</span>(<span class="dt">C =</span> model<span class="op">$</span>cost,</span>
-<span id="cb329-8"><a href="svm.html#cb329-8"></a>       <span class="dt">w =</span> <span class="kw">paste</span>(<span class="kw">round</span>(<span class="kw">t</span>(model<span class="op">$</span>coefs) <span class="op">%*%</span><span class="st"> </span>model<span class="op">$</span>SV, <span class="dt">digits =</span> <span class="dv">2</span>), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>),</span>
-<span id="cb329-9"><a href="svm.html#cb329-9"></a>       <span class="dt">b =</span> <span class="op">-</span><span class="kw">round</span>(model<span class="op">$</span>rho, <span class="dt">digits =</span> <span class="dv">2</span>),</span>
-<span id="cb329-10"><a href="svm.html#cb329-10"></a>       <span class="dt">sv =</span> <span class="kw">paste</span>(model<span class="op">$</span>index, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>),</span>
-<span id="cb329-11"><a href="svm.html#cb329-11"></a>       <span class="dt">misclassified =</span> <span class="kw">paste</span>(<span class="kw">which</span>(model<span class="op">$</span>fitted <span class="op">!=</span><span class="st"> </span><span class="kw">as.factor</span>(inseparable_train_df<span class="op">$</span>class)), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>))</span>
-<span id="cb329-12"><a href="svm.html#cb329-12"></a>}</span>
-<span id="cb329-13"><a href="svm.html#cb329-13"></a></span>
-<span id="cb329-14"><a href="svm.html#cb329-14"></a>svm_summary &lt;-<span class="st"> </span><span class="kw">lapply</span>(svm_models, getHyperplane) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_rows</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="svm.html#cb324-1" aria-hidden="true" tabindex="-1"></a>svm_models <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">100</span>), <span class="cf">function</span>(C)</span>
+<span id="cb324-2"><a href="svm.html#cb324-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">svm</span>(<span class="fu">as.factor</span>(class) <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> inseparable_train_df,</span>
+<span id="cb324-3"><a href="svm.html#cb324-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">kernel =</span> <span class="st">&quot;linear&quot;</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb324-4"><a href="svm.html#cb324-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> <span class="st">&quot;C-classification&quot;</span>, <span class="at">cost =</span> C))</span>
+<span id="cb324-5"><a href="svm.html#cb324-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-6"><a href="svm.html#cb324-6" aria-hidden="true" tabindex="-1"></a>getHyperplane <span class="ot">&lt;-</span> <span class="cf">function</span>(model) {</span>
+<span id="cb324-7"><a href="svm.html#cb324-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">C =</span> model<span class="sc">$</span>cost,</span>
+<span id="cb324-8"><a href="svm.html#cb324-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">w =</span> <span class="fu">paste</span>(<span class="fu">round</span>(<span class="fu">t</span>(model<span class="sc">$</span>coefs) <span class="sc">%*%</span> model<span class="sc">$</span>SV, <span class="at">digits =</span> <span class="dv">2</span>), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>),</span>
+<span id="cb324-9"><a href="svm.html#cb324-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">b =</span> <span class="sc">-</span><span class="fu">round</span>(model<span class="sc">$</span>rho, <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb324-10"><a href="svm.html#cb324-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">sv =</span> <span class="fu">paste</span>(model<span class="sc">$</span>index, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>),</span>
+<span id="cb324-11"><a href="svm.html#cb324-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">misclassified =</span> <span class="fu">paste</span>(<span class="fu">which</span>(model<span class="sc">$</span>fitted <span class="sc">!=</span> <span class="fu">as.factor</span>(inseparable_train_df<span class="sc">$</span>class)), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>))</span>
+<span id="cb324-12"><a href="svm.html#cb324-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb324-13"><a href="svm.html#cb324-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-14"><a href="svm.html#cb324-14" aria-hidden="true" tabindex="-1"></a>svm_summary <span class="ot">&lt;-</span> <span class="fu">lapply</span>(svm_models, getHyperplane) <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:svm-inseparable-summary">Table 9.5: </span>페널티 단가 C에 따른 하이퍼플레인 계수 및 결과</caption>
 <thead>
@@ -947,7 +1020,7 @@ b = \sum_{i: 0 &lt; \alpha_{i}^{*} &lt; C} \frac{1 - y_{i} \mathbf{w}^{\top} \ma
 </tbody>
 </table>
 <p>Table <a href="svm.html#tab:svm-inseparable-summary">9.5</a>에서 보이는 바와 같이, 페널티 단가 <span class="math inline">\(C\)</span>의 값이 1과 5일 때 분리 하이퍼플레인이 변하는 것을 볼 수 있다. <span class="math inline">\(C\)</span>값이 5와 100일 때의 분리 하이퍼플레인은 거의 동일하다.</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="svm.html#cb330-1"></a><span class="kw">plot</span>(svm_models[[<span class="dv">2</span>]], <span class="dt">data =</span> inseparable_train_df, <span class="dt">formula =</span> x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="svm.html#cb325-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(svm_models[[<span class="dv">2</span>]], <span class="at">data =</span> inseparable_train_df, <span class="at">formula =</span> x2 <span class="sc">~</span> x1, <span class="at">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:linear-svm-inseparable-highcost"></span>
 <img src="data-mining-book_files/figure-html/linear-svm-inseparable-highcost-1.png" alt="선형 SVM 분리 불가능 경우의 하이퍼플레인 ($C = 5$)" width="672" />
 <p class="caption">
@@ -957,20 +1030,20 @@ Figure 9.3: 선형 SVM 분리 불가능 경우의 하이퍼플레인 (<span clas
 <p>Figure <a href="svm.html#fig:linear-svm-inseparable-highcost">9.3</a>의 하이퍼플레인(<span class="math inline">\(C = 5\)</span>인 경우)은 Figure <a href="svm.html#fig:linear-svm-basic-inseparable">9.2</a>의 하이퍼플레인(<span class="math inline">\(C = 1\)</span>인 경우)보다 오분류 객체에 가깝게 위치함을 확인할 수 있다.</p>
 </div>
 </div>
-<div id="nonlinear-svm" class="section level2">
+<div id="nonlinear-svm" class="section level2" number="9.5">
 <h2><span class="header-section-number">9.5</span> 비선형 SVM</h2>
 <p>본 장에서는 선형으로 분리 성능이 좋지 않은 경우에 대해 원 입력변수에 대해 비선형인 하이퍼플레인을 찾는 문제를 다룬다. 이는 원 입력변수에 대해 비선형인 기저함수 공간으로 객체를 이동시킨 후 해당 공간에서 선형 분리 하이퍼플레인을 찾는 과정이다.</p>
-<div id="nonlinear-svm-basic-script" class="section level3">
+<div id="nonlinear-svm-basic-script" class="section level3" number="9.5.1">
 <h3><span class="header-section-number">9.5.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="svm.html#cb331-1"></a>nonlinear_train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb331-2"><a href="svm.html#cb331-2"></a>  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">5</span>), </span>
-<span id="cb331-3"><a href="svm.html#cb331-3"></a>  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">4</span>), </span>
-<span id="cb331-4"><a href="svm.html#cb331-4"></a>  <span class="dt">class =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">-1</span>, <span class="dv">-1</span>, <span class="dv">-1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">-1</span>, <span class="dv">-1</span>)</span>
-<span id="cb331-5"><a href="svm.html#cb331-5"></a>)</span>
-<span id="cb331-6"><a href="svm.html#cb331-6"></a></span>
-<span id="cb331-7"><a href="svm.html#cb331-7"></a>knitr<span class="op">::</span><span class="kw">kable</span>(nonlinear_train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb331-8"><a href="svm.html#cb331-8"></a>             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb331-9"><a href="svm.html#cb331-9"></a>             <span class="dt">caption =</span> <span class="st">&#39;비선형 SVM 학습표본 데이터&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="svm.html#cb326-1" aria-hidden="true" tabindex="-1"></a>nonlinear_train_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb326-2"><a href="svm.html#cb326-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x1 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">5</span>), </span>
+<span id="cb326-3"><a href="svm.html#cb326-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">4</span>), </span>
+<span id="cb326-4"><a href="svm.html#cb326-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb326-5"><a href="svm.html#cb326-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb326-6"><a href="svm.html#cb326-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-7"><a href="svm.html#cb326-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(nonlinear_train_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb326-8"><a href="svm.html#cb326-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb326-9"><a href="svm.html#cb326-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;비선형 SVM 학습표본 데이터&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:nonlinear-svm-train-data">Table 9.6: </span>비선형 SVM 학습표본 데이터</caption>
 <thead>
@@ -1028,11 +1101,11 @@ Figure 9.3: 선형 SVM 분리 불가능 경우의 하이퍼플레인 (<span clas
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="svm.html#cb332-1"></a><span class="kw">library</span>(e1071)</span>
-<span id="cb332-2"><a href="svm.html#cb332-2"></a>svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> nonlinear_train_df, </span>
-<span id="cb332-3"><a href="svm.html#cb332-3"></a>                 <span class="dt">kernel =</span> <span class="st">&quot;polynomial&quot;</span>, <span class="dt">coef0 =</span> <span class="dv">1</span>, <span class="dt">gamma =</span> <span class="dv">1</span>, <span class="dt">degree =</span> <span class="dv">2</span>,</span>
-<span id="cb332-4"><a href="svm.html#cb332-4"></a>                 <span class="dt">cost =</span> <span class="dv">5</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb332-5"><a href="svm.html#cb332-5"></a><span class="kw">plot</span>(svm_model, <span class="dt">data =</span> nonlinear_train_df, <span class="dt">formula =</span> x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="svm.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
+<span id="cb327-2"><a href="svm.html#cb327-2" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm</span>(<span class="fu">as.factor</span>(class) <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> nonlinear_train_df, </span>
+<span id="cb327-3"><a href="svm.html#cb327-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">kernel =</span> <span class="st">&quot;polynomial&quot;</span>, <span class="at">coef0 =</span> <span class="dv">1</span>, <span class="at">gamma =</span> <span class="dv">1</span>, <span class="at">degree =</span> <span class="dv">2</span>,</span>
+<span id="cb327-4"><a href="svm.html#cb327-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">cost =</span> <span class="dv">5</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb327-5"><a href="svm.html#cb327-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(svm_model, <span class="at">data =</span> nonlinear_train_df, <span class="at">formula =</span> x2 <span class="sc">~</span> x1, <span class="at">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:nonlinear-svm-basic"></span>
 <img src="data-mining-book_files/figure-html/nonlinear-svm-basic-1.png" alt="비선형 SVM 하이퍼플레인" width="672" />
 <p class="caption">
@@ -1040,7 +1113,7 @@ Figure 9.4: 비선형 SVM 하이퍼플레인
 </p>
 </div>
 </div>
-<div id="nonlinear-svm-hyperplane" class="section level3">
+<div id="nonlinear-svm-hyperplane" class="section level3" number="9.5.2">
 <h3><span class="header-section-number">9.5.2</span> 최적 하이퍼플레인</h3>
 <p>식 <a href="svm.html#eq:linear-svm-hyperplane">(9.1)</a>을 일반화한 다음과 같은 하이퍼플레인을 고려하자.</p>
 <p><span class="math display" id="eq:nonlinear-svm-hyperplane">\[\begin{equation}
@@ -1086,26 +1159,26 @@ K(\mathbf{x}_i, \mathbf{x}_j) = \left( \gamma \mathbf{x}_i^\top \mathbf{x}_j + \
 K(\mathbf{x}_i, \mathbf{x}_j) = \left( \mathbf{x}_i^\top \mathbf{x}_j + 1 \right)^2
 \end{equation*}\]</span></p>
 <p>에 기반한 SVM을 학습하기 위해서 아래와 같이 <code>svm</code> 함수를 호출한다.</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="svm.html#cb333-1"></a>svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> nonlinear_train_df, </span>
-<span id="cb333-2"><a href="svm.html#cb333-2"></a>                 <span class="dt">kernel =</span> <span class="st">&quot;polynomial&quot;</span>, <span class="dt">coef0 =</span> <span class="dv">1</span>, <span class="dt">gamma =</span> <span class="dv">1</span>, <span class="dt">degree =</span> <span class="dv">2</span>,</span>
-<span id="cb333-3"><a href="svm.html#cb333-3"></a>                 <span class="dt">scale =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="svm.html#cb328-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm</span>(<span class="fu">as.factor</span>(class) <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> nonlinear_train_df, </span>
+<span id="cb328-2"><a href="svm.html#cb328-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">kernel =</span> <span class="st">&quot;polynomial&quot;</span>, <span class="at">coef0 =</span> <span class="dv">1</span>, <span class="at">gamma =</span> <span class="dv">1</span>, <span class="at">degree =</span> <span class="dv">2</span>,</span>
+<span id="cb328-3"><a href="svm.html#cb328-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">scale =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>위 함수 호출 결과 서포트 벡터 객체는 1, 7, 2, 3, 9이다.</p>
 <p>비선형 SVM의 분리 하이퍼플레인 또한 페널티 단가 <span class="math inline">\(C\)</span>의 값에 따라 달라진다. 선형 SVM의 경우와 같이 <span class="math inline">\(C = 1, 5, 100\)</span>에 대해 각각 비선형 SVM을 구해보자.</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="svm.html#cb334-1"></a>svm_models &lt;-<span class="st"> </span><span class="kw">lapply</span>(</span>
-<span id="cb334-2"><a href="svm.html#cb334-2"></a>  <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">100</span>),</span>
-<span id="cb334-3"><a href="svm.html#cb334-3"></a>  <span class="cf">function</span>(C)</span>
-<span id="cb334-4"><a href="svm.html#cb334-4"></a>    <span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> nonlinear_train_df,</span>
-<span id="cb334-5"><a href="svm.html#cb334-5"></a>        <span class="dt">kernel =</span> <span class="st">&quot;polynomial&quot;</span>, <span class="dt">coef0 =</span> <span class="dv">1</span>, <span class="dt">gamma =</span> <span class="dv">1</span>, <span class="dt">degree =</span> <span class="dv">2</span>,</span>
-<span id="cb334-6"><a href="svm.html#cb334-6"></a>        <span class="dt">cost =</span> C, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb334-7"><a href="svm.html#cb334-7"></a>)</span>
-<span id="cb334-8"><a href="svm.html#cb334-8"></a></span>
-<span id="cb334-9"><a href="svm.html#cb334-9"></a>getSummary &lt;-<span class="st"> </span><span class="cf">function</span>(model) {</span>
-<span id="cb334-10"><a href="svm.html#cb334-10"></a>  <span class="kw">list</span>(<span class="dt">C =</span> model<span class="op">$</span>cost,</span>
-<span id="cb334-11"><a href="svm.html#cb334-11"></a>       <span class="dt">sv =</span> <span class="kw">paste</span>(model<span class="op">$</span>index, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>),</span>
-<span id="cb334-12"><a href="svm.html#cb334-12"></a>       <span class="dt">misclassified =</span> <span class="kw">paste</span>(<span class="kw">which</span>(model<span class="op">$</span>fitted <span class="op">!=</span><span class="st"> </span><span class="kw">as.factor</span>(nonlinear_train_df<span class="op">$</span>class)), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>))</span>
-<span id="cb334-13"><a href="svm.html#cb334-13"></a>}</span>
-<span id="cb334-14"><a href="svm.html#cb334-14"></a></span>
-<span id="cb334-15"><a href="svm.html#cb334-15"></a>svm_summary &lt;-<span class="st"> </span><span class="kw">lapply</span>(svm_models, getSummary) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_rows</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="svm.html#cb329-1" aria-hidden="true" tabindex="-1"></a>svm_models <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb329-2"><a href="svm.html#cb329-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">100</span>),</span>
+<span id="cb329-3"><a href="svm.html#cb329-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(C)</span>
+<span id="cb329-4"><a href="svm.html#cb329-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">svm</span>(<span class="fu">as.factor</span>(class) <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> nonlinear_train_df,</span>
+<span id="cb329-5"><a href="svm.html#cb329-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">kernel =</span> <span class="st">&quot;polynomial&quot;</span>, <span class="at">coef0 =</span> <span class="dv">1</span>, <span class="at">gamma =</span> <span class="dv">1</span>, <span class="at">degree =</span> <span class="dv">2</span>,</span>
+<span id="cb329-6"><a href="svm.html#cb329-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">cost =</span> C, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb329-7"><a href="svm.html#cb329-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb329-8"><a href="svm.html#cb329-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb329-9"><a href="svm.html#cb329-9" aria-hidden="true" tabindex="-1"></a>getSummary <span class="ot">&lt;-</span> <span class="cf">function</span>(model) {</span>
+<span id="cb329-10"><a href="svm.html#cb329-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">C =</span> model<span class="sc">$</span>cost,</span>
+<span id="cb329-11"><a href="svm.html#cb329-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">sv =</span> <span class="fu">paste</span>(model<span class="sc">$</span>index, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>),</span>
+<span id="cb329-12"><a href="svm.html#cb329-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">misclassified =</span> <span class="fu">paste</span>(<span class="fu">which</span>(model<span class="sc">$</span>fitted <span class="sc">!=</span> <span class="fu">as.factor</span>(nonlinear_train_df<span class="sc">$</span>class)), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>))</span>
+<span id="cb329-13"><a href="svm.html#cb329-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb329-14"><a href="svm.html#cb329-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb329-15"><a href="svm.html#cb329-15" aria-hidden="true" tabindex="-1"></a>svm_summary <span class="ot">&lt;-</span> <span class="fu">lapply</span>(svm_models, getSummary) <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:nonlinear-svm-summary">Table 9.7: </span>페널티 단가 C에 따른 비선형 SVM 결과</caption>
 <thead>
@@ -1135,9 +1208,9 @@ K(\mathbf{x}_i, \mathbf{x}_j) = \left( \mathbf{x}_i^\top \mathbf{x}_j + 1 \right
 </table>
 </div>
 </div>
-<div id="svm-r-pkg" class="section level2">
+<div id="svm-r-pkg" class="section level2" number="9.6">
 <h2><span class="header-section-number">9.6</span> R패키지 내 SVM</h2>
-<div id="svm-kernel-function" class="section level3">
+<div id="svm-kernel-function" class="section level3" number="9.6.1">
 <h3><span class="header-section-number">9.6.1</span> 커널함수</h3>
 <p>앞 장에서는 선형 커널과 다항 커널함수의 예를 살펴보았다. 본 장에서는 가우시안 커널 및 시그모이드 커널을 사용하는 법을 살펴보자.</p>
 <p>가우시안 커널의 경우</p>
@@ -1145,10 +1218,10 @@ K(\mathbf{x}_i, \mathbf{x}_j) = \left( \mathbf{x}_i^\top \mathbf{x}_j + 1 \right
 K(\mathbf{x}_i, \mathbf{x}_j) = \exp \left( -\gamma \left\lVert \mathbf{x}_i - \mathbf{x}_j \right\rVert^2 \right)
 \end{equation*}\]</span></p>
 <p>과 같이 <span class="math inline">\(\gamma\)</span> 파라미터를 이용하여 함수를 정의하며, <code>svm</code> 함수에 <code>gamma</code> 파라미터값을 통해 설정할 수 있다.</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="svm.html#cb335-1"></a>svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> nonlinear_train_df, </span>
-<span id="cb335-2"><a href="svm.html#cb335-2"></a>                 <span class="dt">kernel =</span> <span class="st">&quot;radial&quot;</span>, <span class="dt">gamma =</span> <span class="dv">1</span>,</span>
-<span id="cb335-3"><a href="svm.html#cb335-3"></a>                 <span class="dt">cost =</span> <span class="dv">5</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb335-4"><a href="svm.html#cb335-4"></a><span class="kw">plot</span>(svm_model, <span class="dt">data =</span> nonlinear_train_df, <span class="dt">formula =</span> x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="svm.html#cb330-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm</span>(<span class="fu">as.factor</span>(class) <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> nonlinear_train_df, </span>
+<span id="cb330-2"><a href="svm.html#cb330-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">kernel =</span> <span class="st">&quot;radial&quot;</span>, <span class="at">gamma =</span> <span class="dv">1</span>,</span>
+<span id="cb330-3"><a href="svm.html#cb330-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">cost =</span> <span class="dv">5</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb330-4"><a href="svm.html#cb330-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(svm_model, <span class="at">data =</span> nonlinear_train_df, <span class="at">formula =</span> x2 <span class="sc">~</span> x1, <span class="at">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:nonlinear-svm-radial"></span>
 <img src="data-mining-book_files/figure-html/nonlinear-svm-radial-1.png" alt="가우시안 커널을 이용한 비선형 SVM 하이퍼플레인" width="672" />
 <p class="caption">
@@ -1160,10 +1233,10 @@ Figure 9.5: 가우시안 커널을 이용한 비선형 SVM 하이퍼플레인
 K(\mathbf{x}_i, \mathbf{x}_j) = \tanh \left(\gamma \mathbf{x}_i^\top \mathbf{x}_j + \beta_0 \right)
 \end{equation*}\]</span></p>
 <p>와 같이 두 파라미터 <span class="math inline">\(\gamma, \beta_0\)</span>의 값에 대응하는 <code>svm</code> 함수의 파라미터 <code>gamma, coef0</code> 값을 통해 설정할 수 있다.</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="svm.html#cb336-1"></a>svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> nonlinear_train_df, </span>
-<span id="cb336-2"><a href="svm.html#cb336-2"></a>                 <span class="dt">kernel =</span> <span class="st">&quot;sigmoid&quot;</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>, <span class="dt">coef0 =</span> <span class="dv">-1</span>,</span>
-<span id="cb336-3"><a href="svm.html#cb336-3"></a>                 <span class="dt">cost =</span> <span class="dv">5</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb336-4"><a href="svm.html#cb336-4"></a><span class="kw">plot</span>(svm_model, <span class="dt">data =</span> nonlinear_train_df, <span class="dt">formula =</span> x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="svm.html#cb331-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm</span>(<span class="fu">as.factor</span>(class) <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> nonlinear_train_df, </span>
+<span id="cb331-2"><a href="svm.html#cb331-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">kernel =</span> <span class="st">&quot;sigmoid&quot;</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>, <span class="at">coef0 =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb331-3"><a href="svm.html#cb331-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">cost =</span> <span class="dv">5</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb331-4"><a href="svm.html#cb331-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(svm_model, <span class="at">data =</span> nonlinear_train_df, <span class="at">formula =</span> x2 <span class="sc">~</span> x1, <span class="at">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:nonlinear-svm-sigmoid"></span>
 <img src="data-mining-book_files/figure-html/nonlinear-svm-sigmoid-1.png" alt="시그모이드 커널을 이용한 비선형 SVM 하이퍼플레인" width="672" />
 <p class="caption">
@@ -1172,9 +1245,9 @@ Figure 9.6: 시그모이드 커널을 이용한 비선형 SVM 하이퍼플레인
 </div>
 <p>커널 함수의 종류 <code>kernel</code>, 커널 함수의 파라미터 <code>gamma, coef0, degree</code>, 페널티 단가 <code>cost</code>등의 <code>svm</code> 함수 파라미터는 학습 표본과는 별도의 테스트 데이터에 대해 오분류율을 최소화하는 값을 선택하는 것이 일반적이다.</p>
 </div>
-<div id="svm-nu-classification" class="section level3">
+<div id="svm-nu-classification" class="section level3" number="9.6.2">
 <h3><span class="header-section-number">9.6.2</span> <span class="math inline">\(\nu\)</span>-SVC</h3>
-<p><span class="math inline">\(\nu\)</span>-support vector classification(<span class="math inline">\(\nu\)</span>-SVC) <span class="citation">(Schölkopf et al. <a href="#ref-scholkopf2000new" role="doc-biblioref">2000</a>, @chang2001training)</span>은 <span class="math inline">\(C\)</span>-SVC의 이차계획식 <a href="svm.html#eq:nonlinear-svm-dual-kernel">(9.8)</a>과 다른 형태로, 페널티 단가 <span class="math inline">\(C\)</span> 대신 <span class="math inline">\(\nu\)</span>라는 파라미터를 이용한 아래 최적화 문제의 해를 구한다.</p>
+<p><span class="math inline">\(\nu\)</span>-support vector classification(<span class="math inline">\(\nu\)</span>-SVC) <span class="citation"><a href="#ref-chang2001training" role="doc-biblioref">Chang and Lin</a> (<a href="#ref-chang2001training" role="doc-biblioref">2001</a>)</span>은 <span class="math inline">\(C\)</span>-SVC의 이차계획식 <a href="svm.html#eq:nonlinear-svm-dual-kernel">(9.8)</a>과 다른 형태로, 페널티 단가 <span class="math inline">\(C\)</span> 대신 <span class="math inline">\(\nu\)</span>라는 파라미터를 이용한 아래 최적화 문제의 해를 구한다.</p>
 <p><span class="math display" id="eq:nonlinear-nu-svc-dual">\[\begin{equation}
 \begin{split}
 \min \text{  } &amp; L_D = \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j k_{ij}\\
@@ -1189,7 +1262,7 @@ Figure 9.6: 시그모이드 커널을 이용한 비선형 SVM 하이퍼플레인
 <p><span class="math display">\[\begin{equation*}
 0 &lt; \nu \le \frac{2}{N} \min \left( \sum_i I(y_i = 1), \sum_i I(y_i = -1) \right)
 \end{equation*}\]</span></p>
-<p>으로 <span class="citation">(Chang and Lin <a href="#ref-chang2001training" role="doc-biblioref">2001</a>)</span>, 에를 들어 범주 1에 속하는 학습표본 객체 수가
+<p>으로 <span class="citation">(<a href="#ref-chang2001training" role="doc-biblioref">Chang and Lin 2001</a>)</span>, 에를 들어 범주 1에 속하는 학습표본 객체 수가
 전체의 10% 라면, <span class="math inline">\(\nu\)</span> 값은 최대 0.2 까지 설정할 수 있다. 또한</p>
 <p><code>svm</code> 함수가 호출하는 <code>LIBSVM</code> 라이브러리는 위 식 <a href="svm.html#eq:nonlinear-nu-svc-dual">(9.9)</a>을 <span class="math inline">\(N\)</span>이 큰(학습 표본 수가 매우 많은) 경우에도 안정된 결과를 얻을 수 있도록 아래와 같이 변환한 문제를 다룬다.</p>
 <p><span class="math display" id="eq:libsvm-nu-svc-dual">\[\begin{equation}
@@ -1204,11 +1277,11 @@ Figure 9.6: 시그모이드 커널을 이용한 비선형 SVM 하이퍼플레인
 \end{equation}\]</span></p>
 <p>이 때 <span class="math inline">\(\bar{\alpha}_i = \alpha_i N\)</span>이다.</p>
 <p><span class="math inline">\(\nu\)</span>-SVC은 아래와 같이 <code>svm</code> 함수를 호출할 때 <code>type = "nu-classification"</code>과 파라미터 <code>nu</code> 값을 설정함으로써 학습할 수 있다.</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="svm.html#cb337-1"></a>svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(<span class="kw">as.factor</span>(class) <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> nonlinear_train_df, </span>
-<span id="cb337-2"><a href="svm.html#cb337-2"></a>                 <span class="dt">type =</span> <span class="st">&quot;nu-classification&quot;</span>, </span>
-<span id="cb337-3"><a href="svm.html#cb337-3"></a>                 <span class="dt">kernel =</span> <span class="st">&quot;radial&quot;</span>, <span class="dt">gamma =</span> <span class="dv">1</span>,</span>
-<span id="cb337-4"><a href="svm.html#cb337-4"></a>                 <span class="dt">nu =</span> <span class="fl">0.5</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb337-5"><a href="svm.html#cb337-5"></a><span class="kw">plot</span>(svm_model, <span class="dt">data =</span> nonlinear_train_df, <span class="dt">formula =</span> x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="svm.html#cb332-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm</span>(<span class="fu">as.factor</span>(class) <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> nonlinear_train_df, </span>
+<span id="cb332-2"><a href="svm.html#cb332-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">type =</span> <span class="st">&quot;nu-classification&quot;</span>, </span>
+<span id="cb332-3"><a href="svm.html#cb332-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">kernel =</span> <span class="st">&quot;radial&quot;</span>, <span class="at">gamma =</span> <span class="dv">1</span>,</span>
+<span id="cb332-4"><a href="svm.html#cb332-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">nu =</span> <span class="fl">0.5</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb332-5"><a href="svm.html#cb332-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(svm_model, <span class="at">data =</span> nonlinear_train_df, <span class="at">formula =</span> x2 <span class="sc">~</span> x1, <span class="at">grid =</span> <span class="dv">200</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:nu-svc-radial"></span>
 <img src="data-mining-book_files/figure-html/nu-svc-radial-1.png" alt="가우시안 커널을 이용한 $\nu$-SVC 하이퍼플레인" width="672" />
 <p class="caption">
@@ -1220,24 +1293,21 @@ Figure 9.7: 가우시안 커널을 이용한 <span class="math inline">\(\nu\)</
 </div>
 </div>
 <h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-chang2001training">
-<p>Chang, Chih-Chung, and Chih-Jen Lin. 2001. “Training V-Support Vector Classifiers: Theory and Algorithms.” <em>Neural Computation</em> 13 (9): 2119–47.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-chang2001training" class="csl-entry">
+Chang, Chih-Chung, and Chih-Jen Lin. 2001. <span>“Training v-Support Vector Classifiers: Theory and Algorithms.”</span> <em>Neural Computation</em> 13 (9): 2119–47.
 </div>
-<div id="ref-chang2011libsvm">
-<p>Chang, Chih-Chung, and Chih-Jen Lin. 2011. “LIBSVM: A Library for Support Vector Machines.” <em>ACM Transactions on Intelligent Systems and Technology (TIST)</em> 2 (3): 27.</p>
+<div id="ref-chang2011libsvm" class="csl-entry">
+———. 2011. <span>“LIBSVM: A Library for Support Vector Machines.”</span> <em>ACM Transactions on Intelligent Systems and Technology (TIST)</em> 2 (3): 27.
 </div>
-<div id="ref-fan2005working">
-<p>Fan, Rong-En, Pai-Hsuen Chen, and Chih-Jen Lin. 2005. “Working Set Selection Using Second Order Information for Training Support Vector Machines.” <em>Journal of Machine Learning Research</em> 6 (Dec): 1889–1918.</p>
+<div id="ref-fan2005working" class="csl-entry">
+Fan, Rong-En, Pai-Hsuen Chen, and Chih-Jen Lin. 2005. <span>“Working Set Selection Using Second Order Information for Training Support Vector Machines.”</span> <em>Journal of Machine Learning Research</em> 6 (Dec): 1889–1918.
 </div>
-<div id="ref-goldfarb1983numerically">
-<p>Goldfarb, Donald, and Ashok Idnani. 1983. “A Numerically Stable Dual Method for Solving Strictly Convex Quadratic Programs.” <em>Mathematical Programming</em> 27 (1): 1–33.</p>
+<div id="ref-goldfarb1983numerically" class="csl-entry">
+Goldfarb, Donald, and Ashok Idnani. 1983. <span>“A Numerically Stable Dual Method for Solving Strictly Convex Quadratic Programs.”</span> <em>Mathematical Programming</em> 27 (1): 1–33.
 </div>
-<div id="ref-scholkopf2000new">
-<p>Schölkopf, Bernhard, Alex J Smola, Robert C Williamson, and Peter L Bartlett. 2000. “New Support Vector Algorithms.” <em>Neural Computation</em> 12 (5): 1207–45.</p>
-</div>
-<div id="ref-jun2012datamining">
-<p>전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.</p>
+<div id="ref-jun2012datamining" class="csl-entry">
+전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -1259,6 +1329,7 @@ s.setAttribute('data-timestamp', +new Date());
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
             </section>
 
           </div>
@@ -1288,6 +1359,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1307,7 +1379,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["data-mining-book.pdf"],
+"download": ["data-mining-book.pdf", "data-mining-book.epub"],
 "toc": {
 "collapse": "subsection"
 },

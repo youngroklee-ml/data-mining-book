@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 16 추천시스템 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 16 추천시스템 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2020-12-12" />
+<meta name="date" content="2021-07-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="association-rule.html"/>
 <link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,24 +51,23 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,7 +87,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -120,6 +120,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -139,20 +162,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>개요</a></li>
 <li class="chapter" data-level="1" data-path="datamining-overview.html"><a href="datamining-overview.html"><i class="fa fa-check"></i><b>1</b> 데이터마이닝 개요</a></li>
 <li class="part"><span><b>I 1부 - 예측</b></span></li>
-<li class="chapter" data-level="2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>2</b> 회귀분석</a><ul>
+<li class="chapter" data-level="2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>2</b> 회귀분석</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="regression.html"><a href="regression.html#regression-packages-install"><i class="fa fa-check"></i><b>2.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>2.2</b> 다중회귀모형</a></li>
-<li class="chapter" data-level="2.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>2.3</b> 반응치에 대한 추정 및 예측</a><ul>
+<li class="chapter" data-level="2.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>2.3</b> 반응치에 대한 추정 및 예측</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="regression.html"><a href="regression.html#regression-response-confidence"><i class="fa fa-check"></i><b>2.3.1</b> 평균반응치의 추정</a></li>
 <li class="chapter" data-level="2.3.2" data-path="regression.html"><a href="regression.html#regression-response-prediction"><i class="fa fa-check"></i><b>2.3.2</b> 미래반응치의 예측</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>2.4</b> 지시변수와 회귀모형</a><ul>
+<li class="chapter" data-level="2.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>2.4</b> 지시변수와 회귀모형</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="regression.html"><a href="regression.html#regression-indicator-variable-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스트립트</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3</b> 주성분분석</a><ul>
+<li class="chapter" data-level="3" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3</b> 주성분분석</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="pca.html"><a href="pca.html#pca-packages-install"><i class="fa fa-check"></i><b>3.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="3.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>3.2</b> 행렬의 분해</a><ul>
+<li class="chapter" data-level="3.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>3.2</b> 행렬의 분해</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="pca.html"><a href="pca.html#pca-matrix-factorization-basic-script"><i class="fa fa-check"></i><b>3.2.1</b> 기본 R 스트립트</a></li>
 <li class="chapter" data-level="3.2.2" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>3.2.2</b> 변수의 변동과 제곱합</a></li>
 <li class="chapter" data-level="3.2.3" data-path="pca.html"><a href="pca.html#pca-intro"><i class="fa fa-check"></i><b>3.2.3</b> 주성분의 이해 및 행렬의 분해</a></li>
@@ -160,15 +188,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.5" data-path="pca.html"><a href="pca.html#pca-spectral"><i class="fa fa-check"></i><b>3.2.5</b> 분광분해 (Spectral Decomposition)</a></li>
 <li class="chapter" data-level="3.2.6" data-path="pca.html"><a href="pca.html#pca-nipals"><i class="fa fa-check"></i><b>3.2.6</b> NIPALS 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a><ul>
+<li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="pca.html"><a href="pca.html#pcr-basic-script"><i class="fa fa-check"></i><b>3.3.1</b> 기본 R 스트립트</a></li>
 <li class="chapter" data-level="3.3.2" data-path="pca.html"><a href="pca.html#pcr-regression-coefficient"><i class="fa fa-check"></i><b>3.3.2</b> 주성분 회귀계수 추정</a></li>
 <li class="chapter" data-level="3.3.3" data-path="pca.html"><a href="pca.html#pcr-regression-transform"><i class="fa fa-check"></i><b>3.3.3</b> 회귀계수 선형변환</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="plsr.html"><a href="plsr.html"><i class="fa fa-check"></i><b>4</b> 부분최소자승법</a><ul>
+<li class="chapter" data-level="4" data-path="plsr.html"><a href="plsr.html"><i class="fa fa-check"></i><b>4</b> 부분최소자승법</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="plsr.html"><a href="plsr.html#plsr-packages-install"><i class="fa fa-check"></i><b>4.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="4.2" data-path="plsr.html"><a href="plsr.html#plsr-single-target"><i class="fa fa-check"></i><b>4.2</b> 하나의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.2" data-path="plsr.html"><a href="plsr.html#plsr-single-target"><i class="fa fa-check"></i><b>4.2</b> 하나의 종속변수의 경우</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="plsr.html"><a href="plsr.html#plsr-basic-script"><i class="fa fa-check"></i><b>4.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.2.2" data-path="plsr.html"><a href="plsr.html#plsr-model"><i class="fa fa-check"></i><b>4.2.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.2.3" data-path="plsr.html"><a href="plsr.html#plsr-single-nipals"><i class="fa fa-check"></i><b>4.2.3</b> NIPALS 알고리즘</a></li>
@@ -176,7 +207,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.5" data-path="plsr.html"><a href="plsr.html#plsr-sst"><i class="fa fa-check"></i><b>4.2.5</b> 제곱합 분해</a></li>
 <li class="chapter" data-level="4.2.6" data-path="plsr.html"><a href="plsr.html#plsr-variable-importance"><i class="fa fa-check"></i><b>4.2.6</b> 독립변수의 중요도</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-basic-script"><i class="fa fa-check"></i><b>4.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.3.2" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-model"><i class="fa fa-check"></i><b>4.3.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.3.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-nipals"><i class="fa fa-check"></i><b>4.3.3</b> NIPALS 알고리즘</a></li>
@@ -185,189 +217,230 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II 2부 - 분류분석</b></span></li>
-<li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a><ul>
+<li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-packages-install"><i class="fa fa-check"></i><b>5.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="5.2" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-problem-methods"><i class="fa fa-check"></i><b>5.2</b> 분류문제 및 분류기법</a></li>
-<li class="chapter" data-level="5.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>5.3</b> 기본적인 분류기법</a><ul>
+<li class="chapter" data-level="5.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>5.3</b> 기본적인 분류기법</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#nearest-neighbor-classification"><i class="fa fa-check"></i><b>5.3.1</b> 인접객체법</a></li>
 <li class="chapter" data-level="5.3.2" data-path="classification-analysis.html"><a href="classification-analysis.html#naive-bayes"><i class="fa fa-check"></i><b>5.3.2</b> 나이브 베이지안 분류법</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6</b> 로지스틱 회귀분석</a><ul>
+<li class="chapter" data-level="6" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6</b> 로지스틱 회귀분석</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-packages-install"><i class="fa fa-check"></i><b>6.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="6.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>6.2</b> 이분 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>6.2</b> 이분 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#bianry-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-model"><i class="fa fa-check"></i><b>6.2.2</b> 회귀모형</a></li>
 <li class="chapter" data-level="6.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-estimation"><i class="fa fa-check"></i><b>6.2.3</b> 회귀계수 추정</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>6.3</b> 명목 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>6.3</b> 명목 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#baseline-category-logit-model"><i class="fa fa-check"></i><b>6.3.2</b> 기준범주 로짓모형</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>6.4</b> 서열 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>6.4</b> 서열 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-basic-script"><i class="fa fa-check"></i><b>6.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#cumulative-logit-model"><i class="fa fa-check"></i><b>6.4.2</b> 누적 로짓모형</a></li>
 <li class="chapter" data-level="6.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#adjacent-categories-logit-model"><i class="fa fa-check"></i><b>6.4.3</b> 인근범주 로짓모형</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>7</b> 판별분석</a><ul>
+<li class="chapter" data-level="7" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>7</b> 판별분석</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="da.html"><a href="da.html#da-overview"><i class="fa fa-check"></i><b>7.1</b> 개요</a></li>
 <li class="chapter" data-level="7.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a><ul>
+<li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#피셔-판별함수"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
 <li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#분류-규칙"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
 <li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r-패키지를-이용한-분류규칙-도출"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
+<li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>7.4.2</b> 선형판별함수</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>7.5</b> 오분류비용을 고려한 분류규칙</a></li>
-<li class="chapter" data-level="7.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>7.6</b> 이차판별분석</a><ul>
+<li class="chapter" data-level="7.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>7.6</b> 이차판별분석</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>7.6.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>7.6.2</b> 이차 판별함수</a></li>
 <li class="chapter" data-level="7.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>7.6.3</b> 이차판별함수에 의한 분류</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>7.7</b> 세 범주 이상의 분류</a><ul>
+<li class="chapter" data-level="7.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>7.7</b> 세 범주 이상의 분류</a>
+<ul>
 <li class="chapter" data-level="7.7.1" data-path="da.html"><a href="da.html#mutliclass-da-basic-script"><i class="fa fa-check"></i><b>7.7.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.7.2" data-path="da.html"><a href="da.html#mutliclass-generalized-discriminant-function"><i class="fa fa-check"></i><b>7.7.2</b> 일반화된 판별함수</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>8</b> 트리기반 기법</a><ul>
+<li class="chapter" data-level="8" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>8</b> 트리기반 기법</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>8.1</b> CART 개요</a></li>
 <li class="chapter" data-level="8.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-packages-install"><i class="fa fa-check"></i><b>8.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="8.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>8.3</b> CART 트리 생성</a><ul>
+<li class="chapter" data-level="8.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>8.3</b> CART 트리 생성</a>
+<ul>
 <li class="chapter" data-level="8.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>8.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="8.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>8.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="8.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>8.3.3</b> 노드 및 트리의 불순도</a></li>
 <li class="chapter" data-level="8.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>8.3.4</b> 분지기준</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>8.4</b> 가지치기 및 최종 트리 선정</a><ul>
+<li class="chapter" data-level="8.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>8.4</b> 가지치기 및 최종 트리 선정</a>
+<ul>
 <li class="chapter" data-level="8.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>8.4.1</b> 가지치기</a></li>
 <li class="chapter" data-level="8.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>8.4.2</b> 최적 트리의 선정</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>8.5</b> R패키지 내 분류 트리 방법</a><ul>
+<li class="chapter" data-level="8.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>8.5</b> R패키지 내 분류 트리 방법</a>
+<ul>
 <li class="chapter" data-level="8.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>8.5.1</b> 트리 확장</a></li>
 <li class="chapter" data-level="8.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>8.5.2</b> 가지치기</a></li>
 <li class="chapter" data-level="8.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>8.5.3</b> 파라미터값 결정</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>9</b> 서포트 벡터 머신</a><ul>
+<li class="chapter" data-level="9" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>9</b> 서포트 벡터 머신</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>9.1</b> 개요</a></li>
 <li class="chapter" data-level="9.2" data-path="svm.html"><a href="svm.html#svm-packages-install"><i class="fa fa-check"></i><b>9.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="9.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>9.3</b> 선형 SVM - 분리 가능 경우</a><ul>
+<li class="chapter" data-level="9.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>9.3</b> 선형 SVM - 분리 가능 경우</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>9.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>9.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="9.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>9.3.3</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>9.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="9.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>9.4</b> 선형 SVM - 분리 불가능 경우</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>9.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>9.4.2</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>9.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="9.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>9.5</b> 비선형 SVM</a>
+<ul>
 <li class="chapter" data-level="9.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>9.5.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>9.5.2</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>9.6</b> R패키지 내 SVM</a><ul>
+<li class="chapter" data-level="9.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>9.6</b> R패키지 내 SVM</a>
+<ul>
 <li class="chapter" data-level="9.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>9.6.1</b> 커널함수</a></li>
 <li class="chapter" data-level="9.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>9.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>10</b> 분류규칙의 성능 평가</a><ul>
+<li class="chapter" data-level="10" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>10</b> 분류규칙의 성능 평가</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-packages-install"><i class="fa fa-check"></i><b>10.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="10.2" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-misclassification-rate"><i class="fa fa-check"></i><b>10.2</b> 분류오류율</a></li>
-<li class="chapter" data-level="10.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>10.3</b> 정확도, 민감도 및 특이도</a><ul>
+<li class="chapter" data-level="10.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>10.3</b> 정확도, 민감도 및 특이도</a>
+<ul>
 <li class="chapter" data-level="10.3.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#confusion-matrix-r-package"><i class="fa fa-check"></i><b>10.3.1</b> R 패키지 내 정오분류표</a></li>
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#roc-curve"><i class="fa fa-check"></i><b>10.4</b> ROC 곡선</a></li>
 <li class="chapter" data-level="10.5" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#gain-chart"><i class="fa fa-check"></i><b>10.5</b> 이익도표</a></li>
 </ul></li>
 <li class="part"><span><b>III 3부 - 군집분석</b></span></li>
-<li class="chapter" data-level="11" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>11</b> 군집분석 개요</a><ul>
+<li class="chapter" data-level="11" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>11</b> 군집분석 개요</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>11.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="11.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>11.2</b> 군집분석 기법</a></li>
-<li class="chapter" data-level="11.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>11.3</b> 객체 간의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>11.3</b> 객체 간의 유사성 척도</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="clustering-overview.html"><a href="clustering-overview.html#object-distance-metric"><i class="fa fa-check"></i><b>11.3.1</b> 거리 관련 척도</a></li>
 <li class="chapter" data-level="11.3.2" data-path="clustering-overview.html"><a href="clustering-overview.html#object-correlation-metric"><i class="fa fa-check"></i><b>11.3.2</b> 상관계수 관련 척도</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>11.4</b> 범주형 객체의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>11.4</b> 범주형 객체의 유사성 척도</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="clustering-overview.html"><a href="clustering-overview.html#binary-similarity-metric"><i class="fa fa-check"></i><b>11.4.1</b> 이분형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.2" data-path="clustering-overview.html"><a href="clustering-overview.html#ordinal-similarity-metric"><i class="fa fa-check"></i><b>11.4.2</b> 서열형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.3" data-path="clustering-overview.html"><a href="clustering-overview.html#nominal-similarity-metric"><i class="fa fa-check"></i><b>11.4.3</b> 명목형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.4" data-path="clustering-overview.html"><a href="clustering-overview.html#mixed-similarity-metric"><i class="fa fa-check"></i><b>11.4.4</b> 혼합형의 경우</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>12</b> 계층적 군집방법</a><ul>
+<li class="chapter" data-level="12" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>12</b> 계층적 군집방법</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>12.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="12.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#distance-between-clusters"><i class="fa fa-check"></i><b>12.2</b> 군집 간 거리척도 및 연결법</a></li>
-<li class="chapter" data-level="12.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>12.3</b> 연결법의 군집 알고리즘</a><ul>
+<li class="chapter" data-level="12.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>12.3</b> 연결법의 군집 알고리즘</a>
+<ul>
 <li class="chapter" data-level="12.3.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-basic-script"><i class="fa fa-check"></i><b>12.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.3.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-algorithm"><i class="fa fa-check"></i><b>12.3.2</b> 연결법 군집 알고리즘</a></li>
 <li class="chapter" data-level="12.3.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hclust"><i class="fa fa-check"></i><b>12.3.3</b> R 패키지 내 연결법</a></li>
 </ul></li>
-<li class="chapter" data-level="12.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>12.4</b> 워드 방법</a><ul>
+<li class="chapter" data-level="12.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>12.4</b> 워드 방법</a>
+<ul>
 <li class="chapter" data-level="12.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>12.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>12.4.2</b> 워드 군집 알고리즘</a></li>
 <li class="chapter" data-level="12.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>12.4.3</b> R 패키지 내 워드 방법</a></li>
 </ul></li>
-<li class="chapter" data-level="12.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>12.5</b> 분리적 방법 - 다이아나</a><ul>
+<li class="chapter" data-level="12.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>12.5</b> 분리적 방법 - 다이아나</a>
+<ul>
 <li class="chapter" data-level="12.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>12.5.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>12.5.2</b> 다이아나 알고리즘</a></li>
 </ul></li>
 <li class="chapter" data-level="12.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>12.6</b> 군집수의 결정</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>13</b> 비계층적 군집방법</a><ul>
+<li class="chapter" data-level="13" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>13</b> 비계층적 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>13.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="13.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>13.2</b> K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>13.2</b> K-means 알고리즘</a>
+<ul>
 <li class="chapter" data-level="13.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>13.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="13.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>13.2.2</b> 알고리즘</a></li>
 <li class="chapter" data-level="13.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>13.2.3</b> R 스크립트 구현</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>13.3</b> K-medoids 군집방법</a><ul>
+<li class="chapter" data-level="13.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>13.3</b> K-medoids 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>13.3.1</b> PAM 알고리즘</a></li>
 <li class="chapter" data-level="13.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>13.3.2</b> CLARA 알고리즘</a></li>
 <li class="chapter" data-level="13.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>13.3.3</b> CLARANS 알고리즘</a></li>
 <li class="chapter" data-level="13.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>13.3.4</b> K-means-like 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>13.4</b> 퍼지 K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>13.4</b> 퍼지 K-means 알고리즘</a>
+<ul>
 <li class="chapter" data-level="13.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>13.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="13.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>13.4.2</b> 알고리즘</a></li>
 <li class="chapter" data-level="13.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>13.4.3</b> R 스크립트 구현</a></li>
 </ul></li>
-<li class="chapter" data-level="13.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>13.5</b> 모형기반 군집방법</a><ul>
+<li class="chapter" data-level="13.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>13.5</b> 모형기반 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>13.5.1</b> 기본 R script</a></li>
 <li class="chapter" data-level="13.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>13.5.2</b> EM 알고리즘</a></li>
 <li class="chapter" data-level="13.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>13.5.3</b> R 스크립트 구현</a></li>
 <li class="chapter" data-level="13.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>13.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>14</b> 군집해의 평가 및 해석</a><ul>
+<li class="chapter" data-level="14" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>14</b> 군집해의 평가 및 해석</a>
+<ul>
 <li class="chapter" data-level="14.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>14.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="14.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>14.2</b> 군집해의 평가</a><ul>
+<li class="chapter" data-level="14.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>14.2</b> 군집해의 평가</a>
+<ul>
 <li class="chapter" data-level="14.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>14.2.1</b> 외부평가지수</a></li>
 <li class="chapter" data-level="14.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>14.2.2</b> 내부평가지수</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>14.3</b> 군집해의 해석</a></li>
 </ul></li>
 <li class="part"><span><b>IV 4부 - 연관규칙</b></span></li>
-<li class="chapter" data-level="15" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>15</b> 연관규칙</a><ul>
+<li class="chapter" data-level="15" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>15</b> 연관규칙</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="association-rule.html"><a href="association-rule.html#association-packages-install"><i class="fa fa-check"></i><b>15.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="15.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>15.2</b> 연관규칙의 정의 및 성능척도</a><ul>
+<li class="chapter" data-level="15.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>15.2</b> 연관규칙의 정의 및 성능척도</a>
+<ul>
 <li class="chapter" data-level="15.2.1" data-path="association-rule.html"><a href="association-rule.html#association-rule-support"><i class="fa fa-check"></i><b>15.2.1</b> 지지도</a></li>
 <li class="chapter" data-level="15.2.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-confidence"><i class="fa fa-check"></i><b>15.2.2</b> 신뢰도</a></li>
 <li class="chapter" data-level="15.2.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-lift"><i class="fa fa-check"></i><b>15.2.3</b> 개선도</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>15.3</b> 연관규칙의 탐사</a><ul>
+<li class="chapter" data-level="15.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>15.3</b> 연관규칙의 탐사</a>
+<ul>
 <li class="chapter" data-level="15.3.1" data-path="association-rule.html"><a href="association-rule.html#apriori-large-itemsets"><i class="fa fa-check"></i><b>15.3.1</b> 빈발항목집합 생성</a></li>
 <li class="chapter" data-level="15.3.2" data-path="association-rule.html"><a href="association-rule.html#apriori-rule-exploration"><i class="fa fa-check"></i><b>15.3.2</b> 규칙의 탐사</a></li>
 <li class="chapter" data-level="15.3.3" data-path="association-rule.html"><a href="association-rule.html#apriori-r-package"><i class="fa fa-check"></i><b>15.3.3</b> R 패키지 내 Apriori</a></li>
 </ul></li>
-<li class="chapter" data-level="15.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>15.4</b> 순차적 패턴의 탐사</a><ul>
+<li class="chapter" data-level="15.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>15.4</b> 순차적 패턴의 탐사</a>
+<ul>
 <li class="chapter" data-level="15.4.1" data-path="association-rule.html"><a href="association-rule.html#association-aprioriall"><i class="fa fa-check"></i><b>15.4.1</b> AprioriAll 알고리즘</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>16</b> 추천시스템</a><ul>
+<li class="chapter" data-level="16" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>16</b> 추천시스템</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="recommender-system.html"><a href="recommender-system.html#recommender-packages-install"><i class="fa fa-check"></i><b>16.1</b> 필요 R package 설치</a></li>
 <li class="chapter" data-level="16.2" data-path="recommender-system.html"><a href="recommender-system.html#content-based-recommender"><i class="fa fa-check"></i><b>16.2</b> 내용기반 추천시스템</a></li>
 <li class="chapter" data-level="16.3" data-path="recommender-system.html"><a href="recommender-system.html#collaborative-filtering"><i class="fa fa-check"></i><b>16.3</b> 협업 필터링</a></li>
@@ -394,11 +467,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="recommender-system" class="section level1">
+<div id="recommender-system" class="section level1" number="16">
 <h1><span class="header-section-number">Chapter 16</span> 추천시스템</h1>
-<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="recommender-system.html#cb695-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="recommender-system.html#cb656-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>추천시스템(recommender system)은 상품, 웹페이지, 신문 기사 등에 대한 소비자의 성향을 파악하여 그에 부합하는 새로운 상품 등을 추천하고자 하는 목적으로 개발되며, 접근 방식에 따라 내용기반(content-based) 방법, 협업 필터링(collaborative filtering), 결합방식(hybrid) 등으로 분류된다.</p>
-<div id="recommender-packages-install" class="section level2">
+<div id="recommender-packages-install" class="section level2" number="16.1">
 <h2><span class="header-section-number">16.1</span> 필요 R package 설치</h2>
 <p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
 <table>
@@ -411,16 +484,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td align="left">tidyverse</td>
-<td align="left">1.3.0</td>
+<td align="left">1.3.1</td>
 </tr>
 <tr class="even">
 <td align="left">tidytext</td>
-<td align="left">0.2.6</td>
+<td align="left">0.3.1</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="content-based-recommender" class="section level2">
+<div id="content-based-recommender" class="section level2" number="16.2">
 <h2><span class="header-section-number">16.2</span> 내용기반 추천시스템</h2>
 <p>내용기반 추천시스템은 주로 문서 등의 추천에 활용되고 있다.</p>
 <ul>
@@ -429,11 +502,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><span class="math inline">\(n_i\)</span>: 단어 <span class="math inline">\(i\)</span>가 한 번 이상 나타난 문서의 수</li>
 </ul>
 <p>우선 <code>tidytext</code> 패키지를 로드하자.</p>
-<div class="sourceCode" id="cb696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb696-1"><a href="recommender-system.html#cb696-1"></a><span class="kw">library</span>(tidytext)</span></code></pre></div>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="recommender-system.html#cb657-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span></code></pre></div>
 <p><code>janeaustenr</code> 패키지에 있는 Jane Austen의 6개 소설에 대한 텍스트 데이터를 로드하자. 해당 데이터는 책 내용이 담긴 <code>text</code>라는 컬럼과 책 제목인 <code>book</code> 컬럼으로 이루어진 데이터 프레임이다.</p>
-<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="recommender-system.html#cb697-1"></a><span class="kw">library</span>(janeaustenr)</span>
-<span id="cb697-2"><a href="recommender-system.html#cb697-2"></a>tidy_books &lt;-<span class="st"> </span><span class="kw">austen_books</span>()</span>
-<span id="cb697-3"><a href="recommender-system.html#cb697-3"></a><span class="kw">head</span>(tidy_books)</span></code></pre></div>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="recommender-system.html#cb658-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janeaustenr)</span>
+<span id="cb658-2"><a href="recommender-system.html#cb658-2" aria-hidden="true" tabindex="-1"></a>tidy_books <span class="ot">&lt;-</span> <span class="fu">austen_books</span>()</span>
+<span id="cb658-3"><a href="recommender-system.html#cb658-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tidy_books)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   text                    book               
 ##   &lt;chr&gt;                   &lt;fct&gt;              
@@ -444,13 +517,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 &quot;(1811)&quot;                Sense &amp; Sensibility
 ## 6 &quot;&quot;                      Sense &amp; Sensibility</code></pre>
 <p>해당 데이터 프레임에 담긴 책의 수는 아래와 같다.</p>
-<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="recommender-system.html#cb699-1"></a>n_book &lt;-<span class="st"> </span><span class="kw">nlevels</span>(tidy_books<span class="op">$</span>book)</span>
-<span id="cb699-2"><a href="recommender-system.html#cb699-2"></a><span class="kw">print</span>(n_book)</span></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="recommender-system.html#cb660-1" aria-hidden="true" tabindex="-1"></a>n_book <span class="ot">&lt;-</span> <span class="fu">nlevels</span>(tidy_books<span class="sc">$</span>book)</span>
+<span id="cb660-2"><a href="recommender-system.html#cb660-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(n_book)</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 <p>책의 내용 text를 단어 단위로 나누어 각 행으로 저장하자.</p>
-<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb701-1"><a href="recommender-system.html#cb701-1"></a>tidy_words &lt;-<span class="st"> </span>tidy_books <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest_tokens</span>(word, text)</span>
-<span id="cb701-2"><a href="recommender-system.html#cb701-2"></a>  </span>
-<span id="cb701-3"><a href="recommender-system.html#cb701-3"></a><span class="kw">head</span>(tidy_words)</span></code></pre></div>
+<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="recommender-system.html#cb662-1" aria-hidden="true" tabindex="-1"></a>tidy_words <span class="ot">&lt;-</span> tidy_books <span class="sc">%&gt;%</span> <span class="fu">unnest_tokens</span>(word, text)</span>
+<span id="cb662-2"><a href="recommender-system.html#cb662-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb662-3"><a href="recommender-system.html#cb662-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tidy_words)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   book                word       
 ##   &lt;fct&gt;               &lt;chr&gt;      
@@ -464,16 +537,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[\begin{equation*}
 TF_{ij} = \frac{f_{ij}}{\sum_k f_{kj}}
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="recommender-system.html#cb703-1"></a>tf_results &lt;-<span class="st"> </span>tidy_words <span class="op">%&gt;%</span></span>
-<span id="cb703-2"><a href="recommender-system.html#cb703-2"></a><span class="st">  </span><span class="kw">group_by</span>(book, word) <span class="op">%&gt;%</span></span>
-<span id="cb703-3"><a href="recommender-system.html#cb703-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
-<span id="cb703-4"><a href="recommender-system.html#cb703-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">tf =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span></span>
-<span id="cb703-5"><a href="recommender-system.html#cb703-5"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>n) <span class="op">%&gt;%</span></span>
-<span id="cb703-6"><a href="recommender-system.html#cb703-6"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb703-7"><a href="recommender-system.html#cb703-7"></a><span class="st">  </span><span class="kw">complete</span>(book, word, <span class="dt">fill =</span> <span class="kw">list</span>(<span class="dt">tf =</span> <span class="dv">0</span>))</span></code></pre></div>
-<pre><code>## `summarise()` regrouping output by &#39;book&#39; (override with `.groups` argument)</code></pre>
-<p>이 때, 단어 빈도수가 높은 단어들은 대체로 너무 흔한 단어들이어서 중요한 의미를 지니지 않은 경우가 많다. 아래와 같이, “the”, “to”, “and” 등의 단어들이 사용 빈도가 매우 높은 단어들이다.</p>
-<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="recommender-system.html#cb705-1"></a>tf_results <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(tf)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="recommender-system.html#cb664-1" aria-hidden="true" tabindex="-1"></a>tf_results <span class="ot">&lt;-</span> tidy_words <span class="sc">%&gt;%</span></span>
+<span id="cb664-2"><a href="recommender-system.html#cb664-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(book, word) <span class="sc">%&gt;%</span></span>
+<span id="cb664-3"><a href="recommender-system.html#cb664-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb664-4"><a href="recommender-system.html#cb664-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tf =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb664-5"><a href="recommender-system.html#cb664-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>n) <span class="sc">%&gt;%</span></span>
+<span id="cb664-6"><a href="recommender-system.html#cb664-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb664-7"><a href="recommender-system.html#cb664-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">complete</span>(book, word, <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">tf =</span> <span class="dv">0</span>))</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;book&#39;. You can override using the `.groups` argument.</code></pre>
+<p>이 때, 단어 빈도수가 높은 단어들은 대체로 너무 흔한 단어들이어서 중요한 의미를 지니지 않은 경우가 많다. 아래와 같이, “the,” “to,” “and” 등의 단어들이 사용 빈도가 매우 높은 단어들이다.</p>
+<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="recommender-system.html#cb666-1" aria-hidden="true" tabindex="-1"></a>tf_results <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(tf)) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ##    book                word      tf
 ##    &lt;fct&gt;               &lt;chr&gt;  &lt;dbl&gt;
@@ -491,14 +564,13 @@ TF_{ij} = \frac{f_{ij}}{\sum_k f_{kj}}
 <p><span class="math display">\[\begin{equation*}
 IDF_{i} = \log \frac{N}{n_i}
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="recommender-system.html#cb707-1"></a>idf_results &lt;-<span class="st"> </span>tf_results <span class="op">%&gt;%</span></span>
-<span id="cb707-2"><a href="recommender-system.html#cb707-2"></a><span class="st">  </span><span class="kw">filter</span>(tf <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span></span>
-<span id="cb707-3"><a href="recommender-system.html#cb707-3"></a><span class="st">  </span><span class="kw">group_by</span>(word) <span class="op">%&gt;%</span></span>
-<span id="cb707-4"><a href="recommender-system.html#cb707-4"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
-<span id="cb707-5"><a href="recommender-system.html#cb707-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">idf =</span> <span class="kw">log</span>(n_book <span class="op">/</span><span class="st"> </span>n)) <span class="op">%&gt;%</span></span>
-<span id="cb707-6"><a href="recommender-system.html#cb707-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>n)</span></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="recommender-system.html#cb709-1"></a>idf_results <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(idf)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="recommender-system.html#cb668-1" aria-hidden="true" tabindex="-1"></a>idf_results <span class="ot">&lt;-</span> tf_results <span class="sc">%&gt;%</span></span>
+<span id="cb668-2"><a href="recommender-system.html#cb668-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tf <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb668-3"><a href="recommender-system.html#cb668-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">%&gt;%</span></span>
+<span id="cb668-4"><a href="recommender-system.html#cb668-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb668-5"><a href="recommender-system.html#cb668-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idf =</span> <span class="fu">log</span>(n_book <span class="sc">/</span> n)) <span class="sc">%&gt;%</span></span>
+<span id="cb668-6"><a href="recommender-system.html#cb668-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>n)</span></code></pre></div>
+<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="recommender-system.html#cb669-1" aria-hidden="true" tabindex="-1"></a>idf_results <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(idf)) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 2
 ##    word           idf
 ##    &lt;chr&gt;        &lt;dbl&gt;
@@ -516,12 +588,12 @@ IDF_{i} = \log \frac{N}{n_i}
 <p><span class="math display">\[\begin{equation*}
 w_{ij} = TF_{ij} \times IDF_{i}
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="recommender-system.html#cb711-1"></a>tf_idf_results &lt;-<span class="st"> </span><span class="kw">inner_join</span>(tf_results, idf_results, <span class="dt">by =</span> <span class="st">&quot;word&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb711-2"><a href="recommender-system.html#cb711-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">tf_idf =</span> tf <span class="op">*</span><span class="st"> </span>idf)</span></code></pre></div>
+<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="recommender-system.html#cb671-1" aria-hidden="true" tabindex="-1"></a>tf_idf_results <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(tf_results, idf_results, <span class="at">by =</span> <span class="st">&quot;word&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb671-2"><a href="recommender-system.html#cb671-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tf_idf =</span> tf <span class="sc">*</span> idf)</span></code></pre></div>
 <p>TF-IDF 가중치가 높은 단어들을 살펴보자.</p>
-<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="recommender-system.html#cb712-1"></a>tf_idf_results <span class="op">%&gt;%</span></span>
-<span id="cb712-2"><a href="recommender-system.html#cb712-2"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(tf_idf)) <span class="op">%&gt;%</span></span>
-<span id="cb712-3"><a href="recommender-system.html#cb712-3"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="recommender-system.html#cb672-1" aria-hidden="true" tabindex="-1"></a>tf_idf_results <span class="sc">%&gt;%</span></span>
+<span id="cb672-2"><a href="recommender-system.html#cb672-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf_idf)) <span class="sc">%&gt;%</span></span>
+<span id="cb672-3"><a href="recommender-system.html#cb672-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 5
 ##    book                word           tf   idf  tf_idf
 ##    &lt;fct&gt;               &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
@@ -537,14 +609,14 @@ w_{ij} = TF_{ij} \times IDF_{i}
 ## 10 Persuasion          wentworth 0.00228  1.79 0.00409</code></pre>
 <p>대체로 소설에 나타나는 인물의 이름이 높은 가중치를 보이는데, 이는 인물의 이름이 소설 한 권에 걸쳐 여러 번 나타나 단어 빈도수가 높으며, 또한 각각의 소설이 서로 다른 인물명을 등장시킴으로써 역문서 빈도수 또한 높기 때문이다.</p>
 <p>위와 같은 TF-IDF 가중치 계산은 <code>tidytext</code> 패키지의 <code>bind_tf_idf</code> 함수를 이용하여 간편하게 구할 수 있다.</p>
-<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="recommender-system.html#cb714-1"></a>tidy_words <span class="op">%&gt;%</span></span>
-<span id="cb714-2"><a href="recommender-system.html#cb714-2"></a><span class="st">  </span><span class="kw">group_by</span>(book, word) <span class="op">%&gt;%</span></span>
-<span id="cb714-3"><a href="recommender-system.html#cb714-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
-<span id="cb714-4"><a href="recommender-system.html#cb714-4"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb714-5"><a href="recommender-system.html#cb714-5"></a><span class="st">  </span><span class="kw">bind_tf_idf</span>(word, book, n) <span class="op">%&gt;%</span></span>
-<span id="cb714-6"><a href="recommender-system.html#cb714-6"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(tf_idf)) <span class="op">%&gt;%</span></span>
-<span id="cb714-7"><a href="recommender-system.html#cb714-7"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</span></code></pre></div>
-<pre><code>## `summarise()` regrouping output by &#39;book&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="recommender-system.html#cb674-1" aria-hidden="true" tabindex="-1"></a>tidy_words <span class="sc">%&gt;%</span></span>
+<span id="cb674-2"><a href="recommender-system.html#cb674-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(book, word) <span class="sc">%&gt;%</span></span>
+<span id="cb674-3"><a href="recommender-system.html#cb674-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb674-4"><a href="recommender-system.html#cb674-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb674-5"><a href="recommender-system.html#cb674-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(word, book, n) <span class="sc">%&gt;%</span></span>
+<span id="cb674-6"><a href="recommender-system.html#cb674-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf_idf)) <span class="sc">%&gt;%</span></span>
+<span id="cb674-7"><a href="recommender-system.html#cb674-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;book&#39;. You can override using the `.groups` argument.</code></pre>
 <pre><code>## # A tibble: 10 x 6
 ##    book                word          n      tf   idf  tf_idf
 ##    &lt;fct&gt;               &lt;chr&gt;     &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
@@ -559,18 +631,18 @@ w_{ij} = TF_{ij} \times IDF_{i}
 ##  9 Pride &amp; Prejudice   bennet      294 0.00241  1.79 0.00431
 ## 10 Persuasion          wentworth   191 0.00228  1.79 0.00409</code></pre>
 <p>임의의 사용자 <span class="math inline">\(u\)</span>가 아래와 같이 다섯 가지 단어에 각기 다른 관심도 <span class="math inline">\(w_{iu}\)</span>를 지닌다고 하자.</p>
-<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="recommender-system.html#cb717-1"></a>words_of_interest &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb717-2"><a href="recommender-system.html#cb717-2"></a>  <span class="dt">word =</span> <span class="kw">c</span>(<span class="st">&quot;kitty&quot;</span>, <span class="st">&quot;cottage&quot;</span>, <span class="st">&quot;judgment&quot;</span>, <span class="st">&quot;war&quot;</span>, <span class="st">&quot;sea&quot;</span>),</span>
-<span id="cb717-3"><a href="recommender-system.html#cb717-3"></a>  <span class="dt">weight =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>)</span>
-<span id="cb717-4"><a href="recommender-system.html#cb717-4"></a>)</span>
-<span id="cb717-5"><a href="recommender-system.html#cb717-5"></a></span>
-<span id="cb717-6"><a href="recommender-system.html#cb717-6"></a>words_of_interest <span class="op">%&gt;%</span></span>
-<span id="cb717-7"><a href="recommender-system.html#cb717-7"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb717-8"><a href="recommender-system.html#cb717-8"></a>    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb717-9"><a href="recommender-system.html#cb717-9"></a>    <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>),</span>
-<span id="cb717-10"><a href="recommender-system.html#cb717-10"></a>    <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;단어 ($i$)&#39;</span>, <span class="st">&#39;가중치 ($w_{iu}$&#39;</span>),</span>
-<span id="cb717-11"><a href="recommender-system.html#cb717-11"></a>    <span class="dt">caption =</span> <span class="st">&#39;목표 사용자의 관심 단어 및 가중치&#39;</span></span>
-<span id="cb717-12"><a href="recommender-system.html#cb717-12"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="recommender-system.html#cb677-1" aria-hidden="true" tabindex="-1"></a>words_of_interest <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb677-2"><a href="recommender-system.html#cb677-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">word =</span> <span class="fu">c</span>(<span class="st">&quot;kitty&quot;</span>, <span class="st">&quot;cottage&quot;</span>, <span class="st">&quot;judgment&quot;</span>, <span class="st">&quot;war&quot;</span>, <span class="st">&quot;sea&quot;</span>),</span>
+<span id="cb677-3"><a href="recommender-system.html#cb677-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>)</span>
+<span id="cb677-4"><a href="recommender-system.html#cb677-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb677-5"><a href="recommender-system.html#cb677-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb677-6"><a href="recommender-system.html#cb677-6" aria-hidden="true" tabindex="-1"></a>words_of_interest <span class="sc">%&gt;%</span></span>
+<span id="cb677-7"><a href="recommender-system.html#cb677-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb677-8"><a href="recommender-system.html#cb677-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb677-9"><a href="recommender-system.html#cb677-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>),</span>
+<span id="cb677-10"><a href="recommender-system.html#cb677-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;단어 ($i$)&#39;</span>, <span class="st">&#39;가중치 ($w_{iu}$&#39;</span>),</span>
+<span id="cb677-11"><a href="recommender-system.html#cb677-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;목표 사용자의 관심 단어 및 가중치&#39;</span></span>
+<span id="cb677-12"><a href="recommender-system.html#cb677-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:word-of-interest">Table 16.1: </span>목표 사용자의 관심 단어 및 가중치</caption>
 <thead>
@@ -606,14 +678,14 @@ w_{ij} = TF_{ij} \times IDF_{i}
 <p><span class="math display">\[\begin{equation*}
 u(a, j) = \frac{\sum_{i = 1}^{K} w_{iu} w_{ij}}{\sqrt{\sum_{i = 1}^{K} w_{iu}^2} \sqrt{\sum_{i = 1}^{K} w_{ij}^2}}
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="recommender-system.html#cb718-1"></a>utility_results &lt;-<span class="st"> </span>tf_idf_results <span class="op">%&gt;%</span></span>
-<span id="cb718-2"><a href="recommender-system.html#cb718-2"></a><span class="st">  </span><span class="kw">inner_join</span>(words_of_interest, <span class="dt">by =</span> <span class="st">&quot;word&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb718-3"><a href="recommender-system.html#cb718-3"></a><span class="st">  </span><span class="kw">group_by</span>(book) <span class="op">%&gt;%</span></span>
-<span id="cb718-4"><a href="recommender-system.html#cb718-4"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">utility =</span> <span class="kw">sum</span>(weight <span class="op">*</span><span class="st"> </span>tf_idf) <span class="op">/</span><span class="st"> </span></span>
-<span id="cb718-5"><a href="recommender-system.html#cb718-5"></a><span class="st">              </span>(<span class="kw">sqrt</span>(<span class="kw">sum</span>(weight <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(tf_idf <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)))) <span class="op">%&gt;%</span></span>
-<span id="cb718-6"><a href="recommender-system.html#cb718-6"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(utility))</span></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="recommender-system.html#cb720-1"></a><span class="kw">print</span>(utility_results)</span></code></pre></div>
+<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="recommender-system.html#cb678-1" aria-hidden="true" tabindex="-1"></a>utility_results <span class="ot">&lt;-</span> tf_idf_results <span class="sc">%&gt;%</span></span>
+<span id="cb678-2"><a href="recommender-system.html#cb678-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(words_of_interest, <span class="at">by =</span> <span class="st">&quot;word&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb678-3"><a href="recommender-system.html#cb678-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(book) <span class="sc">%&gt;%</span></span>
+<span id="cb678-4"><a href="recommender-system.html#cb678-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">utility =</span> <span class="fu">sum</span>(weight <span class="sc">*</span> tf_idf) <span class="sc">/</span> </span>
+<span id="cb678-5"><a href="recommender-system.html#cb678-5" aria-hidden="true" tabindex="-1"></a>              (<span class="fu">sqrt</span>(<span class="fu">sum</span>(weight <span class="sc">^</span> <span class="dv">2</span>)) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(tf_idf <span class="sc">^</span> <span class="dv">2</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb678-6"><a href="recommender-system.html#cb678-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(utility))</span>
+<span id="cb678-7"><a href="recommender-system.html#cb678-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb678-8"><a href="recommender-system.html#cb678-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(utility_results)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   book                utility
 ##   &lt;fct&gt;                 &lt;dbl&gt;
@@ -624,58 +696,58 @@ u(a, j) = \frac{\sum_{i = 1}^{K} w_{iu} w_{ij}}{\sqrt{\sum_{i = 1}^{K} w_{iu}^2}
 ## 5 Northanger Abbey      0.529
 ## 6 Mansfield Park        0.404</code></pre>
 <p>위 결과 Persuasion이 목표 사용자의 관심에 가장 유용도 높은 문서로 추천된다.</p>
-<p>교재 <span class="citation">전치혁 (<a href="#ref-jun2012datamining" role="doc-biblioref">2012</a>)</span> 에 있는 예제에 대한 R 스크립트를 구현해보자.</p>
-<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="recommender-system.html#cb722-1"></a>words_of_interest &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb722-2"><a href="recommender-system.html#cb722-2"></a>  <span class="op">~</span>word, <span class="op">~</span>weight,</span>
-<span id="cb722-3"><a href="recommender-system.html#cb722-3"></a>  <span class="st">&quot;word1&quot;</span>, <span class="fl">0.124</span>,</span>
-<span id="cb722-4"><a href="recommender-system.html#cb722-4"></a>  <span class="st">&quot;word2&quot;</span>, <span class="fl">0.275</span>,</span>
-<span id="cb722-5"><a href="recommender-system.html#cb722-5"></a>  <span class="st">&quot;word3&quot;</span>, <span class="fl">0.019</span>,</span>
-<span id="cb722-6"><a href="recommender-system.html#cb722-6"></a>  <span class="st">&quot;word4&quot;</span>, <span class="fl">0.182</span>,</span>
-<span id="cb722-7"><a href="recommender-system.html#cb722-7"></a>  <span class="st">&quot;word5&quot;</span>, <span class="fl">0.223</span></span>
-<span id="cb722-8"><a href="recommender-system.html#cb722-8"></a>)</span>
-<span id="cb722-9"><a href="recommender-system.html#cb722-9"></a></span>
-<span id="cb722-10"><a href="recommender-system.html#cb722-10"></a>tf_idf_results &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb722-11"><a href="recommender-system.html#cb722-11"></a>  <span class="op">~</span>document, <span class="op">~</span>word, <span class="op">~</span>tf_idf,</span>
-<span id="cb722-12"><a href="recommender-system.html#cb722-12"></a>  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0194</span>,</span>
-<span id="cb722-13"><a href="recommender-system.html#cb722-13"></a>  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0043</span>,</span>
-<span id="cb722-14"><a href="recommender-system.html#cb722-14"></a>  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0054</span>,</span>
-<span id="cb722-15"><a href="recommender-system.html#cb722-15"></a>  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0155</span>,</span>
-<span id="cb722-16"><a href="recommender-system.html#cb722-16"></a>  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0028</span>,</span>
-<span id="cb722-17"><a href="recommender-system.html#cb722-17"></a>  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0082</span>,</span>
-<span id="cb722-18"><a href="recommender-system.html#cb722-18"></a>  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0032</span>,</span>
-<span id="cb722-19"><a href="recommender-system.html#cb722-19"></a>  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0007</span>,</span>
-<span id="cb722-20"><a href="recommender-system.html#cb722-20"></a>  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0104</span>,</span>
-<span id="cb722-21"><a href="recommender-system.html#cb722-21"></a>  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0073</span>,</span>
-<span id="cb722-22"><a href="recommender-system.html#cb722-22"></a>  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0087</span>,</span>
-<span id="cb722-23"><a href="recommender-system.html#cb722-23"></a>  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0174</span>,</span>
-<span id="cb722-24"><a href="recommender-system.html#cb722-24"></a>  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0091</span>,</span>
-<span id="cb722-25"><a href="recommender-system.html#cb722-25"></a>  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0086</span>,</span>
-<span id="cb722-26"><a href="recommender-system.html#cb722-26"></a>  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0268</span>,</span>
-<span id="cb722-27"><a href="recommender-system.html#cb722-27"></a>  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0093</span>,</span>
-<span id="cb722-28"><a href="recommender-system.html#cb722-28"></a>  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0061</span>,</span>
-<span id="cb722-29"><a href="recommender-system.html#cb722-29"></a>  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0172</span>,</span>
-<span id="cb722-30"><a href="recommender-system.html#cb722-30"></a>  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0028</span>,</span>
-<span id="cb722-31"><a href="recommender-system.html#cb722-31"></a>  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0009</span>,</span>
-<span id="cb722-32"><a href="recommender-system.html#cb722-32"></a>  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0185</span>,</span>
-<span id="cb722-33"><a href="recommender-system.html#cb722-33"></a>  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0249</span>,</span>
-<span id="cb722-34"><a href="recommender-system.html#cb722-34"></a>  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0084</span>,</span>
-<span id="cb722-35"><a href="recommender-system.html#cb722-35"></a>  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0167</span>,</span>
-<span id="cb722-36"><a href="recommender-system.html#cb722-36"></a>  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0193</span>,</span>
-<span id="cb722-37"><a href="recommender-system.html#cb722-37"></a>  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0028</span>,</span>
-<span id="cb722-38"><a href="recommender-system.html#cb722-38"></a>  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0003</span>,</span>
-<span id="cb722-39"><a href="recommender-system.html#cb722-39"></a>  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0202</span>,</span>
-<span id="cb722-40"><a href="recommender-system.html#cb722-40"></a>  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0083</span>,</span>
-<span id="cb722-41"><a href="recommender-system.html#cb722-41"></a>  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0054</span></span>
-<span id="cb722-42"><a href="recommender-system.html#cb722-42"></a>)</span>
-<span id="cb722-43"><a href="recommender-system.html#cb722-43"></a></span>
-<span id="cb722-44"><a href="recommender-system.html#cb722-44"></a>utility_results &lt;-<span class="st"> </span>tf_idf_results <span class="op">%&gt;%</span></span>
-<span id="cb722-45"><a href="recommender-system.html#cb722-45"></a><span class="st">  </span><span class="kw">inner_join</span>(words_of_interest, <span class="dt">by =</span> <span class="st">&quot;word&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb722-46"><a href="recommender-system.html#cb722-46"></a><span class="st">  </span><span class="kw">group_by</span>(document) <span class="op">%&gt;%</span></span>
-<span id="cb722-47"><a href="recommender-system.html#cb722-47"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">utility =</span> <span class="kw">sum</span>(weight <span class="op">*</span><span class="st"> </span>tf_idf) <span class="op">/</span><span class="st"> </span></span>
-<span id="cb722-48"><a href="recommender-system.html#cb722-48"></a><span class="st">              </span>(<span class="kw">sqrt</span>(<span class="kw">sum</span>(weight <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(tf_idf <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)))) <span class="op">%&gt;%</span></span>
-<span id="cb722-49"><a href="recommender-system.html#cb722-49"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(utility))</span></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="recommender-system.html#cb724-1"></a><span class="kw">print</span>(utility_results)</span></code></pre></div>
+<p>교재 <span class="citation"><a href="#ref-jun2012datamining" role="doc-biblioref">전치혁</a> (<a href="#ref-jun2012datamining" role="doc-biblioref">2012</a>)</span> 에 있는 예제에 대한 R 스크립트를 구현해보자.</p>
+<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="recommender-system.html#cb680-1" aria-hidden="true" tabindex="-1"></a>words_of_interest <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb680-2"><a href="recommender-system.html#cb680-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>word, <span class="sc">~</span>weight,</span>
+<span id="cb680-3"><a href="recommender-system.html#cb680-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;word1&quot;</span>, <span class="fl">0.124</span>,</span>
+<span id="cb680-4"><a href="recommender-system.html#cb680-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;word2&quot;</span>, <span class="fl">0.275</span>,</span>
+<span id="cb680-5"><a href="recommender-system.html#cb680-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;word3&quot;</span>, <span class="fl">0.019</span>,</span>
+<span id="cb680-6"><a href="recommender-system.html#cb680-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;word4&quot;</span>, <span class="fl">0.182</span>,</span>
+<span id="cb680-7"><a href="recommender-system.html#cb680-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;word5&quot;</span>, <span class="fl">0.223</span></span>
+<span id="cb680-8"><a href="recommender-system.html#cb680-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb680-9"><a href="recommender-system.html#cb680-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb680-10"><a href="recommender-system.html#cb680-10" aria-hidden="true" tabindex="-1"></a>tf_idf_results <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb680-11"><a href="recommender-system.html#cb680-11" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>document, <span class="sc">~</span>word, <span class="sc">~</span>tf_idf,</span>
+<span id="cb680-12"><a href="recommender-system.html#cb680-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0194</span>,</span>
+<span id="cb680-13"><a href="recommender-system.html#cb680-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0043</span>,</span>
+<span id="cb680-14"><a href="recommender-system.html#cb680-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0054</span>,</span>
+<span id="cb680-15"><a href="recommender-system.html#cb680-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0155</span>,</span>
+<span id="cb680-16"><a href="recommender-system.html#cb680-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc1&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0028</span>,</span>
+<span id="cb680-17"><a href="recommender-system.html#cb680-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0082</span>,</span>
+<span id="cb680-18"><a href="recommender-system.html#cb680-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0032</span>,</span>
+<span id="cb680-19"><a href="recommender-system.html#cb680-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0007</span>,</span>
+<span id="cb680-20"><a href="recommender-system.html#cb680-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0104</span>,</span>
+<span id="cb680-21"><a href="recommender-system.html#cb680-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc2&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0073</span>,</span>
+<span id="cb680-22"><a href="recommender-system.html#cb680-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0087</span>,</span>
+<span id="cb680-23"><a href="recommender-system.html#cb680-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0174</span>,</span>
+<span id="cb680-24"><a href="recommender-system.html#cb680-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0091</span>,</span>
+<span id="cb680-25"><a href="recommender-system.html#cb680-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0086</span>,</span>
+<span id="cb680-26"><a href="recommender-system.html#cb680-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc3&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0268</span>,</span>
+<span id="cb680-27"><a href="recommender-system.html#cb680-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0093</span>,</span>
+<span id="cb680-28"><a href="recommender-system.html#cb680-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0061</span>,</span>
+<span id="cb680-29"><a href="recommender-system.html#cb680-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0172</span>,</span>
+<span id="cb680-30"><a href="recommender-system.html#cb680-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0028</span>,</span>
+<span id="cb680-31"><a href="recommender-system.html#cb680-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc4&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0009</span>,</span>
+<span id="cb680-32"><a href="recommender-system.html#cb680-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0185</span>,</span>
+<span id="cb680-33"><a href="recommender-system.html#cb680-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0249</span>,</span>
+<span id="cb680-34"><a href="recommender-system.html#cb680-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0084</span>,</span>
+<span id="cb680-35"><a href="recommender-system.html#cb680-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0167</span>,</span>
+<span id="cb680-36"><a href="recommender-system.html#cb680-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc5&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0193</span>,</span>
+<span id="cb680-37"><a href="recommender-system.html#cb680-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word1&quot;</span>, <span class="fl">0.0028</span>,</span>
+<span id="cb680-38"><a href="recommender-system.html#cb680-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="fl">0.0003</span>,</span>
+<span id="cb680-39"><a href="recommender-system.html#cb680-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word3&quot;</span>, <span class="fl">0.0202</span>,</span>
+<span id="cb680-40"><a href="recommender-system.html#cb680-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word4&quot;</span>, <span class="fl">0.0083</span>,</span>
+<span id="cb680-41"><a href="recommender-system.html#cb680-41" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;doc6&quot;</span>, <span class="st">&quot;word5&quot;</span>, <span class="fl">0.0054</span></span>
+<span id="cb680-42"><a href="recommender-system.html#cb680-42" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb680-43"><a href="recommender-system.html#cb680-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb680-44"><a href="recommender-system.html#cb680-44" aria-hidden="true" tabindex="-1"></a>utility_results <span class="ot">&lt;-</span> tf_idf_results <span class="sc">%&gt;%</span></span>
+<span id="cb680-45"><a href="recommender-system.html#cb680-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(words_of_interest, <span class="at">by =</span> <span class="st">&quot;word&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb680-46"><a href="recommender-system.html#cb680-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(document) <span class="sc">%&gt;%</span></span>
+<span id="cb680-47"><a href="recommender-system.html#cb680-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">utility =</span> <span class="fu">sum</span>(weight <span class="sc">*</span> tf_idf) <span class="sc">/</span> </span>
+<span id="cb680-48"><a href="recommender-system.html#cb680-48" aria-hidden="true" tabindex="-1"></a>              (<span class="fu">sqrt</span>(<span class="fu">sum</span>(weight <span class="sc">^</span> <span class="dv">2</span>)) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(tf_idf <span class="sc">^</span> <span class="dv">2</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb680-49"><a href="recommender-system.html#cb680-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(utility))</span>
+<span id="cb680-50"><a href="recommender-system.html#cb680-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb680-51"><a href="recommender-system.html#cb680-51" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(utility_results)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   document utility
 ##   &lt;chr&gt;      &lt;dbl&gt;
@@ -687,7 +759,7 @@ u(a, j) = \frac{\sum_{i = 1}^{K} w_{iu} w_{ij}}{\sqrt{\sum_{i = 1}^{K} w_{iu}^2}
 ## 6 doc6       0.373</code></pre>
 <p>위 결과, 두 건의 문서를 추천할 경우 doc5, doc3를 추천할 수 있다.</p>
 </div>
-<div id="collaborative-filtering" class="section level2">
+<div id="collaborative-filtering" class="section level2" number="16.3">
 <h2><span class="header-section-number">16.3</span> 협업 필터링</h2>
 <p>총 <span class="math inline">\(m\)</span>개의 상품에 대한 <span class="math inline">\(n\)</span>명의 소비자의 평점이 있다고 할 때, 관련 기호를 다음과 같이 정의하자.</p>
 <ul>
@@ -708,72 +780,72 @@ w(a, i) = \frac{\sum_{j \in I_a \cap I_i} (v_{aj} - \bar{v}_a) (v_{ij} - \bar{v}
 \hat{v}_{aj} = \bar{v}_a + \frac{1}{\sum_{i = 1}^{n} \left| w(a, i) \right|} \sum_{i = 1}^{n} w(a, i) (v_{ij} - \bar{v}_i)
 \end{equation*}\]</span></p>
 <p>교재 @jun2012datamining 에 있는 예제에 대한 R 스크립트를 구현해보자.</p>
-<div class="sourceCode" id="cb726"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb726-1"><a href="recommender-system.html#cb726-1"></a>rating_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb726-2"><a href="recommender-system.html#cb726-2"></a>  <span class="op">~</span>customer, <span class="op">~</span>item, <span class="op">~</span>rating,</span>
-<span id="cb726-3"><a href="recommender-system.html#cb726-3"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">5</span>,</span>
-<span id="cb726-4"><a href="recommender-system.html#cb726-4"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">4</span>,</span>
-<span id="cb726-5"><a href="recommender-system.html#cb726-5"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb726-6"><a href="recommender-system.html#cb726-6"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">0</span>,</span>
-<span id="cb726-7"><a href="recommender-system.html#cb726-7"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">3</span>,</span>
-<span id="cb726-8"><a href="recommender-system.html#cb726-8"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">4</span>,</span>
-<span id="cb726-9"><a href="recommender-system.html#cb726-9"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">4</span>,</span>
-<span id="cb726-10"><a href="recommender-system.html#cb726-10"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">4</span>,</span>
-<span id="cb726-11"><a href="recommender-system.html#cb726-11"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb726-12"><a href="recommender-system.html#cb726-12"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">5</span>,</span>
-<span id="cb726-13"><a href="recommender-system.html#cb726-13"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">4</span>,</span>
-<span id="cb726-14"><a href="recommender-system.html#cb726-14"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb726-15"><a href="recommender-system.html#cb726-15"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">2</span>,</span>
-<span id="cb726-16"><a href="recommender-system.html#cb726-16"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">3</span>,</span>
-<span id="cb726-17"><a href="recommender-system.html#cb726-17"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb726-18"><a href="recommender-system.html#cb726-18"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">2</span>,</span>
-<span id="cb726-19"><a href="recommender-system.html#cb726-19"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb726-20"><a href="recommender-system.html#cb726-20"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">4</span>,</span>
-<span id="cb726-21"><a href="recommender-system.html#cb726-21"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">3</span>,</span>
-<span id="cb726-22"><a href="recommender-system.html#cb726-22"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">5</span>,</span>
-<span id="cb726-23"><a href="recommender-system.html#cb726-23"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">2</span>,</span>
-<span id="cb726-24"><a href="recommender-system.html#cb726-24"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">0</span>,</span>
-<span id="cb726-25"><a href="recommender-system.html#cb726-25"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb726-26"><a href="recommender-system.html#cb726-26"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">3</span>,</span>
-<span id="cb726-27"><a href="recommender-system.html#cb726-27"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">5</span>,</span>
-<span id="cb726-28"><a href="recommender-system.html#cb726-28"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">5</span>,</span>
-<span id="cb726-29"><a href="recommender-system.html#cb726-29"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">2</span>,</span>
-<span id="cb726-30"><a href="recommender-system.html#cb726-30"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">4</span>,</span>
-<span id="cb726-31"><a href="recommender-system.html#cb726-31"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">4</span>,</span>
-<span id="cb726-32"><a href="recommender-system.html#cb726-32"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">2</span>,</span>
-<span id="cb726-33"><a href="recommender-system.html#cb726-33"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">5</span>,</span>
-<span id="cb726-34"><a href="recommender-system.html#cb726-34"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb726-35"><a href="recommender-system.html#cb726-35"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">2</span></span>
-<span id="cb726-36"><a href="recommender-system.html#cb726-36"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="recommender-system.html#cb682-1" aria-hidden="true" tabindex="-1"></a>rating_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb682-2"><a href="recommender-system.html#cb682-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>customer, <span class="sc">~</span>item, <span class="sc">~</span>rating,</span>
+<span id="cb682-3"><a href="recommender-system.html#cb682-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">5</span>,</span>
+<span id="cb682-4"><a href="recommender-system.html#cb682-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">4</span>,</span>
+<span id="cb682-5"><a href="recommender-system.html#cb682-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb682-6"><a href="recommender-system.html#cb682-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">0</span>,</span>
+<span id="cb682-7"><a href="recommender-system.html#cb682-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">3</span>,</span>
+<span id="cb682-8"><a href="recommender-system.html#cb682-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">4</span>,</span>
+<span id="cb682-9"><a href="recommender-system.html#cb682-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">4</span>,</span>
+<span id="cb682-10"><a href="recommender-system.html#cb682-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">4</span>,</span>
+<span id="cb682-11"><a href="recommender-system.html#cb682-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb682-12"><a href="recommender-system.html#cb682-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">5</span>,</span>
+<span id="cb682-13"><a href="recommender-system.html#cb682-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">4</span>,</span>
+<span id="cb682-14"><a href="recommender-system.html#cb682-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb682-15"><a href="recommender-system.html#cb682-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">2</span>,</span>
+<span id="cb682-16"><a href="recommender-system.html#cb682-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">3</span>,</span>
+<span id="cb682-17"><a href="recommender-system.html#cb682-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb682-18"><a href="recommender-system.html#cb682-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">2</span>,</span>
+<span id="cb682-19"><a href="recommender-system.html#cb682-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb682-20"><a href="recommender-system.html#cb682-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">4</span>,</span>
+<span id="cb682-21"><a href="recommender-system.html#cb682-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">3</span>,</span>
+<span id="cb682-22"><a href="recommender-system.html#cb682-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">5</span>,</span>
+<span id="cb682-23"><a href="recommender-system.html#cb682-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">2</span>,</span>
+<span id="cb682-24"><a href="recommender-system.html#cb682-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">0</span>,</span>
+<span id="cb682-25"><a href="recommender-system.html#cb682-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb682-26"><a href="recommender-system.html#cb682-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">3</span>,</span>
+<span id="cb682-27"><a href="recommender-system.html#cb682-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">5</span>,</span>
+<span id="cb682-28"><a href="recommender-system.html#cb682-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">5</span>,</span>
+<span id="cb682-29"><a href="recommender-system.html#cb682-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">2</span>,</span>
+<span id="cb682-30"><a href="recommender-system.html#cb682-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">4</span>,</span>
+<span id="cb682-31"><a href="recommender-system.html#cb682-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">4</span>,</span>
+<span id="cb682-32"><a href="recommender-system.html#cb682-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">2</span>,</span>
+<span id="cb682-33"><a href="recommender-system.html#cb682-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">5</span>,</span>
+<span id="cb682-34"><a href="recommender-system.html#cb682-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb682-35"><a href="recommender-system.html#cb682-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">2</span></span>
+<span id="cb682-36"><a href="recommender-system.html#cb682-36" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>우선, 각 고객이 매긴 평균 평점 <span class="math inline">\(\bar{v}_i\)</span>을 각 아이템에 대한 평점 <span class="math inline">\(v_{ij}\)</span>에서 제외하여 mean_centered rating을 아래와 같이 구한다.</p>
-<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="recommender-system.html#cb727-1"></a>centered_rating_df &lt;-<span class="st"> </span>rating_df <span class="op">%&gt;%</span></span>
-<span id="cb727-2"><a href="recommender-system.html#cb727-2"></a><span class="st">  </span><span class="kw">group_by</span>(customer) <span class="op">%&gt;%</span></span>
-<span id="cb727-3"><a href="recommender-system.html#cb727-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">centered_rating =</span> rating <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(rating)) <span class="op">%&gt;%</span></span>
-<span id="cb727-4"><a href="recommender-system.html#cb727-4"></a><span class="st">  </span><span class="kw">ungroup</span>()</span>
-<span id="cb727-5"><a href="recommender-system.html#cb727-5"></a></span>
-<span id="cb727-6"><a href="recommender-system.html#cb727-6"></a><span class="kw">print</span>(centered_rating_df)</span></code></pre></div>
+<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="recommender-system.html#cb683-1" aria-hidden="true" tabindex="-1"></a>centered_rating_df <span class="ot">&lt;-</span> rating_df <span class="sc">%&gt;%</span></span>
+<span id="cb683-2"><a href="recommender-system.html#cb683-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(customer) <span class="sc">%&gt;%</span></span>
+<span id="cb683-3"><a href="recommender-system.html#cb683-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">centered_rating =</span> rating <span class="sc">-</span> <span class="fu">mean</span>(rating)) <span class="sc">%&gt;%</span></span>
+<span id="cb683-4"><a href="recommender-system.html#cb683-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb683-5"><a href="recommender-system.html#cb683-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb683-6"><a href="recommender-system.html#cb683-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(centered_rating_df)</span></code></pre></div>
 <pre><code>## # A tibble: 33 x 4
 ##    customer item   rating centered_rating
 ##    &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;           &lt;dbl&gt;
-##  1 고객 1   상품 1      5           2.4  
-##  2 고객 1   상품 3      4           1.4  
-##  3 고객 1   상품 5      1          -1.6  
-##  4 고객 1   상품 6      0          -2.6  
-##  5 고객 1   상품 7      3           0.400
-##  6 고객 2   상품 1      4           0.75 
-##  7 고객 2   상품 2      4           0.75 
-##  8 고객 2   상품 3      4           0.75 
-##  9 고객 2   상품 7      1          -2.25 
-## 10 고객 3   상품 1      5           2    
+##  1 고객 1   상품 1      5            2.4 
+##  2 고객 1   상품 3      4            1.4 
+##  3 고객 1   상품 5      1           -1.6 
+##  4 고객 1   상품 6      0           -2.6 
+##  5 고객 1   상품 7      3            0.4 
+##  6 고객 2   상품 1      4            0.75
+##  7 고객 2   상품 2      4            0.75
+##  8 고객 2   상품 3      4            0.75
+##  9 고객 2   상품 7      1           -2.25
+## 10 고객 3   상품 1      5            2   
 ## # … with 23 more rows</code></pre>
 <p>목표 고객과 다른 고객들간의 유사성 척도를 계산한다.</p>
-<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="recommender-system.html#cb729-1"></a>similarity_df &lt;-<span class="st"> </span>centered_rating_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(customer <span class="op">==</span><span class="st"> &quot;목표고객&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb729-2"><a href="recommender-system.html#cb729-2"></a><span class="st">  </span><span class="kw">inner_join</span>(centered_rating_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(customer <span class="op">!=</span><span class="st"> &quot;목표고객&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;item&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb729-3"><a href="recommender-system.html#cb729-3"></a><span class="st">  </span><span class="kw">group_by</span>(customer.y) <span class="op">%&gt;%</span></span>
-<span id="cb729-4"><a href="recommender-system.html#cb729-4"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">similarity =</span> <span class="kw">sum</span>(centered_rating.x <span class="op">*</span><span class="st"> </span>centered_rating.y) <span class="op">/</span></span>
-<span id="cb729-5"><a href="recommender-system.html#cb729-5"></a><span class="st">              </span>(<span class="kw">sqrt</span>(<span class="kw">sum</span>(centered_rating.x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(centered_rating.y <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)))) <span class="op">%&gt;%</span></span>
-<span id="cb729-6"><a href="recommender-system.html#cb729-6"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">customer =</span> customer.y)</span></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="recommender-system.html#cb731-1"></a><span class="kw">print</span>(similarity_df)</span></code></pre></div>
+<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="recommender-system.html#cb685-1" aria-hidden="true" tabindex="-1"></a>similarity_df <span class="ot">&lt;-</span> centered_rating_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(customer <span class="sc">==</span> <span class="st">&quot;목표고객&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb685-2"><a href="recommender-system.html#cb685-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(centered_rating_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(customer <span class="sc">!=</span> <span class="st">&quot;목표고객&quot;</span>), <span class="at">by =</span> <span class="st">&quot;item&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb685-3"><a href="recommender-system.html#cb685-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(customer.y) <span class="sc">%&gt;%</span></span>
+<span id="cb685-4"><a href="recommender-system.html#cb685-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">similarity =</span> <span class="fu">sum</span>(centered_rating.x <span class="sc">*</span> centered_rating.y) <span class="sc">/</span></span>
+<span id="cb685-5"><a href="recommender-system.html#cb685-5" aria-hidden="true" tabindex="-1"></a>              (<span class="fu">sqrt</span>(<span class="fu">sum</span>(centered_rating.x <span class="sc">^</span> <span class="dv">2</span>)) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(centered_rating.y <span class="sc">^</span> <span class="dv">2</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb685-6"><a href="recommender-system.html#cb685-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">customer =</span> customer.y)</span>
+<span id="cb685-7"><a href="recommender-system.html#cb685-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb685-8"><a href="recommender-system.html#cb685-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(similarity_df)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   customer similarity
 ##   &lt;chr&gt;         &lt;dbl&gt;
@@ -784,10 +856,10 @@ w(a, i) = \frac{\sum_{j \in I_a \cap I_i} (v_{aj} - \bar{v}_a) (v_{ij} - \bar{v}
 ## 5 고객 5       -0.853
 ## 6 고객 6        1</code></pre>
 <p>유사성 척도의 절대값의 합이 1이 되도록 normalize한다.</p>
-<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="recommender-system.html#cb733-1"></a>normalized_similarity_df &lt;-<span class="st"> </span>similarity_df <span class="op">%&gt;%</span></span>
-<span id="cb733-2"><a href="recommender-system.html#cb733-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">normalized_similarity =</span> similarity <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">abs</span>(similarity)))</span>
-<span id="cb733-3"><a href="recommender-system.html#cb733-3"></a></span>
-<span id="cb733-4"><a href="recommender-system.html#cb733-4"></a><span class="kw">print</span>(normalized_similarity_df)</span></code></pre></div>
+<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="recommender-system.html#cb687-1" aria-hidden="true" tabindex="-1"></a>normalized_similarity_df <span class="ot">&lt;-</span> similarity_df <span class="sc">%&gt;%</span></span>
+<span id="cb687-2"><a href="recommender-system.html#cb687-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">normalized_similarity =</span> similarity <span class="sc">/</span> <span class="fu">sum</span>(<span class="fu">abs</span>(similarity)))</span>
+<span id="cb687-3"><a href="recommender-system.html#cb687-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb687-4"><a href="recommender-system.html#cb687-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(normalized_similarity_df)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   customer similarity normalized_similarity
 ##   &lt;chr&gt;         &lt;dbl&gt;                 &lt;dbl&gt;
@@ -801,19 +873,18 @@ w(a, i) = \frac{\sum_{j \in I_a \cap I_i} (v_{aj} - \bar{v}_a) (v_{ij} - \bar{v}
 <p><span class="math display">\[\begin{equation*}
 \hat{v}_{aj} = \bar{v}_a + \frac{1}{\sum_{i = 1}^{n} \left| w(a, i) \right|} \sum_{i = 1}^{n} w(a, i) (v_{ij} - \bar{v}_i)
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="recommender-system.html#cb735-1"></a>items &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">setdiff</span>(<span class="kw">unique</span>(rating_df<span class="op">$</span>item), </span>
-<span id="cb735-2"><a href="recommender-system.html#cb735-2"></a>                      rating_df<span class="op">$</span>item[rating_df<span class="op">$</span>customer <span class="op">==</span><span class="st"> &quot;목표고객&quot;</span>]))</span>
-<span id="cb735-3"><a href="recommender-system.html#cb735-3"></a></span>
-<span id="cb735-4"><a href="recommender-system.html#cb735-4"></a>target_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(rating_df<span class="op">$</span>rating[rating_df<span class="op">$</span>customer <span class="op">==</span><span class="st"> &quot;목표고객&quot;</span>])</span>
-<span id="cb735-5"><a href="recommender-system.html#cb735-5"></a></span>
-<span id="cb735-6"><a href="recommender-system.html#cb735-6"></a>centered_rating_df <span class="op">%&gt;%</span></span>
-<span id="cb735-7"><a href="recommender-system.html#cb735-7"></a><span class="st">  </span><span class="kw">filter</span>(item <span class="op">%in%</span><span class="st"> </span>items) <span class="op">%&gt;%</span></span>
-<span id="cb735-8"><a href="recommender-system.html#cb735-8"></a><span class="st">  </span><span class="kw">inner_join</span>(normalized_similarity_df, <span class="dt">by =</span> <span class="st">&quot;customer&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb735-9"><a href="recommender-system.html#cb735-9"></a><span class="st">  </span><span class="kw">group_by</span>(item) <span class="op">%&gt;%</span></span>
-<span id="cb735-10"><a href="recommender-system.html#cb735-10"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">predicted_rating =</span> target_mean <span class="op">+</span><span class="st"> </span></span>
-<span id="cb735-11"><a href="recommender-system.html#cb735-11"></a><span class="st">              </span><span class="kw">sum</span>(normalized_similarity <span class="op">*</span><span class="st"> </span>centered_rating)) <span class="op">%&gt;%</span></span>
-<span id="cb735-12"><a href="recommender-system.html#cb735-12"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(predicted_rating))</span></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="recommender-system.html#cb689-1" aria-hidden="true" tabindex="-1"></a>items <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">setdiff</span>(<span class="fu">unique</span>(rating_df<span class="sc">$</span>item), </span>
+<span id="cb689-2"><a href="recommender-system.html#cb689-2" aria-hidden="true" tabindex="-1"></a>                      rating_df<span class="sc">$</span>item[rating_df<span class="sc">$</span>customer <span class="sc">==</span> <span class="st">&quot;목표고객&quot;</span>]))</span>
+<span id="cb689-3"><a href="recommender-system.html#cb689-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb689-4"><a href="recommender-system.html#cb689-4" aria-hidden="true" tabindex="-1"></a>target_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(rating_df<span class="sc">$</span>rating[rating_df<span class="sc">$</span>customer <span class="sc">==</span> <span class="st">&quot;목표고객&quot;</span>])</span>
+<span id="cb689-5"><a href="recommender-system.html#cb689-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb689-6"><a href="recommender-system.html#cb689-6" aria-hidden="true" tabindex="-1"></a>centered_rating_df <span class="sc">%&gt;%</span></span>
+<span id="cb689-7"><a href="recommender-system.html#cb689-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(item <span class="sc">%in%</span> items) <span class="sc">%&gt;%</span></span>
+<span id="cb689-8"><a href="recommender-system.html#cb689-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(normalized_similarity_df, <span class="at">by =</span> <span class="st">&quot;customer&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb689-9"><a href="recommender-system.html#cb689-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span></span>
+<span id="cb689-10"><a href="recommender-system.html#cb689-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">predicted_rating =</span> target_mean <span class="sc">+</span> </span>
+<span id="cb689-11"><a href="recommender-system.html#cb689-11" aria-hidden="true" tabindex="-1"></a>              <span class="fu">sum</span>(normalized_similarity <span class="sc">*</span> centered_rating)) <span class="sc">%&gt;%</span></span>
+<span id="cb689-12"><a href="recommender-system.html#cb689-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(predicted_rating))</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 2
 ##   item   predicted_rating
 ##   &lt;chr&gt;             &lt;dbl&gt;
@@ -825,14 +896,13 @@ w(a, i) = \frac{\sum_{j \in I_a \cap I_i} (v_{aj} - \bar{v}_a) (v_{ij} - \bar{v}
 <p><span class="math display">\[\begin{equation*}
 \hat{v}_{aj} = \bar{v}_a + \frac{1}{\sum_{i: j \in I_i} \left| w(a, i) \right|} \sum_{i: j \in I_i} w(a, i) (v_{ij} - \bar{v}_i)
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="recommender-system.html#cb738-1"></a>centered_rating_df <span class="op">%&gt;%</span></span>
-<span id="cb738-2"><a href="recommender-system.html#cb738-2"></a><span class="st">  </span><span class="kw">filter</span>(item <span class="op">%in%</span><span class="st"> </span>items) <span class="op">%&gt;%</span></span>
-<span id="cb738-3"><a href="recommender-system.html#cb738-3"></a><span class="st">  </span><span class="kw">inner_join</span>(similarity_df, <span class="dt">by =</span> <span class="st">&quot;customer&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb738-4"><a href="recommender-system.html#cb738-4"></a><span class="st">  </span><span class="kw">group_by</span>(item) <span class="op">%&gt;%</span></span>
-<span id="cb738-5"><a href="recommender-system.html#cb738-5"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">predicted_rating =</span> target_mean <span class="op">+</span><span class="st"> </span></span>
-<span id="cb738-6"><a href="recommender-system.html#cb738-6"></a><span class="st">              </span><span class="kw">sum</span>(similarity <span class="op">*</span><span class="st"> </span>centered_rating) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">abs</span>(similarity))) <span class="op">%&gt;%</span></span>
-<span id="cb738-7"><a href="recommender-system.html#cb738-7"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(predicted_rating))</span></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="recommender-system.html#cb691-1" aria-hidden="true" tabindex="-1"></a>centered_rating_df <span class="sc">%&gt;%</span></span>
+<span id="cb691-2"><a href="recommender-system.html#cb691-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(item <span class="sc">%in%</span> items) <span class="sc">%&gt;%</span></span>
+<span id="cb691-3"><a href="recommender-system.html#cb691-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(similarity_df, <span class="at">by =</span> <span class="st">&quot;customer&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb691-4"><a href="recommender-system.html#cb691-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span></span>
+<span id="cb691-5"><a href="recommender-system.html#cb691-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">predicted_rating =</span> target_mean <span class="sc">+</span> </span>
+<span id="cb691-6"><a href="recommender-system.html#cb691-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">sum</span>(similarity <span class="sc">*</span> centered_rating) <span class="sc">/</span> <span class="fu">sum</span>(<span class="fu">abs</span>(similarity))) <span class="sc">%&gt;%</span></span>
+<span id="cb691-7"><a href="recommender-system.html#cb691-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(predicted_rating))</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 2
 ##   item   predicted_rating
 ##   &lt;chr&gt;             &lt;dbl&gt;
@@ -841,7 +911,7 @@ w(a, i) = \frac{\sum_{j \in I_a \cap I_i} (v_{aj} - \bar{v}_a) (v_{ij} - \bar{v}
 ## 3 상품 5             1.87
 ## 4 상품 6             1.19</code></pre>
 </div>
-<div id="market-basket" class="section level2">
+<div id="market-basket" class="section level2" number="16.4">
 <h2><span class="header-section-number">16.4</span> 시장바구니 데이터를 이용한 협업 필터링</h2>
 <p>아래와 같은 시장바구니 데이터가 있다.</p>
 <p><span class="math display">\[\begin{equation*}
@@ -850,39 +920,39 @@ v_{ij} = \begin{cases}
 0 &amp; \text{ 그렇지 않은 경우}
 \end{cases}
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="recommender-system.html#cb741-1"></a>market_basket_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb741-2"><a href="recommender-system.html#cb741-2"></a>  <span class="op">~</span>customer, <span class="op">~</span>item, <span class="op">~</span>purchase,</span>
-<span id="cb741-3"><a href="recommender-system.html#cb741-3"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-4"><a href="recommender-system.html#cb741-4"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-5"><a href="recommender-system.html#cb741-5"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-6"><a href="recommender-system.html#cb741-6"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-7"><a href="recommender-system.html#cb741-7"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-8"><a href="recommender-system.html#cb741-8"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-9"><a href="recommender-system.html#cb741-9"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-10"><a href="recommender-system.html#cb741-10"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-11"><a href="recommender-system.html#cb741-11"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-12"><a href="recommender-system.html#cb741-12"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-13"><a href="recommender-system.html#cb741-13"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-14"><a href="recommender-system.html#cb741-14"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-15"><a href="recommender-system.html#cb741-15"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-16"><a href="recommender-system.html#cb741-16"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-17"><a href="recommender-system.html#cb741-17"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-18"><a href="recommender-system.html#cb741-18"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-19"><a href="recommender-system.html#cb741-19"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-20"><a href="recommender-system.html#cb741-20"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-21"><a href="recommender-system.html#cb741-21"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-22"><a href="recommender-system.html#cb741-22"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-23"><a href="recommender-system.html#cb741-23"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-24"><a href="recommender-system.html#cb741-24"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-25"><a href="recommender-system.html#cb741-25"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-26"><a href="recommender-system.html#cb741-26"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-27"><a href="recommender-system.html#cb741-27"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-28"><a href="recommender-system.html#cb741-28"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-29"><a href="recommender-system.html#cb741-29"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-30"><a href="recommender-system.html#cb741-30"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-31"><a href="recommender-system.html#cb741-31"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
-<span id="cb741-32"><a href="recommender-system.html#cb741-32"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span></span>
-<span id="cb741-33"><a href="recommender-system.html#cb741-33"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="recommender-system.html#cb693-1" aria-hidden="true" tabindex="-1"></a>market_basket_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb693-2"><a href="recommender-system.html#cb693-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>customer, <span class="sc">~</span>item, <span class="sc">~</span>purchase,</span>
+<span id="cb693-3"><a href="recommender-system.html#cb693-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-4"><a href="recommender-system.html#cb693-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-5"><a href="recommender-system.html#cb693-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-6"><a href="recommender-system.html#cb693-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 1&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-7"><a href="recommender-system.html#cb693-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-8"><a href="recommender-system.html#cb693-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-9"><a href="recommender-system.html#cb693-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-10"><a href="recommender-system.html#cb693-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 2&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-11"><a href="recommender-system.html#cb693-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-12"><a href="recommender-system.html#cb693-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-13"><a href="recommender-system.html#cb693-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-14"><a href="recommender-system.html#cb693-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-15"><a href="recommender-system.html#cb693-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 3&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-16"><a href="recommender-system.html#cb693-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-17"><a href="recommender-system.html#cb693-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-18"><a href="recommender-system.html#cb693-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 3&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-19"><a href="recommender-system.html#cb693-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-20"><a href="recommender-system.html#cb693-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-21"><a href="recommender-system.html#cb693-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 4&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-22"><a href="recommender-system.html#cb693-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-23"><a href="recommender-system.html#cb693-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-24"><a href="recommender-system.html#cb693-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-25"><a href="recommender-system.html#cb693-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 5&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-26"><a href="recommender-system.html#cb693-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 2&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-27"><a href="recommender-system.html#cb693-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 5&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-28"><a href="recommender-system.html#cb693-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 6&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-29"><a href="recommender-system.html#cb693-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;고객 6&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-30"><a href="recommender-system.html#cb693-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 1&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-31"><a href="recommender-system.html#cb693-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 4&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb693-32"><a href="recommender-system.html#cb693-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;목표고객&quot;</span>, <span class="st">&quot;상품 7&quot;</span>, <span class="dv">1</span></span>
+<span id="cb693-33"><a href="recommender-system.html#cb693-33" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>이 때, 총 상품의 개수를 <span class="math inline">\(m\)</span>이라 하고, 고객 <span class="math inline">\(i\)</span>에 대해</p>
 <p><span class="math display">\[\begin{equation*}
 p_i = \frac{|I_i|}{m}
@@ -895,36 +965,36 @@ p_{ik} = \frac{|I_i \cap I_k|}{m}
 <p><span class="math display">\[\begin{equation*}
 w(a, i) = \frac{p_{ai} - p_a p_i}{\sqrt{p_a (1 - p_a)} \sqrt{p_i (1 - p_i)}}
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb742-1"><a href="recommender-system.html#cb742-1"></a>m &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(market_basket_df<span class="op">$</span>item))</span>
-<span id="cb742-2"><a href="recommender-system.html#cb742-2"></a></span>
-<span id="cb742-3"><a href="recommender-system.html#cb742-3"></a>n_df &lt;-<span class="st"> </span>market_basket_df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb742-4"><a href="recommender-system.html#cb742-4"></a><span class="st">  </span><span class="kw">group_by</span>(customer) <span class="op">%&gt;%</span></span>
-<span id="cb742-5"><a href="recommender-system.html#cb742-5"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p =</span> <span class="kw">n</span>() <span class="op">/</span><span class="st"> </span>m)</span></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="recommender-system.html#cb744-1"></a>common_df &lt;-<span class="st"> </span>market_basket_df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb744-2"><a href="recommender-system.html#cb744-2"></a><span class="st">  </span><span class="kw">filter</span>(customer <span class="op">==</span><span class="st"> &quot;목표고객&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb744-3"><a href="recommender-system.html#cb744-3"></a><span class="st">  </span><span class="kw">inner_join</span>(market_basket_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(customer <span class="op">!=</span><span class="st"> &quot;목표고객&quot;</span>), </span>
-<span id="cb744-4"><a href="recommender-system.html#cb744-4"></a>             <span class="dt">by =</span> <span class="st">&quot;item&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb744-5"><a href="recommender-system.html#cb744-5"></a><span class="st">  </span><span class="kw">group_by</span>(customer.y) <span class="op">%&gt;%</span></span>
-<span id="cb744-6"><a href="recommender-system.html#cb744-6"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p =</span> <span class="kw">n</span>() <span class="op">/</span><span class="st"> </span>m) <span class="op">%&gt;%</span></span>
-<span id="cb744-7"><a href="recommender-system.html#cb744-7"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">customer =</span> customer.y)</span></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="recommender-system.html#cb746-1"></a>similarity_df &lt;-<span class="st"> </span><span class="kw">crossing</span>(</span>
-<span id="cb746-2"><a href="recommender-system.html#cb746-2"></a>  <span class="dt">target_customer =</span> <span class="st">&quot;목표고객&quot;</span>,</span>
-<span id="cb746-3"><a href="recommender-system.html#cb746-3"></a>  <span class="dt">ref_customer =</span> n_df<span class="op">$</span>customer[n_df<span class="op">$</span>customer <span class="op">!=</span><span class="st"> &quot;목표고객&quot;</span>]</span>
-<span id="cb746-4"><a href="recommender-system.html#cb746-4"></a>) <span class="op">%&gt;%</span></span>
-<span id="cb746-5"><a href="recommender-system.html#cb746-5"></a><span class="st">  </span><span class="kw">inner_join</span>(n_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">target_p =</span> p),</span>
-<span id="cb746-6"><a href="recommender-system.html#cb746-6"></a>             <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;target_customer&quot;</span> =<span class="st"> &quot;customer&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb746-7"><a href="recommender-system.html#cb746-7"></a><span class="st">  </span><span class="kw">inner_join</span>(n_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">ref_p =</span> p),</span>
-<span id="cb746-8"><a href="recommender-system.html#cb746-8"></a>             <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;ref_customer&quot;</span> =<span class="st"> &quot;customer&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb746-9"><a href="recommender-system.html#cb746-9"></a><span class="st">  </span><span class="kw">inner_join</span>(common_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">common_p =</span> p),</span>
-<span id="cb746-10"><a href="recommender-system.html#cb746-10"></a>             <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;ref_customer&quot;</span> =<span class="st"> &quot;customer&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb746-11"><a href="recommender-system.html#cb746-11"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb746-12"><a href="recommender-system.html#cb746-12"></a>    <span class="dt">similarity =</span> (common_p <span class="op">-</span><span class="st"> </span>target_p <span class="op">*</span><span class="st"> </span>ref_p) <span class="op">/</span></span>
-<span id="cb746-13"><a href="recommender-system.html#cb746-13"></a><span class="st">      </span>(<span class="kw">sqrt</span>(target_p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>target_p)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(ref_p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>ref_p)))</span>
-<span id="cb746-14"><a href="recommender-system.html#cb746-14"></a>  )</span>
-<span id="cb746-15"><a href="recommender-system.html#cb746-15"></a></span>
-<span id="cb746-16"><a href="recommender-system.html#cb746-16"></a><span class="kw">print</span>(similarity_df)</span></code></pre></div>
+<div class="sourceCode" id="cb694"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb694-1"><a href="recommender-system.html#cb694-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(market_basket_df<span class="sc">$</span>item))</span>
+<span id="cb694-2"><a href="recommender-system.html#cb694-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb694-3"><a href="recommender-system.html#cb694-3" aria-hidden="true" tabindex="-1"></a>n_df <span class="ot">&lt;-</span> market_basket_df <span class="sc">%&gt;%</span> </span>
+<span id="cb694-4"><a href="recommender-system.html#cb694-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(customer) <span class="sc">%&gt;%</span></span>
+<span id="cb694-5"><a href="recommender-system.html#cb694-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p =</span> <span class="fu">n</span>() <span class="sc">/</span> m)</span>
+<span id="cb694-6"><a href="recommender-system.html#cb694-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb694-7"><a href="recommender-system.html#cb694-7" aria-hidden="true" tabindex="-1"></a>common_df <span class="ot">&lt;-</span> market_basket_df <span class="sc">%&gt;%</span> </span>
+<span id="cb694-8"><a href="recommender-system.html#cb694-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(customer <span class="sc">==</span> <span class="st">&quot;목표고객&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb694-9"><a href="recommender-system.html#cb694-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(market_basket_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(customer <span class="sc">!=</span> <span class="st">&quot;목표고객&quot;</span>), </span>
+<span id="cb694-10"><a href="recommender-system.html#cb694-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="st">&quot;item&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb694-11"><a href="recommender-system.html#cb694-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(customer.y) <span class="sc">%&gt;%</span></span>
+<span id="cb694-12"><a href="recommender-system.html#cb694-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p =</span> <span class="fu">n</span>() <span class="sc">/</span> m) <span class="sc">%&gt;%</span></span>
+<span id="cb694-13"><a href="recommender-system.html#cb694-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">customer =</span> customer.y)</span>
+<span id="cb694-14"><a href="recommender-system.html#cb694-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb694-15"><a href="recommender-system.html#cb694-15" aria-hidden="true" tabindex="-1"></a>similarity_df <span class="ot">&lt;-</span> <span class="fu">crossing</span>(</span>
+<span id="cb694-16"><a href="recommender-system.html#cb694-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_customer =</span> <span class="st">&quot;목표고객&quot;</span>,</span>
+<span id="cb694-17"><a href="recommender-system.html#cb694-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_customer =</span> n_df<span class="sc">$</span>customer[n_df<span class="sc">$</span>customer <span class="sc">!=</span> <span class="st">&quot;목표고객&quot;</span>]</span>
+<span id="cb694-18"><a href="recommender-system.html#cb694-18" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb694-19"><a href="recommender-system.html#cb694-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(n_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">target_p =</span> p),</span>
+<span id="cb694-20"><a href="recommender-system.html#cb694-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;target_customer&quot;</span> <span class="ot">=</span> <span class="st">&quot;customer&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb694-21"><a href="recommender-system.html#cb694-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(n_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">ref_p =</span> p),</span>
+<span id="cb694-22"><a href="recommender-system.html#cb694-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;ref_customer&quot;</span> <span class="ot">=</span> <span class="st">&quot;customer&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb694-23"><a href="recommender-system.html#cb694-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(common_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">common_p =</span> p),</span>
+<span id="cb694-24"><a href="recommender-system.html#cb694-24" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;ref_customer&quot;</span> <span class="ot">=</span> <span class="st">&quot;customer&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb694-25"><a href="recommender-system.html#cb694-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb694-26"><a href="recommender-system.html#cb694-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">similarity =</span> (common_p <span class="sc">-</span> target_p <span class="sc">*</span> ref_p) <span class="sc">/</span></span>
+<span id="cb694-27"><a href="recommender-system.html#cb694-27" aria-hidden="true" tabindex="-1"></a>      (<span class="fu">sqrt</span>(target_p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> target_p)) <span class="sc">*</span> <span class="fu">sqrt</span>(ref_p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> ref_p)))</span>
+<span id="cb694-28"><a href="recommender-system.html#cb694-28" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb694-29"><a href="recommender-system.html#cb694-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb694-30"><a href="recommender-system.html#cb694-30" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(similarity_df)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##   target_customer ref_customer target_p ref_p common_p similarity
 ##   &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
@@ -938,19 +1008,19 @@ w(a, i) = \frac{p_{ai} - p_a p_i}{\sqrt{p_a (1 - p_a)} \sqrt{p_i (1 - p_i)}}
 <p><span class="math display">\[\begin{equation*}
 P_{aj} = \frac{\sum_{i = 1}^{n} w(a, i) v_{ij}}{\sum_{i = 1}^{n} | w(a, i) |}
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="recommender-system.html#cb748-1"></a>denom &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">abs</span>(similarity_df<span class="op">$</span>similarity))</span>
-<span id="cb748-2"><a href="recommender-system.html#cb748-2"></a></span>
-<span id="cb748-3"><a href="recommender-system.html#cb748-3"></a>pred_df &lt;-<span class="st"> </span>similarity_df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb748-4"><a href="recommender-system.html#cb748-4"></a><span class="st">  </span><span class="kw">inner_join</span>(market_basket_df, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;ref_customer&quot;</span> =<span class="st"> &quot;customer&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb748-5"><a href="recommender-system.html#cb748-5"></a><span class="st">  </span><span class="kw">anti_join</span>(market_basket_df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb748-6"><a href="recommender-system.html#cb748-6"></a><span class="st">              </span><span class="kw">filter</span>(customer <span class="op">==</span><span class="st"> &quot;목표고객&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb748-7"><a href="recommender-system.html#cb748-7"></a><span class="st">              </span><span class="kw">select</span>(item),</span>
-<span id="cb748-8"><a href="recommender-system.html#cb748-8"></a>            <span class="dt">by =</span> <span class="st">&quot;item&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb748-9"><a href="recommender-system.html#cb748-9"></a><span class="st">  </span><span class="kw">group_by</span>(item) <span class="op">%&gt;%</span></span>
-<span id="cb748-10"><a href="recommender-system.html#cb748-10"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">est_score =</span> <span class="kw">sum</span>(similarity <span class="op">*</span><span class="st"> </span>purchase) <span class="op">/</span><span class="st"> </span>denom) <span class="op">%&gt;%</span></span>
-<span id="cb748-11"><a href="recommender-system.html#cb748-11"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(est_score))</span></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb750-1"><a href="recommender-system.html#cb750-1"></a><span class="kw">print</span>(pred_df)</span></code></pre></div>
+<div class="sourceCode" id="cb696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb696-1"><a href="recommender-system.html#cb696-1" aria-hidden="true" tabindex="-1"></a>denom <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>(similarity_df<span class="sc">$</span>similarity))</span>
+<span id="cb696-2"><a href="recommender-system.html#cb696-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb696-3"><a href="recommender-system.html#cb696-3" aria-hidden="true" tabindex="-1"></a>pred_df <span class="ot">&lt;-</span> similarity_df <span class="sc">%&gt;%</span> </span>
+<span id="cb696-4"><a href="recommender-system.html#cb696-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(market_basket_df, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;ref_customer&quot;</span> <span class="ot">=</span> <span class="st">&quot;customer&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb696-5"><a href="recommender-system.html#cb696-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(market_basket_df <span class="sc">%&gt;%</span> </span>
+<span id="cb696-6"><a href="recommender-system.html#cb696-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(customer <span class="sc">==</span> <span class="st">&quot;목표고객&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb696-7"><a href="recommender-system.html#cb696-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(item),</span>
+<span id="cb696-8"><a href="recommender-system.html#cb696-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">&quot;item&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb696-9"><a href="recommender-system.html#cb696-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(item) <span class="sc">%&gt;%</span></span>
+<span id="cb696-10"><a href="recommender-system.html#cb696-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">est_score =</span> <span class="fu">sum</span>(similarity <span class="sc">*</span> purchase) <span class="sc">/</span> denom) <span class="sc">%&gt;%</span></span>
+<span id="cb696-11"><a href="recommender-system.html#cb696-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(est_score))</span>
+<span id="cb696-12"><a href="recommender-system.html#cb696-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb696-13"><a href="recommender-system.html#cb696-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pred_df)</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 2
 ##   item   est_score
 ##   &lt;chr&gt;      &lt;dbl&gt;
@@ -962,9 +1032,9 @@ P_{aj} = \frac{\sum_{i = 1}^{n} w(a, i) v_{ij}}{\sum_{i = 1}^{n} | w(a, i) |}
 </div>
 </div>
 <h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-jun2012datamining">
-<p>전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-jun2012datamining" class="csl-entry">
+전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -986,6 +1056,7 @@ s.setAttribute('data-timestamp', +new Date());
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
             </section>
 
           </div>
@@ -1015,6 +1086,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1034,7 +1106,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["data-mining-book.pdf"],
+"download": ["data-mining-book.pdf", "data-mining-book.epub"],
 "toc": {
 "collapse": "subsection"
 },

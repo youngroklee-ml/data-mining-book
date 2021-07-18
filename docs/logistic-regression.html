@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 로지스틱 회귀분석 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 로지스틱 회귀분석 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2020-12-12" />
+<meta name="date" content="2021-07-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="classification-analysis.html"/>
 <link rel="next" href="da.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,24 +51,23 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,7 +87,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -120,6 +120,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -139,20 +162,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>개요</a></li>
 <li class="chapter" data-level="1" data-path="datamining-overview.html"><a href="datamining-overview.html"><i class="fa fa-check"></i><b>1</b> 데이터마이닝 개요</a></li>
 <li class="part"><span><b>I 1부 - 예측</b></span></li>
-<li class="chapter" data-level="2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>2</b> 회귀분석</a><ul>
+<li class="chapter" data-level="2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>2</b> 회귀분석</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="regression.html"><a href="regression.html#regression-packages-install"><i class="fa fa-check"></i><b>2.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>2.2</b> 다중회귀모형</a></li>
-<li class="chapter" data-level="2.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>2.3</b> 반응치에 대한 추정 및 예측</a><ul>
+<li class="chapter" data-level="2.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>2.3</b> 반응치에 대한 추정 및 예측</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="regression.html"><a href="regression.html#regression-response-confidence"><i class="fa fa-check"></i><b>2.3.1</b> 평균반응치의 추정</a></li>
 <li class="chapter" data-level="2.3.2" data-path="regression.html"><a href="regression.html#regression-response-prediction"><i class="fa fa-check"></i><b>2.3.2</b> 미래반응치의 예측</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>2.4</b> 지시변수와 회귀모형</a><ul>
+<li class="chapter" data-level="2.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>2.4</b> 지시변수와 회귀모형</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="regression.html"><a href="regression.html#regression-indicator-variable-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스트립트</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3</b> 주성분분석</a><ul>
+<li class="chapter" data-level="3" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3</b> 주성분분석</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="pca.html"><a href="pca.html#pca-packages-install"><i class="fa fa-check"></i><b>3.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="3.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>3.2</b> 행렬의 분해</a><ul>
+<li class="chapter" data-level="3.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>3.2</b> 행렬의 분해</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="pca.html"><a href="pca.html#pca-matrix-factorization-basic-script"><i class="fa fa-check"></i><b>3.2.1</b> 기본 R 스트립트</a></li>
 <li class="chapter" data-level="3.2.2" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>3.2.2</b> 변수의 변동과 제곱합</a></li>
 <li class="chapter" data-level="3.2.3" data-path="pca.html"><a href="pca.html#pca-intro"><i class="fa fa-check"></i><b>3.2.3</b> 주성분의 이해 및 행렬의 분해</a></li>
@@ -160,15 +188,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.5" data-path="pca.html"><a href="pca.html#pca-spectral"><i class="fa fa-check"></i><b>3.2.5</b> 분광분해 (Spectral Decomposition)</a></li>
 <li class="chapter" data-level="3.2.6" data-path="pca.html"><a href="pca.html#pca-nipals"><i class="fa fa-check"></i><b>3.2.6</b> NIPALS 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a><ul>
+<li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="pca.html"><a href="pca.html#pcr-basic-script"><i class="fa fa-check"></i><b>3.3.1</b> 기본 R 스트립트</a></li>
 <li class="chapter" data-level="3.3.2" data-path="pca.html"><a href="pca.html#pcr-regression-coefficient"><i class="fa fa-check"></i><b>3.3.2</b> 주성분 회귀계수 추정</a></li>
 <li class="chapter" data-level="3.3.3" data-path="pca.html"><a href="pca.html#pcr-regression-transform"><i class="fa fa-check"></i><b>3.3.3</b> 회귀계수 선형변환</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="plsr.html"><a href="plsr.html"><i class="fa fa-check"></i><b>4</b> 부분최소자승법</a><ul>
+<li class="chapter" data-level="4" data-path="plsr.html"><a href="plsr.html"><i class="fa fa-check"></i><b>4</b> 부분최소자승법</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="plsr.html"><a href="plsr.html#plsr-packages-install"><i class="fa fa-check"></i><b>4.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="4.2" data-path="plsr.html"><a href="plsr.html#plsr-single-target"><i class="fa fa-check"></i><b>4.2</b> 하나의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.2" data-path="plsr.html"><a href="plsr.html#plsr-single-target"><i class="fa fa-check"></i><b>4.2</b> 하나의 종속변수의 경우</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="plsr.html"><a href="plsr.html#plsr-basic-script"><i class="fa fa-check"></i><b>4.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.2.2" data-path="plsr.html"><a href="plsr.html#plsr-model"><i class="fa fa-check"></i><b>4.2.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.2.3" data-path="plsr.html"><a href="plsr.html#plsr-single-nipals"><i class="fa fa-check"></i><b>4.2.3</b> NIPALS 알고리즘</a></li>
@@ -176,7 +207,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.5" data-path="plsr.html"><a href="plsr.html#plsr-sst"><i class="fa fa-check"></i><b>4.2.5</b> 제곱합 분해</a></li>
 <li class="chapter" data-level="4.2.6" data-path="plsr.html"><a href="plsr.html#plsr-variable-importance"><i class="fa fa-check"></i><b>4.2.6</b> 독립변수의 중요도</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-basic-script"><i class="fa fa-check"></i><b>4.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.3.2" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-model"><i class="fa fa-check"></i><b>4.3.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.3.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-nipals"><i class="fa fa-check"></i><b>4.3.3</b> NIPALS 알고리즘</a></li>
@@ -185,189 +217,230 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II 2부 - 분류분석</b></span></li>
-<li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a><ul>
+<li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-packages-install"><i class="fa fa-check"></i><b>5.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="5.2" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-problem-methods"><i class="fa fa-check"></i><b>5.2</b> 분류문제 및 분류기법</a></li>
-<li class="chapter" data-level="5.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>5.3</b> 기본적인 분류기법</a><ul>
+<li class="chapter" data-level="5.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>5.3</b> 기본적인 분류기법</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#nearest-neighbor-classification"><i class="fa fa-check"></i><b>5.3.1</b> 인접객체법</a></li>
 <li class="chapter" data-level="5.3.2" data-path="classification-analysis.html"><a href="classification-analysis.html#naive-bayes"><i class="fa fa-check"></i><b>5.3.2</b> 나이브 베이지안 분류법</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6</b> 로지스틱 회귀분석</a><ul>
+<li class="chapter" data-level="6" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6</b> 로지스틱 회귀분석</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-packages-install"><i class="fa fa-check"></i><b>6.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="6.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>6.2</b> 이분 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>6.2</b> 이분 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#bianry-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-model"><i class="fa fa-check"></i><b>6.2.2</b> 회귀모형</a></li>
 <li class="chapter" data-level="6.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-estimation"><i class="fa fa-check"></i><b>6.2.3</b> 회귀계수 추정</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>6.3</b> 명목 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>6.3</b> 명목 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#baseline-category-logit-model"><i class="fa fa-check"></i><b>6.3.2</b> 기준범주 로짓모형</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>6.4</b> 서열 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>6.4</b> 서열 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-basic-script"><i class="fa fa-check"></i><b>6.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#cumulative-logit-model"><i class="fa fa-check"></i><b>6.4.2</b> 누적 로짓모형</a></li>
 <li class="chapter" data-level="6.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#adjacent-categories-logit-model"><i class="fa fa-check"></i><b>6.4.3</b> 인근범주 로짓모형</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>7</b> 판별분석</a><ul>
+<li class="chapter" data-level="7" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>7</b> 판별분석</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="da.html"><a href="da.html#da-overview"><i class="fa fa-check"></i><b>7.1</b> 개요</a></li>
 <li class="chapter" data-level="7.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a><ul>
+<li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#피셔-판별함수"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
 <li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#분류-규칙"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
 <li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r-패키지를-이용한-분류규칙-도출"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
+<li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>7.4.2</b> 선형판별함수</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>7.5</b> 오분류비용을 고려한 분류규칙</a></li>
-<li class="chapter" data-level="7.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>7.6</b> 이차판별분석</a><ul>
+<li class="chapter" data-level="7.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>7.6</b> 이차판별분석</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>7.6.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>7.6.2</b> 이차 판별함수</a></li>
 <li class="chapter" data-level="7.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>7.6.3</b> 이차판별함수에 의한 분류</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>7.7</b> 세 범주 이상의 분류</a><ul>
+<li class="chapter" data-level="7.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>7.7</b> 세 범주 이상의 분류</a>
+<ul>
 <li class="chapter" data-level="7.7.1" data-path="da.html"><a href="da.html#mutliclass-da-basic-script"><i class="fa fa-check"></i><b>7.7.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.7.2" data-path="da.html"><a href="da.html#mutliclass-generalized-discriminant-function"><i class="fa fa-check"></i><b>7.7.2</b> 일반화된 판별함수</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>8</b> 트리기반 기법</a><ul>
+<li class="chapter" data-level="8" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>8</b> 트리기반 기법</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>8.1</b> CART 개요</a></li>
 <li class="chapter" data-level="8.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-packages-install"><i class="fa fa-check"></i><b>8.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="8.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>8.3</b> CART 트리 생성</a><ul>
+<li class="chapter" data-level="8.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>8.3</b> CART 트리 생성</a>
+<ul>
 <li class="chapter" data-level="8.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>8.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="8.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>8.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="8.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>8.3.3</b> 노드 및 트리의 불순도</a></li>
 <li class="chapter" data-level="8.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>8.3.4</b> 분지기준</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>8.4</b> 가지치기 및 최종 트리 선정</a><ul>
+<li class="chapter" data-level="8.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>8.4</b> 가지치기 및 최종 트리 선정</a>
+<ul>
 <li class="chapter" data-level="8.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>8.4.1</b> 가지치기</a></li>
 <li class="chapter" data-level="8.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>8.4.2</b> 최적 트리의 선정</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>8.5</b> R패키지 내 분류 트리 방법</a><ul>
+<li class="chapter" data-level="8.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>8.5</b> R패키지 내 분류 트리 방법</a>
+<ul>
 <li class="chapter" data-level="8.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>8.5.1</b> 트리 확장</a></li>
 <li class="chapter" data-level="8.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>8.5.2</b> 가지치기</a></li>
 <li class="chapter" data-level="8.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>8.5.3</b> 파라미터값 결정</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>9</b> 서포트 벡터 머신</a><ul>
+<li class="chapter" data-level="9" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>9</b> 서포트 벡터 머신</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>9.1</b> 개요</a></li>
 <li class="chapter" data-level="9.2" data-path="svm.html"><a href="svm.html#svm-packages-install"><i class="fa fa-check"></i><b>9.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="9.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>9.3</b> 선형 SVM - 분리 가능 경우</a><ul>
+<li class="chapter" data-level="9.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>9.3</b> 선형 SVM - 분리 가능 경우</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>9.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>9.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="9.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>9.3.3</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>9.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="9.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>9.4</b> 선형 SVM - 분리 불가능 경우</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>9.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>9.4.2</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>9.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="9.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>9.5</b> 비선형 SVM</a>
+<ul>
 <li class="chapter" data-level="9.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>9.5.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>9.5.2</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>9.6</b> R패키지 내 SVM</a><ul>
+<li class="chapter" data-level="9.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>9.6</b> R패키지 내 SVM</a>
+<ul>
 <li class="chapter" data-level="9.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>9.6.1</b> 커널함수</a></li>
 <li class="chapter" data-level="9.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>9.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>10</b> 분류규칙의 성능 평가</a><ul>
+<li class="chapter" data-level="10" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>10</b> 분류규칙의 성능 평가</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-packages-install"><i class="fa fa-check"></i><b>10.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="10.2" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-misclassification-rate"><i class="fa fa-check"></i><b>10.2</b> 분류오류율</a></li>
-<li class="chapter" data-level="10.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>10.3</b> 정확도, 민감도 및 특이도</a><ul>
+<li class="chapter" data-level="10.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>10.3</b> 정확도, 민감도 및 특이도</a>
+<ul>
 <li class="chapter" data-level="10.3.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#confusion-matrix-r-package"><i class="fa fa-check"></i><b>10.3.1</b> R 패키지 내 정오분류표</a></li>
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#roc-curve"><i class="fa fa-check"></i><b>10.4</b> ROC 곡선</a></li>
 <li class="chapter" data-level="10.5" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#gain-chart"><i class="fa fa-check"></i><b>10.5</b> 이익도표</a></li>
 </ul></li>
 <li class="part"><span><b>III 3부 - 군집분석</b></span></li>
-<li class="chapter" data-level="11" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>11</b> 군집분석 개요</a><ul>
+<li class="chapter" data-level="11" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>11</b> 군집분석 개요</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>11.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="11.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>11.2</b> 군집분석 기법</a></li>
-<li class="chapter" data-level="11.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>11.3</b> 객체 간의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>11.3</b> 객체 간의 유사성 척도</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="clustering-overview.html"><a href="clustering-overview.html#object-distance-metric"><i class="fa fa-check"></i><b>11.3.1</b> 거리 관련 척도</a></li>
 <li class="chapter" data-level="11.3.2" data-path="clustering-overview.html"><a href="clustering-overview.html#object-correlation-metric"><i class="fa fa-check"></i><b>11.3.2</b> 상관계수 관련 척도</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>11.4</b> 범주형 객체의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>11.4</b> 범주형 객체의 유사성 척도</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="clustering-overview.html"><a href="clustering-overview.html#binary-similarity-metric"><i class="fa fa-check"></i><b>11.4.1</b> 이분형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.2" data-path="clustering-overview.html"><a href="clustering-overview.html#ordinal-similarity-metric"><i class="fa fa-check"></i><b>11.4.2</b> 서열형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.3" data-path="clustering-overview.html"><a href="clustering-overview.html#nominal-similarity-metric"><i class="fa fa-check"></i><b>11.4.3</b> 명목형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.4" data-path="clustering-overview.html"><a href="clustering-overview.html#mixed-similarity-metric"><i class="fa fa-check"></i><b>11.4.4</b> 혼합형의 경우</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>12</b> 계층적 군집방법</a><ul>
+<li class="chapter" data-level="12" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>12</b> 계층적 군집방법</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>12.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="12.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#distance-between-clusters"><i class="fa fa-check"></i><b>12.2</b> 군집 간 거리척도 및 연결법</a></li>
-<li class="chapter" data-level="12.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>12.3</b> 연결법의 군집 알고리즘</a><ul>
+<li class="chapter" data-level="12.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>12.3</b> 연결법의 군집 알고리즘</a>
+<ul>
 <li class="chapter" data-level="12.3.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-basic-script"><i class="fa fa-check"></i><b>12.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.3.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-algorithm"><i class="fa fa-check"></i><b>12.3.2</b> 연결법 군집 알고리즘</a></li>
 <li class="chapter" data-level="12.3.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hclust"><i class="fa fa-check"></i><b>12.3.3</b> R 패키지 내 연결법</a></li>
 </ul></li>
-<li class="chapter" data-level="12.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>12.4</b> 워드 방법</a><ul>
+<li class="chapter" data-level="12.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>12.4</b> 워드 방법</a>
+<ul>
 <li class="chapter" data-level="12.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>12.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>12.4.2</b> 워드 군집 알고리즘</a></li>
 <li class="chapter" data-level="12.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>12.4.3</b> R 패키지 내 워드 방법</a></li>
 </ul></li>
-<li class="chapter" data-level="12.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>12.5</b> 분리적 방법 - 다이아나</a><ul>
+<li class="chapter" data-level="12.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>12.5</b> 분리적 방법 - 다이아나</a>
+<ul>
 <li class="chapter" data-level="12.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>12.5.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>12.5.2</b> 다이아나 알고리즘</a></li>
 </ul></li>
 <li class="chapter" data-level="12.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>12.6</b> 군집수의 결정</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>13</b> 비계층적 군집방법</a><ul>
+<li class="chapter" data-level="13" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>13</b> 비계층적 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>13.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="13.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>13.2</b> K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>13.2</b> K-means 알고리즘</a>
+<ul>
 <li class="chapter" data-level="13.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>13.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="13.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>13.2.2</b> 알고리즘</a></li>
 <li class="chapter" data-level="13.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>13.2.3</b> R 스크립트 구현</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>13.3</b> K-medoids 군집방법</a><ul>
+<li class="chapter" data-level="13.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>13.3</b> K-medoids 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>13.3.1</b> PAM 알고리즘</a></li>
 <li class="chapter" data-level="13.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>13.3.2</b> CLARA 알고리즘</a></li>
 <li class="chapter" data-level="13.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>13.3.3</b> CLARANS 알고리즘</a></li>
 <li class="chapter" data-level="13.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>13.3.4</b> K-means-like 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>13.4</b> 퍼지 K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>13.4</b> 퍼지 K-means 알고리즘</a>
+<ul>
 <li class="chapter" data-level="13.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>13.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="13.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>13.4.2</b> 알고리즘</a></li>
 <li class="chapter" data-level="13.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>13.4.3</b> R 스크립트 구현</a></li>
 </ul></li>
-<li class="chapter" data-level="13.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>13.5</b> 모형기반 군집방법</a><ul>
+<li class="chapter" data-level="13.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>13.5</b> 모형기반 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>13.5.1</b> 기본 R script</a></li>
 <li class="chapter" data-level="13.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>13.5.2</b> EM 알고리즘</a></li>
 <li class="chapter" data-level="13.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>13.5.3</b> R 스크립트 구현</a></li>
 <li class="chapter" data-level="13.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>13.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>14</b> 군집해의 평가 및 해석</a><ul>
+<li class="chapter" data-level="14" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>14</b> 군집해의 평가 및 해석</a>
+<ul>
 <li class="chapter" data-level="14.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>14.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="14.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>14.2</b> 군집해의 평가</a><ul>
+<li class="chapter" data-level="14.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>14.2</b> 군집해의 평가</a>
+<ul>
 <li class="chapter" data-level="14.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>14.2.1</b> 외부평가지수</a></li>
 <li class="chapter" data-level="14.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>14.2.2</b> 내부평가지수</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>14.3</b> 군집해의 해석</a></li>
 </ul></li>
 <li class="part"><span><b>IV 4부 - 연관규칙</b></span></li>
-<li class="chapter" data-level="15" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>15</b> 연관규칙</a><ul>
+<li class="chapter" data-level="15" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>15</b> 연관규칙</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="association-rule.html"><a href="association-rule.html#association-packages-install"><i class="fa fa-check"></i><b>15.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="15.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>15.2</b> 연관규칙의 정의 및 성능척도</a><ul>
+<li class="chapter" data-level="15.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>15.2</b> 연관규칙의 정의 및 성능척도</a>
+<ul>
 <li class="chapter" data-level="15.2.1" data-path="association-rule.html"><a href="association-rule.html#association-rule-support"><i class="fa fa-check"></i><b>15.2.1</b> 지지도</a></li>
 <li class="chapter" data-level="15.2.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-confidence"><i class="fa fa-check"></i><b>15.2.2</b> 신뢰도</a></li>
 <li class="chapter" data-level="15.2.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-lift"><i class="fa fa-check"></i><b>15.2.3</b> 개선도</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>15.3</b> 연관규칙의 탐사</a><ul>
+<li class="chapter" data-level="15.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>15.3</b> 연관규칙의 탐사</a>
+<ul>
 <li class="chapter" data-level="15.3.1" data-path="association-rule.html"><a href="association-rule.html#apriori-large-itemsets"><i class="fa fa-check"></i><b>15.3.1</b> 빈발항목집합 생성</a></li>
 <li class="chapter" data-level="15.3.2" data-path="association-rule.html"><a href="association-rule.html#apriori-rule-exploration"><i class="fa fa-check"></i><b>15.3.2</b> 규칙의 탐사</a></li>
 <li class="chapter" data-level="15.3.3" data-path="association-rule.html"><a href="association-rule.html#apriori-r-package"><i class="fa fa-check"></i><b>15.3.3</b> R 패키지 내 Apriori</a></li>
 </ul></li>
-<li class="chapter" data-level="15.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>15.4</b> 순차적 패턴의 탐사</a><ul>
+<li class="chapter" data-level="15.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>15.4</b> 순차적 패턴의 탐사</a>
+<ul>
 <li class="chapter" data-level="15.4.1" data-path="association-rule.html"><a href="association-rule.html#association-aprioriall"><i class="fa fa-check"></i><b>15.4.1</b> AprioriAll 알고리즘</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>16</b> 추천시스템</a><ul>
+<li class="chapter" data-level="16" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>16</b> 추천시스템</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="recommender-system.html"><a href="recommender-system.html#recommender-packages-install"><i class="fa fa-check"></i><b>16.1</b> 필요 R package 설치</a></li>
 <li class="chapter" data-level="16.2" data-path="recommender-system.html"><a href="recommender-system.html#content-based-recommender"><i class="fa fa-check"></i><b>16.2</b> 내용기반 추천시스템</a></li>
 <li class="chapter" data-level="16.3" data-path="recommender-system.html"><a href="recommender-system.html#collaborative-filtering"><i class="fa fa-check"></i><b>16.3</b> 협업 필터링</a></li>
@@ -394,10 +467,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="logistic-regression" class="section level1">
+<div id="logistic-regression" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> 로지스틱 회귀분석</h1>
 <p>로지스틱 회귀분석(logistic regression)은 종속변수가 통상 2개의 범주(있음/없음, 불량/양호, 합격/불합격 등)를 다루는 모형을 지칭하나, 3개 이상의 범주를 다루기도 한다. 후자의 경우는 다시 서열형(ordinal) 데이터와 명목형(nominal) 데이터인 경우에 따라 서로 다른 모형이 사용된다.</p>
-<div id="logistic-packages-install" class="section level2">
+<div id="logistic-packages-install" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> 필요 R 패키지 설치</h2>
 <p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
 <table>
@@ -410,55 +483,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td align="left">tidyverse</td>
-<td align="left">1.3.0</td>
+<td align="left">1.3.1</td>
 </tr>
 <tr class="even">
 <td align="left">stats</td>
-<td align="left">4.0.3</td>
+<td align="left">4.1.0</td>
 </tr>
 <tr class="odd">
 <td align="left">nnet</td>
-<td align="left">7.3-14</td>
+<td align="left">7.3-16</td>
 </tr>
 <tr class="even">
 <td align="left">MASS</td>
-<td align="left">7.3-53</td>
+<td align="left">7.3-54</td>
 </tr>
 <tr class="odd">
 <td align="left">VGAM</td>
-<td align="left">1.1-4</td>
+<td align="left">1.1-5</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="binary-logistic-regression" class="section level2">
+<div id="binary-logistic-regression" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> 이분 로지스틱 회귀모형</h2>
-<div id="bianry-logistic-reg-basic-script" class="section level3">
+<div id="bianry-logistic-reg-basic-script" class="section level3" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="logistic-regression.html#cb203-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb203-2"><a href="logistic-regression.html#cb203-2"></a>  <span class="op">~</span>id, <span class="op">~</span>x1, <span class="op">~</span>x2, <span class="op">~</span>x3, <span class="op">~</span>y,</span>
-<span id="cb203-3"><a href="logistic-regression.html#cb203-3"></a>  <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="st">&quot;우수&quot;</span>,</span>
-<span id="cb203-4"><a href="logistic-regression.html#cb203-4"></a>  <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="st">&quot;우수&quot;</span>,</span>
-<span id="cb203-5"><a href="logistic-regression.html#cb203-5"></a>  <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">0</span>, <span class="st">&quot;우수&quot;</span>,</span>
-<span id="cb203-6"><a href="logistic-regression.html#cb203-6"></a>  <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="st">&quot;우수&quot;</span>,</span>
-<span id="cb203-7"><a href="logistic-regression.html#cb203-7"></a>  <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="st">&quot;우수&quot;</span>,</span>
-<span id="cb203-8"><a href="logistic-regression.html#cb203-8"></a>  <span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="st">&quot;우수&quot;</span>,</span>
-<span id="cb203-9"><a href="logistic-regression.html#cb203-9"></a>  <span class="dv">7</span>, <span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">0</span>, <span class="st">&quot;보통&quot;</span>,</span>
-<span id="cb203-10"><a href="logistic-regression.html#cb203-10"></a>  <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="st">&quot;보통&quot;</span>,</span>
-<span id="cb203-11"><a href="logistic-regression.html#cb203-11"></a>  <span class="dv">9</span>, <span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="st">&quot;보통&quot;</span>,</span>
-<span id="cb203-12"><a href="logistic-regression.html#cb203-12"></a>  <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="st">&quot;보통&quot;</span>,</span>
-<span id="cb203-13"><a href="logistic-regression.html#cb203-13"></a>  <span class="dv">11</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="st">&quot;보통&quot;</span>,</span>
-<span id="cb203-14"><a href="logistic-regression.html#cb203-14"></a>  <span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">0</span>, <span class="st">&quot;보통&quot;</span>,</span>
-<span id="cb203-15"><a href="logistic-regression.html#cb203-15"></a>  <span class="dv">13</span>, <span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="st">&quot;보통&quot;</span>,</span>
-<span id="cb203-16"><a href="logistic-regression.html#cb203-16"></a>  <span class="dv">14</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="st">&quot;보통&quot;</span>,</span>
-<span id="cb203-17"><a href="logistic-regression.html#cb203-17"></a>  <span class="dv">15</span>, <span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="st">&quot;보통&quot;</span></span>
-<span id="cb203-18"><a href="logistic-regression.html#cb203-18"></a>) <span class="op">%&gt;%</span></span>
-<span id="cb203-19"><a href="logistic-regression.html#cb203-19"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">factor</span>(y, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;보통&quot;</span>, <span class="st">&quot;우수&quot;</span>)))</span>
-<span id="cb203-20"><a href="logistic-regression.html#cb203-20"></a></span>
-<span id="cb203-21"><a href="logistic-regression.html#cb203-21"></a>knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb203-22"><a href="logistic-regression.html#cb203-22"></a>             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb203-23"><a href="logistic-regression.html#cb203-23"></a>             <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;아침식사여부($x_1$)&#39;</span>, <span class="st">&#39;수면시간($x_2$)&#39;</span>, <span class="st">&#39;서클활동시간($x_3$)&#39;</span>, <span class="st">&#39;범주(y)&#39;</span>),</span>
-<span id="cb203-24"><a href="logistic-regression.html#cb203-24"></a>             <span class="dt">caption =</span> <span class="st">&#39;우수/보통 학생에 대한 설문조사 결과&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="logistic-regression.html#cb200-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb200-2"><a href="logistic-regression.html#cb200-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>x1, <span class="sc">~</span>x2, <span class="sc">~</span>x3, <span class="sc">~</span>y,</span>
+<span id="cb200-3"><a href="logistic-regression.html#cb200-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="st">&quot;우수&quot;</span>,</span>
+<span id="cb200-4"><a href="logistic-regression.html#cb200-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="st">&quot;우수&quot;</span>,</span>
+<span id="cb200-5"><a href="logistic-regression.html#cb200-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">0</span>, <span class="st">&quot;우수&quot;</span>,</span>
+<span id="cb200-6"><a href="logistic-regression.html#cb200-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="st">&quot;우수&quot;</span>,</span>
+<span id="cb200-7"><a href="logistic-regression.html#cb200-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="st">&quot;우수&quot;</span>,</span>
+<span id="cb200-8"><a href="logistic-regression.html#cb200-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="st">&quot;우수&quot;</span>,</span>
+<span id="cb200-9"><a href="logistic-regression.html#cb200-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span>, <span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">0</span>, <span class="st">&quot;보통&quot;</span>,</span>
+<span id="cb200-10"><a href="logistic-regression.html#cb200-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="st">&quot;보통&quot;</span>,</span>
+<span id="cb200-11"><a href="logistic-regression.html#cb200-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span>, <span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="st">&quot;보통&quot;</span>,</span>
+<span id="cb200-12"><a href="logistic-regression.html#cb200-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="st">&quot;보통&quot;</span>,</span>
+<span id="cb200-13"><a href="logistic-regression.html#cb200-13" aria-hidden="true" tabindex="-1"></a>  <span class="dv">11</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="st">&quot;보통&quot;</span>,</span>
+<span id="cb200-14"><a href="logistic-regression.html#cb200-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">0</span>, <span class="st">&quot;보통&quot;</span>,</span>
+<span id="cb200-15"><a href="logistic-regression.html#cb200-15" aria-hidden="true" tabindex="-1"></a>  <span class="dv">13</span>, <span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="st">&quot;보통&quot;</span>,</span>
+<span id="cb200-16"><a href="logistic-regression.html#cb200-16" aria-hidden="true" tabindex="-1"></a>  <span class="dv">14</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="st">&quot;보통&quot;</span>,</span>
+<span id="cb200-17"><a href="logistic-regression.html#cb200-17" aria-hidden="true" tabindex="-1"></a>  <span class="dv">15</span>, <span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="st">&quot;보통&quot;</span></span>
+<span id="cb200-18"><a href="logistic-regression.html#cb200-18" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb200-19"><a href="logistic-regression.html#cb200-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">factor</span>(y, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;보통&quot;</span>, <span class="st">&quot;우수&quot;</span>)))</span>
+<span id="cb200-20"><a href="logistic-regression.html#cb200-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-21"><a href="logistic-regression.html#cb200-21" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(train_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb200-22"><a href="logistic-regression.html#cb200-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb200-23"><a href="logistic-regression.html#cb200-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;아침식사여부($x_1$)&#39;</span>, <span class="st">&#39;수면시간($x_2$)&#39;</span>, <span class="st">&#39;서클활동시간($x_3$)&#39;</span>, <span class="st">&#39;범주(y)&#39;</span>),</span>
+<span id="cb200-24"><a href="logistic-regression.html#cb200-24" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;우수/보통 학생에 대한 설문조사 결과&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:binary-logistic-reg-train-data">Table 6.1: </span>우수/보통 학생에 대한 설문조사 결과</caption>
 <thead>
@@ -580,14 +653,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">6.1</a>와 같이 세 개의 독립변수 <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(x_3\)</span>와 이분형 종속변수 <span class="math inline">\(y\)</span>의 관측값(보통 = 0, 우수 = 1)으로 이루어진 15개의 학습표본을 <code>train_df</code>라는 data frame에 저장한다.</p>
 <p>아래와 같이 <code>glm</code> 함수를 이용하여 로지스틱 회귀모형을 간편하게 추정할 수 있다.</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="logistic-regression.html#cb204-1"></a>glm_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), <span class="dt">data =</span> train_df)</span>
-<span id="cb204-2"><a href="logistic-regression.html#cb204-2"></a></span>
-<span id="cb204-3"><a href="logistic-regression.html#cb204-3"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb204-4"><a href="logistic-regression.html#cb204-4"></a>  glm_fit <span class="op">%&gt;%</span><span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>(),</span>
-<span id="cb204-5"><a href="logistic-regression.html#cb204-5"></a>  <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb204-6"><a href="logistic-regression.html#cb204-6"></a>  <span class="dt">caption =</span> <span class="st">&quot;위 우수/보통 학생 설문조사 데이터에 대한 Logistic Regression 결과&quot;</span></span>
-<span id="cb204-7"><a href="logistic-regression.html#cb204-7"></a><span class="co">#  caption = &quot;Table \\@ref(tab:binary-logistic-reg-train-data)에 대한 Logistic Regression 결과&quot;</span></span>
-<span id="cb204-8"><a href="logistic-regression.html#cb204-8"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="logistic-regression.html#cb201-1" aria-hidden="true" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>), <span class="at">data =</span> train_df)</span>
+<span id="cb201-2"><a href="logistic-regression.html#cb201-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb201-3"><a href="logistic-regression.html#cb201-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb201-4"><a href="logistic-regression.html#cb201-4" aria-hidden="true" tabindex="-1"></a>  glm_fit <span class="sc">%&gt;%</span>  broom<span class="sc">::</span><span class="fu">tidy</span>(),</span>
+<span id="cb201-5"><a href="logistic-regression.html#cb201-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb201-6"><a href="logistic-regression.html#cb201-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&quot;위 우수/보통 학생 설문조사 데이터에 대한 Logistic Regression 결과&quot;</span></span>
+<span id="cb201-7"><a href="logistic-regression.html#cb201-7" aria-hidden="true" tabindex="-1"></a><span class="co">#  caption = &quot;Table \\@ref(tab:binary-logistic-reg-train-data)에 대한 Logistic Regression 결과&quot;</span></span>
+<span id="cb201-8"><a href="logistic-regression.html#cb201-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:binary-logistic-reg-coef">Table 6.2: </span>위 우수/보통 학생 설문조사 데이터에 대한 Logistic Regression 결과</caption>
 <thead>
@@ -632,7 +705,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>Table <a href="logistic-regression.html#tab:binary-logistic-reg-coef">6.2</a>은 추정된 회귀계수 추정치 <code>estmate</code>과 그 표준오차 <code>std.error</code>, 표준화(standardized)된 회귀계수값 <code>statistic</code> (= <code>estmate</code> / <code>std.error</code>), 그리고 귀무가설 <span class="math inline">\(H_0\)</span>: <code>statistic</code> = 0 에 대한 유의확률 <code>p.value</code>를 보여준다.</p>
 </div>
-<div id="binary-logistic-reg-model" class="section level3">
+<div id="binary-logistic-reg-model" class="section level3" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> 회귀모형</h3>
 <p>이분 로지스틱 회귀모형은 종속변수가 2가지 범주를 취하는 경우에 사용된다.</p>
 <p><span class="math inline">\(N\)</span>개의 객체로 이루어진 학습데이터 <span class="math inline">\(\{(\mathbf{x}_i, y_i)\}_{i = 1, \cdots, N}\)</span>를 아래와 같이 정의하자.</p>
@@ -665,7 +738,7 @@ y_i = \begin{cases}
 \end{equation}\]</span></p>
 <p>식 <a href="logistic-regression.html#eq:binary-logistic-latent-interpret">(6.3)</a>에서 <span class="math inline">\(\varepsilon_i\)</span>는 표준로지스틱분포(standard logistic distribution)을 따른다.</p>
 </div>
-<div id="binary-logistic-reg-estimation" class="section level3">
+<div id="binary-logistic-reg-estimation" class="section level3" number="6.2.3">
 <h3><span class="header-section-number">6.2.3</span> 회귀계수 추정</h3>
 <p>로지스틱 모형에서 회귀계수의 추정을 위해서 주로 최우추정법(maximum likelihood estimation)이 사용된다. <span class="math inline">\(N\)</span>개의 객체로 이루어진 학습데이터에 대해 우도함수는 다음과 같다.</p>
 <p><span class="math display">\[\begin{equation*}
@@ -679,8 +752,8 @@ L = \prod_{i = 1}^{N} P_i^{y_i} (1 - P_i)^{1 - y_i}
 &amp;=&amp; \sum_{i = 1}^{N} y_i \left(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij} \right) - \sum_{i = 1}^{N}  \log \left(1 + \exp\left(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij}\right)\right)
 \tag{6.4}
 \end{eqnarray}\]</span></p>
-<p>식 <a href="logistic-regression.html#eq:binary-logistic-reg-loglik">(6.4)</a>을 각 회귀계수 <span class="math inline">\(\beta_0, \beta_1, \cdots, \beta_p\)</span>에 대해 편미분하여 최적해를 얻는다. 이를 위해 주로 뉴턴-랩슨 알고리즘(Newton-Raphson algorithm)이나 quasi-Newton 알고리즘이 사용되나 <span class="citation">(전치혁 <a href="#ref-jun2012datamining" role="doc-biblioref">2012</a>)</span>, 본 장에서는 우선 안정성은 떨어지지만 보다 간편한 방법으로 경사하강법(gradient descent)을 소개한다.</p>
-<div id="binary-logistic-gradient-descent" class="section level4">
+<p>식 <a href="logistic-regression.html#eq:binary-logistic-reg-loglik">(6.4)</a>을 각 회귀계수 <span class="math inline">\(\beta_0, \beta_1, \cdots, \beta_p\)</span>에 대해 편미분하여 최적해를 얻는다. 이를 위해 주로 뉴턴-랩슨 알고리즘(Newton-Raphson algorithm)이나 quasi-Newton 알고리즘이 사용되나 <span class="citation">(<a href="#ref-jun2012datamining" role="doc-biblioref">전치혁 2012</a>)</span>, 본 장에서는 우선 안정성은 떨어지지만 보다 간편한 방법으로 경사하강법(gradient descent)을 소개한다.</p>
+<div id="binary-logistic-gradient-descent" class="section level4" number="6.2.3.1">
 <h4><span class="header-section-number">6.2.3.1</span> 경사하강법</h4>
 <p>식 <a href="logistic-regression.html#eq:logistic-function">(6.1)</a>과 <span class="math inline">\(P(y_i = 0 \,|\, \mathbf{x}_i) = 1 - P_i\)</span>, 그리고</p>
 <p><span class="math display">\[\begin{equation*}
@@ -716,69 +789,69 @@ f(\beta_0, \boldsymbol\beta) = \sum_{i = 1}^{N} \log \left(1 + \exp\left((1 - 2y
 &amp;=&amp; \sum_{i = 1}^{N} \frac{(1 - 2y_i)x_{ij}}{1 + \exp\left((2y_i - 1)(\beta_0 + \sum_{j = 1}^{p} \beta_j x_{ij})\right)}
 \end{eqnarray*}\]</span></p>
 <p>따라서, 회귀계수 추정값을 이동시키는 함수 <code>update_beta</code>를 아래와 같이 구현할 수 있다.</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="logistic-regression.html#cb205-1"></a>update_beta &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">beta0 =</span> <span class="dv">0</span>, <span class="dt">beta =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(x)[<span class="dv">2</span>]), <span class="dt">alpha =</span> <span class="fl">0.01</span>) {</span>
-<span id="cb205-2"><a href="logistic-regression.html#cb205-2"></a>  <span class="co"># 변미분식의 분모</span></span>
-<span id="cb205-3"><a href="logistic-regression.html#cb205-3"></a>  denominator &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>((<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>y <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(beta0 <span class="op">+</span><span class="st"> </span>(x <span class="op">%*%</span><span class="st"> </span>beta)))</span>
-<span id="cb205-4"><a href="logistic-regression.html#cb205-4"></a></span>
-<span id="cb205-5"><a href="logistic-regression.html#cb205-5"></a>  <span class="co"># intercept 이동량 계산</span></span>
-<span id="cb205-6"><a href="logistic-regression.html#cb205-6"></a>  beta0_numerator &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>y</span>
-<span id="cb205-7"><a href="logistic-regression.html#cb205-7"></a>  beta0_update =<span class="st"> </span><span class="kw">sum</span>(beta0_numerator <span class="op">/</span><span class="st"> </span>denominator)</span>
-<span id="cb205-8"><a href="logistic-regression.html#cb205-8"></a>  </span>
-<span id="cb205-9"><a href="logistic-regression.html#cb205-9"></a>  <span class="co"># intercept 외 회귀계수 이동량 계산</span></span>
-<span id="cb205-10"><a href="logistic-regression.html#cb205-10"></a>  beta_numerator &lt;-<span class="st"> </span><span class="kw">sweep</span>(x, <span class="dt">MARGIN =</span> <span class="dv">1</span>, <span class="dt">STATS =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>y, <span class="dt">FUN =</span> <span class="st">&quot;*&quot;</span>)</span>
-<span id="cb205-11"><a href="logistic-regression.html#cb205-11"></a>  beta_update =<span class="st"> </span><span class="kw">apply</span>(beta_numerator, <span class="dt">MARGIN =</span> <span class="dv">2</span>, </span>
-<span id="cb205-12"><a href="logistic-regression.html#cb205-12"></a>                      <span class="cf">function</span>(x) <span class="kw">sum</span>(x <span class="op">/</span><span class="st"> </span>denominator))</span>
-<span id="cb205-13"><a href="logistic-regression.html#cb205-13"></a></span>
-<span id="cb205-14"><a href="logistic-regression.html#cb205-14"></a>  <span class="co"># 회귀계수 이동</span></span>
-<span id="cb205-15"><a href="logistic-regression.html#cb205-15"></a>  beta0 &lt;-<span class="st"> </span>beta0 <span class="op">-</span><span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span>beta0_update</span>
-<span id="cb205-16"><a href="logistic-regression.html#cb205-16"></a>  beta &lt;-<span class="st"> </span>beta <span class="op">-</span><span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span>beta_update</span>
-<span id="cb205-17"><a href="logistic-regression.html#cb205-17"></a></span>
-<span id="cb205-18"><a href="logistic-regression.html#cb205-18"></a>  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">beta0 =</span> beta0, <span class="dt">beta =</span> beta))</span>
-<span id="cb205-19"><a href="logistic-regression.html#cb205-19"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="logistic-regression.html#cb202-1" aria-hidden="true" tabindex="-1"></a>update_beta <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, <span class="at">beta0 =</span> <span class="dv">0</span>, <span class="at">beta =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">dim</span>(x)[<span class="dv">2</span>]), <span class="at">alpha =</span> <span class="fl">0.01</span>) {</span>
+<span id="cb202-2"><a href="logistic-regression.html#cb202-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 변미분식의 분모</span></span>
+<span id="cb202-3"><a href="logistic-regression.html#cb202-3" aria-hidden="true" tabindex="-1"></a>  denominator <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>((<span class="dv">2</span> <span class="sc">*</span> y <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> (beta0 <span class="sc">+</span> (x <span class="sc">%*%</span> beta)))</span>
+<span id="cb202-4"><a href="logistic-regression.html#cb202-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb202-5"><a href="logistic-regression.html#cb202-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># intercept 이동량 계산</span></span>
+<span id="cb202-6"><a href="logistic-regression.html#cb202-6" aria-hidden="true" tabindex="-1"></a>  beta0_numerator <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> y</span>
+<span id="cb202-7"><a href="logistic-regression.html#cb202-7" aria-hidden="true" tabindex="-1"></a>  beta0_update <span class="ot">=</span> <span class="fu">sum</span>(beta0_numerator <span class="sc">/</span> denominator)</span>
+<span id="cb202-8"><a href="logistic-regression.html#cb202-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb202-9"><a href="logistic-regression.html#cb202-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># intercept 외 회귀계수 이동량 계산</span></span>
+<span id="cb202-10"><a href="logistic-regression.html#cb202-10" aria-hidden="true" tabindex="-1"></a>  beta_numerator <span class="ot">&lt;-</span> <span class="fu">sweep</span>(x, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">STATS =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> y, <span class="at">FUN =</span> <span class="st">&quot;*&quot;</span>)</span>
+<span id="cb202-11"><a href="logistic-regression.html#cb202-11" aria-hidden="true" tabindex="-1"></a>  beta_update <span class="ot">=</span> <span class="fu">apply</span>(beta_numerator, <span class="at">MARGIN =</span> <span class="dv">2</span>, </span>
+<span id="cb202-12"><a href="logistic-regression.html#cb202-12" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">function</span>(x) <span class="fu">sum</span>(x <span class="sc">/</span> denominator))</span>
+<span id="cb202-13"><a href="logistic-regression.html#cb202-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb202-14"><a href="logistic-regression.html#cb202-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 회귀계수 이동</span></span>
+<span id="cb202-15"><a href="logistic-regression.html#cb202-15" aria-hidden="true" tabindex="-1"></a>  beta0 <span class="ot">&lt;-</span> beta0 <span class="sc">-</span> alpha <span class="sc">*</span> beta0_update</span>
+<span id="cb202-16"><a href="logistic-regression.html#cb202-16" aria-hidden="true" tabindex="-1"></a>  beta <span class="ot">&lt;-</span> beta <span class="sc">-</span> alpha <span class="sc">*</span> beta_update</span>
+<span id="cb202-17"><a href="logistic-regression.html#cb202-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb202-18"><a href="logistic-regression.html#cb202-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">beta0 =</span> beta0, <span class="at">beta =</span> beta))</span>
+<span id="cb202-19"><a href="logistic-regression.html#cb202-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>위의 함수를 이용하여 아래 <code>estimate_beta</code>처엄 수렴할 때까지 회귀계수 추정값을 계속 이동시킨다. 본 경사하강법은 학습률 파라미터 <code>alpha</code>값에 따라 민감한 단점이 있으며, 특히 <code>alpha</code>값을 크게 설정할 경우에는 추정값이 수렴하지 않고 오히려 실제값에서 계속 멀어지는 현상이 발생하기도 한다. 이러한 단점을 보완하기 위한 여러 방법이 있으나, 본 장에서 자세한 설명은 생략하기로 한다.</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="logistic-regression.html#cb206-1"></a>caltculate_loglik &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, </span>
-<span id="cb206-2"><a href="logistic-regression.html#cb206-2"></a>                              <span class="dt">beta0 =</span> <span class="dv">0</span>, </span>
-<span id="cb206-3"><a href="logistic-regression.html#cb206-3"></a>                              <span class="dt">beta =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(x)[<span class="dv">2</span>])) {</span>
-<span id="cb206-4"><a href="logistic-regression.html#cb206-4"></a>  <span class="kw">sum</span>(y <span class="op">*</span><span class="st"> </span>(beta0 <span class="op">+</span><span class="st"> </span>(x <span class="op">%*%</span><span class="st"> </span>beta))) <span class="op">-</span><span class="st"> </span></span>
-<span id="cb206-5"><a href="logistic-regression.html#cb206-5"></a><span class="st">    </span><span class="kw">sum</span>(<span class="kw">log</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(beta0 <span class="op">+</span><span class="st"> </span>(x <span class="op">%*%</span><span class="st"> </span>beta))))</span>
-<span id="cb206-6"><a href="logistic-regression.html#cb206-6"></a>}</span>
-<span id="cb206-7"><a href="logistic-regression.html#cb206-7"></a></span>
-<span id="cb206-8"><a href="logistic-regression.html#cb206-8"></a>estimate_beta &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, </span>
-<span id="cb206-9"><a href="logistic-regression.html#cb206-9"></a>                          <span class="dt">beta0 =</span> <span class="dv">0</span>, </span>
-<span id="cb206-10"><a href="logistic-regression.html#cb206-10"></a>                          <span class="dt">beta =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(x)[<span class="dv">2</span>]), </span>
-<span id="cb206-11"><a href="logistic-regression.html#cb206-11"></a>                          <span class="dt">alpha =</span> <span class="fl">0.01</span>, </span>
-<span id="cb206-12"><a href="logistic-regression.html#cb206-12"></a>                          <span class="dt">conv_threshold =</span> <span class="fl">1e-5</span>, </span>
-<span id="cb206-13"><a href="logistic-regression.html#cb206-13"></a>                          <span class="dt">max_iter =</span> <span class="fl">1e+5</span>) {</span>
-<span id="cb206-14"><a href="logistic-regression.html#cb206-14"></a>  new_beta0 &lt;-<span class="st"> </span>beta0</span>
-<span id="cb206-15"><a href="logistic-regression.html#cb206-15"></a>  new_beta &lt;-<span class="st"> </span>beta</span>
-<span id="cb206-16"><a href="logistic-regression.html#cb206-16"></a>  conv &lt;-<span class="st"> </span><span class="ot">FALSE</span></span>
-<span id="cb206-17"><a href="logistic-regression.html#cb206-17"></a>  </span>
-<span id="cb206-18"><a href="logistic-regression.html#cb206-18"></a>  i_iter &lt;-<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb206-19"><a href="logistic-regression.html#cb206-19"></a>  <span class="cf">while</span>(i_iter <span class="op">&lt;</span><span class="st"> </span>max_iter) {</span>
-<span id="cb206-20"><a href="logistic-regression.html#cb206-20"></a>    res &lt;-<span class="st"> </span><span class="kw">update_beta</span>(x, y, new_beta0, new_beta, alpha)</span>
-<span id="cb206-21"><a href="logistic-regression.html#cb206-21"></a>    </span>
-<span id="cb206-22"><a href="logistic-regression.html#cb206-22"></a>    <span class="cf">if</span>(<span class="kw">abs</span>(<span class="kw">caltculate_loglik</span>(x, y, beta0, beta)</span>
-<span id="cb206-23"><a href="logistic-regression.html#cb206-23"></a>           <span class="op">-</span><span class="st"> </span><span class="kw">caltculate_loglik</span>(x, y, res<span class="op">$</span>beta0, res<span class="op">$</span>beta))</span>
-<span id="cb206-24"><a href="logistic-regression.html#cb206-24"></a>       <span class="op">&lt;</span><span class="st"> </span>conv_threshold) {</span>
-<span id="cb206-25"><a href="logistic-regression.html#cb206-25"></a>      conv &lt;-<span class="st"> </span><span class="ot">TRUE</span></span>
-<span id="cb206-26"><a href="logistic-regression.html#cb206-26"></a>      <span class="cf">break</span></span>
-<span id="cb206-27"><a href="logistic-regression.html#cb206-27"></a>      }</span>
-<span id="cb206-28"><a href="logistic-regression.html#cb206-28"></a>    </span>
-<span id="cb206-29"><a href="logistic-regression.html#cb206-29"></a>    new_beta0 &lt;-<span class="st"> </span>res<span class="op">$</span>beta0</span>
-<span id="cb206-30"><a href="logistic-regression.html#cb206-30"></a>    new_beta &lt;-<span class="st"> </span>res<span class="op">$</span>beta</span>
-<span id="cb206-31"><a href="logistic-regression.html#cb206-31"></a>    </span>
-<span id="cb206-32"><a href="logistic-regression.html#cb206-32"></a>    i_iter &lt;-<span class="st"> </span>i_iter <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
-<span id="cb206-33"><a href="logistic-regression.html#cb206-33"></a>  }</span>
-<span id="cb206-34"><a href="logistic-regression.html#cb206-34"></a>  </span>
-<span id="cb206-35"><a href="logistic-regression.html#cb206-35"></a>  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">conv =</span> conv, <span class="dt">beta0 =</span> new_beta0, <span class="dt">beta =</span> new_beta))</span>
-<span id="cb206-36"><a href="logistic-regression.html#cb206-36"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="logistic-regression.html#cb203-1" aria-hidden="true" tabindex="-1"></a>caltculate_loglik <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, </span>
+<span id="cb203-2"><a href="logistic-regression.html#cb203-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">beta0 =</span> <span class="dv">0</span>, </span>
+<span id="cb203-3"><a href="logistic-regression.html#cb203-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">beta =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">dim</span>(x)[<span class="dv">2</span>])) {</span>
+<span id="cb203-4"><a href="logistic-regression.html#cb203-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(y <span class="sc">*</span> (beta0 <span class="sc">+</span> (x <span class="sc">%*%</span> beta))) <span class="sc">-</span> </span>
+<span id="cb203-5"><a href="logistic-regression.html#cb203-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(<span class="fu">log</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(beta0 <span class="sc">+</span> (x <span class="sc">%*%</span> beta))))</span>
+<span id="cb203-6"><a href="logistic-regression.html#cb203-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb203-7"><a href="logistic-regression.html#cb203-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb203-8"><a href="logistic-regression.html#cb203-8" aria-hidden="true" tabindex="-1"></a>estimate_beta <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, </span>
+<span id="cb203-9"><a href="logistic-regression.html#cb203-9" aria-hidden="true" tabindex="-1"></a>                          <span class="at">beta0 =</span> <span class="dv">0</span>, </span>
+<span id="cb203-10"><a href="logistic-regression.html#cb203-10" aria-hidden="true" tabindex="-1"></a>                          <span class="at">beta =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">dim</span>(x)[<span class="dv">2</span>]), </span>
+<span id="cb203-11"><a href="logistic-regression.html#cb203-11" aria-hidden="true" tabindex="-1"></a>                          <span class="at">alpha =</span> <span class="fl">0.01</span>, </span>
+<span id="cb203-12"><a href="logistic-regression.html#cb203-12" aria-hidden="true" tabindex="-1"></a>                          <span class="at">conv_threshold =</span> <span class="fl">1e-5</span>, </span>
+<span id="cb203-13"><a href="logistic-regression.html#cb203-13" aria-hidden="true" tabindex="-1"></a>                          <span class="at">max_iter =</span> <span class="fl">1e+5</span>) {</span>
+<span id="cb203-14"><a href="logistic-regression.html#cb203-14" aria-hidden="true" tabindex="-1"></a>  new_beta0 <span class="ot">&lt;-</span> beta0</span>
+<span id="cb203-15"><a href="logistic-regression.html#cb203-15" aria-hidden="true" tabindex="-1"></a>  new_beta <span class="ot">&lt;-</span> beta</span>
+<span id="cb203-16"><a href="logistic-regression.html#cb203-16" aria-hidden="true" tabindex="-1"></a>  conv <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb203-17"><a href="logistic-regression.html#cb203-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb203-18"><a href="logistic-regression.html#cb203-18" aria-hidden="true" tabindex="-1"></a>  i_iter <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb203-19"><a href="logistic-regression.html#cb203-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(i_iter <span class="sc">&lt;</span> max_iter) {</span>
+<span id="cb203-20"><a href="logistic-regression.html#cb203-20" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> <span class="fu">update_beta</span>(x, y, new_beta0, new_beta, alpha)</span>
+<span id="cb203-21"><a href="logistic-regression.html#cb203-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb203-22"><a href="logistic-regression.html#cb203-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">abs</span>(<span class="fu">caltculate_loglik</span>(x, y, beta0, beta)</span>
+<span id="cb203-23"><a href="logistic-regression.html#cb203-23" aria-hidden="true" tabindex="-1"></a>           <span class="sc">-</span> <span class="fu">caltculate_loglik</span>(x, y, res<span class="sc">$</span>beta0, res<span class="sc">$</span>beta))</span>
+<span id="cb203-24"><a href="logistic-regression.html#cb203-24" aria-hidden="true" tabindex="-1"></a>       <span class="sc">&lt;</span> conv_threshold) {</span>
+<span id="cb203-25"><a href="logistic-regression.html#cb203-25" aria-hidden="true" tabindex="-1"></a>      conv <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb203-26"><a href="logistic-regression.html#cb203-26" aria-hidden="true" tabindex="-1"></a>      <span class="cf">break</span></span>
+<span id="cb203-27"><a href="logistic-regression.html#cb203-27" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb203-28"><a href="logistic-regression.html#cb203-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb203-29"><a href="logistic-regression.html#cb203-29" aria-hidden="true" tabindex="-1"></a>    new_beta0 <span class="ot">&lt;-</span> res<span class="sc">$</span>beta0</span>
+<span id="cb203-30"><a href="logistic-regression.html#cb203-30" aria-hidden="true" tabindex="-1"></a>    new_beta <span class="ot">&lt;-</span> res<span class="sc">$</span>beta</span>
+<span id="cb203-31"><a href="logistic-regression.html#cb203-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb203-32"><a href="logistic-regression.html#cb203-32" aria-hidden="true" tabindex="-1"></a>    i_iter <span class="ot">&lt;-</span> i_iter <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb203-33"><a href="logistic-regression.html#cb203-33" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb203-34"><a href="logistic-regression.html#cb203-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb203-35"><a href="logistic-regression.html#cb203-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">conv =</span> conv, <span class="at">beta0 =</span> new_beta0, <span class="at">beta =</span> new_beta))</span>
+<span id="cb203-36"><a href="logistic-regression.html#cb203-36" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>위에서 정의한 함수를 이용하여 Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">6.1</a>의 학습표본에 대한 로지스틱 회귀모형을 추정해보자.</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="logistic-regression.html#cb207-1"></a>res &lt;-<span class="st"> </span><span class="kw">estimate_beta</span>(train_df[, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>(), </span>
-<span id="cb207-2"><a href="logistic-regression.html#cb207-2"></a>                     train_df<span class="op">$</span>y <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>,</span>
-<span id="cb207-3"><a href="logistic-regression.html#cb207-3"></a>                     <span class="dt">alpha =</span> <span class="fl">0.015</span>,</span>
-<span id="cb207-4"><a href="logistic-regression.html#cb207-4"></a>                     <span class="dt">conv_threshold =</span> <span class="fl">1e-6</span>)</span>
-<span id="cb207-5"><a href="logistic-regression.html#cb207-5"></a></span>
-<span id="cb207-6"><a href="logistic-regression.html#cb207-6"></a><span class="kw">print</span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="logistic-regression.html#cb204-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">estimate_beta</span>(train_df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>(), </span>
+<span id="cb204-2"><a href="logistic-regression.html#cb204-2" aria-hidden="true" tabindex="-1"></a>                     train_df<span class="sc">$</span>y <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>() <span class="sc">-</span> <span class="dv">1</span>,</span>
+<span id="cb204-3"><a href="logistic-regression.html#cb204-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">alpha =</span> <span class="fl">0.015</span>,</span>
+<span id="cb204-4"><a href="logistic-regression.html#cb204-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">conv_threshold =</span> <span class="fl">1e-6</span>)</span>
+<span id="cb204-5"><a href="logistic-regression.html#cb204-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb204-6"><a href="logistic-regression.html#cb204-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res)</span></code></pre></div>
 <pre><code>## $conv
 ## [1] FALSE
 ## 
@@ -790,7 +863,7 @@ f(\beta_0, \boldsymbol\beta) = \sum_{i = 1}^{N} \log \left(1 + \exp\left((1 - 2y
 ## 2.022808 3.457019 2.405969</code></pre>
 <p>위 회귀계수 추정값은 R 함수 <code>glm</code>을 이용한 추정값(Table <a href="logistic-regression.html#tab:binary-logistic-reg-coef">6.2</a>)과 유사함을 볼 수 있다.</p>
 </div>
-<div id="binary-logistic-irls" class="section level4">
+<div id="binary-logistic-irls" class="section level4" number="6.2.3.2">
 <h4><span class="header-section-number">6.2.3.2</span> 반복재가중최소제곱법</h4>
 <p>R의 <code>glm</code> 함수는 반복재가중최소제곱법(iteratively rewighted least squares; IRLS 혹은 IWLS)을 사용한다. 이는 선형회귀식</p>
 <p><span class="math display">\[\begin{equation*}
@@ -815,94 +888,94 @@ w_i = P_i (1 - P_i)
 \end{equation*}\]</span></p>
 <p>가중치와 회귀계수 추정값은 상호 영향을 미치므로, 수렴할 때까지 반복적으로 가중치와 회귀계수 추정값을 변화시키면서 최종 추정값을 찾아가는 방법이다.</p>
 <p>우선 회귀계수 추정값이 주어졌을 때 각 객체에 대한 확률값 <span class="math inline">\(P_i\)</span>와 가중치 <span class="math inline">\(w_i\)</span>를 구하는 함수 <code>calculate_weight</code>를 아래와 같이 구현해보자.</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="logistic-regression.html#cb209-1"></a>calculate_weight &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">beta0 =</span> <span class="dv">0</span>, </span>
-<span id="cb209-2"><a href="logistic-regression.html#cb209-2"></a>                             <span class="dt">beta =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(x)[<span class="dv">2</span>])) {</span>
-<span id="cb209-3"><a href="logistic-regression.html#cb209-3"></a>  <span class="co"># 각 객체의 y값이 1일 확률</span></span>
-<span id="cb209-4"><a href="logistic-regression.html#cb209-4"></a>  P &lt;-<span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="st"> </span>beta0 <span class="op">-</span><span class="st"> </span>(x <span class="op">%*%</span><span class="st"> </span>beta)))<span class="op">^</span>(<span class="op">-</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop</span>()</span>
-<span id="cb209-5"><a href="logistic-regression.html#cb209-5"></a></span>
-<span id="cb209-6"><a href="logistic-regression.html#cb209-6"></a>  <span class="co"># 가중치 계산</span></span>
-<span id="cb209-7"><a href="logistic-regression.html#cb209-7"></a>  w &lt;-<span class="st"> </span>P <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>P)</span>
-<span id="cb209-8"><a href="logistic-regression.html#cb209-8"></a></span>
-<span id="cb209-9"><a href="logistic-regression.html#cb209-9"></a>  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">P =</span> P, <span class="dt">w =</span> w))</span>
-<span id="cb209-10"><a href="logistic-regression.html#cb209-10"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="logistic-regression.html#cb206-1" aria-hidden="true" tabindex="-1"></a>calculate_weight <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">beta0 =</span> <span class="dv">0</span>, </span>
+<span id="cb206-2"><a href="logistic-regression.html#cb206-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">beta =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">dim</span>(x)[<span class="dv">2</span>])) {</span>
+<span id="cb206-3"><a href="logistic-regression.html#cb206-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 각 객체의 y값이 1일 확률</span></span>
+<span id="cb206-4"><a href="logistic-regression.html#cb206-4" aria-hidden="true" tabindex="-1"></a>  P <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span> beta0 <span class="sc">-</span> (x <span class="sc">%*%</span> beta)))<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">drop</span>()</span>
+<span id="cb206-5"><a href="logistic-regression.html#cb206-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-6"><a href="logistic-regression.html#cb206-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 가중치 계산</span></span>
+<span id="cb206-7"><a href="logistic-regression.html#cb206-7" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> P <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> P)</span>
+<span id="cb206-8"><a href="logistic-regression.html#cb206-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-9"><a href="logistic-regression.html#cb206-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">P =</span> P, <span class="at">w =</span> w))</span>
+<span id="cb206-10"><a href="logistic-regression.html#cb206-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>그리고 확률추정값과 가중치가 주어졌을 때 회귀계수를 구하는 함수 <code>calculate_beta</code>를 아래와 같이 구현해보자. 여기서 회귀계수를 구하는 부분은 R의 선형회귀분석함수 <code>lm</code>을 사용한다.</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="logistic-regression.html#cb210-1"></a>calculate_beta &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, P, w) {</span>
-<span id="cb210-2"><a href="logistic-regression.html#cb210-2"></a>  <span class="co"># 추정확률값이 0 이나 1인 경우 </span></span>
-<span id="cb210-3"><a href="logistic-regression.html#cb210-3"></a>  <span class="co"># 여전히 logit 함수가 정의되지 않으므로 회귀계수 결정에서 제외</span></span>
-<span id="cb210-4"><a href="logistic-regression.html#cb210-4"></a>  logit_derivative &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>P <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>P)</span>
-<span id="cb210-5"><a href="logistic-regression.html#cb210-5"></a>  is_good &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.nan</span>(logit_derivative)</span>
-<span id="cb210-6"><a href="logistic-regression.html#cb210-6"></a>  </span>
-<span id="cb210-7"><a href="logistic-regression.html#cb210-7"></a>  <span class="co"># 모든 객체에 대한 추정확률이 0 이나 1인 경우 회귀계수 추정 불가능</span></span>
-<span id="cb210-8"><a href="logistic-regression.html#cb210-8"></a>  <span class="cf">if</span>(<span class="kw">all</span>(<span class="op">!</span>is_good)) <span class="kw">return</span>(<span class="ot">NULL</span>)</span>
-<span id="cb210-9"><a href="logistic-regression.html#cb210-9"></a>  </span>
-<span id="cb210-10"><a href="logistic-regression.html#cb210-10"></a>  <span class="co"># 테일러 급수 계산</span></span>
-<span id="cb210-11"><a href="logistic-regression.html#cb210-11"></a>  g_y &lt;-<span class="st"> </span><span class="kw">log</span>(P[is_good]) <span class="op">-</span><span class="st"> </span></span>
-<span id="cb210-12"><a href="logistic-regression.html#cb210-12"></a><span class="st">    </span><span class="kw">log</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>P[is_good]) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb210-13"><a href="logistic-regression.html#cb210-13"></a><span class="st">    </span>(y[is_good] <span class="op">-</span><span class="st"> </span>P[is_good]) <span class="op">*</span><span class="st"> </span>logit_derivative</span>
-<span id="cb210-14"><a href="logistic-regression.html#cb210-14"></a>  </span>
-<span id="cb210-15"><a href="logistic-regression.html#cb210-15"></a>  <span class="co"># 가중치최소자승법을 이용한 추정</span></span>
-<span id="cb210-16"><a href="logistic-regression.html#cb210-16"></a>  df &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(<span class="kw">as_tibble</span>(x) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb210-17"><a href="logistic-regression.html#cb210-17"></a><span class="st">                    `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">colnames</span>(x)), </span>
-<span id="cb210-18"><a href="logistic-regression.html#cb210-18"></a>                  <span class="kw">tibble</span>(<span class="dt">g_y =</span> g_y))</span>
-<span id="cb210-19"><a href="logistic-regression.html#cb210-19"></a>  <span class="kw">lm</span>(g_y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> df, <span class="dt">subset =</span> is_good, <span class="dt">weights =</span> w)</span>
-<span id="cb210-20"><a href="logistic-regression.html#cb210-20"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="logistic-regression.html#cb207-1" aria-hidden="true" tabindex="-1"></a>calculate_beta <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, P, w) {</span>
+<span id="cb207-2"><a href="logistic-regression.html#cb207-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 추정확률값이 0 이나 1인 경우 </span></span>
+<span id="cb207-3"><a href="logistic-regression.html#cb207-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 여전히 logit 함수가 정의되지 않으므로 회귀계수 결정에서 제외</span></span>
+<span id="cb207-4"><a href="logistic-regression.html#cb207-4" aria-hidden="true" tabindex="-1"></a>  logit_derivative <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>P <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">-</span> P)</span>
+<span id="cb207-5"><a href="logistic-regression.html#cb207-5" aria-hidden="true" tabindex="-1"></a>  is_good <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.nan</span>(logit_derivative)</span>
+<span id="cb207-6"><a href="logistic-regression.html#cb207-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb207-7"><a href="logistic-regression.html#cb207-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 모든 객체에 대한 추정확률이 0 이나 1인 경우 회귀계수 추정 불가능</span></span>
+<span id="cb207-8"><a href="logistic-regression.html#cb207-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">all</span>(<span class="sc">!</span>is_good)) <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb207-9"><a href="logistic-regression.html#cb207-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb207-10"><a href="logistic-regression.html#cb207-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 테일러 급수 계산</span></span>
+<span id="cb207-11"><a href="logistic-regression.html#cb207-11" aria-hidden="true" tabindex="-1"></a>  g_y <span class="ot">&lt;-</span> <span class="fu">log</span>(P[is_good]) <span class="sc">-</span> </span>
+<span id="cb207-12"><a href="logistic-regression.html#cb207-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> P[is_good]) <span class="sc">+</span> </span>
+<span id="cb207-13"><a href="logistic-regression.html#cb207-13" aria-hidden="true" tabindex="-1"></a>    (y[is_good] <span class="sc">-</span> P[is_good]) <span class="sc">*</span> logit_derivative</span>
+<span id="cb207-14"><a href="logistic-regression.html#cb207-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb207-15"><a href="logistic-regression.html#cb207-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 가중치최소자승법을 이용한 추정</span></span>
+<span id="cb207-16"><a href="logistic-regression.html#cb207-16" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(<span class="fu">as_tibble</span>(x) <span class="sc">%&gt;%</span> </span>
+<span id="cb207-17"><a href="logistic-regression.html#cb207-17" aria-hidden="true" tabindex="-1"></a>                    <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(<span class="fu">colnames</span>(x)), </span>
+<span id="cb207-18"><a href="logistic-regression.html#cb207-18" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">tibble</span>(<span class="at">g_y =</span> g_y))</span>
+<span id="cb207-19"><a href="logistic-regression.html#cb207-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(g_y <span class="sc">~</span> ., <span class="at">data =</span> df, <span class="at">subset =</span> is_good, <span class="at">weights =</span> w)</span>
+<span id="cb207-20"><a href="logistic-regression.html#cb207-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>위에서 정의한 두 함수 <code>calculate_weight</code>과 <code>calculate_beta</code>를 반복적으로 사용하여 Table <a href="logistic-regression.html#tab:binary-logistic-reg-train-data">6.1</a>의 학습표본에 대한 로지스틱 회귀모형을 추정해보자. 모든 객체의 가중치 변화량이 1/10000 보다 작을 경우 모형추정이 수렴한 것으로 간주하도록 하자.</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="logistic-regression.html#cb211-1"></a>X &lt;-<span class="st"> </span>train_df[, <span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</span>
-<span id="cb211-2"><a href="logistic-regression.html#cb211-2"></a>y &lt;-<span class="st"> </span>train_df<span class="op">$</span>y <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span></span>
-<span id="cb211-3"><a href="logistic-regression.html#cb211-3"></a></span>
-<span id="cb211-4"><a href="logistic-regression.html#cb211-4"></a>weight &lt;-<span class="st"> </span><span class="kw">calculate_weight</span>(X)</span>
-<span id="cb211-5"><a href="logistic-regression.html#cb211-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) {</span>
-<span id="cb211-6"><a href="logistic-regression.html#cb211-6"></a>  wls_fit &lt;-<span class="st"> </span><span class="kw">calculate_beta</span>(X, y, weight<span class="op">$</span>P, weight<span class="op">$</span>w)</span>
-<span id="cb211-7"><a href="logistic-regression.html#cb211-7"></a>  </span>
-<span id="cb211-8"><a href="logistic-regression.html#cb211-8"></a>  <span class="cf">if</span>(<span class="kw">is.null</span>(wls_fit)) {<span class="cf">break</span>}</span>
-<span id="cb211-9"><a href="logistic-regression.html#cb211-9"></a>  </span>
-<span id="cb211-10"><a href="logistic-regression.html#cb211-10"></a>  new_weight &lt;-<span class="st"> </span><span class="kw">calculate_weight</span>(<span class="dt">x =</span> X, </span>
-<span id="cb211-11"><a href="logistic-regression.html#cb211-11"></a>                                 <span class="dt">beta0 =</span> <span class="kw">coef</span>(wls_fit)[<span class="dv">1</span>], </span>
-<span id="cb211-12"><a href="logistic-regression.html#cb211-12"></a>                                 <span class="dt">beta =</span> <span class="kw">coef</span>(wls_fit)[<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb211-13"><a href="logistic-regression.html#cb211-13"></a>  </span>
-<span id="cb211-14"><a href="logistic-regression.html#cb211-14"></a>  <span class="cf">if</span>(<span class="kw">max</span>(<span class="kw">abs</span>(new_weight<span class="op">$</span>w <span class="op">-</span><span class="st"> </span>weight<span class="op">$</span>w)) <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-4</span>) {<span class="cf">break</span>}</span>
-<span id="cb211-15"><a href="logistic-regression.html#cb211-15"></a>  </span>
-<span id="cb211-16"><a href="logistic-regression.html#cb211-16"></a>  weight &lt;-<span class="st"> </span>new_weight</span>
-<span id="cb211-17"><a href="logistic-regression.html#cb211-17"></a>}</span>
-<span id="cb211-18"><a href="logistic-regression.html#cb211-18"></a></span>
-<span id="cb211-19"><a href="logistic-regression.html#cb211-19"></a><span class="kw">coef</span>(wls_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="logistic-regression.html#cb208-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> train_df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb208-2"><a href="logistic-regression.html#cb208-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> train_df<span class="sc">$</span>y <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb208-3"><a href="logistic-regression.html#cb208-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb208-4"><a href="logistic-regression.html#cb208-4" aria-hidden="true" tabindex="-1"></a>weight <span class="ot">&lt;-</span> <span class="fu">calculate_weight</span>(X)</span>
+<span id="cb208-5"><a href="logistic-regression.html#cb208-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb208-6"><a href="logistic-regression.html#cb208-6" aria-hidden="true" tabindex="-1"></a>  wls_fit <span class="ot">&lt;-</span> <span class="fu">calculate_beta</span>(X, y, weight<span class="sc">$</span>P, weight<span class="sc">$</span>w)</span>
+<span id="cb208-7"><a href="logistic-regression.html#cb208-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb208-8"><a href="logistic-regression.html#cb208-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.null</span>(wls_fit)) {<span class="cf">break</span>}</span>
+<span id="cb208-9"><a href="logistic-regression.html#cb208-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb208-10"><a href="logistic-regression.html#cb208-10" aria-hidden="true" tabindex="-1"></a>  new_weight <span class="ot">&lt;-</span> <span class="fu">calculate_weight</span>(<span class="at">x =</span> X, </span>
+<span id="cb208-11"><a href="logistic-regression.html#cb208-11" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">beta0 =</span> <span class="fu">coef</span>(wls_fit)[<span class="dv">1</span>], </span>
+<span id="cb208-12"><a href="logistic-regression.html#cb208-12" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">beta =</span> <span class="fu">coef</span>(wls_fit)[<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb208-13"><a href="logistic-regression.html#cb208-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb208-14"><a href="logistic-regression.html#cb208-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">max</span>(<span class="fu">abs</span>(new_weight<span class="sc">$</span>w <span class="sc">-</span> weight<span class="sc">$</span>w)) <span class="sc">&lt;</span> <span class="fl">1e-4</span>) {<span class="cf">break</span>}</span>
+<span id="cb208-15"><a href="logistic-regression.html#cb208-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb208-16"><a href="logistic-regression.html#cb208-16" aria-hidden="true" tabindex="-1"></a>  weight <span class="ot">&lt;-</span> new_weight</span>
+<span id="cb208-17"><a href="logistic-regression.html#cb208-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb208-18"><a href="logistic-regression.html#cb208-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb208-19"><a href="logistic-regression.html#cb208-19" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(wls_fit)</span></code></pre></div>
 <pre><code>## (Intercept)          x1          x2          x3 
 ##  -30.510837    2.031278    3.470671    2.414387</code></pre>
 <p>위 스크립트를 실행시킨 결과 7번째 반복수행에서 결과가 수렴하였으며, 해당 결과는 <code>glm</code> 함수를 사용하였을 때의 결과 (Table <a href="logistic-regression.html#tab:binary-logistic-reg-coef">6.2</a>)과 매우 근사함을 확인할 수 있다.</p>
 </div>
 </div>
 </div>
-<div id="nominal-logistic-regression" class="section level2">
+<div id="nominal-logistic-regression" class="section level2" number="6.3">
 <h2><span class="header-section-number">6.3</span> 명목 로지스틱 회귀모형</h2>
-<div id="nominal-logistic-reg-basic-script" class="section level3">
+<div id="nominal-logistic-reg-basic-script" class="section level3" number="6.3.1">
 <h3><span class="header-section-number">6.3.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="logistic-regression.html#cb213-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb213-2"><a href="logistic-regression.html#cb213-2"></a>  <span class="op">~</span>id, <span class="op">~</span>x1, <span class="op">~</span>x2, <span class="op">~</span>y,</span>
-<span id="cb213-3"><a href="logistic-regression.html#cb213-3"></a>  <span class="dv">1</span>, <span class="fl">0.09</span>, <span class="fl">5.02</span>, <span class="dv">1</span>,</span>
-<span id="cb213-4"><a href="logistic-regression.html#cb213-4"></a>  <span class="dv">2</span>, <span class="fl">0.1</span>, <span class="fl">5.01</span>, <span class="dv">1</span>,</span>
-<span id="cb213-5"><a href="logistic-regression.html#cb213-5"></a>  <span class="dv">3</span>, <span class="fl">0.12</span>, <span class="fl">4.94</span>, <span class="dv">1</span>,</span>
-<span id="cb213-6"><a href="logistic-regression.html#cb213-6"></a>  <span class="dv">4</span>, <span class="fl">0.12</span>, <span class="fl">5.12</span>, <span class="dv">1</span>,</span>
-<span id="cb213-7"><a href="logistic-regression.html#cb213-7"></a>  <span class="dv">5</span>, <span class="fl">0.12</span>, <span class="fl">5.03</span>, <span class="dv">1</span>,</span>
-<span id="cb213-8"><a href="logistic-regression.html#cb213-8"></a>  <span class="dv">6</span>, <span class="fl">0.12</span>, <span class="fl">4.94</span>, <span class="dv">2</span>,</span>
-<span id="cb213-9"><a href="logistic-regression.html#cb213-9"></a>  <span class="dv">7</span>, <span class="fl">0.1</span>, <span class="fl">5.13</span>, <span class="dv">2</span>,</span>
-<span id="cb213-10"><a href="logistic-regression.html#cb213-10"></a>  <span class="dv">8</span>, <span class="fl">0.1</span>, <span class="fl">4.87</span>, <span class="dv">1</span>,</span>
-<span id="cb213-11"><a href="logistic-regression.html#cb213-11"></a>  <span class="dv">9</span>, <span class="fl">0.1</span>, <span class="fl">5.13</span>, <span class="dv">2</span>,</span>
-<span id="cb213-12"><a href="logistic-regression.html#cb213-12"></a>  <span class="dv">10</span>, <span class="fl">0.11</span>, <span class="fl">4.94</span>, <span class="dv">3</span>,</span>
-<span id="cb213-13"><a href="logistic-regression.html#cb213-13"></a>  <span class="dv">11</span>, <span class="fl">0.11</span>, <span class="fl">4.93</span>, <span class="dv">3</span>,</span>
-<span id="cb213-14"><a href="logistic-regression.html#cb213-14"></a>  <span class="dv">12</span>, <span class="fl">0.09</span>, <span class="fl">5.02</span>, <span class="dv">3</span>,</span>
-<span id="cb213-15"><a href="logistic-regression.html#cb213-15"></a>  <span class="dv">13</span>, <span class="fl">0.1</span>, <span class="fl">5.01</span>, <span class="dv">3</span>,</span>
-<span id="cb213-16"><a href="logistic-regression.html#cb213-16"></a>  <span class="dv">14</span>, <span class="fl">0.09</span>, <span class="fl">4.94</span>, <span class="dv">3</span>,</span>
-<span id="cb213-17"><a href="logistic-regression.html#cb213-17"></a>  <span class="dv">15</span>, <span class="fl">0.1</span>, <span class="fl">5.12</span>, <span class="dv">2</span>,</span>
-<span id="cb213-18"><a href="logistic-regression.html#cb213-18"></a>  <span class="dv">16</span>, <span class="fl">0.12</span>, <span class="fl">4.93</span>, <span class="dv">2</span>,</span>
-<span id="cb213-19"><a href="logistic-regression.html#cb213-19"></a>  <span class="dv">17</span>, <span class="fl">0.1</span>, <span class="dv">5</span>, <span class="dv">1</span>,</span>
-<span id="cb213-20"><a href="logistic-regression.html#cb213-20"></a>  <span class="dv">18</span>, <span class="fl">0.09</span>, <span class="fl">5.01</span>, <span class="dv">3</span></span>
-<span id="cb213-21"><a href="logistic-regression.html#cb213-21"></a>) <span class="op">%&gt;%</span></span>
-<span id="cb213-22"><a href="logistic-regression.html#cb213-22"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">factor</span>(y, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)))</span>
-<span id="cb213-23"><a href="logistic-regression.html#cb213-23"></a></span>
-<span id="cb213-24"><a href="logistic-regression.html#cb213-24"></a>knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb213-25"><a href="logistic-regression.html#cb213-25"></a>             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb213-26"><a href="logistic-regression.html#cb213-26"></a>             <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, <span class="st">&#39;불량범주($y$)&#39;</span>),</span>
-<span id="cb213-27"><a href="logistic-regression.html#cb213-27"></a>             <span class="dt">caption =</span> <span class="st">&#39;공정변수-불량 종류 데이터&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="logistic-regression.html#cb210-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb210-2"><a href="logistic-regression.html#cb210-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>x1, <span class="sc">~</span>x2, <span class="sc">~</span>y,</span>
+<span id="cb210-3"><a href="logistic-regression.html#cb210-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="fl">0.09</span>, <span class="fl">5.02</span>, <span class="dv">1</span>,</span>
+<span id="cb210-4"><a href="logistic-regression.html#cb210-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="fl">0.1</span>, <span class="fl">5.01</span>, <span class="dv">1</span>,</span>
+<span id="cb210-5"><a href="logistic-regression.html#cb210-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="fl">0.12</span>, <span class="fl">4.94</span>, <span class="dv">1</span>,</span>
+<span id="cb210-6"><a href="logistic-regression.html#cb210-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="fl">0.12</span>, <span class="fl">5.12</span>, <span class="dv">1</span>,</span>
+<span id="cb210-7"><a href="logistic-regression.html#cb210-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="fl">0.12</span>, <span class="fl">5.03</span>, <span class="dv">1</span>,</span>
+<span id="cb210-8"><a href="logistic-regression.html#cb210-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span>, <span class="fl">0.12</span>, <span class="fl">4.94</span>, <span class="dv">2</span>,</span>
+<span id="cb210-9"><a href="logistic-regression.html#cb210-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span>, <span class="fl">0.1</span>, <span class="fl">5.13</span>, <span class="dv">2</span>,</span>
+<span id="cb210-10"><a href="logistic-regression.html#cb210-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span>, <span class="fl">0.1</span>, <span class="fl">4.87</span>, <span class="dv">1</span>,</span>
+<span id="cb210-11"><a href="logistic-regression.html#cb210-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span>, <span class="fl">0.1</span>, <span class="fl">5.13</span>, <span class="dv">2</span>,</span>
+<span id="cb210-12"><a href="logistic-regression.html#cb210-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>, <span class="fl">0.11</span>, <span class="fl">4.94</span>, <span class="dv">3</span>,</span>
+<span id="cb210-13"><a href="logistic-regression.html#cb210-13" aria-hidden="true" tabindex="-1"></a>  <span class="dv">11</span>, <span class="fl">0.11</span>, <span class="fl">4.93</span>, <span class="dv">3</span>,</span>
+<span id="cb210-14"><a href="logistic-regression.html#cb210-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">12</span>, <span class="fl">0.09</span>, <span class="fl">5.02</span>, <span class="dv">3</span>,</span>
+<span id="cb210-15"><a href="logistic-regression.html#cb210-15" aria-hidden="true" tabindex="-1"></a>  <span class="dv">13</span>, <span class="fl">0.1</span>, <span class="fl">5.01</span>, <span class="dv">3</span>,</span>
+<span id="cb210-16"><a href="logistic-regression.html#cb210-16" aria-hidden="true" tabindex="-1"></a>  <span class="dv">14</span>, <span class="fl">0.09</span>, <span class="fl">4.94</span>, <span class="dv">3</span>,</span>
+<span id="cb210-17"><a href="logistic-regression.html#cb210-17" aria-hidden="true" tabindex="-1"></a>  <span class="dv">15</span>, <span class="fl">0.1</span>, <span class="fl">5.12</span>, <span class="dv">2</span>,</span>
+<span id="cb210-18"><a href="logistic-regression.html#cb210-18" aria-hidden="true" tabindex="-1"></a>  <span class="dv">16</span>, <span class="fl">0.12</span>, <span class="fl">4.93</span>, <span class="dv">2</span>,</span>
+<span id="cb210-19"><a href="logistic-regression.html#cb210-19" aria-hidden="true" tabindex="-1"></a>  <span class="dv">17</span>, <span class="fl">0.1</span>, <span class="dv">5</span>, <span class="dv">1</span>,</span>
+<span id="cb210-20"><a href="logistic-regression.html#cb210-20" aria-hidden="true" tabindex="-1"></a>  <span class="dv">18</span>, <span class="fl">0.09</span>, <span class="fl">5.01</span>, <span class="dv">3</span></span>
+<span id="cb210-21"><a href="logistic-regression.html#cb210-21" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb210-22"><a href="logistic-regression.html#cb210-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">factor</span>(y, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)))</span>
+<span id="cb210-23"><a href="logistic-regression.html#cb210-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-24"><a href="logistic-regression.html#cb210-24" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(train_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb210-25"><a href="logistic-regression.html#cb210-25" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb210-26"><a href="logistic-regression.html#cb210-26" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, <span class="st">&#39;불량범주($y$)&#39;</span>),</span>
+<span id="cb210-27"><a href="logistic-regression.html#cb210-27" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;공정변수-불량 종류 데이터&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:nominal-logistic-reg-train-data">Table 6.3: </span>공정변수-불량 종류 데이터</caption>
 <thead>
@@ -1025,10 +1098,10 @@ w_i = P_i (1 - P_i)
 </tbody>
 </table>
 <p>Table <a href="logistic-regression.html#tab:nominal-logistic-reg-train-data">6.3</a>와 같이 두 개의 독립변수 <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>에 따라 세 종류의 불량 (<span class="math inline">\(y = 1, 2, 3\)</span>)$이 발생함을 알았다면, 아래와 같이 <code>nnet</code> 패키지의 <code>multinom</code> 함수를 이용하여 공정변수에 따른 불량 종류를 분류하기 위한 로지스틱 회귀모형을 간편하게 추정할 수 있다.</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="logistic-regression.html#cb214-1"></a>multinom_fit &lt;-<span class="st"> </span>nnet<span class="op">::</span><span class="kw">multinom</span>(</span>
-<span id="cb214-2"><a href="logistic-regression.html#cb214-2"></a>  y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, </span>
-<span id="cb214-3"><a href="logistic-regression.html#cb214-3"></a>  <span class="dt">data =</span> train_df, </span>
-<span id="cb214-4"><a href="logistic-regression.html#cb214-4"></a>  <span class="dt">maxit =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="logistic-regression.html#cb211-1" aria-hidden="true" tabindex="-1"></a>multinom_fit <span class="ot">&lt;-</span> nnet<span class="sc">::</span><span class="fu">multinom</span>(</span>
+<span id="cb211-2"><a href="logistic-regression.html#cb211-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1 <span class="sc">+</span> x2, </span>
+<span id="cb211-3"><a href="logistic-regression.html#cb211-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_df, </span>
+<span id="cb211-4"><a href="logistic-regression.html#cb211-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>## # weights:  12 (6 variable)
 ## initial  value 19.775021 
 ## iter  10 value 17.825831
@@ -1040,12 +1113,12 @@ w_i = P_i (1 - P_i)
 ## iter  70 value 16.016395
 ## final  value 16.015185 
 ## converged</code></pre>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="logistic-regression.html#cb216-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb216-2"><a href="logistic-regression.html#cb216-2"></a>  multinom_fit <span class="op">%&gt;%</span><span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>(<span class="dt">exponentiate =</span> <span class="ot">FALSE</span>),</span>
-<span id="cb216-3"><a href="logistic-regression.html#cb216-3"></a>  <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb216-4"><a href="logistic-regression.html#cb216-4"></a>  <span class="dt">caption =</span> <span class="st">&#39;위 공정변수-불량종류 데이터에 대한 Logistic Regression 결과&#39;</span></span>
-<span id="cb216-5"><a href="logistic-regression.html#cb216-5"></a><span class="co">#  caption = &#39;Table \\@ref(tab:nominal-logistic-reg-train-data)에 대한 Logistic Regression 결과&#39;</span></span>
-<span id="cb216-6"><a href="logistic-regression.html#cb216-6"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="logistic-regression.html#cb213-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb213-2"><a href="logistic-regression.html#cb213-2" aria-hidden="true" tabindex="-1"></a>  multinom_fit <span class="sc">%&gt;%</span>  broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="at">exponentiate =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb213-3"><a href="logistic-regression.html#cb213-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb213-4"><a href="logistic-regression.html#cb213-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;위 공정변수-불량종류 데이터에 대한 Logistic Regression 결과&#39;</span></span>
+<span id="cb213-5"><a href="logistic-regression.html#cb213-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  caption = &#39;Table \\@ref(tab:nominal-logistic-reg-train-data)에 대한 Logistic Regression 결과&#39;</span></span>
+<span id="cb213-6"><a href="logistic-regression.html#cb213-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:nominal-logistic-reg-coef">Table 6.4: </span>위 공정변수-불량종류 데이터에 대한 Logistic Regression 결과</caption>
 <thead>
@@ -1111,7 +1184,7 @@ w_i = P_i (1 - P_i)
 </table>
 <p><code>multinom</code> 함수는 범주 <code>y</code>의 값 1, 2, 3중 첫번째 값인 1을 기준범주(reference category)로 사용한다.</p>
 </div>
-<div id="baseline-category-logit-model" class="section level3">
+<div id="baseline-category-logit-model" class="section level3" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> 기준범주 로짓모형</h3>
 <p>종속변수가 셋 이상의 범주를 갖고 있으나 자연스러운 순서가 없는 경우, 기준범주 로짓모형이 널리 사용된다.</p>
 <p><span class="math inline">\(N\)</span>개의 객체로 이루어진 학습데이터 <span class="math inline">\(\{(\mathbf{x}_i, y_i)\}_{i = 1, \cdots, N}\)</span>를 아래와 같이 정의하자.</p>
@@ -1128,11 +1201,11 @@ w_i = P_i (1 - P_i)
 <p><span class="math display">\[\begin{equation*}
 \sum_{j = 1}^{J} \pi_{ij} = 1
 \end{equation*}\]</span></p>
-<p>이 성립한다. 여기에서 범주 1을 기준 범주(reference category 혹은 baseline category)로 간주하여 범주별로 다음과 같은 회귀모형을 정의한다 (교재 <span class="citation">(전치혁 <a href="#ref-jun2012datamining" role="doc-biblioref">2012</a>)</span>에는 범주 <span class="math inline">\(J\)</span>를 기준 범주로 간주).</p>
+<p>이 성립한다. 여기에서 범주 1을 기준 범주(reference category 혹은 baseline category)로 간주하여 범주별로 다음과 같은 회귀모형을 정의한다 (교재 <span class="citation">(<a href="#ref-jun2012datamining" role="doc-biblioref">전치혁 2012</a>)</span>에는 범주 <span class="math inline">\(J\)</span>를 기준 범주로 간주).</p>
 <p><span class="math display">\[\begin{equation*}
 \log \left( \frac{\pi_{ij}}{\pi_{i1}} \right) = \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i, \, j = 2, \cdots, J
 \end{equation*}\]</span></p>
-<p>이를 <span class="math inline">\(\pi_{ij}\)</span>에 대해 풀면, 아래와 같은 해가 얻어진다 <span class="citation">(Czepiel <a href="#ref-czepiel2002maximum" role="doc-biblioref">2002</a>)</span>.</p>
+<p>이를 <span class="math inline">\(\pi_{ij}\)</span>에 대해 풀면, 아래와 같은 해가 얻어진다 <span class="citation">(<a href="#ref-czepiel2002maximum" role="doc-biblioref">Czepiel 2002</a>)</span>.</p>
 <p><span class="math display" id="eq:multi-nominal-prob-sol">\[\begin{equation}
 \begin{split}
 \pi_{ij} &amp;= \frac{\exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}{1 + \sum_{j = 2}^{J} \exp \left( \beta_{0,j} + \boldsymbol\beta_{j}^\top \mathbf{x}_i \right)}, \, j = 2, \cdots, J\\
@@ -1173,12 +1246,12 @@ L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_
 \end{split}
 \tag{6.8}
 \end{equation}\]</span></p>
-<p>따라서, 명목 로지스틱 회귀분석은 식 <a href="logistic-regression.html#eq:multi-nominal-logit-loglik-diff">(6.8)</a>이 표현하는 <span class="math inline">\((J - 1) \times (p + 1)\)</span>개의 미분식을 모두 0으로 만드는 계수값을 찾는 문제가 된다. 이에 대한 closed form solution은 존재하지 않으므로, 각종 알고리즘을 이용하여 해를 찾아야 한다. Newton-Raphson method에 의해 해를 찾는 방법은 <span class="citation">Czepiel (<a href="#ref-czepiel2002maximum" role="doc-biblioref">2002</a>)</span> 에 보다 자세하게 설명되어 있다.</p>
+<p>따라서, 명목 로지스틱 회귀분석은 식 <a href="logistic-regression.html#eq:multi-nominal-logit-loglik-diff">(6.8)</a>이 표현하는 <span class="math inline">\((J - 1) \times (p + 1)\)</span>개의 미분식을 모두 0으로 만드는 계수값을 찾는 문제가 된다. 이에 대한 closed form solution은 존재하지 않으므로, 각종 알고리즘을 이용하여 해를 찾아야 한다. Newton-Raphson method에 의해 해를 찾는 방법은 <span class="citation"><a href="#ref-czepiel2002maximum" role="doc-biblioref">Czepiel</a> (<a href="#ref-czepiel2002maximum" role="doc-biblioref">2002</a>)</span> 에 보다 자세하게 설명되어 있다.</p>
 <p>Table <a href="logistic-regression.html#tab:nominal-logistic-reg-train-data">6.3</a>의 학습데이터에 대해 명목 로지스틱 회귀모형을 학습하여 범주를 추정한 결과는 아래와 같다.</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="logistic-regression.html#cb217-1"></a>multinom_fit &lt;-<span class="st"> </span>nnet<span class="op">::</span><span class="kw">multinom</span>(</span>
-<span id="cb217-2"><a href="logistic-regression.html#cb217-2"></a>  y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, </span>
-<span id="cb217-3"><a href="logistic-regression.html#cb217-3"></a>  <span class="dt">data =</span> train_df, </span>
-<span id="cb217-4"><a href="logistic-regression.html#cb217-4"></a>  <span class="dt">maxit =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="logistic-regression.html#cb214-1" aria-hidden="true" tabindex="-1"></a>multinom_fit <span class="ot">&lt;-</span> nnet<span class="sc">::</span><span class="fu">multinom</span>(</span>
+<span id="cb214-2"><a href="logistic-regression.html#cb214-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1 <span class="sc">+</span> x2, </span>
+<span id="cb214-3"><a href="logistic-regression.html#cb214-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_df, </span>
+<span id="cb214-4"><a href="logistic-regression.html#cb214-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>## # weights:  12 (6 variable)
 ## initial  value 19.775021 
 ## iter  10 value 17.825831
@@ -1190,25 +1263,23 @@ L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_
 ## iter  70 value 16.016395
 ## final  value 16.015185 
 ## converged</code></pre>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="logistic-regression.html#cb219-1"></a>predict_df &lt;-<span class="st"> </span><span class="kw">predict</span>(multinom_fit, train_df, <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb219-2"><a href="logistic-regression.html#cb219-2"></a><span class="st">  </span><span class="kw">as_data_frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb219-3"><a href="logistic-regression.html#cb219-3"></a><span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb219-4"><a href="logistic-regression.html#cb219-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pred_class =</span> <span class="kw">predict</span>(multinom_fit, train_df, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>))</span></code></pre></div>
-<pre><code>## Warning: `as_data_frame()` is deprecated as of tibble 2.0.0.
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="logistic-regression.html#cb216-1" aria-hidden="true" tabindex="-1"></a>predict_df <span class="ot">&lt;-</span> <span class="fu">predict</span>(multinom_fit, train_df, <span class="at">type =</span> <span class="st">&quot;probs&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb216-2"><a href="logistic-regression.html#cb216-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb216-3"><a href="logistic-regression.html#cb216-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(<span class="fu">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb216-4"><a href="logistic-regression.html#cb216-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_class =</span> <span class="fu">predict</span>(multinom_fit, train_df, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>))</span></code></pre></div>
+<pre><code>## Warning: `as_data_frame()` was deprecated in tibble 2.0.0.
 ## Please use `as_tibble()` instead.
-## The signature and semantics have changed, see `?as_tibble`.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="logistic-regression.html#cb221-1"></a><span class="kw">bind_cols</span>(train_df, predict_df) <span class="op">%&gt;%</span></span>
-<span id="cb221-2"><a href="logistic-regression.html#cb221-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>x1, <span class="op">-</span>x2) <span class="op">%&gt;%</span></span>
-<span id="cb221-3"><a href="logistic-regression.html#cb221-3"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb221-4"><a href="logistic-regression.html#cb221-4"></a>    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb221-5"><a href="logistic-regression.html#cb221-5"></a>    <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb221-6"><a href="logistic-regression.html#cb221-6"></a>    <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;불량범주 $y_i$&#39;</span>, </span>
-<span id="cb221-7"><a href="logistic-regression.html#cb221-7"></a>                  <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i1}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i2}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i3}$&#39;</span>, <span class="st">&#39;추정범주 $</span><span class="ch">\\</span><span class="st">hat{y}_i$&#39;</span>),</span>
-<span id="cb221-8"><a href="logistic-regression.html#cb221-8"></a>    <span class="dt">caption =</span> <span class="st">&#39;명목 로지스틱 회귀모형 범주 추정 결과&#39;</span>,</span>
-<span id="cb221-9"><a href="logistic-regression.html#cb221-9"></a>    <span class="dt">digits =</span> <span class="dv">3</span></span>
-<span id="cb221-10"><a href="logistic-regression.html#cb221-10"></a>  )</span></code></pre></div>
+## The signature and semantics have changed, see `?as_tibble`.</code></pre>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="logistic-regression.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(train_df, predict_df) <span class="sc">%&gt;%</span></span>
+<span id="cb218-2"><a href="logistic-regression.html#cb218-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>x1, <span class="sc">-</span>x2) <span class="sc">%&gt;%</span></span>
+<span id="cb218-3"><a href="logistic-regression.html#cb218-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb218-4"><a href="logistic-regression.html#cb218-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb218-5"><a href="logistic-regression.html#cb218-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb218-6"><a href="logistic-regression.html#cb218-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;불량범주 $y_i$&#39;</span>, </span>
+<span id="cb218-7"><a href="logistic-regression.html#cb218-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i1}$&#39;</span>, <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i2}$&#39;</span>, <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i3}$&#39;</span>, <span class="st">&#39;추정범주 $</span><span class="sc">\\</span><span class="st">hat{y}_i$&#39;</span>),</span>
+<span id="cb218-8"><a href="logistic-regression.html#cb218-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;명목 로지스틱 회귀모형 범주 추정 결과&#39;</span>,</span>
+<span id="cb218-9"><a href="logistic-regression.html#cb218-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">3</span></span>
+<span id="cb218-10"><a href="logistic-regression.html#cb218-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:nominal-logistic-prediction">Table 6.5: </span>명목 로지스틱 회귀모형 범주 추정 결과</caption>
 <thead>
@@ -1369,9 +1440,9 @@ L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_
 </tbody>
 </table>
 <p><code>nnet</code> 패키지 외에도 <code>glmnet</code>, <code>mlogit</code>, <code>VGAM</code> 등의 R 패키지들을 사용해 명목형 로지스틱 회귀모형을 추정할 수 있다.</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="logistic-regression.html#cb222-1"></a>VGAM<span class="op">::</span><span class="kw">vglm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2,</span>
-<span id="cb222-2"><a href="logistic-regression.html#cb222-2"></a>           <span class="dt">data =</span> train_df,</span>
-<span id="cb222-3"><a href="logistic-regression.html#cb222-3"></a>           <span class="dt">family =</span> VGAM<span class="op">::</span>multinomial)</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="logistic-regression.html#cb219-1" aria-hidden="true" tabindex="-1"></a>VGAM<span class="sc">::</span><span class="fu">vglm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2,</span>
+<span id="cb219-2"><a href="logistic-regression.html#cb219-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> train_df,</span>
+<span id="cb219-3"><a href="logistic-regression.html#cb219-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> VGAM<span class="sc">::</span>multinomial)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## VGAM::vglm(formula = y ~ x1 + x2, family = VGAM::multinomial, 
@@ -1379,8 +1450,10 @@ L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_
 ## 
 ## 
 ## Coefficients:
-## (Intercept):1 (Intercept):2          x1:1          x1:2          x2:1          x2:2 
-##     -64.56378    -118.15274     102.65063     133.29235      10.86829      20.81307 
+## (Intercept):1 (Intercept):2          x1:1          x1:2          x2:1 
+##     -64.56378    -118.15274     102.65063     133.29235      10.86829 
+##          x2:2 
+##      20.81307 
 ## 
 ## Degrees of Freedom: 36 Total; 30 Residual
 ## Residual deviance: 32.03007 
@@ -1389,32 +1462,32 @@ L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_
 ## This is a multinomial logit model with 3 levels</code></pre>
 </div>
 </div>
-<div id="ordinal-logistic-regression" class="section level2">
+<div id="ordinal-logistic-regression" class="section level2" number="6.4">
 <h2><span class="header-section-number">6.4</span> 서열 로지스틱 회귀모형</h2>
 <p>본 장에서는 종속변수가 3개 이상의 범주를 가지며, 각 범주 간에 서열이 있는 경우에 대한 로지스틱 회귀모형을 소개한다.</p>
-<div id="ordinal-logistic-basic-script" class="section level3">
+<div id="ordinal-logistic-basic-script" class="section level3" number="6.4.1">
 <h3><span class="header-section-number">6.4.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="logistic-regression.html#cb224-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb224-2"><a href="logistic-regression.html#cb224-2"></a>  <span class="op">~</span>N, <span class="op">~</span>L, <span class="op">~</span>y,</span>
-<span id="cb224-3"><a href="logistic-regression.html#cb224-3"></a>  <span class="dv">25</span>, <span class="dv">5</span>, <span class="dv">3</span>,</span>
-<span id="cb224-4"><a href="logistic-regression.html#cb224-4"></a>  <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">3</span>,</span>
-<span id="cb224-5"><a href="logistic-regression.html#cb224-5"></a>  <span class="dv">25</span>, <span class="dv">20</span>, <span class="dv">2</span>,</span>
-<span id="cb224-6"><a href="logistic-regression.html#cb224-6"></a>  <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">1</span>,</span>
-<span id="cb224-7"><a href="logistic-regression.html#cb224-7"></a>  <span class="dv">32</span>, <span class="dv">5</span>, <span class="dv">3</span>,</span>
-<span id="cb224-8"><a href="logistic-regression.html#cb224-8"></a>  <span class="dv">32</span>, <span class="dv">10</span>, <span class="dv">3</span>,</span>
-<span id="cb224-9"><a href="logistic-regression.html#cb224-9"></a>  <span class="dv">32</span>, <span class="dv">20</span>, <span class="dv">2</span>,</span>
-<span id="cb224-10"><a href="logistic-regression.html#cb224-10"></a>  <span class="dv">32</span>, <span class="dv">30</span>, <span class="dv">1</span>,</span>
-<span id="cb224-11"><a href="logistic-regression.html#cb224-11"></a>  <span class="dv">42</span>, <span class="dv">5</span>, <span class="dv">1</span>,</span>
-<span id="cb224-12"><a href="logistic-regression.html#cb224-12"></a>  <span class="dv">42</span>, <span class="dv">10</span>, <span class="dv">3</span>,</span>
-<span id="cb224-13"><a href="logistic-regression.html#cb224-13"></a>  <span class="dv">42</span>, <span class="dv">20</span>, <span class="dv">1</span>,</span>
-<span id="cb224-14"><a href="logistic-regression.html#cb224-14"></a>  <span class="dv">42</span>, <span class="dv">30</span>, <span class="dv">1</span></span>
-<span id="cb224-15"><a href="logistic-regression.html#cb224-15"></a>) <span class="op">%&gt;%</span></span>
-<span id="cb224-16"><a href="logistic-regression.html#cb224-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">as.ordered</span>(y))</span>
-<span id="cb224-17"><a href="logistic-regression.html#cb224-17"></a></span>
-<span id="cb224-18"><a href="logistic-regression.html#cb224-18"></a>knitr<span class="op">::</span><span class="kw">kable</span>(train_df, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb224-19"><a href="logistic-regression.html#cb224-19"></a>             <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb224-20"><a href="logistic-regression.html#cb224-20"></a>             <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;만족도($y$)&#39;</span>),</span>
-<span id="cb224-21"><a href="logistic-regression.html#cb224-21"></a>             <span class="dt">caption =</span> <span class="st">&#39;성능변수에 따른 통신 만족도&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="logistic-regression.html#cb221-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb221-2"><a href="logistic-regression.html#cb221-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>N, <span class="sc">~</span>L, <span class="sc">~</span>y,</span>
+<span id="cb221-3"><a href="logistic-regression.html#cb221-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">25</span>, <span class="dv">5</span>, <span class="dv">3</span>,</span>
+<span id="cb221-4"><a href="logistic-regression.html#cb221-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">3</span>,</span>
+<span id="cb221-5"><a href="logistic-regression.html#cb221-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">25</span>, <span class="dv">20</span>, <span class="dv">2</span>,</span>
+<span id="cb221-6"><a href="logistic-regression.html#cb221-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">1</span>,</span>
+<span id="cb221-7"><a href="logistic-regression.html#cb221-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">32</span>, <span class="dv">5</span>, <span class="dv">3</span>,</span>
+<span id="cb221-8"><a href="logistic-regression.html#cb221-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">32</span>, <span class="dv">10</span>, <span class="dv">3</span>,</span>
+<span id="cb221-9"><a href="logistic-regression.html#cb221-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">32</span>, <span class="dv">20</span>, <span class="dv">2</span>,</span>
+<span id="cb221-10"><a href="logistic-regression.html#cb221-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">32</span>, <span class="dv">30</span>, <span class="dv">1</span>,</span>
+<span id="cb221-11"><a href="logistic-regression.html#cb221-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">42</span>, <span class="dv">5</span>, <span class="dv">1</span>,</span>
+<span id="cb221-12"><a href="logistic-regression.html#cb221-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">42</span>, <span class="dv">10</span>, <span class="dv">3</span>,</span>
+<span id="cb221-13"><a href="logistic-regression.html#cb221-13" aria-hidden="true" tabindex="-1"></a>  <span class="dv">42</span>, <span class="dv">20</span>, <span class="dv">1</span>,</span>
+<span id="cb221-14"><a href="logistic-regression.html#cb221-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">42</span>, <span class="dv">30</span>, <span class="dv">1</span></span>
+<span id="cb221-15"><a href="logistic-regression.html#cb221-15" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb221-16"><a href="logistic-regression.html#cb221-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">as.ordered</span>(y))</span>
+<span id="cb221-17"><a href="logistic-regression.html#cb221-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb221-18"><a href="logistic-regression.html#cb221-18" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(train_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb221-19"><a href="logistic-regression.html#cb221-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb221-20"><a href="logistic-regression.html#cb221-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;만족도($y$)&#39;</span>),</span>
+<span id="cb221-21"><a href="logistic-regression.html#cb221-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;성능변수에 따른 통신 만족도&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:ordinal-logistic-reg-train-data">Table 6.6: </span>성능변수에 따른 통신 만족도</caption>
 <thead>
@@ -1487,7 +1560,7 @@ L &amp;=&amp; \prod_{i = 1}^{n} \frac{1}{1 + \sum_{j = 2}^{J} \exp \left( \beta_
 </tr>
 </tbody>
 </table>
-<p>Table <a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">6.6</a>은 벨 연구소에서 한 통신장치에 대하여 실시한 조사 결과를 나타낸 것이다. 주요 성능변수인 회선잡음(circuit noise: N)과 소리크기 손실(loudness loss: L)이 이용자의 주관적인 만족도에 미치는 영향을 분석하기 위한 것이다. 만족도는 원결과<span class="citation">(Cavanaugh, Hatch, and Sullivan <a href="#ref-cavanaugh1976models" role="doc-biblioref">1976</a>)</span>를 가공하여 다음과 같이 3가지로 분류하였다.</p>
+<p>Table <a href="logistic-regression.html#tab:ordinal-logistic-reg-train-data">6.6</a>은 벨 연구소에서 한 통신장치에 대하여 실시한 조사 결과를 나타낸 것이다. 주요 성능변수인 회선잡음(circuit noise: N)과 소리크기 손실(loudness loss: L)이 이용자의 주관적인 만족도에 미치는 영향을 분석하기 위한 것이다. 만족도는 원결과<span class="citation">(<a href="#ref-cavanaugh1976models" role="doc-biblioref">Cavanaugh, Hatch, and Sullivan 1976</a>)</span>를 가공하여 다음과 같이 3가지로 분류하였다.</p>
 <p><span class="math display">\[\begin{equation*}
 y = \begin{cases}
 1 &amp; \mbox{good}\\
@@ -1496,8 +1569,8 @@ y = \begin{cases}
 \end{cases}
 \end{equation*}\]</span></p>
 <p>본 장에서는 두 가지 모형을 다룬다. 우선 누적 로짓모형(cumulative logit model)은 아래와 같이 <code>MASS</code> 패키지의 <code>polr</code> 함수를 사용하여 추정할 수 있다.</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="logistic-regression.html#cb225-1"></a>MASS<span class="op">::</span><span class="kw">polr</span>(y <span class="op">~</span><span class="st"> </span>N <span class="op">+</span><span class="st"> </span>L, <span class="dt">data =</span> train_df) <span class="op">%&gt;%</span></span>
-<span id="cb225-2"><a href="logistic-regression.html#cb225-2"></a><span class="st">  </span>broom<span class="op">::</span><span class="kw">tidy</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="logistic-regression.html#cb222-1" aria-hidden="true" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">polr</span>(y <span class="sc">~</span> N <span class="sc">+</span> L, <span class="at">data =</span> train_df) <span class="sc">%&gt;%</span></span>
+<span id="cb222-2"><a href="logistic-regression.html#cb222-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code></pre></div>
 <pre><code>## 
 ## Re-fitting to get Hessian</code></pre>
 <pre><code>## # A tibble: 4 x 5
@@ -1508,9 +1581,9 @@ y = \begin{cases}
 ## 3 1|2    -13.0       6.46      -2.02 scale      
 ## 4 2|3    -11.4       6.17      -1.85 scale</code></pre>
 <p>인근범주 로짓모형(adjacent-categories logit model)은 아래와 같이 <code>VGAM</code> 패키지의 <code>vglm</code> 함수를 이용하여 추정할 수 있다.</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="logistic-regression.html#cb228-1"></a>VGAM<span class="op">::</span><span class="kw">vglm</span>(y <span class="op">~</span><span class="st"> </span>N <span class="op">+</span><span class="st"> </span>L,</span>
-<span id="cb228-2"><a href="logistic-regression.html#cb228-2"></a>           <span class="dt">data =</span> train_df,</span>
-<span id="cb228-3"><a href="logistic-regression.html#cb228-3"></a>           <span class="dt">family =</span> VGAM<span class="op">::</span><span class="kw">acat</span>(<span class="dt">reverse =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="logistic-regression.html#cb225-1" aria-hidden="true" tabindex="-1"></a>VGAM<span class="sc">::</span><span class="fu">vglm</span>(y <span class="sc">~</span> N <span class="sc">+</span> L,</span>
+<span id="cb225-2"><a href="logistic-regression.html#cb225-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> train_df,</span>
+<span id="cb225-3"><a href="logistic-regression.html#cb225-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> VGAM<span class="sc">::</span><span class="fu">acat</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## VGAM::vglm(formula = y ~ N + L, family = VGAM::acat(reverse = TRUE), 
@@ -1518,8 +1591,10 @@ y = \begin{cases}
 ## 
 ## 
 ## Coefficients:
-## (Intercept):1 (Intercept):2           N:1           N:2           L:1           L:2 
-##  -12.94227208   -6.10597713    0.31431599    0.04643039    0.17500408    0.29578067 
+## (Intercept):1 (Intercept):2           N:1           N:2           L:1 
+##  -12.94227208   -6.10597713    0.31431599    0.04643039    0.17500408 
+##           L:2 
+##    0.29578067 
 ## 
 ## Degrees of Freedom: 24 Total; 18 Residual
 ## Residual deviance: 11.67769 
@@ -1527,7 +1602,7 @@ y = \begin{cases}
 ## 
 ## This is an adjacent categories model with 3 levels</code></pre>
 </div>
-<div id="cumulative-logit-model" class="section level3">
+<div id="cumulative-logit-model" class="section level3" number="6.4.2">
 <h3><span class="header-section-number">6.4.2</span> 누적 로짓모형</h3>
 <p>객체 <span class="math inline">\(i\)</span>가 범주 <span class="math inline">\(j\)</span> 이하에 속할 누적확률을 <span class="math inline">\(\kappa_{ij}\)</span>라 하자.</p>
 <p><span class="math display">\[\begin{equation*}
@@ -1557,10 +1632,10 @@ y = \begin{cases}
 <p><span class="math display">\[\begin{equation*}
 \sum_{i = 1}^{n} \sum_{j = 1}^{J} y_i \log \pi_{ij}
 \end{equation*}\]</span></p>
-<p>이며, 이에 위에서 정리한 <span class="math inline">\(\pi_{ij}\)</span>식을 대입하여 전개할 수 있다. 이 로그 우도함수는 concave 함수이므로<span class="citation">(Pratt <a href="#ref-pratt1981concavity" role="doc-biblioref">1981</a>)</span>, 각 계수에 대해 편미분하여 0이 되도록 하는 값을 구하는 방식으로 회귀모형을 추정할 수 있다.</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="logistic-regression.html#cb230-1"></a>polr_fit &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">polr</span>(y <span class="op">~</span><span class="st"> </span>N <span class="op">+</span><span class="st"> </span>L, <span class="dt">data =</span> train_df)</span>
-<span id="cb230-2"><a href="logistic-regression.html#cb230-2"></a></span>
-<span id="cb230-3"><a href="logistic-regression.html#cb230-3"></a><span class="kw">print</span>(polr_fit)</span></code></pre></div>
+<p>이며, 이에 위에서 정리한 <span class="math inline">\(\pi_{ij}\)</span>식을 대입하여 전개할 수 있다. 이 로그 우도함수는 concave 함수이므로<span class="citation">(<a href="#ref-pratt1981concavity" role="doc-biblioref">Pratt 1981</a>)</span>, 각 계수에 대해 편미분하여 0이 되도록 하는 값을 구하는 방식으로 회귀모형을 추정할 수 있다.</p>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="logistic-regression.html#cb227-1" aria-hidden="true" tabindex="-1"></a>polr_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">polr</span>(y <span class="sc">~</span> N <span class="sc">+</span> L, <span class="at">data =</span> train_df)</span>
+<span id="cb227-2"><a href="logistic-regression.html#cb227-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb227-3"><a href="logistic-regression.html#cb227-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(polr_fit)</span></code></pre></div>
 <pre><code>## Call:
 ## MASS::polr(formula = y ~ N + L, data = train_df)
 ## 
@@ -1574,27 +1649,27 @@ y = \begin{cases}
 ## 
 ## Residual Deviance: 12.8825 
 ## AIC: 20.8825</code></pre>
-<p>위와 같이 <code>polr</code> 함수 실행 시 얻어지는 각 변수들에 대한 계수들의 부호는 교재<span class="citation">(전치혁 <a href="#ref-jun2012datamining" role="doc-biblioref">2012</a>)</span>의 내용과 반대인데, 이는 <code>polr</code> 함수는 아래와 같은 모형을 추정하기 때문이다.</p>
+<p>위와 같이 <code>polr</code> 함수 실행 시 얻어지는 각 변수들에 대한 계수들의 부호는 교재<span class="citation">(<a href="#ref-jun2012datamining" role="doc-biblioref">전치혁 2012</a>)</span>의 내용과 반대인데, 이는 <code>polr</code> 함수는 아래와 같은 모형을 추정하기 때문이다.</p>
 <p><span class="math display">\[\begin{equation*}
 \log \left( \frac{\kappa_{ij}}{1 - \kappa_{ij}} \right) = \beta_{0,j} - \boldsymbol\beta^\top \mathbf{x}_i, \, j = 1, \cdots, J - 1
 \end{equation*}\]</span></p>
 <p>위 모형에서 <code>polr</code> 함수 실행 결과 추정된 절편값은 <span class="math inline">\(\beta_{0,1} = -13.0352721\)</span>, <span class="math inline">\(\beta_{0,2} = -11.3990207\)</span> 이며, 두 변수 <span class="math inline">\(N\)</span>, <span class="math inline">\(L\)</span>에 대한 회귀계수는 각각 -0.2236292, -0.2998833로 추정된다.</p>
 <p>추정된 회귀계수를 식 <a href="logistic-regression.html#eq:cumulative-logit-prob">(6.10)</a>에 대입하면 각 객체 <span class="math inline">\(i\)</span>가 각 범주 <span class="math inline">\(j\)</span>에 속할 확률을 Table <a href="logistic-regression.html#tab:cumulative-logit-prediction">6.7</a>와 같이 얻을 수 있다. 아래 R 스크립트에서 사용한 <code>predict</code>라는 함수가 해당 계산을 수행한다.</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="logistic-regression.html#cb232-1"></a>predict_df &lt;-<span class="st"> </span><span class="kw">predict</span>(polr_fit, train_df, <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb232-2"><a href="logistic-regression.html#cb232-2"></a><span class="st">  </span><span class="kw">as_data_frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb232-3"><a href="logistic-regression.html#cb232-3"></a><span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb232-4"><a href="logistic-regression.html#cb232-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pred_class =</span> <span class="kw">predict</span>(polr_fit, train_df, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>))</span>
-<span id="cb232-5"><a href="logistic-regression.html#cb232-5"></a></span>
-<span id="cb232-6"><a href="logistic-regression.html#cb232-6"></a><span class="kw">bind_cols</span>(train_df, predict_df) <span class="op">%&gt;%</span></span>
-<span id="cb232-7"><a href="logistic-regression.html#cb232-7"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb232-8"><a href="logistic-regression.html#cb232-8"></a>    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb232-9"><a href="logistic-regression.html#cb232-9"></a>    <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb232-10"><a href="logistic-regression.html#cb232-10"></a>    <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;실제범주 $y_i$&#39;</span>, </span>
-<span id="cb232-11"><a href="logistic-regression.html#cb232-11"></a>                  <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i1}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i2}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i3}$&#39;</span>, <span class="st">&#39;추정범주 $</span><span class="ch">\\</span><span class="st">hat{y}_i$&#39;</span>),</span>
-<span id="cb232-12"><a href="logistic-regression.html#cb232-12"></a>    <span class="dt">caption =</span> <span class="st">&#39;위 통신 만족도 데이터에 대한 누적 로짓모형의 추정범주&#39;</span>,</span>
-<span id="cb232-13"><a href="logistic-regression.html#cb232-13"></a><span class="co">#    caption = &#39;Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 누적 로짓모형의 추정범주&#39;,</span></span>
-<span id="cb232-14"><a href="logistic-regression.html#cb232-14"></a>    <span class="dt">digits =</span> <span class="dv">4</span></span>
-<span id="cb232-15"><a href="logistic-regression.html#cb232-15"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="logistic-regression.html#cb229-1" aria-hidden="true" tabindex="-1"></a>predict_df <span class="ot">&lt;-</span> <span class="fu">predict</span>(polr_fit, train_df, <span class="at">type =</span> <span class="st">&quot;probs&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb229-2"><a href="logistic-regression.html#cb229-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb229-3"><a href="logistic-regression.html#cb229-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(<span class="fu">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb229-4"><a href="logistic-regression.html#cb229-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_class =</span> <span class="fu">predict</span>(polr_fit, train_df, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>))</span>
+<span id="cb229-5"><a href="logistic-regression.html#cb229-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-6"><a href="logistic-regression.html#cb229-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(train_df, predict_df) <span class="sc">%&gt;%</span></span>
+<span id="cb229-7"><a href="logistic-regression.html#cb229-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb229-8"><a href="logistic-regression.html#cb229-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb229-9"><a href="logistic-regression.html#cb229-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb229-10"><a href="logistic-regression.html#cb229-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;실제범주 $y_i$&#39;</span>, </span>
+<span id="cb229-11"><a href="logistic-regression.html#cb229-11" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i1}$&#39;</span>, <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i2}$&#39;</span>, <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i3}$&#39;</span>, <span class="st">&#39;추정범주 $</span><span class="sc">\\</span><span class="st">hat{y}_i$&#39;</span>),</span>
+<span id="cb229-12"><a href="logistic-regression.html#cb229-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;위 통신 만족도 데이터에 대한 누적 로짓모형의 추정범주&#39;</span>,</span>
+<span id="cb229-13"><a href="logistic-regression.html#cb229-13" aria-hidden="true" tabindex="-1"></a><span class="co">#    caption = &#39;Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 누적 로짓모형의 추정범주&#39;,</span></span>
+<span id="cb229-14"><a href="logistic-regression.html#cb229-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">4</span></span>
+<span id="cb229-15"><a href="logistic-regression.html#cb229-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:cumulative-logit-prediction">Table 6.7: </span>위 통신 만족도 데이터에 대한 누적 로짓모형의 추정범주</caption>
 <thead>
@@ -1720,7 +1795,7 @@ y = \begin{cases}
 </tbody>
 </table>
 </div>
-<div id="adjacent-categories-logit-model" class="section level3">
+<div id="adjacent-categories-logit-model" class="section level3" number="6.4.3">
 <h3><span class="header-section-number">6.4.3</span> 인근범주 로짓모형</h3>
 <p>인근범주 로짓모형은 아래와 같이 인접한 두 범주의 확률 비율에 대한 회귀모형이다.</p>
 <p><span class="math display" id="eq:adjacent-category-logit">\[\begin{equation}
@@ -1745,31 +1820,31 @@ y = \begin{cases}
 \end{equation}\]</span></p>
 <p>와 같다. 이는 <a href="logistic-regression.html#baseline-category-logit-model">6.3.2</a>절에서 살펴보았던 명목형 로지스틱 회귀모형에 비해 다소 복잡하지만 비슷한 형태이며, 역시 최우추정법을 이용하여 모형을 추정할 수 있다.</p>
 <p>R에서는 <code>VGAM</code> 패키지의 <code>vglm</code> 함수를 이용할 때 파라미터 <code>family</code>의 값을 <code>VGAM</code> 패키지의 <code>acat</code> 함수를 설정함으로써 인근범주 로짓모형을 추정할 수 있다. 이 때 <code>acat</code> 함수의 <code>parallel</code> 파라미터값을 <code>TRUE</code>로 설정함으로써 식 <a href="logistic-regression.html#eq:adjacent-category-logit">(6.11)</a>에서와 같이 비례 승산 모형(proportional odds model)을 정의한다.</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="logistic-regression.html#cb233-1"></a>vglm_fit &lt;-<span class="st"> </span>VGAM<span class="op">::</span><span class="kw">vglm</span>(</span>
-<span id="cb233-2"><a href="logistic-regression.html#cb233-2"></a>  y <span class="op">~</span><span class="st"> </span>N <span class="op">+</span><span class="st"> </span>L,</span>
-<span id="cb233-3"><a href="logistic-regression.html#cb233-3"></a>  <span class="dt">data =</span> train_df,</span>
-<span id="cb233-4"><a href="logistic-regression.html#cb233-4"></a>  <span class="dt">family =</span> VGAM<span class="op">::</span><span class="kw">acat</span>(<span class="dt">reverse =</span> <span class="ot">TRUE</span>, <span class="dt">parallel =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb233-5"><a href="logistic-regression.html#cb233-5"></a>  )</span>
-<span id="cb233-6"><a href="logistic-regression.html#cb233-6"></a></span>
-<span id="cb233-7"><a href="logistic-regression.html#cb233-7"></a><span class="kw">print</span>(<span class="kw">coef</span>(vglm_fit))</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="logistic-regression.html#cb230-1" aria-hidden="true" tabindex="-1"></a>vglm_fit <span class="ot">&lt;-</span> VGAM<span class="sc">::</span><span class="fu">vglm</span>(</span>
+<span id="cb230-2"><a href="logistic-regression.html#cb230-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> N <span class="sc">+</span> L,</span>
+<span id="cb230-3"><a href="logistic-regression.html#cb230-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_df,</span>
+<span id="cb230-4"><a href="logistic-regression.html#cb230-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> VGAM<span class="sc">::</span><span class="fu">acat</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>, <span class="at">parallel =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb230-5"><a href="logistic-regression.html#cb230-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb230-6"><a href="logistic-regression.html#cb230-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb230-7"><a href="logistic-regression.html#cb230-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">coef</span>(vglm_fit))</span></code></pre></div>
 <pre><code>## (Intercept):1 (Intercept):2             N             L 
 ##    -9.0658976    -8.9018134     0.1725867     0.2082167</code></pre>
 <p>추정된 모형을 위 식 <a href="logistic-regression.html#eq:adjacent-category-prob">(6.12)</a>에 대입하면 각 객체 <span class="math inline">\(i\)</span>가 각 범주 <span class="math inline">\(j\)</span>에 속할 확률을 추정할 수 있다. <code>VGAM</code> 패키지의 <code>predictvglm</code> 함수가 해당 계산을 수행한다.</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="logistic-regression.html#cb235-1"></a>predict_df &lt;-<span class="st"> </span>VGAM<span class="op">::</span><span class="kw">predictvglm</span>(vglm_fit, train_df, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb235-2"><a href="logistic-regression.html#cb235-2"></a><span class="st">  </span><span class="kw">as_data_frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb235-3"><a href="logistic-regression.html#cb235-3"></a><span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb235-4"><a href="logistic-regression.html#cb235-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pred_class =</span> <span class="kw">ordered</span>(<span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">which.max</span>(x))))</span>
-<span id="cb235-5"><a href="logistic-regression.html#cb235-5"></a></span>
-<span id="cb235-6"><a href="logistic-regression.html#cb235-6"></a><span class="kw">bind_cols</span>(train_df, predict_df) <span class="op">%&gt;%</span></span>
-<span id="cb235-7"><a href="logistic-regression.html#cb235-7"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb235-8"><a href="logistic-regression.html#cb235-8"></a>    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb235-9"><a href="logistic-regression.html#cb235-9"></a>    <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb235-10"><a href="logistic-regression.html#cb235-10"></a>    <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;실제범주 $y_i$&#39;</span>, </span>
-<span id="cb235-11"><a href="logistic-regression.html#cb235-11"></a>                  <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i1}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i2}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i3}$&#39;</span>, <span class="st">&#39;추정범주 $</span><span class="ch">\\</span><span class="st">hat{y}_i$&#39;</span>),</span>
-<span id="cb235-12"><a href="logistic-regression.html#cb235-12"></a>    <span class="dt">caption =</span> <span class="st">&#39;위 통신 만족도 데이터에 대한 인근범주 로짓모형의 추정범주&#39;</span>,</span>
-<span id="cb235-13"><a href="logistic-regression.html#cb235-13"></a><span class="co">#    caption = &#39;Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 인근범주 로짓모형의 추정범주&#39;,</span></span>
-<span id="cb235-14"><a href="logistic-regression.html#cb235-14"></a>    <span class="dt">digits =</span> <span class="dv">4</span></span>
-<span id="cb235-15"><a href="logistic-regression.html#cb235-15"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="logistic-regression.html#cb232-1" aria-hidden="true" tabindex="-1"></a>predict_df <span class="ot">&lt;-</span> VGAM<span class="sc">::</span><span class="fu">predictvglm</span>(vglm_fit, train_df, <span class="st">&quot;response&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb232-2"><a href="logistic-regression.html#cb232-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb232-3"><a href="logistic-regression.html#cb232-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(<span class="fu">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb232-4"><a href="logistic-regression.html#cb232-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_class =</span> <span class="fu">ordered</span>(<span class="fu">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">which.max</span>(x))))</span>
+<span id="cb232-5"><a href="logistic-regression.html#cb232-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-6"><a href="logistic-regression.html#cb232-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(train_df, predict_df) <span class="sc">%&gt;%</span></span>
+<span id="cb232-7"><a href="logistic-regression.html#cb232-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb232-8"><a href="logistic-regression.html#cb232-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb232-9"><a href="logistic-regression.html#cb232-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb232-10"><a href="logistic-regression.html#cb232-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;실제범주 $y_i$&#39;</span>, </span>
+<span id="cb232-11"><a href="logistic-regression.html#cb232-11" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i1}$&#39;</span>, <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i2}$&#39;</span>, <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i3}$&#39;</span>, <span class="st">&#39;추정범주 $</span><span class="sc">\\</span><span class="st">hat{y}_i$&#39;</span>),</span>
+<span id="cb232-12"><a href="logistic-regression.html#cb232-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;위 통신 만족도 데이터에 대한 인근범주 로짓모형의 추정범주&#39;</span>,</span>
+<span id="cb232-13"><a href="logistic-regression.html#cb232-13" aria-hidden="true" tabindex="-1"></a><span class="co">#    caption = &#39;Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 인근범주 로짓모형의 추정범주&#39;,</span></span>
+<span id="cb232-14"><a href="logistic-regression.html#cb232-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">4</span></span>
+<span id="cb232-15"><a href="logistic-regression.html#cb232-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:adjacent-category-logit-prediction">Table 6.8: </span>위 통신 만족도 데이터에 대한 인근범주 로짓모형의 추정범주</caption>
 <thead>
@@ -1900,30 +1975,32 @@ y = \begin{cases}
 \tag{6.13}
 \end{equation}\]</span></p>
 <p>해당 모형은 <code>acat</code> 함수의 <code>parallel</code> 파라미터 값을 <code>FALSE</code>로 설정함으로써 추정할 수 있다.</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="logistic-regression.html#cb236-1"></a>vglm_fit &lt;-<span class="st"> </span>VGAM<span class="op">::</span><span class="kw">vglm</span>(</span>
-<span id="cb236-2"><a href="logistic-regression.html#cb236-2"></a>  y <span class="op">~</span><span class="st"> </span>N <span class="op">+</span><span class="st"> </span>L,</span>
-<span id="cb236-3"><a href="logistic-regression.html#cb236-3"></a>  <span class="dt">data =</span> train_df,</span>
-<span id="cb236-4"><a href="logistic-regression.html#cb236-4"></a>  <span class="dt">family =</span> VGAM<span class="op">::</span><span class="kw">acat</span>(<span class="dt">reverse =</span> <span class="ot">TRUE</span>, <span class="dt">parallel =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb236-5"><a href="logistic-regression.html#cb236-5"></a>  )</span>
-<span id="cb236-6"><a href="logistic-regression.html#cb236-6"></a></span>
-<span id="cb236-7"><a href="logistic-regression.html#cb236-7"></a><span class="kw">print</span>(<span class="kw">coef</span>(vglm_fit))</span></code></pre></div>
-<pre><code>## (Intercept):1 (Intercept):2           N:1           N:2           L:1           L:2 
-##  -12.94227208   -6.10597713    0.31431599    0.04643039    0.17500408    0.29578067</code></pre>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="logistic-regression.html#cb238-1"></a>predict_df &lt;-<span class="st"> </span>VGAM<span class="op">::</span><span class="kw">predictvglm</span>(vglm_fit, train_df, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb238-2"><a href="logistic-regression.html#cb238-2"></a><span class="st">  </span><span class="kw">as_data_frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb238-3"><a href="logistic-regression.html#cb238-3"></a><span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb238-4"><a href="logistic-regression.html#cb238-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pred_class =</span> <span class="kw">ordered</span>(<span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">which.max</span>(x))))</span>
-<span id="cb238-5"><a href="logistic-regression.html#cb238-5"></a></span>
-<span id="cb238-6"><a href="logistic-regression.html#cb238-6"></a><span class="kw">bind_cols</span>(train_df, predict_df) <span class="op">%&gt;%</span></span>
-<span id="cb238-7"><a href="logistic-regression.html#cb238-7"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb238-8"><a href="logistic-regression.html#cb238-8"></a>    <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb238-9"><a href="logistic-regression.html#cb238-9"></a>    <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb238-10"><a href="logistic-regression.html#cb238-10"></a>    <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;실제범주 $y_i$&#39;</span>, </span>
-<span id="cb238-11"><a href="logistic-regression.html#cb238-11"></a>                  <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i1}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i2}$&#39;</span>, <span class="st">&#39;$</span><span class="ch">\\</span><span class="st">pi_{i3}$&#39;</span>, <span class="st">&#39;추정범주 $</span><span class="ch">\\</span><span class="st">hat{y}_i$&#39;</span>),</span>
-<span id="cb238-12"><a href="logistic-regression.html#cb238-12"></a>    <span class="dt">caption =</span> <span class="st">&#39;위 통신 만족도 데이터에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)&#39;</span>,</span>
-<span id="cb238-13"><a href="logistic-regression.html#cb238-13"></a><span class="co">#    caption = &#39;Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)&#39;,</span></span>
-<span id="cb238-14"><a href="logistic-regression.html#cb238-14"></a>    <span class="dt">digits =</span> <span class="dv">4</span></span>
-<span id="cb238-15"><a href="logistic-regression.html#cb238-15"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="logistic-regression.html#cb233-1" aria-hidden="true" tabindex="-1"></a>vglm_fit <span class="ot">&lt;-</span> VGAM<span class="sc">::</span><span class="fu">vglm</span>(</span>
+<span id="cb233-2"><a href="logistic-regression.html#cb233-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> N <span class="sc">+</span> L,</span>
+<span id="cb233-3"><a href="logistic-regression.html#cb233-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_df,</span>
+<span id="cb233-4"><a href="logistic-regression.html#cb233-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> VGAM<span class="sc">::</span><span class="fu">acat</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>, <span class="at">parallel =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb233-5"><a href="logistic-regression.html#cb233-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb233-6"><a href="logistic-regression.html#cb233-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb233-7"><a href="logistic-regression.html#cb233-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">coef</span>(vglm_fit))</span></code></pre></div>
+<pre><code>## (Intercept):1 (Intercept):2           N:1           N:2           L:1 
+##  -12.94227208   -6.10597713    0.31431599    0.04643039    0.17500408 
+##           L:2 
+##    0.29578067</code></pre>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="logistic-regression.html#cb235-1" aria-hidden="true" tabindex="-1"></a>predict_df <span class="ot">&lt;-</span> VGAM<span class="sc">::</span><span class="fu">predictvglm</span>(vglm_fit, train_df, <span class="st">&quot;response&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb235-2"><a href="logistic-regression.html#cb235-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb235-3"><a href="logistic-regression.html#cb235-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(<span class="fu">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb235-4"><a href="logistic-regression.html#cb235-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_class =</span> <span class="fu">ordered</span>(<span class="fu">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">which.max</span>(x))))</span>
+<span id="cb235-5"><a href="logistic-regression.html#cb235-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb235-6"><a href="logistic-regression.html#cb235-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(train_df, predict_df) <span class="sc">%&gt;%</span></span>
+<span id="cb235-7"><a href="logistic-regression.html#cb235-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb235-8"><a href="logistic-regression.html#cb235-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb235-9"><a href="logistic-regression.html#cb235-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb235-10"><a href="logistic-regression.html#cb235-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;잡음(N)&#39;</span>, <span class="st">&#39;손실(L)&#39;</span>, <span class="st">&#39;실제범주 $y_i$&#39;</span>, </span>
+<span id="cb235-11"><a href="logistic-regression.html#cb235-11" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i1}$&#39;</span>, <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i2}$&#39;</span>, <span class="st">&#39;$</span><span class="sc">\\</span><span class="st">pi_{i3}$&#39;</span>, <span class="st">&#39;추정범주 $</span><span class="sc">\\</span><span class="st">hat{y}_i$&#39;</span>),</span>
+<span id="cb235-12"><a href="logistic-regression.html#cb235-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;위 통신 만족도 데이터에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)&#39;</span>,</span>
+<span id="cb235-13"><a href="logistic-regression.html#cb235-13" aria-hidden="true" tabindex="-1"></a><span class="co">#    caption = &#39;Table \\@ref(tab:ordinal-logistic-reg-train-data)에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)&#39;,</span></span>
+<span id="cb235-14"><a href="logistic-regression.html#cb235-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">4</span></span>
+<span id="cb235-15"><a href="logistic-regression.html#cb235-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:adjacent-category-logit-prediction-nonproportional">Table 6.9: </span>위 통신 만족도 데이터에 대한 인근범주 로짓모형의 추정범주 (비례 승산 모형이 아닌 경우)</caption>
 <thead>
@@ -2053,18 +2130,18 @@ y = \begin{cases}
 </div>
 </div>
 <h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-cavanaugh1976models">
-<p>Cavanaugh, JR, RW Hatch, and JL Sullivan. 1976. “Models for the Subjective Effects of Loss, Noise, and Talker Echo on Telephone Connections.” <em>Bell System Technical Journal</em> 55 (9): 1319–71.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-cavanaugh1976models" class="csl-entry">
+Cavanaugh, JR, RW Hatch, and JL Sullivan. 1976. <span>“Models for the Subjective Effects of Loss, Noise, and Talker Echo on Telephone Connections.”</span> <em>Bell System Technical Journal</em> 55 (9): 1319–71.
 </div>
-<div id="ref-czepiel2002maximum">
-<p>Czepiel, Scott A. 2002. “Maximum Likelihood Estimation of Logistic Regression Models: Theory and Implementation.” <em>Available at Czep. Net/Stat/Mlelr. Pdf</em>.</p>
+<div id="ref-czepiel2002maximum" class="csl-entry">
+Czepiel, Scott A. 2002. <span>“Maximum Likelihood Estimation of Logistic Regression Models: Theory and Implementation.”</span> <em>Available at Czep. Net/Stat/Mlelr. Pdf</em>.
 </div>
-<div id="ref-pratt1981concavity">
-<p>Pratt, John W. 1981. “Concavity of the Log Likelihood.” <em>Journal of the American Statistical Association</em> 76 (373): 103–6.</p>
+<div id="ref-pratt1981concavity" class="csl-entry">
+Pratt, John W. 1981. <span>“Concavity of the Log Likelihood.”</span> <em>Journal of the American Statistical Association</em> 76 (373): 103–6.
 </div>
-<div id="ref-jun2012datamining">
-<p>전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.</p>
+<div id="ref-jun2012datamining" class="csl-entry">
+전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -2086,6 +2163,7 @@ s.setAttribute('data-timestamp', +new Date());
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
             </section>
 
           </div>
@@ -2115,6 +2193,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -2134,7 +2213,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["data-mining-book.pdf"],
+"download": ["data-mining-book.pdf", "data-mining-book.epub"],
 "toc": {
 "collapse": "subsection"
 },

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 트리기반 기법 | 데이터마이닝 with R</title>
   <meta name="description" content="전치혁 교수님의 책 을 기반으로 한 R 예제" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 트리기반 기법 | 데이터마이닝 with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2020-12-12" />
+<meta name="date" content="2021-07-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="da.html"/>
 <link rel="next" href="svm.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,24 +51,23 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,7 +87,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -120,6 +120,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -139,20 +162,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>개요</a></li>
 <li class="chapter" data-level="1" data-path="datamining-overview.html"><a href="datamining-overview.html"><i class="fa fa-check"></i><b>1</b> 데이터마이닝 개요</a></li>
 <li class="part"><span><b>I 1부 - 예측</b></span></li>
-<li class="chapter" data-level="2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>2</b> 회귀분석</a><ul>
+<li class="chapter" data-level="2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>2</b> 회귀분석</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="regression.html"><a href="regression.html#regression-packages-install"><i class="fa fa-check"></i><b>2.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>2.2</b> 다중회귀모형</a></li>
-<li class="chapter" data-level="2.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>2.3</b> 반응치에 대한 추정 및 예측</a><ul>
+<li class="chapter" data-level="2.3" data-path="regression.html"><a href="regression.html#regression-response-confidence-prediction"><i class="fa fa-check"></i><b>2.3</b> 반응치에 대한 추정 및 예측</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="regression.html"><a href="regression.html#regression-response-confidence"><i class="fa fa-check"></i><b>2.3.1</b> 평균반응치의 추정</a></li>
 <li class="chapter" data-level="2.3.2" data-path="regression.html"><a href="regression.html#regression-response-prediction"><i class="fa fa-check"></i><b>2.3.2</b> 미래반응치의 예측</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>2.4</b> 지시변수와 회귀모형</a><ul>
+<li class="chapter" data-level="2.4" data-path="regression.html"><a href="regression.html#regression-indicator-variable"><i class="fa fa-check"></i><b>2.4</b> 지시변수와 회귀모형</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="regression.html"><a href="regression.html#regression-indicator-variable-basic-script"><i class="fa fa-check"></i><b>2.4.1</b> 기본 R 스트립트</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3</b> 주성분분석</a><ul>
+<li class="chapter" data-level="3" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3</b> 주성분분석</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="pca.html"><a href="pca.html#pca-packages-install"><i class="fa fa-check"></i><b>3.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="3.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>3.2</b> 행렬의 분해</a><ul>
+<li class="chapter" data-level="3.2" data-path="pca.html"><a href="pca.html#pca-matrix-factorization"><i class="fa fa-check"></i><b>3.2</b> 행렬의 분해</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="pca.html"><a href="pca.html#pca-matrix-factorization-basic-script"><i class="fa fa-check"></i><b>3.2.1</b> 기본 R 스트립트</a></li>
 <li class="chapter" data-level="3.2.2" data-path="pca.html"><a href="pca.html#pca-ss"><i class="fa fa-check"></i><b>3.2.2</b> 변수의 변동과 제곱합</a></li>
 <li class="chapter" data-level="3.2.3" data-path="pca.html"><a href="pca.html#pca-intro"><i class="fa fa-check"></i><b>3.2.3</b> 주성분의 이해 및 행렬의 분해</a></li>
@@ -160,15 +188,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.5" data-path="pca.html"><a href="pca.html#pca-spectral"><i class="fa fa-check"></i><b>3.2.5</b> 분광분해 (Spectral Decomposition)</a></li>
 <li class="chapter" data-level="3.2.6" data-path="pca.html"><a href="pca.html#pca-nipals"><i class="fa fa-check"></i><b>3.2.6</b> NIPALS 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a><ul>
+<li class="chapter" data-level="3.3" data-path="pca.html"><a href="pca.html#pca-regression"><i class="fa fa-check"></i><b>3.3</b> 주성분 회귀분석</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="pca.html"><a href="pca.html#pcr-basic-script"><i class="fa fa-check"></i><b>3.3.1</b> 기본 R 스트립트</a></li>
 <li class="chapter" data-level="3.3.2" data-path="pca.html"><a href="pca.html#pcr-regression-coefficient"><i class="fa fa-check"></i><b>3.3.2</b> 주성분 회귀계수 추정</a></li>
 <li class="chapter" data-level="3.3.3" data-path="pca.html"><a href="pca.html#pcr-regression-transform"><i class="fa fa-check"></i><b>3.3.3</b> 회귀계수 선형변환</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="plsr.html"><a href="plsr.html"><i class="fa fa-check"></i><b>4</b> 부분최소자승법</a><ul>
+<li class="chapter" data-level="4" data-path="plsr.html"><a href="plsr.html"><i class="fa fa-check"></i><b>4</b> 부분최소자승법</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="plsr.html"><a href="plsr.html#plsr-packages-install"><i class="fa fa-check"></i><b>4.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="4.2" data-path="plsr.html"><a href="plsr.html#plsr-single-target"><i class="fa fa-check"></i><b>4.2</b> 하나의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.2" data-path="plsr.html"><a href="plsr.html#plsr-single-target"><i class="fa fa-check"></i><b>4.2</b> 하나의 종속변수의 경우</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="plsr.html"><a href="plsr.html#plsr-basic-script"><i class="fa fa-check"></i><b>4.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.2.2" data-path="plsr.html"><a href="plsr.html#plsr-model"><i class="fa fa-check"></i><b>4.2.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.2.3" data-path="plsr.html"><a href="plsr.html#plsr-single-nipals"><i class="fa fa-check"></i><b>4.2.3</b> NIPALS 알고리즘</a></li>
@@ -176,7 +207,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.5" data-path="plsr.html"><a href="plsr.html#plsr-sst"><i class="fa fa-check"></i><b>4.2.5</b> 제곱합 분해</a></li>
 <li class="chapter" data-level="4.2.6" data-path="plsr.html"><a href="plsr.html#plsr-variable-importance"><i class="fa fa-check"></i><b>4.2.6</b> 독립변수의 중요도</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a><ul>
+<li class="chapter" data-level="4.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-target"><i class="fa fa-check"></i><b>4.3</b> 다수의 종속변수의 경우</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-basic-script"><i class="fa fa-check"></i><b>4.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="4.3.2" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-model"><i class="fa fa-check"></i><b>4.3.2</b> PLS 모형</a></li>
 <li class="chapter" data-level="4.3.3" data-path="plsr.html"><a href="plsr.html#plsr-multivariate-nipals"><i class="fa fa-check"></i><b>4.3.3</b> NIPALS 알고리즘</a></li>
@@ -185,189 +217,230 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II 2부 - 분류분석</b></span></li>
-<li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a><ul>
+<li class="chapter" data-level="5" data-path="classification-analysis.html"><a href="classification-analysis.html"><i class="fa fa-check"></i><b>5</b> 분류분석 개요</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-packages-install"><i class="fa fa-check"></i><b>5.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="5.2" data-path="classification-analysis.html"><a href="classification-analysis.html#classification-problem-methods"><i class="fa fa-check"></i><b>5.2</b> 분류문제 및 분류기법</a></li>
-<li class="chapter" data-level="5.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>5.3</b> 기본적인 분류기법</a><ul>
+<li class="chapter" data-level="5.3" data-path="classification-analysis.html"><a href="classification-analysis.html#simple-classification-methods"><i class="fa fa-check"></i><b>5.3</b> 기본적인 분류기법</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="classification-analysis.html"><a href="classification-analysis.html#nearest-neighbor-classification"><i class="fa fa-check"></i><b>5.3.1</b> 인접객체법</a></li>
 <li class="chapter" data-level="5.3.2" data-path="classification-analysis.html"><a href="classification-analysis.html#naive-bayes"><i class="fa fa-check"></i><b>5.3.2</b> 나이브 베이지안 분류법</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6</b> 로지스틱 회귀분석</a><ul>
+<li class="chapter" data-level="6" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6</b> 로지스틱 회귀분석</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-packages-install"><i class="fa fa-check"></i><b>6.1</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="6.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>6.2</b> 이분 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-regression"><i class="fa fa-check"></i><b>6.2</b> 이분 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#bianry-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-model"><i class="fa fa-check"></i><b>6.2.2</b> 회귀모형</a></li>
 <li class="chapter" data-level="6.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-logistic-reg-estimation"><i class="fa fa-check"></i><b>6.2.3</b> 회귀계수 추정</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>6.3</b> 명목 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.3" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-regression"><i class="fa fa-check"></i><b>6.3</b> 명목 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#nominal-logistic-reg-basic-script"><i class="fa fa-check"></i><b>6.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#baseline-category-logit-model"><i class="fa fa-check"></i><b>6.3.2</b> 기준범주 로짓모형</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>6.4</b> 서열 로지스틱 회귀모형</a><ul>
+<li class="chapter" data-level="6.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>6.4</b> 서열 로지스틱 회귀모형</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#ordinal-logistic-basic-script"><i class="fa fa-check"></i><b>6.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="6.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#cumulative-logit-model"><i class="fa fa-check"></i><b>6.4.2</b> 누적 로짓모형</a></li>
 <li class="chapter" data-level="6.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#adjacent-categories-logit-model"><i class="fa fa-check"></i><b>6.4.3</b> 인근범주 로짓모형</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>7</b> 판별분석</a><ul>
+<li class="chapter" data-level="7" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>7</b> 판별분석</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="da.html"><a href="da.html#da-overview"><i class="fa fa-check"></i><b>7.1</b> 개요</a></li>
 <li class="chapter" data-level="7.2" data-path="da.html"><a href="da.html#da-packages-install"><i class="fa fa-check"></i><b>7.2</b> 필요 R 패키지 설치</a></li>
-<li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a><ul>
+<li class="chapter" data-level="7.3" data-path="da.html"><a href="da.html#da-fisher"><i class="fa fa-check"></i><b>7.3</b> 피셔 방법</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="da.html"><a href="da.html#da-fisher-basic-script"><i class="fa fa-check"></i><b>7.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.3.2" data-path="da.html"><a href="da.html#피셔-판별함수"><i class="fa fa-check"></i><b>7.3.2</b> 피셔 판별함수</a></li>
 <li class="chapter" data-level="7.3.3" data-path="da.html"><a href="da.html#분류-규칙"><i class="fa fa-check"></i><b>7.3.3</b> 분류 규칙</a></li>
 <li class="chapter" data-level="7.3.4" data-path="da.html"><a href="da.html#r-패키지를-이용한-분류규칙-도출"><i class="fa fa-check"></i><b>7.3.4</b> R 패키지를 이용한 분류규칙 도출</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a><ul>
+<li class="chapter" data-level="7.4" data-path="da.html"><a href="da.html#lda"><i class="fa fa-check"></i><b>7.4</b> 의사결정론에 의한 선형분류규칙</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="da.html"><a href="da.html#lda-basic-script"><i class="fa fa-check"></i><b>7.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.4.2" data-path="da.html"><a href="da.html#lda-function"><i class="fa fa-check"></i><b>7.4.2</b> 선형판별함수</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="da.html"><a href="da.html#lda-misclassification-cost"><i class="fa fa-check"></i><b>7.5</b> 오분류비용을 고려한 분류규칙</a></li>
-<li class="chapter" data-level="7.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>7.6</b> 이차판별분석</a><ul>
+<li class="chapter" data-level="7.6" data-path="da.html"><a href="da.html#qda"><i class="fa fa-check"></i><b>7.6</b> 이차판별분석</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="da.html"><a href="da.html#qda-basic-script"><i class="fa fa-check"></i><b>7.6.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.6.2" data-path="da.html"><a href="da.html#qda-function"><i class="fa fa-check"></i><b>7.6.2</b> 이차 판별함수</a></li>
 <li class="chapter" data-level="7.6.3" data-path="da.html"><a href="da.html#qda-discriminant-rule"><i class="fa fa-check"></i><b>7.6.3</b> 이차판별함수에 의한 분류</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>7.7</b> 세 범주 이상의 분류</a><ul>
+<li class="chapter" data-level="7.7" data-path="da.html"><a href="da.html#da-multiclass"><i class="fa fa-check"></i><b>7.7</b> 세 범주 이상의 분류</a>
+<ul>
 <li class="chapter" data-level="7.7.1" data-path="da.html"><a href="da.html#mutliclass-da-basic-script"><i class="fa fa-check"></i><b>7.7.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="7.7.2" data-path="da.html"><a href="da.html#mutliclass-generalized-discriminant-function"><i class="fa fa-check"></i><b>7.7.2</b> 일반화된 판별함수</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>8</b> 트리기반 기법</a><ul>
+<li class="chapter" data-level="8" data-path="tree-based-method.html"><a href="tree-based-method.html"><i class="fa fa-check"></i><b>8</b> 트리기반 기법</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-overview"><i class="fa fa-check"></i><b>8.1</b> CART 개요</a></li>
 <li class="chapter" data-level="8.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-packages-install"><i class="fa fa-check"></i><b>8.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="8.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>8.3</b> CART 트리 생성</a><ul>
+<li class="chapter" data-level="8.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-build"><i class="fa fa-check"></i><b>8.3</b> CART 트리 생성</a>
+<ul>
 <li class="chapter" data-level="8.3.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-basic-r-script"><i class="fa fa-check"></i><b>8.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="8.3.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-notation"><i class="fa fa-check"></i><b>8.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="8.3.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-impurity"><i class="fa fa-check"></i><b>8.3.3</b> 노드 및 트리의 불순도</a></li>
 <li class="chapter" data-level="8.3.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-split"><i class="fa fa-check"></i><b>8.3.4</b> 분지기준</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>8.4</b> 가지치기 및 최종 트리 선정</a><ul>
+<li class="chapter" data-level="8.4" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning-complete"><i class="fa fa-check"></i><b>8.4</b> 가지치기 및 최종 트리 선정</a>
+<ul>
 <li class="chapter" data-level="8.4.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-pruning"><i class="fa fa-check"></i><b>8.4.1</b> 가지치기</a></li>
 <li class="chapter" data-level="8.4.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-best-tree"><i class="fa fa-check"></i><b>8.4.2</b> 최적 트리의 선정</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>8.5</b> R패키지 내 분류 트리 방법</a><ul>
+<li class="chapter" data-level="8.5" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg"><i class="fa fa-check"></i><b>8.5</b> R패키지 내 분류 트리 방법</a>
+<ul>
 <li class="chapter" data-level="8.5.1" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-split"><i class="fa fa-check"></i><b>8.5.1</b> 트리 확장</a></li>
 <li class="chapter" data-level="8.5.2" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-pruning"><i class="fa fa-check"></i><b>8.5.2</b> 가지치기</a></li>
 <li class="chapter" data-level="8.5.3" data-path="tree-based-method.html"><a href="tree-based-method.html#cart-r-pkg-param"><i class="fa fa-check"></i><b>8.5.3</b> 파라미터값 결정</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>9</b> 서포트 벡터 머신</a><ul>
+<li class="chapter" data-level="9" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>9</b> 서포트 벡터 머신</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="svm.html"><a href="svm.html#svm-overview"><i class="fa fa-check"></i><b>9.1</b> 개요</a></li>
 <li class="chapter" data-level="9.2" data-path="svm.html"><a href="svm.html#svm-packages-install"><i class="fa fa-check"></i><b>9.2</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="9.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>9.3</b> 선형 SVM - 분리 가능 경우</a><ul>
+<li class="chapter" data-level="9.3" data-path="svm.html"><a href="svm.html#linear-svm-separable"><i class="fa fa-check"></i><b>9.3</b> 선형 SVM - 분리 가능 경우</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="svm.html"><a href="svm.html#linear-svm-separable-basic-script"><i class="fa fa-check"></i><b>9.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.3.2" data-path="svm.html"><a href="svm.html#linear-svm-notation"><i class="fa fa-check"></i><b>9.3.2</b> 기호 정의</a></li>
 <li class="chapter" data-level="9.3.3" data-path="svm.html"><a href="svm.html#linear-svm-separable-hyperplane"><i class="fa fa-check"></i><b>9.3.3</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>9.4</b> 선형 SVM - 분리 불가능 경우</a><ul>
+<li class="chapter" data-level="9.4" data-path="svm.html"><a href="svm.html#linear-svm-inseparable"><i class="fa fa-check"></i><b>9.4</b> 선형 SVM - 분리 불가능 경우</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-basic-script"><i class="fa fa-check"></i><b>9.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.4.2" data-path="svm.html"><a href="svm.html#linear-svm-inseparable-hyperplane"><i class="fa fa-check"></i><b>9.4.2</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>9.5</b> 비선형 SVM</a><ul>
+<li class="chapter" data-level="9.5" data-path="svm.html"><a href="svm.html#nonlinear-svm"><i class="fa fa-check"></i><b>9.5</b> 비선형 SVM</a>
+<ul>
 <li class="chapter" data-level="9.5.1" data-path="svm.html"><a href="svm.html#nonlinear-svm-basic-script"><i class="fa fa-check"></i><b>9.5.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="9.5.2" data-path="svm.html"><a href="svm.html#nonlinear-svm-hyperplane"><i class="fa fa-check"></i><b>9.5.2</b> 최적 하이퍼플레인</a></li>
 </ul></li>
-<li class="chapter" data-level="9.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>9.6</b> R패키지 내 SVM</a><ul>
+<li class="chapter" data-level="9.6" data-path="svm.html"><a href="svm.html#svm-r-pkg"><i class="fa fa-check"></i><b>9.6</b> R패키지 내 SVM</a>
+<ul>
 <li class="chapter" data-level="9.6.1" data-path="svm.html"><a href="svm.html#svm-kernel-function"><i class="fa fa-check"></i><b>9.6.1</b> 커널함수</a></li>
 <li class="chapter" data-level="9.6.2" data-path="svm.html"><a href="svm.html#svm-nu-classification"><i class="fa fa-check"></i><b>9.6.2</b> <span class="math inline">\(\nu\)</span>-SVC</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>10</b> 분류규칙의 성능 평가</a><ul>
+<li class="chapter" data-level="10" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html"><i class="fa fa-check"></i><b>10</b> 분류규칙의 성능 평가</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-packages-install"><i class="fa fa-check"></i><b>10.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="10.2" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#classifier-evaluation-misclassification-rate"><i class="fa fa-check"></i><b>10.2</b> 분류오류율</a></li>
-<li class="chapter" data-level="10.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>10.3</b> 정확도, 민감도 및 특이도</a><ul>
+<li class="chapter" data-level="10.3" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#precision-sensitivity-specificity"><i class="fa fa-check"></i><b>10.3</b> 정확도, 민감도 및 특이도</a>
+<ul>
 <li class="chapter" data-level="10.3.1" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#confusion-matrix-r-package"><i class="fa fa-check"></i><b>10.3.1</b> R 패키지 내 정오분류표</a></li>
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#roc-curve"><i class="fa fa-check"></i><b>10.4</b> ROC 곡선</a></li>
 <li class="chapter" data-level="10.5" data-path="classifier-evaluation.html"><a href="classifier-evaluation.html#gain-chart"><i class="fa fa-check"></i><b>10.5</b> 이익도표</a></li>
 </ul></li>
 <li class="part"><span><b>III 3부 - 군집분석</b></span></li>
-<li class="chapter" data-level="11" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>11</b> 군집분석 개요</a><ul>
+<li class="chapter" data-level="11" data-path="clustering-overview.html"><a href="clustering-overview.html"><i class="fa fa-check"></i><b>11</b> 군집분석 개요</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-overview-packages-install"><i class="fa fa-check"></i><b>11.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="11.2" data-path="clustering-overview.html"><a href="clustering-overview.html#clustering-method"><i class="fa fa-check"></i><b>11.2</b> 군집분석 기법</a></li>
-<li class="chapter" data-level="11.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>11.3</b> 객체 간의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.3" data-path="clustering-overview.html"><a href="clustering-overview.html#object-similarity-metric"><i class="fa fa-check"></i><b>11.3</b> 객체 간의 유사성 척도</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="clustering-overview.html"><a href="clustering-overview.html#object-distance-metric"><i class="fa fa-check"></i><b>11.3.1</b> 거리 관련 척도</a></li>
 <li class="chapter" data-level="11.3.2" data-path="clustering-overview.html"><a href="clustering-overview.html#object-correlation-metric"><i class="fa fa-check"></i><b>11.3.2</b> 상관계수 관련 척도</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>11.4</b> 범주형 객체의 유사성 척도</a><ul>
+<li class="chapter" data-level="11.4" data-path="clustering-overview.html"><a href="clustering-overview.html#category-similarity-metric"><i class="fa fa-check"></i><b>11.4</b> 범주형 객체의 유사성 척도</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="clustering-overview.html"><a href="clustering-overview.html#binary-similarity-metric"><i class="fa fa-check"></i><b>11.4.1</b> 이분형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.2" data-path="clustering-overview.html"><a href="clustering-overview.html#ordinal-similarity-metric"><i class="fa fa-check"></i><b>11.4.2</b> 서열형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.3" data-path="clustering-overview.html"><a href="clustering-overview.html#nominal-similarity-metric"><i class="fa fa-check"></i><b>11.4.3</b> 명목형 변수의 경우</a></li>
 <li class="chapter" data-level="11.4.4" data-path="clustering-overview.html"><a href="clustering-overview.html#mixed-similarity-metric"><i class="fa fa-check"></i><b>11.4.4</b> 혼합형의 경우</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>12</b> 계층적 군집방법</a><ul>
+<li class="chapter" data-level="12" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>12</b> 계층적 군집방법</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>12.1</b> 필요 R 패키지 설치</a></li>
 <li class="chapter" data-level="12.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#distance-between-clusters"><i class="fa fa-check"></i><b>12.2</b> 군집 간 거리척도 및 연결법</a></li>
-<li class="chapter" data-level="12.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>12.3</b> 연결법의 군집 알고리즘</a><ul>
+<li class="chapter" data-level="12.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method"><i class="fa fa-check"></i><b>12.3</b> 연결법의 군집 알고리즘</a>
+<ul>
 <li class="chapter" data-level="12.3.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-basic-script"><i class="fa fa-check"></i><b>12.3.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.3.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#linkage-method-algorithm"><i class="fa fa-check"></i><b>12.3.2</b> 연결법 군집 알고리즘</a></li>
 <li class="chapter" data-level="12.3.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hclust"><i class="fa fa-check"></i><b>12.3.3</b> R 패키지 내 연결법</a></li>
 </ul></li>
-<li class="chapter" data-level="12.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>12.4</b> 워드 방법</a><ul>
+<li class="chapter" data-level="12.4" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method"><i class="fa fa-check"></i><b>12.4</b> 워드 방법</a>
+<ul>
 <li class="chapter" data-level="12.4.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-basic-script"><i class="fa fa-check"></i><b>12.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.4.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-method-algorithm"><i class="fa fa-check"></i><b>12.4.2</b> 워드 군집 알고리즘</a></li>
 <li class="chapter" data-level="12.4.3" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#ward-rpackages"><i class="fa fa-check"></i><b>12.4.3</b> R 패키지 내 워드 방법</a></li>
 </ul></li>
-<li class="chapter" data-level="12.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>12.5</b> 분리적 방법 - 다이아나</a><ul>
+<li class="chapter" data-level="12.5" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana"><i class="fa fa-check"></i><b>12.5</b> 분리적 방법 - 다이아나</a>
+<ul>
 <li class="chapter" data-level="12.5.1" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-basic-script"><i class="fa fa-check"></i><b>12.5.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="12.5.2" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#diana-algorithm"><i class="fa fa-check"></i><b>12.5.2</b> 다이아나 알고리즘</a></li>
 </ul></li>
 <li class="chapter" data-level="12.6" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#hierarchical-cluster-number"><i class="fa fa-check"></i><b>12.6</b> 군집수의 결정</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>13</b> 비계층적 군집방법</a><ul>
+<li class="chapter" data-level="13" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html"><i class="fa fa-check"></i><b>13</b> 비계층적 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#nonhierarchical-clustering-packages-install"><i class="fa fa-check"></i><b>13.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="13.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>13.2</b> K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans"><i class="fa fa-check"></i><b>13.2</b> K-means 알고리즘</a>
+<ul>
 <li class="chapter" data-level="13.2.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-basic-script"><i class="fa fa-check"></i><b>13.2.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="13.2.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-algorithm"><i class="fa fa-check"></i><b>13.2.2</b> 알고리즘</a></li>
 <li class="chapter" data-level="13.2.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-user-defined-functions"><i class="fa fa-check"></i><b>13.2.3</b> R 스크립트 구현</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>13.3</b> K-medoids 군집방법</a><ul>
+<li class="chapter" data-level="13.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmedoids"><i class="fa fa-check"></i><b>13.3</b> K-medoids 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.3.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#pam"><i class="fa fa-check"></i><b>13.3.1</b> PAM 알고리즘</a></li>
 <li class="chapter" data-level="13.3.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clara"><i class="fa fa-check"></i><b>13.3.2</b> CLARA 알고리즘</a></li>
 <li class="chapter" data-level="13.3.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#clarans"><i class="fa fa-check"></i><b>13.3.3</b> CLARANS 알고리즘</a></li>
 <li class="chapter" data-level="13.3.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#kmeans-like"><i class="fa fa-check"></i><b>13.3.4</b> K-means-like 알고리즘</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>13.4</b> 퍼지 K-means 알고리즘</a><ul>
+<li class="chapter" data-level="13.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans"><i class="fa fa-check"></i><b>13.4</b> 퍼지 K-means 알고리즘</a>
+<ul>
 <li class="chapter" data-level="13.4.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-basic-script"><i class="fa fa-check"></i><b>13.4.1</b> 기본 R 스크립트</a></li>
 <li class="chapter" data-level="13.4.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-algorithm"><i class="fa fa-check"></i><b>13.4.2</b> 알고리즘</a></li>
 <li class="chapter" data-level="13.4.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#fuzzy-kmeans-script-implement"><i class="fa fa-check"></i><b>13.4.3</b> R 스크립트 구현</a></li>
 </ul></li>
-<li class="chapter" data-level="13.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>13.5</b> 모형기반 군집방법</a><ul>
+<li class="chapter" data-level="13.5" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering"><i class="fa fa-check"></i><b>13.5</b> 모형기반 군집방법</a>
+<ul>
 <li class="chapter" data-level="13.5.1" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-basic-script"><i class="fa fa-check"></i><b>13.5.1</b> 기본 R script</a></li>
 <li class="chapter" data-level="13.5.2" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-em"><i class="fa fa-check"></i><b>13.5.2</b> EM 알고리즘</a></li>
 <li class="chapter" data-level="13.5.3" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#model-based-clustering-script-implement"><i class="fa fa-check"></i><b>13.5.3</b> R 스크립트 구현</a></li>
 <li class="chapter" data-level="13.5.4" data-path="nonhierarchical-clustering.html"><a href="nonhierarchical-clustering.html#r-packages-model-based-clustering"><i class="fa fa-check"></i><b>13.5.4</b> R 패키지 내 모형기반 군집분석</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>14</b> 군집해의 평가 및 해석</a><ul>
+<li class="chapter" data-level="14" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html"><i class="fa fa-check"></i><b>14</b> 군집해의 평가 및 해석</a>
+<ul>
 <li class="chapter" data-level="14.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-packages-install"><i class="fa fa-check"></i><b>14.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="14.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>14.2</b> 군집해의 평가</a><ul>
+<li class="chapter" data-level="14.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-evaluation-metric"><i class="fa fa-check"></i><b>14.2</b> 군집해의 평가</a>
+<ul>
 <li class="chapter" data-level="14.2.1" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-external-index"><i class="fa fa-check"></i><b>14.2.1</b> 외부평가지수</a></li>
 <li class="chapter" data-level="14.2.2" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-evaluation-internal-index"><i class="fa fa-check"></i><b>14.2.2</b> 내부평가지수</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="cluster-solution-evaluation.html"><a href="cluster-solution-evaluation.html#cluster-solution-interpretation"><i class="fa fa-check"></i><b>14.3</b> 군집해의 해석</a></li>
 </ul></li>
 <li class="part"><span><b>IV 4부 - 연관규칙</b></span></li>
-<li class="chapter" data-level="15" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>15</b> 연관규칙</a><ul>
+<li class="chapter" data-level="15" data-path="association-rule.html"><a href="association-rule.html"><i class="fa fa-check"></i><b>15</b> 연관규칙</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="association-rule.html"><a href="association-rule.html#association-packages-install"><i class="fa fa-check"></i><b>15.1</b> 필요 R package 설치</a></li>
-<li class="chapter" data-level="15.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>15.2</b> 연관규칙의 정의 및 성능척도</a><ul>
+<li class="chapter" data-level="15.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-definition-metric"><i class="fa fa-check"></i><b>15.2</b> 연관규칙의 정의 및 성능척도</a>
+<ul>
 <li class="chapter" data-level="15.2.1" data-path="association-rule.html"><a href="association-rule.html#association-rule-support"><i class="fa fa-check"></i><b>15.2.1</b> 지지도</a></li>
 <li class="chapter" data-level="15.2.2" data-path="association-rule.html"><a href="association-rule.html#association-rule-confidence"><i class="fa fa-check"></i><b>15.2.2</b> 신뢰도</a></li>
 <li class="chapter" data-level="15.2.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-lift"><i class="fa fa-check"></i><b>15.2.3</b> 개선도</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>15.3</b> 연관규칙의 탐사</a><ul>
+<li class="chapter" data-level="15.3" data-path="association-rule.html"><a href="association-rule.html#association-rule-exploration"><i class="fa fa-check"></i><b>15.3</b> 연관규칙의 탐사</a>
+<ul>
 <li class="chapter" data-level="15.3.1" data-path="association-rule.html"><a href="association-rule.html#apriori-large-itemsets"><i class="fa fa-check"></i><b>15.3.1</b> 빈발항목집합 생성</a></li>
 <li class="chapter" data-level="15.3.2" data-path="association-rule.html"><a href="association-rule.html#apriori-rule-exploration"><i class="fa fa-check"></i><b>15.3.2</b> 규칙의 탐사</a></li>
 <li class="chapter" data-level="15.3.3" data-path="association-rule.html"><a href="association-rule.html#apriori-r-package"><i class="fa fa-check"></i><b>15.3.3</b> R 패키지 내 Apriori</a></li>
 </ul></li>
-<li class="chapter" data-level="15.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>15.4</b> 순차적 패턴의 탐사</a><ul>
+<li class="chapter" data-level="15.4" data-path="association-rule.html"><a href="association-rule.html#association-sequential-pattern"><i class="fa fa-check"></i><b>15.4</b> 순차적 패턴의 탐사</a>
+<ul>
 <li class="chapter" data-level="15.4.1" data-path="association-rule.html"><a href="association-rule.html#association-aprioriall"><i class="fa fa-check"></i><b>15.4.1</b> AprioriAll 알고리즘</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>16</b> 추천시스템</a><ul>
+<li class="chapter" data-level="16" data-path="recommender-system.html"><a href="recommender-system.html"><i class="fa fa-check"></i><b>16</b> 추천시스템</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="recommender-system.html"><a href="recommender-system.html#recommender-packages-install"><i class="fa fa-check"></i><b>16.1</b> 필요 R package 설치</a></li>
 <li class="chapter" data-level="16.2" data-path="recommender-system.html"><a href="recommender-system.html#content-based-recommender"><i class="fa fa-check"></i><b>16.2</b> 내용기반 추천시스템</a></li>
 <li class="chapter" data-level="16.3" data-path="recommender-system.html"><a href="recommender-system.html#collaborative-filtering"><i class="fa fa-check"></i><b>16.3</b> 협업 필터링</a></li>
@@ -394,13 +467,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tree-based-method" class="section level1">
+<div id="tree-based-method" class="section level1" number="8">
 <h1><span class="header-section-number">Chapter 8</span> 트리기반 기법</h1>
-<div id="cart-overview" class="section level2">
+<div id="cart-overview" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> CART 개요</h2>
-<p>CART(Classification and Regression Trees)는 <span class="citation">Breiman et al. (<a href="#ref-breiman1984classification" role="doc-biblioref">1984</a>)</span> 에 의하여 개발된 것인데, 각 (독립)변수를 이분화(binary split)하는 과정을 반복하여 트리 형태를 형성함으로써 분류(종속변수가 범주형일 때) 또는 회귀분석(종속변수가 연속형일 때)을 수행하는 것이다. 이 때 독립변수들은 범주형 또는 연속형 모두에 적용될 수 있다. 본 장에서는 분류를 위한 목적만을 설명하도록 한다.</p>
+<p>CART(Classification and Regression Trees)는 <span class="citation"><a href="#ref-breiman1984classification" role="doc-biblioref">Breiman et al.</a> (<a href="#ref-breiman1984classification" role="doc-biblioref">1984</a>)</span> 에 의하여 개발된 것인데, 각 (독립)변수를 이분화(binary split)하는 과정을 반복하여 트리 형태를 형성함으로써 분류(종속변수가 범주형일 때) 또는 회귀분석(종속변수가 연속형일 때)을 수행하는 것이다. 이 때 독립변수들은 범주형 또는 연속형 모두에 적용될 수 있다. 본 장에서는 분류를 위한 목적만을 설명하도록 한다.</p>
 </div>
-<div id="cart-packages-install" class="section level2">
+<div id="cart-packages-install" class="section level2" number="8.2">
 <h2><span class="header-section-number">8.2</span> 필요 R package 설치</h2>
 <p>본 장에서 필요한 R 패키지들은 아래와 같다.</p>
 <table>
@@ -413,7 +486,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td align="left">tidyverse</td>
-<td align="left">1.3.0</td>
+<td align="left">1.3.1</td>
 </tr>
 <tr class="even">
 <td align="left">rpart</td>
@@ -426,15 +499,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<div id="cart-build" class="section level2">
+<div id="cart-build" class="section level2" number="8.3">
 <h2><span class="header-section-number">8.3</span> CART 트리 생성</h2>
-<div id="cart-basic-r-script" class="section level3">
+<div id="cart-basic-r-script" class="section level3" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="tree-based-method.html#cb287-1"></a>train_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb287-2"><a href="tree-based-method.html#cb287-2"></a>  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>),</span>
-<span id="cb287-3"><a href="tree-based-method.html#cb287-3"></a>  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>),</span>
-<span id="cb287-4"><a href="tree-based-method.html#cb287-4"></a>  <span class="dt">class =</span> <span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb287-5"><a href="tree-based-method.html#cb287-5"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="tree-based-method.html#cb282-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb282-2"><a href="tree-based-method.html#cb282-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x1 =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>),</span>
+<span id="cb282-3"><a href="tree-based-method.html#cb282-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>),</span>
+<span id="cb282-4"><a href="tree-based-method.html#cb282-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb282-5"><a href="tree-based-method.html#cb282-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tree-train-data-table">Table 8.1: </span>학습표본 데이터</caption>
 <thead>
@@ -498,20 +571,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Table <a href="tree-based-method.html#tab:tree-train-data-table">8.1</a>와 같이 두 독립변수 <em>x1</em>, <em>x2</em>와 이분형 종속변수 <em>class</em>의 관측값으로 이루어진 10개의 학습표본을 <em>train_df</em>라는 data frame에 저장한다.</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="tree-based-method.html#cb288-1"></a><span class="kw">library</span>(rpart)</span>
-<span id="cb288-2"><a href="tree-based-method.html#cb288-2"></a><span class="kw">library</span>(rpart.plot)</span>
-<span id="cb288-3"><a href="tree-based-method.html#cb288-3"></a>cart.est &lt;-<span class="st"> </span><span class="kw">rpart</span>(</span>
-<span id="cb288-4"><a href="tree-based-method.html#cb288-4"></a>  class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2</span>
-<span id="cb288-5"><a href="tree-based-method.html#cb288-5"></a>  , <span class="dt">data =</span> train_df</span>
-<span id="cb288-6"><a href="tree-based-method.html#cb288-6"></a>  , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span></span>
-<span id="cb288-7"><a href="tree-based-method.html#cb288-7"></a>  , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
-<span id="cb288-8"><a href="tree-based-method.html#cb288-8"></a>  , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span></span>
-<span id="cb288-9"><a href="tree-based-method.html#cb288-9"></a>                            , <span class="dt">minbucket =</span> <span class="dv">1</span></span>
-<span id="cb288-10"><a href="tree-based-method.html#cb288-10"></a>                            , <span class="dt">cp =</span> <span class="dv">0</span></span>
-<span id="cb288-11"><a href="tree-based-method.html#cb288-11"></a>                            , <span class="dt">xval =</span> <span class="dv">0</span></span>
-<span id="cb288-12"><a href="tree-based-method.html#cb288-12"></a>                            , <span class="dt">maxcompete =</span> <span class="dv">0</span>)</span>
-<span id="cb288-13"><a href="tree-based-method.html#cb288-13"></a>  )</span>
-<span id="cb288-14"><a href="tree-based-method.html#cb288-14"></a><span class="kw">rpart.plot</span>(cart.est)</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="tree-based-method.html#cb283-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb283-2"><a href="tree-based-method.html#cb283-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb283-3"><a href="tree-based-method.html#cb283-3" aria-hidden="true" tabindex="-1"></a>cart.est <span class="ot">&lt;-</span> <span class="fu">rpart</span>(</span>
+<span id="cb283-4"><a href="tree-based-method.html#cb283-4" aria-hidden="true" tabindex="-1"></a>  class <span class="sc">~</span> x1 <span class="sc">+</span> x2</span>
+<span id="cb283-5"><a href="tree-based-method.html#cb283-5" aria-hidden="true" tabindex="-1"></a>  , <span class="at">data =</span> train_df</span>
+<span id="cb283-6"><a href="tree-based-method.html#cb283-6" aria-hidden="true" tabindex="-1"></a>  , <span class="at">method =</span> <span class="st">&quot;class&quot;</span></span>
+<span id="cb283-7"><a href="tree-based-method.html#cb283-7" aria-hidden="true" tabindex="-1"></a>  , <span class="at">parms =</span> <span class="fu">list</span>(<span class="at">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
+<span id="cb283-8"><a href="tree-based-method.html#cb283-8" aria-hidden="true" tabindex="-1"></a>  , <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">minsplit =</span> <span class="dv">2</span></span>
+<span id="cb283-9"><a href="tree-based-method.html#cb283-9" aria-hidden="true" tabindex="-1"></a>                            , <span class="at">minbucket =</span> <span class="dv">1</span></span>
+<span id="cb283-10"><a href="tree-based-method.html#cb283-10" aria-hidden="true" tabindex="-1"></a>                            , <span class="at">cp =</span> <span class="dv">0</span></span>
+<span id="cb283-11"><a href="tree-based-method.html#cb283-11" aria-hidden="true" tabindex="-1"></a>                            , <span class="at">xval =</span> <span class="dv">0</span></span>
+<span id="cb283-12"><a href="tree-based-method.html#cb283-12" aria-hidden="true" tabindex="-1"></a>                            , <span class="at">maxcompete =</span> <span class="dv">0</span>)</span>
+<span id="cb283-13"><a href="tree-based-method.html#cb283-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb283-14"><a href="tree-based-method.html#cb283-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(cart.est)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:cart-basic"></span>
 <img src="data-mining-book_files/figure-html/cart-basic-1.png" alt="CART 트리" width="672" />
 <p class="caption">
@@ -520,7 +593,7 @@ Figure 8.1: CART 트리
 </div>
 <p><a href="https://cran.r-project.org/web/packages/rpart/">rpart</a> 라는 package를 기반으로, 두 변수 x1과 x2를 이용하여 이분형 종속변수 class를 분류하는 CART 트리를 생성할 수 있으며, <a href="https://cran.r-project.org/web/packages/rpart.plot/">rpart.plot</a> package를 이용하여 Figure <a href="tree-based-method.html#fig:cart-basic">8.1</a>과 같이 시각화할 수 있다.</p>
 </div>
-<div id="cart-notation" class="section level3">
+<div id="cart-notation" class="section level3" number="8.3.2">
 <h3><span class="header-section-number">8.3.2</span> 기호 정의</h3>
 <p>본 장에서 사용될 수학적 기호는 아래와 같다.</p>
 <ul>
@@ -544,9 +617,9 @@ p(t) &amp;\approx \frac{N(t)}{N}\\
 p(j|t) &amp;\approx \frac{N_j(t)}{N(t)}
 \end{align}\]</span></p>
 </div>
-<div id="cart-impurity" class="section level3">
+<div id="cart-impurity" class="section level3" number="8.3.3">
 <h3><span class="header-section-number">8.3.3</span> 노드 및 트리의 불순도</h3>
-<div id="노드의-불순도" class="section level4">
+<div id="노드의-불순도" class="section level4" number="8.3.3.1">
 <h4><span class="header-section-number">8.3.3.1</span> 노드의 불순도</h4>
 <p>CART는 지니 지수(Gini index)를 불순도 함수로 사용한다. 총 <span class="math inline">\(J\)</span>개의 범주별 객체비율을 <span class="math inline">\(p_1, \cdots , p_J\)</span>라 할 때 (<span class="math inline">\(\sum_{j=1}^{J} p_j = 1\)</span>), 지니 지수는 식 <a href="tree-based-method.html#eq:gini-index">(8.1)</a>와 같다.</p>
 <p><span class="math display" id="eq:gini-index">\[\begin{equation}
@@ -561,7 +634,7 @@ i(t) &amp;= 1 - \sum_{j=1}^{J} p(j|t)^2\\
 \tag{8.2}
 \end{equation}\]</span></p>
 </div>
-<div id="트리-불순도" class="section level4">
+<div id="트리-불순도" class="section level4" number="8.3.3.2">
 <h4><span class="header-section-number">8.3.3.2</span> 트리 불순도</h4>
 <p>트리 <span class="math inline">\(T\)</span>의 불순도는 식 <a href="tree-based-method.html#eq:tree-impurity">(8.3)</a>와 같이 최종노드들의 불순도의 가중평균으로 정의된다.</p>
 <p><span class="math display" id="eq:tree-impurity">\[\begin{equation}
@@ -573,22 +646,22 @@ I(T) = \sum_{t \in A(T)} i(t)p(t) \tag{8.3}
 <span class="math display">\[ I(T) = \sum_{t \in A(T)} I(t) \]</span></p>
 </div>
 </div>
-<div id="cart-split" class="section level3">
+<div id="cart-split" class="section level3" number="8.3.4">
 <h3><span class="header-section-number">8.3.4</span> 분지기준</h3>
 <p>뿌리 노드에서의 분지만을 살펴보기 위해 control parameter <em>maxdepth</em>의 값을 1으로 설정한다. 이 경우, CART 알고리즘은 뿌리노드에서의 양 갈래 분지만을 선택한 뒤 종료된다. 아래 스크립트를 이용하여 뿌리노드에서 최적분지된 트리를 얻는다.</p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="tree-based-method.html#cb289-1"></a>cart.firstsplit &lt;-<span class="st"> </span><span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2</span>
-<span id="cb289-2"><a href="tree-based-method.html#cb289-2"></a>                  , <span class="dt">data =</span> train_df</span>
-<span id="cb289-3"><a href="tree-based-method.html#cb289-3"></a>                  , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span></span>
-<span id="cb289-4"><a href="tree-based-method.html#cb289-4"></a>                  , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
-<span id="cb289-5"><a href="tree-based-method.html#cb289-5"></a>                  , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span></span>
-<span id="cb289-6"><a href="tree-based-method.html#cb289-6"></a>                                          , <span class="dt">minbucket =</span> <span class="dv">1</span></span>
-<span id="cb289-7"><a href="tree-based-method.html#cb289-7"></a>                                          , <span class="dt">maxdepth =</span> <span class="dv">1</span></span>
-<span id="cb289-8"><a href="tree-based-method.html#cb289-8"></a>                                          , <span class="dt">cp =</span> <span class="dv">0</span></span>
-<span id="cb289-9"><a href="tree-based-method.html#cb289-9"></a>                                          , <span class="dt">xval =</span> <span class="dv">0</span></span>
-<span id="cb289-10"><a href="tree-based-method.html#cb289-10"></a>                                          , <span class="dt">maxcompete =</span> <span class="dv">0</span></span>
-<span id="cb289-11"><a href="tree-based-method.html#cb289-11"></a>                                          )</span>
-<span id="cb289-12"><a href="tree-based-method.html#cb289-12"></a>                  )</span>
-<span id="cb289-13"><a href="tree-based-method.html#cb289-13"></a><span class="kw">rpart.plot</span>(cart.firstsplit)</span></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="tree-based-method.html#cb284-1" aria-hidden="true" tabindex="-1"></a>cart.firstsplit <span class="ot">&lt;-</span> <span class="fu">rpart</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2</span>
+<span id="cb284-2"><a href="tree-based-method.html#cb284-2" aria-hidden="true" tabindex="-1"></a>                  , <span class="at">data =</span> train_df</span>
+<span id="cb284-3"><a href="tree-based-method.html#cb284-3" aria-hidden="true" tabindex="-1"></a>                  , <span class="at">method =</span> <span class="st">&quot;class&quot;</span></span>
+<span id="cb284-4"><a href="tree-based-method.html#cb284-4" aria-hidden="true" tabindex="-1"></a>                  , <span class="at">parms =</span> <span class="fu">list</span>(<span class="at">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
+<span id="cb284-5"><a href="tree-based-method.html#cb284-5" aria-hidden="true" tabindex="-1"></a>                  , <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">minsplit =</span> <span class="dv">2</span></span>
+<span id="cb284-6"><a href="tree-based-method.html#cb284-6" aria-hidden="true" tabindex="-1"></a>                                          , <span class="at">minbucket =</span> <span class="dv">1</span></span>
+<span id="cb284-7"><a href="tree-based-method.html#cb284-7" aria-hidden="true" tabindex="-1"></a>                                          , <span class="at">maxdepth =</span> <span class="dv">1</span></span>
+<span id="cb284-8"><a href="tree-based-method.html#cb284-8" aria-hidden="true" tabindex="-1"></a>                                          , <span class="at">cp =</span> <span class="dv">0</span></span>
+<span id="cb284-9"><a href="tree-based-method.html#cb284-9" aria-hidden="true" tabindex="-1"></a>                                          , <span class="at">xval =</span> <span class="dv">0</span></span>
+<span id="cb284-10"><a href="tree-based-method.html#cb284-10" aria-hidden="true" tabindex="-1"></a>                                          , <span class="at">maxcompete =</span> <span class="dv">0</span></span>
+<span id="cb284-11"><a href="tree-based-method.html#cb284-11" aria-hidden="true" tabindex="-1"></a>                                          )</span>
+<span id="cb284-12"><a href="tree-based-method.html#cb284-12" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb284-13"><a href="tree-based-method.html#cb284-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(cart.firstsplit)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:firstsplit"></span>
 <img src="data-mining-book_files/figure-html/firstsplit-1.png" alt="뿌리노드 분지" width="672" />
 <p class="caption">
@@ -710,48 +783,48 @@ Figure 8.2: 뿌리노드 분지
 </table>
 <p>위 CART 모델 데이터를 이용하여 트리의 불순도를 계산해보자.</p>
 <p>우선 노드 상세 정보 행렬 <em>yval2</em>의 <em>x</em>번째 노드의 불순도(<span class="math inline">\(i(t)\)</span>)를 계산하는 함수 <em>rpartNodeImpurity</em>를 아래와 같이 구현한다.</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="tree-based-method.html#cb291-1"></a>rpartNodeImpurity &lt;-<span class="st"> </span><span class="cf">function</span>(x, yval2) {</span>
-<span id="cb291-2"><a href="tree-based-method.html#cb291-2"></a>  node_vec &lt;-<span class="st"> </span>yval2[x, ]</span>
-<span id="cb291-3"><a href="tree-based-method.html#cb291-3"></a>  n.columns &lt;-<span class="st"> </span><span class="kw">length</span>(node_vec)</span>
-<span id="cb291-4"><a href="tree-based-method.html#cb291-4"></a>  class.prob &lt;-<span class="st"> </span>node_vec[((n.columns<span class="op">/</span><span class="dv">2</span>)<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>(n.columns<span class="dv">-1</span>)]</span>
-<span id="cb291-5"><a href="tree-based-method.html#cb291-5"></a>  <span class="kw">return</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(class.prob<span class="op">^</span><span class="dv">2</span>))</span>
-<span id="cb291-6"><a href="tree-based-method.html#cb291-6"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="tree-based-method.html#cb286-1" aria-hidden="true" tabindex="-1"></a>rpartNodeImpurity <span class="ot">&lt;-</span> <span class="cf">function</span>(x, yval2) {</span>
+<span id="cb286-2"><a href="tree-based-method.html#cb286-2" aria-hidden="true" tabindex="-1"></a>  node_vec <span class="ot">&lt;-</span> yval2[x, ]</span>
+<span id="cb286-3"><a href="tree-based-method.html#cb286-3" aria-hidden="true" tabindex="-1"></a>  n.columns <span class="ot">&lt;-</span> <span class="fu">length</span>(node_vec)</span>
+<span id="cb286-4"><a href="tree-based-method.html#cb286-4" aria-hidden="true" tabindex="-1"></a>  class.prob <span class="ot">&lt;-</span> node_vec[((n.columns<span class="sc">/</span><span class="dv">2</span>)<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(n.columns<span class="dv">-1</span>)]</span>
+<span id="cb286-5"><a href="tree-based-method.html#cb286-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(class.prob<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb286-6"><a href="tree-based-method.html#cb286-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>CART tree 객체의 각 leaf node에 함수 <em>rpartNodeImpurity</em>를 적용하여 노드 불순도 <span class="math inline">\(i(t)\)</span>를 계산한 뒤, 노드 확률 <span class="math inline">\(p(t)\)</span>을 이용한 가중합을 통해 트리 불순도 <span class="math inline">\(I(T)\)</span>를 계산하는 함수 <em>rpartImpurity</em>를 아래와 같이 구현한다.</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="tree-based-method.html#cb292-1"></a>rpartImpurity &lt;-<span class="st"> </span><span class="cf">function</span>(rpart.obj) {</span>
-<span id="cb292-2"><a href="tree-based-method.html#cb292-2"></a>  leaf.nodes &lt;-<span class="st"> </span><span class="kw">which</span>(rpart.obj<span class="op">$</span>frame<span class="op">$</span>var<span class="op">==</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>)</span>
-<span id="cb292-3"><a href="tree-based-method.html#cb292-3"></a>  node.impurity &lt;-<span class="st"> </span><span class="kw">sapply</span>(leaf.nodes, </span>
-<span id="cb292-4"><a href="tree-based-method.html#cb292-4"></a>                          rpartNodeImpurity, </span>
-<span id="cb292-5"><a href="tree-based-method.html#cb292-5"></a>                          <span class="dt">yval2 =</span> rpart.obj<span class="op">$</span>frame<span class="op">$</span>yval2)</span>
-<span id="cb292-6"><a href="tree-based-method.html#cb292-6"></a>  node.prob &lt;-<span class="st"> </span>rpart.obj<span class="op">$</span>frame<span class="op">$</span>yval2[leaf.nodes, <span class="st">&#39;nodeprob&#39;</span>]</span>
-<span id="cb292-7"><a href="tree-based-method.html#cb292-7"></a>  <span class="kw">return</span>(<span class="kw">sum</span>(node.prob <span class="op">*</span><span class="st"> </span>node.impurity))</span>
-<span id="cb292-8"><a href="tree-based-method.html#cb292-8"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="tree-based-method.html#cb287-1" aria-hidden="true" tabindex="-1"></a>rpartImpurity <span class="ot">&lt;-</span> <span class="cf">function</span>(rpart.obj) {</span>
+<span id="cb287-2"><a href="tree-based-method.html#cb287-2" aria-hidden="true" tabindex="-1"></a>  leaf.nodes <span class="ot">&lt;-</span> <span class="fu">which</span>(rpart.obj<span class="sc">$</span>frame<span class="sc">$</span>var<span class="sc">==</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>)</span>
+<span id="cb287-3"><a href="tree-based-method.html#cb287-3" aria-hidden="true" tabindex="-1"></a>  node.impurity <span class="ot">&lt;-</span> <span class="fu">sapply</span>(leaf.nodes, </span>
+<span id="cb287-4"><a href="tree-based-method.html#cb287-4" aria-hidden="true" tabindex="-1"></a>                          rpartNodeImpurity, </span>
+<span id="cb287-5"><a href="tree-based-method.html#cb287-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">yval2 =</span> rpart.obj<span class="sc">$</span>frame<span class="sc">$</span>yval2)</span>
+<span id="cb287-6"><a href="tree-based-method.html#cb287-6" aria-hidden="true" tabindex="-1"></a>  node.prob <span class="ot">&lt;-</span> rpart.obj<span class="sc">$</span>frame<span class="sc">$</span>yval2[leaf.nodes, <span class="st">&#39;nodeprob&#39;</span>]</span>
+<span id="cb287-7"><a href="tree-based-method.html#cb287-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">sum</span>(node.prob <span class="sc">*</span> node.impurity))</span>
+<span id="cb287-8"><a href="tree-based-method.html#cb287-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>위 함수를 이용하여 계산한 트리 Figure <a href="tree-based-method.html#fig:cart-basic">8.1</a>의 불순도는 0.29이다.</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="tree-based-method.html#cb293-1"></a><span class="kw">rpartImpurity</span>(cart.firstsplit)</span></code></pre></div>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="tree-based-method.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rpartImpurity</span>(cart.firstsplit)</span></code></pre></div>
 <pre><code>## [1] 0.2857143</code></pre>
 <p>분지를 추가할수록 불순도는 감소한다. 분지를 추가하기 위해서는 <em>maxdepth</em>라는 control parameter 값을 증가시키면 된다.</p>
 <ul>
 <li>maxdepth: 뿌리노드부터 임의의 최종노드에 도달하는 최대 가능 분지 수 (default=30)</li>
 </ul>
 <p><em>maxdepth</em> 파라미터의 값을 1부터 4까지 증가시키며 불순도의 변화를 살펴보자.</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="tree-based-method.html#cb295-1"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb295-2"><a href="tree-based-method.html#cb295-2"></a></span>
-<span id="cb295-3"><a href="tree-based-method.html#cb295-3"></a>tree.impurity &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="cf">function</span>(depth) {</span>
-<span id="cb295-4"><a href="tree-based-method.html#cb295-4"></a>  <span class="kw">rpart</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2</span>
-<span id="cb295-5"><a href="tree-based-method.html#cb295-5"></a>        , <span class="dt">data =</span> train_df</span>
-<span id="cb295-6"><a href="tree-based-method.html#cb295-6"></a>        , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span></span>
-<span id="cb295-7"><a href="tree-based-method.html#cb295-7"></a>        , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
-<span id="cb295-8"><a href="tree-based-method.html#cb295-8"></a>        , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span></span>
-<span id="cb295-9"><a href="tree-based-method.html#cb295-9"></a>                                  , <span class="dt">minbucket =</span> <span class="dv">1</span></span>
-<span id="cb295-10"><a href="tree-based-method.html#cb295-10"></a>                                  , <span class="dt">maxdepth =</span> depth</span>
-<span id="cb295-11"><a href="tree-based-method.html#cb295-11"></a>                                  , <span class="dt">cp =</span> <span class="dv">0</span></span>
-<span id="cb295-12"><a href="tree-based-method.html#cb295-12"></a>                                  , <span class="dt">xval =</span> <span class="dv">0</span></span>
-<span id="cb295-13"><a href="tree-based-method.html#cb295-13"></a>                                  , <span class="dt">maxcompete =</span> <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb295-14"><a href="tree-based-method.html#cb295-14"></a><span class="st">  </span><span class="kw">rpartImpurity</span>()</span>
-<span id="cb295-15"><a href="tree-based-method.html#cb295-15"></a>})</span>
-<span id="cb295-16"><a href="tree-based-method.html#cb295-16"></a></span>
-<span id="cb295-17"><a href="tree-based-method.html#cb295-17"></a><span class="kw">tibble</span>(<span class="dt">maxdepth=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="dt">impurity=</span>tree.impurity) <span class="op">%&gt;%</span></span>
-<span id="cb295-18"><a href="tree-based-method.html#cb295-18"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>maxdepth, <span class="dt">y=</span>impurity)) <span class="op">+</span></span>
-<span id="cb295-19"><a href="tree-based-method.html#cb295-19"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="tree-based-method.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb290-2"><a href="tree-based-method.html#cb290-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb290-3"><a href="tree-based-method.html#cb290-3" aria-hidden="true" tabindex="-1"></a>tree.impurity <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="cf">function</span>(depth) {</span>
+<span id="cb290-4"><a href="tree-based-method.html#cb290-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2</span>
+<span id="cb290-5"><a href="tree-based-method.html#cb290-5" aria-hidden="true" tabindex="-1"></a>        , <span class="at">data =</span> train_df</span>
+<span id="cb290-6"><a href="tree-based-method.html#cb290-6" aria-hidden="true" tabindex="-1"></a>        , <span class="at">method =</span> <span class="st">&quot;class&quot;</span></span>
+<span id="cb290-7"><a href="tree-based-method.html#cb290-7" aria-hidden="true" tabindex="-1"></a>        , <span class="at">parms =</span> <span class="fu">list</span>(<span class="at">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
+<span id="cb290-8"><a href="tree-based-method.html#cb290-8" aria-hidden="true" tabindex="-1"></a>        , <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">minsplit =</span> <span class="dv">2</span></span>
+<span id="cb290-9"><a href="tree-based-method.html#cb290-9" aria-hidden="true" tabindex="-1"></a>                                  , <span class="at">minbucket =</span> <span class="dv">1</span></span>
+<span id="cb290-10"><a href="tree-based-method.html#cb290-10" aria-hidden="true" tabindex="-1"></a>                                  , <span class="at">maxdepth =</span> depth</span>
+<span id="cb290-11"><a href="tree-based-method.html#cb290-11" aria-hidden="true" tabindex="-1"></a>                                  , <span class="at">cp =</span> <span class="dv">0</span></span>
+<span id="cb290-12"><a href="tree-based-method.html#cb290-12" aria-hidden="true" tabindex="-1"></a>                                  , <span class="at">xval =</span> <span class="dv">0</span></span>
+<span id="cb290-13"><a href="tree-based-method.html#cb290-13" aria-hidden="true" tabindex="-1"></a>                                  , <span class="at">maxcompete =</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb290-14"><a href="tree-based-method.html#cb290-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpartImpurity</span>()</span>
+<span id="cb290-15"><a href="tree-based-method.html#cb290-15" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb290-16"><a href="tree-based-method.html#cb290-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb290-17"><a href="tree-based-method.html#cb290-17" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">maxdepth=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">impurity=</span>tree.impurity) <span class="sc">%&gt;%</span></span>
+<span id="cb290-18"><a href="tree-based-method.html#cb290-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>maxdepth, <span class="at">y=</span>impurity)) <span class="sc">+</span></span>
+<span id="cb290-19"><a href="tree-based-method.html#cb290-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:impurity-trend"></span>
 <img src="data-mining-book_files/figure-html/impurity-trend-1.png" alt="파라미터 maxdepth값에 따른 트리불순도 변화" width="672" />
 <p class="caption">
@@ -765,9 +838,9 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 <p>위 예제에서는 <em>cp</em>값을 0으로 설정하여, 해당 분지가 트리 불순도를 감소시킨다 하더라도 전체 트리의 오분류를 감소시키는 데 기여하지 않는다면 시도하지 않도록 하였다.</p>
 </div>
 </div>
-<div id="cart-pruning-complete" class="section level2">
+<div id="cart-pruning-complete" class="section level2" number="8.4">
 <h2><span class="header-section-number">8.4</span> 가지치기 및 최종 트리 선정</h2>
-<div id="cart-pruning" class="section level3">
+<div id="cart-pruning" class="section level3" number="8.4.1">
 <h3><span class="header-section-number">8.4.1</span> 가지치기</h3>
 <p>앞 장의 최대 트리 그림 <a href="tree-based-method.html#fig:cart-basic">8.1</a>은 학습 데이터를 오분류 없이 완벽하게 분류하기 위해 복잡한 분류 구조를 형성하였다. 이러한 복잡한 분류 구조는 학습 데이터가 아닌 새로운 데이터에 대한 분류 정확도를 떨어뜨릴 수 있다. 이는 bias-variance tradeoff라 부르는 현상으로, 비단 분류트리 뿐 아니라 모든 데이터마이닝 방법에 일반적으로 적용된다.</p>
 <p>분류 트리는 가지치기라는 방식을 통해, 분류 구조를 단순화함으로써 분류 트리가 새로운 데이터에도 정확한 분류를 제공하기를 추구한다. 가지치기란 트리 내 특정 내부노드를 기준으로 그 하위에 발생한 분지를 모두 제거하고, 해당 내부노드를 최종노드로 치환하는 방식이다.</p>
@@ -889,14 +962,14 @@ Figure 8.3: 파라미터 maxdepth값에 따른 트리불순도 변화
 </tbody>
 </table>
 <p>Table <a href="tree-based-method.html#tab:max-frame">8.4</a>에서 생성 가능한 가지치기는 최종 노드(<em>var값이 &lt;leaf&gt;</em>)가 아닌 모든 노드(1, 3, 7, 14)에서 가능하며, 함수 <em>snip.rpart</em>를 이용하여 가지치기 된 트리를 생성할 수 있다. 각 내부 노드에서 가지치기된 트리들은 아래와 같이 얻어진다.</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="tree-based-method.html#cb296-1"></a>internal.node.index &lt;-<span class="st"> </span><span class="kw">rownames</span>(cart.est<span class="op">$</span>frame)[<span class="kw">which</span>(cart.est<span class="op">$</span>frame<span class="op">$</span>var <span class="op">!=</span><span class="st"> &#39;&lt;leaf&gt;&#39;</span>)] <span class="op">%&gt;%</span></span>
-<span id="cb296-2"><a href="tree-based-method.html#cb296-2"></a><span class="st">  </span><span class="kw">as.numeric</span>()</span>
-<span id="cb296-3"><a href="tree-based-method.html#cb296-3"></a>snipped &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, <span class="cf">function</span>(x){<span class="kw">snip.rpart</span>(cart.est, x)})</span>
-<span id="cb296-4"><a href="tree-based-method.html#cb296-4"></a>n.trees &lt;-<span class="st"> </span><span class="kw">length</span>(snipped)</span>
-<span id="cb296-5"><a href="tree-based-method.html#cb296-5"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb296-6"><a href="tree-based-method.html#cb296-6"></a><span class="kw">invisible</span>(<span class="kw">lapply</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>n.trees), <span class="cf">function</span>(x) {</span>
-<span id="cb296-7"><a href="tree-based-method.html#cb296-7"></a>  <span class="kw">rpart.plot</span>(snipped[[x]])}</span>
-<span id="cb296-8"><a href="tree-based-method.html#cb296-8"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="tree-based-method.html#cb291-1" aria-hidden="true" tabindex="-1"></a>internal.node.index <span class="ot">&lt;-</span> <span class="fu">rownames</span>(cart.est<span class="sc">$</span>frame)[<span class="fu">which</span>(cart.est<span class="sc">$</span>frame<span class="sc">$</span>var <span class="sc">!=</span> <span class="st">&#39;&lt;leaf&gt;&#39;</span>)] <span class="sc">%&gt;%</span></span>
+<span id="cb291-2"><a href="tree-based-method.html#cb291-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
+<span id="cb291-3"><a href="tree-based-method.html#cb291-3" aria-hidden="true" tabindex="-1"></a>snipped <span class="ot">&lt;-</span> <span class="fu">lapply</span>(internal.node.index, <span class="cf">function</span>(x){<span class="fu">snip.rpart</span>(cart.est, x)})</span>
+<span id="cb291-4"><a href="tree-based-method.html#cb291-4" aria-hidden="true" tabindex="-1"></a>n.trees <span class="ot">&lt;-</span> <span class="fu">length</span>(snipped)</span>
+<span id="cb291-5"><a href="tree-based-method.html#cb291-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb291-6"><a href="tree-based-method.html#cb291-6" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(<span class="fu">lapply</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>n.trees), <span class="cf">function</span>(x) {</span>
+<span id="cb291-7"><a href="tree-based-method.html#cb291-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart.plot</span>(snipped[[x]])}</span>
+<span id="cb291-8"><a href="tree-based-method.html#cb291-8" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:snipped"></span>
 <img src="data-mining-book_files/figure-html/snipped-1.png" alt="각 내부노드 기준으로 가지치기된 트리" width="672" />
 <p class="caption">
@@ -904,20 +977,20 @@ Figure 8.4: 각 내부노드 기준으로 가지치기된 트리
 </p>
 </div>
 <p>위 각 가지치기 후보 노드의 오분류 비용은 함수 <em>nodeCost</em>를 아래와 같이 구현하여 계산할 수 있다.</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="tree-based-method.html#cb297-1"></a>nodeCost &lt;-<span class="st"> </span><span class="cf">function</span>(node, tree) {</span>
-<span id="cb297-2"><a href="tree-based-method.html#cb297-2"></a>  node_vec &lt;-<span class="st"> </span>tree<span class="op">$</span>frame<span class="op">$</span>yval2[<span class="kw">as.character</span>(node) <span class="op">==</span><span class="st"> </span><span class="kw">row.names</span>(tree<span class="op">$</span>frame), ]</span>
-<span id="cb297-3"><a href="tree-based-method.html#cb297-3"></a>  n.columns &lt;-<span class="st"> </span><span class="kw">length</span>(node_vec)</span>
-<span id="cb297-4"><a href="tree-based-method.html#cb297-4"></a>  class.prob.max &lt;-<span class="st"> </span><span class="kw">max</span>(node_vec[((n.columns<span class="op">/</span><span class="dv">2</span>)<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>(n.columns<span class="dv">-1</span>)])</span>
-<span id="cb297-5"><a href="tree-based-method.html#cb297-5"></a>  node.prob &lt;-<span class="st"> </span>node_vec[n.columns]</span>
-<span id="cb297-6"><a href="tree-based-method.html#cb297-6"></a>  node.misclassification.cost &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>class.prob.max)<span class="op">*</span>node.prob</span>
-<span id="cb297-7"><a href="tree-based-method.html#cb297-7"></a>  <span class="kw">return</span>(node.misclassification.cost)</span>
-<span id="cb297-8"><a href="tree-based-method.html#cb297-8"></a>}</span>
-<span id="cb297-9"><a href="tree-based-method.html#cb297-9"></a></span>
-<span id="cb297-10"><a href="tree-based-method.html#cb297-10"></a><span class="kw">tibble</span>(</span>
-<span id="cb297-11"><a href="tree-based-method.html#cb297-11"></a>  <span class="dt">pruning_node =</span> internal.node.index,</span>
-<span id="cb297-12"><a href="tree-based-method.html#cb297-12"></a>  <span class="dt">node_cost =</span> <span class="kw">sapply</span>(internal.node.index, nodeCost, <span class="dt">tree=</span>cart.est)</span>
-<span id="cb297-13"><a href="tree-based-method.html#cb297-13"></a>) <span class="op">%&gt;%</span></span>
-<span id="cb297-14"><a href="tree-based-method.html#cb297-14"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="tree-based-method.html#cb292-1" aria-hidden="true" tabindex="-1"></a>nodeCost <span class="ot">&lt;-</span> <span class="cf">function</span>(node, tree) {</span>
+<span id="cb292-2"><a href="tree-based-method.html#cb292-2" aria-hidden="true" tabindex="-1"></a>  node_vec <span class="ot">&lt;-</span> tree<span class="sc">$</span>frame<span class="sc">$</span>yval2[<span class="fu">as.character</span>(node) <span class="sc">==</span> <span class="fu">row.names</span>(tree<span class="sc">$</span>frame), ]</span>
+<span id="cb292-3"><a href="tree-based-method.html#cb292-3" aria-hidden="true" tabindex="-1"></a>  n.columns <span class="ot">&lt;-</span> <span class="fu">length</span>(node_vec)</span>
+<span id="cb292-4"><a href="tree-based-method.html#cb292-4" aria-hidden="true" tabindex="-1"></a>  class.prob.max <span class="ot">&lt;-</span> <span class="fu">max</span>(node_vec[((n.columns<span class="sc">/</span><span class="dv">2</span>)<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(n.columns<span class="dv">-1</span>)])</span>
+<span id="cb292-5"><a href="tree-based-method.html#cb292-5" aria-hidden="true" tabindex="-1"></a>  node.prob <span class="ot">&lt;-</span> node_vec[n.columns]</span>
+<span id="cb292-6"><a href="tree-based-method.html#cb292-6" aria-hidden="true" tabindex="-1"></a>  node.misclassification.cost <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">-</span>class.prob.max)<span class="sc">*</span>node.prob</span>
+<span id="cb292-7"><a href="tree-based-method.html#cb292-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(node.misclassification.cost)</span>
+<span id="cb292-8"><a href="tree-based-method.html#cb292-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb292-9"><a href="tree-based-method.html#cb292-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb292-10"><a href="tree-based-method.html#cb292-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb292-11"><a href="tree-based-method.html#cb292-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">pruning_node =</span> internal.node.index,</span>
+<span id="cb292-12"><a href="tree-based-method.html#cb292-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">node_cost =</span> <span class="fu">sapply</span>(internal.node.index, nodeCost, <span class="at">tree=</span>cart.est)</span>
+<span id="cb292-13"><a href="tree-based-method.html#cb292-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb292-14"><a href="tree-based-method.html#cb292-14" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -945,23 +1018,23 @@ Figure 8.4: 각 내부노드 기준으로 가지치기된 트리
 </tbody>
 </table>
 <p>각 가지치기 노드에 해당하는 하부 트리의 오분류비용 및 복잡도를 구하기 위해 <em>subtreeEval</em>라는 함수를 아래와 같이 구현한다.</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="tree-based-method.html#cb298-1"></a>subtreeEval &lt;-<span class="st"> </span><span class="cf">function</span>(node, tree) {</span>
-<span id="cb298-2"><a href="tree-based-method.html#cb298-2"></a>  snipped &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(tree, node)<span class="op">$</span>frame</span>
-<span id="cb298-3"><a href="tree-based-method.html#cb298-3"></a>  leaf.nodes &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="kw">rownames</span>(tree<span class="op">$</span>frame[tree<span class="op">$</span>frame<span class="op">$</span>var<span class="op">==</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>,]),</span>
-<span id="cb298-4"><a href="tree-based-method.html#cb298-4"></a>          <span class="kw">rownames</span>(snipped)) <span class="op">%&gt;%</span></span>
-<span id="cb298-5"><a href="tree-based-method.html#cb298-5"></a><span class="st">    </span><span class="kw">as.numeric</span>()</span>
-<span id="cb298-6"><a href="tree-based-method.html#cb298-6"></a></span>
-<span id="cb298-7"><a href="tree-based-method.html#cb298-7"></a>  <span class="kw">tibble</span>(</span>
-<span id="cb298-8"><a href="tree-based-method.html#cb298-8"></a>    <span class="dt">pruning_node =</span> node,</span>
-<span id="cb298-9"><a href="tree-based-method.html#cb298-9"></a>    <span class="dt">node.cost =</span> <span class="kw">nodeCost</span>(node, tree),</span>
-<span id="cb298-10"><a href="tree-based-method.html#cb298-10"></a>    <span class="dt">subtree.cost =</span> <span class="kw">sapply</span>(leaf.nodes, nodeCost, <span class="dt">tree=</span>tree) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>(),</span>
-<span id="cb298-11"><a href="tree-based-method.html#cb298-11"></a>    <span class="dt">subtree.size =</span> <span class="kw">length</span>(leaf.nodes)</span>
-<span id="cb298-12"><a href="tree-based-method.html#cb298-12"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb298-13"><a href="tree-based-method.html#cb298-13"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">alpha =</span> (node.cost <span class="op">-</span><span class="st"> </span>subtree.cost) <span class="op">/</span><span class="st"> </span>(subtree.size <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</span>
-<span id="cb298-14"><a href="tree-based-method.html#cb298-14"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="tree-based-method.html#cb293-1" aria-hidden="true" tabindex="-1"></a>subtreeEval <span class="ot">&lt;-</span> <span class="cf">function</span>(node, tree) {</span>
+<span id="cb293-2"><a href="tree-based-method.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  snipped <span class="ot">&lt;-</span> <span class="fu">snip.rpart</span>(tree, node)<span class="sc">$</span>frame</span>
+<span id="cb293-3"><a href="tree-based-method.html#cb293-3" aria-hidden="true" tabindex="-1"></a>  leaf.nodes <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">rownames</span>(tree<span class="sc">$</span>frame[tree<span class="sc">$</span>frame<span class="sc">$</span>var<span class="sc">==</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>,]),</span>
+<span id="cb293-4"><a href="tree-based-method.html#cb293-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rownames</span>(snipped)) <span class="sc">%&gt;%</span></span>
+<span id="cb293-5"><a href="tree-based-method.html#cb293-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.numeric</span>()</span>
+<span id="cb293-6"><a href="tree-based-method.html#cb293-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb293-7"><a href="tree-based-method.html#cb293-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb293-8"><a href="tree-based-method.html#cb293-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">pruning_node =</span> node,</span>
+<span id="cb293-9"><a href="tree-based-method.html#cb293-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">node.cost =</span> <span class="fu">nodeCost</span>(node, tree),</span>
+<span id="cb293-10"><a href="tree-based-method.html#cb293-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtree.cost =</span> <span class="fu">sapply</span>(leaf.nodes, nodeCost, <span class="at">tree=</span>tree) <span class="sc">%&gt;%</span> <span class="fu">sum</span>(),</span>
+<span id="cb293-11"><a href="tree-based-method.html#cb293-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtree.size =</span> <span class="fu">length</span>(leaf.nodes)</span>
+<span id="cb293-12"><a href="tree-based-method.html#cb293-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb293-13"><a href="tree-based-method.html#cb293-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">alpha =</span> (node.cost <span class="sc">-</span> subtree.cost) <span class="sc">/</span> (subtree.size <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb293-14"><a href="tree-based-method.html#cb293-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>각 노드에 대하여 알파값을 다음과 같이 계산할 수 있다.</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="tree-based-method.html#cb299-1"></a>df.cost &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, subtreeEval, <span class="dt">tree=</span>cart.est) <span class="op">%&gt;%</span></span>
-<span id="cb299-2"><a href="tree-based-method.html#cb299-2"></a><span class="st">  </span><span class="kw">bind_rows</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="tree-based-method.html#cb294-1" aria-hidden="true" tabindex="-1"></a>df.cost <span class="ot">&lt;-</span> <span class="fu">lapply</span>(internal.node.index, subtreeEval, <span class="at">tree=</span>cart.est) <span class="sc">%&gt;%</span></span>
+<span id="cb294-2"><a href="tree-based-method.html#cb294-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:first-prune-candidate-tab">Table 8.5: </span>내부노드 가지치기 평가 (df.cost)</caption>
 <thead>
@@ -1005,9 +1078,9 @@ Figure 8.4: 각 내부노드 기준으로 가지치기된 트리
 </tbody>
 </table>
 <p>위 Table <a href="tree-based-method.html#tab:first-prune-candidate-tab">8.5</a> 에서 최소 알파값에 해당하는 노드 7에서 가지치기를 한다.</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="tree-based-method.html#cb300-1"></a>pruned.tree<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(cart.est,</span>
-<span id="cb300-2"><a href="tree-based-method.html#cb300-2"></a>                            df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])</span>
-<span id="cb300-3"><a href="tree-based-method.html#cb300-3"></a><span class="kw">rpart.plot</span>(pruned.tree<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="tree-based-method.html#cb295-1" aria-hidden="true" tabindex="-1"></a>pruned.tree<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">snip.rpart</span>(cart.est,</span>
+<span id="cb295-2"><a href="tree-based-method.html#cb295-2" aria-hidden="true" tabindex="-1"></a>                            df.cost<span class="sc">$</span>pruning_node[<span class="fu">which.min</span>(df.cost<span class="sc">$</span>alpha)])</span>
+<span id="cb295-3"><a href="tree-based-method.html#cb295-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(pruned.tree<span class="fl">.1</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:first-prune-result"></span>
 <img src="data-mining-book_files/figure-html/first-prune-result-1.png" alt="1단계 가지치기 결과" width="672" />
 <p class="caption">
@@ -1015,12 +1088,12 @@ Figure 8.5: 1단계 가지치기 결과
 </p>
 </div>
 <p>가지치기로 형성된 트리에서 다시 각 가지치기 노드의 오분류비용, 복잡도 및 알파값을 구한다.</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="tree-based-method.html#cb301-1"></a>df.cost &lt;-<span class="st"> </span><span class="kw">rownames</span>(pruned.tree<span class="fl">.1</span><span class="op">$</span>frame)[pruned.tree<span class="fl">.1</span><span class="op">$</span>frame<span class="op">$</span>var<span class="op">!=</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb301-2"><a href="tree-based-method.html#cb301-2"></a><span class="st">  </span><span class="kw">as.numeric</span>() <span class="op">%&gt;%</span></span>
-<span id="cb301-3"><a href="tree-based-method.html#cb301-3"></a><span class="st">  </span><span class="kw">lapply</span>(subtreeEval, <span class="dt">tree=</span>pruned.tree<span class="fl">.1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb301-4"><a href="tree-based-method.html#cb301-4"></a><span class="st">  </span><span class="kw">bind_rows</span>()</span>
-<span id="cb301-5"><a href="tree-based-method.html#cb301-5"></a></span>
-<span id="cb301-6"><a href="tree-based-method.html#cb301-6"></a>knitr<span class="op">::</span><span class="kw">kable</span>(df.cost)</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="tree-based-method.html#cb296-1" aria-hidden="true" tabindex="-1"></a>df.cost <span class="ot">&lt;-</span> <span class="fu">rownames</span>(pruned.tree<span class="fl">.1</span><span class="sc">$</span>frame)[pruned.tree<span class="fl">.1</span><span class="sc">$</span>frame<span class="sc">$</span>var<span class="sc">!=</span><span class="st">&quot;&lt;leaf&gt;&quot;</span>] <span class="sc">%&gt;%</span> </span>
+<span id="cb296-2"><a href="tree-based-method.html#cb296-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb296-3"><a href="tree-based-method.html#cb296-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(subtreeEval, <span class="at">tree=</span>pruned.tree<span class="fl">.1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb296-4"><a href="tree-based-method.html#cb296-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span>
+<span id="cb296-5"><a href="tree-based-method.html#cb296-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb296-6"><a href="tree-based-method.html#cb296-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(df.cost)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1049,9 +1122,9 @@ Figure 8.5: 1단계 가지치기 결과
 </tbody>
 </table>
 <p>위 결과에서 다시 최소 알파값에 해당하는 노드 3에서 가지치기를 하면 아래와 같은 트리가 형성된다.</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="tree-based-method.html#cb302-1"></a>pruned.tree<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(pruned.tree<span class="fl">.1</span>,</span>
-<span id="cb302-2"><a href="tree-based-method.html#cb302-2"></a>                            df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])</span>
-<span id="cb302-3"><a href="tree-based-method.html#cb302-3"></a><span class="kw">rpart.plot</span>(pruned.tree<span class="fl">.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="tree-based-method.html#cb297-1" aria-hidden="true" tabindex="-1"></a>pruned.tree<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">snip.rpart</span>(pruned.tree<span class="fl">.1</span>,</span>
+<span id="cb297-2"><a href="tree-based-method.html#cb297-2" aria-hidden="true" tabindex="-1"></a>                            df.cost<span class="sc">$</span>pruning_node[<span class="fu">which.min</span>(df.cost<span class="sc">$</span>alpha)])</span>
+<span id="cb297-3"><a href="tree-based-method.html#cb297-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(pruned.tree<span class="fl">.2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:second-prune-result"></span>
 <img src="data-mining-book_files/figure-html/second-prune-result-1.png" alt="2단계 가지치기 결과" width="672" />
 <p class="caption">
@@ -1059,15 +1132,15 @@ Figure 8.6: 2단계 가지치기 결과
 </p>
 </div>
 </div>
-<div id="cart-best-tree" class="section level3">
+<div id="cart-best-tree" class="section level3" number="8.4.2">
 <h3><span class="header-section-number">8.4.2</span> 최적 트리의 선정</h3>
 <p>위 가지치기 과정에서 얻는 가지친 트리들이 최종 트리의 후보가 되며, 이 중 테스트 표본에 대한 오분류율이 가장 작은 트리를 최적 트리로 선정하게 된다.</p>
 <p>트리를 학습할 때 사용된 학습데이터 Table <a href="tree-based-method.html#tab:tree-train-data-table">8.1</a> 외에, Table <a href="tree-based-method.html#tab:tree-test-data-table">8.6</a>과 같은 6개의 테스트 데이터가 있다고 하자.</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="tree-based-method.html#cb303-1"></a>test_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb303-2"><a href="tree-based-method.html#cb303-2"></a>  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>),</span>
-<span id="cb303-3"><a href="tree-based-method.html#cb303-3"></a>  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">4</span>),</span>
-<span id="cb303-4"><a href="tree-based-method.html#cb303-4"></a>  <span class="dt">class =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">levels=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb303-5"><a href="tree-based-method.html#cb303-5"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="tree-based-method.html#cb298-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb298-2"><a href="tree-based-method.html#cb298-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x1 =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>),</span>
+<span id="cb298-3"><a href="tree-based-method.html#cb298-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">4</span>),</span>
+<span id="cb298-4"><a href="tree-based-method.html#cb298-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb298-5"><a href="tree-based-method.html#cb298-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tree-test-data-table">Table 8.6: </span>테스트 데이터</caption>
 <thead>
@@ -1111,12 +1184,12 @@ Figure 8.6: 2단계 가지치기 결과
 </tbody>
 </table>
 <p>테스트 데이터에 위에서 학습된 세 개의 트리, 즉 최대 트리 <em>cart.est</em>와 두 개의 가지치기 트리 <em>pruned.tree.1</em> &amp; <em>pruned.tree.2</em>를 적용하여 각 트리가 각각의 테스트 데이터를 어떻게 분류하는지 살펴보자.</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="tree-based-method.html#cb304-1"></a>test_pred &lt;-<span class="st"> </span>test_df <span class="op">%&gt;%</span></span>
-<span id="cb304-2"><a href="tree-based-method.html#cb304-2"></a><span class="st">  </span><span class="kw">bind_cols</span>(</span>
-<span id="cb304-3"><a href="tree-based-method.html#cb304-3"></a>    <span class="dt">pred_maxtree =</span> <span class="kw">predict</span>(cart.est, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>),</span>
-<span id="cb304-4"><a href="tree-based-method.html#cb304-4"></a>    <span class="dt">pred_prune1 =</span> <span class="kw">predict</span>(pruned.tree<span class="fl">.1</span>, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>),</span>
-<span id="cb304-5"><a href="tree-based-method.html#cb304-5"></a>    <span class="dt">pred_prune2 =</span> <span class="kw">predict</span>(pruned.tree<span class="fl">.2</span>, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)</span>
-<span id="cb304-6"><a href="tree-based-method.html#cb304-6"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="tree-based-method.html#cb299-1" aria-hidden="true" tabindex="-1"></a>test_pred <span class="ot">&lt;-</span> test_df <span class="sc">%&gt;%</span></span>
+<span id="cb299-2"><a href="tree-based-method.html#cb299-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
+<span id="cb299-3"><a href="tree-based-method.html#cb299-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">pred_maxtree =</span> <span class="fu">predict</span>(cart.est, test_df, <span class="at">type=</span><span class="st">&quot;class&quot;</span>),</span>
+<span id="cb299-4"><a href="tree-based-method.html#cb299-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">pred_prune1 =</span> <span class="fu">predict</span>(pruned.tree<span class="fl">.1</span>, test_df, <span class="at">type=</span><span class="st">&quot;class&quot;</span>),</span>
+<span id="cb299-5"><a href="tree-based-method.html#cb299-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">pred_prune2 =</span> <span class="fu">predict</span>(pruned.tree<span class="fl">.2</span>, test_df, <span class="at">type=</span><span class="st">&quot;class&quot;</span>)</span>
+<span id="cb299-6"><a href="tree-based-method.html#cb299-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tree-class-prediction-table">Table 8.7: </span>테스트 데이터에 대한 예측 결과</caption>
 <thead>
@@ -1188,15 +1261,15 @@ Figure 8.6: 2단계 가지치기 결과
 <span class="math display">\[SE = \sqrt{\frac{R^{ts}(1 - R^{ts})}{n_{test}}}\]</span></li>
 <li>1에서 구한 오분류율에 2에서 구한 표준편차를 더하여 <span class="math inline">\(R^{ts} + SE\)</span>를 각 트리의 평가척도로 계산한다. 후보 트리들 중 해당 평가척도가 가장 작은 트리를 최종 트리로 선정한다.</li>
 </ol>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="tree-based-method.html#cb305-1"></a>test.summary &lt;-<span class="st"> </span>test_pred <span class="op">%&gt;%</span></span>
-<span id="cb305-2"><a href="tree-based-method.html#cb305-2"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n.test =</span> <span class="kw">n</span>(),</span>
-<span id="cb305-3"><a href="tree-based-method.html#cb305-3"></a>            <span class="dt">cart.est =</span> <span class="kw">sum</span>(pred_maxtree <span class="op">!=</span><span class="st"> </span>class) <span class="op">/</span><span class="st"> </span>n.test,</span>
-<span id="cb305-4"><a href="tree-based-method.html#cb305-4"></a>            <span class="dt">pruned.tree.1 =</span> <span class="kw">sum</span>(pred_prune1 <span class="op">!=</span><span class="st"> </span>class) <span class="op">/</span><span class="st"> </span>n.test,</span>
-<span id="cb305-5"><a href="tree-based-method.html#cb305-5"></a>            <span class="dt">pruned.tree.2 =</span> <span class="kw">sum</span>(pred_prune2 <span class="op">!=</span><span class="st"> </span>class) <span class="op">/</span><span class="st"> </span>n.test) <span class="op">%&gt;%</span></span>
-<span id="cb305-6"><a href="tree-based-method.html#cb305-6"></a><span class="st">  </span><span class="kw">gather</span>(<span class="st">&quot;tree&quot;</span>,<span class="st">&quot;R.ts&quot;</span>,<span class="op">-</span>n.test) <span class="op">%&gt;%</span></span>
-<span id="cb305-7"><a href="tree-based-method.html#cb305-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">SE =</span> <span class="kw">sqrt</span>((R.ts<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>R.ts))<span class="op">/</span>n.test),</span>
-<span id="cb305-8"><a href="tree-based-method.html#cb305-8"></a>         <span class="dt">score =</span> R.ts <span class="op">+</span><span class="st"> </span>SE) <span class="op">%&gt;%</span></span>
-<span id="cb305-9"><a href="tree-based-method.html#cb305-9"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>n.test)</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="tree-based-method.html#cb300-1" aria-hidden="true" tabindex="-1"></a>test.summary <span class="ot">&lt;-</span> test_pred <span class="sc">%&gt;%</span></span>
+<span id="cb300-2"><a href="tree-based-method.html#cb300-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n.test =</span> <span class="fu">n</span>(),</span>
+<span id="cb300-3"><a href="tree-based-method.html#cb300-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">cart.est =</span> <span class="fu">sum</span>(pred_maxtree <span class="sc">!=</span> class) <span class="sc">/</span> n.test,</span>
+<span id="cb300-4"><a href="tree-based-method.html#cb300-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">pruned.tree.1 =</span> <span class="fu">sum</span>(pred_prune1 <span class="sc">!=</span> class) <span class="sc">/</span> n.test,</span>
+<span id="cb300-5"><a href="tree-based-method.html#cb300-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">pruned.tree.2 =</span> <span class="fu">sum</span>(pred_prune2 <span class="sc">!=</span> class) <span class="sc">/</span> n.test) <span class="sc">%&gt;%</span></span>
+<span id="cb300-6"><a href="tree-based-method.html#cb300-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="st">&quot;tree&quot;</span>,<span class="st">&quot;R.ts&quot;</span>,<span class="sc">-</span>n.test) <span class="sc">%&gt;%</span></span>
+<span id="cb300-7"><a href="tree-based-method.html#cb300-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SE =</span> <span class="fu">sqrt</span>((R.ts<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> R.ts))<span class="sc">/</span>n.test),</span>
+<span id="cb300-8"><a href="tree-based-method.html#cb300-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">score =</span> R.ts <span class="sc">+</span> SE) <span class="sc">%&gt;%</span></span>
+<span id="cb300-9"><a href="tree-based-method.html#cb300-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>n.test)</span></code></pre></div>
 <table>
 <caption><span id="tab:misclassification-rate-table">Table 8.8: </span>분류 성능</caption>
 <thead>
@@ -1230,51 +1303,51 @@ Figure 8.6: 2단계 가지치기 결과
 </table>
 <p>위 결과, 최적 트리는 최대 트리 혹은 첫 번째 가지치기 트리가 된다.</p>
 <p>위 절차를 임의의 데이터에 대해 수행하는 함수를 구현해보자.</p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="tree-based-method.html#cb306-1"></a>rpart_learn &lt;-<span class="st"> </span><span class="cf">function</span>(formula, train_df, test_df) {</span>
-<span id="cb306-2"><a href="tree-based-method.html#cb306-2"></a>  <span class="co"># 최대 트리 생성</span></span>
-<span id="cb306-3"><a href="tree-based-method.html#cb306-3"></a>  max_tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(formula</span>
-<span id="cb306-4"><a href="tree-based-method.html#cb306-4"></a>                    , <span class="dt">data =</span> train_df</span>
-<span id="cb306-5"><a href="tree-based-method.html#cb306-5"></a>                    , <span class="dt">method =</span> <span class="st">&quot;class&quot;</span></span>
-<span id="cb306-6"><a href="tree-based-method.html#cb306-6"></a>                    , <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
-<span id="cb306-7"><a href="tree-based-method.html#cb306-7"></a>                    , <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">minsplit =</span> <span class="dv">2</span></span>
-<span id="cb306-8"><a href="tree-based-method.html#cb306-8"></a>                                              , <span class="dt">minbucket =</span> <span class="dv">1</span></span>
-<span id="cb306-9"><a href="tree-based-method.html#cb306-9"></a>                                              , <span class="dt">cp =</span> <span class="dv">0</span></span>
-<span id="cb306-10"><a href="tree-based-method.html#cb306-10"></a>                                              , <span class="dt">xval =</span> <span class="dv">0</span></span>
-<span id="cb306-11"><a href="tree-based-method.html#cb306-11"></a>                                              , <span class="dt">maxcompete =</span> <span class="dv">0</span></span>
-<span id="cb306-12"><a href="tree-based-method.html#cb306-12"></a>                    )</span>
-<span id="cb306-13"><a href="tree-based-method.html#cb306-13"></a>  )</span>
-<span id="cb306-14"><a href="tree-based-method.html#cb306-14"></a>  </span>
-<span id="cb306-15"><a href="tree-based-method.html#cb306-15"></a>  <span class="co"># 가지치기</span></span>
-<span id="cb306-16"><a href="tree-based-method.html#cb306-16"></a>  curr_tree &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
-<span id="cb306-17"><a href="tree-based-method.html#cb306-17"></a>  k &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb306-18"><a href="tree-based-method.html#cb306-18"></a>  curr_tree[[k]] &lt;-<span class="st"> </span>max_tree</span>
-<span id="cb306-19"><a href="tree-based-method.html#cb306-19"></a>  <span class="cf">while</span>(<span class="kw">dim</span>(curr_tree[[k]]<span class="op">$</span>frame)[<span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {</span>
-<span id="cb306-20"><a href="tree-based-method.html#cb306-20"></a>    internal.node.index &lt;-<span class="st"> </span><span class="kw">rownames</span>(curr_tree[[k]]<span class="op">$</span>frame)[<span class="kw">which</span>(curr_tree[[k]]<span class="op">$</span>frame<span class="op">$</span>var <span class="op">!=</span><span class="st"> &#39;&lt;leaf&gt;&#39;</span>)] <span class="op">%&gt;%</span></span>
-<span id="cb306-21"><a href="tree-based-method.html#cb306-21"></a><span class="st">      </span><span class="kw">as.numeric</span>()</span>
-<span id="cb306-22"><a href="tree-based-method.html#cb306-22"></a>    df.cost &lt;-<span class="st"> </span><span class="kw">lapply</span>(internal.node.index, subtreeEval, <span class="dt">tree=</span>curr_tree[[k]]) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_rows</span>()</span>
-<span id="cb306-23"><a href="tree-based-method.html#cb306-23"></a>    curr_tree[[k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">snip.rpart</span>(curr_tree[[k]],</span>
-<span id="cb306-24"><a href="tree-based-method.html#cb306-24"></a>               df.cost<span class="op">$</span>pruning_node[<span class="kw">which.min</span>(df.cost<span class="op">$</span>alpha)])</span>
-<span id="cb306-25"><a href="tree-based-method.html#cb306-25"></a>    k &lt;-<span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
-<span id="cb306-26"><a href="tree-based-method.html#cb306-26"></a>  }</span>
-<span id="cb306-27"><a href="tree-based-method.html#cb306-27"></a></span>
-<span id="cb306-28"><a href="tree-based-method.html#cb306-28"></a>  <span class="co"># 최적 가지치기 트리 선정</span></span>
-<span id="cb306-29"><a href="tree-based-method.html#cb306-29"></a>  n.test &lt;-<span class="st"> </span><span class="kw">dim</span>(test_df)[<span class="dv">1</span>]</span>
-<span id="cb306-30"><a href="tree-based-method.html#cb306-30"></a>  R.ts &lt;-<span class="st"> </span><span class="kw">lapply</span>(curr_tree, <span class="cf">function</span>(x) {</span>
-<span id="cb306-31"><a href="tree-based-method.html#cb306-31"></a>    <span class="kw">sum</span>(<span class="kw">predict</span>(x, test_df, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>) <span class="op">!=</span><span class="st"> </span>test_df<span class="op">$</span>class) <span class="op">/</span><span class="st"> </span>n.test</span>
-<span id="cb306-32"><a href="tree-based-method.html#cb306-32"></a>    }) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>()</span>
-<span id="cb306-33"><a href="tree-based-method.html#cb306-33"></a>  score &lt;-<span class="st"> </span>R.ts <span class="op">+</span><span class="st"> </span><span class="kw">sqrt</span>((R.ts<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>R.ts))<span class="op">/</span>n.test)</span>
-<span id="cb306-34"><a href="tree-based-method.html#cb306-34"></a>  <span class="kw">return</span>(curr_tree[[<span class="kw">max</span>(<span class="kw">which</span>(score <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(score)))]])</span>
-<span id="cb306-35"><a href="tree-based-method.html#cb306-35"></a>}</span>
-<span id="cb306-36"><a href="tree-based-method.html#cb306-36"></a></span>
-<span id="cb306-37"><a href="tree-based-method.html#cb306-37"></a>optimal_tree &lt;-<span class="st"> </span><span class="kw">rpart_learn</span>(class <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, train_df, test_df)</span>
-<span id="cb306-38"><a href="tree-based-method.html#cb306-38"></a><span class="kw">rpart.plot</span>(optimal_tree)</span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="tree-based-method.html#cb301-1" aria-hidden="true" tabindex="-1"></a>rpart_learn <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, train_df, test_df) {</span>
+<span id="cb301-2"><a href="tree-based-method.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 최대 트리 생성</span></span>
+<span id="cb301-3"><a href="tree-based-method.html#cb301-3" aria-hidden="true" tabindex="-1"></a>  max_tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(formula</span>
+<span id="cb301-4"><a href="tree-based-method.html#cb301-4" aria-hidden="true" tabindex="-1"></a>                    , <span class="at">data =</span> train_df</span>
+<span id="cb301-5"><a href="tree-based-method.html#cb301-5" aria-hidden="true" tabindex="-1"></a>                    , <span class="at">method =</span> <span class="st">&quot;class&quot;</span></span>
+<span id="cb301-6"><a href="tree-based-method.html#cb301-6" aria-hidden="true" tabindex="-1"></a>                    , <span class="at">parms =</span> <span class="fu">list</span>(<span class="at">split =</span> <span class="st">&quot;gini&quot;</span>)</span>
+<span id="cb301-7"><a href="tree-based-method.html#cb301-7" aria-hidden="true" tabindex="-1"></a>                    , <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">minsplit =</span> <span class="dv">2</span></span>
+<span id="cb301-8"><a href="tree-based-method.html#cb301-8" aria-hidden="true" tabindex="-1"></a>                                              , <span class="at">minbucket =</span> <span class="dv">1</span></span>
+<span id="cb301-9"><a href="tree-based-method.html#cb301-9" aria-hidden="true" tabindex="-1"></a>                                              , <span class="at">cp =</span> <span class="dv">0</span></span>
+<span id="cb301-10"><a href="tree-based-method.html#cb301-10" aria-hidden="true" tabindex="-1"></a>                                              , <span class="at">xval =</span> <span class="dv">0</span></span>
+<span id="cb301-11"><a href="tree-based-method.html#cb301-11" aria-hidden="true" tabindex="-1"></a>                                              , <span class="at">maxcompete =</span> <span class="dv">0</span></span>
+<span id="cb301-12"><a href="tree-based-method.html#cb301-12" aria-hidden="true" tabindex="-1"></a>                    )</span>
+<span id="cb301-13"><a href="tree-based-method.html#cb301-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb301-14"><a href="tree-based-method.html#cb301-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb301-15"><a href="tree-based-method.html#cb301-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 가지치기</span></span>
+<span id="cb301-16"><a href="tree-based-method.html#cb301-16" aria-hidden="true" tabindex="-1"></a>  curr_tree <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb301-17"><a href="tree-based-method.html#cb301-17" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb301-18"><a href="tree-based-method.html#cb301-18" aria-hidden="true" tabindex="-1"></a>  curr_tree[[k]] <span class="ot">&lt;-</span> max_tree</span>
+<span id="cb301-19"><a href="tree-based-method.html#cb301-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(<span class="fu">dim</span>(curr_tree[[k]]<span class="sc">$</span>frame)[<span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb301-20"><a href="tree-based-method.html#cb301-20" aria-hidden="true" tabindex="-1"></a>    internal.node.index <span class="ot">&lt;-</span> <span class="fu">rownames</span>(curr_tree[[k]]<span class="sc">$</span>frame)[<span class="fu">which</span>(curr_tree[[k]]<span class="sc">$</span>frame<span class="sc">$</span>var <span class="sc">!=</span> <span class="st">&#39;&lt;leaf&gt;&#39;</span>)] <span class="sc">%&gt;%</span></span>
+<span id="cb301-21"><a href="tree-based-method.html#cb301-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>()</span>
+<span id="cb301-22"><a href="tree-based-method.html#cb301-22" aria-hidden="true" tabindex="-1"></a>    df.cost <span class="ot">&lt;-</span> <span class="fu">lapply</span>(internal.node.index, subtreeEval, <span class="at">tree=</span>curr_tree[[k]]) <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span>
+<span id="cb301-23"><a href="tree-based-method.html#cb301-23" aria-hidden="true" tabindex="-1"></a>    curr_tree[[k <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">snip.rpart</span>(curr_tree[[k]],</span>
+<span id="cb301-24"><a href="tree-based-method.html#cb301-24" aria-hidden="true" tabindex="-1"></a>               df.cost<span class="sc">$</span>pruning_node[<span class="fu">which.min</span>(df.cost<span class="sc">$</span>alpha)])</span>
+<span id="cb301-25"><a href="tree-based-method.html#cb301-25" aria-hidden="true" tabindex="-1"></a>    k <span class="ot">&lt;-</span> k <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb301-26"><a href="tree-based-method.html#cb301-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb301-27"><a href="tree-based-method.html#cb301-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb301-28"><a href="tree-based-method.html#cb301-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 최적 가지치기 트리 선정</span></span>
+<span id="cb301-29"><a href="tree-based-method.html#cb301-29" aria-hidden="true" tabindex="-1"></a>  n.test <span class="ot">&lt;-</span> <span class="fu">dim</span>(test_df)[<span class="dv">1</span>]</span>
+<span id="cb301-30"><a href="tree-based-method.html#cb301-30" aria-hidden="true" tabindex="-1"></a>  R.ts <span class="ot">&lt;-</span> <span class="fu">lapply</span>(curr_tree, <span class="cf">function</span>(x) {</span>
+<span id="cb301-31"><a href="tree-based-method.html#cb301-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(<span class="fu">predict</span>(x, test_df, <span class="at">type=</span><span class="st">&quot;class&quot;</span>) <span class="sc">!=</span> test_df<span class="sc">$</span>class) <span class="sc">/</span> n.test</span>
+<span id="cb301-32"><a href="tree-based-method.html#cb301-32" aria-hidden="true" tabindex="-1"></a>    }) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb301-33"><a href="tree-based-method.html#cb301-33" aria-hidden="true" tabindex="-1"></a>  score <span class="ot">&lt;-</span> R.ts <span class="sc">+</span> <span class="fu">sqrt</span>((R.ts<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> R.ts))<span class="sc">/</span>n.test)</span>
+<span id="cb301-34"><a href="tree-based-method.html#cb301-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(curr_tree[[<span class="fu">max</span>(<span class="fu">which</span>(score <span class="sc">==</span> <span class="fu">min</span>(score)))]])</span>
+<span id="cb301-35"><a href="tree-based-method.html#cb301-35" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb301-36"><a href="tree-based-method.html#cb301-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb301-37"><a href="tree-based-method.html#cb301-37" aria-hidden="true" tabindex="-1"></a>optimal_tree <span class="ot">&lt;-</span> <span class="fu">rpart_learn</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df, test_df)</span>
+<span id="cb301-38"><a href="tree-based-method.html#cb301-38" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(optimal_tree)</span></code></pre></div>
 <p><img src="data-mining-book_files/figure-html/rpart-learn-1.png" width="672" /></p>
 </div>
 </div>
-<div id="cart-r-pkg" class="section level2">
+<div id="cart-r-pkg" class="section level2" number="8.5">
 <h2><span class="header-section-number">8.5</span> R패키지 내 분류 트리 방법</h2>
 <p>앞 장에서는 <em>rpart</em>의 결과를 이용하여 교재 8.2 - 8.3장의 예제를 재현해보았다. 실제로 <em>rpart</em> 내부의 기본 트리 방법은 교재의 예제와는 다소 다른 부분이 있다. 이 장에서는 실제 <em>rpart</em> 패키지의 분류 트리 방법에 대해 알아본다.</p>
-<div id="cart-r-pkg-split" class="section level3">
+<div id="cart-r-pkg-split" class="section level3" number="8.5.1">
 <h3><span class="header-section-number">8.5.1</span> 트리 확장</h3>
 <p>트리 내 임의의 노드 <span class="math inline">\(t\)</span>에 대한 불순도는 아래와 같이 정의된다.
 <span class="math display">\[i(t) = \sum_{j=1}^{J} f\left(p(j|t)\right)\]</span>
@@ -1286,7 +1359,7 @@ Figure 8.6: 2단계 가지치기 결과
 \Delta I(s,t) &amp;=&amp; I(t) - I(t_L) - I(t_R)\\ &amp;=&amp; p(t)i(t) - p(t_L)i(t_L) - p(t_R)i(t_R) 
 \end{eqnarray}\]</span></p>
 <p><em>rpart</em>는 위 <span class="math inline">\(\Delta I(s,t)\)</span>값이 최대가 되는 분지 기준 <span class="math inline">\(s^*\)</span>를 찾아 노드 <span class="math inline">\(t\)</span>를 분지하여 트리를 확장하고, 확장된 트리의 최종 노드에서 다시 최적 분지를 찾는 과정을 반복한다.</p>
-<div id="분지-함수" class="section level4">
+<div id="분지-함수" class="section level4" number="8.5.1.1">
 <h4><span class="header-section-number">8.5.1.1</span> 분지 함수</h4>
 <p>함수 <em>rpart</em> 사용 시 <em>parms</em> 파라미터에 <em>split</em> 값으로 분지 방법을 설정할 수 있다.</p>
 <ol style="list-style-type: decimal">
@@ -1301,7 +1374,7 @@ Figure 8.6: 2단계 가지치기 결과
 </ol>
 </div>
 </div>
-<div id="cart-r-pkg-pruning" class="section level3">
+<div id="cart-r-pkg-pruning" class="section level3" number="8.5.2">
 <h3><span class="header-section-number">8.5.2</span> 가지치기</h3>
 <p>임의의 노드 <span class="math inline">\(t\)</span>에 대한 위험도(오분류 비용의 기대치)는 아래와 같이 계산된다.
 <span class="math display">\[r(t) = \sum_{j \neq \tau(t)} p(j|t)C\left(\tau(t)|j\right)\]</span>
@@ -1323,7 +1396,7 @@ Figure 8.6: 2단계 가지치기 결과
 <li><span class="math inline">\(\alpha &gt; \beta\)</span>일 때, <span class="math inline">\(T_\alpha\)</span>는 <span class="math inline">\(T_\beta\)</span>와 동일하거나 혹은 <span class="math inline">\(T_\beta\)</span>에서 가지치기된 트리이다.</li>
 </ul>
 </div>
-<div id="cart-r-pkg-param" class="section level3">
+<div id="cart-r-pkg-param" class="section level3" number="8.5.3">
 <h3><span class="header-section-number">8.5.3</span> 파라미터값 결정</h3>
 <p>함수 <em>rpart</em>를 사용할 때 여러가지 사용자 정의 파라미터값을 설정할 수 있으며, 그 파라미터 값에 따라 생성되는 트리의 결과가 달라진다. 대표적인 파라미터 값으로는 아래와 같은 것들이 있다.</p>
 <ul>
@@ -1336,9 +1409,9 @@ Figure 8.6: 2단계 가지치기 결과
 </div>
 </div>
 <h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-breiman1984classification">
-<p>Breiman, Leo, Jerome Friedman, Charles J Stone, and Richard A Olshen. 1984. <em>Classification and Regression Trees</em>. CRC press.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-breiman1984classification" class="csl-entry">
+Breiman, Leo, Jerome Friedman, Charles J Stone, and Richard A Olshen. 1984. <em>Classification and Regression Trees</em>. CRC press.
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -1360,6 +1433,7 @@ s.setAttribute('data-timestamp', +new Date());
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
             </section>
 
           </div>
@@ -1389,6 +1463,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1408,7 +1483,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["data-mining-book.pdf"],
+"download": ["data-mining-book.pdf", "data-mining-book.epub"],
 "toc": {
 "collapse": "subsection"
 },
