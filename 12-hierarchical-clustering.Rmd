@@ -38,7 +38,7 @@ tribble(
   ~method, ~equation,
   "단일연결법(single linkage method)", "$\\min_{u \\in C_i, \\, v \\in C_j} d(u, v)$",
   "완전연결법(complete linkage method)", "$\\max_{u \\in C_i, \\, v \\in C_j} d(u, v)$",
-  "평균연결법(average linkage method)", "$\\frac{1}{|C_i||C_j|} \\sum_{u \\in C_i, \\, v \\in C_j} d(u, v)$",
+  "평균연결법(average linkage method)", "$\\frac{1}{\\lvert C_i \\rvert \\lvert C_j \\rvert} \\sum_{u \\in C_i, \\, v \\in C_j} d(u, v)$",
   "중심연결법(centroid linkage method)", "$d(\\mathbf{c}_i, \\mathbf{c}_j)$"
 ) %>%
   knitr::kable(

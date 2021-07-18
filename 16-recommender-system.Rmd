@@ -152,7 +152,7 @@ words_of_interest %>%
   knitr::kable(
     booktabs = TRUE,
     align = c('c', 'c'),
-    col.names = c('단어 ($i$)', '가중치 ($w_{iu}$'),
+    col.names = c('단어 ($i$)', '가중치 ($w_{iu}$)'),
     caption = '목표 사용자의 관심 단어 및 가중치'
   )
 ```

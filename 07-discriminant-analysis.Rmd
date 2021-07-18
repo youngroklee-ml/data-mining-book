@@ -409,8 +409,8 @@ knitr::kable(
   align = rep('r', dim(lda_posterior_result_df)[2]),
   col.names = c('객체번호', '$x_1$', '$x_2$',
                 '실제범주', 
-                '$P(y = 1 | \\mathbf{x})$', 
-                '$P(y = 2 | \\mathbf{x})$',
+                '$P(y = 1 \\vert \\mathbf{x})$', 
+                '$P(y = 2 \\vert \\mathbf{x})$',
                 '추정범주'),
   caption = '학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주')
 ```
@@ -448,8 +448,8 @@ train_df %>% bind_cols(
     align = rep('r', dim(lda_posterior_result_df)[2]),
     col.names = c('객체번호', '$x_1$', '$x_2$',
                 '실제범주', 
-                '$P(y = 1 | \\mathbf{x})$', 
-                '$P(y = 2 | \\mathbf{x})$',
+                '$P(y = 1 \\vert \\mathbf{x})$', 
+                '$P(y = 2 \\vert \\mathbf{x})$',
                 '추정범주'),
     caption = '학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주 (사전확률 = 0.5)')
 ```
@@ -519,8 +519,8 @@ knitr::kable(
   align = rep('r', dim(lda_unequal_cost_result_df)[2]),
   col.names = c('객체번호', '$x_1$', '$x_2$',
                 '실제범주', 
-                '$C(2 \\, | \\, 1) P(y = 1 | \\mathbf{x})$', 
-                '$C(1 \\, | \\, 2) P(y = 2 | \\mathbf{x})$',
+                '$C(2 \\, \\vert \\, 1) P(y = 1 \\vert \\mathbf{x})$', 
+                '$C(1 \\, \\vert \\, 2) P(y = 2 \\vert \\mathbf{x})$',
                 '추정범주'),
   caption = '학습표본에 대한 오분류 비용을 고려한 LDA 적용 결과')
 ```
@@ -650,8 +650,8 @@ knitr::kable(
   align = rep('r', dim(qda_posterior_result_df)[2]),
   col.names = c('객체번호', '$x_1$', '$x_2$',
                 '실제범주', 
-                '$P(y = 1 | \\mathbf{x})$', 
-                '$P(y = 2 | \\mathbf{x})$',
+                '$P(y = 1 \\vert \\mathbf{x})$', 
+                '$P(y = 2 \\vert \\mathbf{x})$',
                 '추정범주'),
   caption = '학습표본에 대한 QDA 적용 결과: 사후확률 및 추정범주')
 ```
