@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2021-07-18" />
+<meta name="date" content="2021-07-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -517,10 +517,10 @@ R^{ts}(d) = \frac{1}{L} \sum_{i = N + 1}^{N + L} I(d(\mathbf{x}_i) \neq y_i)
 <div id="precision-sensitivity-specificity" class="section level2" number="10.3">
 <h2><span class="header-section-number">10.3</span> 정확도, 민감도 및 특이도</h2>
 <p>의학 분야에서 어떤 질병에 대한 진단방법을 평가할 때 오류율 이와에 정확도, 민감도 및 특이도를 분석하는 경우가 종종 있다. 실제범주가 질병이 있는 경우(<code>1</code> 또는 <code>+</code>로 표기)와 질병이 없는 경우(<code>0</code> 또는 <code>-</code>로 표기)의 두 가지로 분류된다고 하고, 진단 방법이 양성(<code>1</code> 또는 <code>+</code>) 또는 음성(<code>0</code> 또는 <code>-</code>)으로 판정할 때, 아래와 같이 네 가지 경우가 발생한다. 이와 같은 표를 정오분류표(confusion matrix)라 한다.</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="classifier-evaluation.html#cb330-1" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;d&#39;</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb330-2"><a href="classifier-evaluation.html#cb330-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(cm, <span class="st">&quot;dimnames&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Prediction =</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;0&quot;</span>), <span class="at">Reference =</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;0&quot;</span>))</span>
-<span id="cb330-3"><a href="classifier-evaluation.html#cb330-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cm) <span class="ot">&lt;-</span> <span class="st">&quot;table&quot;</span></span>
-<span id="cb330-4"><a href="classifier-evaluation.html#cb330-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cm)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="classifier-evaluation.html#cb333-1" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;d&#39;</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb333-2"><a href="classifier-evaluation.html#cb333-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(cm, <span class="st">&quot;dimnames&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Prediction =</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;0&quot;</span>), <span class="at">Reference =</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;0&quot;</span>))</span>
+<span id="cb333-3"><a href="classifier-evaluation.html#cb333-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cm) <span class="ot">&lt;-</span> <span class="st">&quot;table&quot;</span></span>
+<span id="cb333-4"><a href="classifier-evaluation.html#cb333-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cm)</span></code></pre></div>
 <pre><code>##           Reference
 ## Prediction 1 0
 ##          1 a b
@@ -570,24 +570,24 @@ y_i &amp;=&amp; \begin{cases}
 0 &amp; i = 16, \cdots, 90
 \end{cases}
 \end{eqnarray*}\]</span></p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="classifier-evaluation.html#cb332-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">20</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">80</span>)), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb332-2"><a href="classifier-evaluation.html#cb332-2" aria-hidden="true" tabindex="-1"></a>y_hat <span class="ot">&lt;-</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">15</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">75</span>), <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>)), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="classifier-evaluation.html#cb335-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">20</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">80</span>)), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb335-2"><a href="classifier-evaluation.html#cb335-2" aria-hidden="true" tabindex="-1"></a>y_hat <span class="ot">&lt;-</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">15</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">75</span>), <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>)), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
 <p>해당 추정결과에 대한 정오분류표 및 각종 평가지표를 얻기 위해 <code>caret</code> 패키지의 <code>confusionMatrix</code> 함수를 이용한다.</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="classifier-evaluation.html#cb333-1" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(<span class="at">data =</span> y_hat, <span class="at">reference =</span> y)</span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="classifier-evaluation.html#cb336-1" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(<span class="at">data =</span> y_hat, <span class="at">reference =</span> y)</span></code></pre></div>
 <p>우선 정오분류표는 결과 객체의 <code>table</code> component에 저장된다.</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="classifier-evaluation.html#cb334-1" aria-hidden="true" tabindex="-1"></a>cm<span class="sc">$</span>table</span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="classifier-evaluation.html#cb337-1" aria-hidden="true" tabindex="-1"></a>cm<span class="sc">$</span>table</span></code></pre></div>
 <pre><code>##           Reference
 ## Prediction  1  0
 ##          1 15 10
 ##          0  5 70</code></pre>
 <p>정확도를 비롯한 각종 전반적인 지표는 <code>overall</code>이라는 component에 벡터 형태로 저장된다.</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="classifier-evaluation.html#cb336-1" aria-hidden="true" tabindex="-1"></a>cm<span class="sc">$</span>overall</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="classifier-evaluation.html#cb339-1" aria-hidden="true" tabindex="-1"></a>cm<span class="sc">$</span>overall</span></code></pre></div>
 <pre><code>##       Accuracy          Kappa  AccuracyLower  AccuracyUpper   AccuracyNull 
 ##      0.8500000      0.5714286      0.7646925      0.9135456      0.8000000 
 ## AccuracyPValue  McnemarPValue 
 ##      0.1285055      0.3016996</code></pre>
 <p>또한, 민감도, 특이도를 비롯한 몇 가지 분류성능 지표들은 <code>byClass</code>라는 component에 역시 벡터 형태로 저장된다.</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="classifier-evaluation.html#cb338-1" aria-hidden="true" tabindex="-1"></a>cm<span class="sc">$</span>byClass</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="classifier-evaluation.html#cb341-1" aria-hidden="true" tabindex="-1"></a>cm<span class="sc">$</span>byClass</span></code></pre></div>
 <pre><code>##          Sensitivity          Specificity       Pos Pred Value 
 ##            0.7500000            0.8750000            0.6000000 
 ##       Neg Pred Value            Precision               Recall 
@@ -602,73 +602,73 @@ y_i &amp;=&amp; \begin{cases}
 <h2><span class="header-section-number">10.4</span> ROC 곡선</h2>
 <p>일반적으로 민감도와 특이도를 동시에 증가시키는 것은 불가능하다. 다시 말하면, 민감도를 높이면 특이도가 감소하고, 또한 반대가 성립하게 된다.</p>
 <p>예를 들어 다음과 같이 10개의 객체로 이루어진 학습표본이 있다고 하자.</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="classifier-evaluation.html#cb340-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb340-2"><a href="classifier-evaluation.html#cb340-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y,</span>
-<span id="cb340-3"><a href="classifier-evaluation.html#cb340-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">24</span>, <span class="dv">0</span>,</span>
-<span id="cb340-4"><a href="classifier-evaluation.html#cb340-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">35</span>, <span class="dv">0</span>,</span>
-<span id="cb340-5"><a href="classifier-evaluation.html#cb340-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">37</span>, <span class="dv">1</span>,</span>
-<span id="cb340-6"><a href="classifier-evaluation.html#cb340-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">42</span>, <span class="dv">0</span>,</span>
-<span id="cb340-7"><a href="classifier-evaluation.html#cb340-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">49</span>, <span class="dv">1</span>,</span>
-<span id="cb340-8"><a href="classifier-evaluation.html#cb340-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">54</span>, <span class="dv">1</span>,</span>
-<span id="cb340-9"><a href="classifier-evaluation.html#cb340-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">56</span>, <span class="dv">0</span>,</span>
-<span id="cb340-10"><a href="classifier-evaluation.html#cb340-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">68</span>, <span class="dv">1</span>,</span>
-<span id="cb340-11"><a href="classifier-evaluation.html#cb340-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">72</span>, <span class="dv">1</span>,</span>
-<span id="cb340-12"><a href="classifier-evaluation.html#cb340-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">73</span>, <span class="dv">1</span></span>
-<span id="cb340-13"><a href="classifier-evaluation.html#cb340-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb340-14"><a href="classifier-evaluation.html#cb340-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">factor</span>(y, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="classifier-evaluation.html#cb343-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb343-2"><a href="classifier-evaluation.html#cb343-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y,</span>
+<span id="cb343-3"><a href="classifier-evaluation.html#cb343-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">24</span>, <span class="dv">0</span>,</span>
+<span id="cb343-4"><a href="classifier-evaluation.html#cb343-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">35</span>, <span class="dv">0</span>,</span>
+<span id="cb343-5"><a href="classifier-evaluation.html#cb343-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">37</span>, <span class="dv">1</span>,</span>
+<span id="cb343-6"><a href="classifier-evaluation.html#cb343-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">42</span>, <span class="dv">0</span>,</span>
+<span id="cb343-7"><a href="classifier-evaluation.html#cb343-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">49</span>, <span class="dv">1</span>,</span>
+<span id="cb343-8"><a href="classifier-evaluation.html#cb343-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">54</span>, <span class="dv">1</span>,</span>
+<span id="cb343-9"><a href="classifier-evaluation.html#cb343-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">56</span>, <span class="dv">0</span>,</span>
+<span id="cb343-10"><a href="classifier-evaluation.html#cb343-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">68</span>, <span class="dv">1</span>,</span>
+<span id="cb343-11"><a href="classifier-evaluation.html#cb343-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">72</span>, <span class="dv">1</span>,</span>
+<span id="cb343-12"><a href="classifier-evaluation.html#cb343-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">73</span>, <span class="dv">1</span></span>
+<span id="cb343-13"><a href="classifier-evaluation.html#cb343-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb343-14"><a href="classifier-evaluation.html#cb343-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">factor</span>(y, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)))</span></code></pre></div>
 <p>분류기준이 만약 <span class="math inline">\(x &lt; 40\)</span>이면 범주 <code>0</code>, <span class="math inline">\(x \geq 40\)</span>이면 범주 <code>1</code>로 추정할 때, 정오분류표는 다음과 같다.</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="classifier-evaluation.html#cb341-1" aria-hidden="true" tabindex="-1"></a>cm40 <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(</span>
-<span id="cb341-2"><a href="classifier-evaluation.html#cb341-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(<span class="fu">as.integer</span>(train_df<span class="sc">$</span>x <span class="sc">&gt;=</span> <span class="dv">40</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),</span>
-<span id="cb341-3"><a href="classifier-evaluation.html#cb341-3" aria-hidden="true" tabindex="-1"></a>  train_df<span class="sc">$</span>y</span>
-<span id="cb341-4"><a href="classifier-evaluation.html#cb341-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb341-5"><a href="classifier-evaluation.html#cb341-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb341-6"><a href="classifier-evaluation.html#cb341-6" aria-hidden="true" tabindex="-1"></a>cm40<span class="sc">$</span>table</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="classifier-evaluation.html#cb344-1" aria-hidden="true" tabindex="-1"></a>cm40 <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(</span>
+<span id="cb344-2"><a href="classifier-evaluation.html#cb344-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(<span class="fu">as.integer</span>(train_df<span class="sc">$</span>x <span class="sc">&gt;=</span> <span class="dv">40</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),</span>
+<span id="cb344-3"><a href="classifier-evaluation.html#cb344-3" aria-hidden="true" tabindex="-1"></a>  train_df<span class="sc">$</span>y</span>
+<span id="cb344-4"><a href="classifier-evaluation.html#cb344-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb344-5"><a href="classifier-evaluation.html#cb344-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb344-6"><a href="classifier-evaluation.html#cb344-6" aria-hidden="true" tabindex="-1"></a>cm40<span class="sc">$</span>table</span></code></pre></div>
 <pre><code>##           Reference
 ## Prediction 1 0
 ##          1 5 2
 ##          0 1 2</code></pre>
 <p>이 때 구해지는 민감도 및 특이도는 아래와 같다.</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="classifier-evaluation.html#cb343-1" aria-hidden="true" tabindex="-1"></a>cm40<span class="sc">$</span>byClass[<span class="fu">c</span>(<span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="classifier-evaluation.html#cb346-1" aria-hidden="true" tabindex="-1"></a>cm40<span class="sc">$</span>byClass[<span class="fu">c</span>(<span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>)]</span></code></pre></div>
 <pre><code>## Sensitivity Specificity 
 ##   0.8333333   0.5000000</code></pre>
 <p>한편, 분류기준이 만약 <span class="math inline">\(x &lt; 50\)</span>이면 범주 <code>0</code>, <span class="math inline">\(x \geq 50\)</span>이면 범주 <code>1</code>로 추정할 때, 정오분류표는 다음과 같다.</p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="classifier-evaluation.html#cb345-1" aria-hidden="true" tabindex="-1"></a>cm50 <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(</span>
-<span id="cb345-2"><a href="classifier-evaluation.html#cb345-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(<span class="fu">as.integer</span>(train_df<span class="sc">$</span>x <span class="sc">&gt;=</span> <span class="dv">50</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),</span>
-<span id="cb345-3"><a href="classifier-evaluation.html#cb345-3" aria-hidden="true" tabindex="-1"></a>  train_df<span class="sc">$</span>y</span>
-<span id="cb345-4"><a href="classifier-evaluation.html#cb345-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb345-5"><a href="classifier-evaluation.html#cb345-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb345-6"><a href="classifier-evaluation.html#cb345-6" aria-hidden="true" tabindex="-1"></a>cm50<span class="sc">$</span>table</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="classifier-evaluation.html#cb348-1" aria-hidden="true" tabindex="-1"></a>cm50 <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(</span>
+<span id="cb348-2"><a href="classifier-evaluation.html#cb348-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(<span class="fu">as.integer</span>(train_df<span class="sc">$</span>x <span class="sc">&gt;=</span> <span class="dv">50</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),</span>
+<span id="cb348-3"><a href="classifier-evaluation.html#cb348-3" aria-hidden="true" tabindex="-1"></a>  train_df<span class="sc">$</span>y</span>
+<span id="cb348-4"><a href="classifier-evaluation.html#cb348-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb348-5"><a href="classifier-evaluation.html#cb348-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb348-6"><a href="classifier-evaluation.html#cb348-6" aria-hidden="true" tabindex="-1"></a>cm50<span class="sc">$</span>table</span></code></pre></div>
 <pre><code>##           Reference
 ## Prediction 1 0
 ##          1 4 1
 ##          0 2 3</code></pre>
 <p>또한, 이 때 구해지는 민감도 및 특이도는 아래와 같다.</p>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="classifier-evaluation.html#cb347-1" aria-hidden="true" tabindex="-1"></a>cm50<span class="sc">$</span>byClass[<span class="fu">c</span>(<span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="classifier-evaluation.html#cb350-1" aria-hidden="true" tabindex="-1"></a>cm50<span class="sc">$</span>byClass[<span class="fu">c</span>(<span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>)]</span></code></pre></div>
 <pre><code>## Sensitivity Specificity 
 ##   0.6666667   0.7500000</code></pre>
 <p>위 <span class="math inline">\(x\)</span>값 40을 기준으로 분류를 하는 경우와 비교하여 민감도는 감소하고 특이도는 증가함을 관찰할 수 있다.</p>
 <p>분류를 위한 <span class="math inline">\(x\)</span> 기준값(threshold)을 증가시켜가면서 민감도와 특이도가 어떻게 변하는 지 살펴보도록 하자.</p>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="classifier-evaluation.html#cb349-1" aria-hidden="true" tabindex="-1"></a>univariate_binary_rule <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, th) {</span>
-<span id="cb349-2"><a href="classifier-evaluation.html#cb349-2" aria-hidden="true" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(</span>
-<span id="cb349-3"><a href="classifier-evaluation.html#cb349-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">factor</span>(<span class="fu">as.integer</span>(x <span class="sc">&gt;=</span> th), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),</span>
-<span id="cb349-4"><a href="classifier-evaluation.html#cb349-4" aria-hidden="true" tabindex="-1"></a>    y</span>
-<span id="cb349-5"><a href="classifier-evaluation.html#cb349-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb349-6"><a href="classifier-evaluation.html#cb349-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb349-7"><a href="classifier-evaluation.html#cb349-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">threshold =</span> th, </span>
-<span id="cb349-8"><a href="classifier-evaluation.html#cb349-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">sensitivity =</span> cm<span class="sc">$</span>byClass[<span class="st">&quot;Sensitivity&quot;</span>],</span>
-<span id="cb349-9"><a href="classifier-evaluation.html#cb349-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">specificity =</span> cm<span class="sc">$</span>byClass[<span class="st">&quot;Specificity&quot;</span>])</span>
-<span id="cb349-10"><a href="classifier-evaluation.html#cb349-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb349-11"><a href="classifier-evaluation.html#cb349-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb349-12"><a href="classifier-evaluation.html#cb349-12" aria-hidden="true" tabindex="-1"></a>th <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">sort</span>(train_df<span class="sc">$</span>x), <span class="cn">Inf</span>)</span>
-<span id="cb349-13"><a href="classifier-evaluation.html#cb349-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb349-14"><a href="classifier-evaluation.html#cb349-14" aria-hidden="true" tabindex="-1"></a>roc_df <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(th, univariate_binary_rule, <span class="at">x =</span> train_df<span class="sc">$</span>x, <span class="at">y =</span> train_df<span class="sc">$</span>y)</span>
-<span id="cb349-15"><a href="classifier-evaluation.html#cb349-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb349-16"><a href="classifier-evaluation.html#cb349-16" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb349-17"><a href="classifier-evaluation.html#cb349-17" aria-hidden="true" tabindex="-1"></a>  roc_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb349-18"><a href="classifier-evaluation.html#cb349-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb349-19"><a href="classifier-evaluation.html#cb349-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;분류기준값($x$)&#39;</span>, <span class="st">&#39;민감도(sensitivity)&#39;</span>, <span class="st">&#39;특이도(specificity)&#39;</span>),</span>
-<span id="cb349-20"><a href="classifier-evaluation.html#cb349-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;분류기준별 민감도 및 특이도&#39;</span></span>
-<span id="cb349-21"><a href="classifier-evaluation.html#cb349-21" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="classifier-evaluation.html#cb352-1" aria-hidden="true" tabindex="-1"></a>univariate_binary_rule <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, th) {</span>
+<span id="cb352-2"><a href="classifier-evaluation.html#cb352-2" aria-hidden="true" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(</span>
+<span id="cb352-3"><a href="classifier-evaluation.html#cb352-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">factor</span>(<span class="fu">as.integer</span>(x <span class="sc">&gt;=</span> th), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)),</span>
+<span id="cb352-4"><a href="classifier-evaluation.html#cb352-4" aria-hidden="true" tabindex="-1"></a>    y</span>
+<span id="cb352-5"><a href="classifier-evaluation.html#cb352-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb352-6"><a href="classifier-evaluation.html#cb352-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb352-7"><a href="classifier-evaluation.html#cb352-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">threshold =</span> th, </span>
+<span id="cb352-8"><a href="classifier-evaluation.html#cb352-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">sensitivity =</span> cm<span class="sc">$</span>byClass[<span class="st">&quot;Sensitivity&quot;</span>],</span>
+<span id="cb352-9"><a href="classifier-evaluation.html#cb352-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">specificity =</span> cm<span class="sc">$</span>byClass[<span class="st">&quot;Specificity&quot;</span>])</span>
+<span id="cb352-10"><a href="classifier-evaluation.html#cb352-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb352-11"><a href="classifier-evaluation.html#cb352-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb352-12"><a href="classifier-evaluation.html#cb352-12" aria-hidden="true" tabindex="-1"></a>th <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">sort</span>(train_df<span class="sc">$</span>x), <span class="cn">Inf</span>)</span>
+<span id="cb352-13"><a href="classifier-evaluation.html#cb352-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb352-14"><a href="classifier-evaluation.html#cb352-14" aria-hidden="true" tabindex="-1"></a>roc_df <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(th, univariate_binary_rule, <span class="at">x =</span> train_df<span class="sc">$</span>x, <span class="at">y =</span> train_df<span class="sc">$</span>y)</span>
+<span id="cb352-15"><a href="classifier-evaluation.html#cb352-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb352-16"><a href="classifier-evaluation.html#cb352-16" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb352-17"><a href="classifier-evaluation.html#cb352-17" aria-hidden="true" tabindex="-1"></a>  roc_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb352-18"><a href="classifier-evaluation.html#cb352-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb352-19"><a href="classifier-evaluation.html#cb352-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;분류기준값($x$)&#39;</span>, <span class="st">&#39;민감도(sensitivity)&#39;</span>, <span class="st">&#39;특이도(specificity)&#39;</span>),</span>
+<span id="cb352-20"><a href="classifier-evaluation.html#cb352-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;분류기준별 민감도 및 특이도&#39;</span></span>
+<span id="cb352-21"><a href="classifier-evaluation.html#cb352-21" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:roc-data">Table 10.1: </span>분류기준별 민감도 및 특이도</caption>
 <thead>
@@ -738,9 +738,9 @@ y_i &amp;=&amp; \begin{cases}
 </table>
 <p>민감도와 특이도를 동시에 그래프로 나타낸 것 중 ROC(receiver operating characteristic) 곡선이 널리 사용되는데, 이는 분류기의 경계치를 조정하여 가면서 (1 - 특이도)(또는 false positive rate)을 <span class="math inline">\(x\)</span>축에, 민감도를 <span class="math inline">\(y\)</span>축에 도식화한 것이다.</p>
 <p>위 Table <a href="classifier-evaluation.html#tab:roc-data">10.1</a>를 바탕으로 ROC 곡선을 작성해보자.</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="classifier-evaluation.html#cb350-1" aria-hidden="true" tabindex="-1"></a>roc_df <span class="sc">%&gt;%</span></span>
-<span id="cb350-2"><a href="classifier-evaluation.html#cb350-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">-</span> specificity, <span class="at">y =</span> sensitivity)) <span class="sc">+</span></span>
-<span id="cb350-3"><a href="classifier-evaluation.html#cb350-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="classifier-evaluation.html#cb353-1" aria-hidden="true" tabindex="-1"></a>roc_df <span class="sc">%&gt;%</span></span>
+<span id="cb353-2"><a href="classifier-evaluation.html#cb353-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">-</span> specificity, <span class="at">y =</span> sensitivity)) <span class="sc">+</span></span>
+<span id="cb353-3"><a href="classifier-evaluation.html#cb353-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:roc-example"></span>
 <img src="data-mining-book_files/figure-html/roc-example-1.png" alt="ROC 곡선" width="672" />
 <p class="caption">
@@ -759,15 +759,15 @@ Figure 10.1: ROC 곡선
 \text{lift} &amp;=&amp; \frac{n_{kj}}{\frac{1}{K} \sum_{k = 1}^{K} n_{kj}}
 \end{eqnarray*}\]</span></p>
 <p>1,000개의 객체로 이루어진 어떤 데이터의 실제 범주별 빈도가 다음과 같다고 하자.</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="classifier-evaluation.html#cb351-1" aria-hidden="true" tabindex="-1"></a>y_freq <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb351-2"><a href="classifier-evaluation.html#cb351-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>y, <span class="sc">~</span>n,</span>
-<span id="cb351-3"><a href="classifier-evaluation.html#cb351-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">437</span>,</span>
-<span id="cb351-4"><a href="classifier-evaluation.html#cb351-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">348</span>,</span>
-<span id="cb351-5"><a href="classifier-evaluation.html#cb351-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">215</span></span>
-<span id="cb351-6"><a href="classifier-evaluation.html#cb351-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb351-7"><a href="classifier-evaluation.html#cb351-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">factor</span>(y, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)))</span>
-<span id="cb351-8"><a href="classifier-evaluation.html#cb351-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb351-9"><a href="classifier-evaluation.html#cb351-9" aria-hidden="true" tabindex="-1"></a>y_freq</span></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="classifier-evaluation.html#cb354-1" aria-hidden="true" tabindex="-1"></a>y_freq <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb354-2"><a href="classifier-evaluation.html#cb354-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>y, <span class="sc">~</span>n,</span>
+<span id="cb354-3"><a href="classifier-evaluation.html#cb354-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">437</span>,</span>
+<span id="cb354-4"><a href="classifier-evaluation.html#cb354-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">348</span>,</span>
+<span id="cb354-5"><a href="classifier-evaluation.html#cb354-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">215</span></span>
+<span id="cb354-6"><a href="classifier-evaluation.html#cb354-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb354-7"><a href="classifier-evaluation.html#cb354-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">factor</span>(y, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)))</span>
+<span id="cb354-8"><a href="classifier-evaluation.html#cb354-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb354-9"><a href="classifier-evaluation.html#cb354-9" aria-hidden="true" tabindex="-1"></a>y_freq</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   y         n
 ##   &lt;fct&gt; &lt;dbl&gt;
@@ -775,21 +775,21 @@ Figure 10.1: ROC 곡선
 ## 2 2       348
 ## 3 3       215</code></pre>
 <p>한편, 어떤 분류모형을 사용하여 각 객체의 범주 <code>1</code>(특정 범주)에 대한 사후확률을 산출한 후, 전체 객체를 사후확률의 내림차순으로 정렬한 뒤 100개 객체씩 한 집단으로 구분하였다. 각 집단에 속하는 범주 <code>1</code>의 빈도는 다음과 같았다.</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="classifier-evaluation.html#cb353-1" aria-hidden="true" tabindex="-1"></a>freq_within_group <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb353-2"><a href="classifier-evaluation.html#cb353-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>k, <span class="sc">~</span>n,</span>
-<span id="cb353-3"><a href="classifier-evaluation.html#cb353-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">92</span>,</span>
-<span id="cb353-4"><a href="classifier-evaluation.html#cb353-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">78</span>,</span>
-<span id="cb353-5"><a href="classifier-evaluation.html#cb353-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">64</span>,</span>
-<span id="cb353-6"><a href="classifier-evaluation.html#cb353-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">57</span>,</span>
-<span id="cb353-7"><a href="classifier-evaluation.html#cb353-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="dv">43</span>,</span>
-<span id="cb353-8"><a href="classifier-evaluation.html#cb353-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span>, <span class="dv">35</span>,</span>
-<span id="cb353-9"><a href="classifier-evaluation.html#cb353-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span>, <span class="dv">29</span>,</span>
-<span id="cb353-10"><a href="classifier-evaluation.html#cb353-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span>, <span class="dv">22</span>,</span>
-<span id="cb353-11"><a href="classifier-evaluation.html#cb353-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span>, <span class="dv">7</span>,</span>
-<span id="cb353-12"><a href="classifier-evaluation.html#cb353-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>, <span class="dv">10</span></span>
-<span id="cb353-13"><a href="classifier-evaluation.html#cb353-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb353-14"><a href="classifier-evaluation.html#cb353-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb353-15"><a href="classifier-evaluation.html#cb353-15" aria-hidden="true" tabindex="-1"></a>freq_within_group</span></code></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="classifier-evaluation.html#cb356-1" aria-hidden="true" tabindex="-1"></a>freq_within_group <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb356-2"><a href="classifier-evaluation.html#cb356-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>k, <span class="sc">~</span>n,</span>
+<span id="cb356-3"><a href="classifier-evaluation.html#cb356-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">92</span>,</span>
+<span id="cb356-4"><a href="classifier-evaluation.html#cb356-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">78</span>,</span>
+<span id="cb356-5"><a href="classifier-evaluation.html#cb356-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">64</span>,</span>
+<span id="cb356-6"><a href="classifier-evaluation.html#cb356-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">57</span>,</span>
+<span id="cb356-7"><a href="classifier-evaluation.html#cb356-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="dv">43</span>,</span>
+<span id="cb356-8"><a href="classifier-evaluation.html#cb356-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span>, <span class="dv">35</span>,</span>
+<span id="cb356-9"><a href="classifier-evaluation.html#cb356-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span>, <span class="dv">29</span>,</span>
+<span id="cb356-10"><a href="classifier-evaluation.html#cb356-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span>, <span class="dv">22</span>,</span>
+<span id="cb356-11"><a href="classifier-evaluation.html#cb356-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span>, <span class="dv">7</span>,</span>
+<span id="cb356-12"><a href="classifier-evaluation.html#cb356-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>, <span class="dv">10</span></span>
+<span id="cb356-13"><a href="classifier-evaluation.html#cb356-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb356-14"><a href="classifier-evaluation.html#cb356-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb356-15"><a href="classifier-evaluation.html#cb356-15" aria-hidden="true" tabindex="-1"></a>freq_within_group</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 2
 ##        k     n
 ##    &lt;dbl&gt; &lt;dbl&gt;
@@ -804,25 +804,25 @@ Figure 10.1: ROC 곡선
 ##  9     9     7
 ## 10    10    10</code></pre>
 <p>이를 바탕으로 각 집단 별 범주 <code>1</code>에 대한 통계량을 산출해보자.</p>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="classifier-evaluation.html#cb355-1" aria-hidden="true" tabindex="-1"></a>stat_df <span class="ot">&lt;-</span> freq_within_group <span class="sc">%&gt;%</span></span>
-<span id="cb355-2"><a href="classifier-evaluation.html#cb355-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cum_n =</span> <span class="fu">cumsum</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb355-3"><a href="classifier-evaluation.html#cb355-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb355-4"><a href="classifier-evaluation.html#cb355-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">captured_response_pct =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb355-5"><a href="classifier-evaluation.html#cb355-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cum_captured_response_pct =</span> cum_n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb355-6"><a href="classifier-evaluation.html#cb355-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">response_pct =</span> n <span class="sc">/</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb355-7"><a href="classifier-evaluation.html#cb355-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">lift =</span> n <span class="sc">/</span> <span class="fu">mean</span>(n)</span>
-<span id="cb355-8"><a href="classifier-evaluation.html#cb355-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb355-9"><a href="classifier-evaluation.html#cb355-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>cum_n)</span>
-<span id="cb355-10"><a href="classifier-evaluation.html#cb355-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb355-11"><a href="classifier-evaluation.html#cb355-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb355-12"><a href="classifier-evaluation.html#cb355-12" aria-hidden="true" tabindex="-1"></a>  stat_df,</span>
-<span id="cb355-13"><a href="classifier-evaluation.html#cb355-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb355-14"><a href="classifier-evaluation.html#cb355-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">6</span>),</span>
-<span id="cb355-15"><a href="classifier-evaluation.html#cb355-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;집단&#39;</span>, <span class="st">&#39;범주 1의 빈도&#39;</span>, <span class="st">&#39;% captured response&#39;</span>, </span>
-<span id="cb355-16"><a href="classifier-evaluation.html#cb355-16" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;cum. % captured response&#39;</span>, <span class="st">&#39;% response&#39;</span>, <span class="st">&#39;lift&#39;</span>),</span>
-<span id="cb355-17"><a href="classifier-evaluation.html#cb355-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;이익도표를 위한 통계량&#39;</span>,</span>
-<span id="cb355-18"><a href="classifier-evaluation.html#cb355-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span></span>
-<span id="cb355-19"><a href="classifier-evaluation.html#cb355-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="classifier-evaluation.html#cb358-1" aria-hidden="true" tabindex="-1"></a>stat_df <span class="ot">&lt;-</span> freq_within_group <span class="sc">%&gt;%</span></span>
+<span id="cb358-2"><a href="classifier-evaluation.html#cb358-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cum_n =</span> <span class="fu">cumsum</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb358-3"><a href="classifier-evaluation.html#cb358-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb358-4"><a href="classifier-evaluation.html#cb358-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">captured_response_pct =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb358-5"><a href="classifier-evaluation.html#cb358-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cum_captured_response_pct =</span> cum_n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb358-6"><a href="classifier-evaluation.html#cb358-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">response_pct =</span> n <span class="sc">/</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb358-7"><a href="classifier-evaluation.html#cb358-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">lift =</span> n <span class="sc">/</span> <span class="fu">mean</span>(n)</span>
+<span id="cb358-8"><a href="classifier-evaluation.html#cb358-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb358-9"><a href="classifier-evaluation.html#cb358-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>cum_n)</span>
+<span id="cb358-10"><a href="classifier-evaluation.html#cb358-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb358-11"><a href="classifier-evaluation.html#cb358-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb358-12"><a href="classifier-evaluation.html#cb358-12" aria-hidden="true" tabindex="-1"></a>  stat_df,</span>
+<span id="cb358-13"><a href="classifier-evaluation.html#cb358-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb358-14"><a href="classifier-evaluation.html#cb358-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">6</span>),</span>
+<span id="cb358-15"><a href="classifier-evaluation.html#cb358-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;집단&#39;</span>, <span class="st">&#39;범주 1의 빈도&#39;</span>, <span class="st">&#39;% captured response&#39;</span>, </span>
+<span id="cb358-16"><a href="classifier-evaluation.html#cb358-16" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;cum. % captured response&#39;</span>, <span class="st">&#39;% response&#39;</span>, <span class="st">&#39;lift&#39;</span>),</span>
+<span id="cb358-17"><a href="classifier-evaluation.html#cb358-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;이익도표를 위한 통계량&#39;</span>,</span>
+<span id="cb358-18"><a href="classifier-evaluation.html#cb358-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span></span>
+<span id="cb358-19"><a href="classifier-evaluation.html#cb358-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:gain-chart-stat">Table 10.2: </span>이익도표를 위한 통계량</caption>
 <thead>
@@ -919,21 +919,21 @@ Figure 10.1: ROC 곡선
 </tbody>
 </table>
 <p>Table <a href="classifier-evaluation.html#tab:gain-chart-stat">10.2</a>를 바탕으로 네 가지 이익도표를 작성해보자.</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="classifier-evaluation.html#cb356-1" aria-hidden="true" tabindex="-1"></a>stat_df <span class="sc">%&gt;%</span></span>
-<span id="cb356-2"><a href="classifier-evaluation.html#cb356-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;stat&quot;</span>, <span class="at">value =</span> <span class="st">&quot;value&quot;</span>,</span>
-<span id="cb356-3"><a href="classifier-evaluation.html#cb356-3" aria-hidden="true" tabindex="-1"></a>         captured_response_pct<span class="sc">:</span>lift) <span class="sc">%&gt;%</span></span>
-<span id="cb356-4"><a href="classifier-evaluation.html#cb356-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> k, <span class="at">y =</span> value)) <span class="sc">+</span></span>
-<span id="cb356-5"><a href="classifier-evaluation.html#cb356-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb356-6"><a href="classifier-evaluation.html#cb356-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb356-7"><a href="classifier-evaluation.html#cb356-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(stat), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>,</span>
-<span id="cb356-8"><a href="classifier-evaluation.html#cb356-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">labeller =</span> <span class="fu">as_labeller</span>(</span>
-<span id="cb356-9"><a href="classifier-evaluation.html#cb356-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="st">&quot;captured_response_pct&quot;</span> <span class="ot">=</span> <span class="st">&quot;% captured response&quot;</span>,</span>
-<span id="cb356-10"><a href="classifier-evaluation.html#cb356-10" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;cum_captured_response_pct&quot;</span> <span class="ot">=</span> <span class="st">&quot;cum. % captured response&quot;</span>,</span>
-<span id="cb356-11"><a href="classifier-evaluation.html#cb356-11" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;response_pct&quot;</span> <span class="ot">=</span> <span class="st">&quot;% response&quot;</span>,</span>
-<span id="cb356-12"><a href="classifier-evaluation.html#cb356-12" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;lift&quot;</span> <span class="ot">=</span> <span class="st">&quot;lift&quot;</span>)</span>
-<span id="cb356-13"><a href="classifier-evaluation.html#cb356-13" aria-hidden="true" tabindex="-1"></a>             )) <span class="sc">+</span></span>
-<span id="cb356-14"><a href="classifier-evaluation.html#cb356-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;group&quot;</span>) <span class="sc">+</span></span>
-<span id="cb356-15"><a href="classifier-evaluation.html#cb356-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;statistics&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="classifier-evaluation.html#cb359-1" aria-hidden="true" tabindex="-1"></a>stat_df <span class="sc">%&gt;%</span></span>
+<span id="cb359-2"><a href="classifier-evaluation.html#cb359-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;stat&quot;</span>, <span class="at">value =</span> <span class="st">&quot;value&quot;</span>,</span>
+<span id="cb359-3"><a href="classifier-evaluation.html#cb359-3" aria-hidden="true" tabindex="-1"></a>         captured_response_pct<span class="sc">:</span>lift) <span class="sc">%&gt;%</span></span>
+<span id="cb359-4"><a href="classifier-evaluation.html#cb359-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> k, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb359-5"><a href="classifier-evaluation.html#cb359-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb359-6"><a href="classifier-evaluation.html#cb359-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb359-7"><a href="classifier-evaluation.html#cb359-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(stat), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>,</span>
+<span id="cb359-8"><a href="classifier-evaluation.html#cb359-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">labeller =</span> <span class="fu">as_labeller</span>(</span>
+<span id="cb359-9"><a href="classifier-evaluation.html#cb359-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="st">&quot;captured_response_pct&quot;</span> <span class="ot">=</span> <span class="st">&quot;% captured response&quot;</span>,</span>
+<span id="cb359-10"><a href="classifier-evaluation.html#cb359-10" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;cum_captured_response_pct&quot;</span> <span class="ot">=</span> <span class="st">&quot;cum. % captured response&quot;</span>,</span>
+<span id="cb359-11"><a href="classifier-evaluation.html#cb359-11" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;response_pct&quot;</span> <span class="ot">=</span> <span class="st">&quot;% response&quot;</span>,</span>
+<span id="cb359-12"><a href="classifier-evaluation.html#cb359-12" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;lift&quot;</span> <span class="ot">=</span> <span class="st">&quot;lift&quot;</span>)</span>
+<span id="cb359-13"><a href="classifier-evaluation.html#cb359-13" aria-hidden="true" tabindex="-1"></a>             )) <span class="sc">+</span></span>
+<span id="cb359-14"><a href="classifier-evaluation.html#cb359-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;group&quot;</span>) <span class="sc">+</span></span>
+<span id="cb359-15"><a href="classifier-evaluation.html#cb359-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;statistics&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:gain-chart-plot"></span>
 <img src="data-mining-book_files/figure-html/gain-chart-plot-1.png" alt="이익도표" width="672" />
 <p class="caption">

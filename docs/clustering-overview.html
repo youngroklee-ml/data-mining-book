@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2021-07-18" />
+<meta name="date" content="2021-07-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -600,27 +600,27 @@ d(\mathbf{x}_n, \mathbf{x}_1) &amp; d(\mathbf{x}_n, \mathbf{x}_2) &amp; \dots &a
 \end{bmatrix}
 \end{equation*}\]</span></p>
 <p>아래 표는 가정에서 PC를 사용하는 10명에 대한 나이(<span class="math inline">\(x_1\)</span>), PC 경험연수(<span class="math inline">\(x_2\)</span>), 주당 사용시간(<span class="math inline">\(x_3\)</span>)을 나타낸 것이다.</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="clustering-overview.html#cb357-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb357-2"><a href="clustering-overview.html#cb357-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>x1, <span class="sc">~</span>x2, <span class="sc">~</span>x3,</span>
-<span id="cb357-3"><a href="clustering-overview.html#cb357-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">20</span>, <span class="dv">6</span>, <span class="dv">14</span>,</span>
-<span id="cb357-4"><a href="clustering-overview.html#cb357-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">28</span>, <span class="dv">8</span>, <span class="dv">13</span>,</span>
-<span id="cb357-5"><a href="clustering-overview.html#cb357-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">42</span>, <span class="dv">14</span>, <span class="dv">6</span>,</span>
-<span id="cb357-6"><a href="clustering-overview.html#cb357-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">35</span>, <span class="dv">12</span>, <span class="dv">7</span>,</span>
-<span id="cb357-7"><a href="clustering-overview.html#cb357-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="dv">30</span>, <span class="dv">15</span>, <span class="dv">7</span>,</span>
-<span id="cb357-8"><a href="clustering-overview.html#cb357-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span>, <span class="dv">30</span>, <span class="dv">7</span>, <span class="dv">15</span>,</span>
-<span id="cb357-9"><a href="clustering-overview.html#cb357-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span>, <span class="dv">45</span>, <span class="dv">13</span>, <span class="dv">6</span>,</span>
-<span id="cb357-10"><a href="clustering-overview.html#cb357-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span>, <span class="dv">46</span>, <span class="dv">4</span>, <span class="dv">2</span>,</span>
-<span id="cb357-11"><a href="clustering-overview.html#cb357-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span>, <span class="dv">51</span>, <span class="dv">3</span>, <span class="dv">3</span>,</span>
-<span id="cb357-12"><a href="clustering-overview.html#cb357-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>, <span class="dv">41</span>, <span class="dv">3</span>, <span class="dv">2</span></span>
-<span id="cb357-13"><a href="clustering-overview.html#cb357-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb357-14"><a href="clustering-overview.html#cb357-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb357-15"><a href="clustering-overview.html#cb357-15" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb357-16"><a href="clustering-overview.html#cb357-16" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb357-17"><a href="clustering-overview.html#cb357-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb357-18"><a href="clustering-overview.html#cb357-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb357-19"><a href="clustering-overview.html#cb357-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;나이($x_1$)&#39;</span>, <span class="st">&#39;PC 경험연수($x_2$)&#39;</span>, <span class="st">&#39;주당 사용시간($x_3$)&#39;</span>),</span>
-<span id="cb357-20"><a href="clustering-overview.html#cb357-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;PC 사용 데이터&#39;</span></span>
-<span id="cb357-21"><a href="clustering-overview.html#cb357-21" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="clustering-overview.html#cb360-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb360-2"><a href="clustering-overview.html#cb360-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>x1, <span class="sc">~</span>x2, <span class="sc">~</span>x3,</span>
+<span id="cb360-3"><a href="clustering-overview.html#cb360-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">20</span>, <span class="dv">6</span>, <span class="dv">14</span>,</span>
+<span id="cb360-4"><a href="clustering-overview.html#cb360-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">28</span>, <span class="dv">8</span>, <span class="dv">13</span>,</span>
+<span id="cb360-5"><a href="clustering-overview.html#cb360-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">42</span>, <span class="dv">14</span>, <span class="dv">6</span>,</span>
+<span id="cb360-6"><a href="clustering-overview.html#cb360-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">35</span>, <span class="dv">12</span>, <span class="dv">7</span>,</span>
+<span id="cb360-7"><a href="clustering-overview.html#cb360-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="dv">30</span>, <span class="dv">15</span>, <span class="dv">7</span>,</span>
+<span id="cb360-8"><a href="clustering-overview.html#cb360-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span>, <span class="dv">30</span>, <span class="dv">7</span>, <span class="dv">15</span>,</span>
+<span id="cb360-9"><a href="clustering-overview.html#cb360-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span>, <span class="dv">45</span>, <span class="dv">13</span>, <span class="dv">6</span>,</span>
+<span id="cb360-10"><a href="clustering-overview.html#cb360-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span>, <span class="dv">46</span>, <span class="dv">4</span>, <span class="dv">2</span>,</span>
+<span id="cb360-11"><a href="clustering-overview.html#cb360-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span>, <span class="dv">51</span>, <span class="dv">3</span>, <span class="dv">3</span>,</span>
+<span id="cb360-12"><a href="clustering-overview.html#cb360-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>, <span class="dv">41</span>, <span class="dv">3</span>, <span class="dv">2</span></span>
+<span id="cb360-13"><a href="clustering-overview.html#cb360-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb360-14"><a href="clustering-overview.html#cb360-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb360-15"><a href="clustering-overview.html#cb360-15" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb360-16"><a href="clustering-overview.html#cb360-16" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb360-17"><a href="clustering-overview.html#cb360-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb360-18"><a href="clustering-overview.html#cb360-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb360-19"><a href="clustering-overview.html#cb360-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;나이($x_1$)&#39;</span>, <span class="st">&#39;PC 경험연수($x_2$)&#39;</span>, <span class="st">&#39;주당 사용시간($x_3$)&#39;</span>),</span>
+<span id="cb360-20"><a href="clustering-overview.html#cb360-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;PC 사용 데이터&#39;</span></span>
+<span id="cb360-21"><a href="clustering-overview.html#cb360-21" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:pc-user">Table 11.1: </span>PC 사용 데이터</caption>
 <thead>
@@ -696,18 +696,18 @@ d(\mathbf{x}_n, \mathbf{x}_1) &amp; d(\mathbf{x}_n, \mathbf{x}_2) &amp; \dots &a
 </table>
 <p>R 함수 <code>dist</code>를 이용하여 다양한 거리를 계산할 수 있다.</p>
 <p>우선 객체 2로부터 객체 4, 5까지의 유클리드 거리는 아래와 같이 계산된다.</p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="clustering-overview.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)], <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb358-2"><a href="clustering-overview.html#cb358-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb358-3"><a href="clustering-overview.html#cb358-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb358-4"><a href="clustering-overview.html#cb358-4" aria-hidden="true" tabindex="-1"></a>    item1 <span class="sc">==</span> <span class="dv">2</span>,</span>
-<span id="cb358-5"><a href="clustering-overview.html#cb358-5" aria-hidden="true" tabindex="-1"></a>    item2 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb358-6"><a href="clustering-overview.html#cb358-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb358-7"><a href="clustering-overview.html#cb358-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb358-8"><a href="clustering-overview.html#cb358-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb358-9"><a href="clustering-overview.html#cb358-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb358-10"><a href="clustering-overview.html#cb358-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;거리&#39;</span>),</span>
-<span id="cb358-11"><a href="clustering-overview.html#cb358-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;유클리드 거리&#39;</span></span>
-<span id="cb358-12"><a href="clustering-overview.html#cb358-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="clustering-overview.html#cb361-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)], <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb361-2"><a href="clustering-overview.html#cb361-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb361-3"><a href="clustering-overview.html#cb361-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb361-4"><a href="clustering-overview.html#cb361-4" aria-hidden="true" tabindex="-1"></a>    item1 <span class="sc">==</span> <span class="dv">2</span>,</span>
+<span id="cb361-5"><a href="clustering-overview.html#cb361-5" aria-hidden="true" tabindex="-1"></a>    item2 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb361-6"><a href="clustering-overview.html#cb361-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb361-7"><a href="clustering-overview.html#cb361-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb361-8"><a href="clustering-overview.html#cb361-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb361-9"><a href="clustering-overview.html#cb361-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb361-10"><a href="clustering-overview.html#cb361-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;거리&#39;</span>),</span>
+<span id="cb361-11"><a href="clustering-overview.html#cb361-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;유클리드 거리&#39;</span></span>
+<span id="cb361-12"><a href="clustering-overview.html#cb361-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:euclidean-dist">Table 11.2: </span>유클리드 거리</caption>
 <thead>
@@ -732,18 +732,18 @@ d(\mathbf{x}_n, \mathbf{x}_1) &amp; d(\mathbf{x}_n, \mathbf{x}_2) &amp; \dots &a
 </table>
 <p>위 표에서 나타나는 바와 같이, 객체 2를 기준으로 할 때, 객체 4가 객체 5보다 멀리 떨어져있다고 할 수 있다.</p>
 <p>표준화된 거리를 계산하기 위해서는 데이터를 함수 <code>scale</code>을 이용하여 데이터를 표준화한 뒤 <code>dist</code>함수를 적용한다.</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="clustering-overview.html#cb359-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(<span class="fu">scale</span>(df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)]), <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb359-2"><a href="clustering-overview.html#cb359-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb359-3"><a href="clustering-overview.html#cb359-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb359-4"><a href="clustering-overview.html#cb359-4" aria-hidden="true" tabindex="-1"></a>    item1 <span class="sc">==</span> <span class="dv">2</span>,</span>
-<span id="cb359-5"><a href="clustering-overview.html#cb359-5" aria-hidden="true" tabindex="-1"></a>    item2 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb359-6"><a href="clustering-overview.html#cb359-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb359-7"><a href="clustering-overview.html#cb359-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb359-8"><a href="clustering-overview.html#cb359-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb359-9"><a href="clustering-overview.html#cb359-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb359-10"><a href="clustering-overview.html#cb359-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;거리&#39;</span>),</span>
-<span id="cb359-11"><a href="clustering-overview.html#cb359-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;표준 유클리드 거리&#39;</span></span>
-<span id="cb359-12"><a href="clustering-overview.html#cb359-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="clustering-overview.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(<span class="fu">scale</span>(df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)]), <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb362-2"><a href="clustering-overview.html#cb362-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb362-3"><a href="clustering-overview.html#cb362-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb362-4"><a href="clustering-overview.html#cb362-4" aria-hidden="true" tabindex="-1"></a>    item1 <span class="sc">==</span> <span class="dv">2</span>,</span>
+<span id="cb362-5"><a href="clustering-overview.html#cb362-5" aria-hidden="true" tabindex="-1"></a>    item2 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb362-6"><a href="clustering-overview.html#cb362-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb362-7"><a href="clustering-overview.html#cb362-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb362-8"><a href="clustering-overview.html#cb362-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb362-9"><a href="clustering-overview.html#cb362-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb362-10"><a href="clustering-overview.html#cb362-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;거리&#39;</span>),</span>
+<span id="cb362-11"><a href="clustering-overview.html#cb362-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;표준 유클리드 거리&#39;</span></span>
+<span id="cb362-12"><a href="clustering-overview.html#cb362-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:std-euclidean-dist">Table 11.3: </span>표준 유클리드 거리</caption>
 <thead>
@@ -782,23 +782,23 @@ m_{i} = \frac{1}{p} \sum_{a = 1}^{p} x_{ai}
 \end{equation*}\]</span></p>
 <p>식 <a href="clustering-overview.html#eq:object-correlation">(11.1)</a>은 -1에서 1 사이의 값을 가지며, 값이 클수록 두 객체의 유사성이 크다고 할 수 있다. 여기서도 데이터를 변수별로 표준화한 후 상관계수를 산출함을 추천한다.</p>
 <p>아래는 Table <a href="clustering-overview.html#tab:pc-user">11.1</a>의 객체 1과 객체 6, 8간의 상관계수를 계산한 것이다.</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="clustering-overview.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(<span class="fu">scale</span>(df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)])) <span class="sc">%&gt;%</span> </span>
-<span id="cb360-2"><a href="clustering-overview.html#cb360-2" aria-hidden="true" tabindex="-1"></a>  corrr<span class="sc">::</span><span class="fu">correlate</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb360-3"><a href="clustering-overview.html#cb360-3" aria-hidden="true" tabindex="-1"></a>  corrr<span class="sc">::</span><span class="fu">stretch</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb360-4"><a href="clustering-overview.html#cb360-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb360-5"><a href="clustering-overview.html#cb360-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.integer</span>(<span class="fu">gsub</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;&quot;</span>, x)),</span>
-<span id="cb360-6"><a href="clustering-overview.html#cb360-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">as.integer</span>(<span class="fu">gsub</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;&quot;</span>, y))</span>
-<span id="cb360-7"><a href="clustering-overview.html#cb360-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb360-8"><a href="clustering-overview.html#cb360-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb360-9"><a href="clustering-overview.html#cb360-9" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb360-10"><a href="clustering-overview.html#cb360-10" aria-hidden="true" tabindex="-1"></a>    y <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">8</span>)</span>
-<span id="cb360-11"><a href="clustering-overview.html#cb360-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb360-12"><a href="clustering-overview.html#cb360-12" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb360-13"><a href="clustering-overview.html#cb360-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb360-14"><a href="clustering-overview.html#cb360-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb360-15"><a href="clustering-overview.html#cb360-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;상관계수&#39;</span>),</span>
-<span id="cb360-16"><a href="clustering-overview.html#cb360-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;객체 간 상관계수&#39;</span></span>
-<span id="cb360-17"><a href="clustering-overview.html#cb360-17" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="clustering-overview.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(<span class="fu">scale</span>(df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)])) <span class="sc">%&gt;%</span> </span>
+<span id="cb363-2"><a href="clustering-overview.html#cb363-2" aria-hidden="true" tabindex="-1"></a>  corrr<span class="sc">::</span><span class="fu">correlate</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb363-3"><a href="clustering-overview.html#cb363-3" aria-hidden="true" tabindex="-1"></a>  corrr<span class="sc">::</span><span class="fu">stretch</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb363-4"><a href="clustering-overview.html#cb363-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb363-5"><a href="clustering-overview.html#cb363-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.integer</span>(<span class="fu">gsub</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;&quot;</span>, x)),</span>
+<span id="cb363-6"><a href="clustering-overview.html#cb363-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">as.integer</span>(<span class="fu">gsub</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;&quot;</span>, y))</span>
+<span id="cb363-7"><a href="clustering-overview.html#cb363-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb363-8"><a href="clustering-overview.html#cb363-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb363-9"><a href="clustering-overview.html#cb363-9" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb363-10"><a href="clustering-overview.html#cb363-10" aria-hidden="true" tabindex="-1"></a>    y <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">8</span>)</span>
+<span id="cb363-11"><a href="clustering-overview.html#cb363-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb363-12"><a href="clustering-overview.html#cb363-12" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb363-13"><a href="clustering-overview.html#cb363-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb363-14"><a href="clustering-overview.html#cb363-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb363-15"><a href="clustering-overview.html#cb363-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;상관계수&#39;</span>),</span>
+<span id="cb363-16"><a href="clustering-overview.html#cb363-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;객체 간 상관계수&#39;</span></span>
+<span id="cb363-17"><a href="clustering-overview.html#cb363-17" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## 
 ## Correlation method: &#39;pearson&#39;
 ## Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
@@ -828,25 +828,25 @@ m_{i} = \frac{1}{p} \sum_{a = 1}^{p} x_{ai}
 <p><span class="math display">\[\begin{equation*}
 d(\mathbf{x}_i, \mathbf{x}_j) = 1 - r_{ij}
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="clustering-overview.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(<span class="fu">scale</span>(df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)])) <span class="sc">%&gt;%</span> </span>
-<span id="cb362-2"><a href="clustering-overview.html#cb362-2" aria-hidden="true" tabindex="-1"></a>  corrr<span class="sc">::</span><span class="fu">correlate</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb362-3"><a href="clustering-overview.html#cb362-3" aria-hidden="true" tabindex="-1"></a>  corrr<span class="sc">::</span><span class="fu">stretch</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb362-4"><a href="clustering-overview.html#cb362-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb362-5"><a href="clustering-overview.html#cb362-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.integer</span>(<span class="fu">gsub</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;&quot;</span>, x)),</span>
-<span id="cb362-6"><a href="clustering-overview.html#cb362-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">as.integer</span>(<span class="fu">gsub</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;&quot;</span>, y)),</span>
-<span id="cb362-7"><a href="clustering-overview.html#cb362-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">d =</span> <span class="dv">1</span> <span class="sc">-</span> r</span>
-<span id="cb362-8"><a href="clustering-overview.html#cb362-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb362-9"><a href="clustering-overview.html#cb362-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>r) <span class="sc">%&gt;%</span></span>
-<span id="cb362-10"><a href="clustering-overview.html#cb362-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb362-11"><a href="clustering-overview.html#cb362-11" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb362-12"><a href="clustering-overview.html#cb362-12" aria-hidden="true" tabindex="-1"></a>    y <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">8</span>)</span>
-<span id="cb362-13"><a href="clustering-overview.html#cb362-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb362-14"><a href="clustering-overview.html#cb362-14" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb362-15"><a href="clustering-overview.html#cb362-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb362-16"><a href="clustering-overview.html#cb362-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb362-17"><a href="clustering-overview.html#cb362-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;거리&#39;</span>),</span>
-<span id="cb362-18"><a href="clustering-overview.html#cb362-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;상관계수 기반 비유사성 척도&#39;</span></span>
-<span id="cb362-19"><a href="clustering-overview.html#cb362-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="clustering-overview.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(<span class="fu">scale</span>(df[, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>)])) <span class="sc">%&gt;%</span> </span>
+<span id="cb365-2"><a href="clustering-overview.html#cb365-2" aria-hidden="true" tabindex="-1"></a>  corrr<span class="sc">::</span><span class="fu">correlate</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb365-3"><a href="clustering-overview.html#cb365-3" aria-hidden="true" tabindex="-1"></a>  corrr<span class="sc">::</span><span class="fu">stretch</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb365-4"><a href="clustering-overview.html#cb365-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb365-5"><a href="clustering-overview.html#cb365-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.integer</span>(<span class="fu">gsub</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;&quot;</span>, x)),</span>
+<span id="cb365-6"><a href="clustering-overview.html#cb365-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">as.integer</span>(<span class="fu">gsub</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;&quot;</span>, y)),</span>
+<span id="cb365-7"><a href="clustering-overview.html#cb365-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">d =</span> <span class="dv">1</span> <span class="sc">-</span> r</span>
+<span id="cb365-8"><a href="clustering-overview.html#cb365-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb365-9"><a href="clustering-overview.html#cb365-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>r) <span class="sc">%&gt;%</span></span>
+<span id="cb365-10"><a href="clustering-overview.html#cb365-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb365-11"><a href="clustering-overview.html#cb365-11" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb365-12"><a href="clustering-overview.html#cb365-12" aria-hidden="true" tabindex="-1"></a>    y <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">8</span>)</span>
+<span id="cb365-13"><a href="clustering-overview.html#cb365-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb365-14"><a href="clustering-overview.html#cb365-14" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb365-15"><a href="clustering-overview.html#cb365-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb365-16"><a href="clustering-overview.html#cb365-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb365-17"><a href="clustering-overview.html#cb365-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;거리&#39;</span>),</span>
+<span id="cb365-18"><a href="clustering-overview.html#cb365-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;상관계수 기반 비유사성 척도&#39;</span></span>
+<span id="cb365-19"><a href="clustering-overview.html#cb365-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## 
 ## Correlation method: &#39;pearson&#39;
 ## Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
@@ -910,20 +910,20 @@ sim(x_{ki}, x_{kj}) = \begin{cases}
 sim(\mathbf{x}_i, \mathbf{x}_j) = \frac{\sum_{k: x_{ki} + x_{kj} &gt; 0} sim(x_{ki}, x_{kj})}{\sum_{k: x_{ki} + x_{kj} &gt; 0} 1}
 \end{equation*}\]</span></p>
 <p>다음은 3명에 대한 건강 관련 문진에 대한 답을 나타낸 자료이다.</p>
-<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="clustering-overview.html#cb364-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb364-2"><a href="clustering-overview.html#cb364-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>x1, <span class="sc">~</span>x2, <span class="sc">~</span>x3, <span class="sc">~</span>x4, <span class="sc">~</span>x5,</span>
-<span id="cb364-3"><a href="clustering-overview.html#cb364-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
-<span id="cb364-4"><a href="clustering-overview.html#cb364-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb364-5"><a href="clustering-overview.html#cb364-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span></span>
-<span id="cb364-6"><a href="clustering-overview.html#cb364-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb364-7"><a href="clustering-overview.html#cb364-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb364-8"><a href="clustering-overview.html#cb364-8" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb364-9"><a href="clustering-overview.html#cb364-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb364-10"><a href="clustering-overview.html#cb364-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb364-11"><a href="clustering-overview.html#cb364-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb364-12"><a href="clustering-overview.html#cb364-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;운동여부($x_1$)&#39;</span>, <span class="st">&#39;음주여부($x_2$)&#39;</span>, <span class="st">&#39;흡연여부($x_3$)&#39;</span>, <span class="st">&#39;가족력여부($x_4$)&#39;</span>, <span class="st">&#39;고혈압여부($x_5$)&#39;</span>),</span>
-<span id="cb364-13"><a href="clustering-overview.html#cb364-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;건강 문진&#39;</span></span>
-<span id="cb364-14"><a href="clustering-overview.html#cb364-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="clustering-overview.html#cb367-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb367-2"><a href="clustering-overview.html#cb367-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>x1, <span class="sc">~</span>x2, <span class="sc">~</span>x3, <span class="sc">~</span>x4, <span class="sc">~</span>x5,</span>
+<span id="cb367-3"><a href="clustering-overview.html#cb367-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb367-4"><a href="clustering-overview.html#cb367-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb367-5"><a href="clustering-overview.html#cb367-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span></span>
+<span id="cb367-6"><a href="clustering-overview.html#cb367-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb367-7"><a href="clustering-overview.html#cb367-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb367-8"><a href="clustering-overview.html#cb367-8" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb367-9"><a href="clustering-overview.html#cb367-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb367-10"><a href="clustering-overview.html#cb367-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb367-11"><a href="clustering-overview.html#cb367-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb367-12"><a href="clustering-overview.html#cb367-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;운동여부($x_1$)&#39;</span>, <span class="st">&#39;음주여부($x_2$)&#39;</span>, <span class="st">&#39;흡연여부($x_3$)&#39;</span>, <span class="st">&#39;가족력여부($x_4$)&#39;</span>, <span class="st">&#39;고혈압여부($x_5$)&#39;</span>),</span>
+<span id="cb367-13"><a href="clustering-overview.html#cb367-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;건강 문진&#39;</span></span>
+<span id="cb367-14"><a href="clustering-overview.html#cb367-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:health-question-df">Table 11.6: </span>건강 문진</caption>
 <thead>
@@ -964,35 +964,35 @@ sim(\mathbf{x}_i, \mathbf{x}_j) = \frac{\sum_{k: x_{ki} + x_{kj} &gt; 0} sim(x_{
 </tbody>
 </table>
 <p>객체 1과 2의 단순매칭에 의한 유사성은 다음과 같다.</p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="clustering-overview.html#cb365-1" aria-hidden="true" tabindex="-1"></a>similarity_simplematching <span class="ot">&lt;-</span> <span class="cf">function</span>(vec_1, vec_2) {</span>
-<span id="cb365-2"><a href="clustering-overview.html#cb365-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">abs</span>(vec_1 <span class="sc">-</span> vec_2)) <span class="sc">/</span> <span class="fu">length</span>(vec_1)</span>
-<span id="cb365-3"><a href="clustering-overview.html#cb365-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb365-4"><a href="clustering-overview.html#cb365-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb365-5"><a href="clustering-overview.html#cb365-5" aria-hidden="true" tabindex="-1"></a>df_pairs <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb365-6"><a href="clustering-overview.html#cb365-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id) <span class="sc">%&gt;%</span></span>
-<span id="cb365-7"><a href="clustering-overview.html#cb365-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand</span>(<span class="at">id_1 =</span> id, <span class="at">id_2 =</span> id) <span class="sc">%&gt;%</span></span>
-<span id="cb365-8"><a href="clustering-overview.html#cb365-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(id_1 <span class="sc">!=</span> id_2)</span>
-<span id="cb365-9"><a href="clustering-overview.html#cb365-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb365-10"><a href="clustering-overview.html#cb365-10" aria-hidden="true" tabindex="-1"></a>df_pairs<span class="sc">$</span>similarity <span class="ot">&lt;-</span> df_pairs <span class="sc">%&gt;%</span> </span>
-<span id="cb365-11"><a href="clustering-overview.html#cb365-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(df, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;id_1&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb365-12"><a href="clustering-overview.html#cb365-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(df, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;id_2&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb365-13"><a href="clustering-overview.html#cb365-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb365-14"><a href="clustering-overview.html#cb365-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do</span>(<span class="at">similarity =</span> <span class="fu">similarity_simplematching</span>(</span>
-<span id="cb365-15"><a href="clustering-overview.html#cb365-15" aria-hidden="true" tabindex="-1"></a>    .[<span class="fu">c</span>(<span class="st">&quot;x1.x&quot;</span>, <span class="st">&quot;x2.x&quot;</span>, <span class="st">&quot;x3.x&quot;</span>, <span class="st">&quot;x4.x&quot;</span>, <span class="st">&quot;x5.x&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
-<span id="cb365-16"><a href="clustering-overview.html#cb365-16" aria-hidden="true" tabindex="-1"></a>    .[<span class="fu">c</span>(<span class="st">&quot;x1.y&quot;</span>, <span class="st">&quot;x2.y&quot;</span>, <span class="st">&quot;x3.y&quot;</span>, <span class="st">&quot;x4.y&quot;</span>, <span class="st">&quot;x5.y&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>())) <span class="sc">%&gt;%</span></span>
-<span id="cb365-17"><a href="clustering-overview.html#cb365-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
-<span id="cb365-18"><a href="clustering-overview.html#cb365-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb365-19"><a href="clustering-overview.html#cb365-19" aria-hidden="true" tabindex="-1"></a>df_pairs <span class="sc">%&gt;%</span></span>
-<span id="cb365-20"><a href="clustering-overview.html#cb365-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb365-21"><a href="clustering-overview.html#cb365-21" aria-hidden="true" tabindex="-1"></a>    id_1 <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb365-22"><a href="clustering-overview.html#cb365-22" aria-hidden="true" tabindex="-1"></a>    id_2 <span class="sc">==</span> <span class="dv">2</span></span>
-<span id="cb365-23"><a href="clustering-overview.html#cb365-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb365-24"><a href="clustering-overview.html#cb365-24" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb365-25"><a href="clustering-overview.html#cb365-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb365-26"><a href="clustering-overview.html#cb365-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb365-27"><a href="clustering-overview.html#cb365-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;유사도&#39;</span>),</span>
-<span id="cb365-28"><a href="clustering-overview.html#cb365-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;단순매칭 유사성 척도&#39;</span></span>
-<span id="cb365-29"><a href="clustering-overview.html#cb365-29" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="clustering-overview.html#cb368-1" aria-hidden="true" tabindex="-1"></a>similarity_simplematching <span class="ot">&lt;-</span> <span class="cf">function</span>(vec_1, vec_2) {</span>
+<span id="cb368-2"><a href="clustering-overview.html#cb368-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">abs</span>(vec_1 <span class="sc">-</span> vec_2)) <span class="sc">/</span> <span class="fu">length</span>(vec_1)</span>
+<span id="cb368-3"><a href="clustering-overview.html#cb368-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb368-4"><a href="clustering-overview.html#cb368-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb368-5"><a href="clustering-overview.html#cb368-5" aria-hidden="true" tabindex="-1"></a>df_pairs <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb368-6"><a href="clustering-overview.html#cb368-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id) <span class="sc">%&gt;%</span></span>
+<span id="cb368-7"><a href="clustering-overview.html#cb368-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand</span>(<span class="at">id_1 =</span> id, <span class="at">id_2 =</span> id) <span class="sc">%&gt;%</span></span>
+<span id="cb368-8"><a href="clustering-overview.html#cb368-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(id_1 <span class="sc">!=</span> id_2)</span>
+<span id="cb368-9"><a href="clustering-overview.html#cb368-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb368-10"><a href="clustering-overview.html#cb368-10" aria-hidden="true" tabindex="-1"></a>df_pairs<span class="sc">$</span>similarity <span class="ot">&lt;-</span> df_pairs <span class="sc">%&gt;%</span> </span>
+<span id="cb368-11"><a href="clustering-overview.html#cb368-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(df, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;id_1&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb368-12"><a href="clustering-overview.html#cb368-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(df, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;id_2&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb368-13"><a href="clustering-overview.html#cb368-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb368-14"><a href="clustering-overview.html#cb368-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do</span>(<span class="at">similarity =</span> <span class="fu">similarity_simplematching</span>(</span>
+<span id="cb368-15"><a href="clustering-overview.html#cb368-15" aria-hidden="true" tabindex="-1"></a>    .[<span class="fu">c</span>(<span class="st">&quot;x1.x&quot;</span>, <span class="st">&quot;x2.x&quot;</span>, <span class="st">&quot;x3.x&quot;</span>, <span class="st">&quot;x4.x&quot;</span>, <span class="st">&quot;x5.x&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
+<span id="cb368-16"><a href="clustering-overview.html#cb368-16" aria-hidden="true" tabindex="-1"></a>    .[<span class="fu">c</span>(<span class="st">&quot;x1.y&quot;</span>, <span class="st">&quot;x2.y&quot;</span>, <span class="st">&quot;x3.y&quot;</span>, <span class="st">&quot;x4.y&quot;</span>, <span class="st">&quot;x5.y&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>())) <span class="sc">%&gt;%</span></span>
+<span id="cb368-17"><a href="clustering-overview.html#cb368-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
+<span id="cb368-18"><a href="clustering-overview.html#cb368-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb368-19"><a href="clustering-overview.html#cb368-19" aria-hidden="true" tabindex="-1"></a>df_pairs <span class="sc">%&gt;%</span></span>
+<span id="cb368-20"><a href="clustering-overview.html#cb368-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb368-21"><a href="clustering-overview.html#cb368-21" aria-hidden="true" tabindex="-1"></a>    id_1 <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb368-22"><a href="clustering-overview.html#cb368-22" aria-hidden="true" tabindex="-1"></a>    id_2 <span class="sc">==</span> <span class="dv">2</span></span>
+<span id="cb368-23"><a href="clustering-overview.html#cb368-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb368-24"><a href="clustering-overview.html#cb368-24" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb368-25"><a href="clustering-overview.html#cb368-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb368-26"><a href="clustering-overview.html#cb368-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb368-27"><a href="clustering-overview.html#cb368-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;유사도&#39;</span>),</span>
+<span id="cb368-28"><a href="clustering-overview.html#cb368-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;단순매칭 유사성 척도&#39;</span></span>
+<span id="cb368-29"><a href="clustering-overview.html#cb368-29" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:binary-simplematching">Table 11.7: </span>단순매칭 유사성 척도</caption>
 <thead>
@@ -1011,20 +1011,20 @@ sim(\mathbf{x}_i, \mathbf{x}_j) = \frac{\sum_{k: x_{ki} + x_{kj} &gt; 0} sim(x_{
 </tbody>
 </table>
 <p>한편 자카드 유사성은 아래와 같이 함수 <code>dist</code>를 이용하여 구할 수 있다. 함수 <code>dist</code>는 거리 척도 함수로, 자카드 기반 거리의 경우 <span class="math inline">\(d(\mathbf{x}_i, \mathbf{x}_j) = 1 - sim(\mathbf{x}_i, \mathbf{x}_j)\)</span>를 계산한다. 따라서, 거리값에 기반하여 자카드 유사성을 구하고 싶은 경우, <span class="math inline">\(sim(\mathbf{x}_i, \mathbf{x}_j) = 1 - d(\mathbf{x}_i, \mathbf{x}_j)\)</span>를 계산하면 된다.</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="clustering-overview.html#cb366-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">method =</span> <span class="st">&quot;binary&quot;</span>, <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb366-2"><a href="clustering-overview.html#cb366-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb366-3"><a href="clustering-overview.html#cb366-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">similarity =</span> <span class="dv">1</span> <span class="sc">-</span> distance) <span class="sc">%&gt;%</span></span>
-<span id="cb366-4"><a href="clustering-overview.html#cb366-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>distance) <span class="sc">%&gt;%</span></span>
-<span id="cb366-5"><a href="clustering-overview.html#cb366-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb366-6"><a href="clustering-overview.html#cb366-6" aria-hidden="true" tabindex="-1"></a>    item1 <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb366-7"><a href="clustering-overview.html#cb366-7" aria-hidden="true" tabindex="-1"></a>    item2 <span class="sc">==</span> <span class="dv">2</span></span>
-<span id="cb366-8"><a href="clustering-overview.html#cb366-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb366-9"><a href="clustering-overview.html#cb366-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb366-10"><a href="clustering-overview.html#cb366-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb366-11"><a href="clustering-overview.html#cb366-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb366-12"><a href="clustering-overview.html#cb366-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;유사도&#39;</span>),</span>
-<span id="cb366-13"><a href="clustering-overview.html#cb366-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;자카드 유사성 척도&#39;</span></span>
-<span id="cb366-14"><a href="clustering-overview.html#cb366-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="clustering-overview.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">method =</span> <span class="st">&quot;binary&quot;</span>, <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb369-2"><a href="clustering-overview.html#cb369-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb369-3"><a href="clustering-overview.html#cb369-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">similarity =</span> <span class="dv">1</span> <span class="sc">-</span> distance) <span class="sc">%&gt;%</span></span>
+<span id="cb369-4"><a href="clustering-overview.html#cb369-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>distance) <span class="sc">%&gt;%</span></span>
+<span id="cb369-5"><a href="clustering-overview.html#cb369-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb369-6"><a href="clustering-overview.html#cb369-6" aria-hidden="true" tabindex="-1"></a>    item1 <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb369-7"><a href="clustering-overview.html#cb369-7" aria-hidden="true" tabindex="-1"></a>    item2 <span class="sc">==</span> <span class="dv">2</span></span>
+<span id="cb369-8"><a href="clustering-overview.html#cb369-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb369-9"><a href="clustering-overview.html#cb369-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb369-10"><a href="clustering-overview.html#cb369-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb369-11"><a href="clustering-overview.html#cb369-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb369-12"><a href="clustering-overview.html#cb369-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;유사도&#39;</span>),</span>
+<span id="cb369-13"><a href="clustering-overview.html#cb369-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;자카드 유사성 척도&#39;</span></span>
+<span id="cb369-14"><a href="clustering-overview.html#cb369-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:binary-jaccard">Table 11.8: </span>자카드 유사성 척도</caption>
 <thead>
@@ -1092,42 +1092,42 @@ sim(\mathbf{x}_i, \mathbf{x}_j) = \frac{1}{p} \sum_{k = 1}^{p} sim(x_{ki}, x_{kj
 d(\mathbf{x}_i, \mathbf{x}_j) = \frac{1}{p} \sum_{k = 1}^{p} d(x_{ki}, x_{kj})
 \end{equation*}\]</span></p>
 <p>위에 설명한 혼합형 거리 척도는 <span class="citation"><a href="#ref-gower1971general" role="doc-biblioref">Gower</a> (<a href="#ref-gower1971general" role="doc-biblioref">1971</a>)</span> 에 기반하며, R에서는 <code>cluster</code> 패키지의 <code>daisy</code> 함수를 이용하여 구할 수 있다. <code>daisy</code> 함수는 연속형 및 서열형 변수의 경우 입력 데이터에 기반하여 range를 계산하므로, 입력 데이터의 최소값, 최대값이 아닌 이론적 최소값, 최대값에 의하여 range를 계산하고 싶은 경우에는 명시적으로 각 변수의 최소값과 최대값을 나타내는 데이터를 입력 데이터에 추가하여야 한다.</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="clustering-overview.html#cb367-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb367-2"><a href="clustering-overview.html#cb367-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>x1, <span class="sc">~</span>x2, <span class="sc">~</span>x3, <span class="sc">~</span>x4, <span class="sc">~</span>x5,</span>
-<span id="cb367-3"><a href="clustering-overview.html#cb367-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">&quot;남&quot;</span>, <span class="dv">46</span>, <span class="st">&quot;공무원&quot;</span>, <span class="dv">35000</span>, <span class="dv">2</span>,</span>
-<span id="cb367-4"><a href="clustering-overview.html#cb367-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="st">&quot;여&quot;</span>, <span class="dv">28</span>, <span class="st">&quot;은행원&quot;</span>, <span class="dv">51000</span>, <span class="dv">3</span>,</span>
-<span id="cb367-5"><a href="clustering-overview.html#cb367-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="st">&quot;여&quot;</span>, <span class="dv">32</span>, <span class="st">&quot;주부&quot;</span>, <span class="dv">46000</span>, <span class="dv">4</span></span>
-<span id="cb367-6"><a href="clustering-overview.html#cb367-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb367-7"><a href="clustering-overview.html#cb367-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb367-8"><a href="clustering-overview.html#cb367-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x1 =</span> <span class="fu">factor</span>(x1, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;남&quot;</span>, <span class="st">&quot;여&quot;</span>)),</span>
-<span id="cb367-9"><a href="clustering-overview.html#cb367-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x3 =</span> <span class="fu">factor</span>(x3),</span>
-<span id="cb367-10"><a href="clustering-overview.html#cb367-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x5 =</span> <span class="fu">factor</span>(x5, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb367-11"><a href="clustering-overview.html#cb367-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb367-12"><a href="clustering-overview.html#cb367-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb367-13"><a href="clustering-overview.html#cb367-13" aria-hidden="true" tabindex="-1"></a>n_obs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb367-14"><a href="clustering-overview.html#cb367-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb367-15"><a href="clustering-overview.html#cb367-15" aria-hidden="true" tabindex="-1"></a>range_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb367-16"><a href="clustering-overview.html#cb367-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">70</span>),</span>
-<span id="cb367-17"><a href="clustering-overview.html#cb367-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x4 =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">150000</span>),</span>
-<span id="cb367-18"><a href="clustering-overview.html#cb367-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">x5 =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb367-19"><a href="clustering-overview.html#cb367-19" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb367-20"><a href="clustering-overview.html#cb367-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb367-21"><a href="clustering-overview.html#cb367-21" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb367-22"><a href="clustering-overview.html#cb367-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(range_df) <span class="sc">%&gt;%</span></span>
-<span id="cb367-23"><a href="clustering-overview.html#cb367-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>id) <span class="sc">%&gt;%</span></span>
-<span id="cb367-24"><a href="clustering-overview.html#cb367-24" aria-hidden="true" tabindex="-1"></a>  cluster<span class="sc">::</span><span class="fu">daisy</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb367-25"><a href="clustering-overview.html#cb367-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.dist</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb367-26"><a href="clustering-overview.html#cb367-26" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb367-27"><a href="clustering-overview.html#cb367-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb367-28"><a href="clustering-overview.html#cb367-28" aria-hidden="true" tabindex="-1"></a>    item1 <span class="sc">&lt;=</span> n_obs,</span>
-<span id="cb367-29"><a href="clustering-overview.html#cb367-29" aria-hidden="true" tabindex="-1"></a>    item2 <span class="sc">&lt;=</span> n_obs</span>
-<span id="cb367-30"><a href="clustering-overview.html#cb367-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb367-31"><a href="clustering-overview.html#cb367-31" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb367-32"><a href="clustering-overview.html#cb367-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb367-33"><a href="clustering-overview.html#cb367-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb367-34"><a href="clustering-overview.html#cb367-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;거리&#39;</span>),</span>
-<span id="cb367-35"><a href="clustering-overview.html#cb367-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;혼합형 Gower 거리&#39;</span></span>
-<span id="cb367-36"><a href="clustering-overview.html#cb367-36" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="clustering-overview.html#cb370-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb370-2"><a href="clustering-overview.html#cb370-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>x1, <span class="sc">~</span>x2, <span class="sc">~</span>x3, <span class="sc">~</span>x4, <span class="sc">~</span>x5,</span>
+<span id="cb370-3"><a href="clustering-overview.html#cb370-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">&quot;남&quot;</span>, <span class="dv">46</span>, <span class="st">&quot;공무원&quot;</span>, <span class="dv">35000</span>, <span class="dv">2</span>,</span>
+<span id="cb370-4"><a href="clustering-overview.html#cb370-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="st">&quot;여&quot;</span>, <span class="dv">28</span>, <span class="st">&quot;은행원&quot;</span>, <span class="dv">51000</span>, <span class="dv">3</span>,</span>
+<span id="cb370-5"><a href="clustering-overview.html#cb370-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="st">&quot;여&quot;</span>, <span class="dv">32</span>, <span class="st">&quot;주부&quot;</span>, <span class="dv">46000</span>, <span class="dv">4</span></span>
+<span id="cb370-6"><a href="clustering-overview.html#cb370-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb370-7"><a href="clustering-overview.html#cb370-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb370-8"><a href="clustering-overview.html#cb370-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x1 =</span> <span class="fu">factor</span>(x1, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;남&quot;</span>, <span class="st">&quot;여&quot;</span>)),</span>
+<span id="cb370-9"><a href="clustering-overview.html#cb370-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x3 =</span> <span class="fu">factor</span>(x3),</span>
+<span id="cb370-10"><a href="clustering-overview.html#cb370-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x5 =</span> <span class="fu">factor</span>(x5, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb370-11"><a href="clustering-overview.html#cb370-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb370-12"><a href="clustering-overview.html#cb370-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb370-13"><a href="clustering-overview.html#cb370-13" aria-hidden="true" tabindex="-1"></a>n_obs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb370-14"><a href="clustering-overview.html#cb370-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb370-15"><a href="clustering-overview.html#cb370-15" aria-hidden="true" tabindex="-1"></a>range_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb370-16"><a href="clustering-overview.html#cb370-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">70</span>),</span>
+<span id="cb370-17"><a href="clustering-overview.html#cb370-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x4 =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">150000</span>),</span>
+<span id="cb370-18"><a href="clustering-overview.html#cb370-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">x5 =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb370-19"><a href="clustering-overview.html#cb370-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb370-20"><a href="clustering-overview.html#cb370-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb370-21"><a href="clustering-overview.html#cb370-21" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb370-22"><a href="clustering-overview.html#cb370-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(range_df) <span class="sc">%&gt;%</span></span>
+<span id="cb370-23"><a href="clustering-overview.html#cb370-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>id) <span class="sc">%&gt;%</span></span>
+<span id="cb370-24"><a href="clustering-overview.html#cb370-24" aria-hidden="true" tabindex="-1"></a>  cluster<span class="sc">::</span><span class="fu">daisy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb370-25"><a href="clustering-overview.html#cb370-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.dist</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb370-26"><a href="clustering-overview.html#cb370-26" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb370-27"><a href="clustering-overview.html#cb370-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb370-28"><a href="clustering-overview.html#cb370-28" aria-hidden="true" tabindex="-1"></a>    item1 <span class="sc">&lt;=</span> n_obs,</span>
+<span id="cb370-29"><a href="clustering-overview.html#cb370-29" aria-hidden="true" tabindex="-1"></a>    item2 <span class="sc">&lt;=</span> n_obs</span>
+<span id="cb370-30"><a href="clustering-overview.html#cb370-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb370-31"><a href="clustering-overview.html#cb370-31" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb370-32"><a href="clustering-overview.html#cb370-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb370-33"><a href="clustering-overview.html#cb370-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb370-34"><a href="clustering-overview.html#cb370-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;거리&#39;</span>),</span>
+<span id="cb370-35"><a href="clustering-overview.html#cb370-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;혼합형 Gower 거리&#39;</span></span>
+<span id="cb370-36"><a href="clustering-overview.html#cb370-36" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## Warning in Ops.factor(item1, n_obs): &#39;&lt;=&#39; not meaningful for factors</code></pre>
 <pre><code>## Warning in Ops.factor(item2, n_obs): &#39;&lt;=&#39; not meaningful for factors</code></pre>
 <table>

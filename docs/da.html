@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2021-07-18" />
+<meta name="date" content="2021-07-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -503,18 +503,18 @@ div.csl-indent {
 <h2><span class="header-section-number">7.3</span> 피셔 방법</h2>
 <div id="da-fisher-basic-script" class="section level3" number="7.3.1">
 <h3><span class="header-section-number">7.3.1</span> 기본 R 스크립트</h3>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="da.html#cb233-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb233-2"><a href="da.html#cb233-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>),</span>
-<span id="cb233-3"><a href="da.html#cb233-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x1 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">5</span>),</span>
-<span id="cb233-4"><a href="da.html#cb233-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">4</span>),</span>
-<span id="cb233-5"><a href="da.html#cb233-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb233-6"><a href="da.html#cb233-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb233-7"><a href="da.html#cb233-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb233-8"><a href="da.html#cb233-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(train_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb233-9"><a href="da.html#cb233-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb233-10"><a href="da.html#cb233-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, <span class="st">&#39;범주&#39;</span>),</span>
-<span id="cb233-11"><a href="da.html#cb233-11" aria-hidden="true" tabindex="-1"></a>             </span>
-<span id="cb233-12"><a href="da.html#cb233-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;판별분석 학습표본 데이터&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="da.html#cb236-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb236-2"><a href="da.html#cb236-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>),</span>
+<span id="cb236-3"><a href="da.html#cb236-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x1 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">5</span>),</span>
+<span id="cb236-4"><a href="da.html#cb236-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">4</span>),</span>
+<span id="cb236-5"><a href="da.html#cb236-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb236-6"><a href="da.html#cb236-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb236-7"><a href="da.html#cb236-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb236-8"><a href="da.html#cb236-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(train_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb236-9"><a href="da.html#cb236-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb236-10"><a href="da.html#cb236-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, <span class="st">&#39;범주&#39;</span>),</span>
+<span id="cb236-11"><a href="da.html#cb236-11" aria-hidden="true" tabindex="-1"></a>             </span>
+<span id="cb236-12"><a href="da.html#cb236-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;판별분석 학습표본 데이터&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:da-train-data-table">Table 7.1: </span>판별분석 학습표본 데이터</caption>
 <thead>
@@ -583,9 +583,9 @@ div.csl-indent {
 </tbody>
 </table>
 <p>Table <a href="da.html#tab:da-train-data-table">7.1</a>와 같이 두 독립변수 <em>x1</em>, <em>x2</em>와 이분형 종속변수 <em>class</em>의 관측값으로 이루어진 9개의 학습표본을 <em>train_df</em>라는 data frame에 저장한다.</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="da.html#cb234-1" aria-hidden="true" tabindex="-1"></a>fisher_da <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
-<span id="cb234-2"><a href="da.html#cb234-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb234-3"><a href="da.html#cb234-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fisher_da)</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="da.html#cb237-1" aria-hidden="true" tabindex="-1"></a>fisher_da <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
+<span id="cb237-2"><a href="da.html#cb237-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb237-3"><a href="da.html#cb237-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fisher_da)</span></code></pre></div>
 <pre><code>## Call:
 ## lda(class ~ x1 + x2, data = train_df)
 ## 
@@ -629,26 +629,26 @@ z = \mathbf{w}^\top \mathbf{x} \tag{7.1}
 \end{equation}\]</span></p>
 <p>실제 모집단의 평균 및 분산을 알지 못하는 경우, 학습표본으로부터 <span class="math inline">\(\boldsymbol\mu_1, \boldsymbol\mu_2, \boldsymbol\Sigma\)</span>의 추정치를 얻어 식 <a href="da.html#eq:fisher-discriminant-function-coef-sol">(7.3)</a>에 대입하는 방식으로 판별계수를 추정한다. 자세한 내용은 교재 <span class="citation">(<a href="#ref-jun2012datamining" role="doc-biblioref">전치혁 2012</a>)</span> 참조.</p>
 <p>Table <a href="da.html#tab:da-train-data-table">7.1</a>에 주어진 학습표본을 이용하여 피셔 판별함수를 구해보도록 하자. 우선 각 범주별 평균벡터 <span class="math inline">\(\hat{\boldsymbol\mu}_1, \hat{\boldsymbol\mu}_2\)</span>를 아래와 같이 구한다.</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="da.html#cb236-1" aria-hidden="true" tabindex="-1"></a>mu_hat <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span> </span>
-<span id="cb236-2"><a href="da.html#cb236-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
-<span id="cb236-3"><a href="da.html#cb236-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">x1 =</span> <span class="fu">mean</span>(x1),</span>
-<span id="cb236-4"><a href="da.html#cb236-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">x2 =</span> <span class="fu">mean</span>(x2)) <span class="sc">%&gt;%</span></span>
-<span id="cb236-5"><a href="da.html#cb236-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(class)</span>
-<span id="cb236-6"><a href="da.html#cb236-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb236-7"><a href="da.html#cb236-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mu_hat)</span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="da.html#cb239-1" aria-hidden="true" tabindex="-1"></a>mu_hat <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span> </span>
+<span id="cb239-2"><a href="da.html#cb239-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
+<span id="cb239-3"><a href="da.html#cb239-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">x1 =</span> <span class="fu">mean</span>(x1),</span>
+<span id="cb239-4"><a href="da.html#cb239-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">x2 =</span> <span class="fu">mean</span>(x2)) <span class="sc">%&gt;%</span></span>
+<span id="cb239-5"><a href="da.html#cb239-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(class)</span>
+<span id="cb239-6"><a href="da.html#cb239-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-7"><a href="da.html#cb239-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mu_hat)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##   class    x1    x2
 ##   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 1       4     6  
 ## 2 2       6.6   5.4</code></pre>
 <p>또한 범주별 표본 분산-공분산행렬 <span class="math inline">\(\mathbf{S}_1, \mathbf{S}_2\)</span>를 다음과 같이 구한다. 리스트 <code>S_within_group</code>의 첫번째 원소는 범주 1의 분산-공분산행렬 <span class="math inline">\(\mathbf{S}_1\)</span>, 두번째 원소는 범주 2의 분산-공분산행렬 <span class="math inline">\(\mathbf{S}_2\)</span>를 나타낸다.</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="da.html#cb238-1" aria-hidden="true" tabindex="-1"></a>S_within_group <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
-<span id="cb238-2"><a href="da.html#cb238-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>(train_df<span class="sc">$</span>class) <span class="sc">%&gt;%</span> <span class="fu">sort</span>(), <span class="cf">function</span>(x) {</span>
-<span id="cb238-3"><a href="da.html#cb238-3" aria-hidden="true" tabindex="-1"></a>    train_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(class <span class="sc">==</span> x) <span class="sc">%&gt;%</span> <span class="fu">select</span>(x1, x2) <span class="sc">%&gt;%</span> <span class="fu">var</span>()</span>
-<span id="cb238-4"><a href="da.html#cb238-4" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb238-5"><a href="da.html#cb238-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb238-6"><a href="da.html#cb238-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb238-7"><a href="da.html#cb238-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(S_within_group)</span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="da.html#cb241-1" aria-hidden="true" tabindex="-1"></a>S_within_group <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb241-2"><a href="da.html#cb241-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>(train_df<span class="sc">$</span>class) <span class="sc">%&gt;%</span> <span class="fu">sort</span>(), <span class="cf">function</span>(x) {</span>
+<span id="cb241-3"><a href="da.html#cb241-3" aria-hidden="true" tabindex="-1"></a>    train_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(class <span class="sc">==</span> x) <span class="sc">%&gt;%</span> <span class="fu">select</span>(x1, x2) <span class="sc">%&gt;%</span> <span class="fu">var</span>()</span>
+<span id="cb241-4"><a href="da.html#cb241-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb241-5"><a href="da.html#cb241-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb241-6"><a href="da.html#cb241-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb241-7"><a href="da.html#cb241-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(S_within_group)</span></code></pre></div>
 <pre><code>## [[1]]
 ##          x1        x2
 ## x1 3.333333 1.0000000
@@ -663,22 +663,22 @@ z = \mathbf{w}^\top \mathbf{x} \tag{7.1}
 \hat{\boldsymbol\Sigma} = \mathbf{S}_p = \frac{(n_1 - 1)\mathbf{S}_1 + (n_2 - 1)\mathbf{S}_2}{n_1 + n_2 - 2}
 \end{equation*}\]</span></p>
 <p>이 때 <span class="math inline">\(n_1, n_2\)</span>는 각각 범주 1, 2에 속한 학습표본 객체의 수를 나타낸다. 아래 R 스크립트에서는 임의의 범주 표본수 벡터 <code>n</code>과 범주별 표본 분산-공분산행렬 리스트 <code>S</code>에 대해 합동 분산-공분산행렬을 구하는 함수 <code>pooled_variance</code>를 정의하고, 주어진 학습표본에 대한 입력값을 대입하여 합동 분산-공분산행렬 추정치 <code>Sigma_hat</code>을 구한다.</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="da.html#cb240-1" aria-hidden="true" tabindex="-1"></a>pooled_variance <span class="ot">&lt;-</span> <span class="cf">function</span>(n, S) {</span>
-<span id="cb240-2"><a href="da.html#cb240-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(n), <span class="cf">function</span>(i) (n[i] <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>S[[i]]) <span class="sc">%&gt;%</span> </span>
-<span id="cb240-3"><a href="da.html#cb240-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Reduce</span>(<span class="st">`</span><span class="at">+</span><span class="st">`</span>, .) <span class="sc">%&gt;%</span></span>
-<span id="cb240-4"><a href="da.html#cb240-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">/</span><span class="st">`</span>(<span class="fu">sum</span>(n) <span class="sc">-</span> <span class="fu">length</span>(n))</span>
-<span id="cb240-5"><a href="da.html#cb240-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb240-6"><a href="da.html#cb240-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb240-7"><a href="da.html#cb240-7" aria-hidden="true" tabindex="-1"></a>n_obs <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span></span>
-<span id="cb240-8"><a href="da.html#cb240-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
-<span id="cb240-9"><a href="da.html#cb240-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb240-10"><a href="da.html#cb240-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb240-11"><a href="da.html#cb240-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pi =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb240-12"><a href="da.html#cb240-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(class)</span>
-<span id="cb240-13"><a href="da.html#cb240-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb240-14"><a href="da.html#cb240-14" aria-hidden="true" tabindex="-1"></a>Sigma_hat <span class="ot">&lt;-</span> <span class="fu">pooled_variance</span>(n_obs<span class="sc">$</span>n, S_within_group)</span>
-<span id="cb240-15"><a href="da.html#cb240-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb240-16"><a href="da.html#cb240-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Sigma_hat)</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="da.html#cb243-1" aria-hidden="true" tabindex="-1"></a>pooled_variance <span class="ot">&lt;-</span> <span class="cf">function</span>(n, S) {</span>
+<span id="cb243-2"><a href="da.html#cb243-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(n), <span class="cf">function</span>(i) (n[i] <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>S[[i]]) <span class="sc">%&gt;%</span> </span>
+<span id="cb243-3"><a href="da.html#cb243-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Reduce</span>(<span class="st">`</span><span class="at">+</span><span class="st">`</span>, .) <span class="sc">%&gt;%</span></span>
+<span id="cb243-4"><a href="da.html#cb243-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">/</span><span class="st">`</span>(<span class="fu">sum</span>(n) <span class="sc">-</span> <span class="fu">length</span>(n))</span>
+<span id="cb243-5"><a href="da.html#cb243-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb243-6"><a href="da.html#cb243-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb243-7"><a href="da.html#cb243-7" aria-hidden="true" tabindex="-1"></a>n_obs <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span></span>
+<span id="cb243-8"><a href="da.html#cb243-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
+<span id="cb243-9"><a href="da.html#cb243-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb243-10"><a href="da.html#cb243-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb243-11"><a href="da.html#cb243-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pi =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb243-12"><a href="da.html#cb243-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(class)</span>
+<span id="cb243-13"><a href="da.html#cb243-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb243-14"><a href="da.html#cb243-14" aria-hidden="true" tabindex="-1"></a>Sigma_hat <span class="ot">&lt;-</span> <span class="fu">pooled_variance</span>(n_obs<span class="sc">$</span>n, S_within_group)</span>
+<span id="cb243-15"><a href="da.html#cb243-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb243-16"><a href="da.html#cb243-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Sigma_hat)</span></code></pre></div>
 <pre><code>##          x1       x2
 ## x1 3.885714 2.114286
 ## x2 2.114286 2.457143</code></pre>
@@ -686,9 +686,9 @@ z = \mathbf{w}^\top \mathbf{x} \tag{7.1}
 <p><span class="math display">\[\begin{equation*}
 \hat{\mathbf{w}} = \hat{\boldsymbol\Sigma}^{-1}(\hat{\boldsymbol\mu}_1 - \hat{\boldsymbol\mu}_2) 
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="da.html#cb242-1" aria-hidden="true" tabindex="-1"></a>w_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(Sigma_hat) <span class="sc">%*%</span> <span class="fu">t</span>(mu_hat[<span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)] <span class="sc">-</span> mu_hat[<span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)])</span>
-<span id="cb242-2"><a href="da.html#cb242-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb242-3"><a href="da.html#cb242-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(w_hat)</span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="da.html#cb245-1" aria-hidden="true" tabindex="-1"></a>w_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(Sigma_hat) <span class="sc">%*%</span> <span class="fu">t</span>(mu_hat[<span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)] <span class="sc">-</span> mu_hat[<span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&#39;x1&#39;</span>, <span class="st">&#39;x2&#39;</span>)])</span>
+<span id="cb245-2"><a href="da.html#cb245-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-3"><a href="da.html#cb245-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(w_hat)</span></code></pre></div>
 <pre><code>##         [,1]
 ## x1 -1.508039
 ## x2  1.541801</code></pre>
@@ -699,25 +699,25 @@ z = \mathbf{w}^\top \mathbf{x} \tag{7.1}
 <p><span class="math display">\[\begin{equation*}
 \bar{z} = \frac{1}{N} \sum_i^N \hat{\mathbf{w}}^\top \mathbf{x}_i
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="da.html#cb244-1" aria-hidden="true" tabindex="-1"></a>z_mean <span class="ot">&lt;-</span> <span class="fu">t</span>(w_hat) <span class="sc">%*%</span> (train_df <span class="sc">%&gt;%</span> <span class="fu">select</span>(x1, x2) <span class="sc">%&gt;%</span> <span class="fu">colMeans</span>()) <span class="sc">%&gt;%</span> <span class="fu">drop</span>()</span>
-<span id="cb244-2"><a href="da.html#cb244-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb244-3"><a href="da.html#cb244-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(z_mean)</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="da.html#cb247-1" aria-hidden="true" tabindex="-1"></a>z_mean <span class="ot">&lt;-</span> <span class="fu">t</span>(w_hat) <span class="sc">%*%</span> (train_df <span class="sc">%&gt;%</span> <span class="fu">select</span>(x1, x2) <span class="sc">%&gt;%</span> <span class="fu">colMeans</span>()) <span class="sc">%&gt;%</span> <span class="fu">drop</span>()</span>
+<span id="cb247-2"><a href="da.html#cb247-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-3"><a href="da.html#cb247-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(z_mean)</span></code></pre></div>
 <pre><code>## [1] 0.526438</code></pre>
 <p>위 결과를 통해, 분류규칙은 다음과 같이 주어진다.</p>
 <ul>
 <li><span class="math inline">\(\hat{\mathbf{w}}^\top \mathbf{x} \ge \bar{z}\)</span> 이면, <span class="math inline">\(\mathbf{x}\)</span>를 범주 1로 분류</li>
 <li><span class="math inline">\(\hat{\mathbf{w}}^\top \mathbf{x} &lt; \bar{z}\)</span> 이면, <span class="math inline">\(\mathbf{x}\)</span>를 범주 2로 분류</li>
 </ul>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="da.html#cb246-1" aria-hidden="true" tabindex="-1"></a>train_prediction_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span></span>
-<span id="cb246-2"><a href="da.html#cb246-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb246-3"><a href="da.html#cb246-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">z =</span> w_hat[<span class="dv">1</span>]<span class="sc">*</span>x1 <span class="sc">+</span> w_hat[<span class="dv">2</span>]<span class="sc">*</span>x2,</span>
-<span id="cb246-4"><a href="da.html#cb246-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(z <span class="sc">&gt;=</span> z_mean, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb246-5"><a href="da.html#cb246-5" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb246-6"><a href="da.html#cb246-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb246-7"><a href="da.html#cb246-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(train_prediction_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb246-8"><a href="da.html#cb246-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb246-9"><a href="da.html#cb246-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$z$&#39;</span>, <span class="st">&#39;추정범주&#39;</span>),</span>
-<span id="cb246-10"><a href="da.html#cb246-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 피셔 분류 결과&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="da.html#cb249-1" aria-hidden="true" tabindex="-1"></a>train_prediction_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span></span>
+<span id="cb249-2"><a href="da.html#cb249-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb249-3"><a href="da.html#cb249-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">z =</span> w_hat[<span class="dv">1</span>]<span class="sc">*</span>x1 <span class="sc">+</span> w_hat[<span class="dv">2</span>]<span class="sc">*</span>x2,</span>
+<span id="cb249-4"><a href="da.html#cb249-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(z <span class="sc">&gt;=</span> z_mean, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb249-5"><a href="da.html#cb249-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb249-6"><a href="da.html#cb249-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb249-7"><a href="da.html#cb249-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(train_prediction_df, <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb249-8"><a href="da.html#cb249-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb249-9"><a href="da.html#cb249-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$z$&#39;</span>, <span class="st">&#39;추정범주&#39;</span>),</span>
+<span id="cb249-10"><a href="da.html#cb249-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 피셔 분류 결과&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:fisher-da-result">Table 7.2: </span>학습표본에 대한 피셔 분류 결과</caption>
 <thead>
@@ -817,35 +817,35 @@ z = \mathbf{w}^\top \mathbf{x} \tag{7.1}
 \end{split}
 \end{equation*}\]</span></p>
 <p>이에 따른 <code>lda</code> 함수의 계수 추정 결과는 아래와 같다.</p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="da.html#cb247-1" aria-hidden="true" tabindex="-1"></a>fisher_da <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
-<span id="cb247-2"><a href="da.html#cb247-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb247-3"><a href="da.html#cb247-3" aria-hidden="true" tabindex="-1"></a>w_hat_lda <span class="ot">&lt;-</span> fisher_da<span class="sc">$</span>scaling</span>
-<span id="cb247-4"><a href="da.html#cb247-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(w_hat_lda)</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="da.html#cb250-1" aria-hidden="true" tabindex="-1"></a>fisher_da <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
+<span id="cb250-2"><a href="da.html#cb250-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb250-3"><a href="da.html#cb250-3" aria-hidden="true" tabindex="-1"></a>w_hat_lda <span class="ot">&lt;-</span> fisher_da<span class="sc">$</span>scaling</span>
+<span id="cb250-4"><a href="da.html#cb250-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(w_hat_lda)</span></code></pre></div>
 <pre><code>##           LD1
 ## x1  0.6850490
 ## x2 -0.7003859</code></pre>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="da.html#cb249-1" aria-hidden="true" tabindex="-1"></a>z_mean_lda <span class="ot">&lt;-</span> <span class="fu">t</span>(fisher_da<span class="sc">$</span>scaling) <span class="sc">%*%</span> (train_df <span class="sc">%&gt;%</span> <span class="fu">select</span>(x1, x2) <span class="sc">%&gt;%</span> <span class="fu">colMeans</span>()) <span class="sc">%&gt;%</span> <span class="fu">drop</span>()</span>
-<span id="cb249-2"><a href="da.html#cb249-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(z_mean_lda)</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="da.html#cb252-1" aria-hidden="true" tabindex="-1"></a>z_mean_lda <span class="ot">&lt;-</span> <span class="fu">t</span>(fisher_da<span class="sc">$</span>scaling) <span class="sc">%*%</span> (train_df <span class="sc">%&gt;%</span> <span class="fu">select</span>(x1, x2) <span class="sc">%&gt;%</span> <span class="fu">colMeans</span>()) <span class="sc">%&gt;%</span> <span class="fu">drop</span>()</span>
+<span id="cb252-2"><a href="da.html#cb252-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(z_mean_lda)</span></code></pre></div>
 <pre><code>##        LD1 
 ## -0.2391423</code></pre>
 <p>위 결과는 아래와 같은 계산을 통해 앞 장에서 보았던 결과와 동일한 분류 경계식으로 표현될 수 있음을 볼 수 있다.</p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="da.html#cb251-1" aria-hidden="true" tabindex="-1"></a>scale_adjust <span class="ot">&lt;-</span> <span class="fu">t</span>(w_hat) <span class="sc">%*%</span> Sigma_hat <span class="sc">%*%</span> w_hat <span class="sc">%&gt;%</span> <span class="fu">drop</span>() <span class="sc">%&gt;%</span> <span class="fu">sqrt</span>()</span>
-<span id="cb251-2"><a href="da.html#cb251-2" aria-hidden="true" tabindex="-1"></a>sign_adjust <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb251-3"><a href="da.html#cb251-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb251-4"><a href="da.html#cb251-4" aria-hidden="true" tabindex="-1"></a>w_hat <span class="ot">&lt;-</span> w_hat_lda <span class="sc">*</span> scale_adjust <span class="sc">*</span> sign_adjust</span>
-<span id="cb251-5"><a href="da.html#cb251-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(w_hat)</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="da.html#cb254-1" aria-hidden="true" tabindex="-1"></a>scale_adjust <span class="ot">&lt;-</span> <span class="fu">t</span>(w_hat) <span class="sc">%*%</span> Sigma_hat <span class="sc">%*%</span> w_hat <span class="sc">%&gt;%</span> <span class="fu">drop</span>() <span class="sc">%&gt;%</span> <span class="fu">sqrt</span>()</span>
+<span id="cb254-2"><a href="da.html#cb254-2" aria-hidden="true" tabindex="-1"></a>sign_adjust <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb254-3"><a href="da.html#cb254-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb254-4"><a href="da.html#cb254-4" aria-hidden="true" tabindex="-1"></a>w_hat <span class="ot">&lt;-</span> w_hat_lda <span class="sc">*</span> scale_adjust <span class="sc">*</span> sign_adjust</span>
+<span id="cb254-5"><a href="da.html#cb254-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(w_hat)</span></code></pre></div>
 <pre><code>##          LD1
 ## x1 -1.508039
 ## x2  1.541801</code></pre>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="da.html#cb253-1" aria-hidden="true" tabindex="-1"></a>z_mean <span class="ot">&lt;-</span> z_mean_lda <span class="sc">*</span> scale_adjust <span class="sc">*</span> sign_adjust </span>
-<span id="cb253-2"><a href="da.html#cb253-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(z_mean)</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="da.html#cb256-1" aria-hidden="true" tabindex="-1"></a>z_mean <span class="ot">&lt;-</span> z_mean_lda <span class="sc">*</span> scale_adjust <span class="sc">*</span> sign_adjust </span>
+<span id="cb256-2"><a href="da.html#cb256-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(z_mean)</span></code></pre></div>
 <pre><code>##      LD1 
 ## 0.526438</code></pre>
 <p>아래 스크립트는 위 <code>lda</code> 함수로부터의 경계식 추정을 기반으로 아래 수식값을 계산한다.</p>
 <p><span class="math display">\[\begin{equation*}
 \hat{\mathbf{w}}^\top \mathbf{x} - \bar{z}
 \end{equation*}\]</span></p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="da.html#cb255-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fisher_da, train_df)<span class="sc">$</span>x</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="da.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fisher_da, train_df)<span class="sc">$</span>x</span></code></pre></div>
 <pre><code>##          LD1
 ## 1 -1.2383140
 ## 2  0.8781805
@@ -857,16 +857,16 @@ z = \mathbf{w}^\top \mathbf{x} \tag{7.1}
 ## 8  2.2022677
 ## 9  0.8628436</code></pre>
 <p>피셔 분류규칙에 따라 해당 값이 0보다 작으면 범주 1, 0보다 크면 범주 2로 분류한다.</p>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="da.html#cb257-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="sc">%&gt;%</span></span>
-<span id="cb257-2"><a href="da.html#cb257-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb257-3"><a href="da.html#cb257-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">centered_z =</span> <span class="fu">predict</span>(fisher_da, .)<span class="sc">$</span>x,</span>
-<span id="cb257-4"><a href="da.html#cb257-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(centered_z <span class="sc">&lt;=</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb257-5"><a href="da.html#cb257-5" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb257-6"><a href="da.html#cb257-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb257-7"><a href="da.html#cb257-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb257-8"><a href="da.html#cb257-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, </span>
-<span id="cb257-9"><a href="da.html#cb257-9" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$z - </span><span class="sc">\\</span><span class="st">bar{z}$&#39;</span>, <span class="st">&#39;추정범주&#39;</span>),</span>
-<span id="cb257-10"><a href="da.html#cb257-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 피셔 분류 결과 - `MASS::lda` 분류 경계식 기준&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="da.html#cb260-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="sc">%&gt;%</span></span>
+<span id="cb260-2"><a href="da.html#cb260-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb260-3"><a href="da.html#cb260-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">centered_z =</span> <span class="fu">predict</span>(fisher_da, .)<span class="sc">$</span>x,</span>
+<span id="cb260-4"><a href="da.html#cb260-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(centered_z <span class="sc">&lt;=</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb260-5"><a href="da.html#cb260-5" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb260-6"><a href="da.html#cb260-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb260-7"><a href="da.html#cb260-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb260-8"><a href="da.html#cb260-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>, </span>
+<span id="cb260-9"><a href="da.html#cb260-9" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$z - </span><span class="sc">\\</span><span class="st">bar{z}$&#39;</span>, <span class="st">&#39;추정범주&#39;</span>),</span>
+<span id="cb260-10"><a href="da.html#cb260-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 피셔 분류 결과 - `MASS::lda` 분류 경계식 기준&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:fisher-da-result-lda">Table 7.3: </span>학습표본에 대한 피셔 분류 결과 - <code>MASS::lda</code> 분류 경계식 기준</caption>
 <thead>
@@ -973,9 +973,9 @@ f_k(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol\Sigma|^{1/2}} \exp \{ -\frac
 <div id="lda-basic-script" class="section level3" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> 기본 R 스크립트</h3>
 <p>Table <a href="da.html#tab:da-train-data-table">7.1</a>의 학습표본에 대해 선형판별분석을 적용하는 R 스크립트는 아래에 보이는 것처럼 피셔 판별함수를 구하기 위한 동일하며, <code>prior</code> 파라미터를 정의하지 않음으로써 <span class="math inline">\(\pi_1\)</span>과 <span class="math inline">\(\pi_2\)</span>를 학습표본의 범주 1, 2의 비율로 설정한다.</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="da.html#cb258-1" aria-hidden="true" tabindex="-1"></a>lda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
-<span id="cb258-2"><a href="da.html#cb258-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb258-3"><a href="da.html#cb258-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(lda_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="da.html#cb261-1" aria-hidden="true" tabindex="-1"></a>lda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
+<span id="cb261-2"><a href="da.html#cb261-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb261-3"><a href="da.html#cb261-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(lda_fit)</span></code></pre></div>
 <pre><code>## Call:
 ## lda(class ~ x1 + x2, data = train_df)
 ## 
@@ -1040,40 +1040,40 @@ u_k(\mathbf{x}) = \boldsymbol\mu_k^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac
 \tag{7.8}
 \end{equation}\]</span></p>
 <p>Table <a href="da.html#tab:da-train-data-table">7.1</a>의 학습표본에 대해 판별함수값을 계산하고 범주를 추정하면 아래와 같다.</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="da.html#cb260-1" aria-hidden="true" tabindex="-1"></a>discriminant_func <span class="ot">&lt;-</span> <span class="cf">function</span>(X, mu, Sigma, pi) {</span>
-<span id="cb260-2"><a href="da.html#cb260-2" aria-hidden="true" tabindex="-1"></a>  Sigma_inv <span class="ot">&lt;-</span> <span class="fu">solve</span>(Sigma)</span>
-<span id="cb260-3"><a href="da.html#cb260-3" aria-hidden="true" tabindex="-1"></a>  (<span class="fu">t</span>(mu) <span class="sc">%*%</span> Sigma_inv <span class="sc">%*%</span> X <span class="sc">%&gt;%</span> <span class="fu">drop</span>()) <span class="sc">-</span>  </span>
-<span id="cb260-4"><a href="da.html#cb260-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.5</span> <span class="sc">*</span> (<span class="fu">t</span>(mu) <span class="sc">%*%</span> Sigma_inv <span class="sc">%*%</span> mu <span class="sc">%&gt;%</span> <span class="fu">drop</span>()) <span class="sc">+</span> </span>
-<span id="cb260-5"><a href="da.html#cb260-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(pi)</span>
-<span id="cb260-6"><a href="da.html#cb260-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb260-7"><a href="da.html#cb260-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb260-8"><a href="da.html#cb260-8" aria-hidden="true" tabindex="-1"></a>lda_discriminant_result_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span> </span>
-<span id="cb260-9"><a href="da.html#cb260-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb260-10"><a href="da.html#cb260-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">u1 =</span> <span class="fu">discriminant_func</span>(</span>
-<span id="cb260-11"><a href="da.html#cb260-11" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">t</span>(),</span>
-<span id="cb260-12"><a href="da.html#cb260-12" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
-<span id="cb260-13"><a href="da.html#cb260-13" aria-hidden="true" tabindex="-1"></a>      Sigma_hat,</span>
-<span id="cb260-14"><a href="da.html#cb260-14" aria-hidden="true" tabindex="-1"></a>      n_obs<span class="sc">$</span>pi[<span class="dv">1</span>]</span>
-<span id="cb260-15"><a href="da.html#cb260-15" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb260-16"><a href="da.html#cb260-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">u2 =</span> <span class="fu">discriminant_func</span>(</span>
-<span id="cb260-17"><a href="da.html#cb260-17" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">t</span>(),</span>
-<span id="cb260-18"><a href="da.html#cb260-18" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
-<span id="cb260-19"><a href="da.html#cb260-19" aria-hidden="true" tabindex="-1"></a>      Sigma_hat,</span>
-<span id="cb260-20"><a href="da.html#cb260-20" aria-hidden="true" tabindex="-1"></a>      n_obs<span class="sc">$</span>pi[<span class="dv">2</span>]</span>
-<span id="cb260-21"><a href="da.html#cb260-21" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb260-22"><a href="da.html#cb260-22" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb260-23"><a href="da.html#cb260-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb260-24"><a href="da.html#cb260-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(u1 <span class="sc">&gt;=</span> u2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb260-25"><a href="da.html#cb260-25" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb260-26"><a href="da.html#cb260-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb260-27"><a href="da.html#cb260-27" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb260-28"><a href="da.html#cb260-28" aria-hidden="true" tabindex="-1"></a>  lda_discriminant_result_df,</span>
-<span id="cb260-29"><a href="da.html#cb260-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb260-30"><a href="da.html#cb260-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(lda_discriminant_result_df)[<span class="dv">2</span>]),</span>
-<span id="cb260-31"><a href="da.html#cb260-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
-<span id="cb260-32"><a href="da.html#cb260-32" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$u_1(</span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, <span class="st">&#39;$u_2(</span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
-<span id="cb260-33"><a href="da.html#cb260-33" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
-<span id="cb260-34"><a href="da.html#cb260-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 판별함수값 및 추정범주&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="da.html#cb263-1" aria-hidden="true" tabindex="-1"></a>discriminant_func <span class="ot">&lt;-</span> <span class="cf">function</span>(X, mu, Sigma, pi) {</span>
+<span id="cb263-2"><a href="da.html#cb263-2" aria-hidden="true" tabindex="-1"></a>  Sigma_inv <span class="ot">&lt;-</span> <span class="fu">solve</span>(Sigma)</span>
+<span id="cb263-3"><a href="da.html#cb263-3" aria-hidden="true" tabindex="-1"></a>  (<span class="fu">t</span>(mu) <span class="sc">%*%</span> Sigma_inv <span class="sc">%*%</span> X <span class="sc">%&gt;%</span> <span class="fu">drop</span>()) <span class="sc">-</span>  </span>
+<span id="cb263-4"><a href="da.html#cb263-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.5</span> <span class="sc">*</span> (<span class="fu">t</span>(mu) <span class="sc">%*%</span> Sigma_inv <span class="sc">%*%</span> mu <span class="sc">%&gt;%</span> <span class="fu">drop</span>()) <span class="sc">+</span> </span>
+<span id="cb263-5"><a href="da.html#cb263-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(pi)</span>
+<span id="cb263-6"><a href="da.html#cb263-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb263-7"><a href="da.html#cb263-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb263-8"><a href="da.html#cb263-8" aria-hidden="true" tabindex="-1"></a>lda_discriminant_result_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span> </span>
+<span id="cb263-9"><a href="da.html#cb263-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb263-10"><a href="da.html#cb263-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">u1 =</span> <span class="fu">discriminant_func</span>(</span>
+<span id="cb263-11"><a href="da.html#cb263-11" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">t</span>(),</span>
+<span id="cb263-12"><a href="da.html#cb263-12" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
+<span id="cb263-13"><a href="da.html#cb263-13" aria-hidden="true" tabindex="-1"></a>      Sigma_hat,</span>
+<span id="cb263-14"><a href="da.html#cb263-14" aria-hidden="true" tabindex="-1"></a>      n_obs<span class="sc">$</span>pi[<span class="dv">1</span>]</span>
+<span id="cb263-15"><a href="da.html#cb263-15" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb263-16"><a href="da.html#cb263-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">u2 =</span> <span class="fu">discriminant_func</span>(</span>
+<span id="cb263-17"><a href="da.html#cb263-17" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">t</span>(),</span>
+<span id="cb263-18"><a href="da.html#cb263-18" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
+<span id="cb263-19"><a href="da.html#cb263-19" aria-hidden="true" tabindex="-1"></a>      Sigma_hat,</span>
+<span id="cb263-20"><a href="da.html#cb263-20" aria-hidden="true" tabindex="-1"></a>      n_obs<span class="sc">$</span>pi[<span class="dv">2</span>]</span>
+<span id="cb263-21"><a href="da.html#cb263-21" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb263-22"><a href="da.html#cb263-22" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb263-23"><a href="da.html#cb263-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb263-24"><a href="da.html#cb263-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(u1 <span class="sc">&gt;=</span> u2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb263-25"><a href="da.html#cb263-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb263-26"><a href="da.html#cb263-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb263-27"><a href="da.html#cb263-27" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb263-28"><a href="da.html#cb263-28" aria-hidden="true" tabindex="-1"></a>  lda_discriminant_result_df,</span>
+<span id="cb263-29"><a href="da.html#cb263-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb263-30"><a href="da.html#cb263-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(lda_discriminant_result_df)[<span class="dv">2</span>]),</span>
+<span id="cb263-31"><a href="da.html#cb263-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
+<span id="cb263-32"><a href="da.html#cb263-32" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$u_1(</span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, <span class="st">&#39;$u_2(</span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
+<span id="cb263-33"><a href="da.html#cb263-33" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
+<span id="cb263-34"><a href="da.html#cb263-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 판별함수값 및 추정범주&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:lda-disriminant-result">Table 7.4: </span>학습표본에 대한 LDA 적용 결과: 판별함수값 및 추정범주</caption>
 <thead>
@@ -1172,39 +1172,39 @@ u_k(\mathbf{x}) = \boldsymbol\mu_k^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac
 </tbody>
 </table>
 <p>또한 식 <a href="da.html#eq:lda-posterior">(7.5)</a>에 따른 사후확률과 식 <a href="da.html#eq:lda-posterior-rule">(7.6)</a>에 따른 추정범주는 아래와 같이 얻어진다.</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="da.html#cb261-1" aria-hidden="true" tabindex="-1"></a>lda_posterior_result_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span></span>
-<span id="cb261-2"><a href="da.html#cb261-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb261-3"><a href="da.html#cb261-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">f1 =</span> mvtnorm<span class="sc">::</span><span class="fu">dmvnorm</span>(</span>
-<span id="cb261-4"><a href="da.html#cb261-4" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],</span>
-<span id="cb261-5"><a href="da.html#cb261-5" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
-<span id="cb261-6"><a href="da.html#cb261-6" aria-hidden="true" tabindex="-1"></a>      Sigma_hat),</span>
-<span id="cb261-7"><a href="da.html#cb261-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">f2 =</span> mvtnorm<span class="sc">::</span><span class="fu">dmvnorm</span>(</span>
-<span id="cb261-8"><a href="da.html#cb261-8" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],</span>
-<span id="cb261-9"><a href="da.html#cb261-9" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
-<span id="cb261-10"><a href="da.html#cb261-10" aria-hidden="true" tabindex="-1"></a>      Sigma_hat),</span>
-<span id="cb261-11"><a href="da.html#cb261-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">f =</span> n_obs<span class="sc">$</span>pi[<span class="dv">1</span>] <span class="sc">*</span> f1 <span class="sc">+</span> n_obs<span class="sc">$</span>pi[<span class="dv">2</span>] <span class="sc">*</span> f2</span>
-<span id="cb261-12"><a href="da.html#cb261-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb261-13"><a href="da.html#cb261-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb261-14"><a href="da.html#cb261-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">p1 =</span> n_obs<span class="sc">$</span>pi[<span class="dv">1</span>] <span class="sc">*</span> f1 <span class="sc">/</span> f,</span>
-<span id="cb261-15"><a href="da.html#cb261-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">p2 =</span> n_obs<span class="sc">$</span>pi[<span class="dv">2</span>] <span class="sc">*</span> f2 <span class="sc">/</span> f</span>
-<span id="cb261-16"><a href="da.html#cb261-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb261-17"><a href="da.html#cb261-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb261-18"><a href="da.html#cb261-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(p1 <span class="sc">&gt;=</span> p2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb261-19"><a href="da.html#cb261-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb261-20"><a href="da.html#cb261-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb261-21"><a href="da.html#cb261-21" aria-hidden="true" tabindex="-1"></a>    id, x1, x2, class, p1, p2, predicted_class</span>
-<span id="cb261-22"><a href="da.html#cb261-22" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb261-23"><a href="da.html#cb261-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb261-24"><a href="da.html#cb261-24" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb261-25"><a href="da.html#cb261-25" aria-hidden="true" tabindex="-1"></a>  lda_posterior_result_df,</span>
-<span id="cb261-26"><a href="da.html#cb261-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb261-27"><a href="da.html#cb261-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(lda_posterior_result_df)[<span class="dv">2</span>]),</span>
-<span id="cb261-28"><a href="da.html#cb261-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
-<span id="cb261-29"><a href="da.html#cb261-29" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, </span>
-<span id="cb261-30"><a href="da.html#cb261-30" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 1 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, </span>
-<span id="cb261-31"><a href="da.html#cb261-31" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 2 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
-<span id="cb261-32"><a href="da.html#cb261-32" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
-<span id="cb261-33"><a href="da.html#cb261-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="da.html#cb264-1" aria-hidden="true" tabindex="-1"></a>lda_posterior_result_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span></span>
+<span id="cb264-2"><a href="da.html#cb264-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb264-3"><a href="da.html#cb264-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">f1 =</span> mvtnorm<span class="sc">::</span><span class="fu">dmvnorm</span>(</span>
+<span id="cb264-4"><a href="da.html#cb264-4" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],</span>
+<span id="cb264-5"><a href="da.html#cb264-5" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
+<span id="cb264-6"><a href="da.html#cb264-6" aria-hidden="true" tabindex="-1"></a>      Sigma_hat),</span>
+<span id="cb264-7"><a href="da.html#cb264-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">f2 =</span> mvtnorm<span class="sc">::</span><span class="fu">dmvnorm</span>(</span>
+<span id="cb264-8"><a href="da.html#cb264-8" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],</span>
+<span id="cb264-9"><a href="da.html#cb264-9" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
+<span id="cb264-10"><a href="da.html#cb264-10" aria-hidden="true" tabindex="-1"></a>      Sigma_hat),</span>
+<span id="cb264-11"><a href="da.html#cb264-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">f =</span> n_obs<span class="sc">$</span>pi[<span class="dv">1</span>] <span class="sc">*</span> f1 <span class="sc">+</span> n_obs<span class="sc">$</span>pi[<span class="dv">2</span>] <span class="sc">*</span> f2</span>
+<span id="cb264-12"><a href="da.html#cb264-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb264-13"><a href="da.html#cb264-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb264-14"><a href="da.html#cb264-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">p1 =</span> n_obs<span class="sc">$</span>pi[<span class="dv">1</span>] <span class="sc">*</span> f1 <span class="sc">/</span> f,</span>
+<span id="cb264-15"><a href="da.html#cb264-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">p2 =</span> n_obs<span class="sc">$</span>pi[<span class="dv">2</span>] <span class="sc">*</span> f2 <span class="sc">/</span> f</span>
+<span id="cb264-16"><a href="da.html#cb264-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb264-17"><a href="da.html#cb264-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb264-18"><a href="da.html#cb264-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(p1 <span class="sc">&gt;=</span> p2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb264-19"><a href="da.html#cb264-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb264-20"><a href="da.html#cb264-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb264-21"><a href="da.html#cb264-21" aria-hidden="true" tabindex="-1"></a>    id, x1, x2, class, p1, p2, predicted_class</span>
+<span id="cb264-22"><a href="da.html#cb264-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb264-23"><a href="da.html#cb264-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb264-24"><a href="da.html#cb264-24" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb264-25"><a href="da.html#cb264-25" aria-hidden="true" tabindex="-1"></a>  lda_posterior_result_df,</span>
+<span id="cb264-26"><a href="da.html#cb264-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb264-27"><a href="da.html#cb264-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(lda_posterior_result_df)[<span class="dv">2</span>]),</span>
+<span id="cb264-28"><a href="da.html#cb264-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
+<span id="cb264-29"><a href="da.html#cb264-29" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, </span>
+<span id="cb264-30"><a href="da.html#cb264-30" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 1 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, </span>
+<span id="cb264-31"><a href="da.html#cb264-31" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 2 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
+<span id="cb264-32"><a href="da.html#cb264-32" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
+<span id="cb264-33"><a href="da.html#cb264-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:lda-posterior-result">Table 7.5: </span>학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주</caption>
 <thead>
@@ -1303,15 +1303,15 @@ u_k(\mathbf{x}) = \boldsymbol\mu_k^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac
 </tbody>
 </table>
 <p>패키지 <code>MASS</code>내의 함수 <code>lda</code>를 통해 위 Table <a href="da.html#tab:lda-posterior-result">7.5</a> 결과를 간편하게 얻을 수 있다.</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="da.html#cb262-1" aria-hidden="true" tabindex="-1"></a>lda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
-<span id="cb262-2"><a href="da.html#cb262-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb262-3"><a href="da.html#cb262-3" aria-hidden="true" tabindex="-1"></a>train_df <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(</span>
-<span id="cb262-4"><a href="da.html#cb262-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(lda_fit, train_df)<span class="sc">$</span>posterior <span class="sc">%&gt;%</span> </span>
-<span id="cb262-5"><a href="da.html#cb262-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(<span class="fu">paste0</span>(<span class="st">&quot;p&quot;</span>, <span class="fu">colnames</span>(.))) <span class="sc">%&gt;%</span> <span class="fu">as_data_frame</span>()</span>
-<span id="cb262-6"><a href="da.html#cb262-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb262-7"><a href="da.html#cb262-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb262-8"><a href="da.html#cb262-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">predict</span>(lda_fit, .)<span class="sc">$</span>class</span>
-<span id="cb262-9"><a href="da.html#cb262-9" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="da.html#cb265-1" aria-hidden="true" tabindex="-1"></a>lda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
+<span id="cb265-2"><a href="da.html#cb265-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb265-3"><a href="da.html#cb265-3" aria-hidden="true" tabindex="-1"></a>train_df <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb265-4"><a href="da.html#cb265-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(lda_fit, train_df)<span class="sc">$</span>posterior <span class="sc">%&gt;%</span> </span>
+<span id="cb265-5"><a href="da.html#cb265-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(<span class="fu">paste0</span>(<span class="st">&quot;p&quot;</span>, <span class="fu">colnames</span>(.))) <span class="sc">%&gt;%</span> <span class="fu">as_data_frame</span>()</span>
+<span id="cb265-6"><a href="da.html#cb265-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb265-7"><a href="da.html#cb265-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb265-8"><a href="da.html#cb265-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">predict</span>(lda_fit, .)<span class="sc">$</span>class</span>
+<span id="cb265-9"><a href="da.html#cb265-9" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
 <pre><code>## # A tibble: 9 x 7
 ##      id    x1    x2 class      p1     p2 predicted_class
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;          
@@ -1325,24 +1325,24 @@ u_k(\mathbf{x}) = \boldsymbol\mu_k^\top \boldsymbol\Sigma^{-1}\mathbf{x} - \frac
 ## 8     8     9     6 2     0.00477 0.995  2              
 ## 9     9     5     4 2     0.0838  0.916  2</code></pre>
 <p>위 결과들은 교재 <span class="citation">(<a href="#ref-jun2012datamining" role="doc-biblioref">전치혁 2012</a>)</span>의 예제 결과와는 다소 차이가 있는데, 이는 교재에서는 사전확률을 학습표본 내 비율 대신 <span class="math inline">\(\pi_1 = \pi_2 = 0.5\)</span>로 지정하였기 때문이다. 교재와 동일한 결과는 아래의 스크립트처럼 <code>lda</code> 함수 실행 시 사전확률 파리미터 <code>prior</code>의 값을 지정함으로써 얻을 수 있다.</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="da.html#cb264-1" aria-hidden="true" tabindex="-1"></a>lda_fit_equal_prior <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df, <span class="at">prior =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>))</span>
-<span id="cb264-2"><a href="da.html#cb264-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb264-3"><a href="da.html#cb264-3" aria-hidden="true" tabindex="-1"></a>train_df <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(</span>
-<span id="cb264-4"><a href="da.html#cb264-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(lda_fit_equal_prior, train_df)<span class="sc">$</span>posterior <span class="sc">%&gt;%</span> </span>
-<span id="cb264-5"><a href="da.html#cb264-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(<span class="fu">paste0</span>(<span class="st">&quot;p&quot;</span>, <span class="fu">colnames</span>(.))) <span class="sc">%&gt;%</span> <span class="fu">as_data_frame</span>()</span>
-<span id="cb264-6"><a href="da.html#cb264-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb264-7"><a href="da.html#cb264-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb264-8"><a href="da.html#cb264-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">predict</span>(lda_fit_equal_prior, .)<span class="sc">$</span>class</span>
-<span id="cb264-9"><a href="da.html#cb264-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb264-10"><a href="da.html#cb264-10" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb264-11"><a href="da.html#cb264-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb264-12"><a href="da.html#cb264-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(lda_posterior_result_df)[<span class="dv">2</span>]),</span>
-<span id="cb264-13"><a href="da.html#cb264-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
-<span id="cb264-14"><a href="da.html#cb264-14" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, </span>
-<span id="cb264-15"><a href="da.html#cb264-15" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 1 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, </span>
-<span id="cb264-16"><a href="da.html#cb264-16" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 2 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
-<span id="cb264-17"><a href="da.html#cb264-17" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
-<span id="cb264-18"><a href="da.html#cb264-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주 (사전확률 = 0.5)&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="da.html#cb267-1" aria-hidden="true" tabindex="-1"></a>lda_fit_equal_prior <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df, <span class="at">prior =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>))</span>
+<span id="cb267-2"><a href="da.html#cb267-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb267-3"><a href="da.html#cb267-3" aria-hidden="true" tabindex="-1"></a>train_df <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb267-4"><a href="da.html#cb267-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(lda_fit_equal_prior, train_df)<span class="sc">$</span>posterior <span class="sc">%&gt;%</span> </span>
+<span id="cb267-5"><a href="da.html#cb267-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(<span class="fu">paste0</span>(<span class="st">&quot;p&quot;</span>, <span class="fu">colnames</span>(.))) <span class="sc">%&gt;%</span> <span class="fu">as_data_frame</span>()</span>
+<span id="cb267-6"><a href="da.html#cb267-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb267-7"><a href="da.html#cb267-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb267-8"><a href="da.html#cb267-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">predict</span>(lda_fit_equal_prior, .)<span class="sc">$</span>class</span>
+<span id="cb267-9"><a href="da.html#cb267-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb267-10"><a href="da.html#cb267-10" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb267-11"><a href="da.html#cb267-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb267-12"><a href="da.html#cb267-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(lda_posterior_result_df)[<span class="dv">2</span>]),</span>
+<span id="cb267-13"><a href="da.html#cb267-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
+<span id="cb267-14"><a href="da.html#cb267-14" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, </span>
+<span id="cb267-15"><a href="da.html#cb267-15" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 1 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, </span>
+<span id="cb267-16"><a href="da.html#cb267-16" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 2 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
+<span id="cb267-17"><a href="da.html#cb267-17" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
+<span id="cb267-18"><a href="da.html#cb267-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주 (사전확률 = 0.5)&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:lda-posterior-result-equal-prior">Table 7.6: </span>학습표본에 대한 LDA 적용 결과: 사후확률 및 추정범주 (사전확률 = 0.5)</caption>
 <thead>
@@ -1475,29 +1475,29 @@ R_1 &amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{\pi_1 f_1(\mat
 \end{eqnarray*}\]</span></p>
 <p>따라서 오분류비용을 고려한 분류규칙은 1) 사후확률에 오분류 비용을 곱한 뒤, 2) 그 값이 큰 범주로 분류하여 오분류비용을 최소화한다.</p>
 <p>Table <a href="da.html#tab:lda-posterior-result">7.5</a>에 오분류비용 <span class="math inline">\(C(1 \, | \, 2) = 1, C(2 \, | \, 1) = 5\)</span>를 적용한 결과는 아래와 같이 구할 수 있다.</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="da.html#cb265-1" aria-hidden="true" tabindex="-1"></a>lda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
-<span id="cb265-2"><a href="da.html#cb265-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb265-3"><a href="da.html#cb265-3" aria-hidden="true" tabindex="-1"></a>misclassification_cost <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>)</span>
-<span id="cb265-4"><a href="da.html#cb265-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb265-5"><a href="da.html#cb265-5" aria-hidden="true" tabindex="-1"></a>lda_unequal_cost_result_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(</span>
-<span id="cb265-6"><a href="da.html#cb265-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(lda_fit, train_df)<span class="sc">$</span>posterior <span class="sc">%*%</span> <span class="fu">diag</span>(misclassification_cost) <span class="sc">%&gt;%</span> </span>
-<span id="cb265-7"><a href="da.html#cb265-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_data_frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb265-8"><a href="da.html#cb265-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">names&lt;-</span><span class="st">`</span>(<span class="fu">paste0</span>(<span class="st">&quot;s&quot;</span>, lda_fit<span class="sc">$</span>lev)) </span>
-<span id="cb265-9"><a href="da.html#cb265-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb265-10"><a href="da.html#cb265-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb265-11"><a href="da.html#cb265-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(s1 <span class="sc">&gt;=</span> s2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb265-12"><a href="da.html#cb265-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb265-13"><a href="da.html#cb265-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb265-14"><a href="da.html#cb265-14" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb265-15"><a href="da.html#cb265-15" aria-hidden="true" tabindex="-1"></a>  lda_unequal_cost_result_df,</span>
-<span id="cb265-16"><a href="da.html#cb265-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb265-17"><a href="da.html#cb265-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(lda_unequal_cost_result_df)[<span class="dv">2</span>]),</span>
-<span id="cb265-18"><a href="da.html#cb265-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
-<span id="cb265-19"><a href="da.html#cb265-19" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, </span>
-<span id="cb265-20"><a href="da.html#cb265-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$C(2 </span><span class="sc">\\</span><span class="st">, </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">, 1) P(y = 1 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, </span>
-<span id="cb265-21"><a href="da.html#cb265-21" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$C(1 </span><span class="sc">\\</span><span class="st">, </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">, 2) P(y = 2 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
-<span id="cb265-22"><a href="da.html#cb265-22" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
-<span id="cb265-23"><a href="da.html#cb265-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 오분류 비용을 고려한 LDA 적용 결과&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="da.html#cb268-1" aria-hidden="true" tabindex="-1"></a>lda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
+<span id="cb268-2"><a href="da.html#cb268-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-3"><a href="da.html#cb268-3" aria-hidden="true" tabindex="-1"></a>misclassification_cost <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>)</span>
+<span id="cb268-4"><a href="da.html#cb268-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-5"><a href="da.html#cb268-5" aria-hidden="true" tabindex="-1"></a>lda_unequal_cost_result_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb268-6"><a href="da.html#cb268-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(lda_fit, train_df)<span class="sc">$</span>posterior <span class="sc">%*%</span> <span class="fu">diag</span>(misclassification_cost) <span class="sc">%&gt;%</span> </span>
+<span id="cb268-7"><a href="da.html#cb268-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_data_frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb268-8"><a href="da.html#cb268-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">names&lt;-</span><span class="st">`</span>(<span class="fu">paste0</span>(<span class="st">&quot;s&quot;</span>, lda_fit<span class="sc">$</span>lev)) </span>
+<span id="cb268-9"><a href="da.html#cb268-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb268-10"><a href="da.html#cb268-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb268-11"><a href="da.html#cb268-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(s1 <span class="sc">&gt;=</span> s2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb268-12"><a href="da.html#cb268-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb268-13"><a href="da.html#cb268-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-14"><a href="da.html#cb268-14" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb268-15"><a href="da.html#cb268-15" aria-hidden="true" tabindex="-1"></a>  lda_unequal_cost_result_df,</span>
+<span id="cb268-16"><a href="da.html#cb268-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb268-17"><a href="da.html#cb268-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(lda_unequal_cost_result_df)[<span class="dv">2</span>]),</span>
+<span id="cb268-18"><a href="da.html#cb268-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
+<span id="cb268-19"><a href="da.html#cb268-19" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, </span>
+<span id="cb268-20"><a href="da.html#cb268-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$C(2 </span><span class="sc">\\</span><span class="st">, </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">, 1) P(y = 1 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, </span>
+<span id="cb268-21"><a href="da.html#cb268-21" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$C(1 </span><span class="sc">\\</span><span class="st">, </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">, 2) P(y = 2 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
+<span id="cb268-22"><a href="da.html#cb268-22" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
+<span id="cb268-23"><a href="da.html#cb268-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 오분류 비용을 고려한 LDA 적용 결과&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:lda-unequal-cost-result">Table 7.7: </span>학습표본에 대한 오분류 비용을 고려한 LDA 적용 결과</caption>
 <colgroup>
@@ -1612,9 +1612,9 @@ R_1 &amp;=&amp; \left\{\mathbf{x} \in \mathbb{R}^p \, :  \, \frac{\pi_1 f_1(\mat
 <div id="qda-basic-script" class="section level3" number="7.6.1">
 <h3><span class="header-section-number">7.6.1</span> 기본 R 스크립트</h3>
 <p>Table <a href="da.html#tab:da-train-data-table">7.1</a>의 학습표본에 대해 이차판별분석을 적용하는 R 스크립트는 아래에 보이는 것과 같이 <code>MASS</code> 패키지의 <code>qda</code> 함수를 사용한다.</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="da.html#cb266-1" aria-hidden="true" tabindex="-1"></a>qda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">qda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
-<span id="cb266-2"><a href="da.html#cb266-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb266-3"><a href="da.html#cb266-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(qda_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="da.html#cb269-1" aria-hidden="true" tabindex="-1"></a>qda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">qda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, train_df)</span>
+<span id="cb269-2"><a href="da.html#cb269-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb269-3"><a href="da.html#cb269-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(qda_fit)</span></code></pre></div>
 <pre><code>## Call:
 ## qda(class ~ x1 + x2, data = train_df)
 ## 
@@ -1641,10 +1641,10 @@ u_k(\mathbf{x}) = - \frac{1}{2} (\mathbf{x} - \boldsymbol\mu_k)^\top \boldsymbol
 \tag{7.11}
 \end{equation}\]</span></p>
 <p>데이터 행렬 <span class="math inline">\(X = (\mathbf{x}_1, \mathbf{x}_2, \cdots , \mathbf{x}_N)\)</span>의 각 객체에 대한 판별함수값을 얻는 함수를 아래와 같이 구현할 수 있다.</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="da.html#cb268-1" aria-hidden="true" tabindex="-1"></a>qda_discriminant_func <span class="ot">&lt;-</span> <span class="cf">function</span>(X, mu, Sigma, pi) {</span>
-<span id="cb268-2"><a href="da.html#cb268-2" aria-hidden="true" tabindex="-1"></a>  Sigma_inv_sqrt <span class="ot">&lt;-</span> <span class="fu">chol</span>(<span class="fu">solve</span>(Sigma))</span>
-<span id="cb268-3"><a href="da.html#cb268-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span> <span class="fl">0.5</span> <span class="sc">*</span> <span class="fu">rowSums</span>((<span class="fu">t</span>(X <span class="sc">-</span> mu) <span class="sc">%*%</span> <span class="fu">t</span>(Sigma_inv_sqrt))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="fl">0.5</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">det</span>(Sigma)) <span class="sc">+</span> <span class="fu">log</span>(pi)</span>
-<span id="cb268-4"><a href="da.html#cb268-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="da.html#cb271-1" aria-hidden="true" tabindex="-1"></a>qda_discriminant_func <span class="ot">&lt;-</span> <span class="cf">function</span>(X, mu, Sigma, pi) {</span>
+<span id="cb271-2"><a href="da.html#cb271-2" aria-hidden="true" tabindex="-1"></a>  Sigma_inv_sqrt <span class="ot">&lt;-</span> <span class="fu">chol</span>(<span class="fu">solve</span>(Sigma))</span>
+<span id="cb271-3"><a href="da.html#cb271-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span> <span class="fl">0.5</span> <span class="sc">*</span> <span class="fu">rowSums</span>((<span class="fu">t</span>(X <span class="sc">-</span> mu) <span class="sc">%*%</span> <span class="fu">t</span>(Sigma_inv_sqrt))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="fl">0.5</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">det</span>(Sigma)) <span class="sc">+</span> <span class="fu">log</span>(pi)</span>
+<span id="cb271-4"><a href="da.html#cb271-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="qda-discriminant-rule" class="section level3" number="7.6.3">
 <h3><span class="header-section-number">7.6.3</span> 이차판별함수에 의한 분류</h3>
@@ -1656,32 +1656,32 @@ u_k(\mathbf{x}) = - \frac{1}{2} (\mathbf{x} - \boldsymbol\mu_k)^\top \boldsymbol
 \end{cases}
 \end{equation*}\]</span></p>
 <p>Table <a href="da.html#tab:da-train-data-table">7.1</a>의 학습표본에 대해 이차판별함수값을 계산하고 범주를 추정하면 아래와 같다.</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="da.html#cb269-1" aria-hidden="true" tabindex="-1"></a>qda_discriminant_result_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
-<span id="cb269-2"><a href="da.html#cb269-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">u1 =</span> <span class="fu">qda_discriminant_func</span>(</span>
-<span id="cb269-3"><a href="da.html#cb269-3" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">t</span>(),</span>
-<span id="cb269-4"><a href="da.html#cb269-4" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
-<span id="cb269-5"><a href="da.html#cb269-5" aria-hidden="true" tabindex="-1"></a>      S_within_group[[<span class="dv">1</span>]],</span>
-<span id="cb269-6"><a href="da.html#cb269-6" aria-hidden="true" tabindex="-1"></a>      n_obs<span class="sc">$</span>pi[<span class="dv">1</span>]</span>
-<span id="cb269-7"><a href="da.html#cb269-7" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb269-8"><a href="da.html#cb269-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">u2 =</span> <span class="fu">qda_discriminant_func</span>(</span>
-<span id="cb269-9"><a href="da.html#cb269-9" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">t</span>(),</span>
-<span id="cb269-10"><a href="da.html#cb269-10" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
-<span id="cb269-11"><a href="da.html#cb269-11" aria-hidden="true" tabindex="-1"></a>      S_within_group[[<span class="dv">2</span>]],</span>
-<span id="cb269-12"><a href="da.html#cb269-12" aria-hidden="true" tabindex="-1"></a>      n_obs<span class="sc">$</span>pi[<span class="dv">2</span>]</span>
-<span id="cb269-13"><a href="da.html#cb269-13" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb269-14"><a href="da.html#cb269-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb269-15"><a href="da.html#cb269-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb269-16"><a href="da.html#cb269-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(u1 <span class="sc">&gt;=</span> u2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb269-17"><a href="da.html#cb269-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb269-18"><a href="da.html#cb269-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb269-19"><a href="da.html#cb269-19" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb269-20"><a href="da.html#cb269-20" aria-hidden="true" tabindex="-1"></a>  qda_discriminant_result_df,</span>
-<span id="cb269-21"><a href="da.html#cb269-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb269-22"><a href="da.html#cb269-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(qda_discriminant_result_df)[<span class="dv">2</span>]),</span>
-<span id="cb269-23"><a href="da.html#cb269-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
-<span id="cb269-24"><a href="da.html#cb269-24" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$u_1(</span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, <span class="st">&#39;$u_2(</span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
-<span id="cb269-25"><a href="da.html#cb269-25" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
-<span id="cb269-26"><a href="da.html#cb269-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 QDA 적용 결과: 판별함수값 및 추정범주&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="da.html#cb272-1" aria-hidden="true" tabindex="-1"></a>qda_discriminant_result_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb272-2"><a href="da.html#cb272-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">u1 =</span> <span class="fu">qda_discriminant_func</span>(</span>
+<span id="cb272-3"><a href="da.html#cb272-3" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">t</span>(),</span>
+<span id="cb272-4"><a href="da.html#cb272-4" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
+<span id="cb272-5"><a href="da.html#cb272-5" aria-hidden="true" tabindex="-1"></a>      S_within_group[[<span class="dv">1</span>]],</span>
+<span id="cb272-6"><a href="da.html#cb272-6" aria-hidden="true" tabindex="-1"></a>      n_obs<span class="sc">$</span>pi[<span class="dv">1</span>]</span>
+<span id="cb272-7"><a href="da.html#cb272-7" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb272-8"><a href="da.html#cb272-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">u2 =</span> <span class="fu">qda_discriminant_func</span>(</span>
+<span id="cb272-9"><a href="da.html#cb272-9" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">t</span>(),</span>
+<span id="cb272-10"><a href="da.html#cb272-10" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
+<span id="cb272-11"><a href="da.html#cb272-11" aria-hidden="true" tabindex="-1"></a>      S_within_group[[<span class="dv">2</span>]],</span>
+<span id="cb272-12"><a href="da.html#cb272-12" aria-hidden="true" tabindex="-1"></a>      n_obs<span class="sc">$</span>pi[<span class="dv">2</span>]</span>
+<span id="cb272-13"><a href="da.html#cb272-13" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb272-14"><a href="da.html#cb272-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb272-15"><a href="da.html#cb272-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb272-16"><a href="da.html#cb272-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(u1 <span class="sc">&gt;=</span> u2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb272-17"><a href="da.html#cb272-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb272-18"><a href="da.html#cb272-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb272-19"><a href="da.html#cb272-19" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb272-20"><a href="da.html#cb272-20" aria-hidden="true" tabindex="-1"></a>  qda_discriminant_result_df,</span>
+<span id="cb272-21"><a href="da.html#cb272-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb272-22"><a href="da.html#cb272-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(qda_discriminant_result_df)[<span class="dv">2</span>]),</span>
+<span id="cb272-23"><a href="da.html#cb272-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
+<span id="cb272-24"><a href="da.html#cb272-24" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;$u_1(</span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, <span class="st">&#39;$u_2(</span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
+<span id="cb272-25"><a href="da.html#cb272-25" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
+<span id="cb272-26"><a href="da.html#cb272-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 QDA 적용 결과: 판별함수값 및 추정범주&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:qda-discriminant-result">Table 7.8: </span>학습표본에 대한 QDA 적용 결과: 판별함수값 및 추정범주</caption>
 <thead>
@@ -1781,39 +1781,39 @@ u_k(\mathbf{x}) = - \frac{1}{2} (\mathbf{x} - \boldsymbol\mu_k)^\top \boldsymbol
 </table>
 <p>위 Table <a href="da.html#tab:qda-discriminant-result">7.8</a>에서 보듯이 모든 학습객체가 올바로 분류되고 있다.</p>
 <p>또한 선형판별분석의 경우와 마찬가지로 사후확률 비교를 통한 범주 분류를 수행할 수 있다.</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="da.html#cb270-1" aria-hidden="true" tabindex="-1"></a>qda_posterior_result_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span></span>
-<span id="cb270-2"><a href="da.html#cb270-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb270-3"><a href="da.html#cb270-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">f1 =</span> mvtnorm<span class="sc">::</span><span class="fu">dmvnorm</span>(</span>
-<span id="cb270-4"><a href="da.html#cb270-4" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],</span>
-<span id="cb270-5"><a href="da.html#cb270-5" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
-<span id="cb270-6"><a href="da.html#cb270-6" aria-hidden="true" tabindex="-1"></a>      S_within_group[[<span class="dv">1</span>]]),</span>
-<span id="cb270-7"><a href="da.html#cb270-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">f2 =</span> mvtnorm<span class="sc">::</span><span class="fu">dmvnorm</span>(</span>
-<span id="cb270-8"><a href="da.html#cb270-8" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],</span>
-<span id="cb270-9"><a href="da.html#cb270-9" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
-<span id="cb270-10"><a href="da.html#cb270-10" aria-hidden="true" tabindex="-1"></a>      S_within_group[[<span class="dv">2</span>]]),</span>
-<span id="cb270-11"><a href="da.html#cb270-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">f =</span> n_obs<span class="sc">$</span>pi[<span class="dv">1</span>] <span class="sc">*</span> f1 <span class="sc">+</span> n_obs<span class="sc">$</span>pi[<span class="dv">2</span>] <span class="sc">*</span> f2</span>
-<span id="cb270-12"><a href="da.html#cb270-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb270-13"><a href="da.html#cb270-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb270-14"><a href="da.html#cb270-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">p1 =</span> n_obs<span class="sc">$</span>pi[<span class="dv">1</span>] <span class="sc">*</span> f1 <span class="sc">/</span> f,</span>
-<span id="cb270-15"><a href="da.html#cb270-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">p2 =</span> n_obs<span class="sc">$</span>pi[<span class="dv">2</span>] <span class="sc">*</span> f2 <span class="sc">/</span> f</span>
-<span id="cb270-16"><a href="da.html#cb270-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb270-17"><a href="da.html#cb270-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb270-18"><a href="da.html#cb270-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(p1 <span class="sc">&gt;=</span> p2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb270-19"><a href="da.html#cb270-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb270-20"><a href="da.html#cb270-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb270-21"><a href="da.html#cb270-21" aria-hidden="true" tabindex="-1"></a>    id, x1, x2, class, p1, p2, predicted_class</span>
-<span id="cb270-22"><a href="da.html#cb270-22" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb270-23"><a href="da.html#cb270-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb270-24"><a href="da.html#cb270-24" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb270-25"><a href="da.html#cb270-25" aria-hidden="true" tabindex="-1"></a>  qda_posterior_result_df,</span>
-<span id="cb270-26"><a href="da.html#cb270-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb270-27"><a href="da.html#cb270-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(qda_posterior_result_df)[<span class="dv">2</span>]),</span>
-<span id="cb270-28"><a href="da.html#cb270-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
-<span id="cb270-29"><a href="da.html#cb270-29" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, </span>
-<span id="cb270-30"><a href="da.html#cb270-30" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 1 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, </span>
-<span id="cb270-31"><a href="da.html#cb270-31" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 2 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
-<span id="cb270-32"><a href="da.html#cb270-32" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
-<span id="cb270-33"><a href="da.html#cb270-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 QDA 적용 결과: 사후확률 및 추정범주&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="da.html#cb273-1" aria-hidden="true" tabindex="-1"></a>qda_posterior_result_df <span class="ot">&lt;-</span> train_df <span class="sc">%&gt;%</span></span>
+<span id="cb273-2"><a href="da.html#cb273-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb273-3"><a href="da.html#cb273-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">f1 =</span> mvtnorm<span class="sc">::</span><span class="fu">dmvnorm</span>(</span>
+<span id="cb273-4"><a href="da.html#cb273-4" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],</span>
+<span id="cb273-5"><a href="da.html#cb273-5" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
+<span id="cb273-6"><a href="da.html#cb273-6" aria-hidden="true" tabindex="-1"></a>      S_within_group[[<span class="dv">1</span>]]),</span>
+<span id="cb273-7"><a href="da.html#cb273-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">f2 =</span> mvtnorm<span class="sc">::</span><span class="fu">dmvnorm</span>(</span>
+<span id="cb273-8"><a href="da.html#cb273-8" aria-hidden="true" tabindex="-1"></a>      .[<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)],</span>
+<span id="cb273-9"><a href="da.html#cb273-9" aria-hidden="true" tabindex="-1"></a>      mu_hat[<span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>)] <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(),</span>
+<span id="cb273-10"><a href="da.html#cb273-10" aria-hidden="true" tabindex="-1"></a>      S_within_group[[<span class="dv">2</span>]]),</span>
+<span id="cb273-11"><a href="da.html#cb273-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">f =</span> n_obs<span class="sc">$</span>pi[<span class="dv">1</span>] <span class="sc">*</span> f1 <span class="sc">+</span> n_obs<span class="sc">$</span>pi[<span class="dv">2</span>] <span class="sc">*</span> f2</span>
+<span id="cb273-12"><a href="da.html#cb273-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb273-13"><a href="da.html#cb273-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb273-14"><a href="da.html#cb273-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">p1 =</span> n_obs<span class="sc">$</span>pi[<span class="dv">1</span>] <span class="sc">*</span> f1 <span class="sc">/</span> f,</span>
+<span id="cb273-15"><a href="da.html#cb273-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">p2 =</span> n_obs<span class="sc">$</span>pi[<span class="dv">2</span>] <span class="sc">*</span> f2 <span class="sc">/</span> f</span>
+<span id="cb273-16"><a href="da.html#cb273-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb273-17"><a href="da.html#cb273-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb273-18"><a href="da.html#cb273-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">factor</span>(<span class="fu">if_else</span>(p1 <span class="sc">&gt;=</span> p2, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb273-19"><a href="da.html#cb273-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb273-20"><a href="da.html#cb273-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb273-21"><a href="da.html#cb273-21" aria-hidden="true" tabindex="-1"></a>    id, x1, x2, class, p1, p2, predicted_class</span>
+<span id="cb273-22"><a href="da.html#cb273-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb273-23"><a href="da.html#cb273-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb273-24"><a href="da.html#cb273-24" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb273-25"><a href="da.html#cb273-25" aria-hidden="true" tabindex="-1"></a>  qda_posterior_result_df,</span>
+<span id="cb273-26"><a href="da.html#cb273-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb273-27"><a href="da.html#cb273-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="fu">dim</span>(qda_posterior_result_df)[<span class="dv">2</span>]),</span>
+<span id="cb273-28"><a href="da.html#cb273-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span>,</span>
+<span id="cb273-29"><a href="da.html#cb273-29" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;실제범주&#39;</span>, </span>
+<span id="cb273-30"><a href="da.html#cb273-30" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 1 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>, </span>
+<span id="cb273-31"><a href="da.html#cb273-31" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;$P(y = 2 </span><span class="sc">\\</span><span class="st">vert </span><span class="sc">\\</span><span class="st">mathbf{x})$&#39;</span>,</span>
+<span id="cb273-32"><a href="da.html#cb273-32" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;추정범주&#39;</span>),</span>
+<span id="cb273-33"><a href="da.html#cb273-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;학습표본에 대한 QDA 적용 결과: 사후확률 및 추정범주&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:qda-posterior-result">Table 7.9: </span>학습표본에 대한 QDA 적용 결과: 사후확률 및 추정범주</caption>
 <thead>
@@ -1912,13 +1912,13 @@ u_k(\mathbf{x}) = - \frac{1}{2} (\mathbf{x} - \boldsymbol\mu_k)^\top \boldsymbol
 </tbody>
 </table>
 <p>이 또한 <code>MASS</code> 패키지의 <code>predict.qda</code> 함수를 통해 아래와 같이 동일한 결과값을 보다 간편하게 얻을 수 있다.</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="da.html#cb271-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(</span>
-<span id="cb271-2"><a href="da.html#cb271-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(qda_fit, train_df)<span class="sc">$</span>posterior <span class="sc">%&gt;%</span> </span>
-<span id="cb271-3"><a href="da.html#cb271-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(<span class="fu">paste0</span>(<span class="st">&quot;p&quot;</span>, <span class="fu">colnames</span>(.))) <span class="sc">%&gt;%</span> <span class="fu">as_data_frame</span>()</span>
-<span id="cb271-4"><a href="da.html#cb271-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb271-5"><a href="da.html#cb271-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb271-6"><a href="da.html#cb271-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">predict</span>(qda_fit, .)<span class="sc">$</span>class</span>
-<span id="cb271-7"><a href="da.html#cb271-7" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="da.html#cb274-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb274-2"><a href="da.html#cb274-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(qda_fit, train_df)<span class="sc">$</span>posterior <span class="sc">%&gt;%</span> </span>
+<span id="cb274-3"><a href="da.html#cb274-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(<span class="fu">paste0</span>(<span class="st">&quot;p&quot;</span>, <span class="fu">colnames</span>(.))) <span class="sc">%&gt;%</span> <span class="fu">as_data_frame</span>()</span>
+<span id="cb274-4"><a href="da.html#cb274-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb274-5"><a href="da.html#cb274-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb274-6"><a href="da.html#cb274-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">predict</span>(qda_fit, .)<span class="sc">$</span>class</span>
+<span id="cb274-7"><a href="da.html#cb274-7" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
 <pre><code>## # A tibble: 9 x 7
 ##      id    x1    x2 class        p1     p2 predicted_class
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;          
@@ -1938,20 +1938,20 @@ u_k(\mathbf{x}) = - \frac{1}{2} (\mathbf{x} - \boldsymbol\mu_k)^\top \boldsymbol
 <div id="mutliclass-da-basic-script" class="section level3" number="7.7.1">
 <h3><span class="header-section-number">7.7.1</span> 기본 R 스크립트</h3>
 <p>3개의 범주를 지닌 붓꽃(iris) 데이터에 대해 선형판별분석을 적용하는 R 스크립트는 아래와 같다. 본 예제에서는 각 범주별 50개 데이터 중 첫 30개 관측치만을 학습표본으로 삼아 판별함수를 유도한다.</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="da.html#cb273-1" aria-hidden="true" tabindex="-1"></a>iris_train_df <span class="ot">&lt;-</span> datasets<span class="sc">::</span>iris <span class="sc">%&gt;%</span></span>
-<span id="cb273-2"><a href="da.html#cb273-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">x1 =</span> Sepal.Length,</span>
-<span id="cb273-3"><a href="da.html#cb273-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">x2 =</span> Sepal.Width,</span>
-<span id="cb273-4"><a href="da.html#cb273-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">x3 =</span> Petal.Length,</span>
-<span id="cb273-5"><a href="da.html#cb273-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">x4 =</span> Petal.Width,</span>
-<span id="cb273-6"><a href="da.html#cb273-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">class =</span> Species) <span class="sc">%&gt;%</span></span>
-<span id="cb273-7"><a href="da.html#cb273-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
-<span id="cb273-8"><a href="da.html#cb273-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb273-9"><a href="da.html#cb273-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb273-10"><a href="da.html#cb273-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>())</span>
-<span id="cb273-11"><a href="da.html#cb273-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb273-12"><a href="da.html#cb273-12" aria-hidden="true" tabindex="-1"></a>iris_lda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> . <span class="sc">-</span>id, iris_train_df)</span>
-<span id="cb273-13"><a href="da.html#cb273-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb273-14"><a href="da.html#cb273-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(iris_lda_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="da.html#cb276-1" aria-hidden="true" tabindex="-1"></a>iris_train_df <span class="ot">&lt;-</span> datasets<span class="sc">::</span>iris <span class="sc">%&gt;%</span></span>
+<span id="cb276-2"><a href="da.html#cb276-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">x1 =</span> Sepal.Length,</span>
+<span id="cb276-3"><a href="da.html#cb276-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">x2 =</span> Sepal.Width,</span>
+<span id="cb276-4"><a href="da.html#cb276-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">x3 =</span> Petal.Length,</span>
+<span id="cb276-5"><a href="da.html#cb276-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">x4 =</span> Petal.Width,</span>
+<span id="cb276-6"><a href="da.html#cb276-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">class =</span> Species) <span class="sc">%&gt;%</span></span>
+<span id="cb276-7"><a href="da.html#cb276-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
+<span id="cb276-8"><a href="da.html#cb276-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb276-9"><a href="da.html#cb276-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb276-10"><a href="da.html#cb276-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>())</span>
+<span id="cb276-11"><a href="da.html#cb276-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-12"><a href="da.html#cb276-12" aria-hidden="true" tabindex="-1"></a>iris_lda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> . <span class="sc">-</span>id, iris_train_df)</span>
+<span id="cb276-13"><a href="da.html#cb276-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-14"><a href="da.html#cb276-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(iris_lda_fit)</span></code></pre></div>
 <pre><code>## Call:
 ## lda(class ~ . - id, data = iris_train_df)
 ## 
@@ -2009,18 +2009,18 @@ P(y = k \,|\, \mathbf{x}) \propto \pi_k f_k(\mathbf{x})
 \end{equation*}\]</span></p>
 <p>앞 장들에서 살펴본 것과 마찬가지로, 선형판별분석의 경우 각 범주의 확률밀도함수 <span class="math inline">\(f_k(\mathbf{x})\)</span>가 동일 분산-공분산행렬을 가정하며, 이차판별분석의 경우 서로 다른 분산-공분산행렬을 가정한다.</p>
 <p>아래 스크립트는 <code>MASS</code> 패키지의 <code>lda</code> 함수를 통해 각 범주에 속할 사후확률과 범주 추정값을 얻는 과정을 보여준다.</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="da.html#cb275-1" aria-hidden="true" tabindex="-1"></a>iris_lda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4, iris_train_df)</span>
-<span id="cb275-2"><a href="da.html#cb275-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb275-3"><a href="da.html#cb275-3" aria-hidden="true" tabindex="-1"></a>iris_lda_result <span class="ot">&lt;-</span> iris_train_df <span class="sc">%&gt;%</span></span>
-<span id="cb275-4"><a href="da.html#cb275-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
-<span id="cb275-5"><a href="da.html#cb275-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(iris_lda_fit, .)<span class="sc">$</span>posterior <span class="sc">%&gt;%</span></span>
-<span id="cb275-6"><a href="da.html#cb275-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as_data_frame</span>()</span>
-<span id="cb275-7"><a href="da.html#cb275-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb275-8"><a href="da.html#cb275-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb275-9"><a href="da.html#cb275-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">predict</span>(iris_lda_fit, .)<span class="sc">$</span>class</span>
-<span id="cb275-10"><a href="da.html#cb275-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb275-11"><a href="da.html#cb275-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb275-12"><a href="da.html#cb275-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(iris_lda_result)</span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="da.html#cb278-1" aria-hidden="true" tabindex="-1"></a>iris_lda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4, iris_train_df)</span>
+<span id="cb278-2"><a href="da.html#cb278-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb278-3"><a href="da.html#cb278-3" aria-hidden="true" tabindex="-1"></a>iris_lda_result <span class="ot">&lt;-</span> iris_train_df <span class="sc">%&gt;%</span></span>
+<span id="cb278-4"><a href="da.html#cb278-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
+<span id="cb278-5"><a href="da.html#cb278-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(iris_lda_fit, .)<span class="sc">$</span>posterior <span class="sc">%&gt;%</span></span>
+<span id="cb278-6"><a href="da.html#cb278-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as_data_frame</span>()</span>
+<span id="cb278-7"><a href="da.html#cb278-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb278-8"><a href="da.html#cb278-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb278-9"><a href="da.html#cb278-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">predict</span>(iris_lda_fit, .)<span class="sc">$</span>class</span>
+<span id="cb278-10"><a href="da.html#cb278-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb278-11"><a href="da.html#cb278-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb278-12"><a href="da.html#cb278-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(iris_lda_result)</span></code></pre></div>
 <pre><code>## # A tibble: 90 x 10
 ##       x1    x2    x3    x4 class     id setosa versicolor virginica
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;int&gt;  &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
@@ -2035,16 +2035,16 @@ P(y = k \,|\, \mathbf{x}) \propto \pi_k f_k(\mathbf{x})
 ##  9   4.4   2.9   1.4   0.2 setosa     9   1.00   2.22e-15  3.42e-33
 ## 10   4.9   3.1   1.5   0.1 setosa    10   1      9.36e-19  4.85e-38
 ## # … with 80 more rows, and 1 more variable: predicted_class &lt;fct&gt;</code></pre>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="da.html#cb277-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb277-2"><a href="da.html#cb277-2" aria-hidden="true" tabindex="-1"></a>  iris_lda_result <span class="sc">%&gt;%</span> </span>
-<span id="cb277-3"><a href="da.html#cb277-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(id, class, predicted_class,</span>
-<span id="cb277-4"><a href="da.html#cb277-4" aria-hidden="true" tabindex="-1"></a>           setosa, versicolor, virginica) <span class="sc">%&gt;%</span> </span>
-<span id="cb277-5"><a href="da.html#cb277-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(class <span class="sc">!=</span> predicted_class),</span>
-<span id="cb277-6"><a href="da.html#cb277-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb277-7"><a href="da.html#cb277-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">6</span>),</span>
-<span id="cb277-8"><a href="da.html#cb277-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;추정범주&#39;</span>,</span>
-<span id="cb277-9"><a href="da.html#cb277-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;setosa&#39;</span>, <span class="st">&#39;versicolor&#39;</span>, <span class="st">&#39;virginica&#39;</span>),</span>
-<span id="cb277-10"><a href="da.html#cb277-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;붓꽃 학습표본에 대한 LDA 적용 결과 - 오분류 객체 사후 확률&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="da.html#cb280-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb280-2"><a href="da.html#cb280-2" aria-hidden="true" tabindex="-1"></a>  iris_lda_result <span class="sc">%&gt;%</span> </span>
+<span id="cb280-3"><a href="da.html#cb280-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(id, class, predicted_class,</span>
+<span id="cb280-4"><a href="da.html#cb280-4" aria-hidden="true" tabindex="-1"></a>           setosa, versicolor, virginica) <span class="sc">%&gt;%</span> </span>
+<span id="cb280-5"><a href="da.html#cb280-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(class <span class="sc">!=</span> predicted_class),</span>
+<span id="cb280-6"><a href="da.html#cb280-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb280-7"><a href="da.html#cb280-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">6</span>),</span>
+<span id="cb280-8"><a href="da.html#cb280-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;추정범주&#39;</span>,</span>
+<span id="cb280-9"><a href="da.html#cb280-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;setosa&#39;</span>, <span class="st">&#39;versicolor&#39;</span>, <span class="st">&#39;virginica&#39;</span>),</span>
+<span id="cb280-10"><a href="da.html#cb280-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;붓꽃 학습표본에 대한 LDA 적용 결과 - 오분류 객체 사후 확률&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:iris-lda">Table 7.10: </span>붓꽃 학습표본에 대한 LDA 적용 결과 - 오분류 객체 사후 확률</caption>
 <thead>
@@ -2069,27 +2069,27 @@ P(y = k \,|\, \mathbf{x}) \propto \pi_k f_k(\mathbf{x})
 </tbody>
 </table>
 <p>아래 스크립트는 <code>MASS</code> 패키지의 <code>qda</code> 함수를 통해 각 범주에 속할 사후확률과 범주 추정값을 얻는 과정을 보여준다.</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="da.html#cb278-1" aria-hidden="true" tabindex="-1"></a>iris_qda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">qda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4, iris_train_df)</span>
-<span id="cb278-2"><a href="da.html#cb278-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb278-3"><a href="da.html#cb278-3" aria-hidden="true" tabindex="-1"></a>iris_qda_result <span class="ot">&lt;-</span> iris_train_df <span class="sc">%&gt;%</span></span>
-<span id="cb278-4"><a href="da.html#cb278-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
-<span id="cb278-5"><a href="da.html#cb278-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(iris_qda_fit, .)<span class="sc">$</span>posterior <span class="sc">%&gt;%</span></span>
-<span id="cb278-6"><a href="da.html#cb278-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as_data_frame</span>()</span>
-<span id="cb278-7"><a href="da.html#cb278-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb278-8"><a href="da.html#cb278-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb278-9"><a href="da.html#cb278-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">predict</span>(iris_qda_fit, .)<span class="sc">$</span>class</span>
-<span id="cb278-10"><a href="da.html#cb278-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb278-11"><a href="da.html#cb278-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb278-12"><a href="da.html#cb278-12" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb278-13"><a href="da.html#cb278-13" aria-hidden="true" tabindex="-1"></a>  iris_qda_result <span class="sc">%&gt;%</span> </span>
-<span id="cb278-14"><a href="da.html#cb278-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(id, class, predicted_class,</span>
-<span id="cb278-15"><a href="da.html#cb278-15" aria-hidden="true" tabindex="-1"></a>           setosa, versicolor, virginica) <span class="sc">%&gt;%</span> </span>
-<span id="cb278-16"><a href="da.html#cb278-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(class <span class="sc">!=</span> predicted_class),</span>
-<span id="cb278-17"><a href="da.html#cb278-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb278-18"><a href="da.html#cb278-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">6</span>),</span>
-<span id="cb278-19"><a href="da.html#cb278-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;추정범주&#39;</span>,</span>
-<span id="cb278-20"><a href="da.html#cb278-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;setosa&#39;</span>, <span class="st">&#39;versicolor&#39;</span>, <span class="st">&#39;virginica&#39;</span>),</span>
-<span id="cb278-21"><a href="da.html#cb278-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;붓꽃 학습표본에 대한 QDA 적용 결과 - 오분류 객체 사후 확률&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="da.html#cb281-1" aria-hidden="true" tabindex="-1"></a>iris_qda_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">qda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4, iris_train_df)</span>
+<span id="cb281-2"><a href="da.html#cb281-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb281-3"><a href="da.html#cb281-3" aria-hidden="true" tabindex="-1"></a>iris_qda_result <span class="ot">&lt;-</span> iris_train_df <span class="sc">%&gt;%</span></span>
+<span id="cb281-4"><a href="da.html#cb281-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
+<span id="cb281-5"><a href="da.html#cb281-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(iris_qda_fit, .)<span class="sc">$</span>posterior <span class="sc">%&gt;%</span></span>
+<span id="cb281-6"><a href="da.html#cb281-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as_data_frame</span>()</span>
+<span id="cb281-7"><a href="da.html#cb281-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb281-8"><a href="da.html#cb281-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb281-9"><a href="da.html#cb281-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted_class =</span> <span class="fu">predict</span>(iris_qda_fit, .)<span class="sc">$</span>class</span>
+<span id="cb281-10"><a href="da.html#cb281-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb281-11"><a href="da.html#cb281-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb281-12"><a href="da.html#cb281-12" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb281-13"><a href="da.html#cb281-13" aria-hidden="true" tabindex="-1"></a>  iris_qda_result <span class="sc">%&gt;%</span> </span>
+<span id="cb281-14"><a href="da.html#cb281-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(id, class, predicted_class,</span>
+<span id="cb281-15"><a href="da.html#cb281-15" aria-hidden="true" tabindex="-1"></a>           setosa, versicolor, virginica) <span class="sc">%&gt;%</span> </span>
+<span id="cb281-16"><a href="da.html#cb281-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(class <span class="sc">!=</span> predicted_class),</span>
+<span id="cb281-17"><a href="da.html#cb281-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb281-18"><a href="da.html#cb281-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">6</span>),</span>
+<span id="cb281-19"><a href="da.html#cb281-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호&#39;</span>, <span class="st">&#39;실제범주&#39;</span>, <span class="st">&#39;추정범주&#39;</span>,</span>
+<span id="cb281-20"><a href="da.html#cb281-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;setosa&#39;</span>, <span class="st">&#39;versicolor&#39;</span>, <span class="st">&#39;virginica&#39;</span>),</span>
+<span id="cb281-21"><a href="da.html#cb281-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;붓꽃 학습표본에 대한 QDA 적용 결과 - 오분류 객체 사후 확률&#39;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:iris-qda">Table 7.11: </span>붓꽃 학습표본에 대한 QDA 적용 결과 - 오분류 객체 사후 확률</caption>
 <thead>

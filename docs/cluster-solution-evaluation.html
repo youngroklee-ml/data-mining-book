@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2021-07-18" />
+<meta name="date" content="2021-07-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -523,10 +523,10 @@ U &amp;=&amp; \{ \{1, 2, 3, 4\}, \{5, 6, 7\}, \{8, 9, 10\} \}\\
 V &amp;=&amp; \{ \{1, 2, 5, 8\}, \{3, 6, 9\}, \{4, 7, 10\} \}
 \end{eqnarray*}\]</span></p>
 <p>랜드지수 및 수정랜드지수는 <code>flexclust</code> 패키지의 <code>randIndex</code> 함수를 호출하여 계산할 수 있으며, 랜드지수를 계산할 때는 <code>correct = FALSE</code>, 수정랜드지수를 계산할 때는 <code>correct = TRUE</code>로 파라미터 값을 지정하여야 한다. 파라미터값을 지정하지 않을 때는 기본값으로 수정랜드지수를 계산한다.</p>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="cluster-solution-evaluation.html#cb582-1" aria-hidden="true" tabindex="-1"></a>sol_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
-<span id="cb582-2"><a href="cluster-solution-evaluation.html#cb582-2" aria-hidden="true" tabindex="-1"></a>sol_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb582-3"><a href="cluster-solution-evaluation.html#cb582-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>), </span>
-<span id="cb582-4"><a href="cluster-solution-evaluation.html#cb582-4" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span> flexclust<span class="sc">::</span><span class="fu">randIndex</span>(<span class="at">x =</span> sol_1, <span class="at">y =</span> sol_2, <span class="at">correct =</span> .x))</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="cluster-solution-evaluation.html#cb585-1" aria-hidden="true" tabindex="-1"></a>sol_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb585-2"><a href="cluster-solution-evaluation.html#cb585-2" aria-hidden="true" tabindex="-1"></a>sol_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb585-3"><a href="cluster-solution-evaluation.html#cb585-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>), </span>
+<span id="cb585-4"><a href="cluster-solution-evaluation.html#cb585-4" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span> flexclust<span class="sc">::</span><span class="fu">randIndex</span>(<span class="at">x =</span> sol_1, <span class="at">y =</span> sol_2, <span class="at">correct =</span> .x))</span></code></pre></div>
 <pre><code>## [[1]]
 ##        RI 
 ## 0.5111111 
@@ -580,71 +580,71 @@ RI_{adj} = \frac{2 (ad - bc)}{(a + b)(b + d) + (a + c)(c + d)} \tag{14.2}
 <li><code>adj_ri</code>: 수정랜드지수</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="cluster-solution-evaluation.html#cb584-1" aria-hidden="true" tabindex="-1"></a>rand_index <span class="ot">&lt;-</span> <span class="cf">function</span>(u, v) {</span>
-<span id="cb584-2"><a href="cluster-solution-evaluation.html#cb584-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is_vector</span>(u) <span class="sc">||</span> <span class="sc">!</span><span class="fu">is_vector</span>(v)) {</span>
-<span id="cb584-3"><a href="cluster-solution-evaluation.html#cb584-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Input needs to be vector&quot;</span>)</span>
-<span id="cb584-4"><a href="cluster-solution-evaluation.html#cb584-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">length</span>(u) <span class="sc">!=</span> <span class="fu">length</span>(v)) {</span>
-<span id="cb584-5"><a href="cluster-solution-evaluation.html#cb584-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Vectors u and v must have the same length.&quot;</span>)</span>
-<span id="cb584-6"><a href="cluster-solution-evaluation.html#cb584-6" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb584-7"><a href="cluster-solution-evaluation.html#cb584-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb584-8"><a href="cluster-solution-evaluation.html#cb584-8" aria-hidden="true" tabindex="-1"></a>  U <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb584-9"><a href="cluster-solution-evaluation.html#cb584-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="fu">seq_along</span>(u),</span>
-<span id="cb584-10"><a href="cluster-solution-evaluation.html#cb584-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> u</span>
-<span id="cb584-11"><a href="cluster-solution-evaluation.html#cb584-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb584-12"><a href="cluster-solution-evaluation.html#cb584-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
-<span id="cb584-13"><a href="cluster-solution-evaluation.html#cb584-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rename</span>(., <span class="at">j =</span> i),</span>
-<span id="cb584-14"><a href="cluster-solution-evaluation.html#cb584-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;cluster&quot;</span></span>
-<span id="cb584-15"><a href="cluster-solution-evaluation.html#cb584-15" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb584-16"><a href="cluster-solution-evaluation.html#cb584-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb584-17"><a href="cluster-solution-evaluation.html#cb584-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(i <span class="sc">&lt;</span> j) </span>
-<span id="cb584-18"><a href="cluster-solution-evaluation.html#cb584-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb584-19"><a href="cluster-solution-evaluation.html#cb584-19" aria-hidden="true" tabindex="-1"></a>  V <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb584-20"><a href="cluster-solution-evaluation.html#cb584-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="fu">seq_along</span>(v),</span>
-<span id="cb584-21"><a href="cluster-solution-evaluation.html#cb584-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> v</span>
-<span id="cb584-22"><a href="cluster-solution-evaluation.html#cb584-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb584-23"><a href="cluster-solution-evaluation.html#cb584-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
-<span id="cb584-24"><a href="cluster-solution-evaluation.html#cb584-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rename</span>(., <span class="at">j =</span> i),</span>
-<span id="cb584-25"><a href="cluster-solution-evaluation.html#cb584-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;cluster&quot;</span></span>
-<span id="cb584-26"><a href="cluster-solution-evaluation.html#cb584-26" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb584-27"><a href="cluster-solution-evaluation.html#cb584-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb584-28"><a href="cluster-solution-evaluation.html#cb584-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(i <span class="sc">&lt;</span> j) </span>
-<span id="cb584-29"><a href="cluster-solution-evaluation.html#cb584-29" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb584-30"><a href="cluster-solution-evaluation.html#cb584-30" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> <span class="fu">nrow</span>(<span class="fu">inner_join</span>(U, V, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))</span>
-<span id="cb584-31"><a href="cluster-solution-evaluation.html#cb584-31" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> <span class="fu">nrow</span>(<span class="fu">anti_join</span>(U, V, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))</span>
-<span id="cb584-32"><a href="cluster-solution-evaluation.html#cb584-32" aria-hidden="true" tabindex="-1"></a>  c <span class="ot">&lt;-</span> <span class="fu">nrow</span>(<span class="fu">anti_join</span>(V, U, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))</span>
-<span id="cb584-33"><a href="cluster-solution-evaluation.html#cb584-33" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> <span class="fu">choose</span>(<span class="fu">length</span>(u), <span class="dv">2</span>) <span class="sc">-</span> (a <span class="sc">+</span> b <span class="sc">+</span> c)</span>
-<span id="cb584-34"><a href="cluster-solution-evaluation.html#cb584-34" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb584-35"><a href="cluster-solution-evaluation.html#cb584-35" aria-hidden="true" tabindex="-1"></a>  ri <span class="ot">&lt;-</span> (a <span class="sc">+</span> d) <span class="sc">/</span> (a <span class="sc">+</span> b <span class="sc">+</span> c <span class="sc">+</span> d)</span>
-<span id="cb584-36"><a href="cluster-solution-evaluation.html#cb584-36" aria-hidden="true" tabindex="-1"></a>  adj_ri <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (a <span class="sc">*</span> d <span class="sc">-</span> b <span class="sc">*</span> c) <span class="sc">/</span> </span>
-<span id="cb584-37"><a href="cluster-solution-evaluation.html#cb584-37" aria-hidden="true" tabindex="-1"></a>    ((a <span class="sc">+</span> b) <span class="sc">*</span> (b <span class="sc">+</span> d) <span class="sc">+</span> (a <span class="sc">+</span> c) <span class="sc">*</span> (c <span class="sc">+</span> d))</span>
-<span id="cb584-38"><a href="cluster-solution-evaluation.html#cb584-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb584-39"><a href="cluster-solution-evaluation.html#cb584-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">ri =</span> ri, <span class="at">adj_ri =</span> adj_ri))</span>
-<span id="cb584-40"><a href="cluster-solution-evaluation.html#cb584-40" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="cluster-solution-evaluation.html#cb587-1" aria-hidden="true" tabindex="-1"></a>rand_index <span class="ot">&lt;-</span> <span class="cf">function</span>(u, v) {</span>
+<span id="cb587-2"><a href="cluster-solution-evaluation.html#cb587-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is_vector</span>(u) <span class="sc">||</span> <span class="sc">!</span><span class="fu">is_vector</span>(v)) {</span>
+<span id="cb587-3"><a href="cluster-solution-evaluation.html#cb587-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Input needs to be vector&quot;</span>)</span>
+<span id="cb587-4"><a href="cluster-solution-evaluation.html#cb587-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">length</span>(u) <span class="sc">!=</span> <span class="fu">length</span>(v)) {</span>
+<span id="cb587-5"><a href="cluster-solution-evaluation.html#cb587-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Vectors u and v must have the same length.&quot;</span>)</span>
+<span id="cb587-6"><a href="cluster-solution-evaluation.html#cb587-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb587-7"><a href="cluster-solution-evaluation.html#cb587-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb587-8"><a href="cluster-solution-evaluation.html#cb587-8" aria-hidden="true" tabindex="-1"></a>  U <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb587-9"><a href="cluster-solution-evaluation.html#cb587-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="fu">seq_along</span>(u),</span>
+<span id="cb587-10"><a href="cluster-solution-evaluation.html#cb587-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> u</span>
+<span id="cb587-11"><a href="cluster-solution-evaluation.html#cb587-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb587-12"><a href="cluster-solution-evaluation.html#cb587-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
+<span id="cb587-13"><a href="cluster-solution-evaluation.html#cb587-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rename</span>(., <span class="at">j =</span> i),</span>
+<span id="cb587-14"><a href="cluster-solution-evaluation.html#cb587-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;cluster&quot;</span></span>
+<span id="cb587-15"><a href="cluster-solution-evaluation.html#cb587-15" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb587-16"><a href="cluster-solution-evaluation.html#cb587-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb587-17"><a href="cluster-solution-evaluation.html#cb587-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(i <span class="sc">&lt;</span> j) </span>
+<span id="cb587-18"><a href="cluster-solution-evaluation.html#cb587-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb587-19"><a href="cluster-solution-evaluation.html#cb587-19" aria-hidden="true" tabindex="-1"></a>  V <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb587-20"><a href="cluster-solution-evaluation.html#cb587-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="fu">seq_along</span>(v),</span>
+<span id="cb587-21"><a href="cluster-solution-evaluation.html#cb587-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> v</span>
+<span id="cb587-22"><a href="cluster-solution-evaluation.html#cb587-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb587-23"><a href="cluster-solution-evaluation.html#cb587-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
+<span id="cb587-24"><a href="cluster-solution-evaluation.html#cb587-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rename</span>(., <span class="at">j =</span> i),</span>
+<span id="cb587-25"><a href="cluster-solution-evaluation.html#cb587-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;cluster&quot;</span></span>
+<span id="cb587-26"><a href="cluster-solution-evaluation.html#cb587-26" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb587-27"><a href="cluster-solution-evaluation.html#cb587-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb587-28"><a href="cluster-solution-evaluation.html#cb587-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(i <span class="sc">&lt;</span> j) </span>
+<span id="cb587-29"><a href="cluster-solution-evaluation.html#cb587-29" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb587-30"><a href="cluster-solution-evaluation.html#cb587-30" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> <span class="fu">nrow</span>(<span class="fu">inner_join</span>(U, V, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))</span>
+<span id="cb587-31"><a href="cluster-solution-evaluation.html#cb587-31" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> <span class="fu">nrow</span>(<span class="fu">anti_join</span>(U, V, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))</span>
+<span id="cb587-32"><a href="cluster-solution-evaluation.html#cb587-32" aria-hidden="true" tabindex="-1"></a>  c <span class="ot">&lt;-</span> <span class="fu">nrow</span>(<span class="fu">anti_join</span>(V, U, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;j&quot;</span>)))</span>
+<span id="cb587-33"><a href="cluster-solution-evaluation.html#cb587-33" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> <span class="fu">choose</span>(<span class="fu">length</span>(u), <span class="dv">2</span>) <span class="sc">-</span> (a <span class="sc">+</span> b <span class="sc">+</span> c)</span>
+<span id="cb587-34"><a href="cluster-solution-evaluation.html#cb587-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb587-35"><a href="cluster-solution-evaluation.html#cb587-35" aria-hidden="true" tabindex="-1"></a>  ri <span class="ot">&lt;-</span> (a <span class="sc">+</span> d) <span class="sc">/</span> (a <span class="sc">+</span> b <span class="sc">+</span> c <span class="sc">+</span> d)</span>
+<span id="cb587-36"><a href="cluster-solution-evaluation.html#cb587-36" aria-hidden="true" tabindex="-1"></a>  adj_ri <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (a <span class="sc">*</span> d <span class="sc">-</span> b <span class="sc">*</span> c) <span class="sc">/</span> </span>
+<span id="cb587-37"><a href="cluster-solution-evaluation.html#cb587-37" aria-hidden="true" tabindex="-1"></a>    ((a <span class="sc">+</span> b) <span class="sc">*</span> (b <span class="sc">+</span> d) <span class="sc">+</span> (a <span class="sc">+</span> c) <span class="sc">*</span> (c <span class="sc">+</span> d))</span>
+<span id="cb587-38"><a href="cluster-solution-evaluation.html#cb587-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb587-39"><a href="cluster-solution-evaluation.html#cb587-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">ri =</span> ri, <span class="at">adj_ri =</span> adj_ri))</span>
+<span id="cb587-40"><a href="cluster-solution-evaluation.html#cb587-40" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>50개의 객체에 대해 랜덤하게 할당된 군집해(<code>K = 3</code>) 두 개를 비교하여 랜드지수와 수정랜드지수를 구해보자.</p>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="cluster-solution-evaluation.html#cb585-1" aria-hidden="true" tabindex="-1"></a>random_rand_index <span class="ot">&lt;-</span> <span class="cf">function</span>(n, r, s) {</span>
-<span id="cb585-2"><a href="cluster-solution-evaluation.html#cb585-2" aria-hidden="true" tabindex="-1"></a>  u <span class="ot">&lt;-</span> <span class="fu">sample.int</span>(r, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb585-3"><a href="cluster-solution-evaluation.html#cb585-3" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">sample.int</span>(s, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb585-4"><a href="cluster-solution-evaluation.html#cb585-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rand_index</span>(u, v)</span>
-<span id="cb585-5"><a href="cluster-solution-evaluation.html#cb585-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb585-6"><a href="cluster-solution-evaluation.html#cb585-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb585-7"><a href="cluster-solution-evaluation.html#cb585-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">500</span>)</span>
-<span id="cb585-8"><a href="cluster-solution-evaluation.html#cb585-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb585-9"><a href="cluster-solution-evaluation.html#cb585-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rerun</span>(<span class="dv">200</span>, <span class="fu">random_rand_index</span>(<span class="dv">50</span>, <span class="dv">3</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb585-10"><a href="cluster-solution-evaluation.html#cb585-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb585-11"><a href="cluster-solution-evaluation.html#cb585-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;metric&quot;</span>, <span class="at">value =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb585-12"><a href="cluster-solution-evaluation.html#cb585-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">fill =</span> metric)) <span class="sc">+</span></span>
-<span id="cb585-13"><a href="cluster-solution-evaluation.html#cb585-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>) <span class="sc">+</span></span>
-<span id="cb585-14"><a href="cluster-solution-evaluation.html#cb585-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb585-15"><a href="cluster-solution-evaluation.html#cb585-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(</span>
-<span id="cb585-16"><a href="cluster-solution-evaluation.html#cb585-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb585-17"><a href="cluster-solution-evaluation.html#cb585-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">&quot;ri&quot;</span>, <span class="st">&quot;adj_ri&quot;</span>),</span>
-<span id="cb585-18"><a href="cluster-solution-evaluation.html#cb585-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Rand Index&quot;</span>, <span class="st">&quot;adjusted Rand Index&quot;</span>)</span>
-<span id="cb585-19"><a href="cluster-solution-evaluation.html#cb585-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb585-20"><a href="cluster-solution-evaluation.html#cb585-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb585-21"><a href="cluster-solution-evaluation.html#cb585-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribution of index values from 200 random assignments&quot;</span>,</span>
-<span id="cb585-22"><a href="cluster-solution-evaluation.html#cb585-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;index value&quot;</span>,</span>
-<span id="cb585-23"><a href="cluster-solution-evaluation.html#cb585-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;frequency&quot;</span></span>
-<span id="cb585-24"><a href="cluster-solution-evaluation.html#cb585-24" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="cluster-solution-evaluation.html#cb588-1" aria-hidden="true" tabindex="-1"></a>random_rand_index <span class="ot">&lt;-</span> <span class="cf">function</span>(n, r, s) {</span>
+<span id="cb588-2"><a href="cluster-solution-evaluation.html#cb588-2" aria-hidden="true" tabindex="-1"></a>  u <span class="ot">&lt;-</span> <span class="fu">sample.int</span>(r, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb588-3"><a href="cluster-solution-evaluation.html#cb588-3" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">sample.int</span>(s, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb588-4"><a href="cluster-solution-evaluation.html#cb588-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rand_index</span>(u, v)</span>
+<span id="cb588-5"><a href="cluster-solution-evaluation.html#cb588-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb588-6"><a href="cluster-solution-evaluation.html#cb588-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb588-7"><a href="cluster-solution-evaluation.html#cb588-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">500</span>)</span>
+<span id="cb588-8"><a href="cluster-solution-evaluation.html#cb588-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb588-9"><a href="cluster-solution-evaluation.html#cb588-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rerun</span>(<span class="dv">200</span>, <span class="fu">random_rand_index</span>(<span class="dv">50</span>, <span class="dv">3</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb588-10"><a href="cluster-solution-evaluation.html#cb588-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb588-11"><a href="cluster-solution-evaluation.html#cb588-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;metric&quot;</span>, <span class="at">value =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb588-12"><a href="cluster-solution-evaluation.html#cb588-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">fill =</span> metric)) <span class="sc">+</span></span>
+<span id="cb588-13"><a href="cluster-solution-evaluation.html#cb588-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>) <span class="sc">+</span></span>
+<span id="cb588-14"><a href="cluster-solution-evaluation.html#cb588-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb588-15"><a href="cluster-solution-evaluation.html#cb588-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(</span>
+<span id="cb588-16"><a href="cluster-solution-evaluation.html#cb588-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb588-17"><a href="cluster-solution-evaluation.html#cb588-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">&quot;ri&quot;</span>, <span class="st">&quot;adj_ri&quot;</span>),</span>
+<span id="cb588-18"><a href="cluster-solution-evaluation.html#cb588-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Rand Index&quot;</span>, <span class="st">&quot;adjusted Rand Index&quot;</span>)</span>
+<span id="cb588-19"><a href="cluster-solution-evaluation.html#cb588-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb588-20"><a href="cluster-solution-evaluation.html#cb588-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb588-21"><a href="cluster-solution-evaluation.html#cb588-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Distribution of index values from 200 random assignments&quot;</span>,</span>
+<span id="cb588-22"><a href="cluster-solution-evaluation.html#cb588-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;index value&quot;</span>,</span>
+<span id="cb588-23"><a href="cluster-solution-evaluation.html#cb588-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;frequency&quot;</span></span>
+<span id="cb588-24"><a href="cluster-solution-evaluation.html#cb588-24" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_bar).</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:rand-index-random"></span>
 <img src="data-mining-book_files/figure-html/rand-index-random-1.png" alt="랜덤한 군집해 간 비교: 랜드지수 및 수정랜드지수" width="672" />
@@ -658,10 +658,10 @@ Figure 14.1: 랜덤한 군집해 간 비교: 랜드지수 및 수정랜드지수
 U &amp;=&amp; \{(1, 2, 3, 4), (5, 6, 7), (8, 9, 10) \}\\
 V &amp;=&amp; \{(1, 2, 5, 8), (3, 6, 9), (4, 7, 10) \}
 \end{eqnarray*}\]</span></p>
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="cluster-solution-evaluation.html#cb587-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rand_index</span>(</span>
-<span id="cb587-2"><a href="cluster-solution-evaluation.html#cb587-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>),</span>
-<span id="cb587-3"><a href="cluster-solution-evaluation.html#cb587-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb587-4"><a href="cluster-solution-evaluation.html#cb587-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="cluster-solution-evaluation.html#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rand_index</span>(</span>
+<span id="cb590-2"><a href="cluster-solution-evaluation.html#cb590-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>),</span>
+<span id="cb590-3"><a href="cluster-solution-evaluation.html#cb590-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb590-4"><a href="cluster-solution-evaluation.html#cb590-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## $ri
 ## [1] 0.5111111
 ## 
@@ -679,28 +679,28 @@ C = \{ C_1, C_2, \cdots, C_K \}
 <div id="cluster-evaluation-internal-index-basic-script" class="section level4" number="14.2.2.1">
 <h4><span class="header-section-number">14.2.2.1</span> 기본 R 스크립트</h4>
 <p>아래와 같이 두 개의 변수 <span class="math inline">\(x_1\)</span> 및 <span class="math inline">\(x_2\)</span>로 표현되는 객체 데이터에 대해 군집을 찾고자 한다.</p>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="cluster-solution-evaluation.html#cb589-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb589-2"><a href="cluster-solution-evaluation.html#cb589-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>x1, <span class="sc">~</span>x2,</span>
-<span id="cb589-3"><a href="cluster-solution-evaluation.html#cb589-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">15</span>,</span>
-<span id="cb589-4"><a href="cluster-solution-evaluation.html#cb589-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">13</span>,</span>
-<span id="cb589-5"><a href="cluster-solution-evaluation.html#cb589-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">13</span>,</span>
-<span id="cb589-6"><a href="cluster-solution-evaluation.html#cb589-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">19</span>, <span class="dv">4</span>,</span>
-<span id="cb589-7"><a href="cluster-solution-evaluation.html#cb589-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="dv">17</span>, <span class="dv">17</span>,</span>
-<span id="cb589-8"><a href="cluster-solution-evaluation.html#cb589-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">11</span>,</span>
-<span id="cb589-9"><a href="cluster-solution-evaluation.html#cb589-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span>, <span class="dv">19</span>, <span class="dv">12</span>,</span>
-<span id="cb589-10"><a href="cluster-solution-evaluation.html#cb589-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span>, <span class="dv">18</span>, <span class="dv">6</span></span>
-<span id="cb589-11"><a href="cluster-solution-evaluation.html#cb589-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb589-12"><a href="cluster-solution-evaluation.html#cb589-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb589-13"><a href="cluster-solution-evaluation.html#cb589-13" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb589-14"><a href="cluster-solution-evaluation.html#cb589-14" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb589-15"><a href="cluster-solution-evaluation.html#cb589-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb589-16"><a href="cluster-solution-evaluation.html#cb589-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
-<span id="cb589-17"><a href="cluster-solution-evaluation.html#cb589-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(</span>
-<span id="cb589-18"><a href="cluster-solution-evaluation.html#cb589-18" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;객체번호&#39;</span>, </span>
-<span id="cb589-19"><a href="cluster-solution-evaluation.html#cb589-19" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span></span>
-<span id="cb589-20"><a href="cluster-solution-evaluation.html#cb589-20" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb589-21"><a href="cluster-solution-evaluation.html#cb589-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;군집 대상 데이터&#39;</span></span>
-<span id="cb589-22"><a href="cluster-solution-evaluation.html#cb589-22" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="cluster-solution-evaluation.html#cb592-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb592-2"><a href="cluster-solution-evaluation.html#cb592-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>x1, <span class="sc">~</span>x2,</span>
+<span id="cb592-3"><a href="cluster-solution-evaluation.html#cb592-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">15</span>,</span>
+<span id="cb592-4"><a href="cluster-solution-evaluation.html#cb592-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">13</span>,</span>
+<span id="cb592-5"><a href="cluster-solution-evaluation.html#cb592-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">13</span>,</span>
+<span id="cb592-6"><a href="cluster-solution-evaluation.html#cb592-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">19</span>, <span class="dv">4</span>,</span>
+<span id="cb592-7"><a href="cluster-solution-evaluation.html#cb592-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="dv">17</span>, <span class="dv">17</span>,</span>
+<span id="cb592-8"><a href="cluster-solution-evaluation.html#cb592-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">11</span>,</span>
+<span id="cb592-9"><a href="cluster-solution-evaluation.html#cb592-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span>, <span class="dv">19</span>, <span class="dv">12</span>,</span>
+<span id="cb592-10"><a href="cluster-solution-evaluation.html#cb592-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span>, <span class="dv">18</span>, <span class="dv">6</span></span>
+<span id="cb592-11"><a href="cluster-solution-evaluation.html#cb592-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb592-12"><a href="cluster-solution-evaluation.html#cb592-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb592-13"><a href="cluster-solution-evaluation.html#cb592-13" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb592-14"><a href="cluster-solution-evaluation.html#cb592-14" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb592-15"><a href="cluster-solution-evaluation.html#cb592-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb592-16"><a href="cluster-solution-evaluation.html#cb592-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;r&#39;</span>),</span>
+<span id="cb592-17"><a href="cluster-solution-evaluation.html#cb592-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(</span>
+<span id="cb592-18"><a href="cluster-solution-evaluation.html#cb592-18" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;객체번호&#39;</span>, </span>
+<span id="cb592-19"><a href="cluster-solution-evaluation.html#cb592-19" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;$x_1$&#39;</span>, <span class="st">&#39;$x_2$&#39;</span></span>
+<span id="cb592-20"><a href="cluster-solution-evaluation.html#cb592-20" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb592-21"><a href="cluster-solution-evaluation.html#cb592-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;군집 대상 데이터&#39;</span></span>
+<span id="cb592-22"><a href="cluster-solution-evaluation.html#cb592-22" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:cluster-eval-data">Table 14.1: </span>군집 대상 데이터</caption>
 <thead>
@@ -761,8 +761,8 @@ V =&amp; \{ \{1, 3, 6\}, \{2, 4, 5, 7, 8\} \}
 \end{split}
 \tag{14.3}
 \end{equation}\]</span></p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="cluster-solution-evaluation.html#cb590-1" aria-hidden="true" tabindex="-1"></a>sol_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb590-2"><a href="cluster-solution-evaluation.html#cb590-2" aria-hidden="true" tabindex="-1"></a>sol_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="cluster-solution-evaluation.html#cb593-1" aria-hidden="true" tabindex="-1"></a>sol_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb593-2"><a href="cluster-solution-evaluation.html#cb593-2" aria-hidden="true" tabindex="-1"></a>sol_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span></code></pre></div>
 <p>본 장에서는 4가지 내부 평가지수를 다룬다. 아래는 R 패키지들에 속한 각각의 함수를 실행하여 그 결과를 리스트 형태로 리턴하는 사용자 정의 함수 <code>cluster_eval</code>를 구현한 것이다. 해당 함수에서 호출하는 R 패키지 함수들은 아래와 같다.</p>
 <ul>
 <li>Dunn index <span class="citation">(<a href="#ref-dunn1973fuzzy" role="doc-biblioref">Dunn 1973</a>)</span>: <code>clValid::dunn</code></li>
@@ -778,38 +778,38 @@ V =&amp; \{ \{1, 3, 6\}, \{2, 4, 5, 7, 8\} \}
 <li><code>dist_method</code>: 거리 척도; Dunn, Connectivity, Silhouettes 지수 측정에 사용된다.</li>
 <li><code>nn</code>: 최근 객체 수 (&gt;= 2); Connectivity 측정에 사용된다.</li>
 </ul>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="cluster-solution-evaluation.html#cb591-1" aria-hidden="true" tabindex="-1"></a>cluster_eval <span class="ot">&lt;-</span> <span class="cf">function</span>(cluster, df, <span class="at">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">nn =</span> <span class="dv">2</span>) {</span>
-<span id="cb591-2"><a href="cluster-solution-evaluation.html#cb591-2" aria-hidden="true" tabindex="-1"></a>  dunn_index <span class="ot">&lt;-</span> clValid<span class="sc">::</span><span class="fu">dunn</span>(</span>
-<span id="cb591-3"><a href="cluster-solution-evaluation.html#cb591-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Data =</span> df, </span>
-<span id="cb591-4"><a href="cluster-solution-evaluation.html#cb591-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">clusters =</span> cluster, </span>
-<span id="cb591-5"><a href="cluster-solution-evaluation.html#cb591-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> dist_method</span>
-<span id="cb591-6"><a href="cluster-solution-evaluation.html#cb591-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb591-7"><a href="cluster-solution-evaluation.html#cb591-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb591-8"><a href="cluster-solution-evaluation.html#cb591-8" aria-hidden="true" tabindex="-1"></a>  ch_index <span class="ot">&lt;-</span> fpc<span class="sc">::</span><span class="fu">calinhara</span>(</span>
-<span id="cb591-9"><a href="cluster-solution-evaluation.html#cb591-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> df, </span>
-<span id="cb591-10"><a href="cluster-solution-evaluation.html#cb591-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">clustering =</span> cluster</span>
-<span id="cb591-11"><a href="cluster-solution-evaluation.html#cb591-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb591-12"><a href="cluster-solution-evaluation.html#cb591-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb591-13"><a href="cluster-solution-evaluation.html#cb591-13" aria-hidden="true" tabindex="-1"></a>  connectivity <span class="ot">&lt;-</span> clValid<span class="sc">::</span><span class="fu">connectivity</span>(</span>
-<span id="cb591-14"><a href="cluster-solution-evaluation.html#cb591-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">Data =</span> df, </span>
-<span id="cb591-15"><a href="cluster-solution-evaluation.html#cb591-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">clusters =</span> cluster, </span>
-<span id="cb591-16"><a href="cluster-solution-evaluation.html#cb591-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">neighbSize =</span> nn</span>
-<span id="cb591-17"><a href="cluster-solution-evaluation.html#cb591-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb591-18"><a href="cluster-solution-evaluation.html#cb591-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb591-19"><a href="cluster-solution-evaluation.html#cb591-19" aria-hidden="true" tabindex="-1"></a>  asw <span class="ot">&lt;-</span> cluster<span class="sc">::</span><span class="fu">silhouette</span>(</span>
-<span id="cb591-20"><a href="cluster-solution-evaluation.html#cb591-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> cluster, </span>
-<span id="cb591-21"><a href="cluster-solution-evaluation.html#cb591-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">dist =</span> <span class="fu">dist</span>(df, <span class="at">method =</span> dist_method)</span>
-<span id="cb591-22"><a href="cluster-solution-evaluation.html#cb591-22" aria-hidden="true" tabindex="-1"></a>  )[, <span class="st">&quot;sil_width&quot;</span>] <span class="sc">%&gt;%</span> <span class="fu">mean</span>()</span>
-<span id="cb591-23"><a href="cluster-solution-evaluation.html#cb591-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb591-24"><a href="cluster-solution-evaluation.html#cb591-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(</span>
-<span id="cb591-25"><a href="cluster-solution-evaluation.html#cb591-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">dunn_index =</span> dunn_index,</span>
-<span id="cb591-26"><a href="cluster-solution-evaluation.html#cb591-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">ch_index =</span> ch_index,</span>
-<span id="cb591-27"><a href="cluster-solution-evaluation.html#cb591-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">connectivity =</span> connectivity,</span>
-<span id="cb591-28"><a href="cluster-solution-evaluation.html#cb591-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">asw =</span> asw</span>
-<span id="cb591-29"><a href="cluster-solution-evaluation.html#cb591-29" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb591-30"><a href="cluster-solution-evaluation.html#cb591-30" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb591-31"><a href="cluster-solution-evaluation.html#cb591-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb591-32"><a href="cluster-solution-evaluation.html#cb591-32" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dfr</span>(<span class="fu">list</span>(sol_1, sol_2), cluster_eval, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">.id =</span> <span class="st">&quot;solution&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="cluster-solution-evaluation.html#cb594-1" aria-hidden="true" tabindex="-1"></a>cluster_eval <span class="ot">&lt;-</span> <span class="cf">function</span>(cluster, df, <span class="at">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">nn =</span> <span class="dv">2</span>) {</span>
+<span id="cb594-2"><a href="cluster-solution-evaluation.html#cb594-2" aria-hidden="true" tabindex="-1"></a>  dunn_index <span class="ot">&lt;-</span> clValid<span class="sc">::</span><span class="fu">dunn</span>(</span>
+<span id="cb594-3"><a href="cluster-solution-evaluation.html#cb594-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Data =</span> df, </span>
+<span id="cb594-4"><a href="cluster-solution-evaluation.html#cb594-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">clusters =</span> cluster, </span>
+<span id="cb594-5"><a href="cluster-solution-evaluation.html#cb594-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> dist_method</span>
+<span id="cb594-6"><a href="cluster-solution-evaluation.html#cb594-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb594-7"><a href="cluster-solution-evaluation.html#cb594-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb594-8"><a href="cluster-solution-evaluation.html#cb594-8" aria-hidden="true" tabindex="-1"></a>  ch_index <span class="ot">&lt;-</span> fpc<span class="sc">::</span><span class="fu">calinhara</span>(</span>
+<span id="cb594-9"><a href="cluster-solution-evaluation.html#cb594-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> df, </span>
+<span id="cb594-10"><a href="cluster-solution-evaluation.html#cb594-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">clustering =</span> cluster</span>
+<span id="cb594-11"><a href="cluster-solution-evaluation.html#cb594-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb594-12"><a href="cluster-solution-evaluation.html#cb594-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb594-13"><a href="cluster-solution-evaluation.html#cb594-13" aria-hidden="true" tabindex="-1"></a>  connectivity <span class="ot">&lt;-</span> clValid<span class="sc">::</span><span class="fu">connectivity</span>(</span>
+<span id="cb594-14"><a href="cluster-solution-evaluation.html#cb594-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">Data =</span> df, </span>
+<span id="cb594-15"><a href="cluster-solution-evaluation.html#cb594-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">clusters =</span> cluster, </span>
+<span id="cb594-16"><a href="cluster-solution-evaluation.html#cb594-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">neighbSize =</span> nn</span>
+<span id="cb594-17"><a href="cluster-solution-evaluation.html#cb594-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb594-18"><a href="cluster-solution-evaluation.html#cb594-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb594-19"><a href="cluster-solution-evaluation.html#cb594-19" aria-hidden="true" tabindex="-1"></a>  asw <span class="ot">&lt;-</span> cluster<span class="sc">::</span><span class="fu">silhouette</span>(</span>
+<span id="cb594-20"><a href="cluster-solution-evaluation.html#cb594-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> cluster, </span>
+<span id="cb594-21"><a href="cluster-solution-evaluation.html#cb594-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">dist =</span> <span class="fu">dist</span>(df, <span class="at">method =</span> dist_method)</span>
+<span id="cb594-22"><a href="cluster-solution-evaluation.html#cb594-22" aria-hidden="true" tabindex="-1"></a>  )[, <span class="st">&quot;sil_width&quot;</span>] <span class="sc">%&gt;%</span> <span class="fu">mean</span>()</span>
+<span id="cb594-23"><a href="cluster-solution-evaluation.html#cb594-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb594-24"><a href="cluster-solution-evaluation.html#cb594-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(</span>
+<span id="cb594-25"><a href="cluster-solution-evaluation.html#cb594-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">dunn_index =</span> dunn_index,</span>
+<span id="cb594-26"><a href="cluster-solution-evaluation.html#cb594-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">ch_index =</span> ch_index,</span>
+<span id="cb594-27"><a href="cluster-solution-evaluation.html#cb594-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">connectivity =</span> connectivity,</span>
+<span id="cb594-28"><a href="cluster-solution-evaluation.html#cb594-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">asw =</span> asw</span>
+<span id="cb594-29"><a href="cluster-solution-evaluation.html#cb594-29" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb594-30"><a href="cluster-solution-evaluation.html#cb594-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb594-31"><a href="cluster-solution-evaluation.html#cb594-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb594-32"><a href="cluster-solution-evaluation.html#cb594-32" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dfr</span>(<span class="fu">list</span>(sol_1, sol_2), cluster_eval, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">.id =</span> <span class="st">&quot;solution&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 5
 ##   solution dunn_index ch_index connectivity   asw
 ##   &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
@@ -829,95 +829,95 @@ DI = \frac{\min_{\mathbf{x} \in C_i, \, \mathbf{y} \in C_j \, 1 \leq i \neq j \l
 <li><code>df</code>: 객체 데이터를 나타내는 <span class="math inline">\(n\)</span>행의 프레임</li>
 <li><code>dist_method</code>: <code>base::dist</code> 함수의 <code>method</code> 파라미터값으로 사용할 거리 척도</li>
 </ul>
-<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="cluster-solution-evaluation.html#cb593-1" aria-hidden="true" tabindex="-1"></a>dunn_index <span class="ot">&lt;-</span> <span class="cf">function</span>(cluster, df, <span class="at">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {</span>
-<span id="cb593-2"><a href="cluster-solution-evaluation.html#cb593-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 객체 수</span></span>
-<span id="cb593-3"><a href="cluster-solution-evaluation.html#cb593-3" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb593-4"><a href="cluster-solution-evaluation.html#cb593-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb593-5"><a href="cluster-solution-evaluation.html#cb593-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 각 객체의 군집해</span></span>
-<span id="cb593-6"><a href="cluster-solution-evaluation.html#cb593-6" aria-hidden="true" tabindex="-1"></a>  cluster_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb593-7"><a href="cluster-solution-evaluation.html#cb593-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
-<span id="cb593-8"><a href="cluster-solution-evaluation.html#cb593-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> cluster</span>
-<span id="cb593-9"><a href="cluster-solution-evaluation.html#cb593-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb593-10"><a href="cluster-solution-evaluation.html#cb593-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb593-11"><a href="cluster-solution-evaluation.html#cb593-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 각 객체 간 거리 데이터 프레임</span></span>
-<span id="cb593-12"><a href="cluster-solution-evaluation.html#cb593-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 위 군집해 데이터 프레임과 `inner_join` 을 통해</span></span>
-<span id="cb593-13"><a href="cluster-solution-evaluation.html#cb593-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 두 객체가 동일 군집에 속하는지 서로 다른 군집에 속하는 지 표현</span></span>
-<span id="cb593-14"><a href="cluster-solution-evaluation.html#cb593-14" aria-hidden="true" tabindex="-1"></a>  dist_df <span class="ot">&lt;-</span> <span class="fu">dist</span>(df, <span class="at">method =</span> dist_method, <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb593-15"><a href="cluster-solution-evaluation.html#cb593-15" aria-hidden="true" tabindex="-1"></a>    broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb593-16"><a href="cluster-solution-evaluation.html#cb593-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_if</span>(is.factor, <span class="sc">~</span> <span class="fu">as.integer</span>(<span class="fu">as.character</span>(.))) <span class="sc">%&gt;%</span></span>
-<span id="cb593-17"><a href="cluster-solution-evaluation.html#cb593-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
-<span id="cb593-18"><a href="cluster-solution-evaluation.html#cb593-18" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item1 =</span> id, <span class="at">item1_cluster =</span> cluster),</span>
-<span id="cb593-19"><a href="cluster-solution-evaluation.html#cb593-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item1&quot;</span></span>
-<span id="cb593-20"><a href="cluster-solution-evaluation.html#cb593-20" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%&gt;%</span></span>
-<span id="cb593-21"><a href="cluster-solution-evaluation.html#cb593-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
-<span id="cb593-22"><a href="cluster-solution-evaluation.html#cb593-22" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item2 =</span> id, <span class="at">item2_cluster =</span> cluster),</span>
-<span id="cb593-23"><a href="cluster-solution-evaluation.html#cb593-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item2&quot;</span></span>
-<span id="cb593-24"><a href="cluster-solution-evaluation.html#cb593-24" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb593-25"><a href="cluster-solution-evaluation.html#cb593-25" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb593-26"><a href="cluster-solution-evaluation.html#cb593-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 서로 다른 군집에 속한 객체 쌍 중</span></span>
-<span id="cb593-27"><a href="cluster-solution-evaluation.html#cb593-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 가장 가까운 객체 간의 거리</span></span>
-<span id="cb593-28"><a href="cluster-solution-evaluation.html#cb593-28" aria-hidden="true" tabindex="-1"></a>  numerator <span class="ot">&lt;-</span> dist_df <span class="sc">%&gt;%</span></span>
-<span id="cb593-29"><a href="cluster-solution-evaluation.html#cb593-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(item1_cluster <span class="sc">!=</span> item2_cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb593-30"><a href="cluster-solution-evaluation.html#cb593-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="sc">-</span><span class="dv">1</span>, distance) <span class="sc">%&gt;%</span></span>
-<span id="cb593-31"><a href="cluster-solution-evaluation.html#cb593-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb593-32"><a href="cluster-solution-evaluation.html#cb593-32" aria-hidden="true" tabindex="-1"></a>    .<span class="sc">$</span>distance</span>
-<span id="cb593-33"><a href="cluster-solution-evaluation.html#cb593-33" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb593-34"><a href="cluster-solution-evaluation.html#cb593-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 서로 같은 군집에 속한 객체 쌍 중</span></span>
-<span id="cb593-35"><a href="cluster-solution-evaluation.html#cb593-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 가장 먼 객체 간의 거리</span></span>
-<span id="cb593-36"><a href="cluster-solution-evaluation.html#cb593-36" aria-hidden="true" tabindex="-1"></a>  denominator <span class="ot">&lt;-</span> dist_df <span class="sc">%&gt;%</span></span>
-<span id="cb593-37"><a href="cluster-solution-evaluation.html#cb593-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(item1_cluster <span class="sc">==</span> item2_cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb593-38"><a href="cluster-solution-evaluation.html#cb593-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="dv">1</span>, distance) <span class="sc">%&gt;%</span></span>
-<span id="cb593-39"><a href="cluster-solution-evaluation.html#cb593-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb593-40"><a href="cluster-solution-evaluation.html#cb593-40" aria-hidden="true" tabindex="-1"></a>    .<span class="sc">$</span>distance</span>
-<span id="cb593-41"><a href="cluster-solution-evaluation.html#cb593-41" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb593-42"><a href="cluster-solution-evaluation.html#cb593-42" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> numerator <span class="sc">/</span> denominator</span>
-<span id="cb593-43"><a href="cluster-solution-evaluation.html#cb593-43" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb593-44"><a href="cluster-solution-evaluation.html#cb593-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(res)</span>
-<span id="cb593-45"><a href="cluster-solution-evaluation.html#cb593-45" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="cluster-solution-evaluation.html#cb594-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), dunn_index, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="cluster-solution-evaluation.html#cb596-1" aria-hidden="true" tabindex="-1"></a>dunn_index <span class="ot">&lt;-</span> <span class="cf">function</span>(cluster, df, <span class="at">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {</span>
+<span id="cb596-2"><a href="cluster-solution-evaluation.html#cb596-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 객체 수</span></span>
+<span id="cb596-3"><a href="cluster-solution-evaluation.html#cb596-3" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb596-4"><a href="cluster-solution-evaluation.html#cb596-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb596-5"><a href="cluster-solution-evaluation.html#cb596-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 각 객체의 군집해</span></span>
+<span id="cb596-6"><a href="cluster-solution-evaluation.html#cb596-6" aria-hidden="true" tabindex="-1"></a>  cluster_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb596-7"><a href="cluster-solution-evaluation.html#cb596-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb596-8"><a href="cluster-solution-evaluation.html#cb596-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> cluster</span>
+<span id="cb596-9"><a href="cluster-solution-evaluation.html#cb596-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb596-10"><a href="cluster-solution-evaluation.html#cb596-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb596-11"><a href="cluster-solution-evaluation.html#cb596-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 각 객체 간 거리 데이터 프레임</span></span>
+<span id="cb596-12"><a href="cluster-solution-evaluation.html#cb596-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 위 군집해 데이터 프레임과 `inner_join` 을 통해</span></span>
+<span id="cb596-13"><a href="cluster-solution-evaluation.html#cb596-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 두 객체가 동일 군집에 속하는지 서로 다른 군집에 속하는 지 표현</span></span>
+<span id="cb596-14"><a href="cluster-solution-evaluation.html#cb596-14" aria-hidden="true" tabindex="-1"></a>  dist_df <span class="ot">&lt;-</span> <span class="fu">dist</span>(df, <span class="at">method =</span> dist_method, <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb596-15"><a href="cluster-solution-evaluation.html#cb596-15" aria-hidden="true" tabindex="-1"></a>    broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb596-16"><a href="cluster-solution-evaluation.html#cb596-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_if</span>(is.factor, <span class="sc">~</span> <span class="fu">as.integer</span>(<span class="fu">as.character</span>(.))) <span class="sc">%&gt;%</span></span>
+<span id="cb596-17"><a href="cluster-solution-evaluation.html#cb596-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
+<span id="cb596-18"><a href="cluster-solution-evaluation.html#cb596-18" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item1 =</span> id, <span class="at">item1_cluster =</span> cluster),</span>
+<span id="cb596-19"><a href="cluster-solution-evaluation.html#cb596-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item1&quot;</span></span>
+<span id="cb596-20"><a href="cluster-solution-evaluation.html#cb596-20" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%&gt;%</span></span>
+<span id="cb596-21"><a href="cluster-solution-evaluation.html#cb596-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
+<span id="cb596-22"><a href="cluster-solution-evaluation.html#cb596-22" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item2 =</span> id, <span class="at">item2_cluster =</span> cluster),</span>
+<span id="cb596-23"><a href="cluster-solution-evaluation.html#cb596-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item2&quot;</span></span>
+<span id="cb596-24"><a href="cluster-solution-evaluation.html#cb596-24" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb596-25"><a href="cluster-solution-evaluation.html#cb596-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb596-26"><a href="cluster-solution-evaluation.html#cb596-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 서로 다른 군집에 속한 객체 쌍 중</span></span>
+<span id="cb596-27"><a href="cluster-solution-evaluation.html#cb596-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 가장 가까운 객체 간의 거리</span></span>
+<span id="cb596-28"><a href="cluster-solution-evaluation.html#cb596-28" aria-hidden="true" tabindex="-1"></a>  numerator <span class="ot">&lt;-</span> dist_df <span class="sc">%&gt;%</span></span>
+<span id="cb596-29"><a href="cluster-solution-evaluation.html#cb596-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(item1_cluster <span class="sc">!=</span> item2_cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb596-30"><a href="cluster-solution-evaluation.html#cb596-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="sc">-</span><span class="dv">1</span>, distance) <span class="sc">%&gt;%</span></span>
+<span id="cb596-31"><a href="cluster-solution-evaluation.html#cb596-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb596-32"><a href="cluster-solution-evaluation.html#cb596-32" aria-hidden="true" tabindex="-1"></a>    .<span class="sc">$</span>distance</span>
+<span id="cb596-33"><a href="cluster-solution-evaluation.html#cb596-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb596-34"><a href="cluster-solution-evaluation.html#cb596-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 서로 같은 군집에 속한 객체 쌍 중</span></span>
+<span id="cb596-35"><a href="cluster-solution-evaluation.html#cb596-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 가장 먼 객체 간의 거리</span></span>
+<span id="cb596-36"><a href="cluster-solution-evaluation.html#cb596-36" aria-hidden="true" tabindex="-1"></a>  denominator <span class="ot">&lt;-</span> dist_df <span class="sc">%&gt;%</span></span>
+<span id="cb596-37"><a href="cluster-solution-evaluation.html#cb596-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(item1_cluster <span class="sc">==</span> item2_cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb596-38"><a href="cluster-solution-evaluation.html#cb596-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="dv">1</span>, distance) <span class="sc">%&gt;%</span></span>
+<span id="cb596-39"><a href="cluster-solution-evaluation.html#cb596-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb596-40"><a href="cluster-solution-evaluation.html#cb596-40" aria-hidden="true" tabindex="-1"></a>    .<span class="sc">$</span>distance</span>
+<span id="cb596-41"><a href="cluster-solution-evaluation.html#cb596-41" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb596-42"><a href="cluster-solution-evaluation.html#cb596-42" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> numerator <span class="sc">/</span> denominator</span>
+<span id="cb596-43"><a href="cluster-solution-evaluation.html#cb596-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb596-44"><a href="cluster-solution-evaluation.html#cb596-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb596-45"><a href="cluster-solution-evaluation.html#cb596-45" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="cluster-solution-evaluation.html#cb597-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), dunn_index, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] 1.075291 0.822375</code></pre>
 <p><span class="citation"><a href="#ref-calinski1974dendrite" role="doc-biblioref">Caliński and Harabasz</a> (<a href="#ref-calinski1974dendrite" role="doc-biblioref">1974</a>)</span> 는 다음과 같은 지수를 제안하였다.</p>
 <p><span class="math display" id="eq:cluster-ch-index">\[\begin{equation}
 CH = \frac{\frac{1}{K - 1} \sum_{k = 1}^{K} n_k (\mathbf{c}_k - \mathbf{c})^\top (\mathbf{c}_k - \mathbf{c})}{\frac{1}{n - K} \sum_{k = 1}^{K} \sum_{i \in C_k} (\mathbf{x}_i - \mathbf{c}_k)^\top (\mathbf{x}_i - \mathbf{c}_k)} \tag{14.5}
 \end{equation}\]</span></p>
 <p>여기에서 <span class="math inline">\(\mathbf{c}_k\)</span>는 군집 <span class="math inline">\(k\)</span>의 중심좌표(centroid), <span class="math inline">\(\mathbf{c}\)</span>는 전체 객체들의 중심좌표, <span class="math inline">\(n_k\)</span>는 군집 <span class="math inline">\(C_k\)</span>내의 객체 수, <span class="math inline">\(n\)</span>은 전체 객체 수를 나타낸다. 식 <a href="cluster-solution-evaluation.html#eq:cluster-ch-index">(14.5)</a> 또한 분자는 분리성, 분모는 밀집성을 평가하며, 값이 클수록 좋은 군집해로 평가된다.</p>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="cluster-solution-evaluation.html#cb596-1" aria-hidden="true" tabindex="-1"></a>ch_index <span class="ot">&lt;-</span> <span class="cf">function</span>(cluster, df) {</span>
-<span id="cb596-2"><a href="cluster-solution-evaluation.html#cb596-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 전체 데이터 중심</span></span>
-<span id="cb596-3"><a href="cluster-solution-evaluation.html#cb596-3" aria-hidden="true" tabindex="-1"></a>  centroid <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">summarize_all</span>(mean)</span>
-<span id="cb596-4"><a href="cluster-solution-evaluation.html#cb596-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb596-5"><a href="cluster-solution-evaluation.html#cb596-5" aria-hidden="true" tabindex="-1"></a>  cluster_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
-<span id="cb596-6"><a href="cluster-solution-evaluation.html#cb596-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cluster =</span> cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb596-7"><a href="cluster-solution-evaluation.html#cb596-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb596-8"><a href="cluster-solution-evaluation.html#cb596-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nest</span>()</span>
-<span id="cb596-9"><a href="cluster-solution-evaluation.html#cb596-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb596-10"><a href="cluster-solution-evaluation.html#cb596-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 군집 중심</span></span>
-<span id="cb596-11"><a href="cluster-solution-evaluation.html#cb596-11" aria-hidden="true" tabindex="-1"></a>  cluster_centroid_df <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(cluster_df<span class="sc">$</span>data, <span class="sc">~</span> <span class="fu">summarize_all</span>(., mean))</span>
-<span id="cb596-12"><a href="cluster-solution-evaluation.html#cb596-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb596-13"><a href="cluster-solution-evaluation.html#cb596-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 각 군집 중심과 전체 데이터 중심 간 제곱 유클리드 거리</span></span>
-<span id="cb596-14"><a href="cluster-solution-evaluation.html#cb596-14" aria-hidden="true" tabindex="-1"></a>  centroid_dist <span class="ot">&lt;-</span> flexclust<span class="sc">::</span><span class="fu">dist2</span>(</span>
-<span id="cb596-15"><a href="cluster-solution-evaluation.html#cb596-15" aria-hidden="true" tabindex="-1"></a>    cluster_centroid_df, </span>
-<span id="cb596-16"><a href="cluster-solution-evaluation.html#cb596-16" aria-hidden="true" tabindex="-1"></a>    centroid</span>
-<span id="cb596-17"><a href="cluster-solution-evaluation.html#cb596-17" aria-hidden="true" tabindex="-1"></a>    )<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb596-18"><a href="cluster-solution-evaluation.html#cb596-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb596-19"><a href="cluster-solution-evaluation.html#cb596-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 각 군집 크기</span></span>
-<span id="cb596-20"><a href="cluster-solution-evaluation.html#cb596-20" aria-hidden="true" tabindex="-1"></a>  cluster_size <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(cluster_df<span class="sc">$</span>data, nrow)</span>
-<span id="cb596-21"><a href="cluster-solution-evaluation.html#cb596-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb596-22"><a href="cluster-solution-evaluation.html#cb596-22" aria-hidden="true" tabindex="-1"></a>  numerator <span class="ot">&lt;-</span> <span class="fu">sum</span>(centroid_dist <span class="sc">*</span> cluster_size) <span class="sc">/</span> (<span class="fu">nrow</span>(cluster_df) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb596-23"><a href="cluster-solution-evaluation.html#cb596-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb596-24"><a href="cluster-solution-evaluation.html#cb596-24" aria-hidden="true" tabindex="-1"></a>  denominator <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(</span>
-<span id="cb596-25"><a href="cluster-solution-evaluation.html#cb596-25" aria-hidden="true" tabindex="-1"></a>    cluster_df<span class="sc">$</span>data,</span>
-<span id="cb596-26"><a href="cluster-solution-evaluation.html#cb596-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 각 군집 내의 객체와 군집 중심 간 제곱 유클리드 거리의 합</span></span>
-<span id="cb596-27"><a href="cluster-solution-evaluation.html#cb596-27" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span> flexclust<span class="sc">::</span><span class="fu">dist2</span>(., <span class="fu">summarize_all</span>(., mean))<span class="sc">^</span><span class="dv">2</span> <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb596-28"><a href="cluster-solution-evaluation.html#cb596-28" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb596-29"><a href="cluster-solution-evaluation.html#cb596-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb596-30"><a href="cluster-solution-evaluation.html#cb596-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">/</span><span class="st">`</span>(<span class="fu">nrow</span>(df) <span class="sc">-</span> <span class="fu">nrow</span>(cluster_df))</span>
-<span id="cb596-31"><a href="cluster-solution-evaluation.html#cb596-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb596-32"><a href="cluster-solution-evaluation.html#cb596-32" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> numerator <span class="sc">/</span> denominator</span>
-<span id="cb596-33"><a href="cluster-solution-evaluation.html#cb596-33" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb596-34"><a href="cluster-solution-evaluation.html#cb596-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(res)</span>
-<span id="cb596-35"><a href="cluster-solution-evaluation.html#cb596-35" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb596-36"><a href="cluster-solution-evaluation.html#cb596-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb596-37"><a href="cluster-solution-evaluation.html#cb596-37" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), ch_index, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="cluster-solution-evaluation.html#cb599-1" aria-hidden="true" tabindex="-1"></a>ch_index <span class="ot">&lt;-</span> <span class="cf">function</span>(cluster, df) {</span>
+<span id="cb599-2"><a href="cluster-solution-evaluation.html#cb599-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 전체 데이터 중심</span></span>
+<span id="cb599-3"><a href="cluster-solution-evaluation.html#cb599-3" aria-hidden="true" tabindex="-1"></a>  centroid <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">summarize_all</span>(mean)</span>
+<span id="cb599-4"><a href="cluster-solution-evaluation.html#cb599-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb599-5"><a href="cluster-solution-evaluation.html#cb599-5" aria-hidden="true" tabindex="-1"></a>  cluster_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb599-6"><a href="cluster-solution-evaluation.html#cb599-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cluster =</span> cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb599-7"><a href="cluster-solution-evaluation.html#cb599-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb599-8"><a href="cluster-solution-evaluation.html#cb599-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nest</span>()</span>
+<span id="cb599-9"><a href="cluster-solution-evaluation.html#cb599-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb599-10"><a href="cluster-solution-evaluation.html#cb599-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 군집 중심</span></span>
+<span id="cb599-11"><a href="cluster-solution-evaluation.html#cb599-11" aria-hidden="true" tabindex="-1"></a>  cluster_centroid_df <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(cluster_df<span class="sc">$</span>data, <span class="sc">~</span> <span class="fu">summarize_all</span>(., mean))</span>
+<span id="cb599-12"><a href="cluster-solution-evaluation.html#cb599-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb599-13"><a href="cluster-solution-evaluation.html#cb599-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 각 군집 중심과 전체 데이터 중심 간 제곱 유클리드 거리</span></span>
+<span id="cb599-14"><a href="cluster-solution-evaluation.html#cb599-14" aria-hidden="true" tabindex="-1"></a>  centroid_dist <span class="ot">&lt;-</span> flexclust<span class="sc">::</span><span class="fu">dist2</span>(</span>
+<span id="cb599-15"><a href="cluster-solution-evaluation.html#cb599-15" aria-hidden="true" tabindex="-1"></a>    cluster_centroid_df, </span>
+<span id="cb599-16"><a href="cluster-solution-evaluation.html#cb599-16" aria-hidden="true" tabindex="-1"></a>    centroid</span>
+<span id="cb599-17"><a href="cluster-solution-evaluation.html#cb599-17" aria-hidden="true" tabindex="-1"></a>    )<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb599-18"><a href="cluster-solution-evaluation.html#cb599-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb599-19"><a href="cluster-solution-evaluation.html#cb599-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 각 군집 크기</span></span>
+<span id="cb599-20"><a href="cluster-solution-evaluation.html#cb599-20" aria-hidden="true" tabindex="-1"></a>  cluster_size <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(cluster_df<span class="sc">$</span>data, nrow)</span>
+<span id="cb599-21"><a href="cluster-solution-evaluation.html#cb599-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb599-22"><a href="cluster-solution-evaluation.html#cb599-22" aria-hidden="true" tabindex="-1"></a>  numerator <span class="ot">&lt;-</span> <span class="fu">sum</span>(centroid_dist <span class="sc">*</span> cluster_size) <span class="sc">/</span> (<span class="fu">nrow</span>(cluster_df) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb599-23"><a href="cluster-solution-evaluation.html#cb599-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb599-24"><a href="cluster-solution-evaluation.html#cb599-24" aria-hidden="true" tabindex="-1"></a>  denominator <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(</span>
+<span id="cb599-25"><a href="cluster-solution-evaluation.html#cb599-25" aria-hidden="true" tabindex="-1"></a>    cluster_df<span class="sc">$</span>data,</span>
+<span id="cb599-26"><a href="cluster-solution-evaluation.html#cb599-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 각 군집 내의 객체와 군집 중심 간 제곱 유클리드 거리의 합</span></span>
+<span id="cb599-27"><a href="cluster-solution-evaluation.html#cb599-27" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span> flexclust<span class="sc">::</span><span class="fu">dist2</span>(., <span class="fu">summarize_all</span>(., mean))<span class="sc">^</span><span class="dv">2</span> <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
+<span id="cb599-28"><a href="cluster-solution-evaluation.html#cb599-28" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb599-29"><a href="cluster-solution-evaluation.html#cb599-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb599-30"><a href="cluster-solution-evaluation.html#cb599-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">/</span><span class="st">`</span>(<span class="fu">nrow</span>(df) <span class="sc">-</span> <span class="fu">nrow</span>(cluster_df))</span>
+<span id="cb599-31"><a href="cluster-solution-evaluation.html#cb599-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb599-32"><a href="cluster-solution-evaluation.html#cb599-32" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> numerator <span class="sc">/</span> denominator</span>
+<span id="cb599-33"><a href="cluster-solution-evaluation.html#cb599-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb599-34"><a href="cluster-solution-evaluation.html#cb599-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb599-35"><a href="cluster-solution-evaluation.html#cb599-35" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb599-36"><a href="cluster-solution-evaluation.html#cb599-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb599-37"><a href="cluster-solution-evaluation.html#cb599-37" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), ch_index, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] 26.45029 15.36218</code></pre>
 <p><span class="citation"><a href="#ref-handl2005exploiting" role="doc-biblioref">Handl and Knowles</a> (<a href="#ref-handl2005exploiting" role="doc-biblioref">2005</a>)</span> 은 연결성을 반영한 아래와 같은 지수를 제시하고 있다.</p>
 <p><span class="math display" id="eq:cluster-connectivity">\[\begin{equation}
@@ -931,46 +931,46 @@ v_{i, nn_i(j)} = \begin{cases}
 \end{cases}
 \end{equation*}\]</span></p>
 <p>즉, 식 <a href="cluster-solution-evaluation.html#eq:cluster-connectivity">(14.6)</a>는 각 객체가 <span class="math inline">\(j (\leq L)\)</span>번째 최근 객체와 다른 객체에 속하면 <span class="math inline">\(1 / j\)</span>의 벌점을 부여하는 방식으로, 작은 값일수록 좋은 군집으로 평가될 수 있다.</p>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="cluster-solution-evaluation.html#cb598-1" aria-hidden="true" tabindex="-1"></a>connectivity <span class="ot">&lt;-</span> <span class="cf">function</span>(cluster, df, <span class="at">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">n_neighbor =</span> <span class="dv">1</span>) {</span>
-<span id="cb598-2"><a href="cluster-solution-evaluation.html#cb598-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb598-3"><a href="cluster-solution-evaluation.html#cb598-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb598-4"><a href="cluster-solution-evaluation.html#cb598-4" aria-hidden="true" tabindex="-1"></a>  cluster_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb598-5"><a href="cluster-solution-evaluation.html#cb598-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
-<span id="cb598-6"><a href="cluster-solution-evaluation.html#cb598-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> cluster</span>
-<span id="cb598-7"><a href="cluster-solution-evaluation.html#cb598-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb598-8"><a href="cluster-solution-evaluation.html#cb598-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb598-9"><a href="cluster-solution-evaluation.html#cb598-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 객체간 거리</span></span>
-<span id="cb598-10"><a href="cluster-solution-evaluation.html#cb598-10" aria-hidden="true" tabindex="-1"></a>  distance_df <span class="ot">&lt;-</span> <span class="fu">dist</span>(df, <span class="at">method =</span> dist_method, <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb598-11"><a href="cluster-solution-evaluation.html#cb598-11" aria-hidden="true" tabindex="-1"></a>    broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb598-12"><a href="cluster-solution-evaluation.html#cb598-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_if</span>(is.factor, <span class="sc">~</span> <span class="fu">as.integer</span>(<span class="fu">as.character</span>(.)))</span>
-<span id="cb598-13"><a href="cluster-solution-evaluation.html#cb598-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb598-14"><a href="cluster-solution-evaluation.html#cb598-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 최근 객체</span></span>
-<span id="cb598-15"><a href="cluster-solution-evaluation.html#cb598-15" aria-hidden="true" tabindex="-1"></a>  nn_df <span class="ot">&lt;-</span> distance_df <span class="sc">%&gt;%</span></span>
-<span id="cb598-16"><a href="cluster-solution-evaluation.html#cb598-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(item1) <span class="sc">%&gt;%</span></span>
-<span id="cb598-17"><a href="cluster-solution-evaluation.html#cb598-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">nearest =</span> <span class="fu">rank</span>(distance, <span class="at">ties.method =</span> <span class="st">&quot;random&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb598-18"><a href="cluster-solution-evaluation.html#cb598-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(nearest <span class="sc">&lt;=</span> n_neighbor) <span class="sc">%&gt;%</span></span>
-<span id="cb598-19"><a href="cluster-solution-evaluation.html#cb598-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb598-20"><a href="cluster-solution-evaluation.html#cb598-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
-<span id="cb598-21"><a href="cluster-solution-evaluation.html#cb598-21" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item1 =</span> id, <span class="at">item1_cluster =</span> cluster),</span>
-<span id="cb598-22"><a href="cluster-solution-evaluation.html#cb598-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item1&quot;</span></span>
-<span id="cb598-23"><a href="cluster-solution-evaluation.html#cb598-23" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%&gt;%</span></span>
-<span id="cb598-24"><a href="cluster-solution-evaluation.html#cb598-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
-<span id="cb598-25"><a href="cluster-solution-evaluation.html#cb598-25" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item2 =</span> id, <span class="at">item2_cluster =</span> cluster),</span>
-<span id="cb598-26"><a href="cluster-solution-evaluation.html#cb598-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item2&quot;</span></span>
-<span id="cb598-27"><a href="cluster-solution-evaluation.html#cb598-27" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb598-28"><a href="cluster-solution-evaluation.html#cb598-28" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb598-29"><a href="cluster-solution-evaluation.html#cb598-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 연결성 계산</span></span>
-<span id="cb598-30"><a href="cluster-solution-evaluation.html#cb598-30" aria-hidden="true" tabindex="-1"></a>  nn_df <span class="sc">%&gt;%</span></span>
-<span id="cb598-31"><a href="cluster-solution-evaluation.html#cb598-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(item1_cluster <span class="sc">!=</span> item2_cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb598-32"><a href="cluster-solution-evaluation.html#cb598-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">v =</span> <span class="dv">1</span> <span class="sc">/</span> nearest) <span class="sc">%&gt;%</span></span>
-<span id="cb598-33"><a href="cluster-solution-evaluation.html#cb598-33" aria-hidden="true" tabindex="-1"></a>    .<span class="sc">$</span>v <span class="sc">%&gt;%</span></span>
-<span id="cb598-34"><a href="cluster-solution-evaluation.html#cb598-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>()</span>
-<span id="cb598-35"><a href="cluster-solution-evaluation.html#cb598-35" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb598-36"><a href="cluster-solution-evaluation.html#cb598-36" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb598-37"><a href="cluster-solution-evaluation.html#cb598-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb598-38"><a href="cluster-solution-evaluation.html#cb598-38" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), connectivity, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">n_neighbor =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="cluster-solution-evaluation.html#cb601-1" aria-hidden="true" tabindex="-1"></a>connectivity <span class="ot">&lt;-</span> <span class="cf">function</span>(cluster, df, <span class="at">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">n_neighbor =</span> <span class="dv">1</span>) {</span>
+<span id="cb601-2"><a href="cluster-solution-evaluation.html#cb601-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb601-3"><a href="cluster-solution-evaluation.html#cb601-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb601-4"><a href="cluster-solution-evaluation.html#cb601-4" aria-hidden="true" tabindex="-1"></a>  cluster_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb601-5"><a href="cluster-solution-evaluation.html#cb601-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb601-6"><a href="cluster-solution-evaluation.html#cb601-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> cluster</span>
+<span id="cb601-7"><a href="cluster-solution-evaluation.html#cb601-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb601-8"><a href="cluster-solution-evaluation.html#cb601-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb601-9"><a href="cluster-solution-evaluation.html#cb601-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 객체간 거리</span></span>
+<span id="cb601-10"><a href="cluster-solution-evaluation.html#cb601-10" aria-hidden="true" tabindex="-1"></a>  distance_df <span class="ot">&lt;-</span> <span class="fu">dist</span>(df, <span class="at">method =</span> dist_method, <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb601-11"><a href="cluster-solution-evaluation.html#cb601-11" aria-hidden="true" tabindex="-1"></a>    broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb601-12"><a href="cluster-solution-evaluation.html#cb601-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_if</span>(is.factor, <span class="sc">~</span> <span class="fu">as.integer</span>(<span class="fu">as.character</span>(.)))</span>
+<span id="cb601-13"><a href="cluster-solution-evaluation.html#cb601-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb601-14"><a href="cluster-solution-evaluation.html#cb601-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 최근 객체</span></span>
+<span id="cb601-15"><a href="cluster-solution-evaluation.html#cb601-15" aria-hidden="true" tabindex="-1"></a>  nn_df <span class="ot">&lt;-</span> distance_df <span class="sc">%&gt;%</span></span>
+<span id="cb601-16"><a href="cluster-solution-evaluation.html#cb601-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(item1) <span class="sc">%&gt;%</span></span>
+<span id="cb601-17"><a href="cluster-solution-evaluation.html#cb601-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">nearest =</span> <span class="fu">rank</span>(distance, <span class="at">ties.method =</span> <span class="st">&quot;random&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb601-18"><a href="cluster-solution-evaluation.html#cb601-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(nearest <span class="sc">&lt;=</span> n_neighbor) <span class="sc">%&gt;%</span></span>
+<span id="cb601-19"><a href="cluster-solution-evaluation.html#cb601-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb601-20"><a href="cluster-solution-evaluation.html#cb601-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
+<span id="cb601-21"><a href="cluster-solution-evaluation.html#cb601-21" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item1 =</span> id, <span class="at">item1_cluster =</span> cluster),</span>
+<span id="cb601-22"><a href="cluster-solution-evaluation.html#cb601-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item1&quot;</span></span>
+<span id="cb601-23"><a href="cluster-solution-evaluation.html#cb601-23" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%&gt;%</span></span>
+<span id="cb601-24"><a href="cluster-solution-evaluation.html#cb601-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
+<span id="cb601-25"><a href="cluster-solution-evaluation.html#cb601-25" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item2 =</span> id, <span class="at">item2_cluster =</span> cluster),</span>
+<span id="cb601-26"><a href="cluster-solution-evaluation.html#cb601-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item2&quot;</span></span>
+<span id="cb601-27"><a href="cluster-solution-evaluation.html#cb601-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb601-28"><a href="cluster-solution-evaluation.html#cb601-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb601-29"><a href="cluster-solution-evaluation.html#cb601-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 연결성 계산</span></span>
+<span id="cb601-30"><a href="cluster-solution-evaluation.html#cb601-30" aria-hidden="true" tabindex="-1"></a>  nn_df <span class="sc">%&gt;%</span></span>
+<span id="cb601-31"><a href="cluster-solution-evaluation.html#cb601-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(item1_cluster <span class="sc">!=</span> item2_cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb601-32"><a href="cluster-solution-evaluation.html#cb601-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">v =</span> <span class="dv">1</span> <span class="sc">/</span> nearest) <span class="sc">%&gt;%</span></span>
+<span id="cb601-33"><a href="cluster-solution-evaluation.html#cb601-33" aria-hidden="true" tabindex="-1"></a>    .<span class="sc">$</span>v <span class="sc">%&gt;%</span></span>
+<span id="cb601-34"><a href="cluster-solution-evaluation.html#cb601-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>()</span>
+<span id="cb601-35"><a href="cluster-solution-evaluation.html#cb601-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb601-36"><a href="cluster-solution-evaluation.html#cb601-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb601-37"><a href="cluster-solution-evaluation.html#cb601-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb601-38"><a href="cluster-solution-evaluation.html#cb601-38" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), connectivity, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">n_neighbor =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 0 0</code></pre>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="cluster-solution-evaluation.html#cb600-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), connectivity, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">n_neighbor =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="cluster-solution-evaluation.html#cb603-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), connectivity, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">n_neighbor =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 1 0</code></pre>
 <p><span class="citation"><a href="#ref-rousseeuw1987silhouettes" role="doc-biblioref">Rousseeuw</a> (<a href="#ref-rousseeuw1987silhouettes" role="doc-biblioref">1987</a>)</span> 은 실루엣(silhouettes)이라는 내부평가지수를 제안하였다. 우선 다음과 같은 기호를 정의하자.</p>
 <ul>
@@ -1007,48 +1007,48 @@ s(i) = \begin{cases}
 <p><span class="math display" id="eq:cluster-average-silhouette">\[\begin{equation}
 ASW = \frac{1}{n} \sum_{i = 1}^{n} s(i) \tag{14.9}
 \end{equation}\]</span></p>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="cluster-solution-evaluation.html#cb602-1" aria-hidden="true" tabindex="-1"></a>asw <span class="ot">&lt;-</span> <span class="cf">function</span>(cluster, df, <span class="at">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {</span>
-<span id="cb602-2"><a href="cluster-solution-evaluation.html#cb602-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb602-3"><a href="cluster-solution-evaluation.html#cb602-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb602-4"><a href="cluster-solution-evaluation.html#cb602-4" aria-hidden="true" tabindex="-1"></a>  cluster_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb602-5"><a href="cluster-solution-evaluation.html#cb602-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
-<span id="cb602-6"><a href="cluster-solution-evaluation.html#cb602-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> cluster</span>
-<span id="cb602-7"><a href="cluster-solution-evaluation.html#cb602-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb602-8"><a href="cluster-solution-evaluation.html#cb602-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb602-9"><a href="cluster-solution-evaluation.html#cb602-9" aria-hidden="true" tabindex="-1"></a>  dist_df <span class="ot">&lt;-</span> <span class="fu">dist</span>(df, <span class="at">method =</span> dist_method, <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb602-10"><a href="cluster-solution-evaluation.html#cb602-10" aria-hidden="true" tabindex="-1"></a>    broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb602-11"><a href="cluster-solution-evaluation.html#cb602-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_if</span>(is.factor, <span class="sc">~</span> <span class="fu">as.integer</span>(<span class="fu">as.character</span>(.))) <span class="sc">%&gt;%</span></span>
-<span id="cb602-12"><a href="cluster-solution-evaluation.html#cb602-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
-<span id="cb602-13"><a href="cluster-solution-evaluation.html#cb602-13" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item1 =</span> id, <span class="at">item1_cluster =</span> cluster),</span>
-<span id="cb602-14"><a href="cluster-solution-evaluation.html#cb602-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item1&quot;</span></span>
-<span id="cb602-15"><a href="cluster-solution-evaluation.html#cb602-15" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%&gt;%</span></span>
-<span id="cb602-16"><a href="cluster-solution-evaluation.html#cb602-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
-<span id="cb602-17"><a href="cluster-solution-evaluation.html#cb602-17" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item2 =</span> id, <span class="at">item2_cluster =</span> cluster),</span>
-<span id="cb602-18"><a href="cluster-solution-evaluation.html#cb602-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item2&quot;</span></span>
-<span id="cb602-19"><a href="cluster-solution-evaluation.html#cb602-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb602-20"><a href="cluster-solution-evaluation.html#cb602-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb602-21"><a href="cluster-solution-evaluation.html#cb602-21" aria-hidden="true" tabindex="-1"></a>  dist_df <span class="ot">&lt;-</span> dist_df <span class="sc">%&gt;%</span></span>
-<span id="cb602-22"><a href="cluster-solution-evaluation.html#cb602-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(item1, item1_cluster, item2_cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb602-23"><a href="cluster-solution-evaluation.html#cb602-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
-<span id="cb602-24"><a href="cluster-solution-evaluation.html#cb602-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">avg_distance =</span> <span class="fu">mean</span>(distance)</span>
-<span id="cb602-25"><a href="cluster-solution-evaluation.html#cb602-25" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb602-26"><a href="cluster-solution-evaluation.html#cb602-26" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb602-27"><a href="cluster-solution-evaluation.html#cb602-27" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> dist_df <span class="sc">%&gt;%</span></span>
-<span id="cb602-28"><a href="cluster-solution-evaluation.html#cb602-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(item1_cluster <span class="sc">==</span> item2_cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb602-29"><a href="cluster-solution-evaluation.html#cb602-29" aria-hidden="true" tabindex="-1"></a>    .<span class="sc">$</span>avg_distance</span>
-<span id="cb602-30"><a href="cluster-solution-evaluation.html#cb602-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb602-31"><a href="cluster-solution-evaluation.html#cb602-31" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> dist_df <span class="sc">%&gt;%</span></span>
-<span id="cb602-32"><a href="cluster-solution-evaluation.html#cb602-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(item1_cluster <span class="sc">!=</span> item2_cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb602-33"><a href="cluster-solution-evaluation.html#cb602-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="sc">-</span><span class="dv">1</span>, avg_distance) <span class="sc">%&gt;%</span></span>
-<span id="cb602-34"><a href="cluster-solution-evaluation.html#cb602-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb602-35"><a href="cluster-solution-evaluation.html#cb602-35" aria-hidden="true" tabindex="-1"></a>    .<span class="sc">$</span>avg_distance</span>
-<span id="cb602-36"><a href="cluster-solution-evaluation.html#cb602-36" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb602-37"><a href="cluster-solution-evaluation.html#cb602-37" aria-hidden="true" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">map2_dbl</span>(a, b, <span class="sc">~</span> (.y <span class="sc">-</span> .x) <span class="sc">/</span> <span class="fu">max</span>(.x, .y))</span>
-<span id="cb602-38"><a href="cluster-solution-evaluation.html#cb602-38" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb602-39"><a href="cluster-solution-evaluation.html#cb602-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(s)</span>
-<span id="cb602-40"><a href="cluster-solution-evaluation.html#cb602-40" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb602-41"><a href="cluster-solution-evaluation.html#cb602-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb602-42"><a href="cluster-solution-evaluation.html#cb602-42" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), asw, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="cluster-solution-evaluation.html#cb605-1" aria-hidden="true" tabindex="-1"></a>asw <span class="ot">&lt;-</span> <span class="cf">function</span>(cluster, df, <span class="at">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>) {</span>
+<span id="cb605-2"><a href="cluster-solution-evaluation.html#cb605-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb605-3"><a href="cluster-solution-evaluation.html#cb605-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb605-4"><a href="cluster-solution-evaluation.html#cb605-4" aria-hidden="true" tabindex="-1"></a>  cluster_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb605-5"><a href="cluster-solution-evaluation.html#cb605-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb605-6"><a href="cluster-solution-evaluation.html#cb605-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> cluster</span>
+<span id="cb605-7"><a href="cluster-solution-evaluation.html#cb605-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb605-8"><a href="cluster-solution-evaluation.html#cb605-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb605-9"><a href="cluster-solution-evaluation.html#cb605-9" aria-hidden="true" tabindex="-1"></a>  dist_df <span class="ot">&lt;-</span> <span class="fu">dist</span>(df, <span class="at">method =</span> dist_method, <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb605-10"><a href="cluster-solution-evaluation.html#cb605-10" aria-hidden="true" tabindex="-1"></a>    broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb605-11"><a href="cluster-solution-evaluation.html#cb605-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_if</span>(is.factor, <span class="sc">~</span> <span class="fu">as.integer</span>(<span class="fu">as.character</span>(.))) <span class="sc">%&gt;%</span></span>
+<span id="cb605-12"><a href="cluster-solution-evaluation.html#cb605-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
+<span id="cb605-13"><a href="cluster-solution-evaluation.html#cb605-13" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item1 =</span> id, <span class="at">item1_cluster =</span> cluster),</span>
+<span id="cb605-14"><a href="cluster-solution-evaluation.html#cb605-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item1&quot;</span></span>
+<span id="cb605-15"><a href="cluster-solution-evaluation.html#cb605-15" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%&gt;%</span></span>
+<span id="cb605-16"><a href="cluster-solution-evaluation.html#cb605-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
+<span id="cb605-17"><a href="cluster-solution-evaluation.html#cb605-17" aria-hidden="true" tabindex="-1"></a>      cluster_df <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">item2 =</span> id, <span class="at">item2_cluster =</span> cluster),</span>
+<span id="cb605-18"><a href="cluster-solution-evaluation.html#cb605-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;item2&quot;</span></span>
+<span id="cb605-19"><a href="cluster-solution-evaluation.html#cb605-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb605-20"><a href="cluster-solution-evaluation.html#cb605-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb605-21"><a href="cluster-solution-evaluation.html#cb605-21" aria-hidden="true" tabindex="-1"></a>  dist_df <span class="ot">&lt;-</span> dist_df <span class="sc">%&gt;%</span></span>
+<span id="cb605-22"><a href="cluster-solution-evaluation.html#cb605-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(item1, item1_cluster, item2_cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb605-23"><a href="cluster-solution-evaluation.html#cb605-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
+<span id="cb605-24"><a href="cluster-solution-evaluation.html#cb605-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">avg_distance =</span> <span class="fu">mean</span>(distance)</span>
+<span id="cb605-25"><a href="cluster-solution-evaluation.html#cb605-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb605-26"><a href="cluster-solution-evaluation.html#cb605-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb605-27"><a href="cluster-solution-evaluation.html#cb605-27" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> dist_df <span class="sc">%&gt;%</span></span>
+<span id="cb605-28"><a href="cluster-solution-evaluation.html#cb605-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(item1_cluster <span class="sc">==</span> item2_cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb605-29"><a href="cluster-solution-evaluation.html#cb605-29" aria-hidden="true" tabindex="-1"></a>    .<span class="sc">$</span>avg_distance</span>
+<span id="cb605-30"><a href="cluster-solution-evaluation.html#cb605-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb605-31"><a href="cluster-solution-evaluation.html#cb605-31" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> dist_df <span class="sc">%&gt;%</span></span>
+<span id="cb605-32"><a href="cluster-solution-evaluation.html#cb605-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(item1_cluster <span class="sc">!=</span> item2_cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb605-33"><a href="cluster-solution-evaluation.html#cb605-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="sc">-</span><span class="dv">1</span>, avg_distance) <span class="sc">%&gt;%</span></span>
+<span id="cb605-34"><a href="cluster-solution-evaluation.html#cb605-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb605-35"><a href="cluster-solution-evaluation.html#cb605-35" aria-hidden="true" tabindex="-1"></a>    .<span class="sc">$</span>avg_distance</span>
+<span id="cb605-36"><a href="cluster-solution-evaluation.html#cb605-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb605-37"><a href="cluster-solution-evaluation.html#cb605-37" aria-hidden="true" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">map2_dbl</span>(a, b, <span class="sc">~</span> (.y <span class="sc">-</span> .x) <span class="sc">/</span> <span class="fu">max</span>(.x, .y))</span>
+<span id="cb605-38"><a href="cluster-solution-evaluation.html#cb605-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb605-39"><a href="cluster-solution-evaluation.html#cb605-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(s)</span>
+<span id="cb605-40"><a href="cluster-solution-evaluation.html#cb605-40" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb605-41"><a href="cluster-solution-evaluation.html#cb605-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb605-42"><a href="cluster-solution-evaluation.html#cb605-42" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), asw, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">dist_method =</span> <span class="st">&quot;euclidean&quot;</span>)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;item1&#39;, &#39;item1_cluster&#39;. You can override using the `.groups` argument.
 ## `summarise()` has grouped output by &#39;item1&#39;, &#39;item1_cluster&#39;. You can override using the `.groups` argument.</code></pre>
 <pre><code>## [1] 0.6507364 0.5864226</code></pre>
