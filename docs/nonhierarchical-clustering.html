@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2021-07-30" />
+<meta name="date" content="2022-07-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -487,7 +487,7 @@ div.csl-indent {
 </tr>
 <tr class="even">
 <td align="left">stats</td>
-<td align="left">4.1.0</td>
+<td align="left">4.1.3</td>
 </tr>
 <tr class="odd">
 <td align="left">cluster</td>
@@ -799,7 +799,7 @@ a_{ij} = \begin{cases}
 </ol>
 <div id="pam" class="section level3" number="13.3.1">
 <h3><span class="header-section-number">13.3.1</span> PAM 알고리즘</h3>
-<p>PAM 알고리즘은 <span class="citation"><a href="#ref-kaufman1990finding" role="doc-biblioref">Kaufman and Rousseeuw</a> (<a href="#ref-kaufman1990finding" role="doc-biblioref">1990</a>)</span> 에 의하여 발표된 것으로, 초기 대표객체를 선정하는 방법인 <strong>BUILD</strong>와 더 나은 군집해를 찾아나가는 과정인 <strong>SWAP</strong>의 두 부분으로 구성되어 있다.</p>
+<p>PAM 알고리즘은 <span class="citation">Kaufman and Rousseeuw (<a href="#ref-kaufman1990finding" role="doc-biblioref">1990</a>)</span> 에 의하여 발표된 것으로, 초기 대표객체를 선정하는 방법인 <strong>BUILD</strong>와 더 나은 군집해를 찾아나가는 과정인 <strong>SWAP</strong>의 두 부분으로 구성되어 있다.</p>
 <div id="pam-basic-script" class="section level4" number="13.3.1.1">
 <h4><span class="header-section-number">13.3.1.1</span> 기본 R 스크립트</h4>
 <div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="nonhierarchical-clustering.html#cb468-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
@@ -986,8 +986,8 @@ M \leftarrow M \cup \{m\}
 <p><strong>[단계 1]</strong> 객체 <span class="math inline">\(i\)</span>와 객체 <span class="math inline">\(h\)</span>를 교환할 때 목적함수의 변화량을 산출하기 위하여 우선, 대표객체로 선정되지 않은 임의의 객체 <span class="math inline">\(j \neq h\)</span>에서의 변화량을 다음과 같이 산출한다.</p>
 <p><span class="math display">\[\begin{eqnarray*}
 C_{jih} &amp;=&amp; \text{($i$와 $h$를 교환 후 객체 $j$와 대표객체와의 거리)}\\
- &amp; &amp; - \text{(교환 전 객체 $j$와 대표객체와의 거리)},\\
- &amp; &amp; \, (j \notin M, i \in M, h \notin M)
+&amp; &amp; - \text{(교환 전 객체 $j$와 대표객체와의 거리)},\\
+&amp; &amp; \, (j \notin M, i \in M, h \notin M)
 \end{eqnarray*}\]</span></p>
 <div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="nonhierarchical-clustering.html#cb483-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 교환 전 각 객체와 대표 객체와의 거리</span></span>
 <span id="cb483-2"><a href="nonhierarchical-clustering.html#cb483-2" aria-hidden="true" tabindex="-1"></a>D_j <span class="ot">&lt;-</span> pairwise_distance_df <span class="sc">%&gt;%</span></span>
@@ -1334,7 +1334,7 @@ T_{ih} = \sum_{j} C_{jih}
 </div>
 <div id="kmeans-like" class="section level3" number="13.3.4">
 <h3><span class="header-section-number">13.3.4</span> K-means-like 알고리즘</h3>
-<p>본 알고리즘은 PAM 알고리즘의 단점을 보완하고자 <span class="citation"><a href="#ref-park2009simple" role="doc-biblioref">Park and Jun</a> (<a href="#ref-park2009simple" role="doc-biblioref">2009</a>)</span> 에 의해 제안된 것으로, 대표객체를 반복적으로 수정하는데 K-means 알고리즘의 작동 원리를 모방한 K-medoids 군집 방법이다. 따라서 간단하며 계산 시간이 빠른 것이 장점이라 하겠다. 이 알고리즘은 다음과 같이 3단계로 구성되어 있다. 알고리즘의 각 단계를 Table <a href="nonhierarchical-clustering.html#tab:pam-train-data">13.2</a>의 예제 데이터에 적용하여 살펴보기로 하자.</p>
+<p>본 알고리즘은 PAM 알고리즘의 단점을 보완하고자 <span class="citation">Park and Jun (<a href="#ref-park2009simple" role="doc-biblioref">2009</a>)</span> 에 의해 제안된 것으로, 대표객체를 반복적으로 수정하는데 K-means 알고리즘의 작동 원리를 모방한 K-medoids 군집 방법이다. 따라서 간단하며 계산 시간이 빠른 것이 장점이라 하겠다. 이 알고리즘은 다음과 같이 3단계로 구성되어 있다. 알고리즘의 각 단계를 Table <a href="nonhierarchical-clustering.html#tab:pam-train-data">13.2</a>의 예제 데이터에 적용하여 살펴보기로 하자.</p>
 <p><strong>[단계 1]</strong> (초기 대표객체 선정) <span class="math inline">\(K\)</span>개의 초기 대표객체를 선정하며, 각 객체를 가장 가까운 대표객체에 배정하여 초기 군집해를 얻는다.</p>
 <p>객체들 간의 거리 <span class="math inline">\(d(i, j), \, i, j = 1, \cdots, n\)</span>를 구한다.</p>
 <div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="nonhierarchical-clustering.html#cb511-1" aria-hidden="true" tabindex="-1"></a>pairwise_distance_df <span class="ot">&lt;-</span> <span class="fu">dist</span>(df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">upper =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
@@ -1653,9 +1653,10 @@ v_j = \sum_{i = 1}^{n} \frac{d(i, j)}{\sum_{k = 1}^{n} d(i, k)}
 ##  [1] 1 1 2 2 2 1 2 3 3 3
 ## 
 ## Available components:
-##  [1] &quot;membership&quot;  &quot;coeff&quot;       &quot;memb.exp&quot;    &quot;clustering&quot;  &quot;k.crisp&quot;    
-##  [6] &quot;objective&quot;   &quot;convergence&quot; &quot;diss&quot;        &quot;call&quot;        &quot;silinfo&quot;    
-## [11] &quot;data&quot;</code></pre>
+##  [1] &quot;membership&quot;  &quot;coeff&quot;       &quot;memb.exp&quot;   
+##  [4] &quot;clustering&quot;  &quot;k.crisp&quot;     &quot;objective&quot;  
+##  [7] &quot;convergence&quot; &quot;diss&quot;        &quot;call&quot;       
+## [10] &quot;silinfo&quot;     &quot;data&quot;</code></pre>
 </div>
 <div id="fuzzy-kmeans-algorithm" class="section level3" number="13.4.2">
 <h3><span class="header-section-number">13.4.2</span> 알고리즘</h3>
@@ -2080,7 +2081,7 @@ z_{ik} = \begin{cases}
 <li>for all <span class="math inline">\(k\)</span>, <span class="math inline">\(\mathbf{A}_k = \mathbf{A}\)</span></li>
 </ul></li>
 </ul>
-<p><span class="citation"><a href="#ref-celeux1995gaussian" role="doc-biblioref">Celeux and Govaert</a> (<a href="#ref-celeux1995gaussian" role="doc-biblioref">1995</a>)</span> 에 각 분산-공분산 모형에 대한 추정값을 얻는 반복적 알고리즘이 소개되어 있으며, 이는 교재 <span class="citation">(<a href="#ref-jun2012datamining" role="doc-biblioref">전치혁 2012</a>)</span>에도 설명되어 있다.</p>
+<p><span class="citation">Celeux and Govaert (<a href="#ref-celeux1995gaussian" role="doc-biblioref">1995</a>)</span> 에 각 분산-공분산 모형에 대한 추정값을 얻는 반복적 알고리즘이 소개되어 있으며, 이는 교재 <span class="citation">(<a href="#ref-jun2012datamining" role="doc-biblioref">전치혁 2012</a>)</span>에도 설명되어 있다.</p>
 <p>우선, 각 군집 <span class="math inline">\(k\)</span> 내에서의 scatter matrix를 아래와 같이 계산한다.</p>
 <p><span class="math display">\[\begin{equation*}
 \mathbf{W}_k = \sum_{i = 1}^{n} \hat{z}_{ik} (\mathbf{x}_i - \hat{\boldsymbol\mu}_k)(\mathbf{x}_i - \hat{\boldsymbol\mu}_k)^\top
@@ -2139,10 +2140,10 @@ z_{ik} = \begin{cases}
 <p><span class="math display">\[\begin{equation*}
 \boldsymbol\Sigma_k = \lambda_k \mathbf{C}
 \end{equation*}\]</span></p>
-<p>위 각 분산-공분산 모형을 추정 과정에 대한 설명은, 보다 일반화된 분산-공분산 구조 <span class="math inline">\(\lambda_k \mathbf{D}_k \mathbf{A}_k \mathbf{D}_k^\top\)</span>을 추정하는 과정을 각 모형에 추가되는 제약에 따라 조금 더 단순하게 표현한 것이다. 보다 자세한 내용은 <span class="citation"><a href="#ref-celeux1995gaussian" role="doc-biblioref">Celeux and Govaert</a> (<a href="#ref-celeux1995gaussian" role="doc-biblioref">1995</a>)</span> 참조.</p>
+<p>위 각 분산-공분산 모형을 추정 과정에 대한 설명은, 보다 일반화된 분산-공분산 구조 <span class="math inline">\(\lambda_k \mathbf{D}_k \mathbf{A}_k \mathbf{D}_k^\top\)</span>을 추정하는 과정을 각 모형에 추가되는 제약에 따라 조금 더 단순하게 표현한 것이다. 보다 자세한 내용은 <span class="citation">Celeux and Govaert (<a href="#ref-celeux1995gaussian" role="doc-biblioref">1995</a>)</span> 참조.</p>
 <p>아래와 같이 군집 내 분산-공분산 행렬을 추정하는 함수 <code>estimate_mixture_cov</code>를 구현해보자. 해당 함수는 3개의 입력변수를 사용한다.</p>
 <ul>
-<li><code>modelName</code>: 분산-공분산 모형 이름. “VII,” “VEI,” “VEE” 중 하나를 선택한다.</li>
+<li><code>modelName</code>: 분산-공분산 모형 이름. “VII”, “VEI”, “VEE” 중 하나를 선택한다.</li>
 <li><code>W</code>: <code>K</code>개의 scatter matrix (<span class="math inline">\(\mathbf{W}_1, \cdots, \mathbf{W}_K\)</span>)를 원소로 지니는 리스트 (<code>list</code>)</li>
 <li><code>z</code>: <span class="math inline">\(z_{ik}\)</span> 값을 지닌 데이터 프레임 (<code>data.frame</code>). <span class="math inline">\(n\)</span>개의 행과 <span class="math inline">\(K\)</span>개의 열로 이루어진다. 즉, 행은 각 관측객체를 나타내며, 열은 각 군집을 나타낸다.</li>
 </ul>
@@ -2491,22 +2492,30 @@ z_{ik} = \begin{cases}
 <p>함수 수행결과 객체의 <code>BIC</code> 원소가 나타내는 결과는 아래와 같다.</p>
 <div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="nonhierarchical-clustering.html#cb582-1" aria-hidden="true" tabindex="-1"></a>res_mclust_opt<span class="sc">$</span>BIC</span></code></pre></div>
 <pre><code>## Bayesian Information Criterion (BIC): 
-##         EII       VII       EEI       VEI       EVI       VVI       EEE
-## 1 -85.40006 -85.40006 -85.70851 -85.70851 -85.70851 -85.70851 -75.27433
-## 2 -62.00992 -63.86240 -63.37677 -65.22485 -65.32204 -67.17013 -64.66516
-## 3 -65.47796        NA -66.01911        NA        NA        NA -67.87781
-## 4 -69.04346        NA -70.17240        NA        NA        NA -67.31282
-## 5 -72.02226        NA -73.96817        NA        NA        NA        NA
-## 6 -62.27998        NA -64.22589        NA        NA        NA        NA
-## 7        NA        NA        NA        NA        NA        NA        NA
-##         VEE       EVE       VVE       EEV       VEV       EVV       VVV
-## 1 -75.27433 -75.27433 -75.27433 -75.27433 -75.27433 -75.27433 -75.27433
-## 2 -66.60332 -65.06811 -66.92481 -65.42506 -67.34154 -66.55375 -68.44666
-## 3        NA        NA        NA -71.48895        NA        NA        NA
-## 4        NA        NA        NA        NA        NA        NA        NA
-## 5        NA        NA        NA        NA        NA        NA        NA
-## 6        NA        NA        NA        NA        NA        NA        NA
-## 7        NA        NA        NA        NA        NA        NA        NA
+##         EII       VII       EEI       VEI       EVI
+## 1 -85.40006 -85.40006 -85.70851 -85.70851 -85.70851
+## 2 -62.00992 -63.86240 -63.37677 -65.22485 -65.32204
+## 3 -65.47796        NA -66.01911        NA        NA
+## 4 -69.04346        NA -70.17240        NA        NA
+## 5 -72.02226        NA -73.96817        NA        NA
+## 6 -62.27998        NA -64.22589        NA        NA
+## 7        NA        NA        NA        NA        NA
+##         VVI       EEE       VEE       EVE       VVE
+## 1 -85.70851 -75.27433 -75.27433 -75.27433 -75.27433
+## 2 -67.17013 -64.66516 -66.60332 -65.06811 -66.92481
+## 3        NA -67.87781        NA        NA        NA
+## 4        NA -67.31282        NA        NA        NA
+## 5        NA        NA        NA        NA        NA
+## 6        NA        NA        NA        NA        NA
+## 7        NA        NA        NA        NA        NA
+##         EEV       VEV       EVV       VVV
+## 1 -75.27433 -75.27433 -75.27433 -75.27433
+## 2 -65.42506 -67.34154 -66.55375 -68.44666
+## 3 -71.48895        NA        NA        NA
+## 4        NA        NA        NA        NA
+## 5        NA        NA        NA        NA
+## 6        NA        NA        NA        NA
+## 7        NA        NA        NA        NA
 ## 
 ## Top 3 models based on the BIC criterion: 
 ##     EII,2     EII,6     EEI,2 
@@ -2546,26 +2555,6 @@ Scrucca, Luca, Michael Fop, T Brendan Murphy, and Adrian E Raftery. 2016. <span>
 전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.
 </div>
 </div>
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://r-data-mining-book.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            
             </section>
 
           </div>

@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2021-07-30" />
+<meta name="date" content="2022-07-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -557,7 +557,7 @@ b &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l
 c &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} (1 - u_{jk}) v_{il} v_{jl}\\
 d &amp;=&amp; \sum_{i = 1}^{n - 1} \sum_{j = i + 1}^{n} \sum_{k = 1}^{r} \sum_{l = 1}^{s} u_{ik} (1 - u_{jk}) v_{il} (1 - v_{jl})
 \end{eqnarray*}\]</span></p>
-<p>이 때, <span class="citation"><a href="#ref-rand1971objective" role="doc-biblioref">Rand</a> (<a href="#ref-rand1971objective" role="doc-biblioref">1971</a>)</span> 가 제안한 랜드지수(Rand index)는 다음과 같이 정의된다.</p>
+<p>이 때, <span class="citation">Rand (<a href="#ref-rand1971objective" role="doc-biblioref">1971</a>)</span> 가 제안한 랜드지수(Rand index)는 다음과 같이 정의된다.</p>
 <p><span class="math display" id="eq:rand-index">\[\begin{equation}
 RI = \frac{a + d}{a + b + c + d} \tag{14.1}
 \end{equation}\]</span></p>
@@ -566,7 +566,7 @@ RI = \frac{a + d}{a + b + c + d} \tag{14.1}
 a + b + c + d = {n \choose 2}
 \end{equation*}\]</span></p>
 <p>식 <a href="cluster-solution-evaluation.html#eq:rand-index">(14.1)</a>는 0에서 1 사이의 값을 갖게 되며, 0에 가까울수록 두 군집해가 일치하지 않음을, 1에 가까울수록 두 군집해가 일치함을 나타낸다. 또한 랜드지수는 랜덤하게 작성한 두 군집해 간의 유사도의 기대값이 0보다 크다.</p>
-<p><span class="citation"><a href="#ref-hubert1985comparing" role="doc-biblioref">Hubert and Arabie</a> (<a href="#ref-hubert1985comparing" role="doc-biblioref">1985</a>)</span> 는 수정랜드지수(adjusted Rand index)를 아래와 같이 제안하였다.</p>
+<p><span class="citation">Hubert and Arabie (<a href="#ref-hubert1985comparing" role="doc-biblioref">1985</a>)</span> 는 수정랜드지수(adjusted Rand index)를 아래와 같이 제안하였다.</p>
 <p><span class="math display" id="eq:adj-rand-index">\[\begin{equation}
 RI_{adj} = \frac{2 (ad - bc)}{(a + b)(b + d) + (a + c)(c + d)} \tag{14.2}
 \end{equation}\]</span></p>
@@ -645,7 +645,8 @@ RI_{adj} = \frac{2 (ad - bc)}{(a + b)(b + d) + (a + c)(c + d)} \tag{14.2}
 <span id="cb588-22"><a href="cluster-solution-evaluation.html#cb588-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;index value&quot;</span>,</span>
 <span id="cb588-23"><a href="cluster-solution-evaluation.html#cb588-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;frequency&quot;</span></span>
 <span id="cb588-24"><a href="cluster-solution-evaluation.html#cb588-24" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing missing values (geom_bar).</code></pre>
+<pre><code>## Warning: Removed 4 rows containing missing values
+## (geom_bar).</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:rand-index-random"></span>
 <img src="data-mining-book_files/figure-html/rand-index-random-1.png" alt="랜덤한 군집해 간 비교: 랜드지수 및 수정랜드지수" width="672" />
 <p class="caption">
@@ -818,7 +819,7 @@ V =&amp; \{ \{1, 3, 6\}, \{2, 4, 5, 7, 8\} \}
 </div>
 <div id="cluster-evaluation-internal-index-explanation" class="section level4" number="14.2.2.2">
 <h4><span class="header-section-number">14.2.2.2</span> 대표 내부평가지수</h4>
-<p><span class="citation"><a href="#ref-dunn1973fuzzy" role="doc-biblioref">Dunn</a> (<a href="#ref-dunn1973fuzzy" role="doc-biblioref">1973</a>)</span> 은 아래와 같은 지수를 제안하였다.</p>
+<p><span class="citation">Dunn (<a href="#ref-dunn1973fuzzy" role="doc-biblioref">1973</a>)</span> 은 아래와 같은 지수를 제안하였다.</p>
 <p><span class="math display" id="eq:cluster-dunn-index">\[\begin{equation}
 DI = \frac{\min_{\mathbf{x} \in C_i, \, \mathbf{y} \in C_j \, 1 \leq i \neq j \leq K} d(\mathbf{x}, \mathbf{y})}{\max_{\mathbf{x} \in C_i, \mathbf{y} \in C_i, \, 1 \leq i \leq K} d(\mathbf{x}, \mathbf{y})} \tag{14.4}
 \end{equation}\]</span></p>
@@ -876,7 +877,7 @@ DI = \frac{\min_{\mathbf{x} \in C_i, \, \mathbf{y} \in C_j \, 1 \leq i \neq j \l
 <span id="cb596-45"><a href="cluster-solution-evaluation.html#cb596-45" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="cluster-solution-evaluation.html#cb597-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), dunn_index, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] 1.075291 0.822375</code></pre>
-<p><span class="citation"><a href="#ref-calinski1974dendrite" role="doc-biblioref">Caliński and Harabasz</a> (<a href="#ref-calinski1974dendrite" role="doc-biblioref">1974</a>)</span> 는 다음과 같은 지수를 제안하였다.</p>
+<p><span class="citation">Caliński and Harabasz (<a href="#ref-calinski1974dendrite" role="doc-biblioref">1974</a>)</span> 는 다음과 같은 지수를 제안하였다.</p>
 <p><span class="math display" id="eq:cluster-ch-index">\[\begin{equation}
 CH = \frac{\frac{1}{K - 1} \sum_{k = 1}^{K} n_k (\mathbf{c}_k - \mathbf{c})^\top (\mathbf{c}_k - \mathbf{c})}{\frac{1}{n - K} \sum_{k = 1}^{K} \sum_{i \in C_k} (\mathbf{x}_i - \mathbf{c}_k)^\top (\mathbf{x}_i - \mathbf{c}_k)} \tag{14.5}
 \end{equation}\]</span></p>
@@ -919,7 +920,7 @@ CH = \frac{\frac{1}{K - 1} \sum_{k = 1}^{K} n_k (\mathbf{c}_k - \mathbf{c})^\top
 <span id="cb599-36"><a href="cluster-solution-evaluation.html#cb599-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb599-37"><a href="cluster-solution-evaluation.html#cb599-37" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), ch_index, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] 26.45029 15.36218</code></pre>
-<p><span class="citation"><a href="#ref-handl2005exploiting" role="doc-biblioref">Handl and Knowles</a> (<a href="#ref-handl2005exploiting" role="doc-biblioref">2005</a>)</span> 은 연결성을 반영한 아래와 같은 지수를 제시하고 있다.</p>
+<p><span class="citation">Handl and Knowles (<a href="#ref-handl2005exploiting" role="doc-biblioref">2005</a>)</span> 은 연결성을 반영한 아래와 같은 지수를 제시하고 있다.</p>
 <p><span class="math display" id="eq:cluster-connectivity">\[\begin{equation}
 Conn = \sum_{i = 1}^{n} \sum_{j = 1}^{L} v_{i, nn_{i}(j)} \tag{14.6}
 \end{equation}\]</span></p>
@@ -927,7 +928,7 @@ Conn = \sum_{i = 1}^{n} \sum_{j = 1}^{L} v_{i, nn_{i}(j)} \tag{14.6}
 <p><span class="math display">\[\begin{equation*}
 v_{i, nn_i(j)} = \begin{cases}
 0 &amp; \text{ if } \exists C_k : i, nn_i(j) \in C_k \\
-1 / j &amp; \text{ otherwise} 
+1 / j &amp; \text{ otherwise}
 \end{cases}
 \end{equation*}\]</span></p>
 <p>즉, 식 <a href="cluster-solution-evaluation.html#eq:cluster-connectivity">(14.6)</a>는 각 객체가 <span class="math inline">\(j (\leq L)\)</span>번째 최근 객체와 다른 객체에 속하면 <span class="math inline">\(1 / j\)</span>의 벌점을 부여하는 방식으로, 작은 값일수록 좋은 군집으로 평가될 수 있다.</p>
@@ -972,7 +973,7 @@ v_{i, nn_i(j)} = \begin{cases}
 <pre><code>## [1] 0 0</code></pre>
 <div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="cluster-solution-evaluation.html#cb603-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">list</span>(sol_1, sol_2), connectivity, <span class="at">df =</span> df[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">n_neighbor =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 1 0</code></pre>
-<p><span class="citation"><a href="#ref-rousseeuw1987silhouettes" role="doc-biblioref">Rousseeuw</a> (<a href="#ref-rousseeuw1987silhouettes" role="doc-biblioref">1987</a>)</span> 은 실루엣(silhouettes)이라는 내부평가지수를 제안하였다. 우선 다음과 같은 기호를 정의하자.</p>
+<p><span class="citation">Rousseeuw (<a href="#ref-rousseeuw1987silhouettes" role="doc-biblioref">1987</a>)</span> 은 실루엣(silhouettes)이라는 내부평가지수를 제안하였다. 우선 다음과 같은 기호를 정의하자.</p>
 <ul>
 <li><span class="math inline">\(a(i)\)</span>: 객체 <span class="math inline">\(i\)</span>와 동일 군집에 속한 다른 객체들과의 평균 거리</li>
 <li><span class="math inline">\(d(i, C_k)\)</span>: 객체 <span class="math inline">\(i\)</span>와 다른 군집 <span class="math inline">\(C_k\)</span>에 속한 모든 객체들과의 평균 거리, <span class="math inline">\(i \notin C_k\)</span></li>
@@ -1085,26 +1086,6 @@ Rand, William M. 1971. <span>“Objective Criteria for the Evaluation of Cluster
 Rousseeuw, Peter J. 1987. <span>“Silhouettes: A Graphical Aid to the Interpretation and Validation of Cluster Analysis.”</span> <em>Journal of Computational and Applied Mathematics</em> 20: 53–65.
 </div>
 </div>
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://r-data-mining-book.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            
             </section>
 
           </div>

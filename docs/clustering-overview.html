@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2021-07-30" />
+<meta name="date" content="2022-07-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -487,7 +487,7 @@ div.csl-indent {
 </tr>
 <tr class="even">
 <td align="left">stats</td>
-<td align="left">4.1.0</td>
+<td align="left">4.1.3</td>
 </tr>
 <tr class="odd">
 <td align="left">corrr</td>
@@ -926,6 +926,14 @@ sim(\mathbf{x}_i, \mathbf{x}_j) = \frac{\sum_{k: x_{ki} + x_{kj} &gt; 0} sim(x_{
 <span id="cb367-14"><a href="clustering-overview.html#cb367-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:health-question-df">Table 11.6: </span>건강 문진</caption>
+<colgroup>
+<col width="9%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="19%" />
+<col width="19%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="right">객체번호</th>
@@ -1091,7 +1099,7 @@ sim(\mathbf{x}_i, \mathbf{x}_j) = \frac{1}{p} \sum_{k = 1}^{p} sim(x_{ki}, x_{kj
 <p><span class="math display">\[\begin{equation*}
 d(\mathbf{x}_i, \mathbf{x}_j) = \frac{1}{p} \sum_{k = 1}^{p} d(x_{ki}, x_{kj})
 \end{equation*}\]</span></p>
-<p>위에 설명한 혼합형 거리 척도는 <span class="citation"><a href="#ref-gower1971general" role="doc-biblioref">Gower</a> (<a href="#ref-gower1971general" role="doc-biblioref">1971</a>)</span> 에 기반하며, R에서는 <code>cluster</code> 패키지의 <code>daisy</code> 함수를 이용하여 구할 수 있다. <code>daisy</code> 함수는 연속형 및 서열형 변수의 경우 입력 데이터에 기반하여 range를 계산하므로, 입력 데이터의 최소값, 최대값이 아닌 이론적 최소값, 최대값에 의하여 range를 계산하고 싶은 경우에는 명시적으로 각 변수의 최소값과 최대값을 나타내는 데이터를 입력 데이터에 추가하여야 한다.</p>
+<p>위에 설명한 혼합형 거리 척도는 <span class="citation">Gower (<a href="#ref-gower1971general" role="doc-biblioref">1971</a>)</span> 에 기반하며, R에서는 <code>cluster</code> 패키지의 <code>daisy</code> 함수를 이용하여 구할 수 있다. <code>daisy</code> 함수는 연속형 및 서열형 변수의 경우 입력 데이터에 기반하여 range를 계산하므로, 입력 데이터의 최소값, 최대값이 아닌 이론적 최소값, 최대값에 의하여 range를 계산하고 싶은 경우에는 명시적으로 각 변수의 최소값과 최대값을 나타내는 데이터를 입력 데이터에 추가하여야 한다.</p>
 <div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="clustering-overview.html#cb370-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb370-2"><a href="clustering-overview.html#cb370-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>x1, <span class="sc">~</span>x2, <span class="sc">~</span>x3, <span class="sc">~</span>x4, <span class="sc">~</span>x5,</span>
 <span id="cb370-3"><a href="clustering-overview.html#cb370-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">&quot;남&quot;</span>, <span class="dv">46</span>, <span class="st">&quot;공무원&quot;</span>, <span class="dv">35000</span>, <span class="dv">2</span>,</span>
@@ -1128,8 +1136,10 @@ d(\mathbf{x}_i, \mathbf{x}_j) = \frac{1}{p} \sum_{k = 1}^{p} d(x_{ki}, x_{kj})
 <span id="cb370-34"><a href="clustering-overview.html#cb370-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;객체번호(from)&#39;</span>, <span class="st">&#39;객체번호(to)&#39;</span>, <span class="st">&#39;거리&#39;</span>),</span>
 <span id="cb370-35"><a href="clustering-overview.html#cb370-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;혼합형 Gower 거리&#39;</span></span>
 <span id="cb370-36"><a href="clustering-overview.html#cb370-36" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## Warning in Ops.factor(item1, n_obs): &#39;&lt;=&#39; not meaningful for factors</code></pre>
-<pre><code>## Warning in Ops.factor(item2, n_obs): &#39;&lt;=&#39; not meaningful for factors</code></pre>
+<pre><code>## Warning in Ops.factor(item1, n_obs): &#39;&lt;=&#39; not meaningful
+## for factors</code></pre>
+<pre><code>## Warning in Ops.factor(item2, n_obs): &#39;&lt;=&#39; not meaningful
+## for factors</code></pre>
 <table>
 <caption><span id="tab:mixed-gower">Table 11.9: </span>혼합형 Gower 거리</caption>
 <thead>
@@ -1152,26 +1162,6 @@ d(\mathbf{x}_i, \mathbf{x}_j) = \frac{1}{p} \sum_{k = 1}^{p} d(x_{ki}, x_{kj})
 Gower, John C. 1971. <span>“A General Coefficient of Similarity and Some of Its Properties.”</span> <em>Biometrics</em>, 857–71.
 </div>
 </div>
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://r-data-mining-book.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            
             </section>
 
           </div>

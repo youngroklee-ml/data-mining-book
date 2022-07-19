@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2021-07-30" />
+<meta name="date" content="2022-07-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -640,7 +640,7 @@ lift(R) = \frac{conf(R)}{supp(Y)} = \frac{supp(X \cup Y)}{supp(X)supp(Y)}
 </div>
 <div id="association-rule-exploration" class="section level2" number="15.3">
 <h2><span class="header-section-number">15.3</span> 연관규칙의 탐사</h2>
-<p>연관규칙의 탐사는 결국 신뢰도 또는 개선도가 높은 규칙 <span class="math inline">\(R\)</span>을 트랜잭션 데이터로부터 도출하는 과정이다. 알고리즘으로 가장 널리 사용되는 것이 Apriori 알고리즘<span class="citation">(<a href="#ref-agrawal1994fast" role="doc-biblioref">Agrawal, Srikant, and others 1994</a>)</span>이다.</p>
+<p>연관규칙의 탐사는 결국 신뢰도 또는 개선도가 높은 규칙 <span class="math inline">\(R\)</span>을 트랜잭션 데이터로부터 도출하는 과정이다. 알고리즘으로 가장 널리 사용되는 것이 Apriori 알고리즘<span class="citation">(<a href="#ref-agrawal1994fast" role="doc-biblioref">Agrawal, Srikant, et al. 1994</a>)</span>이다.</p>
 <div id="apriori-large-itemsets" class="section level3" number="15.3.1">
 <h3><span class="header-section-number">15.3.1</span> 빈발항목집합 생성</h3>
 <p>빈발항목집합(large itemsets)이란 미리 결정한 최소 지지도 <span class="math inline">\(s_{\text{min}}\)</span> 이상의 지지도를 같는 모든 항목집합들을 뜻한다.</p>
@@ -699,11 +699,12 @@ lift(R) = \frac{conf(R)}{supp(Y)} = \frac{supp(X \cup Y)}{supp(X)supp(Y)}
 ## [1] &quot;{a}&quot; &quot;{b}&quot; &quot;{c}&quot; &quot;{e}&quot; &quot;{f}&quot; &quot;{g}&quot;
 ## 
 ## [[2]]
-## [1] &quot;{a, b}&quot; &quot;{b, c}&quot; &quot;{b, e}&quot; &quot;{b, f}&quot; &quot;{b, g}&quot; &quot;{c, e}&quot; &quot;{c, f}&quot; &quot;{c, g}&quot;
-## [9] &quot;{e, f}&quot;
+## [1] &quot;{a, b}&quot; &quot;{b, c}&quot; &quot;{b, e}&quot; &quot;{b, f}&quot; &quot;{b, g}&quot; &quot;{c, e}&quot;
+## [7] &quot;{c, f}&quot; &quot;{c, g}&quot; &quot;{e, f}&quot;
 ## 
 ## [[3]]
-## [1] &quot;{b, c, e}&quot; &quot;{b, c, f}&quot; &quot;{b, c, g}&quot; &quot;{b, e, f}&quot; &quot;{c, e, f}&quot;
+## [1] &quot;{b, c, e}&quot; &quot;{b, c, f}&quot; &quot;{b, c, g}&quot; &quot;{b, e, f}&quot;
+## [5] &quot;{c, e, f}&quot;
 ## 
 ## [[4]]
 ## [1] &quot;{b, c, e, f}&quot;</code></pre>
@@ -927,51 +928,59 @@ R: X \Rightarrow L \backslash X
 <h3><span class="header-section-number">15.3.3</span> R 패키지 내 Apriori</h3>
 <p>R 패키지 <code>arules</code>의 <code>apriori</code> 함수를 이용하여 위에서 살펴본 연관규칙 탐사를 수행할 수 있다.</p>
 <p>우선, <a href="association-rule.html#association-rule-support">15.2.1</a> 절에서 생성한 데이터 프레임 <code>transaction_df</code>를 <code>arules</code> 패키지 내에 정의된 <code>transactions</code> 클래스 형태의 데이터로 변환한다.</p>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="association-rule.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="fu">requireNamespace</span>(<span class="st">&quot;arules&quot;</span>)</span></code></pre></div>
-<pre><code>## Loading required namespace: arules</code></pre>
-<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="association-rule.html#cb630-1" aria-hidden="true" tabindex="-1"></a>transaction_df2 <span class="ot">&lt;-</span> <span class="fu">as</span>(</span>
-<span id="cb630-2"><a href="association-rule.html#cb630-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(transaction_df<span class="sc">$</span>item, transaction_df<span class="sc">$</span>transaction_id),</span>
-<span id="cb630-3"><a href="association-rule.html#cb630-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;transactions&quot;</span></span>
-<span id="cb630-4"><a href="association-rule.html#cb630-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="association-rule.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="fu">requireNamespace</span>(<span class="st">&quot;arules&quot;</span>)</span>
+<span id="cb628-2"><a href="association-rule.html#cb628-2" aria-hidden="true" tabindex="-1"></a>transaction_df2 <span class="ot">&lt;-</span> <span class="fu">as</span>(</span>
+<span id="cb628-3"><a href="association-rule.html#cb628-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(transaction_df<span class="sc">$</span>item, transaction_df<span class="sc">$</span>transaction_id),</span>
+<span id="cb628-4"><a href="association-rule.html#cb628-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;transactions&quot;</span></span>
+<span id="cb628-5"><a href="association-rule.html#cb628-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>이후, <code>apriori</code> 함수를 호출하여 연관규칙 탐사를 수행한다.</p>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="association-rule.html#cb631-1" aria-hidden="true" tabindex="-1"></a>rule_results <span class="ot">&lt;-</span> arules<span class="sc">::</span><span class="fu">apriori</span>(</span>
-<span id="cb631-2"><a href="association-rule.html#cb631-2" aria-hidden="true" tabindex="-1"></a>  transaction_df2,</span>
-<span id="cb631-3"><a href="association-rule.html#cb631-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameter =</span> <span class="fu">list</span>(</span>
-<span id="cb631-4"><a href="association-rule.html#cb631-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">support =</span> <span class="fl">0.4</span>,</span>
-<span id="cb631-5"><a href="association-rule.html#cb631-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">confidence =</span> <span class="fl">0.7</span>,</span>
-<span id="cb631-6"><a href="association-rule.html#cb631-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="st">&quot;rules&quot;</span></span>
-<span id="cb631-7"><a href="association-rule.html#cb631-7" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb631-8"><a href="association-rule.html#cb631-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">list</span>(</span>
-<span id="cb631-9"><a href="association-rule.html#cb631-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
-<span id="cb631-10"><a href="association-rule.html#cb631-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb631-11"><a href="association-rule.html#cb631-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="association-rule.html#cb629-1" aria-hidden="true" tabindex="-1"></a>rule_results <span class="ot">&lt;-</span> arules<span class="sc">::</span><span class="fu">apriori</span>(</span>
+<span id="cb629-2"><a href="association-rule.html#cb629-2" aria-hidden="true" tabindex="-1"></a>  transaction_df2,</span>
+<span id="cb629-3"><a href="association-rule.html#cb629-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameter =</span> <span class="fu">list</span>(</span>
+<span id="cb629-4"><a href="association-rule.html#cb629-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">support =</span> <span class="fl">0.4</span>,</span>
+<span id="cb629-5"><a href="association-rule.html#cb629-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">confidence =</span> <span class="fl">0.7</span>,</span>
+<span id="cb629-6"><a href="association-rule.html#cb629-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="st">&quot;rules&quot;</span></span>
+<span id="cb629-7"><a href="association-rule.html#cb629-7" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb629-8"><a href="association-rule.html#cb629-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">list</span>(</span>
+<span id="cb629-9"><a href="association-rule.html#cb629-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
+<span id="cb629-10"><a href="association-rule.html#cb629-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb629-11"><a href="association-rule.html#cb629-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>결과로 얻어지는 <code>rules</code> 클래스 객체에서 필요한 정보를 추출하여 데이터 프레임으로 저장하자.</p>
 <ul>
 <li><code>lhs</code>: 조건부</li>
 <li><code>rhs</code>: 결과부</li>
 <li><code>quality</code>: 평가척도 (지지도, 신뢰도, 개선도, 관측수)</li>
 </ul>
-<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="association-rule.html#cb632-1" aria-hidden="true" tabindex="-1"></a>rule_results_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb632-2"><a href="association-rule.html#cb632-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> <span class="fu">as</span>(rule_results<span class="sc">@</span>lhs, <span class="st">&quot;list&quot;</span>),</span>
-<span id="cb632-3"><a href="association-rule.html#cb632-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> <span class="fu">as</span>(rule_results<span class="sc">@</span>rhs, <span class="st">&quot;list&quot;</span>)</span>
-<span id="cb632-4"><a href="association-rule.html#cb632-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb632-5"><a href="association-rule.html#cb632-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(rule_results<span class="sc">@</span>quality)</span></code></pre></div>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="association-rule.html#cb630-1" aria-hidden="true" tabindex="-1"></a>rule_results_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb630-2"><a href="association-rule.html#cb630-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> <span class="fu">as</span>(rule_results<span class="sc">@</span>lhs, <span class="st">&quot;list&quot;</span>),</span>
+<span id="cb630-3"><a href="association-rule.html#cb630-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> <span class="fu">as</span>(rule_results<span class="sc">@</span>rhs, <span class="st">&quot;list&quot;</span>)</span>
+<span id="cb630-4"><a href="association-rule.html#cb630-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb630-5"><a href="association-rule.html#cb630-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(rule_results<span class="sc">@</span>quality)</span></code></pre></div>
 <p>해당 데이터 프레임은 아래와 같다.</p>
-<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="association-rule.html#cb633-1" aria-hidden="true" tabindex="-1"></a>rule_results_df <span class="sc">%&gt;%</span></span>
-<span id="cb633-2"><a href="association-rule.html#cb633-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb633-3"><a href="association-rule.html#cb633-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb633-4"><a href="association-rule.html#cb633-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> <span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">str_c</span>(<span class="fu">unlist</span>(X), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>),</span>
-<span id="cb633-5"><a href="association-rule.html#cb633-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Y =</span> <span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">str_c</span>(<span class="fu">unlist</span>(Y), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>)</span>
-<span id="cb633-6"><a href="association-rule.html#cb633-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb633-7"><a href="association-rule.html#cb633-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb633-8"><a href="association-rule.html#cb633-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb633-9"><a href="association-rule.html#cb633-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>),</span>
-<span id="cb633-10"><a href="association-rule.html#cb633-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;조건부 $X$&#39;</span>, <span class="st">&#39;결과부 $Y$&#39;</span>, <span class="st">&#39;지지도&#39;</span>,</span>
-<span id="cb633-11"><a href="association-rule.html#cb633-11" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;신뢰도&#39;</span>, <span class="st">&#39;포함률&#39;</span>, <span class="st">&#39;개선도&#39;</span>, <span class="st">&#39;관측수&#39;</span>),</span>
-<span id="cb633-12"><a href="association-rule.html#cb633-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;최종 연관규칙 - arules::apriori&#39;</span></span>
-<span id="cb633-13"><a href="association-rule.html#cb633-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="association-rule.html#cb631-1" aria-hidden="true" tabindex="-1"></a>rule_results_df <span class="sc">%&gt;%</span></span>
+<span id="cb631-2"><a href="association-rule.html#cb631-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb631-3"><a href="association-rule.html#cb631-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb631-4"><a href="association-rule.html#cb631-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> <span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">str_c</span>(<span class="fu">unlist</span>(X), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>),</span>
+<span id="cb631-5"><a href="association-rule.html#cb631-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Y =</span> <span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">str_c</span>(<span class="fu">unlist</span>(Y), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>)</span>
+<span id="cb631-6"><a href="association-rule.html#cb631-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb631-7"><a href="association-rule.html#cb631-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb631-8"><a href="association-rule.html#cb631-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb631-9"><a href="association-rule.html#cb631-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;c&#39;</span>),</span>
+<span id="cb631-10"><a href="association-rule.html#cb631-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;조건부 $X$&#39;</span>, <span class="st">&#39;결과부 $Y$&#39;</span>, <span class="st">&#39;지지도&#39;</span>,</span>
+<span id="cb631-11"><a href="association-rule.html#cb631-11" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;신뢰도&#39;</span>, <span class="st">&#39;포함률&#39;</span>, <span class="st">&#39;개선도&#39;</span>, <span class="st">&#39;관측수&#39;</span>),</span>
+<span id="cb631-12"><a href="association-rule.html#cb631-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;최종 연관규칙 - arules::apriori&#39;</span></span>
+<span id="cb631-13"><a href="association-rule.html#cb631-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:apriori-r-results">Table 15.3: </span>최종 연관규칙 - arules::apriori</caption>
+<colgroup>
+<col width="18%" />
+<col width="18%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="15%" />
+<col width="12%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="center">조건부 <span class="math inline">\(X\)</span></th>
@@ -1243,36 +1252,36 @@ supp(s) = \frac{1}{N} \sum_{i = 1}^{N} I(s \prec s_i)
 <h3><span class="header-section-number">15.4.1</span> AprioriAll 알고리즘</h3>
 <p>AprioriAll 알고리즘은 빈발 시퀀스를 탐색하나, 탐색된 시퀀스가 최대 빈발 시퀀스임을 보장하지는 못한다. 따라서, 후에 최대화 단계를 요한다.</p>
 <p>아래와 같은 고객 시퀀스가 존재한다고 하자.</p>
-<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="association-rule.html#cb634-1" aria-hidden="true" tabindex="-1"></a>sequential_transaction_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb634-2"><a href="association-rule.html#cb634-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>customer_id, <span class="sc">~</span>transaction_seq, <span class="sc">~</span>item,</span>
-<span id="cb634-3"><a href="association-rule.html#cb634-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">1</span>, <span class="st">&quot;a&quot;</span>,</span>
-<span id="cb634-4"><a href="association-rule.html#cb634-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">2</span>, <span class="st">&quot;b&quot;</span>,</span>
-<span id="cb634-5"><a href="association-rule.html#cb634-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">1</span>, <span class="st">&quot;c&quot;</span>,</span>
-<span id="cb634-6"><a href="association-rule.html#cb634-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">1</span>, <span class="st">&quot;d&quot;</span>,</span>
-<span id="cb634-7"><a href="association-rule.html#cb634-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">2</span>, <span class="st">&quot;a&quot;</span>,</span>
-<span id="cb634-8"><a href="association-rule.html#cb634-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&quot;e&quot;</span>,</span>
-<span id="cb634-9"><a href="association-rule.html#cb634-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&quot;f&quot;</span>,</span>
-<span id="cb634-10"><a href="association-rule.html#cb634-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&quot;g&quot;</span>,</span>
-<span id="cb634-11"><a href="association-rule.html#cb634-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">1</span>, <span class="st">&quot;a&quot;</span>,</span>
-<span id="cb634-12"><a href="association-rule.html#cb634-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">1</span>, <span class="st">&quot;h&quot;</span>,</span>
-<span id="cb634-13"><a href="association-rule.html#cb634-13" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">1</span>, <span class="st">&quot;g&quot;</span>,</span>
-<span id="cb634-14"><a href="association-rule.html#cb634-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">1</span>, <span class="st">&quot;a&quot;</span>,</span>
-<span id="cb634-15"><a href="association-rule.html#cb634-15" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">2</span>, <span class="st">&quot;e&quot;</span>,</span>
-<span id="cb634-16"><a href="association-rule.html#cb634-16" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">2</span>, <span class="st">&quot;g&quot;</span>,</span>
-<span id="cb634-17"><a href="association-rule.html#cb634-17" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">3</span>, <span class="st">&quot;b&quot;</span>,</span>
-<span id="cb634-18"><a href="association-rule.html#cb634-18" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="dv">1</span>, <span class="st">&quot;b&quot;</span></span>
-<span id="cb634-19"><a href="association-rule.html#cb634-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb634-20"><a href="association-rule.html#cb634-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb634-21"><a href="association-rule.html#cb634-21" aria-hidden="true" tabindex="-1"></a>sequential_transaction_df <span class="sc">%&gt;%</span></span>
-<span id="cb634-22"><a href="association-rule.html#cb634-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(customer_id, transaction_seq) <span class="sc">%&gt;%</span></span>
-<span id="cb634-23"><a href="association-rule.html#cb634-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">itemset =</span> <span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">str_c</span>(item, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb634-24"><a href="association-rule.html#cb634-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sequence =</span> <span class="fu">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="fu">str_c</span>(itemset, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;&gt;&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb634-25"><a href="association-rule.html#cb634-25" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb634-26"><a href="association-rule.html#cb634-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb634-27"><a href="association-rule.html#cb634-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>),</span>
-<span id="cb634-28"><a href="association-rule.html#cb634-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;고객ID ($i$)&quot;</span>, <span class="st">&quot;고객 시퀀스 ($s_i$)&quot;</span>),</span>
-<span id="cb634-29"><a href="association-rule.html#cb634-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;고객별 시퀀스&quot;</span></span>
-<span id="cb634-30"><a href="association-rule.html#cb634-30" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="association-rule.html#cb632-1" aria-hidden="true" tabindex="-1"></a>sequential_transaction_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb632-2"><a href="association-rule.html#cb632-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>customer_id, <span class="sc">~</span>transaction_seq, <span class="sc">~</span>item,</span>
+<span id="cb632-3"><a href="association-rule.html#cb632-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">1</span>, <span class="st">&quot;a&quot;</span>,</span>
+<span id="cb632-4"><a href="association-rule.html#cb632-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">2</span>, <span class="st">&quot;b&quot;</span>,</span>
+<span id="cb632-5"><a href="association-rule.html#cb632-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">1</span>, <span class="st">&quot;c&quot;</span>,</span>
+<span id="cb632-6"><a href="association-rule.html#cb632-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">1</span>, <span class="st">&quot;d&quot;</span>,</span>
+<span id="cb632-7"><a href="association-rule.html#cb632-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">2</span>, <span class="st">&quot;a&quot;</span>,</span>
+<span id="cb632-8"><a href="association-rule.html#cb632-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&quot;e&quot;</span>,</span>
+<span id="cb632-9"><a href="association-rule.html#cb632-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&quot;f&quot;</span>,</span>
+<span id="cb632-10"><a href="association-rule.html#cb632-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&quot;g&quot;</span>,</span>
+<span id="cb632-11"><a href="association-rule.html#cb632-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">1</span>, <span class="st">&quot;a&quot;</span>,</span>
+<span id="cb632-12"><a href="association-rule.html#cb632-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">1</span>, <span class="st">&quot;h&quot;</span>,</span>
+<span id="cb632-13"><a href="association-rule.html#cb632-13" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="dv">1</span>, <span class="st">&quot;g&quot;</span>,</span>
+<span id="cb632-14"><a href="association-rule.html#cb632-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">1</span>, <span class="st">&quot;a&quot;</span>,</span>
+<span id="cb632-15"><a href="association-rule.html#cb632-15" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">2</span>, <span class="st">&quot;e&quot;</span>,</span>
+<span id="cb632-16"><a href="association-rule.html#cb632-16" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">2</span>, <span class="st">&quot;g&quot;</span>,</span>
+<span id="cb632-17"><a href="association-rule.html#cb632-17" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">3</span>, <span class="st">&quot;b&quot;</span>,</span>
+<span id="cb632-18"><a href="association-rule.html#cb632-18" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="dv">1</span>, <span class="st">&quot;b&quot;</span></span>
+<span id="cb632-19"><a href="association-rule.html#cb632-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb632-20"><a href="association-rule.html#cb632-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb632-21"><a href="association-rule.html#cb632-21" aria-hidden="true" tabindex="-1"></a>sequential_transaction_df <span class="sc">%&gt;%</span></span>
+<span id="cb632-22"><a href="association-rule.html#cb632-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(customer_id, transaction_seq) <span class="sc">%&gt;%</span></span>
+<span id="cb632-23"><a href="association-rule.html#cb632-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">itemset =</span> <span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">str_c</span>(item, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb632-24"><a href="association-rule.html#cb632-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sequence =</span> <span class="fu">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="fu">str_c</span>(itemset, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;&gt;&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb632-25"><a href="association-rule.html#cb632-25" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb632-26"><a href="association-rule.html#cb632-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb632-27"><a href="association-rule.html#cb632-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>),</span>
+<span id="cb632-28"><a href="association-rule.html#cb632-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;고객ID ($i$)&quot;</span>, <span class="st">&quot;고객 시퀀스 ($s_i$)&quot;</span>),</span>
+<span id="cb632-29"><a href="association-rule.html#cb632-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;고객별 시퀀스&quot;</span></span>
+<span id="cb632-30"><a href="association-rule.html#cb632-30" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;customer_id&#39;. You can override using the `.groups` argument.</code></pre>
 <table>
 <caption><span id="tab:sequential-transaction-data">Table 15.4: </span>고객별 시퀀스</caption>
@@ -1307,58 +1316,58 @@ supp(s) = \frac{1}{N} \sum_{i = 1}^{N} I(s \prec s_i)
 </table>
 <p>고객 시퀀스의 항목집합 또는 이의 부분집합 중 최소 지지도 이상인 것들을 빈발항목 집합으로 도출한다.</p>
 <p>우선 시퀀스가 특정 패턴을 포함하는지 여부를 판단하는 사용자 정의 함수 <code>is_contained</code>와 고객 시퀀스 집합의 특정 패턴에 대한 지지도를 산출하는 사용자 정의 함수 <code>support_sequence</code>를 아래와 같이 구현해보자.</p>
-<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="association-rule.html#cb636-1" aria-hidden="true" tabindex="-1"></a>is_contained <span class="ot">&lt;-</span> <span class="cf">function</span>(x, pattern) {</span>
-<span id="cb636-2"><a href="association-rule.html#cb636-2" aria-hidden="true" tabindex="-1"></a>  n_x <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
-<span id="cb636-3"><a href="association-rule.html#cb636-3" aria-hidden="true" tabindex="-1"></a>  n_pattern <span class="ot">&lt;-</span> <span class="fu">length</span>(pattern)</span>
-<span id="cb636-4"><a href="association-rule.html#cb636-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (n_pattern <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">return</span> (<span class="cn">TRUE</span>)</span>
-<span id="cb636-5"><a href="association-rule.html#cb636-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb636-6"><a href="association-rule.html#cb636-6" aria-hidden="true" tabindex="-1"></a>  rtn <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
-<span id="cb636-7"><a href="association-rule.html#cb636-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb636-8"><a href="association-rule.html#cb636-8" aria-hidden="true" tabindex="-1"></a>  location <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA_integer_</span>, n_pattern)</span>
-<span id="cb636-9"><a href="association-rule.html#cb636-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb636-10"><a href="association-rule.html#cb636-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (n_x <span class="sc">&gt;=</span> n_pattern) {</span>
-<span id="cb636-11"><a href="association-rule.html#cb636-11" aria-hidden="true" tabindex="-1"></a>    j <span class="ot">&lt;-</span> 1L</span>
-<span id="cb636-12"><a href="association-rule.html#cb636-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(n_x)) {</span>
-<span id="cb636-13"><a href="association-rule.html#cb636-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">is_empty</span>(<span class="fu">setdiff</span>(pattern[[j]], x[[i]]))) {</span>
-<span id="cb636-14"><a href="association-rule.html#cb636-14" aria-hidden="true" tabindex="-1"></a>        location[j] <span class="ot">&lt;-</span> i</span>
-<span id="cb636-15"><a href="association-rule.html#cb636-15" aria-hidden="true" tabindex="-1"></a>        j <span class="ot">&lt;-</span> j <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb636-16"><a href="association-rule.html#cb636-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (j <span class="sc">&gt;</span> n_pattern) {</span>
-<span id="cb636-17"><a href="association-rule.html#cb636-17" aria-hidden="true" tabindex="-1"></a>          rtn <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb636-18"><a href="association-rule.html#cb636-18" aria-hidden="true" tabindex="-1"></a>          <span class="cf">break</span></span>
-<span id="cb636-19"><a href="association-rule.html#cb636-19" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb636-20"><a href="association-rule.html#cb636-20" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb636-21"><a href="association-rule.html#cb636-21" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb636-22"><a href="association-rule.html#cb636-22" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb636-23"><a href="association-rule.html#cb636-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb636-24"><a href="association-rule.html#cb636-24" aria-hidden="true" tabindex="-1"></a>  rtn</span>
-<span id="cb636-25"><a href="association-rule.html#cb636-25" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb636-26"><a href="association-rule.html#cb636-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb636-27"><a href="association-rule.html#cb636-27" aria-hidden="true" tabindex="-1"></a>support_sequence <span class="ot">&lt;-</span> <span class="cf">function</span>(sequence_list, pattern) {</span>
-<span id="cb636-28"><a href="association-rule.html#cb636-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_lgl</span>(sequence_list, is_contained, <span class="at">pattern =</span> pattern) <span class="sc">%&gt;%</span> <span class="fu">mean</span>()</span>
-<span id="cb636-29"><a href="association-rule.html#cb636-29" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="association-rule.html#cb634-1" aria-hidden="true" tabindex="-1"></a>is_contained <span class="ot">&lt;-</span> <span class="cf">function</span>(x, pattern) {</span>
+<span id="cb634-2"><a href="association-rule.html#cb634-2" aria-hidden="true" tabindex="-1"></a>  n_x <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb634-3"><a href="association-rule.html#cb634-3" aria-hidden="true" tabindex="-1"></a>  n_pattern <span class="ot">&lt;-</span> <span class="fu">length</span>(pattern)</span>
+<span id="cb634-4"><a href="association-rule.html#cb634-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (n_pattern <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">return</span> (<span class="cn">TRUE</span>)</span>
+<span id="cb634-5"><a href="association-rule.html#cb634-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb634-6"><a href="association-rule.html#cb634-6" aria-hidden="true" tabindex="-1"></a>  rtn <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb634-7"><a href="association-rule.html#cb634-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb634-8"><a href="association-rule.html#cb634-8" aria-hidden="true" tabindex="-1"></a>  location <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA_integer_</span>, n_pattern)</span>
+<span id="cb634-9"><a href="association-rule.html#cb634-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb634-10"><a href="association-rule.html#cb634-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (n_x <span class="sc">&gt;=</span> n_pattern) {</span>
+<span id="cb634-11"><a href="association-rule.html#cb634-11" aria-hidden="true" tabindex="-1"></a>    j <span class="ot">&lt;-</span> 1L</span>
+<span id="cb634-12"><a href="association-rule.html#cb634-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(n_x)) {</span>
+<span id="cb634-13"><a href="association-rule.html#cb634-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">is_empty</span>(<span class="fu">setdiff</span>(pattern[[j]], x[[i]]))) {</span>
+<span id="cb634-14"><a href="association-rule.html#cb634-14" aria-hidden="true" tabindex="-1"></a>        location[j] <span class="ot">&lt;-</span> i</span>
+<span id="cb634-15"><a href="association-rule.html#cb634-15" aria-hidden="true" tabindex="-1"></a>        j <span class="ot">&lt;-</span> j <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb634-16"><a href="association-rule.html#cb634-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (j <span class="sc">&gt;</span> n_pattern) {</span>
+<span id="cb634-17"><a href="association-rule.html#cb634-17" aria-hidden="true" tabindex="-1"></a>          rtn <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb634-18"><a href="association-rule.html#cb634-18" aria-hidden="true" tabindex="-1"></a>          <span class="cf">break</span></span>
+<span id="cb634-19"><a href="association-rule.html#cb634-19" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb634-20"><a href="association-rule.html#cb634-20" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb634-21"><a href="association-rule.html#cb634-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb634-22"><a href="association-rule.html#cb634-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb634-23"><a href="association-rule.html#cb634-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb634-24"><a href="association-rule.html#cb634-24" aria-hidden="true" tabindex="-1"></a>  rtn</span>
+<span id="cb634-25"><a href="association-rule.html#cb634-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb634-26"><a href="association-rule.html#cb634-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb634-27"><a href="association-rule.html#cb634-27" aria-hidden="true" tabindex="-1"></a>support_sequence <span class="ot">&lt;-</span> <span class="cf">function</span>(sequence_list, pattern) {</span>
+<span id="cb634-28"><a href="association-rule.html#cb634-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_lgl</span>(sequence_list, is_contained, <span class="at">pattern =</span> pattern) <span class="sc">%&gt;%</span> <span class="fu">mean</span>()</span>
+<span id="cb634-29"><a href="association-rule.html#cb634-29" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>앞 <a href="association-rule.html#apriori-large-itemsets">15.3.1</a>절에서와 같이 사용자 정의 함수 <code>apriori_gen</code>을 이용하여 빈발항목집합(시퀀스 지지도 기준)을 아래와 같이 얻는다.</p>
-<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="association-rule.html#cb637-1" aria-hidden="true" tabindex="-1"></a>s_min <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
-<span id="cb637-2"><a href="association-rule.html#cb637-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb637-3"><a href="association-rule.html#cb637-3" aria-hidden="true" tabindex="-1"></a>customer_sequence <span class="ot">&lt;-</span> sequential_transaction_df <span class="sc">%&gt;%</span></span>
-<span id="cb637-4"><a href="association-rule.html#cb637-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(customer_id, transaction_seq) <span class="sc">%&gt;%</span></span>
-<span id="cb637-5"><a href="association-rule.html#cb637-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">itemset =</span> <span class="fu">list</span>(item)) <span class="sc">%&gt;%</span></span>
-<span id="cb637-6"><a href="association-rule.html#cb637-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sequence =</span> <span class="fu">list</span>(itemset))</span></code></pre></div>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="association-rule.html#cb635-1" aria-hidden="true" tabindex="-1"></a>s_min <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb635-2"><a href="association-rule.html#cb635-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb635-3"><a href="association-rule.html#cb635-3" aria-hidden="true" tabindex="-1"></a>customer_sequence <span class="ot">&lt;-</span> sequential_transaction_df <span class="sc">%&gt;%</span></span>
+<span id="cb635-4"><a href="association-rule.html#cb635-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(customer_id, transaction_seq) <span class="sc">%&gt;%</span></span>
+<span id="cb635-5"><a href="association-rule.html#cb635-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">itemset =</span> <span class="fu">list</span>(item)) <span class="sc">%&gt;%</span></span>
+<span id="cb635-6"><a href="association-rule.html#cb635-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sequence =</span> <span class="fu">list</span>(itemset))</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;customer_id&#39;. You can override using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="association-rule.html#cb639-1" aria-hidden="true" tabindex="-1"></a>candidate_itemsets <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">sort</span>(<span class="fu">unique</span>(sequential_transaction_df<span class="sc">$</span>item)), <span class="sc">~</span><span class="fu">list</span>(.x))</span>
-<span id="cb639-2"><a href="association-rule.html#cb639-2" aria-hidden="true" tabindex="-1"></a>large_itemsets <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="at">length =</span> <span class="fu">length</span>(candidate_itemsets))</span>
-<span id="cb639-3"><a href="association-rule.html#cb639-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb639-4"><a href="association-rule.html#cb639-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(large_itemsets)) {</span>
-<span id="cb639-5"><a href="association-rule.html#cb639-5" aria-hidden="true" tabindex="-1"></a>  large_itemsets[[i]] <span class="ot">&lt;-</span> candidate_itemsets[</span>
-<span id="cb639-6"><a href="association-rule.html#cb639-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map_dbl</span>(candidate_itemsets,</span>
-<span id="cb639-7"><a href="association-rule.html#cb639-7" aria-hidden="true" tabindex="-1"></a>            <span class="sc">~</span><span class="fu">support_sequence</span>(customer_sequence<span class="sc">$</span>sequence, <span class="at">pattern =</span> .x)) <span class="sc">&gt;=</span> s_min</span>
-<span id="cb639-8"><a href="association-rule.html#cb639-8" aria-hidden="true" tabindex="-1"></a>    ] <span class="sc">%&gt;%</span> <span class="fu">flatten</span>()</span>
-<span id="cb639-9"><a href="association-rule.html#cb639-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb639-10"><a href="association-rule.html#cb639-10" aria-hidden="true" tabindex="-1"></a>  candidate_itemsets <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">apriori_gen</span>(large_itemsets[[i]]), <span class="sc">~</span><span class="fu">list</span>(.x))</span>
-<span id="cb639-11"><a href="association-rule.html#cb639-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb639-12"><a href="association-rule.html#cb639-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb639-13"><a href="association-rule.html#cb639-13" aria-hidden="true" tabindex="-1"></a>large_itemsets <span class="ot">&lt;-</span> large_itemsets <span class="sc">%&gt;%</span> <span class="fu">flatten</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="association-rule.html#cb637-1" aria-hidden="true" tabindex="-1"></a>candidate_itemsets <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">sort</span>(<span class="fu">unique</span>(sequential_transaction_df<span class="sc">$</span>item)), <span class="sc">~</span><span class="fu">list</span>(.x))</span>
+<span id="cb637-2"><a href="association-rule.html#cb637-2" aria-hidden="true" tabindex="-1"></a>large_itemsets <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="at">length =</span> <span class="fu">length</span>(candidate_itemsets))</span>
+<span id="cb637-3"><a href="association-rule.html#cb637-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb637-4"><a href="association-rule.html#cb637-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(large_itemsets)) {</span>
+<span id="cb637-5"><a href="association-rule.html#cb637-5" aria-hidden="true" tabindex="-1"></a>  large_itemsets[[i]] <span class="ot">&lt;-</span> candidate_itemsets[</span>
+<span id="cb637-6"><a href="association-rule.html#cb637-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map_dbl</span>(candidate_itemsets,</span>
+<span id="cb637-7"><a href="association-rule.html#cb637-7" aria-hidden="true" tabindex="-1"></a>            <span class="sc">~</span><span class="fu">support_sequence</span>(customer_sequence<span class="sc">$</span>sequence, <span class="at">pattern =</span> .x)) <span class="sc">&gt;=</span> s_min</span>
+<span id="cb637-8"><a href="association-rule.html#cb637-8" aria-hidden="true" tabindex="-1"></a>    ] <span class="sc">%&gt;%</span> <span class="fu">flatten</span>()</span>
+<span id="cb637-9"><a href="association-rule.html#cb637-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb637-10"><a href="association-rule.html#cb637-10" aria-hidden="true" tabindex="-1"></a>  candidate_itemsets <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">apriori_gen</span>(large_itemsets[[i]]), <span class="sc">~</span><span class="fu">list</span>(.x))</span>
+<span id="cb637-11"><a href="association-rule.html#cb637-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb637-12"><a href="association-rule.html#cb637-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb637-13"><a href="association-rule.html#cb637-13" aria-hidden="true" tabindex="-1"></a>large_itemsets <span class="ot">&lt;-</span> large_itemsets <span class="sc">%&gt;%</span> <span class="fu">flatten</span>()</span></code></pre></div>
 <p>위 결과, 아래와 같은 빈발항목집합이 얻어진다.</p>
-<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="association-rule.html#cb640-1" aria-hidden="true" tabindex="-1"></a>large_itemsets</span></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="association-rule.html#cb638-1" aria-hidden="true" tabindex="-1"></a>large_itemsets</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] &quot;a&quot;
 ## 
@@ -1374,20 +1383,20 @@ supp(s) = \frac{1}{N} \sum_{i = 1}^{N} I(s \prec s_i)
 ## [[5]]
 ## [1] &quot;e&quot; &quot;g&quot;</code></pre>
 <p>위 빈발항목집합에 일련번호를 부여한 뒤, 고객 시퀀스를 해당 일련번호를 이용한 시퀀스로 변환한다. 우선 아래와 같이 일련번호를 부여해보자.</p>
-<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="association-rule.html#cb642-1" aria-hidden="true" tabindex="-1"></a>large_itemset_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb642-2"><a href="association-rule.html#cb642-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">itemset =</span> large_itemsets,</span>
-<span id="cb642-3"><a href="association-rule.html#cb642-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapped_to =</span> <span class="fu">seq_along</span>(large_itemsets)</span>
-<span id="cb642-4"><a href="association-rule.html#cb642-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb642-5"><a href="association-rule.html#cb642-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb642-6"><a href="association-rule.html#cb642-6" aria-hidden="true" tabindex="-1"></a>large_itemset_df <span class="sc">%&gt;%</span></span>
-<span id="cb642-7"><a href="association-rule.html#cb642-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb642-8"><a href="association-rule.html#cb642-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">itemset =</span> <span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">str_c</span>(itemset, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb642-9"><a href="association-rule.html#cb642-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb642-10"><a href="association-rule.html#cb642-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb642-11"><a href="association-rule.html#cb642-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>),</span>
-<span id="cb642-12"><a href="association-rule.html#cb642-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;빈발항목집합&quot;</span>, <span class="st">&quot;일련번호&quot;</span>),</span>
-<span id="cb642-13"><a href="association-rule.html#cb642-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;고객 시퀀스 빈발항목집합&quot;</span></span>
-<span id="cb642-14"><a href="association-rule.html#cb642-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="association-rule.html#cb640-1" aria-hidden="true" tabindex="-1"></a>large_itemset_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb640-2"><a href="association-rule.html#cb640-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">itemset =</span> large_itemsets,</span>
+<span id="cb640-3"><a href="association-rule.html#cb640-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapped_to =</span> <span class="fu">seq_along</span>(large_itemsets)</span>
+<span id="cb640-4"><a href="association-rule.html#cb640-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb640-5"><a href="association-rule.html#cb640-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb640-6"><a href="association-rule.html#cb640-6" aria-hidden="true" tabindex="-1"></a>large_itemset_df <span class="sc">%&gt;%</span></span>
+<span id="cb640-7"><a href="association-rule.html#cb640-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb640-8"><a href="association-rule.html#cb640-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">itemset =</span> <span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">str_c</span>(itemset, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb640-9"><a href="association-rule.html#cb640-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb640-10"><a href="association-rule.html#cb640-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb640-11"><a href="association-rule.html#cb640-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>),</span>
+<span id="cb640-12"><a href="association-rule.html#cb640-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;빈발항목집합&quot;</span>, <span class="st">&quot;일련번호&quot;</span>),</span>
+<span id="cb640-13"><a href="association-rule.html#cb640-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;고객 시퀀스 빈발항목집합&quot;</span></span>
+<span id="cb640-14"><a href="association-rule.html#cb640-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:association-sequence-large-itemsets">Table 15.5: </span>고객 시퀀스 빈발항목집합</caption>
 <thead>
@@ -1420,33 +1429,33 @@ supp(s) = \frac{1}{N} \sum_{i = 1}^{N} I(s \prec s_i)
 </tbody>
 </table>
 <p>원 고객 시퀀스에 대해, 각 항목집합이 위 빈발항목집합을 포함하는 경우, 해당 일련번호가 항목으로 포함되는 형태로 변환 시퀀스를 생성한다.</p>
-<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="association-rule.html#cb643-1" aria-hidden="true" tabindex="-1"></a>customer_sequence<span class="sc">$</span>transformed_sequence <span class="ot">&lt;-</span> customer_sequence<span class="sc">$</span>sequence <span class="sc">%&gt;%</span></span>
-<span id="cb643-2"><a href="association-rule.html#cb643-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">map</span>(.x, <span class="cf">function</span>(x) {</span>
-<span id="cb643-3"><a href="association-rule.html#cb643-3" aria-hidden="true" tabindex="-1"></a>    large_itemset_df<span class="sc">$</span>mapped_to[</span>
-<span id="cb643-4"><a href="association-rule.html#cb643-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">map_lgl</span>(large_itemset_df<span class="sc">$</span>itemset, <span class="sc">~</span><span class="fu">is_contained</span>(x, .x))</span>
-<span id="cb643-5"><a href="association-rule.html#cb643-5" aria-hidden="true" tabindex="-1"></a>      ]</span>
-<span id="cb643-6"><a href="association-rule.html#cb643-6" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span> <span class="fu">compact</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="association-rule.html#cb641-1" aria-hidden="true" tabindex="-1"></a>customer_sequence<span class="sc">$</span>transformed_sequence <span class="ot">&lt;-</span> customer_sequence<span class="sc">$</span>sequence <span class="sc">%&gt;%</span></span>
+<span id="cb641-2"><a href="association-rule.html#cb641-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">map</span>(.x, <span class="cf">function</span>(x) {</span>
+<span id="cb641-3"><a href="association-rule.html#cb641-3" aria-hidden="true" tabindex="-1"></a>    large_itemset_df<span class="sc">$</span>mapped_to[</span>
+<span id="cb641-4"><a href="association-rule.html#cb641-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">map_lgl</span>(large_itemset_df<span class="sc">$</span>itemset, <span class="sc">~</span><span class="fu">is_contained</span>(x, .x))</span>
+<span id="cb641-5"><a href="association-rule.html#cb641-5" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb641-6"><a href="association-rule.html#cb641-6" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span> <span class="fu">compact</span>())</span></code></pre></div>
 <p>원 고객 시퀀스와 변환 시퀀스는 아래와 같이 표현될 수 있다.</p>
-<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="association-rule.html#cb644-1" aria-hidden="true" tabindex="-1"></a>print_sequence <span class="ot">&lt;-</span> <span class="cf">function</span>(sequence) {</span>
-<span id="cb644-2"><a href="association-rule.html#cb644-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="fu">str_c</span>(</span>
-<span id="cb644-3"><a href="association-rule.html#cb644-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(sequence, <span class="cf">function</span>(x) </span>
-<span id="cb644-4"><a href="association-rule.html#cb644-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_c</span>(<span class="fu">map_chr</span>(x, <span class="sc">~</span><span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">str_c</span>(.x, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>)), </span>
-<span id="cb644-5"><a href="association-rule.html#cb644-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>)),</span>
-<span id="cb644-6"><a href="association-rule.html#cb644-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;&gt;&quot;</span>))</span>
-<span id="cb644-7"><a href="association-rule.html#cb644-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb644-8"><a href="association-rule.html#cb644-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb644-9"><a href="association-rule.html#cb644-9" aria-hidden="true" tabindex="-1"></a>customer_sequence <span class="sc">%&gt;%</span></span>
-<span id="cb644-10"><a href="association-rule.html#cb644-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(customer_id) <span class="sc">%&gt;%</span></span>
-<span id="cb644-11"><a href="association-rule.html#cb644-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb644-12"><a href="association-rule.html#cb644-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sequence =</span> <span class="fu">print_sequence</span>(sequence),</span>
-<span id="cb644-13"><a href="association-rule.html#cb644-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">transformed_sequence =</span> <span class="fu">print_sequence</span>(transformed_sequence)</span>
-<span id="cb644-14"><a href="association-rule.html#cb644-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb644-15"><a href="association-rule.html#cb644-15" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb644-16"><a href="association-rule.html#cb644-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb644-17"><a href="association-rule.html#cb644-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>),</span>
-<span id="cb644-18"><a href="association-rule.html#cb644-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;고객ID&quot;</span>, <span class="st">&quot;고객 시퀀스&quot;</span>, <span class="st">&quot;변환 시퀀스&quot;</span>),</span>
-<span id="cb644-19"><a href="association-rule.html#cb644-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;고객 시퀀스의 변환&quot;</span></span>
-<span id="cb644-20"><a href="association-rule.html#cb644-20" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="association-rule.html#cb642-1" aria-hidden="true" tabindex="-1"></a>print_sequence <span class="ot">&lt;-</span> <span class="cf">function</span>(sequence) {</span>
+<span id="cb642-2"><a href="association-rule.html#cb642-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="fu">str_c</span>(</span>
+<span id="cb642-3"><a href="association-rule.html#cb642-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(sequence, <span class="cf">function</span>(x) </span>
+<span id="cb642-4"><a href="association-rule.html#cb642-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_c</span>(<span class="fu">map_chr</span>(x, <span class="sc">~</span><span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">str_c</span>(.x, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;}&quot;</span>)), </span>
+<span id="cb642-5"><a href="association-rule.html#cb642-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>)),</span>
+<span id="cb642-6"><a href="association-rule.html#cb642-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;&gt;&quot;</span>))</span>
+<span id="cb642-7"><a href="association-rule.html#cb642-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb642-8"><a href="association-rule.html#cb642-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb642-9"><a href="association-rule.html#cb642-9" aria-hidden="true" tabindex="-1"></a>customer_sequence <span class="sc">%&gt;%</span></span>
+<span id="cb642-10"><a href="association-rule.html#cb642-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(customer_id) <span class="sc">%&gt;%</span></span>
+<span id="cb642-11"><a href="association-rule.html#cb642-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb642-12"><a href="association-rule.html#cb642-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sequence =</span> <span class="fu">print_sequence</span>(sequence),</span>
+<span id="cb642-13"><a href="association-rule.html#cb642-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">transformed_sequence =</span> <span class="fu">print_sequence</span>(transformed_sequence)</span>
+<span id="cb642-14"><a href="association-rule.html#cb642-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb642-15"><a href="association-rule.html#cb642-15" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb642-16"><a href="association-rule.html#cb642-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb642-17"><a href="association-rule.html#cb642-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>),</span>
+<span id="cb642-18"><a href="association-rule.html#cb642-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;고객ID&quot;</span>, <span class="st">&quot;고객 시퀀스&quot;</span>, <span class="st">&quot;변환 시퀀스&quot;</span>),</span>
+<span id="cb642-19"><a href="association-rule.html#cb642-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;고객 시퀀스의 변환&quot;</span></span>
+<span id="cb642-20"><a href="association-rule.html#cb642-20" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:association-transformed-sequence">Table 15.6: </span>고객 시퀀스의 변환</caption>
 <thead>
@@ -1486,99 +1495,100 @@ supp(s) = \frac{1}{N} \sum_{i = 1}^{N} I(s \prec s_i)
 </table>
 <p>변환 시퀀스를 기준으로, 길이가 1인 빈발 시퀀스를 구한다. 최소 지지도를 앞에서 빈발항목집합을 구할 때와 동일하게 설정할 때, 길이가 1인 빈발 시퀀스는 빈발항목집합(의 변환된 일련번호)과 동일하다.</p>
 <p>우선, 최대 시퀀스 길이를 구하자.</p>
-<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="association-rule.html#cb645-1" aria-hidden="true" tabindex="-1"></a>max_sequence_length <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">map_int</span>(customer_sequence<span class="sc">$</span>transformed_sequence, <span class="sc">~</span><span class="fu">length</span>(.x)))</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="association-rule.html#cb643-1" aria-hidden="true" tabindex="-1"></a>max_sequence_length <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">map_int</span>(customer_sequence<span class="sc">$</span>transformed_sequence, <span class="sc">~</span><span class="fu">length</span>(.x)))</span></code></pre></div>
 <p>1-시퀀스인 빈발시퀀스는 빈발항목집합과 같다.</p>
-<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="association-rule.html#cb646-1" aria-hidden="true" tabindex="-1"></a>large_sequences <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="at">length =</span> max_sequence_length)</span>
-<span id="cb646-2"><a href="association-rule.html#cb646-2" aria-hidden="true" tabindex="-1"></a>large_sequences[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">map</span>(large_itemset_df<span class="sc">$</span>mapped_to, <span class="sc">~</span><span class="fu">list</span>(.x))</span></code></pre></div>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="association-rule.html#cb644-1" aria-hidden="true" tabindex="-1"></a>large_sequences <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="at">length =</span> max_sequence_length)</span>
+<span id="cb644-2"><a href="association-rule.html#cb644-2" aria-hidden="true" tabindex="-1"></a>large_sequences[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">map</span>(large_itemset_df<span class="sc">$</span>mapped_to, <span class="sc">~</span><span class="fu">list</span>(.x))</span></code></pre></div>
 <p>같은 길이의 두 시퀀스를 이용해서 길이가 1 증가한 새로운 시퀀스를 생성하는 함수 <code>generate_sequence</code>를 아래와 같이 구현해보자. 새로운 시퀀스는 첫 번째 시퀀스 후에 두 번째 시퀀스의 가장 마지막 트랜잭션을 추가한 시퀀스이다.</p>
-<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="association-rule.html#cb647-1" aria-hidden="true" tabindex="-1"></a>generate_sequence <span class="ot">&lt;-</span> <span class="cf">function</span>(seq1, seq2) {</span>
-<span id="cb647-2"><a href="association-rule.html#cb647-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(seq1) <span class="sc">!=</span> <span class="fu">length</span>(seq2)) <span class="fu">stop</span>(<span class="st">&quot;Two sequences must be the same length.&quot;</span>)</span>
-<span id="cb647-3"><a href="association-rule.html#cb647-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb647-4"><a href="association-rule.html#cb647-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># two k-sequences needs to be the same for first k-1 items to generate new sequence</span></span>
-<span id="cb647-5"><a href="association-rule.html#cb647-5" aria-hidden="true" tabindex="-1"></a>  new_sequence <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb647-6"><a href="association-rule.html#cb647-6" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> <span class="fu">length</span>(seq1)</span>
-<span id="cb647-7"><a href="association-rule.html#cb647-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">identical</span>(seq1[<span class="fu">seq_len</span>(k <span class="sc">-</span> <span class="dv">1</span>)], seq2[<span class="fu">seq_len</span>(k <span class="sc">-</span> <span class="dv">1</span>)])) {</span>
-<span id="cb647-8"><a href="association-rule.html#cb647-8" aria-hidden="true" tabindex="-1"></a>    new_sequence <span class="ot">&lt;-</span> <span class="fu">c</span>(seq1, seq2[[k]])</span>
-<span id="cb647-9"><a href="association-rule.html#cb647-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb647-10"><a href="association-rule.html#cb647-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb647-11"><a href="association-rule.html#cb647-11" aria-hidden="true" tabindex="-1"></a>  new_sequence</span>
-<span id="cb647-12"><a href="association-rule.html#cb647-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="association-rule.html#cb645-1" aria-hidden="true" tabindex="-1"></a>generate_sequence <span class="ot">&lt;-</span> <span class="cf">function</span>(seq1, seq2) {</span>
+<span id="cb645-2"><a href="association-rule.html#cb645-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(seq1) <span class="sc">!=</span> <span class="fu">length</span>(seq2)) <span class="fu">stop</span>(<span class="st">&quot;Two sequences must be the same length.&quot;</span>)</span>
+<span id="cb645-3"><a href="association-rule.html#cb645-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb645-4"><a href="association-rule.html#cb645-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># two k-sequences needs to be the same for first k-1 items to generate new sequence</span></span>
+<span id="cb645-5"><a href="association-rule.html#cb645-5" aria-hidden="true" tabindex="-1"></a>  new_sequence <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb645-6"><a href="association-rule.html#cb645-6" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> <span class="fu">length</span>(seq1)</span>
+<span id="cb645-7"><a href="association-rule.html#cb645-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">identical</span>(seq1[<span class="fu">seq_len</span>(k <span class="sc">-</span> <span class="dv">1</span>)], seq2[<span class="fu">seq_len</span>(k <span class="sc">-</span> <span class="dv">1</span>)])) {</span>
+<span id="cb645-8"><a href="association-rule.html#cb645-8" aria-hidden="true" tabindex="-1"></a>    new_sequence <span class="ot">&lt;-</span> <span class="fu">c</span>(seq1, seq2[[k]])</span>
+<span id="cb645-9"><a href="association-rule.html#cb645-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb645-10"><a href="association-rule.html#cb645-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb645-11"><a href="association-rule.html#cb645-11" aria-hidden="true" tabindex="-1"></a>  new_sequence</span>
+<span id="cb645-12"><a href="association-rule.html#cb645-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>빈발 <span class="math inline">\(k\)</span>-시퀀스들로부터 <span class="math inline">\((k+1)\)</span>-시퀀스들을 생성하는 함수 <code>apriori_seq_gen</code>을 아래와 같이 구현해보자.</p>
-<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="association-rule.html#cb648-1" aria-hidden="true" tabindex="-1"></a>apriori_seq_gen <span class="ot">&lt;-</span> <span class="cf">function</span>(L) {</span>
-<span id="cb648-2"><a href="association-rule.html#cb648-2" aria-hidden="true" tabindex="-1"></a>  n_seqs <span class="ot">&lt;-</span> <span class="fu">length</span>(L)</span>
-<span id="cb648-3"><a href="association-rule.html#cb648-3" aria-hidden="true" tabindex="-1"></a>  n_item <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">map_dbl</span>(L, length))</span>
-<span id="cb648-4"><a href="association-rule.html#cb648-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb648-5"><a href="association-rule.html#cb648-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(n_item) <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="fu">stop</span>(<span class="st">&quot;All sequences must be the same length.&quot;</span>)</span>
-<span id="cb648-6"><a href="association-rule.html#cb648-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb648-7"><a href="association-rule.html#cb648-7" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> n_item</span>
-<span id="cb648-8"><a href="association-rule.html#cb648-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb648-9"><a href="association-rule.html#cb648-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># generate large new sequences with length (k+1)</span></span>
-<span id="cb648-10"><a href="association-rule.html#cb648-10" aria-hidden="true" tabindex="-1"></a>  C <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="at">length =</span> n_seqs <span class="sc">*</span> n_seqs)</span>
-<span id="cb648-11"><a href="association-rule.html#cb648-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(L)) {</span>
-<span id="cb648-12"><a href="association-rule.html#cb648-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="fu">seq_along</span>(L)) {</span>
-<span id="cb648-13"><a href="association-rule.html#cb648-13" aria-hidden="true" tabindex="-1"></a>      candidate_sequence <span class="ot">&lt;-</span> <span class="fu">generate_sequence</span>(L[[i]], L[[j]])</span>
-<span id="cb648-14"><a href="association-rule.html#cb648-14" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb648-15"><a href="association-rule.html#cb648-15" aria-hidden="true" tabindex="-1"></a>      <span class="co"># check whether all subsequences with length k are element of L</span></span>
-<span id="cb648-16"><a href="association-rule.html#cb648-16" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (</span>
-<span id="cb648-17"><a href="association-rule.html#cb648-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">all</span>(<span class="fu">map_lgl</span>(<span class="fu">seq_len</span>(k), <span class="cf">function</span>(x) </span>
-<span id="cb648-18"><a href="association-rule.html#cb648-18" aria-hidden="true" tabindex="-1"></a>          <span class="fu">any</span>(<span class="fu">map_lgl</span>(L, <span class="sc">~</span><span class="fu">identical</span>(.x, candidate_sequence[<span class="sc">-</span>x])))</span>
-<span id="cb648-19"><a href="association-rule.html#cb648-19" aria-hidden="true" tabindex="-1"></a>        ))</span>
-<span id="cb648-20"><a href="association-rule.html#cb648-20" aria-hidden="true" tabindex="-1"></a>      ) {</span>
-<span id="cb648-21"><a href="association-rule.html#cb648-21" aria-hidden="true" tabindex="-1"></a>        C[[n_seqs <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j]] <span class="ot">&lt;-</span> candidate_sequence</span>
-<span id="cb648-22"><a href="association-rule.html#cb648-22" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb648-23"><a href="association-rule.html#cb648-23" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb648-24"><a href="association-rule.html#cb648-24" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb648-25"><a href="association-rule.html#cb648-25" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb648-26"><a href="association-rule.html#cb648-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compact</span>(C)</span>
-<span id="cb648-27"><a href="association-rule.html#cb648-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="association-rule.html#cb646-1" aria-hidden="true" tabindex="-1"></a>apriori_seq_gen <span class="ot">&lt;-</span> <span class="cf">function</span>(L) {</span>
+<span id="cb646-2"><a href="association-rule.html#cb646-2" aria-hidden="true" tabindex="-1"></a>  n_seqs <span class="ot">&lt;-</span> <span class="fu">length</span>(L)</span>
+<span id="cb646-3"><a href="association-rule.html#cb646-3" aria-hidden="true" tabindex="-1"></a>  n_item <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">map_dbl</span>(L, length))</span>
+<span id="cb646-4"><a href="association-rule.html#cb646-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb646-5"><a href="association-rule.html#cb646-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(n_item) <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="fu">stop</span>(<span class="st">&quot;All sequences must be the same length.&quot;</span>)</span>
+<span id="cb646-6"><a href="association-rule.html#cb646-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb646-7"><a href="association-rule.html#cb646-7" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> n_item</span>
+<span id="cb646-8"><a href="association-rule.html#cb646-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb646-9"><a href="association-rule.html#cb646-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># generate large new sequences with length (k+1)</span></span>
+<span id="cb646-10"><a href="association-rule.html#cb646-10" aria-hidden="true" tabindex="-1"></a>  C <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="at">length =</span> n_seqs <span class="sc">*</span> n_seqs)</span>
+<span id="cb646-11"><a href="association-rule.html#cb646-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(L)) {</span>
+<span id="cb646-12"><a href="association-rule.html#cb646-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="fu">seq_along</span>(L)) {</span>
+<span id="cb646-13"><a href="association-rule.html#cb646-13" aria-hidden="true" tabindex="-1"></a>      candidate_sequence <span class="ot">&lt;-</span> <span class="fu">generate_sequence</span>(L[[i]], L[[j]])</span>
+<span id="cb646-14"><a href="association-rule.html#cb646-14" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb646-15"><a href="association-rule.html#cb646-15" aria-hidden="true" tabindex="-1"></a>      <span class="co"># check whether all subsequences with length k are element of L</span></span>
+<span id="cb646-16"><a href="association-rule.html#cb646-16" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (</span>
+<span id="cb646-17"><a href="association-rule.html#cb646-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">all</span>(<span class="fu">map_lgl</span>(<span class="fu">seq_len</span>(k), <span class="cf">function</span>(x) </span>
+<span id="cb646-18"><a href="association-rule.html#cb646-18" aria-hidden="true" tabindex="-1"></a>          <span class="fu">any</span>(<span class="fu">map_lgl</span>(L, <span class="sc">~</span><span class="fu">identical</span>(.x, candidate_sequence[<span class="sc">-</span>x])))</span>
+<span id="cb646-19"><a href="association-rule.html#cb646-19" aria-hidden="true" tabindex="-1"></a>        ))</span>
+<span id="cb646-20"><a href="association-rule.html#cb646-20" aria-hidden="true" tabindex="-1"></a>      ) {</span>
+<span id="cb646-21"><a href="association-rule.html#cb646-21" aria-hidden="true" tabindex="-1"></a>        C[[n_seqs <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j]] <span class="ot">&lt;-</span> candidate_sequence</span>
+<span id="cb646-22"><a href="association-rule.html#cb646-22" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb646-23"><a href="association-rule.html#cb646-23" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb646-24"><a href="association-rule.html#cb646-24" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb646-25"><a href="association-rule.html#cb646-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb646-26"><a href="association-rule.html#cb646-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compact</span>(C)</span>
+<span id="cb646-27"><a href="association-rule.html#cb646-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>위 <code>apriori_seq_gen</code> 함수 수행결과로 얻어지는 <span class="math inline">\((k+1)\)</span>-시퀀스들이 모두 빈발 시퀀스라는 보장은 없으므로, 새로 생성된 각 시퀀스가 최소 지지도 이상의 지지도를 갖는지 검토하여, 빈발 시퀀스만을 남기기로 하자. 앞에서 정의했던 함수 <code>support_sequence</code>를 활용하여, 새로운 함수 <code>get_large_sequence</code>를 정의하자.</p>
-<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="association-rule.html#cb649-1" aria-hidden="true" tabindex="-1"></a>get_large_sequence <span class="ot">&lt;-</span> <span class="cf">function</span>(sequence_list, C, s_min) {</span>
-<span id="cb649-2"><a href="association-rule.html#cb649-2" aria-hidden="true" tabindex="-1"></a>  is_large <span class="ot">&lt;-</span> <span class="fu">map_lgl</span>(</span>
-<span id="cb649-3"><a href="association-rule.html#cb649-3" aria-hidden="true" tabindex="-1"></a>    C, <span class="sc">~</span> <span class="fu">support_sequence</span>(sequence_list, .x) <span class="sc">&gt;=</span> s_min</span>
-<span id="cb649-4"><a href="association-rule.html#cb649-4" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb649-5"><a href="association-rule.html#cb649-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb649-6"><a href="association-rule.html#cb649-6" aria-hidden="true" tabindex="-1"></a>  C[is_large]</span>
-<span id="cb649-7"><a href="association-rule.html#cb649-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="association-rule.html#cb647-1" aria-hidden="true" tabindex="-1"></a>get_large_sequence <span class="ot">&lt;-</span> <span class="cf">function</span>(sequence_list, C, s_min) {</span>
+<span id="cb647-2"><a href="association-rule.html#cb647-2" aria-hidden="true" tabindex="-1"></a>  is_large <span class="ot">&lt;-</span> <span class="fu">map_lgl</span>(</span>
+<span id="cb647-3"><a href="association-rule.html#cb647-3" aria-hidden="true" tabindex="-1"></a>    C, <span class="sc">~</span> <span class="fu">support_sequence</span>(sequence_list, .x) <span class="sc">&gt;=</span> s_min</span>
+<span id="cb647-4"><a href="association-rule.html#cb647-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb647-5"><a href="association-rule.html#cb647-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb647-6"><a href="association-rule.html#cb647-6" aria-hidden="true" tabindex="-1"></a>  C[is_large]</span>
+<span id="cb647-7"><a href="association-rule.html#cb647-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>위 빈발 <span class="math inline">\(k\)</span>-시퀀스를 과정을 <span class="math inline">\(k\)</span>값을 1씩 증가시켜가며 더 이상 빈발 시퀀스를 찾을 수 없을 때까지 반복한다.</p>
-<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="association-rule.html#cb650-1" aria-hidden="true" tabindex="-1"></a>s_min <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
-<span id="cb650-2"><a href="association-rule.html#cb650-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb650-3"><a href="association-rule.html#cb650-3" aria-hidden="true" tabindex="-1"></a>large_sequences <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="at">length =</span> max_sequence_length)</span>
-<span id="cb650-4"><a href="association-rule.html#cb650-4" aria-hidden="true" tabindex="-1"></a>large_sequences[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">map</span>(large_itemset_df<span class="sc">$</span>mapped_to, <span class="sc">~</span><span class="fu">list</span>(.x))</span>
-<span id="cb650-5"><a href="association-rule.html#cb650-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb650-6"><a href="association-rule.html#cb650-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(max_sequence_length <span class="sc">-</span> <span class="dv">1</span>)) {</span>
-<span id="cb650-7"><a href="association-rule.html#cb650-7" aria-hidden="true" tabindex="-1"></a>  large_sequences[[i <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">get_large_sequence</span>(</span>
-<span id="cb650-8"><a href="association-rule.html#cb650-8" aria-hidden="true" tabindex="-1"></a>    customer_sequence<span class="sc">$</span>transformed_sequence,</span>
-<span id="cb650-9"><a href="association-rule.html#cb650-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">apriori_seq_gen</span>(large_sequences[[i]]),</span>
-<span id="cb650-10"><a href="association-rule.html#cb650-10" aria-hidden="true" tabindex="-1"></a>    s_min</span>
-<span id="cb650-11"><a href="association-rule.html#cb650-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb650-12"><a href="association-rule.html#cb650-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb650-13"><a href="association-rule.html#cb650-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is_empty</span>(large_sequences[[i <span class="sc">+</span> <span class="dv">1</span>]])) <span class="cf">break</span></span>
-<span id="cb650-14"><a href="association-rule.html#cb650-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb650-15"><a href="association-rule.html#cb650-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb650-16"><a href="association-rule.html#cb650-16" aria-hidden="true" tabindex="-1"></a>large_sequences <span class="ot">&lt;-</span> <span class="fu">flatten</span>(<span class="fu">compact</span>(large_sequences))</span></code></pre></div>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="association-rule.html#cb648-1" aria-hidden="true" tabindex="-1"></a>s_min <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb648-2"><a href="association-rule.html#cb648-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb648-3"><a href="association-rule.html#cb648-3" aria-hidden="true" tabindex="-1"></a>large_sequences <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="at">length =</span> max_sequence_length)</span>
+<span id="cb648-4"><a href="association-rule.html#cb648-4" aria-hidden="true" tabindex="-1"></a>large_sequences[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">map</span>(large_itemset_df<span class="sc">$</span>mapped_to, <span class="sc">~</span><span class="fu">list</span>(.x))</span>
+<span id="cb648-5"><a href="association-rule.html#cb648-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb648-6"><a href="association-rule.html#cb648-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(max_sequence_length <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb648-7"><a href="association-rule.html#cb648-7" aria-hidden="true" tabindex="-1"></a>  large_sequences[[i <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">get_large_sequence</span>(</span>
+<span id="cb648-8"><a href="association-rule.html#cb648-8" aria-hidden="true" tabindex="-1"></a>    customer_sequence<span class="sc">$</span>transformed_sequence,</span>
+<span id="cb648-9"><a href="association-rule.html#cb648-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">apriori_seq_gen</span>(large_sequences[[i]]),</span>
+<span id="cb648-10"><a href="association-rule.html#cb648-10" aria-hidden="true" tabindex="-1"></a>    s_min</span>
+<span id="cb648-11"><a href="association-rule.html#cb648-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb648-12"><a href="association-rule.html#cb648-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb648-13"><a href="association-rule.html#cb648-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is_empty</span>(large_sequences[[i <span class="sc">+</span> <span class="dv">1</span>]])) <span class="cf">break</span></span>
+<span id="cb648-14"><a href="association-rule.html#cb648-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb648-15"><a href="association-rule.html#cb648-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb648-16"><a href="association-rule.html#cb648-16" aria-hidden="true" tabindex="-1"></a>large_sequences <span class="ot">&lt;-</span> <span class="fu">flatten</span>(<span class="fu">compact</span>(large_sequences))</span></code></pre></div>
 <p>결과적으로 찾아진 빈발 시퀀스들은 아래와 같다.</p>
-<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="association-rule.html#cb651-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_chr</span>(large_sequences, </span>
-<span id="cb651-2"><a href="association-rule.html#cb651-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span><span class="fu">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="fu">str_c</span>(<span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">unlist</span>(.x), <span class="st">&quot;}&quot;</span>), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;&gt;&quot;</span>))</span></code></pre></div>
-<pre><code>## [1] &quot;&lt;{1}&gt;&quot;      &quot;&lt;{2}&gt;&quot;      &quot;&lt;{3}&gt;&quot;      &quot;&lt;{4}&gt;&quot;      &quot;&lt;{5}&gt;&quot;     
-## [6] &quot;&lt;{1}, {2}&gt;&quot; &quot;&lt;{1}, {3}&gt;&quot; &quot;&lt;{1}, {4}&gt;&quot; &quot;&lt;{1}, {5}&gt;&quot;</code></pre>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="association-rule.html#cb649-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_chr</span>(large_sequences, </span>
+<span id="cb649-2"><a href="association-rule.html#cb649-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span><span class="fu">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="fu">str_c</span>(<span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">unlist</span>(.x), <span class="st">&quot;}&quot;</span>), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;&gt;&quot;</span>))</span></code></pre></div>
+<pre><code>## [1] &quot;&lt;{1}&gt;&quot;      &quot;&lt;{2}&gt;&quot;      &quot;&lt;{3}&gt;&quot;      &quot;&lt;{4}&gt;&quot;     
+## [5] &quot;&lt;{5}&gt;&quot;      &quot;&lt;{1}, {2}&gt;&quot; &quot;&lt;{1}, {3}&gt;&quot; &quot;&lt;{1}, {4}&gt;&quot;
+## [9] &quot;&lt;{1}, {5}&gt;&quot;</code></pre>
 <p>이후 최대화 단계를 통해, 빈발 시퀀스 중 최대 시퀀스들만 추출한다.</p>
-<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="association-rule.html#cb653-1" aria-hidden="true" tabindex="-1"></a>maximal_large_sequences <span class="ot">&lt;-</span> large_sequences</span>
-<span id="cb653-2"><a href="association-rule.html#cb653-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb653-3"><a href="association-rule.html#cb653-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fu">length</span>(large_sequences), <span class="at">to =</span> <span class="dv">2</span>)) {</span>
-<span id="cb653-4"><a href="association-rule.html#cb653-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is_empty</span>(maximal_large_sequences[i])) {</span>
-<span id="cb653-5"><a href="association-rule.html#cb653-5" aria-hidden="true" tabindex="-1"></a>    is_subsequence <span class="ot">&lt;-</span> <span class="fu">map_lgl</span>(maximal_large_sequences[<span class="fu">seq_len</span>(i <span class="sc">-</span> <span class="dv">1</span>)],</span>
-<span id="cb653-6"><a href="association-rule.html#cb653-6" aria-hidden="true" tabindex="-1"></a>                              <span class="sc">~</span><span class="fu">is_contained</span>(maximal_large_sequences[i], .x))</span>
-<span id="cb653-7"><a href="association-rule.html#cb653-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb653-8"><a href="association-rule.html#cb653-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">walk</span>(<span class="fu">which</span>(is_subsequence), <span class="cf">function</span>(x) maximal_large_sequences[[x]] <span class="ot">&lt;&lt;-</span> <span class="fu">list</span>())</span>
-<span id="cb653-9"><a href="association-rule.html#cb653-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb653-10"><a href="association-rule.html#cb653-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb653-11"><a href="association-rule.html#cb653-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb653-12"><a href="association-rule.html#cb653-12" aria-hidden="true" tabindex="-1"></a>maximal_large_sequences <span class="ot">&lt;-</span> <span class="fu">compact</span>(maximal_large_sequences)</span></code></pre></div>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="association-rule.html#cb651-1" aria-hidden="true" tabindex="-1"></a>maximal_large_sequences <span class="ot">&lt;-</span> large_sequences</span>
+<span id="cb651-2"><a href="association-rule.html#cb651-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb651-3"><a href="association-rule.html#cb651-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fu">length</span>(large_sequences), <span class="at">to =</span> <span class="dv">2</span>)) {</span>
+<span id="cb651-4"><a href="association-rule.html#cb651-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is_empty</span>(maximal_large_sequences[i])) {</span>
+<span id="cb651-5"><a href="association-rule.html#cb651-5" aria-hidden="true" tabindex="-1"></a>    is_subsequence <span class="ot">&lt;-</span> <span class="fu">map_lgl</span>(maximal_large_sequences[<span class="fu">seq_len</span>(i <span class="sc">-</span> <span class="dv">1</span>)],</span>
+<span id="cb651-6"><a href="association-rule.html#cb651-6" aria-hidden="true" tabindex="-1"></a>                              <span class="sc">~</span><span class="fu">is_contained</span>(maximal_large_sequences[i], .x))</span>
+<span id="cb651-7"><a href="association-rule.html#cb651-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb651-8"><a href="association-rule.html#cb651-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">walk</span>(<span class="fu">which</span>(is_subsequence), <span class="cf">function</span>(x) maximal_large_sequences[[x]] <span class="ot">&lt;&lt;-</span> <span class="fu">list</span>())</span>
+<span id="cb651-9"><a href="association-rule.html#cb651-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb651-10"><a href="association-rule.html#cb651-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb651-11"><a href="association-rule.html#cb651-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb651-12"><a href="association-rule.html#cb651-12" aria-hidden="true" tabindex="-1"></a>maximal_large_sequences <span class="ot">&lt;-</span> <span class="fu">compact</span>(maximal_large_sequences)</span></code></pre></div>
 <p>최대 빈발 시퀀스(변환 시퀀스 기준)은 아래와 같다.</p>
-<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="association-rule.html#cb654-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_chr</span>(maximal_large_sequences, </span>
-<span id="cb654-2"><a href="association-rule.html#cb654-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span><span class="fu">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="fu">str_c</span>(<span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">unlist</span>(.x), <span class="st">&quot;}&quot;</span>), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;&gt;&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="association-rule.html#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_chr</span>(maximal_large_sequences, </span>
+<span id="cb652-2"><a href="association-rule.html#cb652-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span><span class="fu">str_c</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="fu">str_c</span>(<span class="fu">str_c</span>(<span class="st">&quot;{&quot;</span>, <span class="fu">unlist</span>(.x), <span class="st">&quot;}&quot;</span>), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;&gt;&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;{1}, {2}&gt;&quot; &quot;&lt;{1}, {3}&gt;&quot; &quot;&lt;{1}, {4}&gt;&quot; &quot;&lt;{1}, {5}&gt;&quot;</code></pre>
-<p>이외에도 AprioriSome 알고리즘, DynamicSome 알고리즘 등의 시퀀스 탐사 알고리즘 들이 존재한다. 보다 자세한 내용은 <span class="citation"><a href="#ref-jun2012datamining" role="doc-biblioref">전치혁</a> (<a href="#ref-jun2012datamining" role="doc-biblioref">2012</a>)</span> 및 <span class="citation"><a href="#ref-agrawal1995mining" role="doc-biblioref">Agrawal, Srikant, and others</a> (<a href="#ref-agrawal1995mining" role="doc-biblioref">1995</a>)</span> 참고.</p>
+<p>이외에도 AprioriSome 알고리즘, DynamicSome 알고리즘 등의 시퀀스 탐사 알고리즘 들이 존재한다. 보다 자세한 내용은 <span class="citation">전치혁 (<a href="#ref-jun2012datamining" role="doc-biblioref">2012</a>)</span> 및 <span class="citation">Agrawal, Srikant, et al. (<a href="#ref-agrawal1995mining" role="doc-biblioref">1995</a>)</span> 참고.</p>
 
 </div>
 </div>
@@ -1589,35 +1599,15 @@ supp(s) = \frac{1}{N} \sum_{i = 1}^{N} I(s \prec s_i)
 Agrawal, Rakesh, Tomasz Imieliński, and Arun Swami. 1993. <span>“Mining Association Rules Between Sets of Items in Large Databases.”</span> In <em>Proceedings of the 1993 ACM SIGMOD International Conference on Management of Data</em>, 207–16. SIGMOD ’93. New York, NY, USA: ACM. <a href="https://doi.org/10.1145/170035.170072">https://doi.org/10.1145/170035.170072</a>.
 </div>
 <div id="ref-agrawal1994fast" class="csl-entry">
-Agrawal, Rakesh, Ramakrishnan Srikant, and others. 1994. <span>“Fast Algorithms for Mining Association Rules.”</span> In <em>Proc. 20th Int. Conf. Very Large Data Bases, VLDB</em>, 1215:487–99.
+Agrawal, Rakesh, Ramakrishnan Srikant, et al. 1994. <span>“Fast Algorithms for Mining Association Rules.”</span> In <em>Proc. 20th Int. Conf. Very Large Data Bases, VLDB</em>, 1215:487–99.
 </div>
 <div id="ref-agrawal1995mining" class="csl-entry">
-———. 1995. <span>“Mining Sequential Patterns.”</span> In <em>Icde</em>, 95:3–14.
+———, et al. 1995. <span>“Mining Sequential Patterns.”</span> In <em>Icde</em>, 95:3–14.
 </div>
 <div id="ref-jun2012datamining" class="csl-entry">
 전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.
 </div>
 </div>
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://r-data-mining-book.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            
             </section>
 
           </div>

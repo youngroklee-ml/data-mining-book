@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2021-07-30" />
+<meta name="date" content="2022-07-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -582,20 +582,26 @@ y_i &amp;=&amp; \begin{cases}
 ##          0  5 70</code></pre>
 <p>정확도를 비롯한 각종 전반적인 지표는 <code>overall</code>이라는 component에 벡터 형태로 저장된다.</p>
 <div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="classifier-evaluation.html#cb339-1" aria-hidden="true" tabindex="-1"></a>cm<span class="sc">$</span>overall</span></code></pre></div>
-<pre><code>##       Accuracy          Kappa  AccuracyLower  AccuracyUpper   AccuracyNull 
-##      0.8500000      0.5714286      0.7646925      0.9135456      0.8000000 
-## AccuracyPValue  McnemarPValue 
-##      0.1285055      0.3016996</code></pre>
+<pre><code>##       Accuracy          Kappa  AccuracyLower 
+##      0.8500000      0.5714286      0.7646925 
+##  AccuracyUpper   AccuracyNull AccuracyPValue 
+##      0.9135456      0.8000000      0.1285055 
+##  McnemarPValue 
+##      0.3016996</code></pre>
 <p>또한, 민감도, 특이도를 비롯한 몇 가지 분류성능 지표들은 <code>byClass</code>라는 component에 역시 벡터 형태로 저장된다.</p>
 <div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="classifier-evaluation.html#cb341-1" aria-hidden="true" tabindex="-1"></a>cm<span class="sc">$</span>byClass</span></code></pre></div>
-<pre><code>##          Sensitivity          Specificity       Pos Pred Value 
-##            0.7500000            0.8750000            0.6000000 
-##       Neg Pred Value            Precision               Recall 
-##            0.9333333            0.6000000            0.7500000 
-##                   F1           Prevalence       Detection Rate 
-##            0.6666667            0.2000000            0.1500000 
-## Detection Prevalence    Balanced Accuracy 
-##            0.2500000            0.8125000</code></pre>
+<pre><code>##          Sensitivity          Specificity 
+##            0.7500000            0.8750000 
+##       Pos Pred Value       Neg Pred Value 
+##            0.6000000            0.9333333 
+##            Precision               Recall 
+##            0.6000000            0.7500000 
+##                   F1           Prevalence 
+##            0.6666667            0.2000000 
+##       Detection Rate Detection Prevalence 
+##            0.1500000            0.2500000 
+##    Balanced Accuracy 
+##            0.8125000</code></pre>
 </div>
 </div>
 <div id="roc-curve" class="section level2" number="10.4">
@@ -825,6 +831,14 @@ Figure 10.1: ROC 곡선
 <span id="cb358-19"><a href="classifier-evaluation.html#cb358-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:gain-chart-stat">Table 10.2: </span>이익도표를 위한 통계량</caption>
+<colgroup>
+<col width="6%" />
+<col width="17%" />
+<col width="25%" />
+<col width="31%" />
+<col width="13%" />
+<col width="6%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="right">집단</th>
@@ -946,26 +960,6 @@ Figure 10.2: 이익도표
 
 
 
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://r-data-mining-book.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            
             </section>
 
           </div>

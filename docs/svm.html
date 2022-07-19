@@ -24,7 +24,7 @@
 <meta name="author" content="전치혁, 이혜선, 이종석, 이영록" />
 
 
-<meta name="date" content="2021-07-30" />
+<meta name="date" content="2022-07-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -608,7 +608,7 @@ Figure 9.1: 선형 SVM 분리 하이퍼플레인
 <p>여기서 <span class="math inline">\(\mathbf{w} \in \mathbb{R}^p\)</span>와 <span class="math inline">\(b \in \mathbb{R}\)</span>이 하이퍼플레인의 계수이다.</p>
 <p>범주값이 1인 객체들 중 하이퍼플레인에서 가장 가까운 객체에 대해 다음과 같은 조건이 만족한다고 가정하자.</p>
 <p><span class="math display">\[
-H_1: \mathbf{w}^\top \mathbf{x} + b = 1 
+H_1: \mathbf{w}^\top \mathbf{x} + b = 1
 \]</span></p>
 <p>또한 범주값이 -1인 객체들 중 하이퍼플레인에서 가장 가까운 객체에 대해 다음과 같은 조건이 만족한다고 가정하자.</p>
 <p><span class="math display">\[
@@ -674,11 +674,11 @@ where
 <span id="cb304-4"><a href="svm.html#cb304-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb304-5"><a href="svm.html#cb304-5" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, N)</span>
 <span id="cb304-6"><a href="svm.html#cb304-6" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> (y <span class="sc">%*%</span> <span class="fu">t</span>(y)) <span class="sc">*</span> (X <span class="sc">%*%</span> <span class="fu">t</span>(X))</span></code></pre></div>
-<p>여기에서 행렬 <span class="math inline">\(\mathbf{D}\)</span>의 determinant 값은 0으로, <span class="citation"><a href="#ref-goldfarb1983numerically" role="doc-biblioref">Goldfarb and Idnani</a> (<a href="#ref-goldfarb1983numerically" role="doc-biblioref">1983</a>)</span> 가 가정하는 symmetric positive definite matrix 조건에 위배되어 <code>solve.QP</code> 함수 실행 시 오류가 발생한다. 이를 방지하기 위해 아래 예에서는 <code>Matrix</code> 패키지의 <code>nearPD</code>함수를 이용하여 행렬 <span class="math inline">\(\mathbf{D}\)</span>와 근사한 symmetric positive definite matrix를 아래와 같이 찾는다.</p>
+<p>여기에서 행렬 <span class="math inline">\(\mathbf{D}\)</span>의 determinant 값은 0으로, <span class="citation">Goldfarb and Idnani (<a href="#ref-goldfarb1983numerically" role="doc-biblioref">1983</a>)</span> 가 가정하는 symmetric positive definite matrix 조건에 위배되어 <code>solve.QP</code> 함수 실행 시 오류가 발생한다. 이를 방지하기 위해 아래 예에서는 <code>Matrix</code> 패키지의 <code>nearPD</code>함수를 이용하여 행렬 <span class="math inline">\(\mathbf{D}\)</span>와 근사한 symmetric positive definite matrix를 아래와 같이 찾는다.</p>
 <div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="svm.html#cb305-1" aria-hidden="true" tabindex="-1"></a>D_pd <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">nearPD</span>(D, <span class="at">doSym =</span> T)<span class="sc">$</span>mat <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span></code></pre></div>
 <p>식 <a href="svm.html#eq:quadprog">(9.4)</a>의 제약식은 모두 inequality 형태로, 식 <a href="svm.html#eq:linear-svm-dual">(9.3)</a>의 equality constraint <span class="math inline">\(\sum_{i = 1}^{N} \alpha_i y_i = 0\)</span>를 표현하기 위해서 두 개의 제약식 <span class="math inline">\(\sum_{i = 1}^{N} \alpha_i y_i \ge 0\)</span>와 <span class="math inline">\(\sum_{i = 1}^{N} - \alpha_i y_i \ge 0\)</span>를 생성한다.</p>
 <p><span class="math display">\[\begin{equation*}
-\mathbf{A}^\top = \left[ 
+\mathbf{A}^\top = \left[
 \begin{array}{c c c c}
 y_1 &amp; y_2 &amp; \cdots &amp; y_N\\
 -y_1 &amp; -y_2 &amp; \cdots &amp; -y_N\\
@@ -754,7 +754,7 @@ y_1 &amp; y_2 &amp; \cdots &amp; y_N\\
 <p>위의 과정으로 최적해 <span class="math inline">\(\alpha_{i}^{*}\)</span>를 구한 뒤, 아래와 같이 분리 하이퍼플레인의 계수를 결정할 수 있다.</p>
 <p><span class="math display">\[\begin{eqnarray*}
 \mathbf{w} &amp;=&amp; \sum_{i = 1}^{N} \alpha_{i}^{*} y_{i} \mathbf{x}_{i}\\
-b &amp;=&amp; \sum_{i: \alpha_{i}^{*} &gt; 0} \frac{1 - y_{i} \mathbf{w}^{\top} \mathbf{x}_{i}}{y_{i}} \left/ \sum_{i: \alpha_{i}^{*} &gt; 0} 1 \right. 
+b &amp;=&amp; \sum_{i: \alpha_{i}^{*} &gt; 0} \frac{1 - y_{i} \mathbf{w}^{\top} \mathbf{x}_{i}}{y_{i}} \left/ \sum_{i: \alpha_{i}^{*} &gt; 0} 1 \right.
 \end{eqnarray*}\]</span></p>
 <div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="svm.html#cb308-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">colSums</span>(alpha_sol <span class="sc">*</span> y <span class="sc">*</span> X)</span>
 <span id="cb308-2"><a href="svm.html#cb308-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(w)</span></code></pre></div>
@@ -955,7 +955,7 @@ Figure 9.2: 선형 SVM 분리 불가능 경우의 하이퍼플레인
 ## 0.6 0.8</code></pre>
 <p>상수 <span class="math inline">\(b\)</span>는 아래와 같이 <span class="math inline">\(0 &lt; \alpha_{i}^{*} &lt; C\)</span>인 객체들을 이용해 산출할 수 있다.</p>
 <p><span class="math display">\[\begin{equation*}
-b = \sum_{i: 0 &lt; \alpha_{i}^{*} &lt; C} \frac{1 - y_{i} \mathbf{w}^{\top} \mathbf{x}_{i}}{y_{i}} \left/ \sum_{i: 0 &lt; \alpha_{i}^{*} &lt; C} 1 \right. 
+b = \sum_{i: 0 &lt; \alpha_{i}^{*} &lt; C} \frac{1 - y_{i} \mathbf{w}^{\top} \mathbf{x}_{i}}{y_{i}} \left/ \sum_{i: 0 &lt; \alpha_{i}^{*} &lt; C} 1 \right.
 \end{equation*}\]</span></p>
 <div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="svm.html#cb318-1" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> sv_ind[alpha_sol[sv_ind] <span class="sc">&lt;</span> svm_model<span class="sc">$</span>cost]</span>
 <span id="cb318-2"><a href="svm.html#cb318-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">mean</span>((<span class="dv">1</span> <span class="sc">-</span> y[ind] <span class="sc">*</span> (X[ind, ] <span class="sc">%*%</span> w)) <span class="sc">/</span> y[ind])</span>
@@ -986,6 +986,13 @@ b = \sum_{i: 0 &lt; \alpha_{i}^{*} &lt; C} \frac{1 - y_{i} \mathbf{w}^{\top} \ma
 <span id="cb324-14"><a href="svm.html#cb324-14" aria-hidden="true" tabindex="-1"></a>svm_summary <span class="ot">&lt;-</span> <span class="fu">lapply</span>(svm_models, getHyperplane) <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:svm-inseparable-summary">Table 9.5: </span>페널티 단가 C에 따른 하이퍼플레인 계수 및 결과</caption>
+<colgroup>
+<col width="25%" />
+<col width="20%" />
+<col width="8%" />
+<col width="26%" />
+<col width="19%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="center">페널티 단가 <span class="math inline">\(C\)</span></th>
@@ -1247,7 +1254,7 @@ Figure 9.6: 시그모이드 커널을 이용한 비선형 SVM 하이퍼플레인
 </div>
 <div id="svm-nu-classification" class="section level3" number="9.6.2">
 <h3><span class="header-section-number">9.6.2</span> <span class="math inline">\(\nu\)</span>-SVC</h3>
-<p><span class="math inline">\(\nu\)</span>-support vector classification(<span class="math inline">\(\nu\)</span>-SVC) <span class="citation"><a href="#ref-chang2001training" role="doc-biblioref">Chang and Lin</a> (<a href="#ref-chang2001training" role="doc-biblioref">2001</a>)</span>은 <span class="math inline">\(C\)</span>-SVC의 이차계획식 <a href="svm.html#eq:nonlinear-svm-dual-kernel">(9.8)</a>과 다른 형태로, 페널티 단가 <span class="math inline">\(C\)</span> 대신 <span class="math inline">\(\nu\)</span>라는 파라미터를 이용한 아래 최적화 문제의 해를 구한다.</p>
+<p><span class="math inline">\(\nu\)</span>-support vector classification(<span class="math inline">\(\nu\)</span>-SVC) <span class="citation">Chang and Lin (<a href="#ref-chang2001training" role="doc-biblioref">2001</a>)</span>은 <span class="math inline">\(C\)</span>-SVC의 이차계획식 <a href="svm.html#eq:nonlinear-svm-dual-kernel">(9.8)</a>과 다른 형태로, 페널티 단가 <span class="math inline">\(C\)</span> 대신 <span class="math inline">\(\nu\)</span>라는 파라미터를 이용한 아래 최적화 문제의 해를 구한다.</p>
 <p><span class="math display" id="eq:nonlinear-nu-svc-dual">\[\begin{equation}
 \begin{split}
 \min \text{  } &amp; L_D = \sum_{i = 1}^{N} \sum_{j = 1}^{N} \alpha_i \alpha_j y_i y_j k_{ij}\\
@@ -1310,26 +1317,6 @@ Goldfarb, Donald, and Ashok Idnani. 1983. <span>“A Numerically Stable Dual Met
 전치혁. 2012. <em>데이터마이닝 기법과 응용</em>. 한나래출판사.
 </div>
 </div>
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://r-data-mining-book.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            
             </section>
 
           </div>
